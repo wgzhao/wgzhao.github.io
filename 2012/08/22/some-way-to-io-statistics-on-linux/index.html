@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux下的一些I/O统计工具 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="作为一个Linux系统管理员，统计各类IO是一项必不可少的工作。其统计工具中iostat显然又是最重要的一个统计手段。但是这里iostat不是本文的重点，因为这个工具的使用在网络上已经有大量的教程，可以供大家参考。这里主要是想介绍一些其他统计工具以来满足不同的需求。 iostat &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2012/08/22/some-way-to-io-statistics-on-linux">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux下的一些I/O统计工具</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-22T10:25:00+08:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2012</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>作为一个Linux系统管理员，统计各类IO是一项必不可少的工作。其统计工具中iostat显然又是最重要的一个统计手段。但是这里iostat不是本文的重点，因为这个工具的使用在网络上已经有大量的教程，可以供大家参考。这里主要是想介绍一些其他统计工具以来满足不同的需求。</p>
+
+<h3>iostat</h3>
+
+<p>iostat的功能异常强大，输出项也特别多，比如下面这个例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Device: rrqm/s  wrqm/s  r/s     w/s    rkB/s    wkB/s    avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+</span><span class='line'>
+</span><span class='line'>sda     0.00     0.50  173.50   73.50  3076.00   604.00    29.80   149.93    676.58   74.36 2098.15  4.05 100.00</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其各项的含义分别是：</p>
+
+<!--more-->
+
+
+<ul>
+<li>rrqm/s:       每秒进行 merge 的读操作数目.即 delta(rmerge)/s</li>
+<li>wrqm/s:  每秒进行 merge 的写操作数目.即 delta(wmerge)/s</li>
+<li>r/s:               每秒完成的读 I/O 设备次数.即 delta(rio)/s</li>
+<li>w/s:             每秒完成的写 I/O 设备次数.即 delta(wio)/s</li>
+<li>rsec/s:        每秒读扇区数.即 delta(rsect)/s</li>
+<li>wsec/s:      每秒写扇区数.即 delta(wsect)/s</li>
+<li>rkB/s:          每秒读K字节数.是 rsect/s 的一半,因为每扇区大小为512字节.(需要计算)</li>
+<li>wkB/s:    每秒写K字节数.是 wsect/s 的一半.(需要计算)</li>
+<li>avgrq-sz: 平均每次设备I/O操作的数据大小 (扇区).delta(rsect+wsect)/delta(rio+wio)</li>
+<li>avgqu-sz: 平均I/O队列长度.即 delta(aveq)/s/1000 (因为aveq的单位为毫秒).</li>
+<li>await:        平均每次设备I/O操作的等待时间 (毫秒).即 delta(ruse+wuse)/delta(rio+wio)</li>
+<li>svctm:       平均每次设备I/O操作的服务时间 (毫秒).即 delta(use)/delta(rio+wio)</li>
+<li>%util:          一秒中有百分之多少的时间用于 I/O 操作,或者说一秒中有多少时间 I/O 队列是非空的.即 delta(use)/s/1000 (因为use的单位为毫秒)</li>
+</ul>
+
+
+<p>如果 <code>%util</code> 接近 100%,说明产生的I/O请求太多,I/O系统已经满负荷,该磁盘可能存在瓶颈.</p>
+
+<p>idle小于70% IO压力就较大了,一般读取速度有较多的wait.</p>
+
+<p>同时可以结合<code>vmstat</code>查看查看b参数(等待资源的进程数)和wa参数(IO等待所占用的CPU时间的百分比,高过30%时IO压力高)</p>
+
+<p>另外 <code>await</code> 的参数也要多和 <code>svctm</code> 来参考。差的过高就一定有 IO 的问题.</p>
+
+<p><code>avgrq-sz</code> 也是个做 IO 调优时需要注意的地方,这个就是直接每次操作的数据的大小,如果次数多,但数据拿的小的话,其实 IO 也会很小.如果数据拿的大,才IO 的数据会高.也可以通过 <code>avgqu-sz × ( r/s or w/s ) = rsec/s or wsec/s</code>.也就是讲,读定速度是这个来决定的.</p>
+
+<p><code>svctm</code> 一般要小于 <code>await</code> (因为同时等待的请求的等待时间被重复计算了),<code>svctm</code> 的大小一般和磁盘性能有关,CPU/内存的负荷也会对其有影响,请求过多也会间接导致 <code>svctm</code> 的增加.<code>await</code> 的大小一般取决于服务时间(<code>svctm</code>) 以及 I/O 队列的长度和 I/O 请求的发出模式.如果 svctm 比较接近 await,说明 I/O 几乎没有等待时间；如果 await 远大于 svctm,说明 I/O 队列太长,应用得到的响应时间变慢,如果响应时间超过了用户可以容许的范围,这时可以考虑更换更快的磁盘,调整内核 <code>elevator</code> 算法,优化应用,或者升级 CPU.</p>
+
+<p> 队列长度(<code>avgqu-sz</code>)也可作为衡量系统 I/O 负荷的指标,但由于 <code>avgqu-sz</code> 是按照单位时间的平均值,所以不能反映瞬间的 I/O 洪水.</p>
+
+<p>有时间的话，我会单独写几个帖子来说说<code>iostat</code>。</p>
+
+<h3>iodump</h3>
+
+<p><a href="http://aspersa.googlecode.com/svn/trunk/iodump">iodump</a> 是一个统计每一个进程(线程)所消耗的磁盘I/O工具。这个一个perl脚本，其原理时打开有关I/O的内核记录消息开关，而后读取消息然后分析输出。简单使用步骤如下：</p>
+
+<p>首先下载这个工具</p>
+
+<p><code>wget http://aspersa.googlecode.com/svn/trunk/iodump</code></p>
+
+<p>然后打开有关I/O内核消息的开关</p>
+
+<p><code>echo 1 &gt;/proc/sys/vm/block_dump</code></p>
+
+<p>上述开关打开后，内核会记录下每一个I/O操作的消息。我们只需要定时获取并分析就好了，比如下面这样</p>
+
+<p><code>while true; do sleep 1; dmesg -c ; done |perl iodump</code></p>
+
+<p>等待一段时间，然后通过<code>ctrl+c</code>来结束上述脚本，你将获得下面类似的信息:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>TASK                   PID      TOTAL       READ      WRITE      DIRTY DEVICES
+</span><span class='line'>postgres              5799       1919       1919          0          0 sda7
+</span><span class='line'>jbd2/sda7-8           1572         35          0         35          0 sda7
+</span><span class='line'>jbd2/sda2-8            250         32          0         32          0 sda2
+</span><span class='line'>flush-8:0             2229         31          0         31          0 sda2, sda7
+</span><span class='line'>postgres              4308          2          0          2          0 sda7
+</span><span class='line'>bash                  5804          1          0          1          0 sda2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上述输出的单位为块(block)，每块的大小取决于创建文件系统时指定的块大小。比如我这个里的sda7的block大小是1KB。</p>
+
+<h3>iotop</h3>
+
+<p><a href="http://guichaz.free.fr/iotop/">iotop</a>是一个Python编写的工具，有类似<code>top</code>工具的UI，包括一些参数也和<code>top</code>类似。不过它对系统有一些要求，分别是：</p>
+
+<ol>
+<li>Python ≥ 2.5 or Python ≥  2.4 with the ctypes module</li>
+<li>Kernel ≥  2.6.20</li>
+<li>Kernel uses options:
+
+<ol>
+<li>TASK_DELAY_ACCT</li>
+<li>CONFIG_TASKSTATS</li>
+<li>TASK_IO_ACCOUNTING</li>
+<li>CONFIG_VM_EVENT_COUNTERS</li>
+</ol>
+</li>
+</ol>
+
+
+<p>如果是基于RPM包的系统，可以直接下载编译好的二进制包(<a href="http://guichaz.free.fr/iotop/files/iotop-0.4.4-1.noarch.rpm">here</a>)或者二进制源代码包(<a href="http://guichaz.free.fr/iotop/files/iotop-0.4.4-1.src.rpm">here</a>)</p>
+
+<p>如果是Debian/Ubuntu系统，直接使用</p>
+
+<p><code>sudo apt-get install iotop</code></p>
+
+<p>即可（不得不说，Debian系统提供的软件真的是相当丰富呀)，其他系统则可以通过下面的指令下载源代码，然后编译</p>
+
+<p><code>git clone git://repo.or.cz/iotop.git</code></p>
+
+<p>具体的使用方法可以参考iotop(8)手册，下面是在我机器上的一个显示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>iotop -o -u wgzhao
+</span><span class='line'>Total DISK READ:       2.15 M/s | Total DISK WRITE:    1601.15 K/s
+</span><span class='line'>  TID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN      IO    COMMAND
+</span><span class='line'> 5984 be/4 wgzhao      2.15 M/s   70.55 K/s  0.00 % 83.67 % postgres: wgzhao pgbench [local] UPDATE
+</span><span class='line'> 4305 be/4 wgzhao      0.00 B/s  227.34 K/s  0.00 %  0.00 % postgres: writer process
+</span><span class='line'> 4308 be/4 wgzhao      0.00 B/s   90.15 K/s  0.00 %  0.00 % postgres: stats collector process</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>iopp</h3>
+
+<p><a href="https://github.com/markwkm/iopp">iopp</a>是另外一个统计每一个进程I/O的工具，使用C语言编写，理论上应该比上述两个重狙效率都要高。<br/>
+安装方法很简单，首先通过下面的指令下载源代码:</p>
+
+<p><code>git://github.com/markwkm/iopp.git</code></p>
+
+<p>然后分别通过下面的指令编译安装</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cmake CMakeLists.txt
+</span><span class='line'>make
+</span><span class='line'>make install DESTDIR=/usr</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下面是一个使用例子</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>iopp -i -c 2
+</span><span class='line'>  pid    rchar    wchar    syscr    syscw   rbytes   wbytes  cwbytes command
+</span><span class='line'> 2144        0      296       40        8        0        0        0 /usr/sbin/LCDd
+</span><span class='line'> 2284        0        0        2        0        0        0        0 ha_logd: read process
+</span><span class='line'> 2299        0        0        2        0        0        0        0 ha_logd: write process
+</span><span class='line'> 2520        3        3        3        3        0        0        0 /usr/lib/virtualbox/vboxwebsrv
+</span><span class='line'> 2599        2        2        2        2        0        0        0 /usr/lib/virtualbox/VBoxSVC
+</span><span class='line'> 2675        0        0        1        0        0        0        0 runsvdir
+</span><span class='line'> 3177       16       16        4        2        0        0        0 /usr/bin/gnome-shell
+</span><span class='line'> 3192       16       16        4        2        0        0        0 nautilus
+</span><span class='line'> 3305      180      340      100       60        0        0        0 /usr/lib/icedove/icedove-bin
+</span><span class='line'> 3623     1393     1440        1        1        0        0        0 sshd: wgzhao@pts/0
+</span><span class='line'> 4305        0  4603904        0      562        0  4603904        0 postgres: writer process   
+</span><span class='line'> 6257  2064384  1892352      252      215  3719168   139264        0 postgres: wgzhao pgbench [local] UPDATE</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上述输出的各项含义是：</p>
+
+<ul>
+<li>pid 进程ID</li>
+<li>rchar 将要从磁盘读取的字节数</li>
+<li>wchar 已经写入或应该要写入磁盘的字节数</li>
+<li>syscr 读I/O数</li>
+<li>syscw 写I/O数</li>
+<li>rbytes 真正从磁盘读取的字节数</li>
+<li>wbytes 真正写入到磁盘的字节数</li>
+<li>cwbytes 因为清空页面缓存而导致没有发生操作的字节数</li>
+<li>command 执行的命令</li>
+</ul>
+
+
+<p>其中<code>rbytes</code>,<code>wbytes</code>,<code>cwbytes</code>会因给出<code>-k</code>或者<code>-m</code>参数，而显示为<code>rkb</code>,<code>wkb</code>,<code>cwkb</code>或<code>rmb</code>,<code>wmb</code>,<code>cwmb</code>。<code>command</code>一列如果给出<code>-c</code>的参数则显示完整的命令名而不仅仅只是命令本身。<br/>
+这些参数的使用和<code>top</code>类似。</p>
+
+<p>更具体的可以参考iopp(8)手册。</p>
+
+<h3>dstat</h3>
+
+<p><a href="http://dag.wieers.com/home-made/dstat/">dstat</a> 号称各种资源统计工具，其目的是想替代<code>vmstat</code>,<code>iostat</code>,<code>netstat</code>,<code>ifstat</code>等各种单一统计工具，从而做到<code>All in one</code>。 dstat用Python语言编写。</p>
+
+<p>dstat能够清晰显示每列的信息，特别是单位及大小很明确，不会在单位换算上犯迷糊和失误。最重要的是，因为它是基于模块化设计，因此我们可以很容易的写一个插件来收集我们需要的统计信息。</p>
+
+<p>另外，dstat的输出还可以导出为<code>CSV</code>格式文件，从而可以在电子表格工具里分方便的生成统计图形。</p>
+
+<p>目前dstat的插件已经相当多了，这是我机器上目前的输出:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ dstat  --list
+</span><span class='line'>internal:
+</span><span class='line'>  aio, cpu, cpu24, disk, disk24, disk24old, epoch, fs, int, int24, io, ipc, load, lock, mem, net, 
+</span><span class='line'>  page, page24, proc, raw, socket, swap, swapold, sys, tcp, time, udp, unix, vm
+</span><span class='line'>/usr/share/dstat:
+</span><span class='line'>  battery, battery-remain, cpufreq, dbus, disk-tps, disk-util, dstat, dstat-cpu, dstat-ctxt, 
+</span><span class='line'>  dstat-mem, fan, freespace, gpfs, gpfs-ops, helloworld, innodb-buffer, innodb-io, innodb-ops, lustre, 
+</span><span class='line'>  memcache-hits, mysql-io, mysql-keys, mysql5-cmds, mysql5-io, mysql5-keys, net-packets, nfs3, 
+</span><span class='line'>  nfs3-ops, nfsd3, nfsd3-ops, ntp, postfix, power, proc-count, qmail, rpc, rpcd, sendmail, snooze, 
+</span><span class='line'>  squid, test, thermal, top-bio, top-bio-adv, top-childwait, top-cpu, top-cpu-adv, top-cputime, 
+</span><span class='line'>  top-cputime-avg, top-int, top-io, top-io-adv, top-latency, top-latency-avg, top-mem, top-oom, utmp, 
+</span><span class='line'>  vm-memctl, vmk-hba, vmk-int, vmk-nic, vz-cpu, vz-io, vz-ubc, wifi</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下面给出几个使用的列子（实际输出是带彩色的，很容易识别）</p>
+
+<p>dstat的缺省输出</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wgzhao-nb:~# dstat
+</span><span class='line'>You did not select any stats, using -cdngy by default.
+</span><span class='line'>----total-cpu-usage---- -dsk/total- -net/total- ---paging-- ---system--
+</span><span class='line'>usr sys idl wai hiq siq| read  writ| recv  send|  in   out | int   csw 
+</span><span class='line'>  2   1  87  10   0   0| 816k  385k|   0     0 |   0     0 |2279  7048 
+</span><span class='line'>  5   1  78  16   0   0|2600k    0 | 140B  940B|   0     0 |5952    13k
+</span><span class='line'>  5   3  80  12   0   0|2896k  182k|  70B  358B|   0     0 |6074    14k
+</span><span class='line'>  4   2  78  16   0   0|2724k    0 |  70B  374B|   0     0 |5703    15k
+</span><span class='line'>  4   2  81  14   0   0|3008k    0 |  70B  358B|   0     0 |5924    13k
+</span><span class='line'>  5   1  80  14   0   0|1976k   17k|  70B  358B|   0     0 |5819    13k
+</span><span class='line'>  5   2  79  14   0   0|2056k    0 | 198B  374B|   0     0 |5618    13k
+</span><span class='line'>  4   2  79  15   0   0|2416k    0 |  70B  358B|   0     0 |5866    15k
+</span><span class='line'>  5   2  78  15   0   0|2528k    0 |  70B  358B|   0     0 |6356    14k
+</span><span class='line'>  5   2  78  16   0   0|2288k    0 |  70B  358B|   0     0 |6515    15k
+</span><span class='line'>  5   2  79  14   0   0|2656k 8192B|  70B  358B|   0     0 |6490    15k
+</span><span class='line'>  3   2  81  13   0   0|2296k    0 |  70B  374B|   0     0 |5573    15k
+</span><span class='line'>  4   3  76  17   0   1|2224k    0 |  70B  358B|   0     0 |5366    12k
+</span><span class='line'>  5   1  81  13   0   0|2208k    0 | 508B  358B|   0     0 |5403    13k
+</span><span class='line'>  4   2  79  15   0   0|2024k  182k|  70B  358B|   0     0 |5583    13k
+</span><span class='line'>  5   2  79  15   0   0|2148k   17k| 186B  490B|   0     0 |5400    12k</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定需要显示的列</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wgzhao-nb:~# dstat  -c --top-cpu -d --top-bio --top-latency
+</span><span class='line'>Module dstat_top_latency failed to load. (Kernel has no scheduler statistics, use at least 2.6.12)
+</span><span class='line'>----total-cpu-usage---- -most-expensive- -dsk/total- ----most-expensive----
+</span><span class='line'>usr sys idl wai hiq siq|  cpu process   | read  writ|  block i/o process   
+</span><span class='line'>  2   1  87  10   0   0|gnome-shell  0.7| 826k  384k|postgres    692k   52k
+</span><span class='line'>  4   2  79  16   0   0|postgres: wgz3.0|1744k  776k|postgres: w1744k   72k
+</span><span class='line'>  5   3  78  15   0   0|postgres: wgz5.0|3120k    0 |postgres: w3064k  136k
+</span><span class='line'>  6   2  73  19   0   0|postgres: wgz4.2|2608k  285k|postgres: w2608k  136k
+</span><span class='line'>  4   2  77  17   0   0|postgres: wgz3.5|2112k  848k|postgres: w2112k   88k
+</span><span class='line'>  3   2  71  25   0   0|postgres: wgz2.0| 944k 1049k|postgres: w 936k   48k
+</span><span class='line'>  3   2  58  37   0   0|postgres: wgz2.0| 920k 2070k|postgres: w 928k   64k
+</span><span class='line'>  3   2  62  34   0   0|postgres: wgz2.2|1496k  992k|postgres: w1608k   72k
+</span><span class='line'>  3   2  56  38   0   0|postgres: wgz3.0|1840k  645k|postgres: w1856k   88k
+</span><span class='line'>  3   2  78  17   0   0|postgres: wgz3.0|1420k 1200k|postgres: w1292k   80k
+</span><span class='line'>  5   2  80  12   0   1|postgres: wgz4.2|2628k    0 |postgres: w2636k  112k
+</span><span class='line'>  4   3  69  25   0   0|postgres: wgz3.8|2168k  576k|postgres: w2224k  104k</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定需要显示的列，并同时将结果导出到文件</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wgzhao-nb:~# dstat  --disk --mem --proc --io --sys --filesystem --tcp --vm --output dstat.csv
+</span><span class='line'>-dsk/total- ------memory-usage----- ---procs--- --io/total- ---system-- --filesystem- ----tcp-sockets---- -----virtual-memory----
+</span><span class='line'> read  writ| used  buff  cach  free|run blk new| read  writ| int   csw |files  inodes|lis act syn tim clo|majpf minpf alloc  free
+</span><span class='line'> 844k  404k| 829M 19.4M 2920M  124M|  0 0.0 0.7|47.5  38.4 |2336  7185 | 4928  12286 | 11   3   0   0   2|   1   620   602   605 
+</span><span class='line'>2128k 1526k| 828M 19.4M 2915M  130M|  0 2.0   0| 111   157 |4588    14k| 4928  12285 | 11   3   0   0   2|   0  1859   995  2278 
+</span><span class='line'> 920k 2151k| 826M 19.4M 2917M  129M|  0 2.0   0|52.0   237 |3091  7540 | 4928  12284 | 11   3   0   0   2|   0  4448  2330  2144 
+</span><span class='line'>2124k 1003k| 826M 19.4M 2921M  126M|1.0 1.0   0| 135   106 |4705    14k| 4928  12284 | 11   3   0   0   2|   0   331   865     1 
+</span><span class='line'>2344k 1024k| 826M 19.4M 2924M  122M|1.0 2.0   0| 121   118 |4074    13k| 4928  12284 | 11   3   0   0   2|   0   249   953     1 
+</span><span class='line'>1572k 1624k| 827M 19.4M 2926M  120M|1.0 2.0   0|87.0   190 |3231    11k| 4928  12284 | 11   3   0   0   2|   0    98   530     1 
+</span><span class='line'> 916k  788k| 827M 19.4M 2928M  119M|  0 2.0   0|68.0  92.0 |3452  8709 | 4928  12284 | 11   3   0   0   2|   0   128   383     4 
+</span><span class='line'>2452k 1665k| 826M 19.4M 2931M  116M|1.0 1.0   0| 132   197 |4779    14k| 4928  12284 | 11   3   0   0   2|   0   208   822     1 
+</span><span class='line'>1552k 1328k| 827M 19.4M 2933M  114M|  0 2.0   0|97.0   156 |3762  9117 | 4928  12284 | 11   3   0   0   2|   0   133   473     1 
+</span><span class='line'>1192k 2024k| 827M 19.4M 2934M  112M|  0 2.0   0|81.0   239 |4068    11k| 4928  12284 | 11   3   0   0   2|   0   135   414     2 
+</span><span class='line'>2668k  584k| 827M 19.4M 2937M  109M|  0 2.0   0| 148  71.0 |4415    10k| 4928  12284 | 11   3   0   0   2|   0   174   870     4 
+</span><span class='line'>1712k  960k| 827M 19.4M 2940M  106M|  0 2.0   0| 122   113 |4454    14k| 4928  12284 | 11   3   0   0   2|   0   182   616     2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更详细的用法，可以参考dstat(1)手册</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-22T10:25:00+08:00" pubdate data-updated="true">Aug 22<span>nd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2012/08/22/some-way-to-io-statistics-on-linux/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2012/08/22/some-way-to-io-statistics-on-linux/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/08/21/explaining-the-postgresql-query-optimizer/" title="Previous Post: PostgreSQL查询优化简介">&laquo; PostgreSQL查询优化简介</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/" title="Next Post: 生成随机字符串以及自动更新时间戳和返回最近插入的ID号">生成随机字符串以及自动更新时间戳和返回最近插入的ID号 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2012/08/22/some-way-to-io-statistics-on-linux/';
+        var disqus_url = 'http://wgzhao.github.io/2012/08/22/some-way-to-io-statistics-on-linux/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

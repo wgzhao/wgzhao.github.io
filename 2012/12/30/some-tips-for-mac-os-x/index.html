@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>一些Mac OS X 的使用技巧 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="下面的这些Mac上使用的小技巧都来自《Mac Kung Fu(2nd edition)》 这本书，改书讲述了超过400个使用Mac的技巧，但是个人感觉很多技巧并不是那么实用，因此这里只摘录了个人觉得用得上的一些技巧。更详细和完善的技巧，大家可以点击这里. FaceTime呼叫自动应答 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2012/12/30/some-tips-for-mac-os-x">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">一些Mac OS X 的使用技巧</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-30T22:08:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2012</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>下面的这些Mac上使用的小技巧都来自<a href="http://pragprog.com/book/ktmack2/mac-kung-fu">《Mac Kung Fu(2nd edition)》</a> 这本书，改书讲述了超过400个使用Mac的技巧，但是个人感觉很多技巧并不是那么实用，因此这里只摘录了个人觉得用得上的一些技巧。更详细和完善的技巧，大家可以点击<a href="http://pragprog.com/book/ktmack2/mac-kung-fu">这里</a>.</p>
+
+<h3>FaceTime呼叫自动应答</h3>
+
+<p>如果有人通过FaceTime呼叫你，默认情况下，你是需要点击接受才能建立起呼叫的，怎么才能做到自动应答呢，我们可以通过下面的方法</p>
+
+<ol>
+<li><p>打开你喜欢的终端，输入下面的指令</p>
+
+<p> <code>defaults write com.apple.FaceTime AutoAcceptInvites -bool TRUE</code></p></li>
+<li><p>接下来，架设你希望FaceTime ID(一般就是Apple ID)为wgzhao@gmail.com的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
+
+<p> <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add wgzhao@gmail.com</code></p>
+
+<p> 如果你希望能够自动应答的联系人是通过手机号码呼入进来的，那就把上面的邮件地址换成手机号码，不过要注意的是，手机号码前需要加上国码标志，比如中国是+86,那么指令类似如下：<br/>
+ <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add +8618612341234</code></p></li>
+<li><p>重启FaceTime，然后试试，应该就可以了。</p></li>
+</ol>
+
+
+<p>如果你想删除自动应答，那很简单，删除上述两条指令就好了，类似如下：</p>
+
+<p><code>default delete com.apple.FaceTime AutoAcceptInvites    
+ default delete com.appple.FaceTime AutoAcceptInvitesFrom</code></p>
+
+<p> 当然，你可以直接编辑<code>~/Library/Preferences/com.apple.FaceTime.plist</code>文件来删除上述两项.</p>
+
+<!--more-->
+
+
+<h3>讯息程序(Messages.app)的一些常用快捷键</h3>
+
+<p><code>Message.app</code>是我在Mac上最常用的应用程序，也是一天使用时间很长的应用程序，因此掌握一些基本常用的快捷方式对提高效率还是很有帮助的。</p>
+
+<ul>
+<li><code>Control + Command + A/I/O/W</code> 设置状态为可用(A)，隐身(I)，离开(W)和离线(O)</li>
+<li><code>Command + 1</code> 显示联系人列表</li>
+<li><code>Control + Tab</code> 在聊天窗口左侧的联系人中来回切换</li>
+<li><code>Option + Up/Down</code> 在消息输入框里，使用这个快捷键，可以循环显示之前发出的消息，这样要是要重新发上一次，或者上几次发出的消息，就用不着重新打字，或者粘贴复制了。而且即使关机，重启后，这些消息依然还是存在</li>
+<li><code>Option + Command + B</code> 显示你正在聊天的人的地址簿信息，如果此人不在地址簿中，则创建一个。如果这个联系人在地址簿中的联系信息比较多，按这个快捷后，你会觉得比较壮观哟。</li>
+<li><code>Shift + Command + I</code> 显示正在聊天人的简介</li>
+<li><code>Option + Command + E</code> 用独立的邮件程序给当前聊天的人写一封电子邮件</li>
+<li><code>Option + Command + L</code> 显示文件传送窗口</li>
+<li><code>Shift + Command + K</code> 给对话增加时间戳</li>
+<li><code>Option + Command + K</code> 永久删除对话，不能恢复</li>
+<li><code>Shift + Command + E</code> 打开视频特效窗口，可以给你当前的视频增加特效，还记得TBBT里Amy和Sheldon的视频聊天不？</li>
+</ul>
+
+
+<h3>打开在终端里显示的链接</h3>
+
+<p>如果你在终端(console)里看到一个邮件地址或者网页地址（比如打开man手册），如果你想打开这个链接，只需要按下<code>Command</code>键，然后把把鼠标移到链接上，鼠标形状就会变成熟悉的手形。点击链接，既可以打开.</p>
+
+<h3>微调音量</h3>
+
+<p>缺省情况下，使用音量调节按钮，每次都是一次增加或者减少一格音量。如果我们先按下<code>Shift</code>键和<code>Option</code>键，然后再按音量调整键，则把一格音量分成了4份，每次增加或者减少1/4格音量，非常方便。</p>
+
+<h3>重启Finder</h3>
+
+<p>最常见的重启<code>Finder</code>的方法是打开一个终端，然后输入<code>killall Finder</code>，这对终端控而言，无疑是最自然的重启方式，不过属于鼠标控而言，我们可以先按下<code>Option</code>键，然后在屏幕下方（也许你换了位置）的Dock上，右键点击<code>Finder</code>图标，在弹出的菜单中，选择<code>重启开始</code>即可</p>
+
+<h3>计算所有文件大小</h3>
+
+<p>如果你在<code>Finder</code>里用列表(list)视图查看文件或文件夹的时候，你可能可以看到每个文件的大小，但是对于文件夹而言，大小那一列，则是用<code>--</code>表示，这个时候，我们可以按<code>Command + J</code>快捷键来打开查看窗口，然后选中下方的<code>计算所有大小</code>，一旦选中，<code>Finder</code>就会立刻计算所有文件夹的大小并显示。这个设置是针对每个你查看的文件夹的，如果你希望这个设置是系统全局可用，那么点击刚才查看窗口的<code>用作默认</code>按钮即可。</p>
+
+<p><img src="http://blog.wgzhao.com/uploads/560_1356920963.png" alt="560" /></p>
+
+<h3>在快速查看里选择文本</h3>
+
+<p>快速查看文件是Mac里一个非常方便的功能，使得我们不需要打开任何应用程序就可以预览绝大部分格式的文件。不过一个不太方便的地方是，在快速查看模式下，你没法选择文本。比如我快速查看一个文本文件，先复制其中某一段，就没办法，只能老老实实用文本编辑器打开，然后选择复制。现在我们可以通过下面的指令来做到这点：</p>
+
+<p><code>defaults write com.apple.finder QLEnableTextSelection -bool TRUE; killall Finder</code></p>
+
+<p>然后你再快速查看一个本文文件或者pdf文件等，看看是不是可以选择，复制了？</p>
+
+<p>如果想去掉这个功能，那就删除上述条目好了</p>
+
+<p><code>defaults delete com.apple.finder QLEnableTextSelection;killall Finder</code></p>
+
+<h3>快速创建文件列表</h3>
+
+<p>有什么办法可以快速创建一个包含当前目录下的所有文件及文件夹的列表文件吗？办法是肯定有的。<br/>
+打开<code>Finder</code>，进入你要创建列表的文件夹，然后按下<code>Command+A</code>选中全部文件和文件夹，然后按<code>Command+C</code>,别担心，只是按下，这个时候不会复制的。然后打开文本编辑器(TextEdit.app)，切换到纯文本模式(<code>Shift + Command +T</code>)，然后按下<code>Command + V</code>粘贴，现在你看到的就是文件列表了，而不是真正的复制那些你拷贝的文件的内容。这个方法对所有可以切换到纯文本模式的字处理程序都有效，包括Word和Pages。</p>
+
+<h3>一些符号的快捷键输入</h3>
+
+<p>直到怎么快速打出Apple的logo不？直到怎么快速插入一些数学符号不？打开你的文本编辑器，试试下面的这些快捷键吧</p>
+
+<h4>苹果符号</h4>
+
+<p>按下<code>Shift+Option+K</code>就可以插入你经常可以在论坛中看到的Apple logo了()，不过要注意的是，在你的电脑上也许显示的是，但是并不意味着在别人的电脑上看到就是这个符号，这依赖于操作系统，比如Windows可能直接显示为一个框框，而Linux系统则有可能显示为另外一个符号</p>
+
+<h4>版权符号</h4>
+
+<p>按下<code>Option + G</code>就可以插入漂亮的版权符号(©)了。还有一个办法，就是你输入<code>(c)</code>后，按空格，也会自动变成版权符号</p>
+
+<h4>货币符号</h4>
+
+<p><code>Shift + 4</code>能输出<code>$</code>符号，这个地球人都知道了。当然如果是在中文输入法的情况下，它会输出人民币符号<code>￥</code>。下面说的都是在默认英语书法的情况下</p>
+
+<ul>
+<li>美分(¢): <code>Option + 4</code></li>
+<li>英镑(£): <code>Option + 3</code></li>
+<li>日元/人民币(¥): <code>Option + Y</code></li>
+<li>欧元(€):<code>Shift + Option + 2</code></li>
+</ul>
+
+
+<h4>数学符号</h4>
+
+<ul>
+<li>约等于(≈): <code>Option + X</code></li>
+<li>度(°): <code>Shift + Option + 8</code></li>
+<li>除号(÷): <code>Option + /</code></li>
+<li>无穷(∞): <code>Option + 5</code></li>
+<li>小于等于(≤): <code>Option + ,</code></li>
+<li>大于等于(≥): <code>Option + .</code></li>
+<li>不等于(≠):  <code>Option + =</code></li>
+<li>Pi(π):    <code>Option + P</code></li>
+<li>加减(±):    <code>Shift + Option + =</code></li>
+<li>平方根(√):    <code>Option + V</code></li>
+<li>求和(∑):    <code>Option + W</code></li>
+</ul>
+
+
+<h4>商标符号</h4>
+
+<p><code>Option + 2</code>可以显示商标符号(™)，<code>Option + R</code>可以获得注册商标符号(®),输入<code>(r)</code>后按下空格，也可以获得.</p>
+
+<h3>屏幕截图</h3>
+
+<p>最简单的对整个屏幕截图的快捷键是<code>Shift+Command+3</code>，默认会把快照照片保存到桌面，格式为png.
+<code>Shift+Command+4</code>则允许你对特定的区域进行截图。</p>
+
+<p>如果是想把截图放在剪贴板里而不是保存到桌面上，那就分别使用<code>Shift+Control+Command+3</code>和<code>Shift+Control+Command+4</code></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-30T22:08:00+08:00" pubdate data-updated="true">Dec 30<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ji-zhu-ji-qiao/'>技术技巧</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2012/12/30/some-tips-for-mac-os-x/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2012/12/30/some-tips-for-mac-os-x/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/" title="Previous Post: 生成随机字符串以及自动更新时间戳和返回最近插入的ID号">&laquo; 生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      
+      
+        <a class="basic-alignment right" href="/2013/01/14/block-youku-ads-cleanly/" title="Next Post: 彻底屏蔽优酷广告">彻底屏蔽优酷广告 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2012/12/30/some-tips-for-mac-os-x/';
+        var disqus_url = 'http://wgzhao.github.io/2012/12/30/some-tips-for-mac-os-x/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

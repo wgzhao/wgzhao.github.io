@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>让Apache支持中文目录 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="Apache自身并不支持中文目录，但是目前日本的webdev提供了mod_encoding插件来支持多字节目录。
+在AS5和Everest0.5pre2版本上测试通过，记录如下： 1）首先确定安装了httpd-devel包。如果没有安装之 2）从官方分别下载基本包和补丁包 #wget http &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">让Apache支持中文目录</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-12-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Apache自身并不支持中文目录，但是目前日本的<a href="http://webdav.todo.gr.jp">webdev</a>提供了<code>mod_encoding</code>插件来支持多字节目录。
+在AS5和Everest0.5pre2版本上测试通过，记录如下：</p>
+
+<p>1）首先确定安装了httpd-devel包。如果没有安装之</p>
+
+<!--more-->
+
+
+<p>2）从官方分别下载基本包和补丁包</p>
+
+<pre><code>#wget http://webdav.todo.gr.jp/download/mod_encoding-20021209.tar.gz
+#wget http://webdav.todo.gr.jp/download/experimental/mod_encoding.c.apache2.20040616
+</code></pre>
+
+<p>或者可以下载文末提供的已经打好补丁的压缩包</p>
+
+<p>3）解压基本包，并用<code>mod_encoding.c.apache2.20040616</code>替代基本包里的<code>mod_encoding.c</code></p>
+
+<pre><code>#tar -xzf mod_encoding-20021209.tar.gz #cd mod_encoding-20021209
+#cp -f ../mod_encoding.c.apache2.20040616 mod_encoding.c 
+</code></pre>
+
+<p>4)编译安装<code>iconv_look</code>库</p>
+
+<pre><code># cd mod_encoding-20021209/lib/ 
+# ./configure &amp;&amp; make &amp;&amp; make   install 
+#echo "/usr/local/lib" &gt;&gt;/etc/ld.so.conf.d/local.conf
+#ldconfig   
+</code></pre>
+
+<p>5)编译安装<code>mod_encoding</code>模块</p>
+
+<pre><code> #cd mod_encoding-20021209 
+ #./configure --with-apxs=/usr/sbin/apxs --with-iconv-hook=/usr/local/include #make &amp; make install 
+</code></pre>
+
+<p>注：如果5）步骤出现下面的报错
+<code>mod_encoding.c:235: error: 'regex_t' undeclared (first use in this
+function)</code>
+请在<code>mod_encoding.c</code>文件中加上<code>regex.h</code>,然后再编译。</p>
+
+<p>6）安装动态库
+如果前面步骤都没有错误，则应该在当前目录能看到<code>mod_encoding.o</code>文件，接下来该目标文件做成共享的动态库</p>
+
+<pre><code># gcc -shared -o mod_encoding.so mod_encoding.o -Wc,-Wall   -L/usr/local/lib -Llib -liconv_hook
+</code></pre>
+
+<p>将生成的<code>mod_encoding.so</code>文件拷贝到Apache的动态模块库目录中去</p>
+
+<pre><code>#cp mod_encoding.so /usr/lib/httpd/modules/  
+</code></pre>
+
+<p>我们采用创建新的conf文件来加载该so文件</p>
+
+<pre><code> #cat &gt;/etc/httpd/conf.d/cndir.conf 
+ LoadModule encoding_module modules/mod_encoding.so 
+ Header add 
+ MS-Author-Via "DAV" 
+ EncodingEngine on 
+ NormalizeUsername on 
+ SetServerEncoding UTF-8 
+ DefaultClientEncoding UTF-8 GBK GB2312 
+ AddClientEncoding "(Microsoft .* DAV $)" UTF-8 GBK GB2312 
+ AddClientEncoding "Microsoft .* DAV" UTF-8 GBK GB2312
+ AddClientEncoding "Microsoft-WebDAV*" UTF-8 GBK GB2312   
+</code></pre>
+
+<p>当然<code>SetServerEncoding UTF-8</code>这样可以设置成你希望的默认编码，比如GBK，比如GB2312.
+重启Apache。现在测试中文目录，看看效果。</p>
+
+<p>在没有加载mod_encoding.so模块前的测试如下：</p>
+
+<p><img src="/uploads/1196739402_0.png" alt="image" /></p>
+
+<p>加载后的效果如下</p>
+
+<p><img src="/uploads/1196739402_1.png" alt="image" /></p>
+
+<p><a href="/uploads/mod_encoding-20021209_mlsx.tar.gz">mod_encoding下载</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-12-04T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/12/03/about-linux-gate-so-1-and-system-call/" title="Previous Post: about linux-gate.so.1 and system call">&laquo; about linux-gate.so.1 and system call</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/12/05/Dream/" title="Next Post: 梦">梦 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory/';
+        var disqus_url = 'http://wgzhao.github.io/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

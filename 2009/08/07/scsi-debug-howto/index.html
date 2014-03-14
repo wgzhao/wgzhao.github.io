@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux Kernel 2.6的scsi_debug适配器驱动 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="因为搬家的原因，这篇文档，断断续续，翻译了一个多星期，翻译的过程中，发现自己对SCSI子系统还是不了解，所以有很多地方翻译得很晦涩，还是建议大家看原文档。
+原文档的链接地址是： http://sg.danny.cz/sg/sdebug26.html
+如果你实在是看着英文就头疼， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/08/07/scsi-debug-howto">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux Kernel 2.6的scsi_debug适配器驱动</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>因为搬家的原因，这篇文档，断断续续，翻译了一个多星期，翻译的过程中，发现自己对SCSI子系统还是不了解，所以有很多地方翻译得很晦涩，还是建议大家看原文档。
+原文档的链接地址是： <br/>
+<a href="http://sg.danny.cz/sg/sdebug26.html">http://sg.danny.cz/sg/sdebug26.html</a><br/>
+如果你实在是看着英文就头疼，那就对付着看我的翻译吧：</p>
+
+<!--more-->
+
+
+<p>
+&mdash;&mdash;开始翻译的分割线&mdash;&mdash;&mdash;&ndash;</p>
+
+<p>想突然在你的机器上多出多达140个SCSI磁盘不？或者想突然有一个超过1PB的SCSI磁盘不？就像下面这样：</p>
+
+<pre><code># parted /dev/sdb unit TB  print
+Model: Linux scsi_debug (scsi)
+磁盘 /dev/sdb: 1288TB
+Sector size (logical/physical): 512B/512B
+分区表：gpt
+
+数字  开始：  End  大小  文件系统  Name  标志
+</code></pre>
+
+<p>上面的磁盘来源于内核2.6自带的<code>scsi_debug</code>驱动，这个虚拟的存储适配器可以在调试SCSI存储时提供很多帮助，就像开发手机应用程序，你需要手机模拟器一样，更多详细的信息，请听我慢慢到来（实际上时自行理解加翻译官方说明)。</p>
+
+<h2>介绍</h2>
+
+<p>scsi_debug适配器驱动模拟一定数量的SCSI磁盘，每一个磁盘共享一定数量的内存充当存储空间。当模拟一个SCSI磁盘时，scsi_debug的功能就是把内存当做磁盘。当模拟多个SCSI磁盘时，他们被当做是指向同一个存储设备的多条路径。驱动能够模拟非常大的磁盘,2TB或者更大的磁盘内容都可以有效的内存里访问。<br/>
+它支持一套较小但是有用的SSI命令集用来做原始错误检查。模拟磁盘的数量以及作为存储空间的共享内存大小可以在模块加载的时候作为参数指定，当然也可以编译进initrd文件里，通过文件来指定其参数。而且模拟的磁盘数量（或者适配器数量）可以在运行时通过sysfs文件系统来修改。各种错误条件可以选择生成测试反应上层内核和应用软件的异常情况。<br/>
+scsi_debug驱动的最开始在kernel 2.4里能找到，作者是Eric Youngdale，Eric用它来测试一些“新的”错误处理，他们在kernel 2.2里被引入，在Kernel 2.4已经扩充了。更详细的内容可以访问<a href="http://www.andante.org/scsi.html">Eric的网站</a>。</p>
+
+<h2>参数</h2>
+
+<p>下面的列表给出了scsi_debug驱动模块所支持的参数</p>
+
+<pre>
+参数名称    缺省值   sysfs访问   sysfs写入生效时间     版本要求  说明
+------------------ --------- ------------- ------------------------ ------ 
+
+add_host    1         读写      立刻                    -       够在运行时态增减主机数（适配器数）
+delay       1         读写     下次命令                  -       单位是时钟滴答(jiffies) (可配置为: 1 到 10 毫秒(ms)) [1.78版本: 非数据传输命令忽略delay参数]
+dev_size_mb 8         只读       -                      -       单位是MB
+every_nth   0         读写     从现在到n个命令            -       错误注入，0表示关闭
+fake_rw     0         读写     下次命令                 1.80     设置后，读写接受到后，不做操作
+max_luns    1         读写     下次正数add_host或者扫描   -       应答的LUN数，从0到 (max_luns - 1),如果设置了no_lun_0，那么就从1到(max_luns - 1)
+no_lun_0    0         读写     下次正数add_host或者扫描   1.77    没有Lun 0,但是会依照SPC-2应答INQUIRY和REPORT LUNS 指令
+num_parts   0         只读       -                            分区数
+num_tgts    1         读写     下次正数add_host或者扫描    -      每主机(适配器）的目标段数（targets)
+opts        0         读写     一般是接下来的命令          -      0表示安静模式，默诶有错误注入（1.81版本里，设置16将注入aborted_command指令） 
+ptype       0         读写     下次正数add_host或者扫描    -      外围设备类型（0表示磁盘）
+scsi_level  5         只读        -                      -      0 (no compliance), 1, 2 (SCSI-2), 3 (SPC), 4 (SPC-2), 5 (SPC-3), 6 (SPC-4)
+virtual_gb  0         读写     立刻, 下次 READ CAPACITY指令 1.79  0表示设备大小就是dev_size_mb设置的大小，如果n\>0，大小为n GB
+vpd_use_hostno   1   读写      下次正数add_host或者扫描     1.80   the driver generates serial numbers and SAS naa-5 addresses based on host number ("hostno"), target id and lun. When set to 0, the generated numbers ignore "hostno".
+
+</pre>
+
+
+<p>加载scsi_debug模块，应该给出2个（含）以上参数，参数之间用空格分开。<br/>
+比如，我们用下面这个指令来模拟140个磁盘：</p>
+
+<p><code>odprobe scsi_debug max_luns=2 num_tgts=7 add_host=10</code></p>
+
+<p>10个主机（适配器），每个主机（适配器）7个目标端(target)，每一个目标端2个lun，一起10 * 7 * 2 =140 个磁盘设备。
+sysfs可以用平常的方法操作，cat读出内容，echo写入内容，比如：</p>
+
+<pre><code># cd /sys/bus/pseudo/drivers/scsi_debug
+# cat dev_size_mb
+8
+# echo 1 &gt; add_host
+</code></pre>
+
+<p><strong>add_host</strong> 参数缺省值为1.在sysfs里，如果给<code>add_host</code>写入0,表示什么都不做，如果写入一个正数，表示增加那么多个主机适配器，负数则相反。<br/>
+每一个主机（适配器）上适用的targetid数不超过<strong>num_tgts</strong>的设定值，缺省为1。 <br/>
+<strong>max_luns</strong>的缺省值也是1。这意味着，缺省条件下，每增减一个主机（适配器）就相应的增减1个lun。当然，这三个参数的任意一个设置为0,将不会产生设备。<br/>
+add_host参数的使用，相当于是模拟主机（适配器）的热插拔。</p>
+
+<p><strong>delay</strong>参数表示时钟滴答(jiffies)数量，表示驱动延时应答时间，缺省值为1。设置为0或者为负数将会导致请求在完成前就将应答反馈给中间层(mid-level)。当前的&#8221;jiffy&#8221;是内核空间的jiffy（比如HZ== i386上的1 ms)，而不是用户空间的jiffy(比如USER_HZ == i386上的10
+ms）。虽然延时和立刻应答都允许，但是延时应答应该更现实一点。对于延时应答，将会使用内核时钟。（真实的适配器会在应答准备好时产生一个中断），对于快速ramdisk而言，可以设置delay为0。那么以下的SCSI命令将会忽略<strong>delay</strong>参数而采取立刻应答方式，他们是：INQUIRY,
+REPORT LUNS, REQUEST SENSE, SYNCHRONIZE CACHE and TEST UNIT READY。</p>
+
+<p><strong>dev_size_mb</strong>
+参数允许用户来指定虚拟存储的大小，单位是MB，缺省是8(MB)。可设置的最大值依赖于vmalloc()函数调用的容量大小。如果模块加载失败，并给出一个&#8221;cannot allocate memory&#8221;报错消息，那么你可以在启动的时候增加&#8221;vmalloc=nn{KMG}&ldquo;的核心参数［具体的参数信息可以参考核心源代码文件：<strong>Documentation/kernel-parameters.txt</strong> 为虚拟存储而保留的内存如果初始化时为0时，会影响sd(scsi disk)驱动，使得块设备层(block layer)认为当前没有分区表。</p>
+
+<p>分区可以通过<strong>num_parts</strong>来模拟(详细情况见下文）。所有虚拟的设备共享同一块内存。如果该参数值设置为0或者复述，<strong>dev_size_mb</strong>将会强制设置为1,表示使用1MB的内存。如果需要更大的模拟存储，可以使用<strong>virtual_gb</strong>参数（详见下文）</p>
+
+<p><strong>every_nth</strong>接受10进制数来作为参数。当数值大于0时，进来的命令将会计数，当条命令进来后，相关命令将会产生某种错误。当前有效的错误有：timeout(当&#8221;opts &amp; 4“为真)和RECOVERED_ERROR(当&#8221;opts &amp; 8&#8221;为真),一旦进来的命令达到了值，则重置为0.</p>
+
+<p>举个例子，如果设置every_nth为3,opts设置为4就会导致每次第三个命令被忽略(即timeout)。如果every_nth没有设置，则使用缺省值0,表示timeout和RECOVERD_ERROR都不会产生。</p>
+
+<p>如果<strong>every_nth</strong>给出负数的话，一个内部命令计数器将会倒计数，当计数达到后，对每一个新进来的命令，持续产生错误条件。这个持续错误状态在驱动标志里是设置为-1。如果设置为0,则上述情况不会发生。</p>
+
+<p><strong>fake_rw</strong>参数通知scsi_debug驱动忽略掉所有的READ和WRITE命令，并返回GOOD状态值。缺省值为0（表示处理READ，WRITE命令)。此参数主要用来测试。</p>
+
+<p><strong>max_luns</strong>参数允许scsi_debug能够应答的lun值的上限。如果设置为2,这会应答lun号分别为0和1。如果<strong>max_luns</strong>是在sysfs里修改的，那么scsi_debug将会修改所有主机（适配器）上的<strong>scsi_host::max_lun</strong>数据结构域。<br/>
+<strong>max_luns</strong>由sysfs修改的话，它将在下一次增加主机(看add_host)时生效，或者对任意存在的主机（适配器）扫描完后生效。中间层代码（mid level）扫描上层信息，但是不包括<strong>max_scsi_luns</strong>，它由系统启动或者模块加载时确定。</p>
+
+<p><strong>num_parts</strong>参数如果大于0,则会写入分区表信息到ramdisk。缺省值为0,表示ramdisk简单的用0填充。如果值大于0,num_parts，DOS格式的主分区块写入逻辑块0，所以，主分区数量也就限制在4个了。分区用0x83的id号表示，这意味着时&#8221;Linux&#8221;分区。如果没有指定分区，可以在之后使用fdisk/parted等工具来分区。</p>
+
+<p><strong>num_tgts</strong>参数指定每一个主机（适配器）有多个少目标端(target)，应该设置为0或者大于0值。<br/>
+如果<strong>num_tgts</strong>是在sysfs层修改，则会在下次增加主机(适配器）或者扫描完成时生效。</p>
+
+<p><strong>no_lun_0</strong>参数设置为非0值，会导致INQUIRY应答为peripheral_qualifier==3,表示当前没有实际的逻辑单元(logical unit)，根据SPC规范，lun 0仍然将会对REPORT LUNS命令做出响应。如果REPORT LUNS设置&#8221;select code&#8221;为1或者2,这其中的一个lun会成为REPORT LUNS知名逻辑单位(lun 49409)，该参数的缺省值为0。<br/>
+如果max_luns大于1(实际上，如果max_luns=1，在no_lun_0被设置时,scsi_debug将不会产生任何scsi设备),那么scsi_debug产生的一个LU号是1（跳过0)。为了帮助逻辑单位扫描，SPC-3要求lun 0 仍然对INQUIRY,REPORT LUNS命令做出应答。知名逻辑单元(wlun)仅支持INQUIRY,REPORT LUNS,REQUEST SENSE,TEST UNIT READY等SCSI命令。为了使wlan看上去像一个通用scsi设备(scsi generic,sg)，需要做下面一下操作：</p>
+
+<pre><code># modprobe scsi_debug no_lun_0=1 max_luns=2
+# cd /sys/class/scsi_host/host0
+# echo "- - 49409" &gt; scan
+#
+# lsscsi -g
+[0:0:0:1]    disk    Linux    scsi_debug       0004  /dev/sda  /dev/sg0
+[0:0:0:49409]wlun    Linux    scsi_debug       0004  -         /dev/sg1
+</code></pre>
+
+<p><strong>ptype</strong>参数允许SCSI外设类型被修改，缺省值为0,对应磁盘设备，1表示磁带，3表示处理器，5时dvd/cd，13表示终结端子。</p>
+
+<p><strong>opts</strong>参数接受数值参数用来与几个服务标志做位或操作，支持的标志有：</p>
+
+<ul>
+<li>1 &ndash; &ldquo;noisy&rdquo; 标志: 所有入口指针的调用均被记录。</li>
+<li>2 &ndash; &ldquo;medium error&rdquo; 标志: 当扇区0x1234(十进制是4660）被读到时，模拟 SCSI MEDIUM
+ERROR错误信息</li>
+<li>4 &ndash; 忽略&#8221;nth&#8221;指令导致timeout，every_nth !=0 时激活</li>
+<li>8 &ndash; 导致&#8221;nth&#8221;读或者写命令产生一个 RECOVERED_ERROR错误. every_nth != 0 时激活</li>
+<li>16 &ndash; 导致&#8221;nth&#8221;读或者写命令产生一个SAS传输错误&mdash;-ABORTED_COMMAND(ack/nak timeout)错误
+.every_nth != 0 时激活</li>
+</ul>
+
+
+<p><strong>scsi_level</strong>参数是用来设置模拟的磁盘能够兼容的ANSI SCSI标准级别，INQUIRY应答里包含了ANSI SCSI标准级别值（2字节)</p>
+
+<p><strong>virtual_gb</strong>参数允许scsi_debug驱动模拟比物理内存大很多的存储设备。当<strong>virtual_gb</strong>参数为0（0是缺省值），模拟的存储设备最大值由dev_siez_mb参数来定义。virtual_gb设置大于0，READ CAPACITY命令将应答为设置的参数大小，单位是GB。<br/>
+当然读写这么大模拟存储数据都是在物理内存范围之内。virtual_gb大于或者等于2048时，需要READ CAPACITY(16)指令来显示大小，使用READ(16)/WRITE(16)访问超过2048GB外的数据。边界值是2**32 -1 块（扇区），每块（扇区）512字节。<br/>
+virtual_gb选项仅仅用来做测试，不要用来做数据存储实验。</p>
+
+<p><strong>vpd_use_hostno</strong>参数影响scsi_debug驱动产生序列号的方法，SAS和naa-5 address。vpd_use_hostno设置为1（缺省值）时，host
+number(hostno),target_id,lun用来产生序列号，SAS和naa-5 address。公式是<code>((hostno + 1) * 2000) + (target_id \* 1000) +
+lun)</code>。<br/>
+vpd_use_hostno设置为0的话，&#8221;hostno&#8221;在公式项里设置为0,这就使得多个模拟得主机（适配器）像是链接到相同的驱动器（比如：这里仅有&#8221;num_tgts * max_luns&#8221;个独立的模拟设备）。而内核会报告有&#8221;add_host * num_tgts * max_luns&#8221;个设备，不过上层的多路径软件能意识到他们的区别。</p>
+
+<h2>支持的SCSI命令</h2>
+
+<p>下面列出了scsi_debug支持的SCSI命令，有些什么也不做（比如 SYNCHRONIZE CACHE)。有一些有趣的功能已经用中括号标记了。如果功能是在修订版本实现的（比如1.76)，也已经标记了。</p>
+
+<ul>
+<li>ALLOW MEDIUM REMOVAL</li>
+<li>INQUIRY [vital product data pages: 0, 0x80, 0x83] [1.77: VPD pages:
+0x85, 0x86, 0x87, 0x88, 0x89, 0xb0]</li>
+<li>LOG SENSE [1.78: temperature(0xd) and informational
+exceptions(0x2f)] [1.80: support log subpages]</li>
+<li>MODE SELECT (6), MODE SELECT (10) [1.78: changeable pages: 0xa
+(control) and 0x1c (informational exceptions)]</li>
+<li>MODE SENSE (6), MODE_SENSE (10) [sense pages: 1 (rw error
+recovery), 2 (disconnect), 3 (format), 8 (caching), 0xa (control),
+0x1c (informational exceptions), 0x3f (read all)] [1.77: subpage
+support plus SAS pages: 0x19,0 0x19,1 and 0x19,2]</li>
+<li>READ (6), READ (10), READ(12), READ(16)</li>
+<li>READ CAPACITY (10), READ CAPACITY (16) [1.79: added 16 byte command]</li>
+<li>RELEASE (6), RELEASE (10)</li>
+<li>REPORT LUNS [1.77: shows REPORT LUNS wlun]</li>
+<li>REQUEST SENSE [1.79: shows MRIE=6 failure prediction, power states]</li>
+<li>RESERVE (6), RESERVE (10)</li>
+<li>REZERO UNIT (which is REWIND for tapes)</li>
+<li>SEND DIAGNOSTIC</li>
+<li>START STOP [1.78: maintains start and stop states, when stopped
+fails media access commands]</li>
+<li>SYNCHRONIZE CACHE</li>
+<li>TEST UNIT READY [1.78: in stopped state gives appropriate error]</li>
+<li>VERIFY (10)</li>
+<li>WRITE (6), WRITE (10), WRITE (12), WRITE (16)</li>
+</ul>
+
+
+<p>以上指令的实现对于SCSI子系统探测和附加设备是足够了。fdisk, e2fsck,mount等指令和sg_utils工具包都可以在这些模拟存储上操作。 <br/>
+现代SCSI设备使用vital product page 0x83来标识，scsi_debug能产生“T10 vendor标识”和“NAA”描述两种形式。前一种是一个ASCII字符出，类似“Linux scsi_debug 4000&#8221;，这里，4000是<code>((hostno + 1 ) * 2000 + (target_id * 1000)+ lun)</code>。<br/>
+在这个例子里，hostno等于1,target_id和lun均等于0.”NAA-5“描述符是一个8字节得二进制值，转成十六进制大概像这样：”51 23 45 60 00 00 0f a0“，这里IEEE公司ID是0x123456（当然是假的），提供商特定ID号是最后2字节0x0fa0，转成十进制就是4000。<br/>
+scsi_debug里的读写指令是原子操作（比如，对一个scsi_debug设备做写操作不会中断对另外一个设备的读操作。因此一个读命令要不就是在同步写之前读取内存的内容，要不就是同步写之后读取。</p>
+
+<h2>用法</h2>
+
+<p>当驱动加载成功后，应该可以看到其他新加的设备：</p>
+
+<pre><code># modprobe scsi_debug
+# lsscsi
+[0:0:0:0]    disk    ATA      WDC WD3200BEVT-6 13.0  /dev/sda
+[1:0:0:0]    cd/dvd  TSSTcorp CDDVDW TS-L633M  0200  /dev/sr0
+[6:0:0:0]    disk    Linux    scsi_debug       0004  /dev/sdb
+</code></pre>
+
+<p>这个例子中，sda,sr0都是真实的设备，sdb是一个scsi_debug虚拟磁盘。<br/>
+<code>fdisk /dev/sdb</code>命令可以对其进行分区。假设我们分一个分区，那么就是sdb1了，然后就是<code>mkfs.ext3 /dev/sdb1</code>了，现在sdb1就可以看成是真实的磁盘分区，可以挂载，读写和卸载了。</p>
+
+<p>有关scsi_debug驱动版本，当前参数和其他数据信息都可以在/proc文件系统里找到，就像下面这样：</p>
+
+<pre><code># cat /proc/scsi/scsi_debug/6
+scsi_debug adapter driver, version 1.81 [20070104]
+num_tgts=1, shared (ram) size=8 MB, opts=0x0, every_nth=0(curr:0)
+delay=1, max_luns=1, scsi_level=5
+sector_size=512 bytes, cylinders=64, heads=8, sectors=32
+number of aborts=0, device_reset=0, bus_resets=0, host_resets=0
+dix_reads=0 dix_writes=0 dif_errors=0
+</code></pre>
+
+<h2>增减主机（适配器）和设备</h2>
+
+<p>每一个独立的设备都可以通过sysfs和中间层（mid-level)的”delete&#8221;程序写入值就可以删除。</p>
+
+<pre><code>root@wgzhao-nb:~# echo 1 &gt;/sys/class/scsi_device/6\:0\:0\:0/device/delete 
+root@wgzhao-nb:~# lsscsi 
+[0:0:0:0]    disk    ATA      WDC WD3200BEVT-6 13.0  /dev/sda
+[1:0:0:0]    cd/dvd  TSSTcorp CDDVDW TS-L633M  0200  /dev/sr0
+</code></pre>
+
+<p>通过以上方法删除的设备，当然也可以通过下面的命令把她重新加入进来：</p>
+
+<pre><code>root@wgzhao-nb:~# lsscsi 
+[0:0:0:0]    disk    ATA      WDC WD3200BEVT-6 13.0  /dev/sda
+[1:0:0:0]    cd/dvd  TSSTcorp CDDVDW TS-L633M  0200  /dev/sr0
+[6:0:0:0]    disk    Linux    scsi_debug       0004  /dev/sdb
+</code></pre>
+
+<p>在echo指令的三个数字分别表示 channel number,target number,lun，通配符(&ndash;)表示可以替代其中任何一个，甚至全部。</p>
+
+<pre><code>root@wgzhao-nb:~# echo "0 - -" &gt;/sys/class/scsi_host/host6/scan 
+root@wgzhao-nb:~# lsscsi 
+[0:0:0:0]    disk    ATA      WDC WD3200BEVT-6 13.0  /dev/sda
+[1:0:0:0]    cd/dvd  TSSTcorp CDDVDW TS-L633M  0200  /dev/sr0
+[6:0:0:0]    disk    Linux    scsi_debug       0004  /dev/sdb
+[6:0:0:1]    disk    Linux    scsi_debug       0004  /dev/sdc
+[6:0:0:2]    disk    Linux    scsi_debug       0004  /dev/sdd
+[6:0:1:0]    disk    Linux    scsi_debug       0004  /dev/sde
+[6:0:1:1]    disk    Linux    scsi_debug       0004  /dev/sdf
+[6:0:1:2]    disk    Linux    scsi_debug       0004  /dev/sdg
+</code></pre>
+
+<p><code>echo "0 - -" &gt;scan</code>增加了5个设备,sdc到sdg。注意在&#8221;lun&#8221;位置的&#8221;&ndash;&ldquo;号，如果kernel的<code>CONFIG_SCSI_MULTI_LUN</code>参数没有设置的话，依然只能探测到lun 0。如果你知道或者一个lun号大于0的lun存在，那么你应该显式的给出这个数值。 <br/>
+主机（适配器）也能通过下面的指令增加或者减少:</p>
+
+<pre><code># cd /sys/bus/pseudo/drivers/scsi_debug/
+# echo 1 &gt;add_host
+# echo -2 &gt;add_host
+# lsscsi 
+[0:0:0:0]    disk    ATA      WDC WD3200BEVT-6 13.0  /dev/sda
+[1:0:0:0]    cd/dvd  TSSTcorp CDDVDW TS-L633M  0200  /dev/sr0
+</code></pre>
+
+<p>scsi_debug驱动对它能创建的设备数没有任何限制。缺省情况下，驱动加载后，产生一个SCSI设备（属于一个主机（适配器））。更多的设备可以通过加载驱动时指定add_host,num_tgts和/或 max_luns参数。<br/>
+SCSI设备数由这三个参数决定（缺省值都是1）。<br/>
+sysfs也能够在scsi_debug加载后用来增加或者删除SCSI设备。两个策略可能用到：</p>
+
+<ul>
+<li>增加num_tgts或max_luns的值，然后使用像<code>echo "0 -  -"\&gt;scan</code>的指令作用在一个已经属于scsi_debug驱动的主机（适配器）上。</li>
+<li>使用类似<code>echo 3 &gt;add_host</code>的指令增加更多的主机（适配器），每一个新增的主机（适配器）将会产生(<code>num_tgts * max_luns</code>)个新SCSI设备。当然num_tgts或max_luns可以在调用<code>echo  3 &gt;add_host</code>之前进行修改。</li>
+</ul>
+
+
+<h2>SAS独特性</h2>
+
+<p>scsi_debug驱动有一个SAS（Serial Attached SCSI（SAS））独特性的东西，对于应用程序所关心的，透过主端口（相对1号目标端口）访问它时，就像一个双端口SAS磁盘。<br/>
+一种情况下，它在SCSI到ATA转换（SAT）层（SATL）背后伪装成一个SATA磁盘。 <br/>
+FC双端口磁盘的大部分设置都是相同的。<br/>
+驱动在INQUIRY应答里设置MULTIP（multiport）位。以下VPD页是SAS或SAT规范：</p>
+
+<ul>
+<li>设备标识页[0x83] (为LU，访问目标端口和目标设备以及其他一些代号产生naa-5地址)</li>
+<li>SCSI 端口 [0x88] (全部端口显示naa-5地址)</li>
+<li>ATA 信息 [0x89] (在SAS域模拟SATA磁盘，在SAT定义)</li>
+</ul>
+
+
+<p>下面是几个SAS规范模式也 （mode page）</p>
+
+<ul>
+<li>协议规范端口页(SAS):短格式页 [0x19,0x0]</li>
+<li>协议规范端口页(SAS): 物理控制器和发现子页 [0x19,0x1]</li>
+<li>协议规范端口页(SAS):共享模式子页 [0x19,0x2] (sas2 version)</li>
+</ul>
+
+
+<p>VPD和模式页都可以通过用户空间程序，比如sdparm，显示其信息，下面是一个例子：</p>
+
+<pre><code>root@wgzhao-nb:~# sdparm -i /dev/sdb
+    /dev/sdb: Linux     scsi_debug        0004
+Device identification VPD page:
+  Addressed logical unit:
+    designator type: T10 vendor identification,  code set: ASCII
+      vendor id: Linux   
+      vendor specific: scsi_debug      14000
+    designator type: NAA,  code set: Binary
+      0x53333330000036b0
+  Target port:
+    designator type: Relative target port,  code set: Binary
+     transport: Serial Attached SCSI (SAS)
+      Relative target port: 0x1
+    designator type: NAA,  code set: Binary
+     transport: Serial Attached SCSI (SAS)
+      0x52222220000036ae
+    designator type: Target port group,  code set: Binary
+     transport: Serial Attached SCSI (SAS)
+      Target port group: 0x700
+  Target device that contains addressed lu:
+    designator type: NAA,  code set: Binary
+     transport: Serial Attached SCSI (SAS)
+      0x52222220000036ad
+    designator type: SCSI name string,  code set: UTF-8
+     transport: Serial Attached SCSI (SAS)
+      SCSI name string:
+      naa.52222220000036AD
+</code></pre>
+
+<p>下面是一个SCSI端口 VPD页显示为双端口目标(target)的例子：</p>
+
+<pre><code>sdparm -i -p sp /dev/sdb
+    /dev/sdb: Linux     scsi_debug        0004
+SCSI Ports VPD page:
+Relative port=1
+   Target port descriptor(s):
+    designator type: NAA,  code set: Binary
+     transport: Serial Attached SCSI (SAS)
+      0x52222220000036ae
+Relative port=2
+   Target port descriptor(s):
+    designator type: NAA,  code set: Binary
+     transport: Serial Attached SCSI (SAS)
+      0x52222220000036af
+</code></pre>
+
+<p>注意：上面的输出意味着INQUIRY指令是通过模拟的SAS双端口目标的端口1 (port A)发送的。协议规范端口-物理控制器和发现模式子页[0x19,0x1]有对应SCSI端口VPD页的端口/物理 SAS地址。</p>
+
+<pre><code>root@wgzhao-nb:~# sdparm -t sas -p pcd -l /dev/sdb
+    /dev/sdb: Linux     scsi_debug        0004
+    Direct access device specific parameters: WP=0  DPOFUA=1
+Phy control and discover (SAS) [pcd] mode page:
+  PPID_1      6  [cha: n, def:  6]  Port's (transport) protocol identifier
+  GENC        0  [cha: n, def:  0]  Generation code
+  NOP         2  [cha: n, def:  2]  Number of phys
+  PHID        0  [cha: n, def:  0]  Phy identifier
+  ADT         1  [cha: n, def:  1]  Attached device type
+  AREAS       0  [cha: n, def:  0]  Attached reason (other end did link reset)
+  REAS        0  [cha: n, def:  0]  Reason (for starting link reset)
+  NPLR        9  [cha: n, def:  9]  Negotiated logical link rate
+  ASIP        1  [cha: n, def:  1]  Attached SSP initiator port
+  ATIP        0  [cha: n, def:  0]  Attached STP initiator port
+  AMIP        0  [cha: n, def:  0]  Attached SMP initiator port
+  ASTP        0  [cha: n, def:  0]  Attached SSP target port
+  ATTP        0  [cha: n, def:  0]  Attached STP target port
+  AMTP        0  [cha: n, def:  0]  Attached SMP target port
+  SASA      0x52222220000036ae  [cha: n, def:0x52222220000036ae]  SAS address
+  ASASA     0x5111111000000001  [cha: n, def:0x5111111000000001]  Attached SAS address
+  APHID       2  [cha: n, def:  2]  Attached phy identifier
+  PMILR       8  [cha: n, def:  8]  Programmed minimum link rate
+  HMILR       8  [cha: n, def:  8]  Hardware minimum link rate
+  PMALR       9  [cha: n, def:  9]  Programmed maximum link rate
+  HMALR       9  [cha: n, def:  9]  Hardware maximum link rate
+  PHID.1      1  [cha: n, def:  1]  Phy identifier
+  ADT.1       1  [cha: n, def:  1]  Attached device type
+  AREAS.1     0  [cha: n, def:  0]  Attached reason (other end did link reset)
+  REAS.1      0  [cha: n, def:  0]  Reason (for starting link reset)
+  NPLR.1      9  [cha: n, def:  9]  Negotiated logical link rate
+  ASIP.1      1  [cha: n, def:  1]  Attached SSP initiator port
+  ATIP.1      0  [cha: n, def:  0]  Attached STP initiator port
+  AMIP.1      0  [cha: n, def:  0]  Attached SMP initiator port
+  ASTP.1      0  [cha: n, def:  0]  Attached SSP target port
+  ATTP.1      0  [cha: n, def:  0]  Attached STP target port
+  AMTP.1      0  [cha: n, def:  0]  Attached SMP target port
+  SASA.1    0x52222220000036af  [cha: n, def:0x52222220000036af]  SAS address
+  ASASA.1   0x5111111000000001  [cha: n, def:0x5111111000000001]  Attached SAS address
+  APHID.1     3  [cha: n, def:  3]  Attached phy identifier
+  PMILR.1     8  [cha: n, def:  8]  Programmed minimum link rate
+  HMILR.1     8  [cha: n, def:  8]  Hardware minimum link rate
+  PMALR.1     9  [cha: n, def:  9]  Programmed maximum link rate
+  HMALR.1     9  [cha: n, def:  9]  Hardware maximum link rate
+</code></pre>
+
+<p>其他更多的信息可以通过类似方法获得。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-07T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/08/07/scsi-debug-howto/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/08/07/scsi-debug-howto/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/07/31/moving/" title="Previous Post: 搬家">&laquo; 搬家</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/08/08/xuzhig-and-gongmeng/" title="Next Post: 许志永和他的公盟为我们每一个人所做的事情">许志永和他的公盟为我们每一个人所做的事情 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/08/07/scsi-debug-howto/';
+        var disqus_url = 'http://wgzhao.github.io/2009/08/07/scsi-debug-howto/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

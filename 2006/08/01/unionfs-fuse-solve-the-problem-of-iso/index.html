@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>unionfs-fuse,解决我的ISO难题 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="在用户级文件系统－－FUSE一文中提到了用户空间级的好处，给并处了一个实际的例子－－sshfs。
+而评论中,pczou给出了另外一个有用的用户级文件系统unpackfs,不过，这个比较适合研发的大侠使用，于我这种属于玩玩Linux的人并没有特别的用处。 于是，我便软磨硬泡，搅乱pczou吃饭的时间 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2006/08/01/unionfs-fuse-solve-the-problem-of-iso">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">unionfs-fuse,解决我的ISO难题</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>在<a href="http://mlsx.xplore.cn/read.php/416.htm">用户级文件系统－－FUSE</a>一文中提到了用户空间级的好处，给并处了一个实际的例子－－sshfs。
+而评论中,<a href="http://pczou.bokee.com">pczou</a>给出了另外一个有用的用户级文件系统unpackfs,不过，这个比较适合研发的大侠使用，于我这种属于玩玩Linux的人并没有特别的用处。</p>
+
+<!--more-->
+
+
+<p>于是，我便软磨硬泡，搅乱pczou吃饭的时间，问问它有没有解决我的iso难题的问题，我的问题是：
+我拿到了一个ISO文件，我想编辑它，但是我不喜欢使用<code>mount &amp;&amp; cp -rf &amp;&amp;,mkiso</code>三部曲，那太费时间，而且也太占据我的空间。那有没有办法可以很方便的编辑这个iso文件。<br/>
+pczou不愧是pczou，说unionfs能解决这个问题。虽然给我掩饰了一通，无聊脑子笨，没有太了解，特别是他在键盘上弹指如飞的时候，我没有明白怎么就可以了。于是边厚颜无耻的希望他在blog上稍微描述一番。呵呵，结果一袋烟的时间，他的blog上便多了这样一篇文章－－<a href="http://pczou.bokee.com/5467274.html">FUSE+UNIONFS</a>，下面的引用是他如何解决我的ISO问题的。</p>
+
+<p>需求2： 作为 Linux 发行版 攒手，经常要做iso，有时候下一个iso，想做些小修改，重新生成一个iso。传统的做法是 <code>mount -o
+loop, cp -rf, mkiso</code>。有慢有耗硬盘，有没有更好的办法？</p>
+
+<p>曾经尝试过unionfs，unionfs可以把两个文件系统合并成一个，这样可以把只读的iso镜像与一个可读写的目录进行合并。原理很简单，但真正操作起来有很多问题。比如我把iso的镜像目录/iso和一个空的可写目录/writable合并成/newiso，这是如果做</p>
+
+<p><code># cp /a.srpm /newiso/SRPMS/b.srpm</code></p>
+
+<p>会报错，原因是/iso下没有/SRPMS/b.srpm文件，即使有的话也是只读的；而/writable下没有/SRPMS目录。这样unionfs就有些无所适从了。理想情况是unionfs在/writable下建立好SRPMS目录，然后把文件拷贝到那里。这并不是unionfs设计的初衷，需要对unionfs打补丁。可unionfs是个内核模块，本身还不太稳定，如果再加上这许多复杂功能，恐怕不是好的选择。</p>
+
+<p>好在有FUSE。</p>
+
+<p>FUSE开发很简单，不过我也不想从头来。根据创新第一定律：“你想到的东西很有可能别人也想到过”，到网上一搜，果然有人已经做了基于FUSE的unionfs，叫做unionfs-fuse:
+<a href="http://linux.softpedia.com/progDownload/unionfs-fuse-Download-9407.html">http://linux.softpedia.com/progDownload/unionfs-fuse-Download-9407.html</a></p>
+
+<p>不顾廉耻地抓过来，可以用。不过是标准的unionfs实现，刚才说道unionfs不能满足要求，需要修改。这回是在用户空间，就不那么恐怖了。<br/>
+做了一番quick and dirtry工作，总算基本满足要求了。<br/>
+实现的原理是，unionfs-fuse是用findroot(path)函数寻找用户请求的路径path属于哪个部分，稍加修改，让findroot()做些额外工作，当读写分区中不存在要找的文件时，自行创建一个。<br/>
+实现中更是使用了system()这个在用户空间都让人不耻的东西，充分发扬了FUSE的优点。</p>
+
+<p>这里是结果：</p>
+
+<pre><code>[root@localhost pczou]# mount -o loop
+/home/pczou/iso/RHEL4-U3-i386-AS-disc1.iso /mnt/iso/
+[root@localhost pczou]# mkdir writable
+[root@localhost pczou]# find writable/
+writable/
+[root@localhost pczou]# mkdir newiso
+[root@localhost pczou]# unionfs writable:/mnt/iso newiso
+[root@localhost pczou]# cp maemopad-1.5-1.src.rpm newiso/SRPMS/
+[root@localhost pczou]# find newiso/SRPMS/
+newiso/SRPMS/
+newiso/SRPMS/maemopad-1.5-1.src.rpm
+newiso/SRPMS/comps-4AS-0.20060303.src.rpm
+newiso/SRPMS/TRANS.TBL
+[root@localhost pczou]# find writable/
+writable/
+writable/SRPMS
+writable/SRPMS/maemopad-1.5-1.src.rpm
+[root@localhost pczou]# find /mnt/iso/SRPMS/
+/mnt/iso/SRPMS/
+/mnt/iso/SRPMS/comps-4AS-0.20060303.src.rpm
+/mnt/iso/SRPMS/TRANS.TBL
+[root@localhost pczou]#
+</code></pre>
+
+<p>可以看出，新文件都存放在writable目录中，所有中间路径(SRPMS)都自动建好。</p>
+
+<p>这个办法可以工作，但还有不少问题，最大的问题是不支持只读目录的文件删除。不过实现起来也并不很困难。</p>
+
+<p>同时他还提出了另外一个非常有用的功能</p>
+
+<p>除了用于iso制作以外，这个扩展的unionfs
+还可以用于“虚拟安装”。我经常需要装一些稀奇古怪的软件包，Linux和Windows一样，都有垃圾软件，如何保证这些垃圾软件不破坏我宝贵的根分区呢？虚拟机可以，可是太慢；做个根分区镜像也可以，不过太耗硬盘空间。这种情况下就可以发挥扩展unionfs的威力了:</p>
+
+<pre><code> # unionfs /writable:/ /mnt/newroot
+ # chroot /mnt/newroot
+ # rpm -ivh ...
+</code></pre>
+
+<p>把根分区(只读)与一个可写分区结合起来，就可以在上面任意乱搞了。搞完后，用纸巾把/writable一擦了事，方便卫生。</p>
+
+<p>不过上面的功能使用官方的unionfs-fuse包做不到，需要使用pczou做的补丁，我这里就直接给出大好补丁好的包吧。</p>
+
+<p><a href="/uploads/unionfs-fuse-0.14-new.tar.gz">unionfs-fuse-0.14</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-01T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2006/08/01/unionfs-fuse-solve-the-problem-of-iso/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2006/08/01/unionfs-fuse-solve-the-problem-of-iso/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/07/31/Life-of-a-major-combat/" title="Previous Post: 人生的一次重大打击">&laquo; 人生的一次重大打击</a>
+      
+      
+        <a class="basic-alignment right" href="/2006/08/03/Kunming-is-the-Vermicelli-eat-it%3F/" title="Next Post: 昆明都是吃米线的吗？">昆明都是吃米线的吗？ &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2006/08/01/unionfs-fuse-solve-the-problem-of-iso/';
+        var disqus_url = 'http://wgzhao.github.io/2006/08/01/unionfs-fuse-solve-the-problem-of-iso/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,704 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="前面提到了用Photorec工具恢复出来的文件都是以inode命名的名字，不看内容，你很难知道这是什么文件。不过不幸的幸运是他识别出了文件的类型（当然在Linux里，即便没有识别出来，也能通过file只能识别出大部分知名的文件类型)。 我们知道每一个结构性（二进制）文件都有metadata信息， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/13">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/25/auto-rename-for-pdf-and-chm-files/">为pdf和chm文件自动重命名</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/25/auto-rename-for-pdf-and-chm-files/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/25/auto-rename-for-pdf-and-chm-files/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前面提到了用<a href="http://www.cgsecurity.org/wiki/PhotoRec">Photorec</a>工具恢复出来的文件都是以inode命名的名字，不看内容，你很难知道这是什么文件。不过不幸的幸运是他识别出了文件的类型（当然在Linux里，即便没有识别出来，也能通过file只能识别出大部分知名的文件类型)。</p>
+
+<p>我们知道每一个结构性（二进制）文件都有metadata信息，一般包括文件的作者、创建，修改时间，标题、主题、关键字等。<br/>
+pdf文件，office文件，chm文件等当然也包含了这些信息。</p>
+
+<p>因为本文就是根据这些metadata信息提取出标题来，然后用标题给文件重新命名。<br/>
+因为office文档我在Linux平台还没有找到好的提取办法（可恶的专有格式），pdf和chm都有基本的处理库文件，我这里使用python调用这些库，来做一些简单的处理，没有考虑很复杂的情况，依赖这个脚本，我给大约150个pdf文件，40个chm文件成功的重命名了。</p>
+
+<p>但是有一部分pdf文档，虽然没有加密，但是程序库认为加密了，使用空密码或者随机字符串解密都失败，针对这类文件，我暂时还没有好的办法。
+下面是程序源代码</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/25/auto-rename-for-pdf-and-chm-files/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/24/bought-three-books-2/">三本书到手</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/24/bought-three-books-2/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/24/bought-three-books-2/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://t.douban.com/lpic/s3588323.jpg" alt="image" /></p>
+
+<p><img src="http://t.douban.com/lpic/s3705488.jpg" alt="image" /></p>
+
+<p><img src="http://t.douban.com/lpic/s3860704.jpg" alt="image" /></p>
+
+<p>上次要买的梁文道和刘瑜（醉钢琴）的书，因为出货太长，取消了，后一个星期后，有捡起了订单，昨天三本书到手了。<br/>
+没有想到《常识》有那么厚，当然《我执》也不薄。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/23/all-data-lost/">All Data Lost</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/23/all-data-lost/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/23/all-data-lost/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>真是具有讽刺意味，昨天我才说完利用<a href="http://blog.wgzhao.com/2009/07/22/recover-deleted-files-on-ext3-filesystem/">ext3grep工具来恢复删除的文</a>件，结果今天我就很悲惨的删除了我两个OS的根文件系统加上最致命的HOME分区，我变得一无所有了。</p>
+
+<p>故事是这样的：</p>
+
+<p>我从<a href="http://linux.solidot.org/">solidot</a>上看到了一篇文档（估计solidot自己也不知道），说是OpenSSH &lt; 5.2版本的都有远程溢出的漏洞，而且网络提供了源代码，这太正常不过了，每次和Linux相关的漏洞，一般都能找到攻击的源代码，于是我就下载了下来，编译没有问题。</p>
+
+<p>开始执行，第一次执行的时候，我用的普通账号，程序提示需要root权限。于是我再用root账号执行，结果死机了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/23/all-data-lost/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/">恢复ext3文件系统上被删除的文件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>是的，我知道ext3文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。<br/>
+而且从ext3文件系统的<a href="http://batleth.sapienti-sat.org/projects/FAQs/ext3-faq.html">FAQ</a>中提到的一条也能印证这点：</p>
+
+<blockquote><p>Q: How can I recover (undelete) deleted files from my ext3 partition?<br/>
+Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, said about it:</p>
+
+<blockquote><p>In order to ensure that ext3 can safely resume
+ an unlink after a crash, it actually zeros out the block pointers in
+ the inode, whereas ext2 just marks these blocks as unused in the block
+ bitmaps and marks the inode as &ldquo;deleted&rdquo; and leaves the block pointers
+ alone.<em> </em>Your only hope is to &ldquo;grep&rdquo; for parts of your files that have
+ been deleted and hope for the best.</p></blockquote></blockquote>
+
+<p>但是，但是，这不是事实的全部，被删除文件的所有信息可能都还在磁盘上，包括块指针。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/18/readout-on-secretary-chu-china-meetings-on-clean-energy/">朱棣文演讲</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/18/readout-on-secretary-chu-china-meetings-on-clean-energy/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/18/readout-on-secretary-chu-china-meetings-on-clean-energy/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>come from: <a href="http://science.solidot.org/article.pl?sid=09/07/17/118258&amp;from=rss">Solidot | 朱棣文清华演讲重提白屋顶设想</a></p>
+
+<p>7月15日，美国能源部长朱棣文在清华大学<a href="http://www.sciencenet.cn/m/user_content.aspx?id=243824">进行了演讲</a>，主题为<a href="http://www.energy.gov/news2009/documents2009/Final_translated_version_of_Tsinghua_Speech.pdf">应对能源和气候的挑战</a>(中文PDF)，朱棣文用大量的数字，介绍了气候变化与人类活动的关系，以及利用可再生能源等应对之道。<br/>
+演讲的部分内容与诺贝尔和平奖得主戈尔和IPCC的观点相同：</p>
+
+<blockquote><p>如“在中国，海平面上升30厘米，将淹没81,348平方公里的沿海低地&hellip;.如果世界遵循‘一切照旧’的道路，气候模型预测&hellip;.芝加哥，高于90
+华氏度（约32摄氏度）的高温天气可能从现在的每年10天增加到75天－90天；目前每隔20年发生的极端热浪天气，将会在中国的大部分地区每隔一年出现一次&hellip;.中国由于沿海城市人口密集，特别容易受到海平面上升的威胁”。<br/>
+朱棣文又重提了今年上半年提出的刷<a href="http://science.solidot.org/article.pl?sid=09/05/28/040248&amp;tid=71">白屋顶的设想</a>：白顶建筑将“阳光能源被反射回太空，而不是在夏季使建筑和房屋升温。<br/>
+用太阳能反射材料改造城市屋顶等同于在路面上消除汽车的二氧化碳排放量长达11年之久”。</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/16/troubleshooting-kernel-panic/">Kernel Panic故障排解</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/16/troubleshooting-kernel-panic/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/16/troubleshooting-kernel-panic/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Linux kernel panic</strong> 是很难定位和排查的重大故障,一旦系统发生了kernel panic，相关的日志信息非常少，而一种常见的排查方法—重现法&mdash;又很难实现，因此遇到kernel panic的问题，一般比较头疼。</p>
+
+<p>没有一个万能和完美的方法来解决所有的kernel panic问题，这篇文章仅仅只是给出一些思路，一来如何解决kernel panic的问题，二来可以尽可能减少发生kernel panic的机会。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/16/troubleshooting-kernel-panic/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/15/google-gear-for-firefox-35/">Google Gear for Firefox 3.5 (32bit and 64bit)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/15/google-gear-for-firefox-35/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/15/google-gear-for-firefox-35/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>firefox3.5 导致很多插件没有更上步伐，包括一些很常用的，比如google gears就是我所需要的。</p>
+
+<p>本来我想下载源代码自己编译的，等我git源代码30分钟后，还没有完成的迹象，而下载的代码量已经超过258M，于是我就作罢了。</p>
+
+<p>今天发现有人已经做了好事，发布了非官方的google gear，而且针对windows 32bit和linux x86/amd64都有发布，真是想人之所想呀。</p>
+
+<p>具体的信息请猛击这个链接:
+<a href="http://groups.google.com/group/gears-users/msg/70f164020c0f8f4e">http://groups.google.com/group/gears-users/msg/70f164020c0f8f4e</a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/15/google-gear-for-firefox-35/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/12/buy-liangwendao-and-liuyu-books/">买梁文道和刘瑜的书</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/12/buy-liangwendao-and-liuyu-books/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/12/buy-liangwendao-and-liuyu-books/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>两本是梁文道老师的著作：<a href="http://www.douban.com/subject/3642673/">我执</a>和 <a href="http://www.douban.com/subject/3344676/">常识</a>，买文道的书，当然是认定其人，当然也看过他不少发表在报纸，杂志上的时评，很过瘾。</p>
+
+<p>另外一本是 <a href="http://www.drunkpiano-liuyu.net/?p=333">民主的细节</a>，这又属于典型的口碑营销了，因为是刚看了<a href="http://www.hecaitou.net/?p=5971">和菜头的推荐</a>，有了他的推荐，我不认为还需要犹豫什么，即便最后我看不明白，或者不对我胃口，那我也不会怀疑是书的问题，肯定是怀疑自己水平的问题了。</p>
+
+<p>应该周三会到吧，到周三，应该上次买的<a href="http://www.douban.com/subject/3289274/">万历十五年</a> 也就看完了。</p>
+
+<p>嗯，是该多读一些书了。</p>
+
+<p><strong>Update：</strong></p>
+
+<p>卓越亚马逊的预计发货时间越来越长了，今天下单，得要到下周5才能发货，考虑到地址会有变动，订单暂时取消了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/">Fs-cache and Cachefs for Network Filesystem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>对于像 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a> 和 <a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a>这种网络文件系统而言，因为受网络的影响，使得对数据访问和存储的实时性就有了一定的挑战，特别是在早期100Mb/s的网络环境下（当然10Mb/s的网络环境就是一个噩耗了）。为了解决响应实效的问题，一种被称为<a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a>的本地缓存方案被开发出来，用来提供分布式文件系统的本地缓存。</p>
+
+<p>作为内核2.6.30的一部分， 一种<a href="http://kernelnewbies.org/Linux_2_6_30#head-29350000cec3a460e9f2af6360324670faf14b2">CacheFS 实现机制</a></p>
+
+<p>已经加入进来，当前它支持<a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a>和<a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a>，但是其他文件系统也能从中获得好处（文章后面会提到）</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/09/what-is-a-good-job/">什么样的职位才是好职位</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/09/what-is-a-good-job/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/09/what-is-a-good-job/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>看完了《杜拉拉升职记》，觉得书的最后，杜拉拉写给李都的那封如何“恰当的活法”中，提到的什么样的职位才是好职位，值得多读几遍，于是摘录下来，和大家分享：</p>
+
+<h2>一、关于什么样的职位算好职位</h2>
+
+<ol>
+<li>你的找一家好公司 什么是好公司?
+
+<ol>
+<li>产品附加值高，生意好，并且从业务线看，具备持续发展的能力和前景;</li>
+<li>有专业的/聪明能干的/经验丰富的/并且为人现实的管理层，在把握这公司，并且有保护一贯这样用人的制度的公司;</li>
+<li>有严格的财务制度，对预算、费用和利润等于投入产出有关的内容，敏感并且具有强控制力的公司;</li>
+<li>崇尚客户导向/市场导向/结果导向/执行力的公司;</li>
+<li>有专业严谨全面的流程和制度，并且其执行有利于推动业务的良性发展，具有控制性和实操性兼备的特点;</li>
+</ol>
+
+
+<p> 总结起来，就是一家具有持续赢利能力的牛B公司</p></li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/09/what-is-a-good-job/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/14/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/12/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="如果不是因为lancy发的购书卡只能在新华书店使用，我想我大概不会去新华书店买书的，事实也是如此：
+其他行业的我不清楚，IT类的基本上都是一些不太实用的书籍，不过名字都是吓死人，不是7天精通，就是30天学会，要不就是从入门到精通，再不济也是玩转xxx之类，重点看了与Linux相关的书籍，唉， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/10">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/11/18/buy-books/">购书</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/11/18/buy-books/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/11/18/buy-books/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>如果不是因为lancy发的购书卡只能在新华书店使用，我想我大概不会去新华书店买书的，事实也是如此：<br/>
+其他行业的我不清楚，IT类的基本上都是一些不太实用的书籍，不过名字都是吓死人，不是7天精通，就是30天学会，要不就是从入门到精通，再不济也是玩转xxx之类，重点看了与Linux相关的书籍，唉，要说Linux就是属于非主流，4层书架上，Linux相关的一般都在最里面和下面，你要不是不蹲下找，是肯定找不到的。</p>
+
+<p>显著位置都摆满了玩转office 2007，玩转注册表，.net 30天精通，精通windows vista。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/11/18/buy-books/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/11/11/using-sogou-pinyin-clound-client-on-ibus-platform/">在linux下使用搜狗云输入法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/11/11/using-sogou-pinyin-clound-client-on-ibus-platform/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/11/11/using-sogou-pinyin-clound-client-on-ibus-platform/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://pinyin.sogou.com/cloud/">搜狗出了云输入法</a>,可以在firefox浏览器使用,但是在linux下如何成为一个独立的输入法呢?<br/>
+有人已经完成了这个,利用ibus框架,搭建了这样的一个输入法客户端,当然依赖于网络,如果网络很快的话,云输入法和本地输入法没有什么区别,但是如果网络速度很慢的话,那就有点痛苦了,不过当前的实现考虑了网络慢的因素,作者特意还给出了两段视频,来分别演示在网络快的情况下和网络慢的情况下表现如何.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/11/11/using-sogou-pinyin-clound-client-on-ibus-platform/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/10/23/rhce-troubleshooting-rpm-package/">RHCE Troubleshooting RPM Package</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/10/23/rhce-troubleshooting-rpm-package/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/10/23/rhce-troubleshooting-rpm-package/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The Troubleshooting Practice problems come in three parts,each invoked
+by a separate command.The sections,commands,and number of problems in
+each section vary;therefore,run <em>command count</em>,to determine the number of problems for each troubleshooting command:</p>
+
+<ul>
+<li>For local: <strong>tslocal count</strong></li>
+<li>For Services: <strong>tsservices count</strong></li>
+<li>For Networking: <strong>tsnetwork count</strong></li>
+<li>For Booting: <strong>tsboot count</strong></li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/10/23/rhce-troubleshooting-rpm-package/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/10/20/netfilter-packet-flow/">Netfilter Packet Flow</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/10/20/netfilter-packet-flow/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/10/20/netfilter-packet-flow/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.flickr.com/photos/mlsx/4027652873/" title="photo sharing"><img src="http://farm4.static.flickr.com/3514/4027652873_c1a2cdc1e8.jpg" alt="image" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/mlsx/4027652873/">nf-packet-flow</a>，原由
+<a href="http://www.flickr.com/people/mlsx/">mlsx</a> 上載。</p>
+
+<p>很详细的一张netfilter包流程图，能直观的描述Netfilter/iptables的工作流程。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/10/20/change-the-default-mysql-data-storage-path-w/">LAMP缺省环境下，修改mysql的数据存储位置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/10/20/change-the-default-mysql-data-storage-path-w/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/10/20/change-the-default-mysql-data-storage-path-w/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>大部分Linux发行版本自带的MySQL数据库，数据存储路径在<code>/var/lib/mysql</code>下，如果该系统充当Web服务器，这个位置似乎不太恰当，通过下面的几个步骤，可以将数据库迁移到别的位置。</p>
+
+<ol>
+<li><p>创建你想存储的目录</p>
+
+<pre><code>mkdir -p /web/db 
+chown root.root /web 
+chmod 755 /web 
+chown    mysql.mysql /web/db
+</code></pre></li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/10/20/change-the-default-mysql-data-storage-path-w/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/10/19/happy-birthday-for-pipi/">皮皮周岁</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/10/19/happy-birthday-for-pipi/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/10/19/happy-birthday-for-pipi/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>时间过的真快，到今天，皮皮整整一岁了。还能想起刚出生时的手忙脚乱。</p>
+
+<p>刚出生时，看上去真的小巧玲珑，因为脸型是削长的，所有看第一眼的人都怀疑皮皮只有5斤左右，而实际上，他有6斤九两，在标准体重范围内。</p>
+
+<p>刚开始时，以为喂牛奶没有经验，不知道一餐要喂多少，结果皮皮无辜的挨了几顿饿，我和还医院的医生和护士吵了几架。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/10/19/happy-birthday-for-pipi/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/10/19/connect-twitter/">访问twitter</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/10/19/connect-twitter/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/10/19/connect-twitter/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我当然知道<a href="http://twitter.com">twitter官方站</a>点已经被和谐了，我说的是无处不在的网民利用了twitter开放的API，创建了大量的可以被访问的站点程序，看，这就是开放的力量，它如同空气一般，可以无孔不入。<br/>
+而我们需要做的，仅仅只要一个国外的主机，支持php5.2以上，就可以了，不需要数据库的支持。<br/>
+So，我在2分钟内，搭建了这样的站点，因而能顺利的访问我的twitter。 如果你现在访问不了，还在寻找如何访问，也许你可以试试。<br/>
+<a href="http://twitter.xplore.cn">http://twitter.xplore.cn</a></p>
+
+<p>我的twitter帐号是<a href="http://twitter.com/mlsx">@mlsx</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/10/18/finding-your-mysql-high-availability-solution/">寻找适合你的MySQL高可用解决方案</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/10/18/finding-your-mysql-high-availability-solution/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/10/18/finding-your-mysql-high-availability-solution/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>摘译自 <a href="http://tinyurl.com/bol3ou7">mysql performance blog</a></p>
+
+<p>需要MySQL高可用吗？</p>
+
+<p>问题似乎很明显，但是有时却忽略了。实际上这是一个投入和产出的问题，投入越大，你获得数据安全性就越高，所以这个问题可以归结为”你的服务器宕机成本是多少？“，如果你的宕机成本小于$10/hour，那基本上你不需要高可用方案了，So，不用浪费时间看下文了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/10/18/finding-your-mysql-high-availability-solution/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/10/09/holiday-feeling/">长假菲林</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/10/09/holiday-feeling/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/10/09/holiday-feeling/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>长假基本上做了3件事情：</p>
+
+<p>1）接待从四方回来的朋友，谢谢你们来看皮皮（我知道你们不是来看我的）， 谢谢彭大美女，向军夫妇，顾总，徐帆，青韶，还有皮皮妈妈的朋友，同事们。</p>
+
+<p>2）遭遇“红色炸弹”，参加同学、朋友的婚礼，anyway，祝福这些新人，愿他们白头偕老！</p>
+
+<p>3）忙着和装修公司逗嘴皮子，尝试着从一个陌生、也许布满陷阱的道路上杀出一条道路来，我知道，受伤在所难免，只是期望还能有力气爬过去。</p>
+
+<p>祝各位<strong>国庆后</strong>快乐！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/10/01/always-love-your-country-but-never-trust-your-government/">Always Love Your Country but Never Trust Your Government!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/10/01/always-love-your-country-but-never-trust-your-government/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/10/01/always-love-your-country-but-never-trust-your-government/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Always love your country — but never trust your government!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/11/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/9/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

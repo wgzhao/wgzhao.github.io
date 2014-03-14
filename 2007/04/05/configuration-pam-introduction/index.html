@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>配置PAM－－介绍 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="PAM（Pluggable Authentication Modules）是一个好东西，在现代的Linux系统中已经必不可少了。
+以前也接触过，也修改过他的一些配置，不过都是依葫芦画瓢，没有仔细看过有关说明文档。今天在linux-mag上看到了这样的文章，正好可以仔细阅读一番。
+介绍分为两篇， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/04/05/configuration-pam-introduction">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">配置PAM－－介绍</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>PAM（Pluggable Authentication Modules）是一个好东西，在现代的Linux系统中已经必不可少了。<br/>
+以前也接触过，也修改过他的一些配置，不过都是依葫芦画瓢，没有仔细看过有关说明文档。今天在linux-mag上看到了这样的文章，正好可以仔细阅读一番。<br/>
+介绍分为两篇，这篇是介绍PAM的基本常识和配置文件的规则，下一篇是利用这些规则做一些联系。下面是阅读后的一些笔记：</p>
+
+<!--more-->
+
+
+<p><strong>PAM 配置文件</strong></p>
+
+<p>大部分现代Linux发行版本都使用<code>/etc/pam.d/</code>下面的文件来配置PAM。<br/>
+这个目录下的每一个文件是以程序提供的服务命名的，有些软件包提供了缺省的PAM配置文件，你也可以自己选择配置，特别是采用不同的协议来实现认证手段，比如你可以使用本地认证工具来配置su程序，而采用LDAP的方式来认证SSH登录。</p>
+
+<p>配置文件的目的是用来创建一个或多个模块堆栈来为每一个程序服务。一个模块堆栈是一系列PAM模块，他们被调用以和特定的程序进行交互。每一个模块执行一个特定的任务，比如为网络服务娇艳密码，坚持用户是否有新邮件。作为登录过程的一部分，模块也可以执行用来执行一些非认证的任务，有时会显得比较方便。
+/etc/pam.d/下的配置文件格式都是由很多行组成，每行有下面四个域：</p>
+
+<pre><code>management_group control_flag module[options]
+</code></pre>
+
+<p>每一个域都有其特定的含义，解释如下：</p>
+
+<ul>
+<li>management_group PAM服务的标识代码: auth 表示认证(典型的就是校验密码), account
+表示帐号管理（无密码帐号访问规则，比如检查该用户是否有有权访问请求的服务）, session
+表示会话管理（处理灯入登出相关的内部事物）, password 表示密码维护（比如修改密码）。</li>
+<li>control_flag 这个域表述了PAM应该如何应答模块的返回代码。可能的值有 requisite, required,
+sufficient, 和 optional. 这些值的详细描述清参考接下来的“PAM模块堆栈”</li>
+<li>module 模块的名字，可以是独立的模块名，也可以是绝对路径。如果没有提供完整路径，PAM通常在<code>/etc/security</code>/目录下寻找对应的模块。<br/>
+一些通用的模块介绍，可以参考后面的“通用PAM模块”</li>
+<li>options 可选项，一般是包括传递给模块的一些参数，详细描述请参考“通用模块选项”
+大部分PAM使用的服务都有自己的PAM配置文件，因此你需要对该对一个的配置文件。有一个文件特别要注意，就是<code>/etc/pam.d/system-auth</code>。这个文件定义了一套标准的模块堆栈，他们能被<code>pam_stack.so</code>模块调用，其意图是想为PAM修改提供一站式服务。通过修改<code>system-auth</code>，你可以改变绝大部分或者全部服务的应答方式。当然，不是所有的发行版本都使用这个配置文件，不过很多（包括
+Fedora, Gentoo, Mandrake, RedHat,RedFlag)都是这样做的。</li>
+</ul>
+
+
+<p>老系统通常使用单个<code>/etc/pam.conf</code>配置文件。这个文件的工作方式就等同于现在的<code>/etc/pam.d/</code>下的配置文件，除了每行开头需要一个引导入口来表示这个配置应用在哪个程序上之外。
+因为这个基本都很少见了，所以这里也就不详细介绍了。</p>
+
+<p><strong>PAM模块堆栈(PAM Module Stacks)</strong></p>
+
+<p>一个PAM配置文件有一系列模块堆栈组成，他们安装相同的管理组集合在一起。当一个程序通过管理组来寻求处理时，PAM依次调用每一个模块，最终根据每一个模块的返回值以及与此相关连的<code>control_flag</code>域来返回一个代码。
+一个典型的认证堆栈类似下面这样</p>
+
+<pre><code>auth required pam_env.so
+auth required pam_unix.so likeauth nullok
+</code></pre>
+
+<p>这个配置我文件意味着<code>pam_env.so</code>和<code>pam_unix.so</code>将依次调用，当PAM被要求认证用户的时候。
+每一个模块有自己特定的任务来执行，后面会描述。<br/>
+堆栈里的每一个模块返回成功或者失败代码，这些代码和模块的<code>control_flag</code>表示合作，用来最终返回一个结果，下面给出control_flag的总结：</p>
+
+<pre>
+            模块控制标识以及返回值表
+ 
+控制标志            成功结果                失败结果
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+requisite           堆栈继续执行                      堆栈立刻以失败方式中断
+required            堆栈继续执行                      堆栈继续执行，但是以失败方式中断
+sufficient          堆栈立刻以成功方式中断，除非之前模块失败了     堆栈继续执行
+optional            堆栈继续执行                      堆栈继续执行，只有当模块丢失或者给出一个非决定性结果才失败。
+</pre>
+
+
+<p>理想情况下，不同模块的结果不会发生冲突，如果冲突了，那么规则能拒绝。<br/>
+比如，假设你想配置一个计算机使用本地密码数据(用<code>pam_unix.so</code>表达)或通过Kerberos(用<code>pam_krb5.so</code>表达)服务来认证用户。你可能会这样写配置文件。</p>
+
+<pre><code>auth required pam_env.so
+auth required pam_unix.so likeauth nullok
+auth sufficient pam_krb5.so try_first_pass
+</code></pre>
+
+<p>(这个堆栈也包括了<code>pam_env.so</code>，<code>pam_deny.so</code>，现在你可以忽略)。这个例子指定<code>pam_krb5.so</code>是sufficient的。<br/>
+其目标是当Kerberos服务宕了胡或者帐号没有存储在这里时，通过本地数据库也可以登录。<br/>
+但问题就出在<code>pam_unix.so</code>的控制标识required上。他表示用户必须通过本地认证。<br/>
+也就没有达到我们预期的目的，因为Kerberos模块没有起到作用。为了达到期望目标，我们应该把所有的模块的控制标志改成sufficient的。</p>
+
+<pre><code>auth required pam_env.so
+auth sufficient pam_unix.so likeauth nullok
+auth sufficient pam_krb5.so try_first_pass
+</code></pre>
+
+<p>但是，问题又来了，当一个模块成功后，他会忽略其后的任何一个模块。在这个例子中，不会有这个问题，但是一些缺省的配置会在认证堆栈中包括额外的模块。有时候忽略接下里的模块不是问题，但有时候却是（下一篇会提到多认证方式）。<br/>
+大部分使用PAM的服务要求多堆栈的帮助。典型的就是登录服务，他使用auth,account,session堆栈，有时候甚至定义至少一个password模块。</p>
+
+<p><strong>通用PAM模块(Common PAM Modules)</strong></p>
+
+<p>PAM提供了非常多样的模块来帮助实现很多功能特征，另外，一些程序也提供了自己的PAM模块来扩展PAM功能。大部分模块可以在一个或多个管理组中工作。特命执行一项任务当他们作为一个堆栈的一部分被调用时同时也可以执行另外一项任务当作为另外一个管理组堆栈的一部分被调用时。</p>
+
+<p>下面的表给出了一些重要的PAM模块的解释，虽然这个表远不够完整。</p>
+
+<pre>
+                        通用PAM模块
+模块名称                        管理组                               效果
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+pam_unix.so         auth, account, session, password    基于/etc/passwd和/etc/shadow认证用户
+pam_unix2.so        auth, account, session, password    pam_unix.so变体，提供额外的一些功能
+pam_securetty.so    auth                                阻止root登录，除非在/etc/securetty文件中设置PAM_TTY环境变量
+pam_env.so          auth                                从/etc/security/pam_env.conf 文件中设置环境变量
+pam_mail.so         auth,session                        根据指定的dir=diretory选项来检查邮件和给用户提供检查结果。
+pam_lastlog.so      auth                                显示用户最后登录的消息
+pam_deny.so         auth, account, session, password    总是表示失败。
+pam_limits.so       session                             用来设置用户对CPU，内存等资源的消耗限制，配置文件是/etc/security/limits.conf
+pam_mkhomedir.so    session                             为用户创建一个家目录，如果它已经不存在了。这为那些通过网络登录服务器验证而登录的用户创造了便利。
+pam_pwcheck.so      password                            根据/etc/login.defs文件规则来检查用户密码，以便用户在修 改密码时提高安全度。
+pam_cracklib.so     password                            根据字典来检查密码，以确保密码至少显得显得比较安全和随机。
+pam_stack.so        auth, account, session, password    调用在system-auth的堆栈，返回其结果。
+</pre>
+
+
+<p>如果你仔细研究你的PAM配置文件，你应该可以看到上面的绝大部分模块。你也可以来确定这些模块的效果，比如我增加<code>pam_mail.so</code>模块看是否能达到上面说的作用。</p>
+
+<p><strong>通用模块选项(Common Module Options)</strong></p>
+
+<p>大多数PAM模块接受可选项，而这些可选现对很多模块是非常有帮助的。更多的通用的可选现包括:</p>
+
+<ul>
+<li>debug       这个选项创建而外的调式输出，典型的是将其发送给系统日志。</li>
+<li>try_first_pass  大多数auth模块接受这个选项，它使得这个模块会去尝试堆栈里以前模块请求到的密码，如果这个密码不正确，这个模块会给出要求新密码的提示。</li>
+<li>use_first_pass   这个选项工作方式和<code>try_first_pass</code>非常相似，除了它不会显示需要第二次密码的提示。实际上，在这种情况下，这个模块返回一个失败代码。</li>
+<li>use_authtok     这个选项使得auth堆栈里的模块把密码当成令牌(token)传递给下一行。</li>
+<li>nullok      通常，处理密码的模块拒绝空(empty,null)密码。这个选项告诉他们接受这样的密码。</li>
+<li>shadow      接受这个选项的模块需要密切注意shadow文件的一些特征，比如密码年龄和过期时间。</li>
+</ul>
+
+
+<p>大部分情况下，你不用管这些选项，尽管有时你可以想使用他，特别是在增加认证工具的时候。比如<code>try_first_pass</code> 或<code>use_first_pass</code>经常用来和auth堆栈中的第二个认证模块联合起来。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-05T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/04/05/configuration-pam-introduction/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/04/05/configuration-pam-introduction/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/04/05/Please-do-not-send-me-Microsoft-Office-documents/" title="Previous Post: 请不要给我发送微软Office文档">&laquo; 请不要给我发送微软Office文档</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/04/05/telephone-records-talking-with-95555/" title="Next Post: 与招行95555的电话记录">与招行95555的电话记录 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/04/05/configuration-pam-introduction/';
+        var disqus_url = 'http://wgzhao.github.io/2007/04/05/configuration-pam-introduction/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

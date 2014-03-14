@@ -1,0 +1,686 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="不得不再一次说，Advanced bash-scripting guide(a.k.a ABS)这本书太强悍了，对于bash里的Here
+Document用法，我说见过的其他关于shell/bash编程的书里，都是简单的介绍这个东西是做什么的，基本用法是什么，然后给出一个例子就完成了。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/12">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/24/here-documents-in-bash/">Bash里的here Document</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/24/here-documents-in-bash/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/24/here-documents-in-bash/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不得不再一次说，<a href="http://tldp.org/LDP/abs/html">Advanced bash-scripting guide(a.k.a ABS)</a>这本书太强悍了，对于bash里的Here
+Document用法，我说见过的其他关于shell/bash编程的书里，都是简单的介绍这个东西是做什么的，基本用法是什么，然后给出一个例子就完成了。<br/>
+我也一直以为他就是为了便于多行的输入。但是看完<a href="http://tldp.org/LDP/abs/html" title="Advanced bash-scripting guide">ABS</a>对此<a href="http://tldp.org/LDP/abs/html/here-docs.html">一整章的介绍</a>，我才发现，其实here
+document没有那么简单。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/24/here-documents-in-bash/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/21/regular-expressions-in-the-shell/">Shell里的正规表达式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/21/regular-expressions-in-the-shell/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>还是来自<a href="p://www.tldp.org/LDP/abs/html/">ABS</a> 最新版的摘录，这次是<a href="http://tldp.org/LDP/abs/html/regexp.html">第十七章</a>，关于正规表达式。以下是摘录和翻译。</p>
+
+<p>一个表达式是一串字符 这些字符表达的意思超出了字面意思，我们称之为<em>元字符(metacharacters)</em>.</p>
+
+<p>正规表达式是一个字符或者元字符集，用来匹配或者模式(patterns)。 一个正规表达式包含以下一个或者多个情形：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/21/regular-expressions-in-the-shell/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/">用shell升级15位身份证到18位</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>写着好玩写的，纯粹是想知道最后那个校验码是怎么算出来的，具体的算法可以<a href="http://zh.wikipedia.org/wiki/%E6%A0%A1%E9%AA%8C%E7%A0%81">参考这里</a>
+更详细的例子，可以参考下面的链接：
+<a href="http://www.heybrain.com/notheal/article/1138.html">http://www.heybrain.com/notheal/article/1138.html</a></p>
+
+<p>我这里是用shell实现了，其实用C实现应该是最好的，毕竟算法的东西，C还是要快很多，我本是打算用C的，结果发现我都忘记得差不多了，连最简单的申明数组并初始化都忘记了，于是只要用效率比较低的shell，不过在做一些匹配和校验的时候，感觉比C要方便一些，不多说了，给代码</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/18/compile-ati-driver-under-kernel-2-6-31/">在2.6.31上编译ATI显卡驱动</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/18/compile-ati-driver-under-kernel-2-6-31/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/18/compile-ati-driver-under-kernel-2-6-31/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>AMD总算发布了更新的<a href="https://a248.e.akamai.net/f/674/9206/0/www2.ati.com/drivers/linux/ati-driver-installer-9-8-x86.x86_64.run">ATI显卡驱动程序V9.8</a>,相比之前的9.7，这次增加了对2.6.29/2.6.30核心的支持。<br/>
+我在我的2.6.31-5上编译能成功，但是加载flgrx驱动的时候，给出下面的报错信息：</p>
+
+<p><code>fglrx: Unknown symbol find_task_by_vpid</code></p>
+
+<p>看来2.6.31又改动了不少。搜索了一番，得出下面的解决办法，没有出现kernel panic的情况。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/18/compile-ati-driver-under-kernel-2-6-31/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/17/linux-kernel-dangerous-exploit/">Linux内核高危漏洞</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/17/linux-kernel-dangerous-exploit/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/17/linux-kernel-dangerous-exploit/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>该漏洞影响自2001年以来所有2.4.x和2.6.x的核心版本及其分支。<br/>
+包括但不限于RedHat,CentOS,Suse,Debian,Ubuntu,Slackware,Mandriva,Gentoo及其衍生系统。<br/>
+只需要执行一个命令，就可以通过此漏洞获得root权限，即使开启了SELinux也于事无补！</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/17/linux-kernel-dangerous-exploit/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/15/some-control-characters-in-bash/">Bash里的一些控制字符</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/15/some-control-characters-in-bash/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/15/some-control-characters-in-bash/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>摘自<a href="http://tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide
+V6.0.05</a>第部分第三章的<a href="http://tldp.org/LDP/abs/html/special-chars.html">特殊字符</a>中的片断，并做了翻译。</p>
+
+<ul>
+<li><code>Ctl-A</code>  将光标移到行首</li>
+<li><code>Ctl-B</code> 退格键（但是我在ubuntu 9.10 bash 3.2.48上测试却是向前移动光标，        并不删除该字符）</li>
+<li><code>Ctl-C</code> 中断. 中断一个前台任务</li>
+<li><code>Ctl-D</code> 从当前shell退出（类似exit) <code>EOF</code> (end-of-file). 它也能中断在stdin的输入。<br/>
+当在一个终端(console)或者虚拟终端(比如xterm)里敲键盘时，<code>ctl-D</code>
+会删除当前光标下的字符.如果当前没有任何字符了，则 <code>Ctl-D</code> 表示从当前会话退出，如果时xterm之类的窗口，则会关闭当前窗口。</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/15/some-control-characters-in-bash/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/10/reading-at-mcdonalds/">在麦当劳看书</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/10/reading-at-mcdonalds/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/10/reading-at-mcdonalds/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我其实讨厌麦当劳，当然也不喜欢肯德基，我说的是他们提供的垃圾食品。</p>
+
+<p>但当离火车开走还有4个小时，又无处可去的时候，我还是希望找到麦当劳或者肯德基的。虽然火车站附近的大小快餐店一家接着一家，但是我想，大概没有人会去呆着那里休息的。很奇怪，在火车站附近没有看到麦当劳，也没有看到肯德基。于是我想到了去银行的营业大厅，那里还算干净，也有免费的空调可以吹。</p>
+
+<p>我一脚跨进建设银行的大门，一位着正装的女孩子连忙起身，问我“先生，您需要办理什么业务”，我环顾四周，说了句，不办什么，看看。那女孩估计知道了我是来噌位子的，连忙说，自动取款机在外面左侧。这女孩可真聪明，我也知道顺着她的台阶说，谢谢。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/10/reading-at-mcdonalds/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/08/xuzhig-and-gongmeng/">许志永和他的公盟为我们每一个人所做的事情</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-08T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/08/xuzhig-and-gongmeng/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/08/xuzhig-and-gongmeng/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>2003年度</h2>
+
+<ol>
+<li><p>就孙志刚案提起违宪审查建议（2003年）<br/>
+2003年南方都市报报道了孙志刚在收容遣送站被殴打致死的消息后，三位法学博士（公盟发起人）就收容遣送制度向全国人大常委会提起违宪审查的公民建议，在媒体和社会公众的共同努力下，两个月后国务院废止了收容遣送制度，一年后全国人大常委会成立了法规备案审查办公室。</p></li>
+<li><p>孙大午案法律援助（2003年）<br/>
+2003年7月，公盟的发起人张星水律师和许志永博士参与大午集团涉嫌非法吸收公众存款一案的辩护。社会各界的共同努力下，10月30日，孙大午先生被判缓刑，获得释放。</p></li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/08/xuzhig-and-gongmeng/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/07/scsi-debug-howto/">Linux Kernel 2.6的scsi_debug适配器驱动</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/07/scsi-debug-howto/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/07/scsi-debug-howto/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>因为搬家的原因，这篇文档，断断续续，翻译了一个多星期，翻译的过程中，发现自己对SCSI子系统还是不了解，所以有很多地方翻译得很晦涩，还是建议大家看原文档。
+原文档的链接地址是： <br/>
+<a href="http://sg.danny.cz/sg/sdebug26.html">http://sg.danny.cz/sg/sdebug26.html</a><br/>
+如果你实在是看着英文就头疼，那就对付着看我的翻译吧：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/07/scsi-debug-howto/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/31/moving/">搬家</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/31/moving/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/31/moving/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天在家里打包，准备明天搬家。<br/>
+之前还想东西真的不多，大件就是一张床，电器就是一台洗衣机，一个95L的小冰箱，一个20寸的液晶电视，还有就是几台电脑，都很轻巧了。<br/>
+没有桌子，没有椅子，没有沙发。</p>
+
+<p>可是等我们打起包来，才发现远不是想像的那么少，我买了6个编织袋，买的时候就觉得自己有点傻，那么这么多干什么，家里还有几个，买1,2个就足够了。</p>
+
+<p>结果6个编织袋仅仅只是把衣服装下了，这还不包括两个大皮箱的衣服，一个属于皮皮的整理箱的衣服。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/31/moving/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/13/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/11/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 翻墙 | Linux系统管理]]></title>
+  <link href="http://wgzhao.github.io/blog/categories/fan-qiang/atom.xml" rel="self"/>
+  <link href="http://wgzhao.github.io/"/>
+  <updated>2014-03-14T14:19:10+08:00</updated>
+  <id>http://wgzhao.github.io/</id>
+  <author>
+    <name><![CDATA[wgzhao]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在Ubuntu 9.10下使用IPv6]]></title>
+    <link href="http://wgzhao.github.io/2010/04/06/using-ipv6-in-ubuntu-910/"/>
+    <updated>2010-04-06T00:00:00+08:00</updated>
+    <id>http://wgzhao.github.io/2010/04/06/using-ipv6-in-ubuntu-910</id>
+    <content type="html"><![CDATA[<ol>
+<li>首先看看是是否已经支持IPv6了，访问<a href="http://www.ipv6.org">http://www.ipv6.org</a>，如果是类似下面的显示你的IPv4地址，那么你就暂时还不支持,Follow me</li>
+<li><p>下载gw6c工具</p>
+
+<pre><code>#sudo apt-get install gw6c
+#cp /usr/share/doc/gw6c/examples/gw6c.conf.sample.gz .
+#gunzip gw6c.conf.sample.gz
+</code></pre>
+
+<p>编辑文件，修改下面几行</p>
+
+<pre><code>if_tunnel_v6v4=sit1
+if_tunnel_v6udpv4=tun0
+if_tunnel_v4v6=sit0
+template=linux
+</code></pre></li>
+<li><p>用root帐号启动gw6c，等待一段时间，看看是否多了<code>tun0</code>网络设备（如果你目前的网络已经有了tun0，那么设置为tun1，以此类推)</p>
+
+<pre><code># ifconfig
+... ...
+tun0      Link encap:未指定  硬件地址 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00  
+          inet6 地址: 2001:5c0:1400:b::672b/128 Scope:Global
+          UP POINTOPOINT RUNNING NOARP MULTICAST  MTU:1280  跃点数:1
+          接收数据包:3 错误:0 丢弃:0 过载:0 帧数:0
+          发送数据包:0 错误:0 丢弃:0 过载:0 载波:0
+          碰撞:0 发送队列长度:500 
+          接收字节:200 (200.0 B)  发送字节:0 (0.0 B)
+</code></pre></li>
+<li><p>再访问<a href="http://www.ipv6.org">http://www.ipv6.org</a> ，看看是不是有显示你的IPv6的地址，类似下面这样：<br/>
+<img src="/images/ipv6.png" title="ipv6" alt="ipv6" /></p></li>
+<li>你也可以使用IPv6访问google哟<br/>
+<img src="/images/ipv6google.png" title="ipv6google" alt="image" /></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[使用dabr工具搭建twitter的代理]]></title>
+    <link href="http://wgzhao.github.io/2010/04/05/access-twitter-using-dabr/"/>
+    <updated>2010-04-05T00:00:00+08:00</updated>
+    <id>http://wgzhao.github.io/2010/04/05/access-twitter-using-dabr</id>
+    <content type="html"><![CDATA[<p>1）找一个国外的空间<br/>
+2）<a href="http://code.google.com/p/dabr">从dabr官方站点下载程序</a>，解压上传到服务器空间 <br/>
+3）将<code>config.sample.php</code>改名为<code>config.php</code>，并根据你的需求，修改对应的定义，如果你没有特别需求。那就可以一行都不用修改。<br/>
+4）访问你的dabr，开始使用。<br/>
+后面3个条件很容易做到。</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,645 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="这一段时间都会把工作之外的时间重点放在学习数据库上。前两周学完Oracle，主要以官方的DBA I , DBA
+II,和eygle的《循序渐进Oracle》为主。我的目的只是了解，基本掌握，能安装，配置，基本问题调试，制定备份策略，掌握如何恢复数据就行了。
+接下来就是重点学习MySQL了， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/11">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/09/29/learning-database/">学习数据库</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/09/29/learning-database/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/09/29/learning-database/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这一段时间都会把工作之外的时间重点放在学习数据库上。前两周学完Oracle，主要以官方的DBA I , DBA
+II,和<a href="www.eygle.com">eygle</a>的《<a href="http://www.douban.com/subject/2208552/">循序渐进Oracle</a>》为主。我的目的只是了解，基本掌握，能安装，配置，基本问题调试，制定备份策略，掌握如何恢复数据就行了。
+接下来就是重点学习MySQL了，虽然MySQL使得的时间最长，但是实际上对它的了解并不太多，特别是后来增加的事务处理，试图，存储过程等内容，另外就是一些基于MySQL的企业级解决方案，高可用性，高性能方面，都需要重点去了解。
+So，这一段时间都不太会更新blog，唠叨的话基本上会发到<a href="http://twitter.com/mlsx">twitter</a>(别点了，早被GFW了)了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/09/25/works-using-two-monitors/">用两个显示器工作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/09/25/works-using-two-monitors/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/09/25/works-using-two-monitors/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://farm3.static.flickr.com/2513/3952569613_78ff2d20cd_m.jpg" title="两个显示器合成一个" alt="两个显示器合在一起，看文档，做实验就方便很多了" />]</p>
+
+<p>一个显示器下，边看文档，边做实验，窗口排列就显得很紧凑，增加一个17寸的显示器作为延伸显示器后，好很多了。美中不足的是，一个是宽屏的 ，一个不是</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/09/24/using-oracle-xe-client-connect-oracle-server/">用oracle Xe Client来做数据库服务器连接工具</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/09/24/using-oracle-xe-client-connect-oracle-server/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/09/24/using-oracle-xe-client-connect-oracle-server/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Oracle从10g起，客户端和服务器端就分成了不同的介质了。而且客户端的介质还在450M以上，如果仅仅只是为了有一个sqlplus工具能够连接到数据库服务器的话，下载那么大的介质感觉没有必要，再说了，不是所有的OS都支持了（比如debian/ubuntu)。<br/>
+所以，我的策略是用oracle推出的简化版XE来充当这个工具。至少它支持debian/ubuntu。 我这里以ubuntu 9.10为例子介绍：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/09/24/using-oracle-xe-client-connect-oracle-server/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/09/16/a-perl-ddos-attack-sample/">A Perl dDos Attack Sample</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/09/16/a-perl-ddos-attack-sample/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/09/16/a-perl-ddos-attack-sample/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/perl&#8221; could not be found</p>
+
+<p>来源于某网站攻击后留下来的脚本，除此之外，还有很多类似的脚本。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/09/14/shv4-rootkit/">Shv4后门程序</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-14T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/09/14/shv4-rootkit/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/09/14/shv4-rootkit/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>也是来自某省会城市网站服务器，检测的时候，已经被植入了shv4后门程序，从系统日志来看，应该是通过猜测root密码登录系统后植入的。</p>
+
+<p>shv4植入后，将会替代ls,login,ifconfig,netstat,grep,ps等基本命令，并透过自带的sshd服务创建一个后门，便于以后登录。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/09/14/shv4-rootkit/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/09/10/a-linux-trojan-sample/">一个Linux下的木马程序样本</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/09/10/a-linux-trojan-sample/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/09/10/a-linux-trojan-sample/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>从某政府部门门户站点抓取出来了，应该是通过弱密码猜测获得了系统登录权限，然后植入了该木马。</p>
+
+<p>这个木马的主要目的是通过扫描某一个网段的IP地址，嗅探哪些IP开放了22端口（sshd服务），然后保存这些IP地址，而后一句木马自带的5个字典文件进行暴力猜解，而后把结果传输到瑞典（通过IP获得的地理位置）的一台服务器上。</p>
+
+<p>整个目录由一个简单的shell脚本发起，对系统本身没有侵害作用，但是扫描和猜测过程中，将消耗系统大部分的网络带宽。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/09/10/a-linux-trojan-sample/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/09/04/superblock-write-last-time-is-in-the-future/">Superblock Write Last Time Is in the Future</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/09/04/superblock-write-last-time-is-in-the-future/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/09/04/superblock-write-last-time-is-in-the-future/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不记得是ubuntu升级到哪个核心版本的时候出现了这个问题，系统正常关闭，再启动的时候，就会提示根文件系统的超级块最后写入时间比当前实际时间快8个小时。<br/>
+而BIOS时钟和系统时钟都是正确的。BIOS里没有时区设置（我没有看到），系统设置的CST时区，以前没有遇到过，有人说是双系统的问题。<br/>
+目前的解决办法是，修改<code>/etc/default/rcS</code>文件，添加或者修改类似下面这行：</p>
+
+<p>UTC=yes</p>
+
+<p>暂时没有出现这个问题了，但是不晓得是否是正解。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/09/02/google-pinyin-for-linux/">在linux下使用谷歌输入法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/09/02/google-pinyin-for-linux/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/09/02/google-pinyin-for-linux/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="/uploads/2009/09/googlepinyin-linux.png" title="googlepinyin-linux" alt="谷歌拼音输入法" /></p>
+
+<p>这里说的不是采取什么类似或者窃取谷歌输入法的字典数据，而是官方发布的。</p>
+
+<p>谷歌最近发布了一个<a href="http://code.google.com/p/scim-googlepinyin/">scim-googlepinyin的项目</a>，打算基于scim引擎，将谷歌输入法移植到其手机操作系统Android上，当然，Android是基于Linux的，所以也就很方便的可以在Linux平台编译了。</p>
+
+<p>我在Linux下没有修改一行代码便编译成功，并运行良好。</p>
+
+<p>目前该项目还没有正式发布，不过大家可以<a href="http://code.google.com/p/scim-googlepinyin/wiki/Source?tm=4">获取源代码</a>，然后自己编译。</p>
+
+<p>哈哈，一直期待linux下能一款真正能能和windows下输入法比较的产品，看来谷歌打算这么做了，期待它的正式发布。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/31/order-four-books/">最近下单的几本书</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/31/order-four-books/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/31/order-four-books/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://blog.wgzhao.com/2009/07/12/buy-liangwendao-and-liuyu-books.html">之前买的三本书</a>已经看完了，同时老六的<a href="http://www.douban.com/subject/3932063/">读库0904</a> 也看完了，天气凉快了，正是读书的好时节呀，在卓越上订了几本书：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/31/order-four-books/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/26/options-of-bash/">Bash的可选项</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/26/options-of-bash/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/08/26/options-of-bash/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>可选项（options）设置用来改变shell或者脚本的行为。</p>
+
+<p><code>set</code>指令可以使得在一个脚本里设置可选项。
+在脚本你需要设置可选项的地方，实用<code>set -o option-name</code>，或者采取缩写模式的<code>set -option-abbrev</code>。这两种形式效果等价。 比如</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/26/options-of-bash/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/12/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/10/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

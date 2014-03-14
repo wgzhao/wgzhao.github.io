@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>系统维护还是研发？--上班的这两天 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="不幸被Rachel言中了。我的工作岗位是研发，而且在我提出要转维护后，主管不同意的情况下，这两天我干的活主要还是技术支持加维护。 上班第一天，主管说你看我们发邮件有错误，你看看是什么问题，我一看日志，嗯，很明显“Permissions Denied"，原来是邮件队列目录权限和属主设置有问题， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/01/12/system-maintenance-or-research-and-development">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">系统维护还是研发？--上班的这两天</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>不幸被Rachel言中了。我的工作岗位是研发，而且在我提出要转维护后，主管不同意的情况下，这两天我干的活主要还是技术支持加维护。</p>
+
+<p>上班第一天，主管说你看我们发邮件有错误，你看看是什么问题，我一看日志，嗯，很明显<code>“Permissions Denied"</code>，原来是邮件队列目录权限和属主设置有问题，于是改了一下，错误现象消失了。一看我解决了这个问题，马上就说你看我们发送邮件的到达率很低，你觉得是什么问题，这个问题就没有开始的容易解决了，仔细看了日志，发现主要是发送被拒绝。于是解释了一通垃圾邮件，MTA，认证的问题。</p>
+
+<!--more-->
+
+
+<p>然后仔细看配置，不看不知道，一看吓一跳，反正我没有怎么理解他们用的postfix是怎么配置的，postfix配置的数据并不在
+<code>/etc/passwd</code>中，程序运行的账号和配置中指定的账号也不符合。而且postfix又是自己编译的，其他这里仅仅是发邮件出去，根本用不着收邮件，所以系统默认的postfix就足够了。</p>
+
+<p>这个问题还没有解决完，就又丢我一个任务，你看我们准备另外上线一套产品，你看看代码，今后交给你管理吧。然后告诉我服务器地址，账号，密码，</p>
+
+<p>因为需要同步服务器的网页，本地又是windows，那最好的办法就是用Dreamweaver了，因为他有这个功能，结果我折腾了半天，为哈，因为这个版本Dreamweaver在支持sftp时采用了putty这样的第三方软件，但是它有不告诉你怎么应该把这个程序放置在什么位置，因为我本地就有。最后还是自动普通FTP服务才搞定的。</p>
+
+<p>好不容易同步了网页，还没有开始看，又来一个任务，今天一个新产品上线，首页要修改，你编辑一下，在服务器上，你同步吧。</p>
+
+<p>呵呵，立刻又变成了编辑，我还没有内容可以编辑，需要等待别人的通知，于是别人在qq上传一条消息过来，我就修改一下，原来我连编辑都不是！</p>
+
+<p>就这，折腾到晚上7点多，第一天上班就加班了，果然是经常加班呀。</p>
+
+<p>今天上班第一件事情，装系统，在windows下干活还是不太爽。我做好了两手准备，带了红旗桌面5.0和红旗DC5。先装桌面，前面都正常，但是后面不动了，切换到日志屏幕，果然是光盘读不出来了。于是换DC5，前面也正常，可是到后面，不知道为什么，机器突然掉电了。
+接连了几次安装都是这样，真是奇怪呀。就这样折腾到快中午，不能折腾了。因为人家等着打印呢，我这台还连着共享的打印机。</p>
+
+<p>中午吃饭完，准备继续折腾系统，结果，主管说继续折腾邮件吧，要不干脆重装系统吧。于是我就彻底又做了一次现场技术支持，还去了机房。</p>
+
+<p>就这件事情，折腾到快下午4点了，结果发现，防火墙又把25号端口给干掉了，得，今天没戏了，明天继续吧，我可怜的JAVA，不知道什么时候看。</p>
+
+<p>快下班的时候，又来一个任务，群发邮件，问题是现在是一无所知，看看也下班了。下周吧。</p>
+
+<p>结果到家没多久，主管打电话过来，说这个单子已经下了，那就要完成，这样吧，明天你来吧，完成这个事情。果然是经常加班呀！</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-12T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/sui-xin-suo-xiang/'>随心所想</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/01/12/system-maintenance-or-research-and-development/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/01/12/system-maintenance-or-research-and-development/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/01/10/what-kind-of-college-students-we-need/" title="Previous Post: 我们需要怎样的大学生--来自闾丘露薇">&laquo; 我们需要怎样的大学生--来自闾丘露薇</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/01/15/About-GRUB/" title="Next Post: 有关GRUB">有关GRUB &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/01/12/system-maintenance-or-research-and-development/';
+        var disqus_url = 'http://wgzhao.github.io/2007/01/12/system-maintenance-or-research-and-development/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

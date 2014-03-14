@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="上午，因为不能说的原因，刚在我这里没呆几天的青韶论坛，就被迫迁移了。
+在一段时间之内，恐怕再也无法访问它了。 希望青韶客户能早日找到海外的空间。
+默哀！
+">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/49">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/24/my73-perhaps-disappear/">My73也许不会再出现了</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/24/my73-perhaps-disappear/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/24/my73-perhaps-disappear/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>上午，因为不能说的原因，刚在我这里没呆几天的青韶论坛，就被迫迁移了。
+在一段时间之内，恐怕再也无法访问它了。</p>
+
+<p>希望青韶客户能早日找到海外的空间。
+默哀！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/24/commands-start-a/">\[sbin学习\]a\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/24/commands-start-a/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/24/commands-start-a/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一直打算认真看完/sbin,/usr/sbin下面的命令，但是一直都托着，如果真的要找一个比较完整的时间来看这些命令，恐怕很难了。
+于是觉得看多少算多少吧，最开始的想法是从/sbin看起，从a打头的命令看起，但是发现，很多命令是紧密结合在一起，因此很难孤立的去学习某一个命令，因此，当有些命令有关联的时候，我就一起做介绍了。
+声明：所有的操作实例来自红旗DC5.0环境。您所用的分发版本可能和我的有不同的地方。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/24/commands-start-a/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/18/mailgraph-good-statistical-tools-to-postfix/">mailgraph&#8211;Postfix邮件统计的好工具</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/18/mailgraph-good-statistical-tools-to-postfix/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/18/mailgraph-good-statistical-tools-to-postfix/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>公司用postfix做MTA来发送邮件，需要知道每天的发送情况，最好有比较详细和直观的统计表示。
+我来之前公司采用自己写的JAVA程序来分析maillog，但是邮件升级后，程序分析就有问题，暂时我也改不了程序，所以只能想其他办法了。</p>
+
+<p>其实sendmail自带了一个邮件统计命令&mdash;mailstats，可以简单的统计邮件发送情况。但是不知道对postfix是否适合。
+在网上搜索了一下，有好几个程序可以做这个事情。我目前采用了<a href="http://people.ee.ethz.ch/~dws/software/mailgraph/">mailgraph</a>这个程序来完成我的工作。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/18/mailgraph-good-statistical-tools-to-postfix/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/18/google-letter/">Google的信件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/18/google-letter/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/18/google-letter/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>下班回来，<a href="http://lawstar.xplore.cn">lancy</a>告诉我<a href="http://rachel.xplore.cn">rachel</a>寄给我的快件到了，好，又有新系统用了。
+同时还告诉我，Google给你寄的邮件也到了，哈哈，双喜临门。Google的信封不像我们平常看到的邮件信封，更类似国内的明信片，只是折叠了起来，四边用白色透明胶带粘住，以防止邮件内容泄露。
+ 信封的正面如下：
+<img src="http://photo.xplore.cn/main.php?g2_view=core.DownloadItem&amp;g2_itemId=406&amp;g2_serialNumber=2" alt="image" />
+背面是Google的简单logo。
+<img src="http://photo.xplore.cn/main.php?g2_view=core.DownloadItem&amp;g2_itemId=401&amp;g2_serialNumber=2" alt="image" />
+ 邮件的内容很简单，主要是告诉你个人识别码。
+<img src="http://photo.xplore.cn/main.php?g2_view=core.DownloadItem&amp;g2_itemId=404&amp;g2_serialNumber=2" alt="image" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/17/today-heavy-snow/">今日大雪</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/17/today-heavy-snow/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/17/today-heavy-snow/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>早晨起来，发现窗外已经是银装素裹，房顶上铺着一层厚厚的白雪，不过地上的已经化了不少，因此到处都是湿漉漉的，果然南方的雪和北方的雪就是不同呀，在南方，雪下来，不用多久，就变成了水，而在北方，无论你怎么折腾雪，结果它们就是不出水，硬是像细沙一下，许久都不曾化去。</p>
+
+<p>毛主席曾写过《沁园春。雪》来描述北方的雪景。而今天，羽水同学应时应景的贴上了《沁园春。买票》，似乎更具有写实的作用，google了下，发现流传甚广，那我也加入吧：</p>
+
+<pre>
+《沁园春.买票》
+
+春节又到，
+中华大地，
+有钱飞机，
+无钱站票。
+望城市內外，
+大包小包。
+站内上下，
+民工滔滔。
+起早贪黑，
+达旦通宵，
+欲与票贩试比高。
+
+挥钞票，
+看人山人海，
+一票难保。
+票如此难买，
+引无数英雄竟折腰。
+昔秦皇汉武，
+见此遁逃；
+唐宗宋祖，
+更是无招！
+一代天骄，
+成吉思汗，
+只好骑马往回蹽。
+咋地？
+两天排队，
+买不着票！
+</pre>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/15/About-GRUB/">有关GRUB</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/15/About-GRUB/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/15/About-GRUB/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>开始看《Linux Troubleshooting for System Administrators and Power Users》顺便记录一些我新学到的东西。</p>
+
+<p>本书一开始就讲系统引导，启动和关机。这点其实也比较关键的，因为在实际的工作中也遇到过很多次，大部分情况下是GRUB（现在Lilo相对很少了）被完全破坏或者部分破坏。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/15/About-GRUB/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/12/system-maintenance-or-research-and-development/">系统维护还是研发？&#8211;上班的这两天</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/12/system-maintenance-or-research-and-development/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/12/system-maintenance-or-research-and-development/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不幸被Rachel言中了。我的工作岗位是研发，而且在我提出要转维护后，主管不同意的情况下，这两天我干的活主要还是技术支持加维护。</p>
+
+<p>上班第一天，主管说你看我们发邮件有错误，你看看是什么问题，我一看日志，嗯，很明显<code>“Permissions Denied"</code>，原来是邮件队列目录权限和属主设置有问题，于是改了一下，错误现象消失了。一看我解决了这个问题，马上就说你看我们发送邮件的到达率很低，你觉得是什么问题，这个问题就没有开始的容易解决了，仔细看了日志，发现主要是发送被拒绝。于是解释了一通垃圾邮件，MTA，认证的问题。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/12/system-maintenance-or-research-and-development/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/10/what-kind-of-college-students-we-need/">我们需要怎样的大学生&#8211;来自闾丘露薇</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/10/what-kind-of-college-students-we-need/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/10/what-kind-of-college-students-we-need/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>很喜欢看<a href="http://blog.sina.com.cn/m/luqiuluwei">闾丘露薇的blog</a>，觉得都写得很真实，很深刻，不愧为记者中的佼佼者。今天看了他的《<a href="http://blog.sina.com.cn/u/46e9d5da0100067s">我们需要怎样的大学生</a>》觉得写得很好，不那么愤青，但是却可以让人沉思，转载过来和大家共享：</p>
+
+<p>朋友问我有没有时间访问哈佛的老师，谈谈关于本科教育的理念，很可惜，我人在香港。其实我很想做这个访问，因为我一直觉得，本科教育对于一个人，对于一所高校来说，是最重要的，而拿我自己来说，当别人问我是那里毕业的，我会毫不犹豫地说，复旦的，虽然研究生去过别的大学，但总不像本科四年那样铭心刻骨。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/10/what-kind-of-college-students-we-need/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/10/return-of-the-interview/">面试归来&#8211;明天就上班？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/10/return-of-the-interview/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/10/return-of-the-interview/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我猜中了开始和过程，但是没有猜中结尾！</p>
+
+<p>14：33，到了<a href="http://www.5460.net">中国同学录</a>的工作地点&mdash;电信大厦27楼。因为没有前台，因此拿出手机给昨天联系我的人打电话，一看手机，没有信号。果然是人家的地盘呀，在高速电梯上，小灵通信号覆盖率是100%，而在这里，移动信号覆盖率几乎成了0%。</p>
+
+<p>找了一个空旷的地方，总算有了一个信号，信号还真的不好，断了两次才算说完“我已经到了27楼，怎么找您”这句话。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/10/return-of-the-interview/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/10/ministry-of-railways-finally-did-a-right-thing/">铁道部总算干了一件好事</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/10/ministry-of-railways-finally-did-a-right-thing/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/10/ministry-of-railways-finally-did-a-right-thing/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>刚看到的消息：</p>
+
+<p>中新网1月10日电 （记者 周音）中国铁道部新闻发言人王永平今天对外宣布：从今年起，铁路春运火车票价格不再实行上浮制度。</p>
+
+<p>提前恭喜要乘火车回家的人了！</p>
+
+<p>同时看看之前的这个报道也是有益的。
+<a href="http://news.qq.com/a/20070108/001458.htm">法学硕士致信铁道部长 呼吁07年春运停止涨价</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/50/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/48/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

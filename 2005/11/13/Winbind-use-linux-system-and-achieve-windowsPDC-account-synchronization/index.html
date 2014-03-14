@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>用winbind实现windowsPDC和linux系统的帐号同步 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="测试环境：
+操作系统：redflagDC4.1 samba版本:samba-3.0.2a-9AX ip：172.16.100.2
+（注意，一定要使用比较“干净”的DC4.1环境，就用自带的samba也可以成功，我们之前的测试因为操作系统已经被别人做过配置，所以换了好几个版本的samba都不行， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2005/11/13/Winbind-use-linux-system-and-achieve-windowsPDC-account-synchronization">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">用winbind实现windowsPDC和linux系统的帐号同步</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>测试环境：</strong>
+操作系统：redflagDC4.1 samba版本:samba-3.0.2a-9AX ip：172.16.100.2
+（注意，一定要使用比较“干净”的DC4.1环境，就用自带的samba也可以成功，我们之前的测试因为操作系统已经被别人做过配置，所以换了好几个版本的samba都不行，不得已后来重新安装DC4.1，配置就很顺利了。）
+PDC控制器：windows2000Server 测试域名tail 主机名pig ip:172.16.100.1
+测试DNS ：windows2000Server 主机名pig (与PDC为同一台服务器)</p>
+
+<!--more-->
+
+
+<p><strong>测试过程：</strong>
+<strong>
+一、准备工作：</strong>
+配置windows2000Server为PDC，建立tail域，配置能够解析 tail
+域的DNS，并用window2000或者windows98和客户端使用该DNS，能够正确登录windows2000Server的PDC域。</p>
+
+<p><strong>二、配置winbindd服务连接PDC抓到的域内的用户和组信息：</strong>
+1、修改nsswitch.conf文件：
+vi /etc/nsswitch.conf
+做如下修改，使winbind成为passwd及group的认证信息源
+passwd: files winbind shadow: files group: files winbind</p>
+
+<p>2、配置DC4.1的DNS客户端文件：
+vi /etc/resolv.conf 加上nameserver 172.16.100.1
+ping一下pig.tail，确保可以连通</p>
+
+<p>3、vi smb.conf，确保[global]段设置中有下面几行：
+[global] workgroup = TAIL netbios name = rfdc41 server string = Samba
+Server security = domain password server = pig.tail preferred master =
+no domain master = no domain logons = no idmap uid = 10000-20000 idmap
+gid = 10000-20000 template shell = /bin/bash template homedir =
+/home/%D/%U winbind separator = % winbind use default domain = Yes</p>
+
+<p>idmap uid和idmap
+gid是设置winbind把win200x域用户、组map成本地用户、组所使用的ID号范围，如果用户很多，可以加大这两个值之间的差。
+Template homedir是用户登录后的主目录，我设置成/home/域名/用户名。
+Template shell是用户登录后的shell，如果你想用PDC给你的sshd做认证，就可以加上这个，给用户一个登录shell。
+winbind separator是获取帐号的时候，域名与用户名之间的分隔符，比如tail%work
+winbind use default
+domain设置它为yes是在显示的时候屏蔽掉域名与用户名之间的分隔符，否则用户在登录linux系统的时候，就要很烦琐地键入类似tail%work这样的用户名了。</p>
+
+<p>5、用samba的net join命令把这台机器加入到windows200x域中（samba3.0以上的版本可以支持）
+net rpc join -S pig.tail -U Administrator
+然后输入域管理员密码，也就是Administrator的密码。</p>
+
+<p>6、启动samba服务和winbindd服务</p>
+
+<h1>service smb start #service winbind start</h1>
+
+<p>7、用wbinfo命令查看用winbindd服务连接PDC抓到的域内的用户和组的信息
+wbinfo -u
+可以看到类似如下winbind抓取到的PDC用户信息：
+Administrator Guest huaijinyang jack krbtgt laohuai user1 user2 user3
+user4 user5 work
+再执行：
+wbinfo -g
+可以看到类似如下winbind抓取到的PDC组信息：
+BUILTIN%System Operators BUILTIN%Replicators BUILTIN%Guests
+BUILTIN%Power Users BUILTIN%Print Operators BUILTIN%Administrators
+BUILTIN%Account Operators BUILTIN%Backup Operators BUILTIN%Users Domain
+Admins Domain Users Domain Guests Domain Computers Domain Controllers
+Cert Publishers Schema Admins Enterprise Admins Group Policy Creator
+Owners DnsUpdateProxy zzz</p>
+
+<p>8、检查PDC用户（组）转换为本地用户（组）UID和GIU情况：
+getent passwd
+显示将PDC用户转换成系统用户的UID情况，显示最后类似如下信息：
+Administrator:x:10000:10000::/home/TAIL/Administrator:/bin/bash
+Guest:x:10001:10000::/home/TAIL/Guest:/bin/bash
+huaijinyang:x:10002:10000:huai:/home/TAIL/huaijinyang:/bin/bash
+jack:x:10003:10000:jack:/home/TAIL/jack:/bin/bash
+krbtgt:x:10004:10000::/home/TAIL/krbtgt:/bin/bash
+laohuai:x:10010:10000:laohuai:/home/TAIL/laohuai:/bin/bash
+user1:x:10005:10000:user1:/home/TAIL/user1:/bin/bash
+user2:x:10006:10000:user2:/home/TAIL/user2:/bin/bash
+user3:x:10007:10000:user3:/home/TAIL/user3:/bin/bash
+user4:x:10008:10000:user4:/home/TAIL/user4:/bin/bash
+user5:x:10011:10000:user5:/home/TAIL/user5:/bin/bash
+work:x:10009:10000:work:/home/TAIL/work:/bin/bash
+PDC用户Administrator的UID从10000开始。</p>
+
+<p>getent group
+显示将PDC用户转换成系统用户的GID情况，显示最后类似如下信息：
+Domain Admins:x:10003:Administrator Domain
+Users:x:10000:Administrator,Guest,krbtgt,work,jack,user1,user2,user3,user4,huaijinyang,user5,laohuai
+Domain Guests:x:10005:Guest Domain
+Computers:x:10006:CALL-CENTER$,hjy$,localhost$,lishen$,HUAIJINYANG$,smb1$,rfas41$,lux$
+Domain Controllers:x:10007:PIG$ Cert Publishers:x:10008: Schema
+Admins:x:10002:Administrator Enterprise Admins:x:10004:Administrator
+Group Policy Creator Owners:x:10001:Administrator
+DnsUpdateProxy:x:10009: zzz:x:10010: BUILTIN%System Operators:x:10011:
+BUILTIN%Replicators:x:10012: BUILTIN%Guests:x:10013: BUILTIN%Power
+Users:x:10014: BUILTIN%Print Operators:x:10015:
+BUILTIN%Administrators:x:10016: BUILTIN%Account Operators:x:10017:
+BUILTIN%Backup Operators:x:10018: BUILTIN%Users:x:10019:
+PDC组Users 的UID从10000开始。
+能够看到这样的信息，表示配置工作已经完成了大半，winbind服务已经在正常工作了。</p>
+
+<p>这里有一点需要注意，如果在PDC域中新建了用户或者为某个用户修改了密码，需要重新刷新samba服务和winbind服务，过程如下：
+service smb stop service winbind stop rm -f /etc/samba/<em>.tdb rm -f
+/var/cache/samba/</em>.tdb net rpc join -S pig.tail -U Administrator
+service smb start service winbind start
+才能重新抓取到PDC的更新信息。</p>
+
+<p>9、建立用户的登录主目录
+samba的配置文件中指定了template homedir的路径，我们先要建立这个目录
+mkdir /home/TAIL
+注意PDC域名要大写！</p>
+
+<p><strong>三、配置PDC用户登录的pam认证</strong>
+1
+、备份原来的pam认证文件
+mkdir /home/backup cp /etc/pam.d/login /home/backup cp
+/etc/pam.d/system-auth</p>
+
+<p>2、修改login文件
+vi /etc/pam.d/login
+这个文件最后一句是
+session optional pam_console.so
+在这句后面加上
+session required pam_mkhomedir.so skel=/etc/skel umask=0022</p>
+
+<p>3、修改system-auth文件
+vi /etc/pam.d/system-auth
+a、找到以“auth”字符串开头并调用“pam_unix.so”的语句，如下：
+auth sufficient /lib/security/$ISA/pam_unix.so likeauth nullok
+在这一句最后加上字符串“use_first_pass”,如下：
+auth sufficient /lib/security/$ISA/pam_unix.so likeauth nullok
+use_first_pass
+然后在这一句上面加上语句：
+auth sufficient /lib/security/pam_winbind.so</p>
+
+<p>b、找到以“account”字符串开头并调用“pam_unix.so”的语句，如下：
+account required /lib/security/$ISA/pam_unix.so
+在这一句最后加上字符串“use_first_pass”,如下：
+account required /lib/security/$ISA/pam_unix.so use_first_pass
+然后在这一句上面加上语句：
+account sufficient /lib/security/pam_winbind.so</p>
+
+<p>四、用PDC用户登录测试
+在linux中某个终端以PDC用户登录，能够看到$提示符，说明配置完成。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-13T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2005/11/13/Winbind-use-linux-system-and-achieve-windowsPDC-account-synchronization/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2005/11/13/Winbind-use-linux-system-and-achieve-windowsPDC-account-synchronization/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2005/11/13/NB-faced-the-embarrassment-of-buying/" title="Previous Post: 买NB遇到的尴尬">&laquo; 买NB遇到的尴尬</a>
+      
+      
+        <a class="basic-alignment right" href="/2005/11/14/Congratulations-Brisy-received-the-gold-medal%21/" title="Next Post: 恭喜Brisy获得金奖！">恭喜Brisy获得金奖！ &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2005/11/13/Winbind-use-linux-system-and-achieve-windowsPDC-account-synchronization/';
+        var disqus_url = 'http://wgzhao.github.io/2005/11/13/Winbind-use-linux-system-and-achieve-windowsPDC-account-synchronization/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

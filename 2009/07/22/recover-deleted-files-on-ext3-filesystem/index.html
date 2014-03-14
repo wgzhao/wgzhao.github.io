@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>恢复ext3文件系统上被删除的文件 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="是的，我知道ext3文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。
+而且从ext3文件系统的FAQ中提到的一条也能印证这点： Q: How can I recover (undelete) deleted files from my ext3 partition? &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">恢复ext3文件系统上被删除的文件</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>是的，我知道ext3文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。<br/>
+而且从ext3文件系统的<a href="http://batleth.sapienti-sat.org/projects/FAQs/ext3-faq.html">FAQ</a>中提到的一条也能印证这点：</p>
+
+<blockquote><p>Q: How can I recover (undelete) deleted files from my ext3 partition?<br/>
+Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, said about it:</p>
+
+<blockquote><p>In order to ensure that ext3 can safely resume
+ an unlink after a crash, it actually zeros out the block pointers in
+ the inode, whereas ext2 just marks these blocks as unused in the block
+ bitmaps and marks the inode as &ldquo;deleted&rdquo; and leaves the block pointers
+ alone.<em> </em>Your only hope is to &ldquo;grep&rdquo; for parts of your files that have
+ been deleted and hope for the best.</p></blockquote></blockquote>
+
+<p>但是，但是，这不是事实的全部，被删除文件的所有信息可能都还在磁盘上，包括块指针。</p>
+
+<!--more-->
+
+
+<p>
+<a href="http://www.xs4all.nl/~carlo17">Carlo Wood</a>在2008年2月7日不小心使用了<code>rm -rf</code> 删除了/home目录，损失数据超过3GB，而唯一的备份还是2007年6月份的，他不甘心他的数据就这么丢失，于是就还是研究ext3文件系统，牛人就是牛人，他花了3个星期，写了将近5000行代码，他恢复了所有的文件。</p>
+
+<p>光说不练是假把式，我们就祭出他的工具&mdash;ext3grep。如果你是debian/ubuntu用户，那你走运了，直接<code>sudo apt-get install ext3grep</code>就可以了，其他系统我没有尝试过，源代码可以在<a href="http://code.google.com/p/ext3grep/">google code</a>下载。</p>
+
+<p>我们可以一步一步的从文件系统原理来告诉你如何恢复一个文件，但是我怕你还没有看完，就走人了，所以我就先给一个快速演示给大家看看：我们先删除/boot目录(/dev/sda2分区)下的某一个文件（如果你不相信他能恢复，请先行备份），然后利用这个工具来恢复这个文件。</p>
+
+<ol>
+<li><p>备份并删除文件</p>
+
+<pre><code> root@wgzhao-nb:/boot# cp initrd.img-2.6.28-13-generic  /var/tmp/
+ root@wgzhao-nb:/boot# mount -o rw,remount /dev/sda2 /boot
+ root@wgzhao-nb:/boot# rm -rf initrd.img-2.6.28-13-generic
+ root@wgzhao-nb:/boot# sync
+</code></pre></li>
+<li><p>如果你为了保险起见，可以立刻将boot分区(/dev/sda2)挂载为只读  <code>mount -o remount,ro /dev/sda2 /boot</code></p></li>
+<li><p>假定你不记得你要恢复的文件的名字了（大部分情况是不会记得的），我们要列出包含删除文件目录下所有包含的文件，包括被删除的文件。</p>
+
+<pre><code> root@wgzhao-nb:/boot# ext3grep /dev/sda2 --dump-names
+ Running ext3grep version 0.10.1
+ WARNING: I don't know what EXT3_FEATURE_COMPAT_EXT_ATTR is.
+ Number of groups: 13
+ Minimum / maximum journal block: 527 / 4641
+ Loading journal descriptors... sorting... done
+ The oldest inode block that is still in the journal, \
+ appears to be from 1246156824 = Sun Jun 28 10:40:24 2009
+ Number of descriptors in journal: 364; min / max sequence numbers: 310 / 883
+ Finding all blocks that might be directories.
+
+ [...]
+
+ System.map-2.6.18-128.1.14.el5
+ System.map-2.6.18-53.11AXS3
+ System.map-2.6.28-13-generic
+ System.map-2.6.28-14-generic
+ System.map-2.6.30-10-generic
+ System.map-2.6.30-10-generic.dpkg-new
+ System.map-2.6.30-10-generic.dpkg-tmp
+
+ [...]
+ lost+found
+ module-info
+ symvers-2.6.18-128.1.14.el5.gz
+ symvers-2.6.18-53.11AXS3.gz
+ vmcoreinfo-2.6.28-13-generic
+ vmcoreinfo-2.6.28-14-generic
+ vmcoreinfo-2.6.30-10-generic
+ vmcoreinfo-2.6.30-10-generic.dpkg-new
+ vmcoreinfo-2.6.30-10-generic.dpkg-tmp
+ vmlinuz
+ vmlinuz-2.6.18-128.1.14.el5
+ vmlinuz-2.6.18-53.11AXS3
+ vmlinuz-2.6.28-13-generic
+ vmlinuz-2.6.28-14-generic
+ vmlinuz-2.6.30-10-generic
+ vmlinuz-2.6.30-10-generic.dpkg-tmp
+</code></pre></li>
+<li><p>看了这个列表你总知道你要恢复的文件名字了吧，我们这里是<code>initrd.img-2.6.28-13-generic</code>，如果你还是不记得，唉，好人做到底，给你必杀技，使用下面的指令：</p>
+
+<pre><code> root@wgzhao-nb:/boot# ext3grep /dev/sda2 --ls --inode $(ls -id  /boot |awk '{print $1}')
+ Running ext3grep version 0.10.1
+ WARNING: I don't know what EXT3_FEATURE_COMPAT_EXT_ATTR is.
+ Number of groups: 13
+ Loading group metadata... done
+ Minimum / maximum journal block: 527 / 4641
+ Loading journal descriptors... sorting... done
+ The oldest inode block that is still in the journal, \
+ appears to be from 1246156824 = Sun Jun 28 10:40:24 2009
+ Number of descriptors in journal: 364; min / max sequence numbers: 310 / 883
+ Inode is Allocated
+ Finding all blocks that might be directories.
+ D: block containing directory start, d: block containing more directory entries.
+ Each plus represents a directory start that references the same \
+ inode as a directory start that we found previously.
+
+ Writing analysis so far to 'sda2.ext3grep.stage2'. Delete that file if you want to do this stage again.
+ The first block of the directory is 513.
+ Inode 2 is directory "".
+ Directory block 513:
+ .-- File type in dir_entry (r=regular file, d=directory, l=symlink)
+ |          .-- D: Deleted ; R: Reallocated
+ Indx Next |  Inode   | Deletion time                        Mode        File name
+ ==========+==========+----------------data-from-inode------+-----------+=========
+ 0    1 d       2                                         drwxr-xr-x  .
+ 1  end d       2                                         drwxr-xr-x  ..
+ 6    7 r      14  D 1248245870 Wed Jul 22 14:57:50 2009  rrw-r--r--  symvers-2.6.18-53.11AXS3.gz
+ 15   16 r    6058  D 1248086531 Mon Jul 20 18:42:11 2009  rrw-r--r--  vmlinuz-2.6.28-13-generic
+ 16   17 r    6063  D 1248086910 Mon Jul 20 18:48:30 2009  rrw-r--r--  System.map-2.6.28-13-generic
+ 17   18 r    6054  D 1248086910 Mon Jul 20 18:48:30 2009  rrw-r--r--  initrd.img-2.6.28-13-generic
+ 18   19 r    6059  D 1248086557 Mon Jul 20 18:42:37 2009  rrw-r--r--  config-2.6.28-13-generic
+ 19   20 r    6064  D 1248086910 Mon Jul 20 18:48:30 2009  rrw-r--r--  vmcoreinfo-2.6.28-13-generic
+ 22   23 r    6057  D 1248086910 Mon Jul 20 18:48:30 2009  rrw-r--r--  abi-2.6.28-13-generic.dpkg-tmp
+ 24   26 r    6056  D 1248086910 Mon Jul 20 18:48:30 2009  rrw-r--r--  config-2.6.28-13-generic.dpkg-tmp
+
+ [...]
+</code></pre></li>
+</ol>
+
+
+<p>以上你看到的D标志的，就是被删除的文件，这你总知道了吧，还是不知道，那就再往后看，最后有一个必必杀计。</p>
+
+<ol>
+<li><p>接着我们恢复文件，这是关键：</p>
+
+<pre><code> root@wgzhao-nb:~# cd /tmp
+ root@wgzhao-nb:/tmp# ext3grep $IMAGE --restore-file initrd.img-2.6.28-13-generic
+ [...]
+ Restoring initrd.img-2.6.28-13-generic
+
+ root@wgzhao-nb:/tmp# md5sum RESTORED_FILES/initrd.img-2.6.28-13-generic
+ 22092b1719a7601674fc59ff4a534dc9  RESTORED_FILES/initrd.img-2.6.28-13-generic
+ root@wgzhao-nb:/tmp# md5sum /var/tmp/initrd.img-2.6.28-13-generic
+ 22092b1719a7601674fc59ff4a534dc9  /var/tmp/initrd.img-2.6.28-13-generic
+</code></pre></li>
+</ol>
+
+
+<p>由此我们知道恢复出来的文件是完整的。这里要注意的是<code>--restore-file</code> 的文件参数，文件参数应该包括文件相对路径，相对路径指的是相对你指定的设备，比如/dev/sda2就是/boot的根目录，而<code>initrd.img-2.6.28-13-generic</code>在/boot目录下，因此这里直接给出文件名就好了，如果是需要恢复<code>/boot/grub/grub.conf</code>文件的话，那么指定的参数就应该像下面这样：</p>
+
+<p><code>root@wgzhao-nb:#ext3grep /dev/sda2 --restore-file grub/grub.conf</code></p>
+
+<p>细心的你，你可能知道了，他指定文件的方式就和grub一样，比如<code>(hd0,1)/grub/grub.conf</code>这样。</p>
+
+<p>以上是恢复一个文件的简单步骤，如果你想从ext3文件系统原理着手来看如何逐步恢复一个文件的话，请看ext3grep的作者自己写的<a href="http://www.xs4all.nl/~carlo17/howto/undelete_ext3.html">howto</a>，那里给出了一个非常详细的步骤，使得你对ext3文件系统一定有更深入的了解。</p>
+
+<p>如果你有N个文件需要恢复（N >100)，那么用上面的方法看就比较恼火了，所以作者给ext3grep增加了一个<code>--restore-all</code>的参数。<br/>
+它能把指定设备的所有看你能恢复的文件都恢复出来，写入一个<code>RESTORED_FILES</code>目录里。<br/>
+作者建议使用<code>--restore-all</code>的参数时，同时指定<code>--after</code>参数，表示指定恢复什么时间之后被删除的文件，这是为了防止用恢复过多的旧文件，算是一种过滤方式。参数为时间戳格式，比如：<br/>
+<code>ext3grep --restore-all --after 1245676061</code> 表示恢复自2009-06-22 21:07以后删除的文件。</p>
+
+<p>OK，更详细更强大的功能，自己去看作者的<a href="http://www.xs4all.nl/~carlo17/howto/undelete_ext3.html">howto</a>吧。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-22T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/07/18/readout-on-secretary-chu-china-meetings-on-clean-energy/" title="Previous Post: 朱棣文演讲">&laquo; 朱棣文演讲</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/07/23/all-data-lost/" title="Next Post: all data lost">all data lost &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/';
+        var disqus_url = 'http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

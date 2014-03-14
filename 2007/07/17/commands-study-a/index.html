@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>\[/usr/sbin/学习\]a\*命令 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="/usr/sbin下的命令明显比/sbin下的命令多了很多，因此/usr/sbin应该是一个比较长的学习过程。
+上次rachel问到我一个mke2fs的命令，我说我怎么没有看到过呀，结果她从我的/sbin学习中找出了这个命令，羞愧呀，学习的又很快忘记了，能记住的还是以前记得和经常使用的命令， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/07/17/commands-study-a">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">\[/usr/sbin/学习\]a\*命令</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><code>/usr/sbin</code>下的命令明显比/sbin下的命令多了很多，因此<code>/usr/sbin</code>应该是一个比较长的学习过程。
+上次rachel问到我一个mke2fs的命令，我说我怎么没有看到过呀，结果她从我的/sbin学习中找出了这个命令，羞愧呀，学习的又很快忘记了，能记住的还是以前记得和经常使用的命令，真是需要学而时习之呀！</p>
+
+<!--more-->
+
+
+<p>alternatives：  用来对系统中不同版本的同个软件进行管理的工具，比如系统里默认有多个java版本，到底使用那个版本的java程序，这时就需要alternatives来管理了。<code>etc/alternatives</code>目录就是它的大本营，里面全是链接文件。<br/>
+这个命令网上有很多帖子详细说明了用法，那我就使用拿来主义了\
+<a href="http://www.linuxquestions.org/linux/answers/Applications_GUI_Multimedia/LINUX_ALTERNATIVES_HOWTO">LINUX alternatives howto</a>用一个实际的例子描述了alternatives的用法。</p>
+
+<p>am-eject：这是am-utils包的一个命令，am-utils是一个BSD的automount程序，用来自动挂载一些文件系统。从amd.conf的man手册来看，似乎am-utils自能自动挂载NFS的文件系统。系统同时也带了autofs这个自动挂载程序，与am-utils不同的是，autofs是内核级别的，它需要内核的支持，另外它支持各种文件系统的挂载。而am-utils则是用户空间的，内核并不知道需要挂载哪些文件系统。分别有两篇文章详细描述了autofs和am-utils的用法，分别是
+<a href="http://www.am-utils.org/docs/am-utils/am-utils.html">Am-utils (4.4BSD Automounter
+Utilities)</a>和<a href="ftp://ftp.nrc.ca/pub/systems/linux/HOWTO/translations/zh/gb/mini/Automount.txt.gz">autofs-HOWTO</a>。</p>
+
+<p>anaconda：目前通用的linux系统安装向导程序，应该算是python的代表作吧。到网上搜索了一下，第一个找到的文章竟然是现在的同事柏生在2005年发表在IBM开发网站的文章，因此就直接拿过来了&mdash;
+<a href="http://www.ibm.com/developerworks/cn/linux/l-anaconda/index.html">redhat 安装程序 anaconda
+分析</a>。</p>
+
+<p>anacron：anacron 是和 cron 相似的任务调度器，只不过它并不要求系统持续运行。它可以用来运行通常由 cron
+运行的每日、每周、和每月的作业。网上同样的详细的帖子介绍，同样拿来用了&mdash;
+<a href="http://knit.ntsky.com/docs/redhat9/rhl-cg-zh_CN-9/s1-autotasks-anacron.html">anacron</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-17T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/07/17/commands-study-a/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/07/17/commands-study-a/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/07/16/bus-old-road-new-campus/" title="Previous Post: 6路车，老路，新校园">&laquo; 6路车，老路，新校园</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/07/18/Details-reflect-the-personality/" title="Next Post: 细节体现人格">细节体现人格 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/07/17/commands-study-a/';
+        var disqus_url = 'http://wgzhao.github.io/2007/07/17/commands-study-a/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

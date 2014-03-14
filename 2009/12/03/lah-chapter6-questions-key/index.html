@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理技术手册第六章习题实践 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="E6.1 怎样决定用户的默认组？怎样改变它？ A：感觉还是用户设置为默认的同名私有组作为默认组是比较恰当的。改变组的指令是chgrp。 E6.2 说明下面这几个umask值的区别：077、027、022和755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux系统管理技术手册第六章习题实践</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-03T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>E6.1 怎样决定用户的默认组？怎样改变它？</p>
+
+<p>A：感觉还是用户设置为默认的同名私有组作为默认组是比较恰当的。改变组的指令是<code>chgrp</code>。</p>
+
+<p>E6.2 说明下面这几个umask值的区别：077、027、022和755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？您可以给用户施加一个标准的umask吗？</p>
+
+<p>A：077，表示创建的缺省文件许可是600，027则是640，022则是644，755则是022。想成为新用户的全局默认值，一个办法是修改系统缺省的umask值，Fedora/RedHat系统是<code>/etc/bashrc</code>文件。Debian/Ubuntu系统是<code>/etc/profile</code>。或者直接修改<code>/etc/skel/.bash_profile</code>文件，增加umask的设定。</p>
+
+<!--more-->
+
+
+<p>E6.3 隐蔽口令文件的目的是什么？</p>
+
+<p>A：安全，安全，安全！</p>
+
+<p>♥ E6.4 列出不用useradd程序，给系统增加一个用户所需要的步骤。对于您本地的环境来说，额外还需要什么步骤？</p>
+
+<p>A:在<code>/etc/passwd</code>增加入口，给<code>/etc/shadow</code>增加入口，给<code>/etc/group</code>创建组（如果有必要）。<br/>
+创建用户主目录，拷贝模板文件。<br/>
+我原来管理的机器，还需要增加邮件存储路径，邮件配额等。</p>
+
+<p>♥ E6.5 确定您的站点上用于新用户的命名约定。采取什么规则？如何保持唯一性？您会想到什么缺点吗？如何删除用户？</p>
+
+<p>A：这类开放式的问题还怎不知道如何回答。首先，我没有管理这么多机器。其次管理的机器帐号数量也很少。另外，我们一般有自己的一个网络名，很少重复。那么这个网络名绝大部分就成了新用户的登录名。不过一个不好就是无法一眼就能知道这个帐号对应的实际活生生的人是谁？</p>
+
+<p>♥♥ E6.6 找到一份学生名单，用它作为脚本的输入，按照您站点上的命名约定构成登录名。在您遇到冲突之前可以受理多少用户？总共有多少个冲突？使用这些数据来评定您站点的命名约定，并给出改进建议。</p>
+
+<p>A：这也是开放式的问题了。需要在自己的实际管理经验中总结，而且还必须是在管理众多用户的情况下才能理解到这个含义。</p>
+
+<p>那就拿我们公司的邮件帐号命名来说，我们一般采取名字拼音首字母+姓全拼音的方式。比如我的邮件名字就是wgzhao。目前来看，重复的几率不大。这样命名似乎也是一个常用的方式。当然对于采取也写企业级邮件系统，比如Domino的，他们的命名采取类似LDAP数据库的分级方式。我了解到的是在大部分银行内部邮件是这样的，而且似乎采取Domino作为邮件服务器的都是这样，包括IBM本身。</p>
+
+<p>♥♥ E6.7 编写一个脚本，帮助监视/etc/passwd文件是否正常（除非您开动脑筋，否则b和e需要超级用户权限）
+a) 找出有UID 0的所有项 <br/>
+b) 找出没有口令的所有项（需要<code>/etc/shadow</code>文件) <br/>
+c) 找出有重复UID的所有项 <br/>
+d) 找出有重复登录名的所有项 <br/>
+e) 找出没有作废日期的所有项(需要<code>/etc/shadow</code>文件)</p>
+
+<p>A：每一个要求，基本上就是一条指令，我就分别写好了。 <br/>
+a) <code>awk -F: '{if ($3 == 0) print $0}' /etc/passwd</code> <br/>
+b) 题目的意思似乎是不想用到超级用户权限，那么使用sudo算不算呢？好吧，加点难度，sudo也不用。判断用户是否没有口令，一般来说如果<code>/etc/passwd</code>秘密一项没有占位符，也就是为空。<br/>
+或者<code>/etc/shadow</code>里密码一项为空。这都表示帐号没有密码。<br/>
+为了统一起来，我们可以把标准帐号挨个尝试，如果不需要密码就能su过去，那就应该是没有密码，否则就是有密码。对于Fedora/RedHat而言，标准帐号从500开始。Debian/Ubuntu则从1000开始。</p>
+
+<pre><code>#!/bin/bash
+for i in `awk -F: '{ if ($3 &gt; 499) print $1}'`
+do
+    su - $i -c "ls" &gt;/dev/null
+    [ $? -eq 0 ] || echo " user $i no password"
+done
+</code></pre>
+
+<p>c)</p>
+
+<pre><code>#!/bin/bash
+echo "the following uid(s) is/are duplicated"
+awk -F: '{print $3}' /etc/passwd |sort -n |uniq -d
+exit 0
+</code></pre>
+
+<p>d)</p>
+
+<pre><code>#!/bin/bash
+echo "the following name(s) is/are duplicated"
+awk -F: '{print $1}' /etc/passwd  |sort  |uniq -d
+exit 0
+</code></pre>
+
+<p>e) 这个暂时想不出不用root权限如何获得任意帐号的过期信息。大家有什么办法吗？如果root权限就办好多了，比如下面这样： <code>awk -F:'{if ( $8 \&gt; 0) print $0 }' /etc/shadow</code></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-03T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>, <a class='category' href='/blog/categories/wo-du-wo-shu/'>我读我书</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/11/27/lah-chapter5-questions-key/" title="Previous Post: Linux系统管理技术手册第五章习题实践">&laquo; Linux系统管理技术手册第五章习题实践</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/12/15/calico-wedding/" title="Next Post: 结婚两周年">结婚两周年 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key/';
+        var disqus_url = 'http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>\[/sbin学习\] G\*命令 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="/sbin下g开头的命令如下： generate-modprobe.conf getkey grub grub-install grub-terminfo genhostid
+getmd grubby grub-md5-crypt generate-modprobe.conf: &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/02/09/commands-start-g">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">\[/sbin学习\] G\*命令</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>/sbin下g开头的命令如下：</p>
+
+<blockquote><p>generate-modprobe.conf getkey grub grub-install grub-terminfo genhostid
+getmd grubby grub-md5-crypt</p></blockquote>
+
+<p>generate-modprobe.conf:  将原来的module.conf文件迁移到modprobe.conf文件。这是2.4内核到2.6内核后驱动模块配置的一个改变。</p>
+
+<!--more-->
+
+
+<p>getkey:在指定的时间内等待按键，默认时间单位是秒。比如：</p>
+
+<pre><code>[root@lancy sbin]# getkey -c 5 -m "Please input a number within 5s[%d]:" 
+Please input a number within 5s[5]
+</code></pre>
+
+<p>后面的[]内的时间是变化的。</p>
+
+<p>grub,grub-install,grub-terminfo,grub-md5-crypt,grubby这这些命令都是和grub有关的。</p>
+
+<p>genhostid:随机生成一个hostid号，如果<code>/etc/hostid</code>不存在的话,他和我们通常使用的hostid(1)有些微妙的关系。</p>
+
+<p>如果/etc/hostid文件不存在，则hostid命令打印出当前机器的标志号，只要你的机器硬件设备没有更换，这个ID号就不会改变，很多情况下这个号码和你的网卡有一定的关系。<br/>
+于是在Linux下，很多软件的授权号码就于hostid有关系，因为不同的机器hostid不同，这样能保证只有授权的机器才能安装对应的软件。<br/>
+但是如果/etc/hostid文件存在,hostid命令则只是打印出该号码，而/etc/hostid的生成就是依赖genhostid命令。<br/>
+但是我刚才说了，genhostid是随机产生一个hostid号。因此如果你希望hostid命令每次得到不同的结果，那么你就应该每次都重新生成/etc/hostid文件。不过要注意的是hostid命令生成的hostid号只有6位，而genhostid产生的是8位。</p>
+
+<pre><code>[root@lancy sbin]# hostid
+7f0100
+[root@lancy sbin]# genhostid
+[root@lancy sbin]# hostid
+804937a4
+[root@lancy sbin]# rm -f /etc/hostid
+[root@lancy sbin]# hostid
+7f0100
+[root@lancy sbin]# genhostid
+[root@lancy sbin]# hostid
+106a8419
+[root@lancy sbin]# hexdump /etc/hostid
+0000000 8419 106a
+0000004
+</code></pre>
+
+<p>从hexdump命令的结果来看，<code>/etc/hostid</code>文件结构似乎很简单，我们尝试获得一个我们需要的“随机”hostid号试试。</p>
+
+<pre><code> [[root@lancy tmp]# cat myhostid.c
+#include
+#include
+int main()
+{
+int fd1;
+int a=0×12345678; //my hostid
+fd1=open(“hostid”,O_CREAT|O_WRONLY,0220);
+if (!fd1)
+{
+perror(“error open “);
+exit(65);
+}
+write(fd1,&amp;a,sizeof(a));
+close(fd1);
+return 0;
+}
+[root@lancy tmp]# gcc myhostid.c -o myhostid
+[root@lancy tmp]# ./myhostid
+[root@lancy tmp]# #cp -f hostid /etc/hostid
+[root@lancy tmp]# hostid
+d2bdd8ed
+[root@lancy tmp]# cp -f hostid /etc/hostid
+[root@lancy tmp]# hostid
+12345678
+</code></pre>
+
+<p>getmd: 分析<code>/etc/raidtab</code>文件，它是scsirastools包中一个命令，这个包的主要功能就是增加一些管理scsi设备的命令，有下面一些：</p>
+
+<p>sgdskfl – to load disk firmware to disks under Linux<br/>
+sgmode – to get and set SCSI mode pages<br/>
+sgdefects – to read the primary and grown defect lists<br/>
+sgdiag – to perform format &amp; other test functions<br/>
+sgraidmon – to monitor software RAID disks for hot-insertion/removal<br/>
+getmd – to parse /etc/raidtab for devices (used in mdmon only)<br/>
+mdadm – to administer the md raid configuration <br/>
+alarms – to set disk fault LEDs on mBMC platforms</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-09T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/02/09/commands-start-g/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/02/09/commands-start-g/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/02/08/In-the-past-two-days-with-Rachel/" title="Previous Post: 这两天陪Rachel">&laquo; 这两天陪Rachel</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/02/12/commands-start-h/" title="Next Post: \[/sbin学习\]h\*命令">\[/sbin学习\]h\*命令 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/02/09/commands-start-g/';
+        var disqus_url = 'http://wgzhao.github.io/2007/02/09/commands-start-g/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

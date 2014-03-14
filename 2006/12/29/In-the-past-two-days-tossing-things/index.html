@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>这两天折腾的事情 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="Update: 已经补充完了，不容易！ 这两天没有发帖子，因为处理一个紧急的事情去了。
+up的一个朋友的服务器崩溃了，想让我看看，数据是否有恢复的可能。 于是登录去看了看，系统已经重新安装了，原来的根分区dd了出来16G的样子，mount发现是ext2的文件系统，AS4 updater &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2006/12/29/In-the-past-two-days-tossing-things">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">这两天折腾的事情</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Update: 已经补充完了，不容易！</p>
+
+<p>这两天没有发帖子，因为处理一个紧急的事情去了。<br/>
+<a href="http://up.uplinux.com">up</a>的一个朋友的服务器崩溃了，想让我看看，数据是否有恢复的可能。</p>
+
+<p>于是登录去看了看，系统已经重新安装了，原来的根分区dd了出来16G的样子，mount发现是ext2的文件系统，AS4 updater
+2的默认文件系统会是ext2吗？</p>
+
+<!--more-->
+
+
+<p>还好至少mount上来，可惜什么都没有，要从这个分区找数据，可能性不大。</p>
+
+<p>考虑服务器上主要是跑web和mail，用户催得比较紧，因此先把服务搭建起来，而且管理员还说有一些备份。<br/>
+但是痛苦的是，网管刚接收这台服务器，他对这台服务器的了解和我的了解一样&mdash;-都是空白。而了解这台机器的人早走了。
+因此我拿不到任何有价值的东西，包括网站的架构，邮件的架构。<br/>
+于是只能从目前还能找得到的数据去猜测当时的架构了。<br/>
+网站比较好说，从<code>httpd.conf</code>文件可以知道大概。这个就放到后面去解决。<br/>
+先解决邮件，首先我能看到的是用户采用了<a href="http://www.squirrelmail.org/">squirremail</a>程序作为邮件的web界面。  squirrelmail我以前了解过一些，他是目前很多linux发行版本自带的一个webmail。可扩展性非常强，而且链接邮件的方式不是采用通常的pop3，而是IMAP。<br/>
+从采用IMAP的角度我想他应该采取了cyrus-imap之类的应用库，这也是系统自带的，而cyrus-imap一般都是配合cyrus-sasl来做的，因此我猜测估计会有cyrus-sasl的参与。<br/>
+同时我还看到有postfixadmin程序，因此估计MTA采用的是postfix而不是sendmail。
+综合上面的考虑，我估计原来的邮件服务器的架构是：</p>
+
+<pre>
++---------------------------------------------------+|                            ||  25/25    25/25     110/993  143/995    80/443    ||
+Incoming Outgoing     POP3     IMAP    WEB-MAIL   ||    
+/       /         /       /        /      
+||    ||       ||         ||       ||        ||      ||    
+/       /         /       /        /      |+-------------------+---------------+---------------+|    
+    Postfix        |               | squirremail   ||                   |               +---------------+|                  
+     |      Cyrus-IMAP               ||       +-----------+-------------------------------+|       
+     |                  Cyrus-SASL               ||       +-------------------------------------------+|       |                  saslauthd                ||       +-------------------------------------------+|       
+     |                     PAM     |+-------+-------------------------------------------+|                      MySQL                        |+---------------------------------------------------+
+</pre>
+
+
+<p>这是我目前折腾的最复杂的邮件服务器架构了。以前弄过一些，不过都没使用mysql来做认证，而是采用cyrus-sasl自己的数据库sasldb2。那就要简单很多。
+不管怎么样，先从mysql这层恢复，先前的数据库结构就无法得知了，没有任何备份，后来从一个角落里翻除了一个.sql文件，打开一看，嗯，是针对mysql的，有数据库，有表，还有一些数据，不过是05年12月份的，但是至少数据库结构应该差不多了，不过随也不能保证1一你的时间没有修改过，而且问题是没有人告诉你这个sql文件就是当时的一个备份，为了确认，我又去找postfixadmin程序的说明和对数据库的操作代码，结果在docs目录下看到一个MYSQL_DATABASE.TXT的问题，里面描述了如何使用mysql做为用户的存储介质，其描述的数据库名称，表名称和那个sql文件一致，这样看来，当时很有可能就是按照这个文档来做的，这也是死马当活马医了，先导入再说。</p>
+
+<p>导入过期数据，配置postfixamdin，访问postfixadmin正常，给管理员看，他确认域和导入的帐户都没有问题，那就是他了。ok，web界面的管理配置搞定了。
+接下来就是pam认证的问题，以前没有听说过mysql是否支持pam认证或者说是否有这类的插件，但是找遍了mysql的官方站点，一无所获，googling一下，找到了一个家伙写的插件。这样一来，我原来构造的架构有了变化，需要加上一层，变成这样了。</p>
+
+<pre>
++---------------------------------------------------+|                                                   ||  25/25    25/25     110/993  143/995    80/443    || Incoming Outgoing     POP3     IMAP    WEB-MAIL   ||    /       /         /       /        /      ||    ||       ||         ||       ||        ||      ||    /       /         /       /        /      |+-------------------+---------------+---------------+|    Postfix        |               | squirrelmail  ||                   |               +---------------+|                   |      Cyrus-IMAP               ||       +-----------+-------------------------------+|       |                  Cyrus-SASL               ||       +-------------------------------------------+|       |                  saslauthd                ||       +-------------------------------------------+|       |                     PAM                   ||       +-------------------------------------------+|       |                  pam_mysql                |+-------+-------------------------------------------+|                      MySQL                        |+---------------------------------------------------+
+</pre>
+
+
+<p>于是<code>confgiure &amp;&amp; make &amp;&amp; make install</code>。
+结果怎么折腾，认证死活通不过，后来找了一些文档，说cyrus-sasl默认并不支持采用密文保存的密码，如果需要，那么需要打对应的补丁，那也就意味着需要重新编译。
+那还能怎样，折腾吧，于是一番configure,make,make
+install后，继续测试，发现还是通不过，我怀疑是不是我的配置有问题，于是将mysql先替换成sasldb2，也就是cyrus-sasl自己的数据库，添加了测试帐户，测试通过，嘿，这就不得不让我怀疑是pam插件的问题的，也就是<code>pam_mysql</code>的问题。
+于是开始折腾<code>pam_mysql</code>，N个小时后，无果，于是打算放弃。</p>
+
+<p>接下来就不知道怎么办了，漫无目的的敲着<code>cd .. &amp;&amp; ls</code>命令，突然发现一个目录，里面有一些于邮件相关的软件源代码，看时间，应该是当时配置邮件服务器留下的，相比我的架构而言有一些不同</p>
+
+<p>1)没有<code>pam_mysql</code>这个目录
+2)多了<code>courier_authlib</code>,postfix,maildrop,courier_imap等程序的源代码。
+这些都是这次配置所必须的吗？</p>
+
+<p>又开始googling了，还真找到了这样的方案，结构大致如下：</p>
+
+<pre>
+    +--------------------------------------------------------------+|                                                              ||  25/25    25/25                110/993  143/995    80/443    || Incoming Outgoing                POP3     IMAP    WEB-MAIL   ||    /       /                    /       /        /      ||    ||       ||                    ||       ||        ||      ||    /       /                    /       /        /      |+---------------------------------+----------------+-----------+|                  Postfix        |                |squirremail||              +------------------+                +-----------+|              |    Cyrus-SASL    |        Courier-IMAP        |+----------+   +------------------+--------------+             || MailDrop |   |authdaemond.mysql |(authmysqlrc) |             |+----------+---+------------------+--------------+-------------+| MailDir/ |                   MySQL             |   MailDir/  |+----------+-------------------------------------+-------------+
+</pre>
+
+
+<p>这个方案也够复杂，主要是<code>cyrus-sasl</code>目前不能直接支持mysql（据说2.1.22版本支持，但是我编译后，还是够呛）。
+第3天，用户那里也找来的一个简单的配置文档，据说是当时的配置笔记，但无法肯定。
+管他呢，先照着做吧。
+又重新开始折腾，又经过N个小时编译，配置，调试。收邮件没有问题了，本地发邮件也没有问题，但是在smtp认证上，无论怎么按照配置文档来配置均是认证失败。</p>
+
+<p>后来用户要得级，因此就没有再继续深入了，无smtp认证是可以发邮件的。</p>
+
+<p>接下来就是网站了，这个单纯一点，找不到数据库，那就是无米之炊，没辙了。</p>
+
+<p>而up也在努力的尝试修复那个dd出来的大于16G的文件。得出的结论是：能看到一些文件（使用strings），但是fsck修复总是会中断，最长的一次达30分钟。从dumpe2fs的信息来看，用户是在挂载的情况下执行的fsck，甚至有可能是系统还在提供服务的情况下做的fsck，这无疑是在伤口上撒盐的做法。
+如果用户当时发现了这个问题，立刻拔掉网线，或者立刻讲/文件系统重新挂载为只读，然后找人修复，或许有效。
+而管理员偏偏对linux不太了解，也没有及时备份，才导致也许能挽救的信息最终丢失了。</p>
+
+<p>有次可以得到两点启示：</p>
+
+<p>1）备份是必须，虽然我们不知道备份是否有用，是否能恢复。
+2）正确和拯救方案也是重要的，特别是在执行者对次并不了解的情况的下，这种情况下，执行者要做的事情就是”什么也别做“，应该找一个有一定经验的或者有类似经历的人，甚至是专业的技术支持公司来做这个事情，这样才能尽可能降低故障带来的损失！</p>
+
+<p>这不由得让我想起的我原来的论坛，一直一来都有备份，但都是本地备份，而且也是找别人借的，结果突然某天，服务器无法访问，持续时间长达1一个月，等再能访问服务器的时候，早已经面目全非了。
+所以备份不仅仅是本地，更应该是远程。所以现在服务器的上的数据都是每天本地备份一次，远程备份一次。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-29T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/sui-xin-suo-xiang/'>随心所想</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2006/12/29/In-the-past-two-days-tossing-things/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2006/12/29/In-the-past-two-days-tossing-things/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/12/26/nostalgia-yesterday-night/" title="Previous Post: 昨晚怀旧">&laquo; 昨晚怀旧</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/01/01/happy-new-year/" title="Next Post: 新年快乐！">新年快乐！ &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2006/12/29/In-the-past-two-days-tossing-things/';
+        var disqus_url = 'http://wgzhao.github.io/2006/12/29/In-the-past-two-days-tossing-things/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

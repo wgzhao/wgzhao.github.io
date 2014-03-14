@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Core Python Programming 2nd Chapter 5 Exercise - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="思考再三，还是决定在blog记录下练习《Python核心编程第二版》习题的过程。
+英文原版书后是有有些习题答案的，但是基本上都是一些简单问题的答案，而且较少。练习是最好的学习，所以我打算尽可能把能练手的习题做一遍。 我手头只有第一版的印刷版，第二版是电子版，目前无法得知电子版是否和印刷版本一致。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Core Python Programming 2nd Chapter 5 Exercise</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>思考再三，还是决定在blog记录下练习《<a href="http://book.douban.com/subject/3112503/">Python核心编程第二版</a>》习题的过程。<br/>
+英文原版书后是有有些习题答案的，但是基本上都是一些简单问题的答案，而且较少。练习是最好的学习，所以我打算尽可能把能练手的习题做一遍。</p>
+
+<p>我手头只有第一版的印刷版，第二版是电子版，目前无法得知电子版是否和印刷版本一致。</p>
+
+<!--more-->
+
+
+<p>不过每章的习题我打算和第一版都比较一下，如果第一章有一些好的习题在第二章去掉了，我也会贴出来。</p>
+
+<p>希望Pythoner能帮我指出代码中非Pythonic的地方。</p>
+
+<p>我练习的环境是Ubuntu 10.04 X86，python的版本是2.6.5。安装了一堆的modules。 所以代码中我可能不会判断module引入是否失败。</p>
+
+<p>另外，我利用了Python 2.6.5 标准库的<code>doctest</code>模块来做测试，测试用例写在函数说明性文档里，如果运行脚本没有报错，且退出代码是0，表示测试通过，否则会给出大量的报错，更详细的信息请参考<a href="http://docs.python.org/library/doctest.html">官方文档</a>。</p>
+
+<p>前四章都是一些概念性的说明，习题也是一些理论性的说明，就跳过了。<br/>
+从第五章开始。</p>
+
+<blockquote><p>5-3 标准类型运算符. 写一段脚本,输入一个测验成绩,根据下面的标准,输出他的评分 成绩(A-F) <br/>
+A: 90–100 B: 80–89 C: 70–79 D:60–69 F: &lt;60</p></blockquote>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-3.py could not be found</p>
+
+<blockquote><p>5-4 取余。判断给定年份是否是闰年。使用下面的公式: <br/>
+一个闰年就是指它可以被 4 整除,但不能被 100 整除, 或者它既可以被 4 又可以被100 整除。<br/>
+比如 1992,1996 和 2000 年是闰年,但 1967 和 1900 则不是闰年。
+下一个是闰年的整世纪是2400 年。</p></blockquote>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-4.py could not be found</p>
+
+<blockquote><p>5-5 取余。取一个任意小于1美元的金额,然后计算可以换成最少多少枚硬币。<br/>
+硬币有 1美分,5 美分,10 美分,25 美分四种。<br/>
+1 美元等于100 美分。<br/>
+举例来说,0.76 美元换算结果应该是 3 枚 25 美分,1 枚 1 美分。<br/>
+类似 76 枚 1 美分,2 枚 25 美分+2 枚 10 美分+1 枚 5 美分+1 枚 1 美分这样的结果都是不符合要求的。</p></blockquote>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-5.py could not be found</p>
+
+<blockquote><p>5-6 算术。 写一个计算器程序 你的代码可以接受这样的表达式,<br/>
+两个操作数加一个运算符: <br/>
+N1 运算符 N2. 其中 N1 和 N2 为整数或浮点数,<br/>
+运算符可以是+, &ndash;, *, /, %, ** <br/>
+分别表示加法,减法, 乘法, 整数除,取余和幂运算。<br/>
+计算这个表达式的结果,然后显示出来。<br/>
+提示:可以使用字符串方法 split(),但不可以使用内建函数 eval().</p></blockquote>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-6.py could not be found</p>
+
+<blockquote><p>5-8 几何。计算面积和体积: <br/>
+(a) 正方形 和 立方体 <br/>
+(b) 圆 和 球</p></blockquote>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-8.py could not be found</p>
+
+<blockquote><p>5-10 转换。写一对函数来进行华氏度到摄氏度的转换。<br/>
+转换公式为 C = (F &ndash; 32) * (5 / 9) <br/>
+应该在这个练习中使用真正的除法, 否则你会得到不正确的结果。</p></blockquote>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-10.py could not be found</p>
+
+<blockquote><p>5–15. 最大公约数和最小公倍数。请计算两个整数的最大公约数和最小公倍数</p></blockquote>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-15.py could not be found</p>
+
+<blockquote><p>5-17 随机数。熟读随机数模块然后解下面的题: <br/>
+生成一个有 N 个元素的由随机数 n 组成的列表, 其中 N 和 n 的取值范围分别为: (1&lt; N &lt;= 100), (0 &lt;= n &lt;= 231 -1)。<br/>
+然后再随机从这个列表中取 N (1 &lt;= N &lt;= 100)个随机数出来,对它们排序,然后显示这个子集。</p></blockquote>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-17.py could not be found</p>
+
+<p>最后这个题目耍了一点小技巧。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-28T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2010/05/25/change-the-lcd-brightness-with-keyboard-shortcuts-html/" title="Previous Post: 编写自己简单的屏幕亮度调整程序">&laquo; 编写自己简单的屏幕亮度调整程序</a>
+      
+      
+        <a class="basic-alignment right" href="/2010/05/28/ipython-for-gedit/" title="Next Post: ipython for gedit">ipython for gedit &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/';
+        var disqus_url = 'http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

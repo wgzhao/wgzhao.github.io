@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>freenas--开源的NAS - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="04年的时候，曾经做过一段时间的NAS开发，不过因为各种原因放弃了，前天，无意中发现了FreeNAS这个开源项目,项目虽然是去年10月成立的，但是发展较快，下载次数也达到了108,852之多。这个项目同时有一个中文网站,不过没有怎么更新。给管理员发了一封邮件希望能加入到项目的开发，也没有回信。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2006/07/10/freenas-the-open-source-nas">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">freenas--开源的NAS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>04年的时候，曾经做过一段时间的NAS开发，不过因为各种原因放弃了，前天，无意中发现了<a href="http://freenas.sourceforge.net/">FreeNAS</a>这个开源项目,项目虽然是去年10月成立的，但是发展较快，下载次数也达到了108,852之多。这个项目同时有一个<a href="http://www.freenas.cn">中文网站</a>,不过没有怎么更新。给管理员发了一封邮件希望能加入到项目的开发，也没有回信。</p>
+
+<p>下面是我的安装手机，贴出来和大家共享：</p>
+
+<!--more-->
+
+
+<p>1)从官方网站下载最新的<a href="http://prdownloads.sourceforge.net/freenas/FreeNAS-0.671.iso?download">ISO文件</a></p>
+
+<p>2）由于没有测试机来测试，只好采用虚拟机，host OS是红旗桌面5.0 HP-OEM版.</p>
+
+<pre><code>#qemu-img create nas.img 500M 
+#qemu-img create data.img 200M 
+#qemu -hda nas.img -cdrom FreeNAS-0.6.7.iso -net tap -net nic -boot d
+</code></pre>
+
+<p>3)在出现的菜单中，选择7来安装如下图所示
+<img src="/uploads/freenas_1.png" alt="image" /></p>
+
+<p>4)紧接着它会询问你安装的模式，主要是问你分一个分区还是两个分区，一个分区的概念是这个分区是全部给操作系统，不建立该分区上存放数据。两个分区的意义在于一个是系统分区，一个是数据分区。我这里的选择是2，其实你也可以选择1.后来我发现选择2没有含义，因为另外一个分区挂载点是/cf，而该目录是不对外访问的。因此后来我又追加了一个data.img来专门存放数据。具体件见下图：
+<img src="/uploads/freenas_2.png" alt="image" /></p>
+
+<p>5）接下来是选择你的安装来源和安装目的地，我这里分别是acd0和ad0，或许你那里并不是这样的。具体见下图：
+<img src="/uploads/freenas_3.png" alt="image" /></p>
+
+<p>6）大约2分钟，系统安装完成，按回车重启，见下图:
+<img src="/uploads/freenas_4.png" alt="image" /></p>
+
+<p>7)重启后，设置你的IP地址，这个是你可以使用web界面了（有关qemu如何使用网络的方法见帖子<a href="/2005/12/26/qemu-two-way-internet.html">qemu的两种上网方式</a>
+)</p>
+
+<p>8)以我的为例，输入<a href="http://192.168.0.2/.%E9%BB%98%E8%AE%A4%E5%B8%90%E5%8F%B7%E6%98%AFadmin,%E5%AF%86%E7%A0%81%E6%98%AFfreenas.%E8%BF%9B%E5%85%A5%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2%E3%80%82%E5%A6%82%E4%B8%8B%EF%BC%9A">http://192.168.0.2/.%E9%BB%98%E8%AE%A4%E5%B8%90%E5%8F%B7%E6%98%AFadmin,%E5%AF%86%E7%A0%81%E6%98%AFfreenas.%E8%BF%9B%E5%85%A5%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2%E3%80%82%E5%A6%82%E4%B8%8B%EF%BC%9A</a>
+<img src="/uploads/freenas_index.png" alt="image" /></p>
+
+<p>后面的管理就很简单了，和大部分的NAS管理差不多。相信玩过NAS的人对这个管理界面不会太陌生。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ji-zhu-ji-qiao/'>技术技巧</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2006/07/10/freenas-the-open-source-nas/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2006/07/10/freenas-the-open-source-nas/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/07/09/inout-is-not-suitable-for-me-blog/" title="Previous Post: inout并不适合我这样的blog">&laquo; inout并不适合我这样的blog</a>
+      
+      
+        <a class="basic-alignment right" href="/2006/07/15/Watermelon-really-can-not-eat-it/" title="Next Post: 西瓜真的不能吃了">西瓜真的不能吃了 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2006/07/10/freenas-the-open-source-nas/';
+        var disqus_url = 'http://wgzhao.github.io/2006/07/10/freenas-the-open-source-nas/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

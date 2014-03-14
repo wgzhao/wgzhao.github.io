@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>配置PAM－－实践 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="之前写过一篇配置PAM－－介绍的帖子，这是第二篇. 具有调用PAM的应用程序可以用来认证用户，登录服务，屏保，密码工具，可以和其他任何认证工具交互。
+要实现这些功能，你需要配置或者是标准的/etc/passwd文件，或者是LDAP服务，或者是windows域控制器，或者是其他任何PAM支持的东西 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/04/10/practice-pam">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">配置PAM－－实践</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>之前写过一篇<a href="2007/04/05/configuration-pam-introduction/">配置PAM－－介绍</a>的帖子，这是第二篇.</p>
+
+<p>具有调用PAM的应用程序可以用来认证用户，登录服务，屏保，密码工具，可以和其他任何认证工具交互。
+要实现这些功能，你需要配置或者是标准的/etc/passwd文件，或者是LDAP服务，或者是windows域控制器，或者是其他任何PAM支持的东西。</p>
+
+<p>虽然，配置标准的PAM看上去比较简单，但是PAM却是非常灵活的，他可以把一个正在工作的系统折腾的不知所以然，所以我们在配置的时候还是要格外小心。 <br/>
+接下来，希望给出一些例子，结合上一篇文章，更加全面的了解PAM。</p>
+
+<!--more-->
+
+
+<p>在开始之前，你必须意识到修改PAM文件会有潜在的风险，如果修改不当，有可能无法登录，因此修复起来比较麻烦。所以修改之前备份相关的配置文件，还有即使任何时候保留一个root已经登录的终端，防止出现问题后，还有一个登录终端可以操作。有点罗嗦，但绝对不是危言耸听。</p>
+
+<p><strong>一般性PAM配置</strong></p>
+
+<p>大部分Linux发行版本的PAM配置文件都在/etc/pam.d目录下，每一个文件－－包括cups,gdm,imap,login,passwd,samba,sshd,su,sudo,system-auth,useradd,xdm,xscreensave等－－指定一个或多个PAM堆栈来告诉PAM如何为特定的程序或服务认证用户。</p>
+
+<p>一个重要的文件便是/etc/pam.d/system-auth，他是pam_stack.so模块的标准控制文件，后面给给出描述。</p>
+
+<p>现在给出一个PAM配置文件的例子，内容如下(list one):</p>
+
+<pre><code>#%PAM-1.0
+auth requisite pam_unix2.so nullok
+auth required pam_securetty.so
+auth required pam_nologin.so
+auth required pam_env.so
+auth required pam_mail.so
+
+account required pam_unix2.so
+
+password required pam_pwcheck.so nullok
+password required pam_unix2.so nullok use_first_pass use_authtok
+
+session required pam_unix2.so none
+session required pam_limits.so
+</code></pre>
+
+<p>上面这个文件来自SuSE Linux的<code>/etc/pam.d/login</code>文件。这里面的有些模块只是为了方便而不是去执行认证的任务。<br/>
+举个例子，上面的auth堆栈中调用的<code>pam_mail.so</code>模块并不执行认证操作，<code>pam_mail.so</code>只是检查新邮件然后告诉当前的用户。
+上面例子中大部分的模块在上一篇文章中都已经简单介绍了。不过一个新的模块<code>pam_nologin.so</code>似乎没有介绍。<br/>
+<code>pam_nologin.so</code>模块检查<code>/etc/nologin</code>文件。<br/>
+如果这个文件存在，这个模块将会拒绝所有的用户登录，并显示<code>/etc/nologin</code>的内容，但是root除外(root总是有例外和特权)</p>
+
+<p>上面例子的一个关键点是<code>pam_unix2.so</code>模块是做为requisite模块在auth堆栈中被调用的，而剩余的模块采用的是required。<br/>
+上次的帖子说道，如果是requisite类型的模块失败(比如输入错误的密码),PAM将绕过这个堆栈后面剩余的模块。<br/>
+与此相反，一个required模块在这种情况会要求剩余的模块继续执行，尽管整个堆栈最终仍然是以失败退出。<br/>
+那么上面的这个例子，就会导致这样的一个情况发生，如果用户输入错误的密码，非认证的auth模块将会忽略，这有时候是有用的，万一这些模块中的某一个做了不应该做的事情，在一次认证失败的事情驱动过程中。虽然不是所有的认证堆栈都会这样预防。</p>
+
+<p>有些发行版本的<code>/etc/pam.d/login</code>文件的结构可能和我们上面举的例子完全不同。许多发行版本是调用<code>pam_unix.so</code>而不是<code>pam_unix2.so</code>,另外模块的调用顺序也不同。有些发行版本更喜欢使用required控制方式，但是更常见的是requisite。</p>
+
+<p><strong>使用pam_stack.so模块</strong></p>
+
+<p>许多发行版本会大量使用pam_stack.so模块，
+下面这个例子显示了一个典型的login配置文件是如何调用这个模块的(来自Gentoo)(list two)</p>
+
+<pre><code>#%PAM-1.0
+
+auth required pam_securetty.so
+auth required pam_stack.so service=system-auth
+auth required pam_nologin.so
+
+account required pam_stack.so service=system-auth
+
+password required pam_stack.so service=system-auth
+
+session required pam_stack.so service=system-auth
+session optional pam_console.so
+</code></pre>
+
+<p>这个例子采用的是调用<code>pam_stack.s</code>o模块而不是<code>pam_unix.so</code>模块或<code>pam_unix2.so</code>模块，通过service选项将配置文件的名字传递给该模块(<code>pam_stack.so</code>)。这个传递过去的配置文件(system-auth)的内如如下(list
+three):</p>
+
+<pre><code>#%PAM-1.0
+
+auth required pam_env.so
+auth required pam_unix.so likeauth nullok
+
+account required pam_unix.so
+
+password required pam_cracklib.so retry=3
+password required pam_unix.so nullok md5 shadow use_authtok
+
+session required pam_limits.so
+session required pam_unix.so use_first_pass
+</code></pre>
+
+<p>例子中<code>pam_stack.so</code>模块返回成功与否依赖于模块定义的配置文件的返回值(典型的是system-auth)。如果你仅仅只是配置一个服务，那么这种方式可能没有什么好处。但是显然，你的系统肯定运行比较多的这些服务器程序，因此采用这种模式的好处就显而易见了：你仅仅只需要修改一个配置文件就能使整个调用该配置文件的服务发生改变。</p>
+
+<p>例子2中(<code>/etc/pam.d/login</code>)在调用了<code>pam_stack.so</code>模块后，调用了<code>pam_nologin.so</code>模块。<code>pam_nologin.so</code>模块阻止非root用户登录，如果<code>/etc/nologin</code>文件存在，你可能考虑把它当成一个安全措施而应用在shell登录服务上，但是不会应用在POP邮件获取上(仅举这个例子)。因此把这个调用放到login服务的文件本身里比放到auth-system文件里更有意思。</p>
+
+<p><strong>增加网络认证工具</strong><br/>
+一种典型的修改PAM认证方式的案例是增加一些模块，使得系统能够使用类似LDAP服务或者Windows
+域控制器服务等来认证用户。</p>
+
+<p>为了做到这点，首先你要你的系统是否使用<code>pam_stack.so</code>模块。如果没有，你可以直接修改登录服务所使用的配置文件来增加新的认证工具。  这意味着你可能需要修改一个到几个文件;反过来，如果使用<code>pam_stack.so</code>模块，那你可以修改服务对应的配置文件来达到你的目的，或者你修改<code>/etc/pam.d/system-auth</code> 来改变整个认证服务。 <br/>
+为了增加一个新的认证模块，你必须增加一个对该模块的引用(reference)到相关的堆栈中去。很明显，auth堆栈是肯定需要修改的，而account堆栈对认证来说也是重要的。如果你准备修改<code>/etc/pam.d/system-auth</code>文件，你也应该增加新认证模块的引用到session堆栈和password堆栈中，作为可选方案，你可以修改这个新的认证工具的配置文件，使得他本身能够从新协议中使用这些服务，比如为passwd工具服务的passwd文件。</p>
+
+<p>一个大问题是，尽管你知道如何修改堆栈。但是修改的细节而因为不同的系统版本，不同的配置方式而不同。<br/>
+一般来说，你应该做这么几件事情：</p>
+
+<ul>
+<li>在已经存在的模块(<code>pam_unix.so or pam_unix2.so</code>)前增加新的模块引用。</li>
+<li>把新模块引用设置为sufficient标志。这样一来，如果新模块工作，他认证成功后，堆栈停止执行，忽略老的认证模块。如果新模块失败，老的模块仍然能够调用。(顺便说一句，对于帐号而言，使用本地管理可能更便利，比如root.)</li>
+<li>增加<code>try_first_pass</code>或者<code>use_first_pass</code>选项给老的(<code>pam_unix.so or    pam_unix2.so</code>)模块。这样可以防止用户不再新认证工具列表中时，系统显示两次密码提示。</li>
+</ul>
+
+
+<p>还是举个例子，考虑例子3(list three)的auth堆栈。你如果想增加一个LDAP服务来认证用户，那么你应该这样加入<code>pam_ldap.so</code>模块到堆栈中：</p>
+
+<pre><code>auth required pam_env.so
+auth sufficient pam_ldap.so
+auth required pam_unix.so likeauth nullok try_first_pass
+</code></pre>
+
+<p>因为这是一个system-auth配置方式，他将影响所有依赖PAM认证的程序。新的系统首先会去尝试LDAP认证，如果成功，<code>pam_stack.so</code>模块成功，<code>pam_unix.so</code>模块不会被调用；如果LDAP认证失败，<code>pam_unix.so</code>将被调用，他的结果决定了<code>pam_stack.so</code>模块的成功与否。</p>
+
+<p>任何情况下，你都应该记得修改auth堆栈和account堆栈，为了那些主要使用PAM认证的工具(login,pop,sshd,xdm,gdm,etc).其他工具，比如passwd配置文件，还要求有别的改变或者说出了除此之外的其他改变（后面会提到）。</p>
+
+<p>同时你也要记得改变那些并不是PAM需求的配置文件，最明显的，如果你使用了网络认证工具，你可能需要修改名字服务交换(Name Service
+Switch,NSS)配置文件,他校验帐号的存在性。至于如何配置就依赖于你使用的网络认证工具了。</p>
+
+<p>增加有用的登录模块</p>
+
+<p>另外一种类型的PAM修改方式根本就不会改变登录认证，相反，他调用增加的模块来执行额外的任务。上次的帖子总结了这些模块中的几个，他们会执行各种有用的任务，比如创建用户主目录，执行密码强度检查。</p>
+
+<p>增加这样的模块一般都简单明了：把需要的模块加入到已经存在的堆栈中去。（确定放到了正确的堆栈上，有些模块仅仅在某种堆栈上工作。）在大部分情况下，把这些模块配置为required类型。这些模块不会设计成用来授权或者拒绝用户访问系统，他们通常情况下返回成功代码，因此他不会导致认证出现失败。</p>
+
+<p>应该把模块加在正确认证模块之前还是之后呢？大部分情况下，两种方式都工作，至少如果你仅仅获得一个认证模块，把这些附加模块放到认证模块的前面会更好。</p>
+
+<p><strong>Password堆栈的特殊考虑</strong></p>
+
+<p>密码服务，比如passwd程序，值得多关注一下。典型的，当增加一个新的认证方式时，你必须在<code>/etc/pam.d/passwd</code>文件中修改auth,account,password堆栈。auth和account堆栈设计为required用来获得对密码设置的访问，即，他们控制了你输入存在的密码的认证方式。</p>
+
+<p>改变password堆栈有点不同，具体来说，通常你增加新的一行来提供新的服务，比如对auth，account堆栈的修改，但是你应该把新的服务设置为optional而不是sufficient.
+这种配置方式的结果是即使某个用户是在本地定义而不是在远程定义，也会返回成功。
+以前的默认的行(<code>pam_unix.so or pam_unix2.so</code>)，你应该保留不动（除了增加<code>use_first_pass</code>选项外，如果默认没有的话）;</p>
+
+<p>可能是觉得required标志的规则可能会导致问题发生，当帐号不再本地存在的时候，实际上，它不会。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-10T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/04/10/practice-pam/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/04/10/practice-pam/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/04/09/virtualization-technologies-discussion-introduction/" title="Previous Post: 虚拟化技术漫谈－－介绍">&laquo; 虚拟化技术漫谈－－介绍</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/04/11/find-page_size/" title="Next Post: 寻找PAGE_SIZE">寻找PAGE_SIZE &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/04/10/practice-pam/';
+        var disqus_url = 'http://wgzhao.github.io/2007/04/10/practice-pam/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

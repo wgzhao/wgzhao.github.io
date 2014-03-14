@@ -1,0 +1,737 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="一学生对无名师说：“我们听说SCO公司把握着纯正的Unix。” 无名师颔首。
+学生继续说，“我们还听说OpenGroup公司也把握着纯正的Unix。” 无名师颔首。 “这怎么可能？”学生问。 无名师答道：
+“SCO确实把握着Unix源码，但是Unix的源码不是Unix。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/58">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/28/master-foo-discourses-unix-nature/">[无根的根]无名师的Unix传统论</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/28/master-foo-discourses-unix-nature/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/28/master-foo-discourses-unix-nature/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一学生对无名师说：“我们听说SCO公司把握着纯正的Unix。” 无名师颔首。
+学生继续说，“我们还听说OpenGroup公司也把握着纯正的Unix。” 无名师颔首。 “这怎么可能？”学生问。 无名师答道：
+“SCO确实把握着Unix源码，但是Unix的源码不是Unix。OpenGroup确实把握着Unix的名称，但Unix的名称不是Unix。”
+“那么，什么是Unix传统？”学生问。 无名师答道： “非源码，非名称，非思想，非实物。恒变，不变。”
+“Unix传统是简单和空。正是简单，正是空，才使得它更强胜飓风。”
+“以自然法则前行，在程序员手中，吸纳各种优良设计。与之竞争的软件最终必与之相像：空，空，真空，虚无，万岁！” 听到此，学生眼中一亮。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/26/master-foo-discoursers-gui/">[无根的根]无名师的GUI论</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/26/master-foo-discoursers-gui/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/26/master-foo-discoursers-gui/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一晚，无名师和Nubi参加一个程序员的讨论会。一个程序员问Nubi和他的老师来自哪所学校。当得知他们市Unix大道的追随者时，程序员颇为不屑。
+“Unix命令行工具太粗糙太落后”，他讥讽道。“现代的、设计得当的操作系统可以在图形用户界面中做任何事情。”
+无名师一言不发，只是指着月亮，旁边的一条狗对着他的手狂吠。
+“我不明白。”程序员说。
+无名师依然缄默，指着一幅佛祖像，然后又指着一扇窗。
+“你想说什么？”程序员问。
+无名师深深蹙眉，轻拍程序员的鼻子两下，把他扔到旁边的垃圾箱中。
+程序员试图从垃圾堆挣扎出来之时，那条狗跑过来在他身上便溺。
+此时，程序员眼中一亮。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/25/master-foo-and-methodologist/">[无根的根]无名师与方法论</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/25/master-foo-and-methodologist/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/25/master-foo-and-methodologist/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>无名师和学生Nubi在圣地行走，无名师习惯在晚间为城市和乡间的Unix新门徒布道。
+一次，聆听者中混进了一名方法论者。
+“优化程序时不对热点进行反复衡量，就像渔夫把网撒入空湖中。”无名师说。
+“那么，”方法论者说，“管理资源时不持续的衡量你的产能，不也像渔夫将网撒入空湖中么？”
+“我一次碰到一个渔夫时，他正将网撒入船下的湖中，”无名师说，“他摸了好一会儿船底，像在寻找他的船。”
+“但是，”方法论者说，“如果他把网撒入湖中，为什么还要找船呢？”
+“因为他不会游泳。”无名师答道。
+听到此，方法论者眼中一亮。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/21/floor-13-and-floor-14/">13楼，14楼</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/21/floor-13-and-floor-14/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/21/floor-13-and-floor-14/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>到城市能看到电梯，乘电梯时才偶然发现电梯没有13楼，14楼的标志，开始一直以为是13楼，14楼不停，但是看了太多了电梯后才发现根本就不是这码事，不会绝大部分的电梯都不停这两层吧。后来才知道是为了避讳（感觉自己很傻，这么晚才知道，是从火星来的）。13是西方不吉利的数字，而14是中国不吉利的数字。因此才屏蔽了这两个数字，据说国外是用M和W来代替这两层的数字。
+今日乘电梯，突然发现13，14赫然在目，反倒有点不习惯，特记录一下。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/18/sept-18th-anniversary/">九一八纪念日</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/18/sept-18th-anniversary/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/18/sept-18th-anniversary/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天是可恶的小日本对我发动万恶的侵略战争九一八时间的纪念日。
+北方的防空警报早已经拉响了吧，南方沉醉在温柔乡里，不知有多少人能记起这国耻日，牢记吧，中国人！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/17/some-tips-here-document/">Here Document 的一些技巧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/17/some-tips-here-document/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/17/some-tips-here-document/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>here document 就是一段特殊目的的代码块. 他使用I/O 重定向的形式来将一个命令序列传递到一个交互程序或者命令中, 比如ftp, cat, 或者ex 文本编辑器.</p>
+
+<pre><code>COMMAND &lt;
+...
+InputComesFromHERE
+</code></pre>
+
+<p>limit string 用来划定命令序列的范围(译者注: 两个相同的limit string 之间就是命令序列) .
+特殊符号 &lt;&lt; 用来表识limit string. 这个符号具有重定向文件的输出到程序或命令的输入的作用.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/09/17/some-tips-here-document/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/17/other-use-about-dd-command/">Shell编程&#8211;dd命令它用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/17/other-use-about-dd-command/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/17/other-use-about-dd-command/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原来dd的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是UNIX微机和IBM大型机通过磁带机交换数据的工具。 但是它会做一些转换.
+下边是一些可能的转换, 比如 ASCII/EBCDIC, [4] 大写/小写, 在输入和输出之间 的字节对的交换,
+还有对输入文件做一些截头去尾的工作. dd &mdash;help 列出了所有转换, 还有这个强力工具的一些其他选项.
+给出几个例子</p>
+
+<p>1） 将一个文件内容大写输出</p>
+
+<pre><code>[root@lancy bin]# cat call.sh
+#!/bin/bash
+function1()
+{
+caller 0
+}
+
+function1
+
+ls -l &amp;     
+wait    
+echo “Done”
+
+exit 0
+</code></pre>
+
+<p>运行结果如下</p>
+
+<pre><code>[root@lancy bin]# dd if=call.sh conv=ucase
+#!/BIN/BASH
+FUNCTION1()
+{
+CALLER 0
+}
+
+FUNCTION1
+
+LS -L &amp;
+WAIT
+ECHO “DONE”
+
+EXIT 0
+</code></pre>
+
+<p>如果想输出为小写，将ucase改成lcase好了。</p>
+
+<p>2）从文件call.sh的位置2到位置5的字符读取出来(4=5-2+1)</p>
+
+<pre><code>[root@lancy bin]# dd if=call.sh bs=1 skip=2 count=4 2&gt;/dev/null
+/bin
+</code></pre>
+
+<p>3）输出垂直的”hello world”字符</p>
+
+<pre><code>[root@lancy bin]# echo -n “hello world” |dd cbs=1 conv=unblock 2&gt;/dev/null
+h
+e
+l
+l
+o
+
+w
+o
+r
+l
+d
+</code></pre>
+
+<p>(以上部分内容来自ABS一书)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/16/seq-command/">Shell编程&#8211;seq命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/16/seq-command/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/16/seq-command/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>seq产生整数数列
+[root@lancy bin]# seq 5
+1
+2
+3
+4
+5
+[root@lancy bin]# seq -s: 5
+1:2:3:4:5</p>
+
+<p>[root@lancy bin]# seq -s: 3 5
+3:4:5
+[root@lancy bin]# seq -s: 3 2 7
+3:5:7
+[root@lancy bin]# seq -s: 7 -2 3
+7:5:3
+[root@lancy bin]# seq 10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+[root@lancy bin]# seq -w 10
+01
+02
+03
+04
+05
+06
+07
+08
+09
+10
+这里-w的参数非常有用，你可以自己设定填充的字符。这在做批量下载的时候非常有用的，之前我写的那个下载程序就是填充没有做好，用这个命令就很好解决了。
+(以上部分内容来自ABS一书)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/15/the-new-features-about-bc/">Shell编程&#8211;发现bc的新功能</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/15/the-new-features-about-bc/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/15/the-new-features-about-bc/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>以前一直以为bc做了不了浮点运算，虽然他能结算类似<code>13.4*45.6</code>的乘法，但是在计算除法的时候，无论你输入<code>5/3</code>还是<code>5/3.0</code>得到的结果都是<code>1</code></p>
+
+<p>我也没有去看man手册，今天无意中发现了<code>ibas</code>e这个变量，是bc使用的一个变量，表示输入的数字的进制，比如<code>ibase=8</code>，表示你输入的数是8进制的。
+这让我很好奇，于是去看了man手册，原来他是可以做浮点除法的，只是默认不输出小数点后面的值，它同样采用了一个变量来控制<code>--scale</code>，其值表示输出多少位小数。另外一个和ibase对应的变量是obase，表示结果输出采用什么进制，默认是10进制。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/09/15/the-new-features-about-bc/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/14/get-the-random-number-in-specific-range/">Shell编程&#8211;获得指定范围内的随机数</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-14T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/14/get-the-random-number-in-specific-range/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/14/get-the-random-number-in-specific-range/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.tldp.org/LDP/abs/abs-guide.pdf">《Advanced Bash-Scripting
+Guide》（简称ABS）</a>是我正在看的一本bash编程书籍，个人觉得很不错，590页的文档充满了示例代码，并且都非常有用，比如下面的这个在制定范围内获得随机数就是一个不错的例子，它没有使用bash内嵌的RANDMON,而是使用了一定的算法(我增加了后面的一段代码)。代码是最好的注释，大家看代码吧。</p>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/random.sh could not be found</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/59/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/57/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>NFS的怪异问题 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="今天去用户现场，遇到一个与NFS有关的怪异问题。 现象是这样的： 一个服务器配置成NFS服务器，假设导出目录是/mnt/datas，使用的参数是rw,sync,anonuid=501,anongid=501
+另外一个客户端在/etc/fstab中配置一条nfs挂载信息，参数是：
+hard,rw 在 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2006/07/27/nfs-weird-problem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">NFS的怪异问题</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>今天去用户现场，遇到一个与NFS有关的怪异问题。</p>
+
+<p>现象是这样的：</p>
+
+<p>一个服务器配置成NFS服务器，假设导出目录是<code>/mnt/datas</code>，使用的参数是<code>rw,sync,anonuid=501,anongid=501</code>
+另外一个客户端在<code>/etc/fstab</code>中配置一条nfs挂载信息，参数是：
+<code>hard,rw</code></p>
+
+<p>在<code>/mnt/data</code>s目录下面创建3个目录，A,B,C。A，B中各有一些文件，但是保证两个目录中的文件名唯一。
+在C目录中写了两个perl脚本，一个是将A目录中的文件先打开一下（使用fopen函数），然后将该文件移动到B目录，而另外一个perl脚本完成的任务则相反。两个脚本处于死循环状态。同时执行这两个脚本，运行都正常，没有任何报错。
+但是一旦你在A目录下连续的执行ls命令，会发现移动A目录文件的perl脚本退出，报告没有那个文件或者目录。</p>
+
+<p>而去A目录看文件存在，使用ls -l 后，会报下面的错误：</p>
+
+<pre><code>#ls -l xorg.conf.12248 
+ls -l xorg.conf.12248: Invalid arguments
+-rw-r--r-- 1 root root 4384 2006-07-27 19:19 xorg.conf.12248 
+</code></pre>
+
+<p>但是大约10秒中后，再执行ls命令，错误信息不见了。
+也对perl脚本做过一些修改，但是还是有这样的错误发生。甚至写了类似这种功能的shell脚本和python脚本，也得到同样的错误。
+于是在NFS服务器端，修改<code>/etc/exports</code>文件，加入了<code>async</code>参数，还是没有什么效果。
+修改客户端，加入tcp参数，没有效果。</p>
+
+<p>加入sync参数，没有出问题，但是文件拷贝速度太慢了，大约2MB/s，用户根本就不能接受。</p>
+
+<p>也加入了<code>dirsync</code>参数也不管用。
+最后<a href="http://pczou.bokee.com">pczou</a>找到了一个参数，在客户端加入了<code>noac</code>参数。测试脚本通过。</p>
+
+<p>回来查了一些noac，原来是禁止attribute cache功能，在 man nfs中是这样说明的：</p>
+
+<blockquote><p>noac Disable all forms of attribute caching entirely. This
+ extracts a significant performance penalty but it allows
+ two different NFS clients to get reasonable results when
+ both clients are actively writing to a common export on
+ the server.</p></blockquote>
+
+<p>网上也有一些连接说到了这个参数：
+<a href="http://lists.freebsd.org/pipermail/freebsd-bugs/2005-September/014747.html">http://lists.freebsd.org/pipermail/freebsd-bugs/2005-September/014747.html</a><br/>
+<a href="http://study.chyangwa.com/IT/AIX/aixcmds3/mount.htm">http://study.chyangwa.com/IT/AIX/aixcmds3/mount.htm</a><br/>
+<a href="http://blog.gmane.org/gmane.linux.nfs/month=20030201">http://blog.gmane.org/gmane.linux.nfs/month=20030201</a><br/>
+<a href="http://lists.scratchbox.org/pipermail/scratchbox-users/2005-November/000335.html">http://lists.scratchbox.org/pipermail/scratchbox-users/2005-November/000335.html</a><br/>
+<a href="http://www.linuxmine.com/1711.html">http://www.linuxmine.com/1711.html</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-27T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2006/07/27/nfs-weird-problem/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2006/07/27/nfs-weird-problem/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/07/25/How-can-you-find-the-code/" title="Previous Post: 如何才能找到你要的代码">&laquo; 如何才能找到你要的代码</a>
+      
+      
+        <a class="basic-alignment right" href="/2006/07/29/novell-suse-10-use-experience/" title="Next Post: Novell SuSe 10.0使用感受">Novell SuSe 10.0使用感受 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2006/07/27/nfs-weird-problem/';
+        var disqus_url = 'http://wgzhao.github.io/2006/07/27/nfs-weird-problem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

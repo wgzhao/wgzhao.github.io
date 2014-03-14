@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理技术手册第七章习题实践 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="很抱歉，前段时间一直出差，书太重，不可能带着跑，所以习题实践中断了一段时间，不过我不会放弃这个计划的。 好了，废话少说。第七章习题较多，最后一个题目难度很大，按照书的前言描述，这应该可以当作一个学期的课程设计，所以暂时不实现（其实是我不善于编程，所以完成需要一个程序需要很长的时间） E7.1 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/12/22/lah-chapter7-questions-key">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux系统管理技术手册第七章习题实践</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>很抱歉，前段时间一直出差，书太重，不可能带着跑，所以习题实践中断了一段时间，不过我不会放弃这个计划的。</p>
+
+<p>好了，废话少说。第七章习题较多，最后一个题目难度很大，按照书的前言描述，这应该可以当作一个学期的课程设计，所以暂时不实现（其实是我不善于编程，所以完成需要一个程序需要很长的时间）</p>
+
+<!--more-->
+
+
+<p>E7.1 列出SCSI的所有种类。每种SCSI该用什么样的连接器？不考虑连接器的差异，不同SCSI版本之间有哪些兼容性问题？</p>
+
+<p>A：如果这个题目回退到10年前，也许他的确需要引起重视，我记得01年我刚接触到一台带有SCSI磁盘的低端存储用来做实验时，就需要自己设置ID号，自己跳线，自己连接终结端子。而现在，这一切都对我们透明了，我们只需要简单的把SCSI/SATA/SAS硬盘插入到对应的插槽就好了，不用考虑不同SCSI版本的兼容性，不用考虑SCSI种类的兼容性。一切看上去都是那么完美。</p>
+
+<p>最开始的时候，窄的SCSI线(8位）和宽SCSI（16位）有混用的情况，SCSI-1和ultra-SCSI也有混用的情况，这些当时都需要考虑兼容性问题。现在恐怕没有谁这么去用了吧？比如，我们还能找到8位的SCSI线吗？So，这个问题现在不重要了。</p>
+
+<p>E7.2 硬盘格式化和硬盘分区之间有什么区别？分区和创建文件系统之间有什么区别？</p>
+
+<p>A：如果这样定义也许会比较好点：硬盘格式化就是硬盘初始化，比如设定磁盘的磁盘标签格式（GPT，MSDOS，Sundisk，etc）。分区说的是将硬盘分成特定大小的逻辑空间，而创建文件系统就是在逻辑空间里写满特定文件系统的元数据信息。</p>
+
+<p>E7.3 列出以下环境下，在一个硬盘上创建一个文件系统所要用到的命令和参数</p>
+
+<ol>
+<li>硬盘用户保存home目录；</li>
+<li>硬盘用于交换区；</li>
+<li>硬盘用在一个很大的垃圾邮件站点存储邮件队列；</li>
+<li>硬盘装有一个MySQL InnoDB数据库。</li>
+</ol>
+
+
+<p>A：假定这个分区是/dev/sda3 home目录保存的是用户的数据，文件大小也不会趋向某一个区段，那就采取最基本的创建文件系统方式好了，不过这里可以把默认的5%保留空间拿走，以腾出更多的空间来保存数据。那么命令就是 <code>mkfs.ext3 -m 0 /dev/sda3</code><br/>
+交换分区，采取创建交换分区的特有指令，首先把分区的ID设置为82，然后执行<code>mkswap /dev/sda3</code>，最后激活它. <code>swapon /dev/sda3</code><br/>
+邮件队列的特点是，文件多，文件体积小，因此我们尽可能的增加inode数量，减小block size的大小。推荐指令如下：
+<code>mkfs.ext3 -b 1024 -m 0 /dev/sda3</code>
+MySQL InnoDB
+已经支持裸设备，当然直接使用裸设备效率会更高。具体可以<a href="http://dev.mysql.com/doc/refman/5.0/en/innodb-raw-devices.html">移步到官方说明</a>。</p>
+
+<p>E7.4 LVM工具软件功能强大，但是如果没有搞得清楚就可能发生混淆。联系实际，说明如何成功地从一个卷组删除一个设备，并加入到另外一个卷组。</p>
+
+<p>A：实际工作中，LVM的活干得很多，设置包括了LVM的紧急救援，恢复工作。但是对于迁移，还真没有实实在在的在生产环境中做过。所以，这里只能是理论上了。<br/>
+首先得要查看当前要删除的设备（当然是一个PV了）是否已经在使用了，这个可以通过pvscan和pvdisplay指令可以获得。<br/>
+如果没有在使用，那就比较容易了，直接用<code>vgreduce vgname pvname(path)</code>的方式先从该卷组中，删除掉。<br/>
+然后通过<code>vgextend vgname pvname（path）</code>的方式加入就可以了。
+如果在使用，则需要通过查看LV的信息，看看是哪几个LV在使用，则需要迁移数据。删除对应的LV，接下来的指令同上。</p>
+
+<p>♥ E7.5 使用书面印刷的或者Internet上的资源。确定性能最好的SCSI硬盘和IDE硬盘，评测这些硬盘所采取的评测指标能反映出一台繁忙的Linux服务器把它用作引导盘的情况吗？您会为SCSI花多少钱？您从多花的钱上得到了多高的性能提升（如果有的话）？</p>
+
+<p>A：呃，这个题目，我似乎只能自行飘过。也许CIO们会感兴趣吧。</p>
+
+<p>♥ E7.6 在给您的系统增加一块硬盘。让新硬盘的一个分区备份根分区，安装一个内核，并从该分区引导。记录下完成此项任务所有的步骤。</p>
+
+<p>A：<br/>
+1.  对硬盘进行分区，创建文件系统，然后挂载，比如挂载在/newroot目录下。<br/>
+2.  把当前系统的根分区拷贝过来，拷贝需要技巧，仅仅只要拷贝根分区下的目录，对于独立出来的分区，比如/usr,/var等就不要拷贝了。<br/>
+3.  修改/newroot/etc/fstab把根分区的挂载设定为当前新硬盘的分区。<br/>
+4.  拷贝需要安装的内核包到/newroot目录。<br/>
+5.  chroot /newroot<br/>
+6.  安装内核<br/>
+7.  修改/boot/grub/menu.lst文件，增加当前新系统的引导入口。<br/>
+8.  调试。</p>
+
+<p>♥ E7.7 什么是超级块？它有什么用？在内核的头文件中查出ext2fs超级块的结构定义，并讨论结构中每一个域所代表的含义。</p>
+
+<p>A：超级块结构表示一个文件系统。它包含管理文件系统所需的信息，包括文件系统名称（比如
+ext2）、文件系统的大小和状态、块设备的引用和元数据信息（比如空闲列表等等）。
+在<code>/usr/include/linux/ext2_fs.h</code>里有super_block的定义，如下：</p>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/ext2_superblock.c could not be found</p>
+
+<p>后面的注释已经写得比较清楚了，就不用再解释了。
+网络上详细剖析ext2文件系统的文档也不少。</p>
+
+<p>♥ E7.8 使用mdadm及其-f选项模拟RAID盘阵中一块硬盘发生故障。从这个盘阵删除该硬盘，然后添加回去。每一步/proc/mdstat显示怎么样的信息？</p>
+
+<p> A：</p>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/softraid.sh could not be found</p>
+
+<p>E7.9 ext3fs文件系统上的inode保存哪些信息？列出代表文件/etc/motd的inode的内容。这个文件的文件名保存在什么地方（诸如hexdump和ls -i这样的名录可能会有帮助)</p>
+
+<p>A：inode包含以下几个域：</p>
+
+<ul>
+<li>文件属主。分成单个属主和组属主。</li>
+<li>文件类型：普通文件、目录、设备文件、FIFO等</li>
+<li>访问权限</li>
+<li>文件访问时间：上次的文件修改/访问/inode修改时间</li>
+<li>链接数：至少是1</li>
+<li>文件数据块的地址表</li>
+<li>文件大小</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-22T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/12/22/lah-chapter7-questions-key/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/12/22/lah-chapter7-questions-key/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/12/17/compress-utility-can-not-always-compress-files/" title="Previous Post: compress指令并不是总是压缩文件">&laquo; compress指令并不是总是压缩文件</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/12/27/videos-for-pipi/" title="Next Post: 皮皮的视频">皮皮的视频 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/12/22/lah-chapter7-questions-key/';
+        var disqus_url = 'http://wgzhao.github.io/2009/12/22/lah-chapter7-questions-key/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

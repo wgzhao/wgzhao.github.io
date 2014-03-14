@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="这应该算是一篇凑数的帖子，就是记录一下怎么记住find里命令-perm参数后面带的数字以及数字前面的+号和-号是什么意思。我这里主要是想说setuid和setgid的问题。 ">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/25">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember/">Find -perm参数的简单记忆办法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-06T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这应该算是一篇凑数的帖子，就是记录一下怎么记住find里命令-perm参数后面带的数字以及数字前面的+号和-号是什么意思。我这里主要是想说setuid和setgid的问题。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/05/04/party/">一日三聚</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/05/04/party/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/05/04/party/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天一天，聚会了三次。当然人数都很少。</p>
+
+<p>上午和大学同学碰了面，聊的是如何赚奶粉钱，她小孩比我的早两个月，压力也很大。老婆换工作不久，工资不太高，还好现在的房子是自己的，不用去租房。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/05/04/party/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/05/04/I-was-working/">我就是打工的</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/05/04/I-was-working/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/05/04/I-was-working/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天去lancy公司的计生科交相关材料，办理准生证这种中国特色的东西。相关材料很早就找齐了，特别是公司的相关证明，虽然当时计生专干要求是公司计生科或者计生相关部门的公章，我想出了政府部门，事业单位，普通的公司哪有什么计生科呀，我可没有听说过，所以就加盖了公司的公章，觉得应该问题不大。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/05/04/I-was-working/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/04/29/create-user-batched-with-newusers-command/">Newusers 批量创建用户</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/04/29/create-user-batched-with-newusers-command/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/04/29/create-user-batched-with-newusers-command/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>使用useradd和passwd两个命令批量创建账号时，密码的输入不太好解决。后来我要wirlfly专门写了一个可以从命令行读取密码并创建的命令。只是不太通用。</p>
+
+<p>今天发现<code>shadow-utils</code>软件包里，包含了一个newusers的命令，他采取读取文件的方式创建用户，包括密码。文件采取一行指定一个账号的相关信息方式，其格式和<code>/etc/passwd</code>一致。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/04/29/create-user-batched-with-newusers-command/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/04/29/The-simplest-example-of-the-use-of-ACLs/">最简单的ACLs使用实例</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/04/29/The-simplest-example-of-the-use-of-ACLs/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/04/29/The-simplest-example-of-the-use-of-ACLs/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>写找个豆腐干帖子的目的是让让自己记住一个最快最简单的ACLs配置有哪些配置。网络上已经有很多长篇大论描述ACLs了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/04/29/The-simplest-example-of-the-use-of-ACLs/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/04/28/Was-partprobe/">原来是partprobe</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/04/28/Was-partprobe/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/04/28/Was-partprobe/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>使用fdisk命令创建新的分区时，如果该磁盘正在使用，在保存分区信息时，肯定会给出一个警告，告诉你内核不会接受新的分区表，需要重启。这个时候你如果想对新分出来的分区设备做mkfs，系统提示你没有那个设备。手工创建设备也不行，主要是内核没有接受这样的设备。</p>
+
+<p>但是呢，同样的情况下，parted命令却不需要这么做，我一直以为这是parted内置的一个功能，非常棒。</p>
+
+<p>知道今天，我才知道，不算是parted内置的功能，只是parted软件包另外包含了一个工具&mdash;partprobe，它能使内核在不重启的情况接受新的分区表信息，这个工具对fdisk当然也有效。</p>
+
+<p>恩，算是又学到一个小技巧。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/04/27/The-use-of-kde4/">使用kde4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/04/27/The-use-of-kde4/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/04/27/The-use-of-kde4/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>几个月前，下载使用过一次<a href="http://www.kde.org/announcements/4.0/">KDE4</a>，不过当时有点失望，非常不稳定，和现有程序的不兼容是我遇到的两个难题，因此使用了2天就卸载了。</p>
+
+<p>前天在酒店，趁网络速度还过得去，下载了KDE4，想看看经过一段时间的更新，KDE4目前是否已经足够可以使用了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/04/27/The-use-of-kde4/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/04/26/Look-up-update/">上来更新一下</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/04/26/Look-up-update/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/04/26/Look-up-update/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这些天一直忙客户培训的事情，顺带帮朋友写了一个小的网站程序。所以blog很久没有更新，为了防止别人以为我放弃了这个blog，还是上来冒个泡好了，顺便罗嗦几句。</p>
+
+<p>前段时间用XeTeX+Beamer重写了我的一些培训资料，算是首先完成了一些基础工作，把以前的PPT格式文档，按照知识单元，转成较小的beamer文档。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/04/26/Look-up-update/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/04/15/Office-of-the-joke-2/">办公室笑话两则</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/04/15/Office-of-the-joke-2/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/04/15/Office-of-the-joke-2/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>lancy今日告诉我的发生在他们办公室的真实故事：</p>
+
+<p>笑话一</p>
+
+<p>中午时分，某君大喊一声：”兄弟姐妹们，吃饭去！“
+某女迷糊了半天，吞吞吐吐的说了一句：“兄？ 没兄呀”。</p>
+
+<p>笑话二</p>
+
+<p>“请问这是私人电话吗？”，电话那头问。
+“不是，这是公人电话”，接电话的某君回答。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/04/13/how-much-inodes-do-you-need/">你需要多少inodes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-04-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/04/13/how-much-inodes-do-you-need/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/04/13/how-much-inodes-do-you-need/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://johnwoolee.cublog.cn/">Johnwoolee</a>打电话问我如何计算一个固定大小的分区的inodes个数，也就是inodes和blocksize之间的计算关系。
+我记得以前我接触过这个问题，记得和一个比率参数有关系。再次参看mkfs.ext3的man手册，记忆唤起来了，同时也增加了新的认识。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/04/13/how-much-inodes-do-you-need/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/26/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/24/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

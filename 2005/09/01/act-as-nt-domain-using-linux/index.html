@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>利用Linux的Samba服务模拟NT域 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="现在，许多单位都在建设自己的局域网以实现资源共享，其中文件共享是一个重要方面。当前有许多网络操作系
+统可供我们选择，相对而言，选择Linux做为网络操作系统具有比较好的性能价格比。Linux提供的Web服务、邮件服务、数据库服务、文件共享服务基本能够胜任大多数单位的应用需求。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2005/09/01/act-as-nt-domain-using-linux">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">利用Linux的Samba服务模拟NT域</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>现在，许多单位都在建设自己的局域网以实现资源共享，其中文件共享是一个重要方面。当前有许多网络操作系
+统可供我们选择，相对而言，选择Linux做为网络操作系统具有比较好的性能价格比。Linux提供的Web服务、邮件服务、数据库服务、文件共享服务基本能够胜任大多数单位的应用需求。本文主要阐述如何利用Linux的Samba服务模拟NT域实现局域网的文件资源共享。</p>
+
+<!--more-->
+
+
+<p> Samba是一个与Windows NT具有相同协议的软件包。我们可以利用Samba服务来模拟Windows
+NT域，使用户从Windows计算机上直接使用一台Linux服务器上的文件和打印机。当你正确安装了Samba软件包后，接下来的工作是正确配置
+Samba，Samba服务的配置都在<code>/etc/smb.conf</code>中完成。</p>
+
+<p> 给Samba一个合适的域名</p>
+
+<p> 在Smb.conf文件[Global]一节中，Workgroup项实际上相当于Windows</p>
+
+<p>NT的域名，它的默认设置是Mygroup，我们可以根据单位名称、个人爱好给它一个名字，如Sambaserver。</p>
+
+<p> 设置允许Windows工作站登录</p>
+
+<p> 同样，在Smb.conf文件[Global]一节中，Domain</p>
+
+<p>logons项设置为Yes，表示Samba服务允许Windows用户登录。</p>
+
+<p> 用户鉴别设置</p>
+
+<p> 经过以上两步设置后，在Windows 95老版本或Lan manager for
+DOS中，按Linux合法用户登录，就能够顺利地登录到Samba服务器。可是，在Windows</p>
+
+<p>98中，你会发现，总是出现一个类似口令不正确的提示，这是什么原因呢？原来Samba服务口令识别默认的设置是普通文本，而Windows
+98和带有SP3以上的Windows NT 4.0、Windows 2000都是使用加密口令。如何解决这个问题呢？可用以下三种方法。</p>
+
+<p> 表1</p>
+
+<p> 项名称 涵义 可能的值</p>
+
+<p> comment 共享名注释</p>
+
+<p> public 该共享资源是否公共许可 yes no</p>
+
+<p> writeable 可以进行写操作 yes no</p>
+
+<p> valid users 允许的用户，多个用户时，中间用分号隔开 mary;joke;hxw</p>
+
+<p> allow hosts 允许的客户机，多个时，中间用分号隔开，可以用ip地址表示
+hxw;moli;liping或11,103,41.*;11.103.42.88</p>
+
+<p>create mask 文件目录建立的强制掩码 class=12v></p>
+
+<p>表2</p>
+
+<p> 宏 涵 义</p>
+
+<p> %u 根据要求共享的用户名提供共享资源</p>
+
+<p> %g 根据要求共享的用户所属组提供共享资源</p>
+
+<p> %m class=12v>根据要求共享的机器名提供共享资源</p>
+
+<p> 1.强制客户端以明文口令登录</p>
+
+<p> 该方法采用修改Windows系统的注册表关闭口令，加密登录时，以明文传送口令。在注册表HKEY_LOCAL_MACHINE
+SystemCurrent-ControlSetServicesVxDVNETSETUP中，添加一项
+EnablePlainTextPassword，值为1(DWORD)。然后，重新启动Windows系统。</p>
+
+<p> 2.让Samba使用加密口令</p>
+
+<p> 第一种解决办法可行但不实用，如果单位工作站太多，对系统管理员来说，显然是件麻烦的事情。事实上，现在流行的Linux的Samba版本都
+能够识别加密口令，只不过Samba默认的口令识别是普通文本。要使Samba能够识别加密口令，需要做如下几项工作。更改[Global]一节中的
+Encrypt password项为Yes，Smb passwd
+file项指向一个你建立的Samba密码文本,默认的文本是etc/smbpasswd。接下来，用
+Cat/etc/passwd|mksmbpasswd.sh>/etc/smbpasswd的方法建立一个初始的Samba密码文本。然后，为所
+有Samba用户建立一个Samba密码口令，如要为Abc用户建立口令，只需键入Smbpasswd abc。</p>
+
+<p> 通过这种办法，你可以完全像登录Windows NT一样使用Linux上的文件资源，客户端不再需要做额外的工作。</p>
+
+<p> 3.寻求第三方用户认证</p>
+
+<p> 如果在局域网中有一个NT服务器，Samba可以通过NT域的认证许可为客户端提供文件服务。也就是说，只要是NT域的合法用户，就可以访问
+Samba上的许可共享资源。具体配置方法为：把[Global]一节中的Security项设置为Server（Samba默认的是User），
+Password Server项指向NT服务器名字，建议使用IP地址。如Password
+Server=11.103.41.12。这种办法简捷，但在Samba共享资源设置上需进行更多的安全设置。因为在Samba服务下的公共许可的资源，
+只要是NT域的合法用户，不管是否是Linux用户，都能访问到该资源。</p>
+
+<p> 设置Samba共享资源</p>
+
+<p> 在Samba服务中，共享资源的设置要比Windows NT灵活得多，它除了能像Windows
+NT一样进行用户和工作站许可设置外，Samba还提供一种宏的功能,能够根据请求共享的机器和用户的情况，动态地分配不同的共享资源，也就是说，使用同
+一个共享名，不同的用户组、用户或不同的客户机，会获得不同的共享资源。设置的具体方法是：在Smb.conf中加入一小节，小节名为共享名，在小节中，
+Path项是必不可少的，它用来表示该共享名映射到Linux服务器上的哪个目录。如：</p>
+
+<p> [myshare]</p>
+
+<p> path = /home/samba</p>
+
+<p> Myshare是供客户机共享的共享名，/home/samba是该共享资源在服务器上的目录。</p>
+
+<p> 在共享小节中，可以加入表1中的一些常用的控制项。</p>
+
+<p> 在Path项中，可以充分利用Samba提供的宏功能，常用的宏见表2。</p>
+
+<p> 如下面的Usershare共享资源，就是根据不同用户映射到其相应的用户目录：</p>
+
+<p>[usershare]</p>
+
+<p> comment=不同用户共享资源</p>
+
+<p> path=/home/%u</p>
+
+<p> public=yes</p>
+
+<p> writeable=yes</p>
+
+<p> printable=no</p>
+
+<p> 在设置共享资源中，要注意的一个问题就是，如果有Lan manager for</p>
+
+<p>DOS工作站，在共享名中不要用$符号(这在NT域共享名中是常用的)，因为在Lan manager for
+DOS工作站要映射一个Samba具有$符号的共享名时，会出现DOS扩展错误。同样，要在Linux中利用Smbmount、Smclient来引用一
+个NT域具有$符号的共享名时也会出现错误。另外要注意的是，Samba是建立在Linux上的一项服务，Linux文件系统的权限优先于Samba。比
+如说，如果Samba允许对一个目录写操作，但Linux不允许，那么客户端还是不能写操作。所以，设置了一个可写的共享却不能进行写操作时，首先应当考
+虑Linux文件系统是否是写许可。</p>
+
+<p> 重新启动Samba服务</p>
+
+<p>每次对Smb.conf做过修改、删除、增加操作，你都必须重新启动Samba服务，才能使你的改动生效。方法是：/etc/rc.d/init.d/smb</p>
+
+<p>restart。</p>
+
+<p>通过以上五步骤，就可建起一个Linux上的“NT域”。经过长期使用后，笔者感觉它的稳定性、安全性都相当不错。当你想建一个文件服务器时，不妨把Samba纳入你的选择范围。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-01T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2005/09/01/act-as-nt-domain-using-linux/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2005/09/01/act-as-nt-domain-using-linux/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2005/09/01/Magical-parameters-ls/" title="Previous Post: ls参数妙用">&laquo; ls参数妙用</a>
+      
+      
+        <a class="basic-alignment right" href="/2005/09/01/under-linux-compressed-file-decompression-guinness/" title="Next Post: Linux下压缩文件解压缩大全">Linux下压缩文件解压缩大全 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2005/09/01/act-as-nt-domain-using-linux/';
+        var disqus_url = 'http://wgzhao.github.io/2005/09/01/act-as-nt-domain-using-linux/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

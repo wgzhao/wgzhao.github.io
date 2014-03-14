@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>\[sbin学习\]d\*命令--未完成 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="看了今天是无法完成d*命令的学习了，有几个重量级的命令都是d开头的，这就要一些时间，先把完成的一部分贴出来吧。
+/sbin/下d开头的命令如下 debugfs delpart dhclient-script dmsetup dump dump.static
+debugfs.ocfs2 depmod &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/01/29/commands-start-d-incomplete">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">\[sbin学习\]d\*命令--未完成</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>看了今天是无法完成d*命令的学习了，有几个重量级的命令都是d开头的，这就要一些时间，先把完成的一部分贴出来吧。
+/sbin/下d开头的命令如下</p>
+
+<pre><code>debugfs delpart dhclient-script dmsetup dump dump.static
+debugfs.ocfs2 depmod dhcp6c dmsetup.static dump_cis
+debugreiserfs dhclient dmraid dosfsck dumpe2fs
+</code></pre>
+
+<p>其中dump.static软连接到dump命令，而dump程序是一个静态编译的命令。</p>
+
+<!--more-->
+
+
+<p>debugfs,debufs.ocfs2,debugreiserfs是文件系统调试工具，其中debugfs我使用过一次，起目的是希望恢复删除的某个文件。 <br/>
+但是实验表明，ext2的文件系统有恢复的可能性，但是ext3却没有可能。在ext3文件系统官方站点的FAQ中，就有一个这样的问题，其中答案就是告诉你，采用rm -f 方式删除的命令是没有办法恢复的，因为他不仅仅只是作删除的标记。<br/>
+而ocfs2目前并不稳定，这是Oracle推出的一种文件系统，是为Oracle数据库的高可用服务的，但是在实际的项目中，ocfs表现的并如人意。起文件系统都用得少，那么调试就更少了。<br/>
+reiserfs是SuSe发行版本中默认的文件系统格式，Redhat和RedFlag缺省都是ext2/ext3的文件系统。  所以debugreiserfs也就没有用过了，加上reiserfs的开发者因为谋杀妻子的罪名被逮捕，因此这中文件系统前途还不知道怎么样。</p>
+
+<p>其实说了这么多，就是给自己找一个借口，这几个调试工具我就不做深入的研究了，呵呵。以后遇到了再说吧。</p>
+
+<p>delpart这 个命令很奇怪，没有man手册，没有info信息，帮助也是少得可怜，似乎很不符合*nix下程序开发的习惯。而他所属的rpm包又是util-linux，这是一个工具集，因此rpm -qi也不能找到有用的信息。
+那就只能从帮助和起程序命令来看了。<br/>
+刚看到这个名字，我以为他是parted程序的一部分，结果不是。看帮助</p>
+
+<pre><code>[root@lancy sbin]# delpart  –help
+usage: delpart diskdevice partitionnr
+</code></pre>
+
+<p>似乎也应该是和分区有关系。我的猜想是他应该是删除一个指定的分区。下面是我的实验过程</p>
+
+<p>首先把我的U盘分一个分区出来</p>
+
+<pre><code>[root@lancy sbin]# fdisk -l /dev/sda
+
+Disk /dev/sda: 252 MB, 252968960 bytes
+8 heads, 61 sectors/track, 1012 cylinders
+Units = cylinders of 488 * 512 = 249856 bytes
+
+Device Boot Start End Blocks Id System
+/dev/sda1 1 81 19733+ 83 Linux
+[root@lancy sbin]# delpart /dev/sda 1
+[root@lancy sbin]# fdisk -l /dev/sda
+
+Disk /dev/sda: 252 MB, 252968960 bytes
+8 heads, 61 sectors/track, 1012 cylinders
+Units = cylinders of 488 * 512 = 249856 bytes
+
+Device Boot Start End Blocks Id System
+/dev/sda1 1 81 19733+ 83 Linux
+[root@lancy sbin]# delpart /dev/sda 1
+BLKPG: No such device or address
+</code></pre>
+
+<p>从实验来看，他应该是删除一个分区的，而且我们从delpart程序反馈信息来看，他认为他删除了sda1，但是fdisk 命令却认为这个分区还在。
+接下来我测试这个分区是否能mkfs</p>
+
+<pre><code>[root@lancy sbin]# mkfs.ext2 /dev/sda1
+mke2fs 1.35 (28-Feb-2004)
+Could not stat /dev/sda1 — 没有那个文件或目录
+
+The device apparently does not exist; did you specify it correctly?
+</code></pre>
+
+<p>哈哈，看来真的已经删除了，但是为什么fdisk不这么认为呢？而且parted也认为这个分区是存在的</p>
+
+<pre><code>[root@lancy sbin]# parted /dev/sda
+GNU Parted 1.6.19
+Copyright (C) 1998 – 2004 Free Software Foundation, Inc.
+This program is free software, covered by the GNU General Public License.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+
+使用 /dev/sda
+(parted) print
+/dev/sda 的磁盘几何结构：0.000-241.250 兆字节
+磁盘标签类型：msdos
+Minor 起始点 终止点 类型 文件系统 标志
+1 0.030 19.300 主分区
+</code></pre>
+
+<p>但是内核却认为这个分区已经不存在了</p>
+
+<pre><code>[root@lancy sbin]# cat /proc/partitions
+major minor #blocks name
+
+3 0 29302560 hda
+3 1 5246608 hda1
+3 2 5178600 hda2
+3 3 1 hda3
+3 4 13267768 hda4
+3 5 5606653 hda5
+8 0 247040 sda
+</code></pre>
+
+<p>而使用sfdisk命令同样也认为sda1存在，但是在扫描sda1时停止</p>
+
+<pre><code>[root@lancy sbin]# sfdisk /dev/sda
+Checking that no-one is using this disk right now …
+OK
+
+Disk /dev/sda: 1012 cylinders, 8 heads, 61 sectors/track
+Old situation:
+Units = cylinders of 249856 bytes, blocks of 1024 bytes, counting from 0
+
+Device Boot Start End #cyls #blocks Id System
+/dev/sda1 0+ 80 81- 19733+ 83 Linux
+/dev/sda2 0 – 0 0 0 Empty
+/dev/sda3 0 – 0 0 0 Empty
+/dev/sda4 0 – 0 0 0 Empty
+Input in the following format; absent fields get a default value.
+
+Usually you only need to specify and (and perhaps ).
+
+/dev/sda1 :
+</code></pre>
+
+<p>后面是Ctrl+c退出的。</p>
+
+<p>strace了一下fdisk 程序，没有找到原因。这个问题也暂时留下了。</p>
+
+<p>depmod：为modprobe工具提供一个正确的模块依赖性列表（modules.dep)。  这个命令对于新加入的模块能够像已经有的模块那样添加和删除起到了很好的作用。<br/>
+我们知道在Linux中，内核模块是是在/lib/modules/下面的。使用insmod/modprobe默认也是从这个目录去找你要加载的模块，除非你用-f来指定模块的路径。<br/>
+而对于编译的内核模块，如果希望modprobe程序能够仅仅提供模块名就可以加载的话，那么至少要做两件事情。<br/>
+1）将新的模块复制到正确的位置。<br/>
+2）使用<code>depmod -A</code> 或者<code>depmod -a</code>来生产模块依赖性比列表。<br/>
+其中－a是表示所有模块都扫描一次，然后生成列表，而－A表示进扫描新增的或者更新的模块，然后更新模块依赖性列表。
+这两个参数是最常用的了。我目前也就仅仅用过这两个参数。刚才看了man手册，还有一些参数，比如－b 表示模块的基本路径在哪里，利用这个参数你可以将模块从/lib/modules/中迁移出来。而-n参数表示仅仅只是打印出模块依赖性列表，而不写入，相当于仅仅是掩饰，而不会产生实际效果。</p>
+
+<p>dhclient,dhclient-script,dhcp6这是DHCP协议中用的，一般我们都不会直接去执行这几个命令，而是配置他的配置文件和运行/etc/rc.d/init.d/dhcpd命令。所以这里也不深入研究了。</p>
+
+<p>dmraid  evice-Mapper软RAID工具，他主要是用来执行设备发现，RAID激活和ATARAID属性显示。因此我们需要和RAID制作工具一起来讲。
+dmsetup：底层逻辑卷管理(LVM),这是device-mapper包中带的唯一一个可执行程序，除了那个静态版的dmsetup.static。这个命令我想留到和device-mapper-multipath一起来研究，这里就不阐述了。</p>
+
+<p>dosfsck：检查和修复MSDOS文件系统，Linux还真的有意思，居然来一个这样的工具，不过我从未在Linux下修复过MS的文件系统，总是感觉有点玄。而且我觉得也没有机会。服务器上吧，MS的文件系统和Linux的文件系统是不会存在一个硬盘上的，服务器上需要双系统吗？自己的机器上，如果有MS的文件系统，那么就应该有其操作系统，那么自己的工具修复自己的东西就好了。当然也不排除这种可能性：以前是有双系统，而一些数据是放在MS的文件系统上的，后来觉得MS的系统不爽，于是咔嚓掉了。但是因为数据太多，其他分区也就不懂了，于是就出现了没有MS的系统，但是有MS的分区。这个时候是不是dosfsck能派上用场呢？</p>
+
+<p>dump：ext2/ext3文件系统备份。dump程序检查ext2/3文件系统上的文件，然后猜测那些文件需要备份。这些文件被复制到指定的磁盘，磁带或者其他存储介质上。他还可以作远程的备份。如果dump出来的数据大于指定的备份存储介质，他将分卷。dump支持的参数比较多。</p>
+
+<p>-level#  dump级别，0是全备份，0以上的数字是增量备份。历史原因，dump程序一般只使用0-9这几个数字，不过现在的dump版本支持9以上的数字（但是，不同的数字意味着什么，man手册中并没有说）</p>
+
+<p>-a     “自动大小(auto-size)”. 忽略所有磁带的长度计算。他将一直写到磁带结束，对于大部分现在的磁带机，这中工作方式是最佳的，也是缺省模式。这种方式特别是在增加数据到一个磁带上或者具有硬件压缩功能的磁带机效果更好。</p>
+
+<p>-A  归档文件，在指定的归档文件上创建一个dump内容表(table-of-contents)，将来可以被restore(8)程序用来判断一个正准备回复的文件是否在dump文件中.</p>
+
+<p>-b 块大小.每个dump记录的KB数.缺省是10.最大值是1024,不过与你的内核限制有关系.</p>
+
+<p>-B 记录数,每卷的快数(每块1KB).当dump程序发现到了存储介质的结尾时,他会要求你更换卷.</p>
+
+<p>-D 文件.设置存储之前先前完全或者增量dump信息的文件路径.</p>
+
+<p>-e inode列表,不准备dump的inode列表,多个inode之间用逗号分隔,你可以使用stat(1)命令来找到文件或者目录的inode值.</p>
+
+<p>-E 文件,从文件中排除不dump的inode,文件格式采用一行一个inode,而且应该是排序的.</p>
+
+<p>-f 文件.写备份到文件;这可以是特定的设备文件,比如/dev/st0,/dev/fd0,/dev/sdc,或者是一个普通文件,或者是标准输出(&ndash;)
+多个文件采用逗号分隔.每一个文件将存储一个dump卷.如果文件命采用host:file或者user@host:file格式,dump将使用rmt(8)程序将数据写入到远程机器指定的文件上(改文件应该存在,dump不会使用创建一个远程文件).</p>
+
+<p>-F 脚本,在每一个磁带的最后执行这个脚本(除了最后一盘磁带)</p>
+
+<p>-L 标签,使用用户提供的字符串作为标签写入到dump都,这样一来,像restore(8)和file(8)程序就可以访问它.标签的最大长度不能超过LBLSIZE(当前是16)个字符,而且字符串必须是\0结尾.
+（未完待续）</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-29T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/01/29/commands-start-d-incomplete/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/01/29/commands-start-d-incomplete/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/" title="Previous Post: 命令行发送html邮件和带附件的邮件">&laquo; 命令行发送html邮件和带附件的邮件</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/01/30/commands-start-d/" title="Next Post: \[sbin学习\]d\*学习--完成">\[sbin学习\]d\*学习--完成 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/01/29/commands-start-d-incomplete/';
+        var disqus_url = 'http://wgzhao.github.io/2007/01/29/commands-start-d-incomplete/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

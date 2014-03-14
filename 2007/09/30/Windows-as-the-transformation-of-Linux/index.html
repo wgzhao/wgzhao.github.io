@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>把windows改造得像Linux - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="这算是我的blog上第一次写Windows平台吧，没有办法，我自己的笔记本坏了，这样一来上网成了麻烦，非得在windows下面。 以前的上网方式是自己的T23笔记本起Windows系统，然后使用CDMA拨号网上，充当路由器。而我办公的笔记本则使用Linux系统。有点奢侈吧， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/09/30/Windows-as-the-transformation-of-Linux">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">把windows改造得像Linux</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-09-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>这算是我的blog上第一次写Windows平台吧，没有办法，我自己的笔记本坏了，这样一来上网成了麻烦，非得在windows下面。</p>
+
+<p>以前的上网方式是自己的T23笔记本起Windows系统，然后使用CDMA拨号网上，充当路由器。而我办公的笔记本则使用Linux系统。有点奢侈吧，但是这也是<a href="read.php/460.htm">ADSL服务提供商逼的</a>。</p>
+
+<p>现在自己的笔记本坏了，只好在windows下办公了，不爽，很不爽。顺便问问，谁能找到DGC CDMA 1X CDMA
+3010型号无线上网卡的Linux驱动吗？</p>
+
+<!--more-->
+
+
+<p>即便用Windows，我也得改造成使用Linux那样方便和习惯。而且用来改造的工具应该开源或者免费，下面是我的改造列表</p>
+
+<p>浏览器：当然使用<a href="http://www.getfirefox.com/">Firefox</a>了，其实<a href="http://www.opera.com/">Opera</a>也不错，这是很多JavaScript支持得不如firefox好。如果是Firefox，增加<a href="http://ietab.mozdev.org/">IEtab</a>这个插件，这样当有些站点必须使用IE浏览器时（比如网银站点），就可以实时切换，而不需要打开IE浏览器了。</p>
+
+<p><strong>IM：</strong>继续使用<a href="http://www.pidgin.im/">Pidgin</a>,包括了Gtalk，MSN和QQ。文字聊天的功能还是足够了。</p>
+
+<p><strong>远程</strong>：要访问其他机器，如果是Windows机器，那使用CIFS方式访问就好了，如果是Linux，则使用<a href="http://ntu.csie.org/~piaip/pietty/">pietty</a>，他是基于<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">putty</a>修改的，增加了菜单和中文支持，因此比putty更好用。当然putty项目中，除了putty以外，还有几个比较好用的东西，比如pscp，psftp，这些类似Linux下的scp,sftp，这样ssh这套工具算是齐全了。基本上管理Linux系统问题不大了。不过pscp和Linux下的scp有一点区别，那就是pscp不支持\~,也就是scp
+<a href="mailto:user@hostname:~/path">user@hostname:\~/path</a>
+这种方式是不受支持的，需要给出绝对路径。</p>
+
+<p>如果需要用到远程桌面，Windows的话，继续用他的3389端口好了，如果是Linux下开启了VNC服务，那使用<a href="http://www.tightvnc.com/">Tightvnc</a>就好了。他有服务器端和客户端。</p>
+
+<p><strong>命令行</strong>：Windows下的命令行显然无法与Linux下的命令行相比，可是我习惯了ls,file等命令怎么办呢？呵呵，也有办法。首先去照一个bash
+for
+windows的工具，这类工具很多，<a href="http://unxutils.sourceforge.net/">看看这个页面</a>，提供了不少Linux下的好命令吧。从ls到tar，到gzip等，基本上一应俱全。这个时候用起来和Linux没有太多差别了。不过目前遗憾的是，这些命令似乎不支持中文目录，希望以后能支持。</p>
+
+<p><strong>编辑器</strong>：Windows下很多人用ultraedit编辑器，诚然，ultraedit很强悍，可惜他是商业软件，没有社区版本。因此我目前使用<a href="http://www.pspad.com/">PSPad</a>,这个编辑器也相当不错，大家看看介绍和截图就知道了，有中文版本。但是目前没有集成对SVN,CVS的支持。我也安装了<a href="http://www.vim.org/">GVIM</a>,习惯了键盘导航后，用鼠标导航还一时不怎么习惯。</p>
+
+<p><strong>开发工具</strong>：这看你开发什么了，如果是C/C++，那使用<a href="http://www.bloodshed.net/devcpp.html">Dev-C++</a>好了，如果是PHP开发，则可以考虑<a href="http://devphp.sourceforge.net/">Dev-PHP</a>,其实用另外一个巨无霸肯定能满足你开发的需求，那就是<a href="http://www.eclipse.org/">Eclipse</a>。</p>
+
+<p><strong>下载</strong>：<a href="http://ww.xunlei.com/">迅雷</a>当然是首选,我在Linux下也使用它。不过迅雷并不能解决你的全部问题，比如sftp怎么办呢？我使用<a href="http://filezilla-project.org/">Filezilla</a>，他支持标准ftp和sftp协议。这样对于只开通了22端口的Linux而言，COPY文件也没有问题了，当然你使用前面我说的psftp，pscp命令也行，只是Filezilla是GUI的。值得一提的是Filezilla也有服务器办，这样在Window下开ftp服务也没有问题了。</p>
+
+<p><strong>播放器</strong>：Linux下的mplayer显然是播放器中的瑞士军刀，而mplayer也有Windows办法的，<a href="http://www.kmplayer.com/">KMPlayer</a>是基于mplayer的一个实现，相信很多人用，其实mplayer自己也有一个windows的实现，界面简单，但是功能不含糊。以前用过，现在找不到了。</p>
+
+<p><strong>其他</strong>：是不是觉得Linux下的SSH服务很爽，那Window下有没有办法呢？我刚才找到了一个，不过是商业版本，那就是<a href="http://www.bitvise.com/">WinSSHD</a>,使用非常简单。破解补丁<a href="http://www.crack.ms/cracks/crack.ms?id=2063405">在这里</a>，可以使用到2012年7月13号，足够了吧。当然也有开源的解决办法，OpenSSH+CygWin就可以解决，只是稍微麻烦一点。不过如果你安装好了<a href="http://www.cygwin.com/">CygWin</a>，那就是活脱脱的一个Linux呀。</p>
+
+<p>不过还有几个地方我找不到解决办法，Linux下KDE环境下的文件浏览器Konqueror可以把窗口分割成若干个，这样COPY文件起来非常方便，Windows下的资源管理器能这样做吗，谁告诉我怎么做，谢谢。Windows下有类似Linux下用ifconfig命令快速换IP地址的方法吗，虽然我知道Windows下有netsh命令，但是分层太多，使用起来不如ifconfig方便，谁能告诉我，谢谢！</p>
+
+<p>虽然我尽量把它改得符合我在Linux下的习惯，可是Windows还是Windows，动不动程序无响应，不稳定还是缠绕着我。终究还是痛苦，这就像一直用Windows的人，突然要用Linux，会发现怎么都用不习惯，我也是，用习惯了Linux，然后要用Windows，还是不习惯。其实如果大家能把对待Windows的耐心同样用到Linux下面，恐怕Linux就不会像传说中的那么难用了。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-09-30T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ji-zhu-ji-qiao/'>技术技巧</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/09/30/Windows-as-the-transformation-of-Linux/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/09/30/Windows-as-the-transformation-of-Linux/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/09/18/sound-the-alarm-bell-do-not-forget-national-humiliation/" title="Previous Post: 警钟长鸣,勿忘国耻">&laquo; 警钟长鸣,勿忘国耻</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/09/30/guess-cctv-news-broadcast/" title="Next Post: 由今日的新闻联播瞎想的">由今日的新闻联播瞎想的 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/09/30/Windows-as-the-transformation-of-Linux/';
+        var disqus_url = 'http://wgzhao.github.io/2007/09/30/Windows-as-the-transformation-of-Linux/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

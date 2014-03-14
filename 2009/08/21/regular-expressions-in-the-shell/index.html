@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Shell里的正规表达式 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="还是来自ABS 最新版的摘录，这次是第十七章，关于正规表达式。以下是摘录和翻译。 一个表达式是一串字符 这些字符表达的意思超出了字面意思，我们称之为元字符(metacharacters). 正规表达式是一个字符或者元字符集，用来匹配或者模式(patterns)。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Shell里的正规表达式</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>还是来自<a href="p://www.tldp.org/LDP/abs/html/">ABS</a> 最新版的摘录，这次是<a href="http://tldp.org/LDP/abs/html/regexp.html">第十七章</a>，关于正规表达式。以下是摘录和翻译。</p>
+
+<p>一个表达式是一串字符 这些字符表达的意思超出了字面意思，我们称之为<em>元字符(metacharacters)</em>.</p>
+
+<p>正规表达式是一个字符或者元字符集，用来匹配或者模式(patterns)。 一个正规表达式包含以下一个或者多个情形：</p>
+
+<!--more-->
+
+
+<ul>
+<li><em>一个字符集</em>. 这些字符保留他们的字面意义。 最简单的正规表达式类型就是这种<em>仅</em>由这些字符组成，而没有元字符</li>
+<li><em>锚(anchor)</em>. <em>锚</em> 指定正规表达式匹配的一行文本的位置。 比如, ^, 和 $ 就都成为锚。</li>
+<li><em>修饰符（Modifiers)</em>. 它扩展或者缩小(<em>修改</em>)
+正规表达式匹配的文本范围。修饰符包括星号(*),括号({,(,&lt;)和反斜杠(\)</li>
+</ul>
+
+
+<!--more-->
+
+
+<p>正规表达式主要用来文本匹配和字符串操作。一个正规表达式匹配单个字符或者字符集&mdash;字符串或者其一部分。</p>
+
+<ul>
+<li>星号  * &mdash; 匹配任意多个字符包括0个字符 &ldquo;1133*&rdquo; 匹配 11 + 一个或者多个3: 113, 1133,
+1133333, 等等。</li>
+<li>点 .  &mdash; 匹配任意一个字符，除了新行(newline)。 &ldquo;13.&rdquo; 匹配 13 + 任意一个字符（包括空格）:    1133, 11333, 但是不包括13 。</li>
+<li>脱字符  ^ &mdash; 匹配一行的开始，但是也依赖上下文，有时表示一个字符集的反面，即不匹配这个字符集。</li>
+<li>美元符  $ &mdash; 匹配一行的结尾。 &ldquo;XXX$&rdquo; 匹配以 XXX 结尾的行。 &ldquo;^$&#8221;匹配空白行。</li>
+<li><p>中括号 [&hellip;] &mdash; 在正规表达式里匹配一个封闭字符集的单个字符。 &ldquo;[xyz]&rdquo; 匹配x, y, 或    z中的任何一个字符 &ldquo;[c-n]&rdquo; 匹配c 到 n范围字符集中的任何一个 &ldquo;[B-Pk-y]&rdquo; 匹配任何B到P和k到y的字符.</p>
+
+<p>&ldquo;[a-z0-9]&rdquo; 匹配任意一个小写字母或者数字。 &ldquo;[^b-d]&rdquo; 匹配任意字符，除了 b 到 d 的字符集之外。</p>
+
+<p>在这里实例中 ^ 除正规表达式的负面或者相反面的意思（类似shell里的 ! 符号的作用)。
+将多个中括号表达式合在一起，通常用来匹配单词模式。&#8221;[Yy][Ee][Ss]&ldquo; 匹配 yes, Yes, YES,yEs,等等。 <br/>
+&rdquo;[0-9][0-9][0-9]&ndash;[0-9][0-9]&ndash;[0-9][0-9][0-9][0-9]&ldquo;
+匹配任意社会安全码。</p></li>
+<li>反斜杠  \ &mdash; 转义 特殊字符，使得该字符按照字面意思来解释（因此，它就不再是特殊字符了）。 &ldquo;\$&rdquo;   取回&#8221;$&ldquo;符号本身的意思，而不是正规表达式里表示行尾的意思。 同样的， &rdquo;&#92;&ldquo; 表示&rdquo;\&ldquo; 符号的本意。</li>
+<li>转义 &ldquo;尖括号&rdquo;  \&lt;&hellip;\> &mdash; 标记单词边界。 尖括号必须转义，否则仅仅表示本意。 &ldquo;\&lt;the\>&rdquo;
+匹配单词 &ldquo;the,&rdquo; 但是不匹配单词 &ldquo;them,&rdquo; &ldquo;there,&rdquo; &ldquo;other,&rdquo; ，等等。</li>
+</ul>
+
+
+<div><script src='https://gist.github.com/1537350.js?file=re-simple.sh'></script>
+<noscript><pre><code>bash$ cat textfile
+This is line 1, of which there is only one instance.
+ This is the only instance of line 2.
+ This is line 3, another line.
+ This is line 4.
+
+bash$ grep &#39;the&#39; textfile
+This is line 1, of which there is only one instance.
+ This is the only instance of line 2.
+ This is line 3, another line.
+
+bash$ grep &#39;\&#39; textfile
+This is the only instance of line 2.
+
+The only way to be certain that a particular RE works is to test it.
+
+TEST FILE: tstfile                          # No match.
+                                            # No match.
+Run   grep &quot;1133*&quot;  on this file.           # Match.
+                                            # No match.
+                                            # No match.
+This line contains the number 113.          # Match.
+This line contains the number 13.           # No match.
+This line contains the number 133.          # No match.
+This line contains the number 1133.         # Match.
+This line contains the number 113312.       # Match.
+This line contains the number 1112.         # No match.
+This line contains the number 113312312.    # Match.
+This line contains no numbers at all.       # No match.
+
+bash$ grep &quot;1133*&quot; tstfile
+Run   grep &quot;1133*&quot;  on this file.           # Match.
+ This line contains the number 113.          # Match.
+ This line contains the number 1133.         # Match.
+ This line contains the number 113312.       # Match.
+ This line contains the number 113312312.    # Match.</code></pre></noscript></div>
+
+
+<p>额外的一些元字符添加到基本集合里用在 egrep, awk, 和 Perl 里。</p>
+
+<ul>
+<li>问号  ? &mdash; 匹配0个或者一个正规表达式之前的字符，通常用来匹配单个字符。</li>
+<li><p>加号  + &mdash; 匹配正规表达式之前的一个或者多个字符，和 * 类似，但是不匹配0个字符。</p>
+
+<pre><code># GNU versions of sed and awk can use "+",
+# but it needs to be escaped.
+
+echo a111b | sed -ne '/a1\+b/p'
+echo a111b | grep 'a1\+b'
+echo a111b | gawk '/a1+b/'
+# All of above are equivalent.
+
+# Thanks, S.C.
+</code></pre></li>
+<li><p>转义的 &ldquo;大括号/花括号&rdquo;  \{ \} &mdash;
+表示正规表达式匹配的数量。和尖括号一样，必须转义，否则只表示其本意。这个表达方式不是正规表达式集合的一部分。<br/>
+&ldquo;[0-9]\{5\}&rdquo; 准确匹配5个字符。 大括号在&#8221;经典&#8221; (非POSIX兼容)版的
+awk里并不作为正规表达式生效。但是，GNU 扩展版本的 <em>awk</em>, <strong>gawk</strong> 提供了 &mdash;re-interval
+可选参数使其有效（不需要转义）。</p>
+
+<pre><code>bash$ echo 2222 | gawk --re-interval '/2{3}/'
+2222
+</code></pre>
+
+<p><strong>Perl</strong> 和一些 <strong>egrep</strong> 版本并不要求转义大括号。</p></li>
+<li><p>圆括号 ( ) &mdash; 封装一组正规表达式。用expr提取子串或者接管道(&ldquo;|&rdquo;)操作时，这个表达式就显得有用。</p></li>
+<li><p>| &ldquo;或&rdquo; 表示匹配可选字符集中的某一个。</p>
+
+<pre><code>bash$ egrep 're(a|e)d' misc.txt
+People who read seem to be better informed than those who do not.
+ The clarinet produces sound by the vibration of its reed.
+</code></pre></li>
+<li><p><strong>POSIX 字符类.</strong> [:class:] 指定一个字符范围用来匹配的一种替代方案</p></li>
+<li>[:alnum:] 匹配字母或者数字字符。等价于 A-Za-z0-9.</li>
+<li>[:alpha:] 匹配字母。 等价于 A-Za-z.</li>
+<li>[:blank:] 匹配空格或者tab健。</li>
+<li>[:cntrl:] 匹配控制字符。</li>
+<li>[:digit:] 匹配数字（十进制）。等价于 0-9.</li>
+<li>[:graph:] (图形打印字符)。匹配ASCII码在33 &ndash; 126 范围的字符。和下面提到的 [:print:]    相同，但是除空格字符除外。</li>
+<li>[:lower:]匹配小写字母。 等价于 a-z.</li>
+<li>[:print:] (可打印字符)。 匹配 ASCII 码在 32 &ndash; 126 范围的字符。和上面提到的 [:graph:]
+相同，不过还要加上空格字符。</li>
+<li>[:space:] 匹配空白字符（空格和水平制表符）。</li>
+<li>[:upper:] 匹配大些字母. 等价于 A-Z。</li>
+<li><p>[:xdigit:] 匹配十六进制数字。等价于 0-9A-Fa-f.</p>
+
+<p>POSIX 字符类通常需要引号或者双括号([[ ]])。</p>
+
+<pre><code>bash$ grep [[:digit:]] test.file
+abc=723
+
+# ...
+if [[ $arow =~ [[:digit:]] ]]   #  Numerical input?
+then       #  POSIX char class
+  if [[ $acol =~ [[:alpha:]] ]] # Number followed by a letter? Illegal!
+# ...
+# From ktour.sh example script.
+</code></pre>
+
+<p>以上字符类甚至可以当做通配符，用做有限的扩展，比如。</p>
+
+<pre><code>bash$ ls -l ?[[:digit:]][[:digit:]]?
+-rw-rw-r--    1 bozo  bozo         0 Aug 21 14:47 a33b
+</code></pre></li>
+</ul>
+
+
+<p>在筛选，文件转换或者I/0流操作中，Sed, awk, 和 Perl, 带一个正规表达的参数在脚本里用来过滤(filter)。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-21T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/" title="Previous Post: 用shell升级15位身份证到18位">&laquo; 用shell升级15位身份证到18位</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/08/24/here-documents-in-bash/" title="Next Post: bash里的here document">bash里的here document &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell/';
+        var disqus_url = 'http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

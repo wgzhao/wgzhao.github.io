@@ -1,0 +1,831 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="知道王垠这个人，是从他的《完全用Linux工作》文章认识的，随后又看了他的主页，觉得上面的很多东西让我茅塞顿开，特别是他介绍TeX，更是让我深深喜欢上了它，也开始像别人推广，但是没有想到，现在他退学了。我们没有资格来评价别人作出的行文，只是每一个人看到他写的为什么退学的原因，我想都有自己的想法， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/76">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/28/Wang-Yin-did-not-think-automatically-drop/">没有想到王垠会自动退学</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/28/Wang-Yin-did-not-think-automatically-drop/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/28/Wang-Yin-did-not-think-automatically-drop/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>知道王垠这个人，是从他的《完全用Linux工作》文章认识的，随后又看了他的<a href="http://learn.tsinghua.edu.cn/homepage/2001315450/">主页</a>，觉得上面的很多东西让我茅塞顿开，特别是他介绍TeX，更是让我深深喜欢上了它，也开始像别人推广，但是没有想到，现在他退学了。我们没有资格来评价别人作出的行文，只是每一个人看到他写的为什么退学的原因，我想都有自己的想法，那就大家都看看吧。</p>
+
+<p><a href="http://spaces.msn.com/members/shredderyin/">下面这个地址是他的新空间</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/28/Some-of-the-samba-server-variables/">Samba服务器的一些变量</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/28/Some-of-the-samba-server-variables/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/28/Some-of-the-samba-server-variables/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>samba配置文件中经常会用到一些变量，而这些变量也经常给我们带来巨大的便利，因此我把samba配置文件（smb.conf）中用到的一些变量。
+每一个变量都是一%开头，后面是一个单独的大写或者小写字母，而且只能用在配置项的右边。
+下面是具体的变量名称，至于其用法，大家可以参考默认的smb.conf文件。如果我利用他完成了漂亮的工作，我也会贴出来。</p>
+
+<h3>客户端变量</h3>
+
+<p>%a | 客户端的体系结构（例如Samba，NT,Win98,或者Unknown）<br/>
+%I | 客户端的IP地址（例如：192.168.220.100)<br/>
+%m | 客户端的NetBios名<br/>
+%M | 客户端的DNS名</p>
+
+<h3>用户变量</h3>
+
+<p>%g | %u的基本组<br/>
+%G | %U的基本组<br/>
+%H | %u的Home目录<br/>
+%u | 当前的unix用户名<br/>
+%U | 被请求的客户端用户名(不总是被samba使用)</p>
+
+<h3>共享变量</h3>
+
+<p>%p | 如果和%p不同,automounter的路径对应共享的根目录<br/>
+%P | 当前共享的根目录<br/>
+%S | 但前共享的名称</p>
+
+<h3>服务器变量</h3>
+
+<p>%d | 当前服务器进程的ID <br/>
+%h | Samba服务器的DNS主机名<br/>
+%L | Samba服务器的netbios名<br/>
+%N | Home目录服务器,来自automount的映射<br/>
+%v | samba版本</p>
+
+<h3>其他变量</h3>
+
+<p>%R | 经过协商的SMB协议<br/>
+%T | 当前的日期和时间</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/28/A-google-search-tips/">Google搜索的一个小技巧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/28/A-google-search-tips/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/28/A-google-search-tips/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>刚看到的，记下来，怕以后忘记了，呵呵。
+如果必要搜索有关samba的pdf文档，你可以在google里面键入
+inurl:samba filetype:pdf
+当然你也可以换成chm文档。
+这个搜索出来的结果会比使用
+samba ebook 或者samba pdf 要好一些。
+大家试试。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/27/and-anti-word-is-the-right-word-zen/">正字与反字 &#8211;禅</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/27/and-anti-word-is-the-right-word-zen/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/27/and-anti-word-is-the-right-word-zen/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>小和尚满怀疑惑地去见师傅：
+ “师傅！您说好人坏人都可以度，问题是坏人已经失去了人的本质，如何算是人呢？既不是人，就不应该度化他。”
+ 师傅没有立刻作答，只是拿起笔在纸上写了个”我”，但字是反写的，如同印章上的文字，左右颠倒。</p>
+
+<p> “这是什么？”师傅问。 <br/>
+ “这是个字。”小和尚说：“但是写反了！” <br/>
+ “什么字呢？” <br/>
+ “‘我’字！” <br/>
+ “写反了的‘我’字算不算字？”师傅追问。 <br/>
+ “不算！” <br/>
+ “既然不算，你为什么说它是个‘我’字？” <br/>
+ “算！”小和尚立刻改口。 <br/>
+ “既算是个字，你为什么说它反了呢？” <br/>
+ 小和尚怔住了，不知怎样作答。</p>
+
+<p>“正字是字，反字也是字，你说它是‘我’字，又认得出那是反字，主要是因为你心里认得真正的‘我’字；  相反的，如果你原不识字，就算我写反了，你也无法分辨，只怕当人告诉你那是个我字之后，遇到正写的我字，你倒要说是写反了！”师傅说：“同样的道理，好人是人，坏人也是人，最重要在于你须识得人的本性，于是当你遇到恶人的时候，仍然一眼便能见到他的‘天质’，并唤出他的‘本真’，本真既明，便不难度化了！”</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/27/Li-Ao-interview/">李敖访谈－－太经典了！</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/27/Li-Ao-interview/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/27/Li-Ao-interview/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>李敖（以下简称李）：
+是吗？太好了，我也很高兴接受贵报的专访，能问以下，你为什么喜欢我李敖呢?</p>
+
+<p>a：因为我看到过一句话：台湾是大陆的睾丸。</p>
+
+<p>李：对，那是我说的。</p>
+
+<p>a：那么，我就开始就我们读者感兴趣的问题向您提问，首先，您对台湾的股市重创</p>
+
+<p>与璩美凤的绯闻事件有什么看法？</p>
+
+<p>李：很简单，归纳起来就是：阿扁让台湾不举。</p>
+
+<p>a：很有意思的概括，那么，您在以游戏心态闹选的时候是不是就预见到了这一点？</p>
+
+<p>李：阿扁的老婆瘫了十好几年，他不举是完全有客观因素存在的，这还用我来猜吗</p>
+
+<p>？
+a：那为什么他的这一生理缺陷造成了今日台湾的政治与经济格局如此不安呢？
+李：不举的男人会有心理问题，这样的人当了总统就成为政治问题，如果动用国库预算算买伟哥，便自然产生经济问题?</p>
+
+<p>a：您真会骂人，据我所知，大陆还有一位王朔也精于此道。</p>
+
+<p>李：他不行，他要在台湾最多只能是前列腺炎。</p>
+
+<p>a：为什么？</p>
+
+<p>李：因为他只骂那些没有办法让他坐牢的人。</p>
+
+<p>a：我们知道您坐过多次班房，那么您认为自己在台湾的作用是.</p>
+
+<p>李：我是台湾的X癌。</p>
+
+<p>a：我可以理解您的比喻，为什么不是aids呢？</p>
+
+<p>李：放眼中国，只有口口口可以这么说。我没有外国背景，也没他那么能传染。</p>
+
+<p>a：对了，在台湾，吕秀莲也是一个很活跃的人物。</p>
+
+<p>李：她没什么能量，只能算包皮过长。</p>
+
+<p>a：怎么讲？</p>
+
+<p>李：不算什么大病，但有了她还真麻烦，最好的办法是割掉她。</p>
+
+<p>a：我明白了，说到她，我想问一句，您支持两岸统一吗？</p>
+
+<p>李：作为中国人，我坚决拥护统一。</p>
+
+<p>a：那么您怎么看最近两岸达成的&#8221;小三通&#8221;？</p>
+
+<p>李：台湾终于有了一根输精管。</p>
+
+<p>a：现在大陆有很大一部分的民意倾向于武力解决统一问题，您的意见呢？</p>
+
+<p>李：这个道理和A片一样，看的人都叫痛快，当事者未必真爽。</p>
+
+<p>a：您觉得现在统一的主要障碍是什么，是阿扁吗？</p>
+
+<p>李：可以这么说。</p>
+
+<p>a：理由？</p>
+
+<p>李：我说过，阿扁已经让台湾不举，如果他持续阳痿，只能造成大陆方面为了要爽强行解决问题。</p>
+
+<p>a：可是阿扁是台湾第一任民选总统.</p>
+
+<p>李：民选不等于民主。</p>
+
+<p>a：既然这么说，您认为美国民主吗？</p>
+
+<p>李：美国最不民主。</p>
+
+<p>a：为什么？</p>
+
+<p>李：从最近的大选事件来看， 美国人连数数都不会，谈什么民主？</p>
+
+<p>a：台湾民主吗？</p>
+
+<p>李：还算有进步。在台湾，选票已经随行就市明码时价，选举的时候各方把钱包一 过秤，靠经济规律办事，科学高效又有说服力。</p>
+
+<p>a：那么大陆呢？
+李：相对以上两个地区，大陆最民主，因为大家选举的时候通常靠举手表决，这样一个人最多只能投两票</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/22/world-car-free-day/">9.22世界无车日</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/22/world-car-free-day/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/22/world-car-free-day/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>亲爱的朋友们：
+ 1998年9月22日，法国35个城市的市民自愿在这一天里弃用私家车，这一天，成为法国的“市内无汽车日”,也注定是一个影响深远的日子。</p>
+
+<p>一年后，1999年9月22日，66个法国城市和92个意大利城市参加了第一届“无车日”活动。2000年2月，法国首创的无车日倡议被纳入欧盟的环保政策框架内。短短的几个月时间，欧盟的14个成员国和其他12个欧洲国家决定加入欧洲无车日运动。在2000年的9月22日，参与欧洲无车日的人数就达到7000万，参与城市达到760个。</p>
+
+<p>无车日活动在中国的城市也正在开展中：2001年，成都成为中国第一个、亚洲第二个举办无车日活动的城市；2002年，台北也将无车日选在了9月22日。</p>
+
+<p>诞生于19世纪最后10年的汽车，曾经是速度和效率的象征。汽车制造业在世界范围内迅速崛起，汽车逐渐进入大众消费领域，成为人们的日常交通工具。然而，当时光飞转到新世纪，汽车污染已经成为一个世界性问题。随着汽车数量越来越多、使用越来越广，它对世界环境的负面效应也越来越大：全球1/4以上的城市大气污染源于汽车尾气，从而引发人类呼吸系统疾病，造成地表空气臭氧含量过高，加重城市热岛效应，使地球气候转向恶化。</p>
+
+<p>拿我们的北京来说，汽车尾气排放的污染物，已经占到京城空气污染物总量的30%，它正在使我们的蓝天变少，使我们的呼吸不再那么自如。我们需要清新的空气，我们需要自由的呼吸。汽车多停放一天，污染物就少排放一些。那么，为什么不从自我做起，让污染物少一点，让环境好一点。</p>
+
+<p>北京的空气环境还不那么令人满意,交通环境也并不尽如人意.在这个城市里,响应和参与无车日的朋友多一位，宣传环保的力量就会多一份，落实环保的实际行动就会多一点。为了增强市民的环保意识，为了动员更多的市民一起来保护我们的自然环境，动感地带倡议，所有热爱自然、热爱环保事业的朋友们，都来积极参与9月22日即将在首都北京展开的“无车日”活动。在这一天请让您的汽车在家中休息一日，让自己体味环保的乐趣。</p>
+
+<p>无车日不仅仅倡导少开一天车，更倡导所有人多一分环保的意识。我们，应该既是美好环境的分享者，也是美好环境的创造者。亲爱的朋友们，环保，需要您的热情，需要您的参与！留下您的姓名，拿出您的实际行动，和动感地带一起行动起来，共同创造北京更多的蓝天，共同实现绿色奥运的庄严承诺!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/21/Li-Beijing-University-lecture-video-download/">李敖北大讲座视频下载</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/21/Li-Beijing-University-lecture-video-download/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/21/Li-Beijing-University-lecture-video-download/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>凤凰卫视9月21日消息 台湾著名学者李敖星期三上午在北京大学举行演讲，受到听众的热烈欢迎，演讲多次被掌声打断。</p>
+
+<p>李敖在凤凰卫视董事局主席、行政总裁刘长乐等人的陪同下入场时，受到听众起立鼓掌致意。北京大学校务委员会主任闵维方在致词中介绍了李敖的生平。李敖在演讲中说，由于大陆观众对他相当熟悉，演讲对他有些难度，不过他并没有讲稿。</p>
+
+<p><img src="http://img.phoenixtv.com/image20010518/74596512717340672/125155.jpg" alt="image" /></p>
+
+<p>李敖在演讲中，肯定了北洋政府创办北京大学、并委任[蔡元培]做校长。在谈到自由主义时，李敖指出，自由主义主要包含「反求诸己」和「反求诸宪法」两部分。所谓[反求诸己]，就是心灵上获得解放。</p>
+
+<p>演讲结束后，李敖还回答了部分北大师生的提问。</p>
+
+<p>演讲会最后，北京大学向李敖赠送了包括他父亲毕业时的照片等礼物；而李敖则向北大回赠了父亲毕业时的文凭正本。</p>
+
+<p><a href="http://cie.xtu.edu.cn/snl/software/liaobeida.wmv">李敖北大视频下载</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/21/Detailed-GRUB/">GRUB详解</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/21/Detailed-GRUB/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/21/Detailed-GRUB/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h6>############</h6>
+
+<h1>GRUB的优点 #</h1>
+
+<h6>############</h6>
+
+<p><a href="http://www.gnu.org/software/gnu">GRUB</a>
+是引导装入器(boot loader) &mdash; 它负责装入内核并引导 Linux 系统。GRUB 还可以引导其它操作系统，如
+FreeBSD、NetBSD、OpenBSD、GNU HURD 和 DOS，以及 Windows 95、98、NT 和
+2000。尽管引导操作系统看上去是件平凡且琐碎的任务，但它实际上很重要。如果引导装入器不能很好地完成工作或者不具有弹性，那么就可能锁住系统，而无
+法引导计算机。另外，好的引导装入器可以给您灵活性，让您可以在计算机上安装多个操作系统，而不必处理不必要的麻烦。
+GRUB
+是一个很棒的boot loader。它有许多功能，可以使引导过程变得非常可靠。例如，它可以直接从 FAT、minix、FFS、ext2
+或ReiserFS 分区读取 Linux 内核。这就意味着无论怎样它总能找到内核。另外，GRUB
+有一个特殊的交互式控制台方式，可以让您手工装入内核并选择引导分区。这个功能是无价的：假设 GRUB
+菜单配置不正确，但仍可以引导系统。哦，对了&mdash; GRUB 还有一个彩色引导菜单。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/09/21/Detailed-GRUB/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/12/Classic-12-months-of-life-sentiment/">人生经典12个感悟</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/12/Classic-12-months-of-life-sentiment/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/12/Classic-12-months-of-life-sentiment/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1、父子二人经过五星级饭店门口，看到一辆十分豪华的进口轿车。  儿子不屑地对他的父亲说：「坐这种车的人，肚子里一定没有学问！」父亲则轻描淡写地回答：「说这种话的人，口袋里一定没有钱！」
+ (注：你对事情的看法，是不是也反映出你内心真正的态度？)</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/09/12/Classic-12-months-of-life-sentiment/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/01/under-linux-compressed-file-decompression-guinness/">Linux下压缩文件解压缩大全</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/01/under-linux-compressed-file-decompression-guinness/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/09/01/under-linux-compressed-file-decompression-guinness/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.以.tar为扩展名的文件:</p>
+
+<p><code>#tar xv file.tar</code></p>
+
+<p>2.以.z为扩展名的文件:</p>
+
+<p><code>#uncompress file.z</code></p>
+
+<p>3.以.gz为扩展名的文件:</p>
+
+<p><code>#gunzip file.gz</code></p>
+
+<p>4.以.bz2为扩展名的文件:</p>
+
+<p><code>#bunzip2 file.bz2</code></p>
+
+<p>5.以.tar.Z为扩展名的文件:</p>
+
+<p><code>#tar xvZf file.tar.Z</code> 或 <code>#compress -dc file.tar.Z | tar xvf -</code></p>
+
+<p>6.以.tar.gz/.tgz为扩展名的文件:</p>
+
+<p><code>#tar xvzf file.tar.gz</code>或 <code>gzip -dc file.tar.gz | tar xvf -</code></p>
+
+<p>7.以.tar.bz2为扩展名的文件:</p>
+
+<p><code>#tar xvIf file.tar.bz2</code> 或 <code>bzip2 -dc file.tar.bz2 | xvf -</code></p>
+
+<p>8.以.cpio.gz/.cgz为扩展名的文件:</p>
+
+<p><code>#gzip -dc file.cgz | cpio -div</code></p>
+
+<p>9.以.cpio/cpio为扩展名的文件:</p>
+
+<p><code>#cpio -div file.cpio</code> 或 <code>cpio -divc file.cpio</code></p>
+
+<p>10.以.rpm为扩展名的文件安装:</p>
+
+<p><code>#rpm -i file.rpm</code></p>
+
+<p>11.以.rpm为扩展名的文件解压缩：</p>
+
+<p><code>#rpm2cpio file.rpm | cpio -div</code></p>
+
+<p>12.以.deb为扩展名的文件安装：</p>
+
+<p><code>#dpkg -i file.deb</code></p>
+
+<p>13.以.deb为扩展名的文件解压缩:</p>
+
+<p><code>#dpkg-deb --fsys-tarfile file.deb | tar xvf - ar p file.deb data.tar.gz | tar vzf -</code></p>
+
+<p>14.以.zip为扩展名的文件:</p>
+
+<p><code>#unzip file.zip</code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/77/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/75/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

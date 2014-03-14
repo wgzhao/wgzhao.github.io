@@ -1,0 +1,703 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="直接访问https://www.google.com似乎会重定向到http://www.google.com。维基百科上有个小朋友做了一个页面，利用google的API来做到完全链接。基于它的页面，我做了少许修改。 现在你只需要下载这压缩文件，解压后得到一个html页面，打开这个html页面。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/7">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/04/01/google-ssl-searching-with-single-page/">使用Google SSL搜索</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/04/01/google-ssl-searching-with-single-page/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/04/01/google-ssl-searching-with-single-page/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>直接访问<a href="https://www.google.com">https://www.google.com</a>似乎会重定向到<a href="http://www.google.com">http://www.google.com</a>。维基百科上有个小朋友做了一个页面，利用google的API来做到完全链接。基于它的页面，我做了少许修改。</p>
+
+<p>现在你只需要下载这压缩文件，解压后得到一个html页面，打开这个html页面。<br/>
+OK，试试你想要的搜索！</p>
+
+<p><a href="http://www.adrive.com/public/33f8d3a55c815028c1e3adb76144e65d4689db682ff3ff056c830d407230cb14.html">猛击这里下载</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/04/01/bug-wgzhao-dot-com-domain/">购买了wgzhao.com新域名</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/04/01/bug-wgzhao-dot-com-domain/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/04/01/bug-wgzhao-dot-com-domain/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在CN域名越来越严厉，越来越不靠谱的情况下，我就只能为帝国主义贡献GDP了。在<a href="http://name.com">name.com</a>上花了8.99刀买了wgzhao.com。因此自动绑定了Google App。正好打算使用一下。因此本来打算用<a href="http://wgzhao.com">http://wgzhao.com</a>
+做blog的网址了，现在就只能用<a href="http://blog.wgzhao.com">http://blog.wgzhao.com</a>。连www.wgzhao.com都被Google App“霸占”了（当然你可以不选择在它那里开通网站）。
+OK，到目前为止，域名在非天朝，服务器在非天朝，我总算可以和无比和谐的ICP备案彻底说拜拜了。</p>
+
+<p>P.S
+本来打算在<a href="http://godaddy.com">godaddy.com</a>上买的，结果发现他的SSL证书过期了，同时加上他比name.com上要贵2刀，于是就选择了name.com。不过听说<a href="http://godaddy.com">godaddy.com</a>上的服务很多。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/03/29/surfing-internet-1/">翻墙办法一</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/03/29/surfing-internet-1/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/03/29/surfing-internet-1/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>使用&#8221;赛风&#8221;突破封锁，访问页面速度比较快，使用方便，不需要下载软件。<br/>
+但是，也存在需要邀请码才能注册，容易被封锁等缺点。<br/>
+数字时代版&#8221;赛风&#8221;无需注册邀请码。<br/>
+一旦被封，我们将通过邮件、GFW Blog等及时公布新地址。<br/>
+ <strong>使用方法非常简单：</strong></p>
+
+<ol>
+<li><p>访问<a href="http://war2wall.info">http://war2wall.info</a>，阅读并同意&#8221;隐私协议&#8221;，点&#8221;agree&#8221;
+<img src="/uploads/2010/03/1.png" title="注册" alt="首先注册" /></p></li>
+<li><p>点&#8221;agree&#8221;后，就可以进入被屏蔽的<a href="http://chinadigitaltimes.net/">中国数字时代(China Digital Times)</a>的首页。你已翻墙成功 。请点页面上方小方框&#8221;Create
+account&#8221;，注册帐号。注册成功后，一旦现在的代理网址被封，我们将发送新的地址到您注册时用的电子邮箱，确保您及时获得新的代理地址。</p></li>
+</ol>
+
+
+<p><img src="/uploads/2010/03/2.png" alt="选择创建帐号" /></p>
+
+<ol>
+<li>注册。Language项，选中文、英文等。 Username项，填用户名。E-mail address项，填电子邮箱地址，我们推荐你用gmail。Password项，填密码。 Verify password项，重复刚才输入的密码。Security
+code项，填下方的认证码。都填完后，点最下面的&#8221;creat account&#8221;，即完成注册。</li>
+</ol>
+
+
+<p><img src="/uploads/2010/03/3.png" alt="填写注册信息" /></p>
+
+<ol>
+<li>访问其他被封锁的网站。很简单。在页面上方小方框输入您想访问的被墙网址，点&#8221;go&#8221;，就可以突破封锁。</li>
+</ol>
+
+
+<p><img src="/uploads/2010/03/4.png" alt="image" /></p>
+
+<p><img src="/uploads/2010/03/1.png" alt="image" /></p>
+
+<p>本文转自:
+<a href="http://feedproxy.google.com/~r/chinagfwblog/~3/vcJmbqV3AZ0/blog-post_7729.html">多伦多大学公民实验室和中国数字时代联合推出翻墙利器：新版&#8221;赛风&#8221;（无需邀请码）</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/03/26/blog-move-to-hongkong/">我在香港欢迎你</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/03/26/blog-move-to-hongkong/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/03/26/blog-move-to-hongkong/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>谷歌说欢迎来到我们的新家。我要说，欢迎来到我的新blog！</p>
+
+<p>内容不变，变化的是服务器，也搬迁到了香港。和谷歌不同的是，他是从“最民主，最开放，最自由”的中国大陆搬迁到了香港。而我是从“万恶的资本主义美国”搬迁的。</p>
+
+<p>算上这次，这应该是第5次搬迁了。从省内几个地方，到国内几个地方，然后到美国，然后到香港。还跑得挺远了。 但是我知道，这绝对不是最后一次。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/03/23/setup-nginx-and-fastcgi/">配置nginx</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/03/23/setup-nginx-and-fastcgi/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/03/23/setup-nginx-and-fastcgi/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这应该算是老掉牙的技术了，但是就是这老掉牙的技术，今天却折腾了我几个小时。</p>
+
+<p>首先是到网络找一些文档，因为转来转去的原因（我痛恨一切不自己产生内容，却到处抓取内容还不完整的网站），基本上只有几篇比较完整的配置文档，无一例外，都是采取源代码编译，编译php,编译mysql，编译nginx，编译memcache，编译eaccelerator，编译everthing。<br/>
+似乎只有这样才是王道，才是问题的解决版本。</p>
+
+<p>我讨厌编译，我只需要配置。我如果跳过编译，只看配置，在我的系统上就会出现无法解析php的情况。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/03/23/setup-nginx-and-fastcgi/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/03/23/google-python-class/">Google的python视频教程含下载地址</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/03/23/google-python-class/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/03/23/google-python-class/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://code.google.com/edu/">google university</a>
+推出了针对python的教程，适合python初学者，当然也适合我这样的菜鸟啦。除了有教学素材，习题以外，更难到的是，有全套的视频，但是（这里省去100000字），生为贵国屁/民，是无福观看了，人家放在<a href="http://www.youtube.com">youtube</a>上了。<br/>
+国内视频网站暂时没有看到“盗版”。
+VPN，自/由/门，无/界，大家各显神通吧。</p>
+
+<p>我正在HK搭建的服务器上以480K/s的速度欢快的下载着。</p>
+
+<p>希望能传到国内某一个空间上，为大家谋福利。你要是等不及了，那就尝试下面的地址吧。</p>
+
+<p><a href="http://www.youtube.com/watch?v=tKTZoB2Vjuk">http://www.youtube.com/watch?v=tKTZoB2Vjuk</a><br/>
+<a href="http://www.youtube.com/watch?v=EPYupizJYQI">http://www.youtube.com/watch?v=EPYupizJYQI</a><br/>
+<a href="http://www.youtube.com/watch?v=haycL41dAhg">http://www.youtube.com/watch?v=haycL41dAhg</a><br/>
+<a href="http://www.youtube.com/watch?v=kWyoYtvJpe4">http://www.youtube.com/watch?v=kWyoYtvJpe4</a><br/>
+<a href="http://www.youtube.com/watch?v=uKZ8GBKmeDM">http://www.youtube.com/watch?v=uKZ8GBKmeDM</a><br/>
+<a href="http://www.youtube.com/watch?v=Nn2KQmVF5Og">http://www.youtube.com/watch?v=Nn2KQmVF5Og</a><br/>
+<a href="http://www.youtube.com/watch?v=IcteAbMC1Ok">http://www.youtube.com/watch?v=IcteAbMC1Ok</a></p>
+
+<p>前三个是第一天的教程，后4个是第二天的。</p>
+
+<p>具体的情况，请<a href="http://code.google.com/intl/zh-CN/edu/languages/google-python-class/">移步到这里</a>。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/03/19/parser-html-and-xml-using-simple-html-dom-class/">PHP Simple HTML DOM Parser 是一个不错的html/xml分析类</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/03/19/parser-html-and-xml-using-simple-html-dom-class/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/03/19/parser-html-and-xml-using-simple-html-dom-class/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>用php解析html/xml文件，PHP内置了几个类，但是要不就是目前处理能力过于简单，用户编码太多，要不就是对文档的要求很严格。刚好今天要用php抓取大量网页的特定内容，在<a href="http://sf.net">sf.net</a>
+上找到了这个称为<a href="http://simplehtmldom.sourceforge.net/index.htm">PHP Simple HTML DOM Parse</a> 类。单个文件，目前36k。官方给出的特性和要求是：</p>
+
+<ul>
+<li>相当简单的方式操作HTML</li>
+<li>要求PHP 5 以上</li>
+<li>支持无效的HTML</li>
+<li>类似jQuery的选择器来查找元素</li>
+<li>单行代码就可以从HTML页面抓取内容。</li>
+</ul>
+
+
+<p>支持无效的HTML很重要，网络上能严格通过w3c验证的网站太少了，大部分网站的很多标签都非封闭的，而大部分DOM解析器都是以XML方式处理，而XML对标签的封闭就要求很严格了，因此大部分网页无法使用这种函数来处理。</p>
+
+<p>一个强大的选择器来查询和定位要找的元素至关重要，jQuery无疑在这方面做的相当棒。而这个类就采用了jQuery类似的查询方式，官方网络上也给出大量的例子来说明这点。</p>
+
+<p>可惜的是，目前还不支持xpath查询方式，如果xpath查找，那就更强悍了，希望早日能看到这个功能。
+想进一步了解，可以看 <a href="http://simplehtmldom.sourceforge.net/manual.htm">在线文档</a>。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/03/15/linux-can-not-access-hp-hsv-storage/">Linux无法识别存储的一个低级问题</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/03/15/linux-can-not-access-hp-hsv-storage/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/03/15/linux-can-not-access-hp-hsv-storage/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>上午同事打电话过来，说某项目中，咱们的系统无法识别到HP的存储。HBA卡是Qlogic 2400系列的.驱动是最新的，而且卡已经正常工作了，在dmesg里能看到HP存储的型号，但是就是看不到存储磁盘。不过有一个提示信息，具体的日志是这样：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/03/15/linux-can-not-access-hp-hsv-storage/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/03/14/take-back-ubuntu/">还是使用ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-14T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/03/14/take-back-ubuntu/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/03/14/take-back-ubuntu/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>考虑到工作的便利性，评估了<a href="http://fedoraproject.org">fedora</a> 12 3天后，开始从ubuntu迁移到fedora 12,使用了不到一周，不堪忍受，还是用回<a href="http://www.ubuntu.com">ubuntu</a>。 原因：</p>
+
+<ol>
+<li>仓库的不稳定，使用国外的仓库把，太慢，国内虽然有不好快速的仓库（比如sohu，比如163），但是都不太稳定。动不动就出现hash值不一致，要不就是<code>yum  search</code>的时候能找到软件包，但是安装的时候却出现404的错误。无语。</li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/03/14/take-back-ubuntu/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/03/02/lah-chapter16-questions-key/">Linux系统管理技术手册第十六章习题实践</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/03/02/lah-chapter16-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/03/02/lah-chapter16-questions-key/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>★ E16.1 研究您本地的NFS设置。使用了NFS吗？还是有别的不同解决方法？采取了自动安装方式吗？有什么样的权衡考虑？</p>
+
+<p>A：以前在网站备份的时候使用过NFS，但是后来放弃了，主要是因为NFS在大I/O的情况下，容易出现崩溃的情况。<br/>
+当然因为挂载点少，所以自动安装方式就没有必要了，越简单，越安全。<br/>
+现在采取了rsync的方式，通过SSH隧道传输数据，相比NFS要稳定和安全。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/03/02/lah-chapter16-questions-key/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/8/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/6/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

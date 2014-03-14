@@ -1,0 +1,679 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="E13.1 研究Linux的route命令，简要介绍它的功能。使用route命令，怎样做到： 加一条通过接口 eth1 到 128.138.129.1 的默认路由；
+删除到 128.138.129.1 的默认路由；
+判断一个程序 (routed)或者一个ICMP重定向是否加入了一条路由（注意， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/8">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/02/25/lah-chapter13-questions-key/">Linux系统管理技术手册第十三章系统实践</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/02/25/lah-chapter13-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/02/25/lah-chapter13-questions-key/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>E13.1 研究Linux的route命令，简要介绍它的功能。使用route命令，怎样做到：</p>
+
+<ol>
+<li>加一条通过接口 eth1 到 128.138.129.1 的默认路由；</li>
+<li>删除到 128.138.129.1 的默认路由；</li>
+<li>判断一个程序 (routed)或者一个ICMP重定向是否加入了一条路由（注意，这个方法也能用netstat -rn 命令的输出做到）。</li>
+</ol>
+
+
+<p>A：route的主要目的是现实和修改内核IP路由表信息。参数比较多。</p>
+
+<ol>
+<li><code>route add default gw 128.138.129.1 eth1</code></li>
+<li><code>route default default gw 128.138.129.1</code></li>
+<li>我的网络环境没有ICMP重定向，所以也看不到是否增加了路由信息。</li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/02/25/lah-chapter13-questions-key/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/02/24/lah-chapter12-questions-key/">Linux系统管理技术手册第十二章系统实践</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/02/24/lah-chapter12-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/02/24/lah-chapter12-questions-key/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>E12.1 听从（也就是服从）ICMP重定向包的指挥，如何会让一个未经授权的用户威胁网络的安全？</p>
+
+<p>A：主要是会获得一个窃听网络数据的可能，更详细的内容，可以参考<a href="http://82880.blog.51cto.com/72880/68795">这篇文档</a>，说的比较详细。</p>
+
+<p>E12.2 网络链路的MTU是什么？如果给定的MTU设得太高，会发生什么问题？太低呢？</p>
+
+<p>A：MTU（Maximum Transfer Unit)，最大传输单元，用来定义网络上传输包的最大值。以太网一般是1500bytes。太高会导致丢包，太低则导致分片，都会产生网络传输问题。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/02/24/lah-chapter12-questions-key/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/02/23/pipi-clothes-2/">再来一张</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/02/23/pipi-clothes-2/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/02/23/pipi-clothes-2/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><hr />
+
+<p><a href="http://www.flickr.com/photos/mlsx/4380482523/" title="photo sharing"><img src="http://farm5.static.flickr.com/4024/4380482523_c481d2936d.jpg" alt="image" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/mlsx/4380482523/">2010-02-23
+11.07.08</a>，原由
+<a href="http://www.flickr.com/people/mlsx/">mlsx</a> 上載。 这张更能看清皮皮的新衣服，呵呵。<br/>
+昨天的那个背带裤也不错，不过拍的几张都模糊了，她总是动，抓拍不下来。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/02/23/pipi-clothes-1/">这件衣服如何</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/02/23/pipi-clothes-1/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/02/23/pipi-clothes-1/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><hr />
+
+<p><a href="http://www.flickr.com/photos/mlsx/4380377009/" title="photo sharing"><img src="http://farm5.static.flickr.com/4063/4380377009_26bb1f55dd.jpg" alt="image" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/mlsx/4380377009/">2010-02-23%2011.07.04.jpg</a>，原由
+<a href="http://www.flickr.com/people/mlsx/">mlsx</a> 上載。</p>
+
+<p>突然发现很多衣服没有来得及穿就已经显得小了，赶紧穿，赶紧选新的，好看的穿。 衣服不少，却发现裤子少了，要买裤子了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/01/20/pipi-washing/">皮皮洗澡</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/01/20/pipi-washing/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/01/20/pipi-washing/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://dl.dropbox.com/u/220586/video-2010-01-15-20-22-19.3gp">皮皮洗澡</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/01/19/google-and-gfw/">图片一枚</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/01/19/google-and-gfw/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/01/19/google-and-gfw/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="uploads/2010/01/GFW.png" alt="image" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/01/15/lah-chapter10-questions-key/">Linux系统管理技术手册第10章系统实践</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/01/15/lah-chapter10-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/01/15/lah-chapter10-questions-key/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>E10.1 保留老日志文件的主要理由是什么？</p>
+
+<p>A：除非你每天查看系统日志并记录有故障的消息，否则你就要保留老的日志文件，否则BOSS问起你来，你来什么来对付呢？</p>
+
+<p>E10.2 lastlog和wtmp之间的区别是什么？每种日志合理的轮换策略是什么？</p>
+
+<p>A：lastlog记录的是当前所有系统帐号的登录情况，记录每一个帐号最近的登录日期，登录端口/终端。如果没有登录过，则显示为从未登录。<br/>
+而wtmp则是记录所有登录帐号的信息，包括该帐号登录的时间，登录终端，退出时间等。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/01/15/lah-chapter10-questions-key/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/01/01/2010-plan/">2010年计划</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/01/01/2010-plan/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/01/01/2010-plan/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2009年开始到来的时候，我做了一个<a href="http://blog.wgzhao.com/2009/01/07/2009-plan.html">计划</a>。现在是总结的时候了</p>
+
+<ol>
+<li><strong>好好抚养皮皮</strong>：目前皮皮正在健康快乐的成长，到目前为止，暂时还没有感冒过，发烧过，除了打预防针，暂时还没有去过医院，这一点让我们觉得皮皮真的很好带，也让我们省了很多心。同时也觉得小孩的东西，质量还是很重要的，这一点，我打算到时专门写一篇blog，谈谈我对购买婴儿用品的看法和理解。</li>
+<li><strong>米米当然还是很重要的</strong>：唉，金融危机呀，到目前为止，属于深度套牢，基本上没有增加结构性收入，创造性收入也非常少。</li>
+<li><strong>如果金融危机不再加深，考虑在这年买房</strong>：这个做到了，4月底买的房，目前正在装修，如果没有特别情况发生，应该可以在农历新年之前完工，不过今年不打算入住。</li>
+<li><p><strong>技能方面</strong>：</p>
+
+<ul>
+<li><strong>数据库技术方面，想重点学习Oracle和MySQL</strong>：买了一本Oracle的书，也系统的学习了下，还是有明显进步的。MySQL没有完成，再一次发现，还是得买印刷的书，电子书容易走神。</li>
+<li><strong>集群和虚拟化技术</strong>： 作了虚拟化的一个专题研究，对heartbeat也有了一些研究，但是都比较肤浅，这点完成得不是很理想。</li>
+<li><strong>系统管理技术</strong>：看了一些电子类的书籍，年终的时候，还是决定买下《linux管理技术手册》一书，并打算完成所有章节后的习题，这算是我系统学习/sbin,/usr/sbin后的另外一个长期实践吧。至于学习python，开了个头，还是没有找到很好的深入学习方式。</li>
+</ul>
+</li>
+<li><p><strong>增加知识面，就需要增加自己的阅读量、阅读面</strong>：2009年，读了不少非专业书籍(在豆瓣网上搞了<a href="http://www.douban.com/doulist/425149/">一个豆列</a>，不包括电子书），可以说绝大部分是买的非专业书籍，对增加自己的知识面和量都大有裨益，需要继续坚持。</p></li>
+</ol>
+
+
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;2009年的分割线&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
+
+<p>说到2010年的计划，除了2009年的一些计划可以延续外，2009年的最后几天增加了一个突发因素，如果这个突发因素导致的事情最后实现的话，那么2010年会有一个相当大的变化，所以其他一些计划目前就不好制定了，一切都要等把这个突发因素带来的影响消化完。</p>
+
+<p>等着吧。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/01/01/2010-hope/">2010希望</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/01/01/2010-hope/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/01/01/2010-hope/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p> 2009让我们失去了太多的东西，2010，我只希望失去的少一点，再少一点。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/12/30/lah-chapter8-questions-key/">Linux系统管理技术手册第8章习题实践</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/12/30/lah-chapter8-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/12/30/lah-chapter8-questions-key/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的crontab特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前crontab文件，并确保他不能增加新的crontab文件所需的步骤。</p>
+
+<p>A：假定用户test就是我们需要惩罚的用户，目前你的帐号是root。列出帐号test的crontab文件指令是：</p>
+
+<pre><code>root@wgzhao-nb:~# crontab -u test -l
+# m h  dom mon dow   command
+20 3 * * * /usr/bin/hugecmd
+</code></pre>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/12/30/lah-chapter8-questions-key/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/9/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/7/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,662 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="现在很多电脑厂商为了降低成本，很多机型在出厂的时候，采用了Linux系统，而不是Windows系统，其实这对Linux的普及无疑是一个很好的机会，但是如果你遇到这样的厂商客服，估计就不会想这是Linux的机会。下面是一个Linux爱好者因为出厂自带的光盘读盘有点问题而打进的电话，摘录一段： 话务员 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/blog/page/57">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/16/This-was-of-no-confidence-in-Linux/">居然如此不信任Linux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/16/This-was-of-no-confidence-in-Linux/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/16/This-was-of-no-confidence-in-Linux/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>现在很多电脑厂商为了降低成本，很多机型在出厂的时候，采用了Linux系统，而不是Windows系统，其实这对Linux的普及无疑是一个很好的机会，但是如果你遇到这样的厂商客服，估计就不会想这是Linux的机会。下面是一个Linux爱好者因为出厂自带的光盘读盘有点问题而打进的电话，摘录一段：</p>
+
+<blockquote><p>话务员：您真的是要安装linux嘛？
+用户：是的
+话务员：您使用电脑做什么呢？
+用户：上网、办公、聊天什么的&hellip;&hellip;&hellip;
+话务员：您要上网、要使用office等是嘛？
+用户：是的
+话务员：如果您真的是要用上面用途，建议您不要安装linux，因为linux无法实现
+上面的功能，不兼容widnows软件
+用户：那么你们为什么要集成呢？我买电脑的时候就带了这个系统啊，为什么不能用？
+话务员：这么跟您说吧，因为国家的政策规定在PC出场的时候要代一个操作系统，
+所以才带红旗的
+用户：真的不能用嘛？
+话务员：建议您还是安装XP吧，要是用linux，你周围的人基本上都不会用的
+用户：如果我一定要安装呢?
+话务员：如果您一定要安装linux，可以给您更换光盘，您可以打维修的电话
+xxxxxxxxx；如果您没有特殊用途，还是安装windowsXP吧
+用户：什么特殊用途可以安装linux呢？
+话务员：反正就是你的用途不能满足吧&hellip;&hellip;&hellip;红旗的800你知道吧，可以问一下他们
+用户：知道，谢谢</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/15/linux-kernel-support-for-real-time/">Linux内核支持实时（Real-Time）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/15/linux-kernel-support-for-real-time/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/15/linux-kernel-support-for-real-time/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最新的2.6.18版本Linux内核(Linus
+Torvalds在9月18日发布）提供了基本的实时支持，这方便了开发人员编写嵌入式应用，之前是使用实时内核补丁集来实现。这项技术主要由
+TimeSys公司的Thomas Gleixner和Red Hat的Ingo Molnar完成。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/14/ext4-file-system-by-adding-linux-kernel/">Ext4文件系统加入linux内核</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-14T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/14/ext4-file-system-by-adding-linux-kernel/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/14/ext4-file-system-by-adding-linux-kernel/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>根据kernel.org最新的patch<a href="http://www.kernel.org/pub/linux/kernel/people/akpm/patches/2.6/2.6.19-rc1/2.6.19-rc1-mm1/announce.txt">声明</a>，ext4已经被加入内核。在你用“-o
+extents”挂载文件系统并创建新文件之前，ext4文件系统与ext3兼容。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/13/With-the-further-development-of-cooperation/">合作有了进一步发展</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/13/With-the-further-development-of-cooperation/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/13/With-the-further-development-of-cooperation/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>老大今天给我打了电话，描述了目前的进展情况，我选择了半紧凑型的合作模式。或许下周二、三就会有更一步的消息。期待中，嚯嚯。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/12/you-find-a-job/">找工作呀，找工作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/12/you-find-a-job/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/12/you-find-a-job/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不知不觉，回长沙的日子已经一月有余。<br/>
+无论在MSN还，QQ上，还是手机短信上，这两天信息我是看到最多的，而且一直延续到今天，或许明天，后天，直到我找到工作吧。
+”在北京不是挺好的，怎么想起要回长沙呀？“<br/>
+”找好工作了吗，在哪里上班呢？“</p>
+
+<p>第一个问题，我想了解和熟悉我的人，都知道为什么，在我以往的帖子中也能找到原因。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/10/12/you-find-a-job/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/11/Web-page-designers-must-have-13-Firefox-plug-in/">网页设计师必须有的13个Firefox插件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/11/Web-page-designers-must-have-13-Firefox-plug-in/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/11/Web-page-designers-must-have-13-Firefox-plug-in/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://software.solidot.org/article.pl?sid=06/10/10/072245&amp;from=rss">solidot上的报道</a>，看你安装了几个，以下是原文报道</p>
+
+<p>如果你是一位喜欢使用Firefox的网页设计师，为了让工作完成的更好可以使用这里提供的</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/10/11/Web-page-designers-must-have-13-Firefox-plug-in/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/11/Hans-Reiser-was-arrested-by-the-police/">Hans Reiser被警方逮捕</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/11/Hans-Reiser-was-arrested-by-the-police/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/11/Hans-Reiser-was-arrested-by-the-police/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Reg报道：ReiserFS作者Hans Reiser日前被奥克兰警方逮捕，因为怀疑他谋杀了自己的妻子Nina
+Reiser。Nina自从9月3日失踪以来再也没有出现过，警方虽然没有找到她的尸体但是认为现有证据足够证明她已被谋杀</p>
+
+<p>ReiserFS适合有大量小文件的文件系统，Novell SuSe默认就是用的这个文件系统。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/10/mastering-what-it-means/">精通意味着什么</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/10/mastering-what-it-means/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/10/mastering-what-it-means/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>上午继续我的<a href="http://www.it732.com">it732</a>网站开发。没有太多进展，自顶向下设计方案和自底向上设计方案同时在用，因此有时两个方案没有走在同一条路上，设计和开发一个人还真累。</p>
+
+<p>下午去面试了一家培训机构，也许是我的简历做的不够吧，没有太多“精通”的东西，导致别人怀疑我对Linux不熟悉。希望我能多用命令行工作。而且他们的要求也很高，大部分的东西都要精通，他们定义的精通是了解所有，了解每一个细节，比如你需要了解所有cisco产品，并精通它。或许真能找到这样的人吧，至少在他们培训机构的现有人员应该是达到了这个水平（否则怎么招聘你来？）
+&lt;!-more&mdash;>
+接着带我参观了他们的培训教室和机房，网络机房里刚好有两个学生在练习，面试的人对我说，你看看这些系统你用过吗？这句话很有诱惑力，虽然在门外我已经知道他们在用什么系统，但是我还是进去了，一个人在用着windows
+2000，另外一个人也在用着windows 2000，只是用虚拟机跑了一个<a href="http://www.redhat.com">RedHat</a>
+9.0，庆幸我能说出这两个系统的名字，更应该庆祝我能说出linux系统的内核版本。不过人家纠正我说，那不是真正的linux，那是用虚拟机运行的，我做恍然大悟状，哦，那<a href="http://fabrice.bellard.free.fr/qemu/">qemu</a>似乎也能做这个吧。</p>
+
+<p>回头看我的简历，只写了&#8221;精通Linux操作系统及其各种服务配置&#8221;，写的时候诚惶诚恐，精通，在我的眼里，那是渴望不可及的一个境界，我知道我对Linux的认识才开始。没有在Linux下做过太多的开发，没有认真阅读过Linux内核代码，顶多算是Linux的爱好者和折腾者，精通者，远在天边。</p>
+
+<p>或许长沙对人才的要求太高，还是北京对人才的要求太低，我不理解。</p>
+
+<p>正式面试前我有十几分钟等待时间，旁听了几分钟在机房的课程，应该是讲网络应用吧（似乎BENT没有这个课），听到了精通~络的讲师这么一段，大意是这样：</p>
+
+<blockquote><p>“网页有静态和动态&hellip;&hellip;.其实动态的网页基本上从网页文件名后缀可以看出来，比如asp结尾的，比如php，比如jsp，当然还有，比如cgi结尾的，
+<strong>比如xhtml，比如shtml，比如XML</strong>&hellip;..&#8221;</p></blockquote>
+
+<p>看来果然是精通网络人士了，XML要是有交互功能，那世界将会变成怎样？</p>
+
+<p>走出这个培训机构我在想，我是为自己的能力不足汗颜，还是应该考虑别的。</p>
+
+<p>晚上和网讯的另外一个股东交换了意见，给他看了一些优秀的web2.0的网站和他们的现有以及潜在价值，当然包括连今天《新闻联播》都报道的Google收购youtube。我的目的是要让相信，并不总是满屏显示的首页超过看上去简陋的首页，都会说google的首页简单~但没有人敢说他的功能简单（也许百度的CTO会这样说吧）。</p>
+
+<p>定义的标准应该是用户的体验。说服了他们，我的首页就容易得多了。</p>
+
+<p>忙的时候总是容易忘记重要的事情，昨天还记得是今天是姐姐的生日，到了今天就差点忘记，打电话不在。只好发了短信，生日快乐！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/07/CDMA-signal-in-the-country-will-not-do/">CDMA的信号在乡下不行</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/07/CDMA-signal-in-the-country-will-not-do/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/07/CDMA-signal-in-the-country-will-not-do/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://mlsx.xplore.cn/read.php/476.htm">CDMA在乡下的信号确实不行</a>，每天拨号要拨几次才行，拨上去，但是总是说DNS解析不了。其实是网路已经断了，害得的白把笔记本抗回去了。
+昨夜回到长沙，在家里测试了一下CDMA，效果就好多了，拨号速度也快了很多，不会出现莫名其妙的“连接失败”的提示。
+速度嘛，马马虎虎，下载速度十几KB，打开<a href="http://news.sina.com.cn">新浪新闻网</a>出现全部文字大约7秒。打开<a href="http://brisy.xplore.cn">我的blog</a>，大约5秒。gmail打开也不怎么快。只能去想想过去电话线拨号如何慢了，以求得一个安慰。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/10/02/10010-faint/">10010，不骂不办事</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-10-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/10/02/10010-faint/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/10/02/10010-faint/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>多种上网方案失败后，决定还是去买CDMA无线上网卡，虽然知道他的速度不尽人意，但是聊胜于无。<br/>
+30号下午买下。CDMA的业务代表告诉我晚上8点前就可以开通。<br/>
+一直等到8：30，结果发现还是上不了，一直都连接失败，确认自己的操作无误后，拨打10010，询问为什么上不了？</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/10/02/10010-faint/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/58/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/56/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>/etc/group,/etc/gshadow释疑 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="下午welling在MSN上问我，你知道/etc/group的第二项是什么意思吗？这项中!和x分别代表什么意思呢？
+之前我还真的没有注意到这个问题。于是先man group了一把，给出了的说明是 password the (encrypted) group password. If this &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/03/12/some-tips-about-group-and-gshadow">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">/etc/group,/etc/gshadow释疑</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>下午<a href="http://weiling00.spaces.live.com/">welling</a>在MSN上问我，你知道/etc/group的第二项是什么意思吗？这项中!和x分别代表什么意思呢？
+之前我还真的没有注意到这个问题。于是先man group了一把，给出了的说明是</p>
+
+<blockquote><p>password the (encrypted) group password. If this field is empty, no
+password is needed.</p></blockquote>
+
+<!--more-->
+
+
+<p>从这个说明来看，应该是设置group的密码（之前我还不知道组也有密码一说）。但是现在这个说明太过于简单，  比如没有提及到一些特别字符，比如!和x，而这些字符在<code>/etc/passwd</code>文件的第二项是有不同含义的。
+google了一下，有找出了一个<code>/etc/gshadow</code>文件，到这里，我的猜测便认<code>为/etc/group</code>的方式和<code>/etc/passwd</code>的方式一致。第二项表示密码，如果是空的，表示没有密码，如果是x，表示该密码设置在对应的<code>/etc/gshadow</code>里。如果是!，应该表示禁止这个组。</p>
+
+<p>于是我把我的理解告诉了welling，不过我说我没有时间来证明这点。</p>
+
+<p>现在有时间，我又google了一下，找了一篇比较全面的文章，是北南南北兄的“用户（User）和用户组（Group）配置文件详解”
+，他给出了这样的一个解释：</p>
+
+<p>root:x:0:root,linuxsir <br/>
+注：用户组root，x是密码段，表示没有设置密码，GID是0,root用户组下包括root、linuxsir以及GID为0的其它用户（可以通过/etc/passwd查看）；；</p>
+
+<p>beinan:x:500:linuxsir<br/>
+注：用户组beinan，x是密码段，表示没有设置密码，GID是500,beinan用户组下包括linuxsir用户及GID为500的用户（可以通过/etc/passwd查看）；
+linuxsir:x:502:linuxsir<br/>
+注：用户组linuxsir，x是密码段，表示没有设置密码，GID是502,linuxsir用户组下包用户linuxsir及GID为502的用户（可以通过/etc/passwd查看）；</p>
+
+<p>helloer:x:503:<br/>
+注：用户组helloer，x是密码段，表示没有设置密码，GID是503,helloer用户组下包括GID为503的用户，可以通过/etc/passwd查看；</p>
+
+<p>这就和我前面的猜想有点不对了。为了搞清楚到底是怎么样的，还是用事实来证明比较好。
+验证步骤如下：</p>
+
+<p>1）用root帐号登录系统，先创建两个测试组group1,group2，然后创建两个不同的测试用户user1,user2,其中user1分别属于组group1,group2，而user2属于group2.</p>
+
+<pre><code>[root@dxs ~]# groupadd -g 1001 group1
+[root@dxs ~]# groupadd -g 1002 group2
+[root@dxs ~]# useradd -u 5001 -g 1001 -G 1001,1002 user1
+[root@dxs ~]# useradd -u 5002 -g 1002 -G 1002 user2
+[root@dxs ~]# tail -n 2 /etc/passwd
+user1:x:5001:1001::/home/user1:/bin/bash
+user2:x:5002:1002::/home/user2:/bin/bash
+[root@dxs ~]# tail -n 2 /etc/group
+group1:x:1001:user1
+group2:x:1002:user1,user2
+</code></pre>
+
+<p>2)测试不同的/etc/group第二项设置而产生的不同结果。<br/>
+首先，我们看看在默认值情况下，切换用户会发生什么情况：</p>
+
+<pre><code>[user1@dxs ~]$ touch first-user1-file
+[user1@dxs ~]$ mkdir first-user1-dir
+[user1@dxs ~]$ ls -lh
+总用量 4.0K
+drwxr-xr-x 2 user1 group1 4.0K 3月 12 20:04 first-user1-dir
+-rwxr–r– 1 user1 group1 0 3月 12 20:04 first-user1-file
+
+[user1@dxs ~]$ newgrp group2
+[user1@dxs ~]$ touch second-user1-file
+[user1@dxs ~]$ mkdir second-user1-dir
+[user1@dxs ~]$ ls -ldh se*
+drwxr-xr-x 2 user1 group2 4.0K 3月 12 20:10 second-user1-dir
+-rw-r–r– 1 user1 group2 0 3月 12 20:09 second-user1-file
+</code></pre>
+
+<p>从这个结果来看，切换用户组后，并没有要求输入密码，同时通过创建文件和目录，可以知道的确已经切换帐号了。  这里不要输入密码的原因应该是user1因为已经同时属于group1，group2两个组了，因此这仅仅是内部的一次切换，不要输入密码。
+下面我们重点来看看user2</p>
+
+<pre><code>[root@dxs ~]# su – user2
+[user2@dxs ~]$ id
+uid=5002(user2) gid=1002(group2) groups=1002(group2)
+[user2@dxs ~]$ touch first-user2-file
+[user2@dxs ~]$ mkdir first-user2-dir
+[user2@dxs ~]$ ls -ldh fi*
+drwxr-xr-x 2 user2 group2 4.0K 3月 12 20:13 first-user2-dir
+-rw-r–r– 1 user2 group2 0 3月 12 20:13 first-user2-file
+[user2@dxs ~]$ newgrp group1
+Password:
+newgrp: Permission denied
+</code></pre>
+
+<p>这里要求输入密码，但是我们并没有设置group1的密码，所以无论输入什么都会告知权限不允许，而此时的<code>/etc/group</code>中对应的项是字母x，我们认为密码是在/etc/gshadow里，而又根据/etc/passwd的惯例，第一次创建帐号后，密码是锁定的，也就是无论你输入什么样的密码都不正确，所以这里的group1应该和也/etc/passwd同样的策略。<br/>
+那么，如果我们把这个位置设置为空，是否意味着可以不要输入密码呢？我们试试</p>
+
+<pre><code>oot@dxs ~]# tail -n 2 /etc/group
+group1::1001:user1
+group2:x:1002:user1,user2
+[user2@dxs ~]$ newgrp group1
+Password:
+newgrp: Permission denied
+</code></pre>
+
+<p>还是需要你输入密码。直接敲回车也没有用。<br/>
+再改成!，试试</p>
+
+<pre><code> [user2@dxs ~]$ newgrp group1 
+ Password: 
+ newgrp: Permission denied 
+</code></pre>
+
+<p>还是不行。</p>
+
+<p>这这点来看，无论这项如何设置，切换的时候都是需要密码的，那我我们就从/etc/gshadow上面着手看看。/etc/gshadow的第二项默认是!,我们分别改成x以及空字符看看效果（/etc/group的第二项保留为空）</p>
+
+<pre><code>[root@dxs ~]# grep 'group1' /etc/gshadow
+group1:::user1
+[user2@dxs ~]$ newgrp group1
+newgrp: Permission denied
+
+[root@dxs ~]# grep 'group1' /etc/gshadow
+group1:x::user1
+[user2@dxs ~]$ newgrp group1
+Password:
+newgrp: Permission denied
+</code></pre>
+
+<p>从这个实验来看似乎为空的时候直接就禁止了，没有给你输入密码的机会，而如果是x，则和!没有区别。
+那我们试试有密码的情况是如何的：</p>
+
+<pre><code>[root@dxs ~]# gpasswd group1
+Changing the password for group group1
+New Password:(here input password abc123)
+Re-enter new password:(same to above)
+[root@dxs ~]# grep 'group1' /etc/gshadow
+group1:XMjSjdI/JIo5E::user1
+</code></pre>
+
+<p>很明显已经设置了组group1的密码。我们再切换试试</p>
+
+<pre><code>[root@dxs ~]# su – user2
+[user2@dxs ~]$ id
+uid=5002(user2) gid=1002(group2) groups=1002(group2)
+[user2@dxs ~]$ newgrp group1
+Password:
+[user2@dxs ~]$ pwd
+/home/user2
+[user2@dxs ~]$ mkdir second-user2-dir
+[user2@dxs ~]$ touch second-user2-file
+[user2@dxs ~]$ ls -ldh *
+drwxr-xr-x 2 user2 group2 4.0K 3月 12 20:13 first-user2-dir
+-rw-r–r– 1 user2 group2 0 3月 12 20:13 first-user2-file
+drwxr-xr-x 2 user2 group1 4.0K 3月 12 20:30 second-user2-dir
+-rw-r–r– 1 user2 group1 0 3月 12 20:30 second-user2-file
+[user2@dxs ~]$ id
+uid=5002(user2) gid=1001(group1) groups=1002(group2)
+</code></pre>
+
+<p>这这个结果来看，我们通过输入正确的密码切换了组，通过创建文件和目录可以印证这点。<br/>
+id命令更能清除的看到这点，user2的gid由之前的1002(group2)变成了1001(group1)。</p>
+
+<p>从这里总结来看是这样的</p>
+
+<p>1）/etc/group文件的第二项表示密码，密码默认设置在/etc/gshadow文件文件。该项不存在特殊字符。<br/>
+2）/etc/gshadow的第二项保存对应组的密码，切换时需要提供该密码。当该项为空时，直接禁止组切换，如果是!,x这样的字符，提供密码输入机会，但是无法切换，实际上他认为组的密码的密文是!或者x，因此!,x在这里也不是特殊字符了。</p>
+
+<p>在要结束测试的时候，在google发现有一个帖子这样描述unix下的<code>/etc/group</code>文件中的第二项：</p>
+
+<blockquote><p>Password Not used. Group administrators are provided instead of group passwords. See the /etc/security/group file for more information.</p></blockquote>
+
+<p>于是到linux下对应的目录看了看，group文件是没有，但是<code>group.conf</code>文件确有。默认里面只有注释。
+这个文件属于pam包的，那也就意味着他与插入式认证有关。找到一段相关说明，大家可以看看：</p>
+
+<p>这个模块根据用户名和发起服务请求的终端，提供组分类功能。
+   这个模块不对用户进行验证，而是为用户赋予组成员关系。这种组成员关系是根据用户请求的服务划分的，在<code>/etc/security/group.conf</code>文件中以文本的方式设置。<br/>
+想要这个模块正常工作，需要准确设置/<code>etc/security/group.conf</code>文件。其格式如下：</p>
+
+<pre><code> services; ttys; users; times; groups
+</code></pre>
+
+<p>前四项和<code>pam_time</code>配置文件:<code>/etc/security/pam_time.conf</code>或者time.conf中的相同。</p>
+
+<p>groups是一些以逗号或者空格分开的文本字符串，表示一些组名。如果用户的应用程序满足前四项，则用户就被加入到第五项定义的组中。</p>
+
+<p>这个模块能否起作用取决于用户对文件系统的访问权限。这一点是指，一旦用户成为一个组的成员，这个用户就可能利用获得的权限试图建立一个 setgid程序。而以后，如果这个用户不再属于这个组，他就可以通过这个程序非法回到这个组中。由于这个原因，用户具有写权限的文件系统需要非常严格的限制，如果文件系统在mount时，被设置为nosuid，那用户就无法建立和执行这样的程序。因此，使用这个模块时，用户具有写权限的所有文件系统都需要使用nosuid参数mount。<br/>
+<code>pam_group</code>的作用和<code>/etc/group</code>文件是并行的，如果用户被加入的这个模块定义的任何组中，同时也被加入到<code>/etc/group</code>文件中；反之亦然。</p>
+
+<p>ok，group的问题先告一段落，再遇到问题，在研究。感谢welling向我提出的这个问题，又让我对<code>/etc/group</code>多了解了一层。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-12T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/03/12/some-tips-about-group-and-gshadow/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/03/12/some-tips-about-group-and-gshadow/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/03/11/Abacus/" title="Previous Post: 算盘">&laquo; 算盘</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/03/15/oracle-performance-tuning-system-part/" title="Next Post: Oracle性能调优--系统篇">Oracle性能调优--系统篇 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/03/12/some-tips-about-group-and-gshadow/';
+        var disqus_url = 'http://wgzhao.github.io/2007/03/12/some-tips-about-group-and-gshadow/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

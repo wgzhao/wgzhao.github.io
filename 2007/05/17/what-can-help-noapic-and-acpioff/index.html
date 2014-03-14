@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Noapic和acpi=off能帮我做到什么？ - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="06年1月的时候写过一篇有关acpi和apic的帖子。当时写这个帖子有两个原因：一是确实遇到了很多人混淆了apic和acpi的差别，也难怪，他们两个长得也太像了。
+二来是因为当时与次相关的两个核心参数(noapic,acpi=off)帮我解决了一个当时我觉得不可思议的问题，所以觉得有必要记录下来 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/05/17/what-can-help-noapic-and-acpioff">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Noapic和acpi=off能帮我做到什么？</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-05-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>06年1月的时候写过一篇有关<a href="/2006/01/12/what-difference-between-acpi-and-apic/">acpi和apic</a>的帖子。当时写这个帖子有两个原因：一是确实遇到了很多人混淆了apic和acpi的差别，也难怪，他们两个长得也太像了。<br/>
+二来是因为当时与次相关的两个核心参数(noapic,acpi=off)帮我解决了一个当时我觉得不可思议的问题，所以觉得有必要记录下来。</p>
+
+<p>后来我又写了一个<a href="read.php/311.htm">帖子</a>，说到了又一次用这两个参数解决疑难杂症的事情。</p>
+
+<!--more-->
+
+
+<p>没有想到，从那以后，我遇到很多奇怪的问题，基本都你觉得事情蹊跷的时候，一用这两个参数，嘿嘿，准行。
+加上今天，我又遇到了使用这两个参数解决问题的事情，所以想记录一下我到目前遇到的这类问题，算是一个回忆吧。</p>
+
+<p>最早应该是CALIAS项目了，DC4.1安装在IBM X346（现在的X3650）上。配有Qlogic的光纤卡，单核心启动一切OK，多核心起来，光纤卡看上去驱动正常了，就是无法访问阵列柜。</p>
+
+<p>后来把机器扛到了公司，经过研发牛人的指点，算是搞定了，从那次起，知道了有这么一个参数。
+同样机器和配置，在另外一个项目中也遇到了这个情况，不过要惨一点，kernel panic。加上这两个参数后，问题解决。</p>
+
+<p>如果没有记错的话，HP ML570机器，安装X86-64版本的DC5,到解压内核时，不动了，按键盘没有响应。重启后，加入这两个参数搞定。</p>
+
+<p>IBM R52笔记本安装红旗桌面4.1plus，安装正常，启动时，到出现ACPI后，不再往下走，加上apci=off后，问题解决。</p>
+
+<p>还有若干次安装普通X86 pc服务器时，出现内核错误，增加这两个参数启动后搞定。</p>
+
+<p>普通台式机，非集成的RTL-8100B/8139D网卡，安装DC5后，网卡能驱动，就是ping不通网络，dmesg能看到</p>
+
+<pre><code>NETDEV WATCHDOG: eth0: transmit timed out
+eth0: Transmit timeout, status 0c 0005 c07f media 00.
+eth0: Tx queue start entry 4 dirty entry 0.
+eth0: Tx descriptor 0 is 0008a03c. (queue head)
+eth0: Tx descriptor 1 is 0008a03c.
+eth0: Tx descriptor 2 is 0008a03c.
+eth0: Tx descriptor 3 is 0008a03c.
+eth0: link up, 100Mbps, full-duplex, lpa 0xC5E1
+NETDEV WATCHDOG: eth0: transmit timed out
+</code></pre>
+
+<p>开始以为是驱动版本过低，但是想想这样的网卡对linux而言是多么的标准呀，百思不得其解中，加入这两个参数，问题解决。</p>
+
+<p>总之：如果你遇到了觉得不可思议的问题时，可以优先考虑增加<code>apci=off noapic</code>的核心参数，也许以为是大问题的事情就这么轻松的解决了。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-05-17T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/05/17/what-can-help-noapic-and-acpioff/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/05/17/what-can-help-noapic-and-acpioff/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/05/13/Ashes/" title="Previous Post: 浴火重生">&laquo; 浴火重生</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/05/21/commands-start-r/" title="Next Post: \[/sbin学习\]r\*命令">\[/sbin学习\]r\*命令 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/05/17/what-can-help-noapic-and-acpioff/';
+        var disqus_url = 'http://wgzhao.github.io/2007/05/17/what-can-help-noapic-and-acpioff/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
