@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Pczou的linux进程内存解析 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="今天pczou献上了一道大餐&mdash;进程的内存使用解析。讲得非常详细，先剽窃过来，呵呵。 Linux下如果知道一个进程究竟占用了多少内存？这是个经常被问道和被答错的问题。进程的内存分配是个比较复杂的话题，这里通过一个例子进行说明。 有这么一个简单程序： 1
+2
+3
+4
+5
+6
+7
+8
+9 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2006/12/11/analysis-linux-memory-process">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Pczou的linux进程内存解析</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>今天<a href="http://pczou.bokee.com">pczou</a>献上了一道大餐&mdash;<a href="http://pczou.bokee.com/5944730.html">进程的内存使用解析</a>。讲得非常详细，先剽窃过来，呵呵。</p>
+
+<p>Linux下如果知道一个进程究竟占用了多少内存？这是个经常被问道和被答错的问题。进程的内存分配是个比较复杂的话题，这里通过一个例子进行说明。</p>
+
+<!--more-->
+
+
+<p>有这么一个简单程序：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'> <span class="p">[</span><span class="n">root</span><span class="err">@</span><span class="n">pczou</span> <span class="n">pczou</span><span class="p">]</span><span class="err">#</span> <span class="n">cat</span> <span class="p">.</span><span class="o">/</span><span class="n">prog</span><span class="p">.</span><span class="n">c</span>
+</span><span class='line'> <span class="err">#</span><span class="n">include</span>
+</span><span class='line'> <span class="err">#</span><span class="n">include</span>
+</span><span class='line'> <span class="err">#</span><span class="n">include</span>
+</span><span class='line'> <span class="err">#</span><span class="n">include</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err">#</span><span class="n">define</span> <span class="n">ONEM</span> <span class="p">(</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kt">int</span> <span class="n">func</span><span class="p">()</span>
+</span><span class='line'> <span class="p">{</span>
+</span><span class='line'> <span class="kt">char</span> <span class="n">s</span><span class="p">[</span><span class="mi">16</span><span class="o">*</span><span class="n">ONEM</span><span class="p">];</span>
+</span><span class='line'> <span class="kt">char</span><span class="o">*</span> <span class="n">p</span><span class="p">;</span>
+</span><span class='line'> <span class="n">p</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">32</span><span class="o">*</span><span class="n">ONEM</span><span class="p">);</span>
+</span><span class='line'> <span class="n">pause</span><span class="p">();</span>
+</span><span class='line'> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+</span><span class='line'> <span class="p">{</span>
+</span><span class='line'> <span class="n">printf</span><span class="p">(</span><span class="s">&quot;pid: %dn&quot;</span><span class="p">,</span> <span class="n">getpid</span><span class="p">());</span>
+</span><span class='line'> <span class="n">func</span><span class="p">();</span>
+</span><span class='line'> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中func()这个函数分配了32MB的内存，以及16MB的堆栈。</p>
+
+<p>运行一下，prog会停在pause()的位置，看看ps怎么说：</p>
+
+<pre><code>USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND 
+root 4238 0.0 0.0 52396 352 pts/0 S 21:29 0:00 ./prog 
+</code></pre>
+
+<p>VSZ指的是进程内存空间的大小，这里是52396KB；
+RSS指的是驻留物理内存中的内存大小，这里是352KB。</p>
+
+<p>一般系统管理员知道VSZ并不代表进程真正用到的内存，因为有些空间会仅在页表中挂个名，也就是说只是虚拟存在着，只有真正用到的时候内核才会把虚拟页面和真正的物理页面映射起来。比如，<code>prog.c</code>中用malloc()分配的32MB内存，由于程序中并没有用到这些内存，所以不应算到进程的帐上。</p>
+
+<p>进程的内存使用情况比较复杂，这是因为：</p>
+
+<ul>
+<li>进程申请的内存不一定真正会被用到</li>
+<li>真正用到的内存也不一定是只有该进程自己在用 (比如动态共享库)</li>
+</ul>
+
+
+<p>所以酒足饭饱结帐的时候，酒吧打出的帐单中不应该有没有上的菜，也不应该一个菜两份钱。而ps给出的就是这样的“糊涂”帐单，不足为凭。</p>
+
+<p>算清楚帐的唯一办法是把每个菜都仔细过一遍，看看有没有上，有没有重复。下面的帐单要清楚多了：</p>
+
+<pre><code> Virtual memory : 52396 KB 
+Effective VM : 52120 KB 
+Mapped : 352 KB
+Effective mapped: 76.6 KB 
+Sole use : 72 KB 
+Per file memory use
+ld-2.3.4.so : VM 94208 B, M 90112 B, S 8192 B 
+prog : VM 8192 B, M 8192
+B, S 8192 B 
+libc-2.3.4.so : VM 1180 KB, M 221184 B, S 16384 B 
+</code></pre>
+
+<p>可以看出，虽然虚拟地址空间是52396KB，实际映射(a.k.a. 分配)的空间是352KB，这和ps给出的结果一致。再看&#8221;Effective Mapped&#8221;这个值，仅为76.6 KB。这个值的计算方法是：</p>
+
+<p> <code>有效的实际使用内存 = 该进程独占的内存 + 共享的内存A /共享A的进程数目 + 共享的内存B /共享B的进程数目 + ...</code></p>
+
+<p>虽然并不十分准确，但&#8221;Effective Mapped&#8221;已经足以说明进程所占用内存的实际大小了。</p>
+
+<p>OK，最后用这个方法给所有进程都“结下帐”：</p>
+
+<p><img src="http://docs.google.com/File?id=acqszgd2zwsk_19hprc2j" alt="image" /></p>
+
+<p>从上面的统计结果可以看出，</p>
+
+<ul>
+<li>虽然firefox的占用虚拟空间是最大的，但其实际占用的内存却比X Server要少。</li>
+<li>firefox的实际占用的内存和其RSS (a.k.a.
+mapped)差别不大，只有少了约700；而kontact的实际占用的内存比起RSS足足少了约1.2MB。由此可以看出我用的窗口管理器是KDE而非Gnome，why?
+因为Qt之类的共享库被很多KDE进程分担了。</li>
+</ul>
+
+
+<p><strong>Update:2007.12.28</strong></p>
+
+<p> 得到上面那个详单的方法是使用了smem.pl脚本。脚本来自下面的链接
+<a href="http://www.contrib.andrew.cmu.edu/~bmaurer/memory/smem.pl">http://www.contrib.andrew.cmu.edu/~bmaurer/memory/smem.pl</a>
+或者从本地下载
+<a href="/uploads/1198853509_0.zip">smem.pl</a></p>
+
+<p>他需要用到perl的smaps包，可以从<a href="http://cpan.uwinnipeg.ca/cpan/authors/id/O/OP/OPI/Linux-Smaps-0.05.tar.gz">这里</a>下载，也可以使用下面的命令，自动安装
+<code>perl -MCPAN -e 'install Linux::Smaps'</code></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-11T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2006/12/11/analysis-linux-memory-process/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2006/12/11/analysis-linux-memory-process/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/12/10/disaster-die-it-will-be-after-the-blessing/" title="Previous Post: 大难不死，会有后福吧">&laquo; 大难不死，会有后福吧</a>
+      
+      
+        <a class="basic-alignment right" href="/2006/12/13/When-the-file-system-inconsistency/" title="Next Post: 什么时候文件系统不一致">什么时候文件系统不一致 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2006/12/11/analysis-linux-memory-process/';
+        var disqus_url = 'http://wgzhao.github.io/2006/12/11/analysis-linux-memory-process/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

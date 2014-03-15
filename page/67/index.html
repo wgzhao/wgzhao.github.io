@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="这次出差似乎很不利。
+机器是OpenPower 720 (具体型号是9124-720-SN064429C)。
+中午开箱验收机器，花了不少时间。到第一台机器上架，已经是到了午饭时间。
+吃过午饭，一边验收另外一台机器，一边开始为系统RAID，使用IBM自带的Standalone Diagnostics &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/67">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/18/OpenPower720-how-you/">OpenPower720怎么啦</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/18/OpenPower720-how-you/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/18/OpenPower720-how-you/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这次出差似乎很不利。<br/>
+机器是OpenPower 720 (具体型号是9124-720-SN064429C)。<br/>
+中午开箱验收机器，花了不少时间。到第一台机器上架，已经是到了午饭时间。<br/>
+吃过午饭，一边验收另外一台机器，一边开始为系统RAID，使用IBM自带的Standalone Diagnostics 光盘自动配置。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/05/18/OpenPower720-how-you/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/18/Mysql-to-amend-the-largest-number-of-connections/">修改mysql的最大连接数</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/18/Mysql-to-amend-the-largest-number-of-connections/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/18/Mysql-to-amend-the-largest-number-of-connections/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>mysql默认的最大连接数是100，但是最近服务器老是报<a href="http://www.mysqlfreaks.com/errors/50.php">MySQL 1040:too many
+connections</a>的错误，看来需要增加最大连接数了。
+修改你的/etc/my.cnf文件，在[mysqld]一节中增加下面一行
+set-variable=max_connections=500
+保存，退出。重启你的MySQL。
+其实你可以增加下面这个变量：
+set-variable=wait_timeout=200
+它表示200秒后将关闭空闲（IDLE）的连接，但是对正在工作的连接不影响。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/16/Improved-5itag.com%2C-xplore.cn-performance/">提升了5itag.com,xplore.cn的性能</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/16/Improved-5itag.com%2C-xplore.cn-performance/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/16/Improved-5itag.com%2C-xplore.cn-performance/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>发现近段时间老是会出现too many
+connect的状况，查看系统的状态，资源还不是那么紧张，因此，修改了apache的配置，将进程提升了1倍，现在大家应该可以明显感觉性能的提升，不过不知道机器是不是抗得住，测试一周先。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/16/5itag-updated-skin/">5itag更新了皮肤</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/16/5itag-updated-skin/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/16/5itag-updated-skin/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在<a href="http://www.feng4ever.com">feng4ever</a>的帮助下，5itag更新了皮肤，不过此时才发现对IE支持的不是很好。需要继续改进，不过还有一些其他BUG的修改，比如插件的下载。
+还有很大的改进是AJAX的更新，采用所有服务的提供来源于一个文件，而不是以前的零散文件。这点我会在以后的文章中详细介绍。
+这次算是这段时间的一个大的更新。不过问题也暴露了很多，还需要努力改进。
+加油！！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/14/Google-Trends-people-look-at-the-distribution-of-the-Linux-version-of-the-degree-of-concern/">Google Trends:看看人们对Linux分发版本的关心度</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-14T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/14/Google-Trends-people-look-at-the-distribution-of-the-Linux-version-of-the-degree-of-concern/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/14/Google-Trends-people-look-at-the-distribution-of-the-Linux-version-of-the-degree-of-concern/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Google 近日发布了Trends，在国内是不是应该叫“谷歌趋势”呢？<br/>
+呵呵<br/>
+看看她怎么理解人们对Linux分发版本的了解：</p>
+
+<p><img src="/uploads/viz.png" alt="image" /></p>
+
+<p>上方曲线图代表的是查询量(Search Volume)，准确的说是以此关键词进行搜索的数目与全部搜索数目之比。下方的曲线图代表的是新闻引用量(News Reference Volume)，即Google News中出现此关键词的新闻数目，上面标有A,B等字样的小旗子代表新闻引用中出现阶跃的点，以及当时的相应新闻。由此可以看出某个关键词受关注的程度。</p>
+
+<p>从上图看出，debian和suse的关注度一直都比较稳定，而且比较高。而Linux老大Redhat则有下降的趋势。值得注意的是ubuntu这个分发版本，从2004年第三季度开始，其关注度飙升，到了2006年第一季度，已经超过其他所有版本而成为最关心的版本。而令人悲哀的是国内Linux老大RedFlag却处于无人问津的惨景，真的是这样吗？</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/12/Rachel-has-blog/">Rachel有了blog</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/12/Rachel-has-blog/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/12/Rachel-has-blog/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://rachel.xplore.cn">Rachel</a>终于在我的怂恿下，又在自己的笔记本上写日志改成了在网络写日志了。希望她能用的开心！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/11/which-database-beijing-gotone-using/">北京全球通数据库搭建在什么系统上？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/11/which-database-beijing-gotone-using/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/11/which-database-beijing-gotone-using/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>连续四天没有交上电话费，去银行不行，自助缴费也不行。准备去营业厅缴费，结果银行的服务人员告诉我，去那里也交不了，“为什么”，我问。</p>
+
+<p>“他们打电话给我们，说系统感染病毒了，正在处理！”。</p>
+
+<p>病毒感染？难道他们使用的是windows系统？那我的欠费是不是会神奇的变成缴费过多呀。似乎可以把这个消息告诉销售，让他们使用Linux系统好了。</p>
+
+<p>等待报销的日子又长了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/11/In-addition-a-new-Linux-community/">另外一个全新的Linux社区</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/11/In-addition-a-new-Linux-community/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/11/In-addition-a-new-Linux-community/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.linux-ren.org">Linux人</a>是红旗发起的一个自由社区.
+社区的发行版，Everest 也可以从下面的 URL 中下载：
+<a href="http://download.linux-ren.org/pub/everest/0.1/iso/x86/">http://download.linux-ren.org/pub/everest/0.1/iso/x86/</a></p>
+
+<p>目前急需各类斑竹，灌水人员，有兴趣者，可以前往，呵呵！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/10/vim7-release/">Vim 7正式发布！</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/10/vim7-release/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/10/vim7-release/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.vim.org/">Vim
+7.0版</a>正式发布！这是自Vim6以来的最重大的一次更新，在功能上有极大的增强，建议<a href="http://www.vim.org/download.php">升级</a>：*nix可以自己编译，PC用户可以直接下载编译好的版本。增强亮点有：
+ * 标签页，:tabnew开新标签，gt在标签间切换；:tabdo命令可以在所有打开的标签页上执行命令。 *
+拼写检查，:set spell/nospell打开和关闭，]s到下一个错误，[s到上一个错误，z=显示所有正确的拼写推荐，敲入序号即可改正。
+* 代码补全，敲代码时如果有支持，Ctrl-x Ctrl-o即可列出可能的选项，然后按屏幕下面的快捷键选择即可。 *
+回退操作，不但可以一步步回退，还可以直接退回到几个小时前。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/10/One-less-Linux-users/">又少了一个Linux的使用者</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/10/One-less-Linux-users/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/10/One-less-Linux-users/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://lawstar.xplore.cn">lancy</a>终究放弃了Linux的使用，虽然前后使用了1年多，但是终究在需要无穷尽的简历登记和网上报名中放弃了，具体到某一个软件，那就是浏览器是其罪魁祸首，几乎所有她需要的报名和登记都只支持IE，虽然我给她安装了WINE－IE，但是依然会遇到这样或者那样的问题，别人30分钟能完成报名，她可能需要2个小时，电脑毕竟只是机器，这样情况下，我只能对她说一句话，“那你使用WINDOWS吧”。此时，Linux虽然还是在她的机器上，但是显然已经失宠了。</p>
+
+<p>而后的毕业论文，明文规定需要doc文档，Linux下面的各种office几乎都不能完成格式要求，于是再一次进入了windows，虽然我非常希望她可以使用LATEX，不过我知道，那仅仅限于憧憬和希望。于是在硬盘资源日益缺希的情况下，她提出了最后的一个要求：“你能把Linux格式化吗？我硬盘空间不够了”，我还能说什么呢？于是就顺便测试了Linux系统中自带的卸载程序，在几次enter键和输入y后，一个Linux使用者就失去了。<br/>
+默哀3分钟！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/68/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/66/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Kerberos 认证配置 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="第一部分 Kerberos 协议介绍 在希腊神话中，Kerberos是守护地狱之门的三头狗。在计算机世界里，美国麻省理工学院(MIT)把他们开发的这一网络认证系统命名为
+Kerberos。 Kerberos认证协议是由美国麻省理工学院(MIT)在80年代首先提出并实现的, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2005/12/02/kerberos-authentication-configuration">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Kerberos 认证配置</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-12-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>第一部分 Kerberos 协议介绍</strong></p>
+
+<p>在希腊神话中，Kerberos是守护地狱之门的三头狗。在计算机世界里，美国麻省理工学院(MIT)把他们开发的这一网络认证系统命名为
+Kerberos。 Kerberos认证协议是由美国麻省理工学院(MIT)在80年代首先提出并实现的,是该校Athena计划的一部分。</p>
+
+<p>因为Kerberos是一个三方
+认证协议，根据称为密匙分配中心（KDC）的第三方服务中心来验证网络中计算机相互的身份，并建立密匙以保证计算机间安全连接。Kerberos协议基本
+上是可行的并且有效的。KDC有两个部分组成：认证服务器AS和票据授权服务器TGS。Kerberos是一种网络认证协议，允许一台计算机通过交换加密
+消息在整个非安全网络上与另一台计算机互相证明身份。一旦身份得到验证，Kerberos协议将会给这两台计算机提供密匙，以进行安全通讯对话。
+Kerberos协议可以认证试图等录上网用户的身份，并通过使用密匙密码为用户间的通信加密。总的来说，Kerberos
+是一种基于私钥加密算法的，需要可信任的第三方作为认证服务器的网络认证系统。它允许在网络上通讯的实体互相证明彼此的身份，并且能够阻止旁听和重放等手
+段的攻击。不仅如此，它还能够提供对通讯数据保密性和完整性的保护。</p>
+
+<!--more-->
+
+
+<p>Kerberos从提出到今天，共经历了五个版本的发展。其中版本1到版本3主要由该校内部使用。当它发展到版本4的时候，已经取得了在MIT校园外的广
+泛认同和应用。由于版本4的传播，人们逐渐发现了它的一些局限性和缺点（例如适用网络环境有限,
+加密过程存在冗余等等）．MIT充分吸收了这些意见，对版本4进行了修改和扩充，形成了今天非常完善的版本5。现在可以MIT提供的Kerberos
+V5的最新实现是版本krb5 1.3.3，本文中提到的实现都是以它为依据的。</p>
+
+<p><strong>第二部分 Kerberos协议术语解释</strong></p>
+
+<p>Principal：在Kerberos中，Principal是参加认证的基本实体。一般来说有两种，一种用来表示Kerberos数据库中的用户，另
+一种用来代表某一特定主机，也就是说Principal是用来表示客户端和服务端身份的实体,
+Principal的格式采用ASN.1标准,即Abstract Syntax Notation
+One，来准确定义)，Principal是由三个部分组成：名字（name），实例（instance），REALM（域）。比如一个标准的
+Kerberos的用户是：name/instance@REALM 。</p>
+
+<p> Name：第一部分。在代表客户方的情况，它是一个用户名；在代表主机的情况，它是写成host。</p>
+
+<p> Instance：第二部分。对name的进一步描述，例如name所在的主机名或name的类型等,可省略。它与第一部分之间用‘ /
+’分隔，但是作为主机的描述时写成host/Instance。</p>
+
+<p> Realm：第三部分。是Kerberos在管理上的划分，在
+KDC中所负责的一个域数据库称作为Realm。这个数据库中存放有该网络范围内的所有Principal和它们的密钥，数据库的内容被Kerberos
+的认证服务器AS和票据授权服务器TGS所使用。Realm通常是永远是大写的字符,并且在大多数Kerberos系统的配置中，一般Realm和该网络
+环境的DNS域是一致的。与第二部分之间用‘@’分隔，缺省为本地的Realm。</p>
+
+<p> 比如，Principal “ cnhawk/<a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#104;&#x61;&#119;&#x6b;&#x2e;&#x74;&#x68;&#x65;&#57;&#x2e;&#99;&#111;&#x6d;&#64;&#84;&#x48;&#69;&#57;&#x2e;&#67;&#79;&#77;">&#104;&#97;&#119;&#x6b;&#46;&#x74;&#104;&#x65;&#57;&#46;&#99;&#111;&#x6d;&#64;&#x54;&#72;&#x45;&#57;&#x2e;&#x43;&#79;&#x4d;</a> ” 表示Realm “ THE9.COM
+”中主机hawk.the9.com上的用户cnhawk ，而Principal “ host/hawk.the9.com @THE9.COM ”
+则通常用来表示Realm “ THE9.COM”中主机hawk.the9.com。</p>
+
+<p> Credential：
+Ticket和与它相联系的会话密钥合在一起称为Credential。之所以有这个概念是因为它们是客户端在向服务器证明自己的身份时必需的两样东西．
+在一个Ticket的生存期内客户端会将这两样东西以Credential为单位保存在一个Cache文件中。</p>
+
+<p>Ticket：一个Ticket是一个用于安全的传递用户身份所需要的信息的集合。它不仅包含该用户的身份，而且包含其它一些相关的信息。一般来说，它主
+要包括客户方
+Principal，目的服务方Principal，客户方IP地址，时间戳（分发该Ticket的时间），该Ticket的生存期，以及会话密钥等内
+容。它的格式亦用ASN.1来准确定义。</p>
+
+<p> Authenticator: 在客户端向服务端进行认证时，伴随Ticket一起发送的另外一个部分，它的作用是证明发送Ticket
+的用户就是拥有Ticket的用户，即防止重放攻击。它的主要内容是一个时间戳（客户端发送Ticket的时间），在rfc1510中有它的完整的
+ASN.1定义。</p>
+
+<p> AS(Authentication Server)： 为用户分发TGT(Ticket Granting Ticket)的服务器。</p>
+
+<p> TGT(Ticket Granting Ticket)： 用户向TGS(Ticket Granting
+Server)证明自己身份的Ticket.</p>
+
+<p> TGS(Ticket Granting
+Server)：为用户分发到最终目的Ticket的服务器，用户使用这个Ticket向自己要求提供服务的服务器证明自己的身份。在实现上，AS和
+TGS实际上是由同一程序完成的，因为它们的实现机制并没有太大的差别，只是在加密所发出的Ticket时所使用的密钥不同（AS使用用户的密钥，而
+TGS使用会话密钥）。</p>
+
+<p> KDC(Key Distribution Center)：密钥发放中心，通常将AS和TGS统称为KDC，有时也把AS 单独称为KDC。</p>
+
+<p><strong>第三部分 认证过程</strong></p>
+
+<p> 1) Client → KDC：用户cnhawk向密钥分配中心（KDC）申请TGT；</p>
+
+<p> 2) KDC → Client：通过KDC的用户密码认证，cnhawk得到KDC发放的TGT；</p>
+
+<p> 3) Client → KDC：申请取得用户cnhawk所需要的host/s；</p>
+
+<p> 4) KDC → Client：KDC根据用户cnhawk提供的TGT，KDC向cnhawk发放host/s；</p>
+
+<p> 5) Client → Server：用户cnhawk向Server提供cnhawk，TGT和host/s
+；Server根据主机的上保存的host/s和用户cnhawk的信息来验证cnhawk的登陆申请。</p>
+
+<p> 6) Server → Client：Server确认，发送信息给Client允许cnhawk登陆Server。</p>
+
+<p><strong>第四部分 实例配置</strong></p>
+
+<p>  下面我们看看怎么在RedFlag DC5.0上实现这个功能，客户端是RedFlag DT5.0,FC4 和RedFlag 4.1Plus服务端配置：</p>
+
+<p>  1、需要的软件包</p>
+
+<p>   krb5-server  <br/>
+   krb5-libs  <br/>
+   krb5-workstation  <br/>
+   pam_krb5</p>
+
+<p> 2、应用环境： <br/>
+   DNS域名： rfkrb.com   172.16.81.195  <br/>
+   kerberos的realm：RFKRB.COM  <br/>
+   kdc服务器：kdc.rfkrb.com 172.16.81.195  <br/>
+   kadmin服务器：kadmin.rfkrb.com 172.16.81.195</p>
+
+<p>  应用服务器：mlsxdemo.rfkrb.com 172.16.81.195 mlsx.rfkrb.com 172.16.81.196 fante.rfkrb.com 172.16.81.193</p>
+
+<p>3.确定 realm<br/>
+  realm是大小写敏感的，在网络中必须是唯一的。一般来说，通常使用全部大写的用户2级域名作为realm。在同一个kerberos服务器中可以有多个realm。在确定realm时应该考虑用户的整个网络。例如，如果用户有一个单独的办公室，应该把他们作为独立的realm。Kerberos realm拓扑应该反映用户的组织结构拓扑。</p>
+
+<p>  4.配置服务器</p>
+
+<p>下面这个文件你需要修改：<br/>
+ /etc/krb5.conf</p>
+
+<p> 简单的说，修改系统自带的文件，把&#8221;EXAMPLE.COM&#8221;改为你用的realm；把&#8221;example.com&#8221;改为你所用的dns domain。</p>
+
+<p>/var/kerberos/krb5kdc/kdc.conf  <br/>
+ 简单的说，修改系统自带的文件，把&#8221;EXAMPLE.COM&#8221;改为你用的realm。默认的加密算法是des3-hmac-sha1。</p>
+
+<p>/var/kerberos/krb5kdc/kadm5.acl</p>
+
+<p> 简单的说，修改系统自带的文件，把&#8221;EXAMPLE.COM&#8221;改为你用的realm。这样，给所有&#8221;/admin&#8221;的principal 全部权限。</p>
+
+<p> 创建kerberos数据库  <br/>
+/usr/kerberos/sbin/kdb5_util create -s</p>
+
+<p> 创建管理用户 admin:</p>
+
+<p> 可以在KDC服务器运行 kadmin.local管理kerberos数据库。输入&#8221;?&ldquo;可以列出所有命令。用addprinc增加principal。</p>
+
+<pre><code># kadmin.local     
+kadmin.local: addprinc admin/admin    
+kadmin.local: listprincs    
+</code></pre>
+
+<p>启动服务：</p>
+
+<pre><code>   chkconfig kadmin on    
+   chkconfig krb5kdc on    
+   /etc/init.d/kadmin start    
+   /etc/init.d/krb5kdc start        
+</code></pre>
+
+<p>为用户和服务创建principal  <br/>
+ 添加用户：在kadmin或kadmin.local中运行  <br/>
+   kadmin.local:    addprinc mlsx</p>
+
+<p>应用服务器</p>
+
+<p>    kerberos并不是所有网络服务器都支持kerberos。kerberos-workstation提供的多个支持kerberos的常用的网络服务，包括telnet, ftp, rsh, rlogin。</p>
+
+<pre><code> openssh声称可以支持kerberos，但是我的测试结果很奇怪，有的服务器可以，有的不行。我不清楚是什么原因。    
+</code></pre>
+
+<p>    支持pam认证的服务软件，可以通过pam使用kerberos。但是这种情况下，只能实现统一用户认证，不能实现单点登录。也就是说，每次登录都需要输入用户名和密码。（对此我没有作过测试）  <br/>
+   修改用户认证方式</p>
+
+<p>   运行authconfig，在Authentication栏选中&#8221;Use Kerberos&#8221;。选Next，配置kerberos。authconfig会自动修改 /etc/pam.d/system-auth和/etc/krb5.conf。也可以把kerberos服务器中的/etc/krb5.conf拷贝过来。</p>
+
+<p>    添加服务：任何一个网络服务，如果能接受Kerberos的认证，必须在KDC中添加一个服务principal，并且保存在本地的keytab。默认的keytab是/etc/krb5.keytab。服务和principal的对应关系是：</p>
+
+<pre><code> OpenSSH, pam_krb5  host/hostname    
+ LDAP  ldap/hostname    
+ NFS  nfs/hostname    
+ keytab的重要性与用户口令相似，注意保护。应该只允许root读。创建keytab的方法是：在服务器上运行    
+kadmin -p admin/admin    
+  addprinc -randkey host/mlsxdemo.rfkrb.com    
+</code></pre>
+
+<p>     ktadd host/mlsxdemo.rfkrb.com   addprinc -randkey host/mlsx.rfkrb.com    ktadd host/mlsx.rfkrb.com</p>
+
+<p>   时间同步</p>
+
+<p>    kerberos认证的安全性部分基于ticket的时间戳。所以客户机的时间与kerberos服务器同步是非常重要的。默认情况下，客户机与kerberos服务器间的时间差必须小于300秒。</p>
+
+<p> 一般情况下，可以使用ntp进行时间同步。系统默认的配置将从internet上获得时间。如果希望直接从kerberos服务器获得时间，可以：  <br/>
+1. 修改kerberos服务器的/etc/ntp.conf: 增加一行：  <br/>
+restrict 172.16.80.0 mask 255.255.248.0 nomodify notrap  <br/>
+2. 在客户端运行  <br/>
+ntpdate kdc.rfkrb.com  <br/>
+或者修改 /etc/ntp.conf，把ntp server设置为kerberos server  <br/>
+server kdc.rfkrb.com</p>
+
+<pre><code>客户端配置    
+</code></pre>
+
+<p> 客</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-12-02T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2005/12/02/kerberos-authentication-configuration/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2005/12/02/kerberos-authentication-configuration/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2005/11/27/AJAX-framework-summary/" title="Previous Post: AJAX框架汇总">&laquo; AJAX框架汇总</a>
+      
+      
+        <a class="basic-alignment right" href="/2005/12/13/firefox15-crazy-me-is-bug/" title="Next Post: FireFox1.5 已经折腾了我两次 是BUG？">FireFox1.5 已经折腾了我两次 是BUG？ &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2005/12/02/kerberos-authentication-configuration/';
+        var disqus_url = 'http://wgzhao.github.io/2005/12/02/kerberos-authentication-configuration/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

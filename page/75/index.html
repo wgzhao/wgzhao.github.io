@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="本文仅仅适用于笔记本自带的内置读卡器。 如果你使用的是USB接口的读卡器，那么，不用看这个了，插上之后就可以当成U盘去用了。 如果你看了这个文档还不能解决问题，那么，就把SD卡放在你的数码相机里，然后通过数码相机跟计算机连接吧。 如果你使用的是sony的memory stick或者是SDIO卡， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/75">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/09/how-to-using-sd-mmc-card-reader-with-laptop/">Linux如何使用笔记本自带的SD/MMC读卡器</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/09/how-to-using-sd-mmc-card-reader-with-laptop/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/09/how-to-using-sd-mmc-card-reader-with-laptop/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>本文仅仅适用于笔记本自带的内置读卡器。</p>
+
+<p>如果你使用的是USB接口的读卡器，那么，不用看这个了，插上之后就可以当成U盘去用了。</p>
+
+<p>如果你看了这个文档还不能解决问题，那么，就把SD卡放在你的数码相机里，然后通过数码相机跟计算机连接吧。</p>
+
+<p>如果你使用的是sony的memory stick或者是SDIO卡，这篇文档对你没有任何帮助。</p>
+
+<p>1，准备内核：</p>
+
+<p>kernel-2.6.9的sd/mmc驱动只能在arm架构中使用，需要手工修改Kconfig才能打开，并且，也不支持winbond读卡器，</p>
+
+<p>所以，如果你要自己编译内核，一定要选个新的版本。</p>
+
+<p>然后，到这里看看有没有最新的补丁：<a href="http://projects.drzeus.cx/wbsd/">http://projects.drzeus.cx/wbsd/</a></p>
+
+<p>红旗5.0的内核已经从kernel-2.6.12 backport了sd/MMC的代码，并且加了几个补丁，所以，没有什么需要你自己作的。</p>
+
+<p>2，创建设备：</p>
+
+<p>打开终端，运行:</p>
+
+<p><code>mknod /dev/mmcblk0 b 254 1</code></p>
+
+<p>3，建立挂载目录：</p>
+
+<p><code>mkdir /mnt/mmc</code></p>
+
+<p>4，插入SD/MMC卡</p>
+
+<p><code>fdisk -l /dev/mmcblk0</code></p>
+
+<p>就可以看到分区信息:</p>
+
+<pre><code>Disk /dev/mmcblk0: 513 MB, 513802240 bytes 32 heads, 32 sectors/track,
+980 cylinders Units = cylinders of 1024 * 512 = 524288 bytes
+Device  Boot Start End Blocks Id System 
+/dev/mmcblk0p1 1 980 501744 6 FAT16
+</code></pre>
+
+<p>5，挂载：</p>
+
+<p><code>mount -t vfat -o sync /dev/mmcblk0p1 /mnt/mmc</code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/09/Which-acronym-for-the-bank-to-see-if-the-cattle/">看看哪家银行的缩写最牛</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/09/Which-acronym-for-the-bank-to-see-if-the-cattle/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/09/Which-acronym-for-the-bank-to-see-if-the-cattle/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>中国建设银行首先发言：&#8221;存不存（CBC）？&#8221; <br/>
+中国银行立即反应道：&#8221;不存（BC）&#8221;。  <br/>
+中国农业银行一楞：&#8221;啊，不存（ABC）？&#8221;<br/>
+民生银行笑道：&#8221;存吗？傻比！&#8221;（CMSB）？<br/>
+招商银行附和道：&#8221;存吗？白痴！（CMBC）&#8221; <br/>
+北京市商业银行生气了：&#8221;白存存不（BCCB)？&#8221; <br/>
+汇丰银行瞟了一白眼，懒懒说道：&#8221;还是不存（HSBC）&#8221;
+中国工商银行牛气地哼了一声：&#8221;爱存不存(ICBC)&ldquo;  <br/>
+国家开发银行忙打圆场道：&#8221;存点吧（CDB）！&rdquo; <br/>
+兴业银行拥护道：&#8221;存一百（CIB）&#8221;。  <br/>
+中国光大银行举手：&#8221;存二百（CEB）”</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/09/More-and-more-people-with-a-rich-breakfast/">越来越丰盛的早餐</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/09/More-and-more-people-with-a-rich-breakfast/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/09/More-and-more-people-with-a-rich-breakfast/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>突然发现我的早餐越来越丰盛了。</p>
+
+<p>1998-2002:馒头一个，亦或多一碗稀饭<br/>
+2002-2004.8:机会没有早餐概念<br/>
+2004.9-2005.1 有时馒头一个，有时没有<br/>
+2005.2-2005.8 酸奶一杯，有时有牛肉饼或者小饼鸡蛋。<br/>
+2005.9-2005.10 小馒头若干或者饺子5，6个，加上家产剁辣椒，酸奶一杯<br/>
+2005/11/08 达到了目前最高峰，具体是：
+速冻饺子5个，煮鸡蛋一个，鲜奶125g一袋，家产剁辣椒，花生米若干，还吃了几颗板栗。</p>
+
+<p>模糊记得一句话，说是“早餐吃得像国王，中餐吃得像公主，晚餐吃得像贫民！”</p>
+
+<p>也发现我增重了不少，呵呵！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/09/How-to-use-Linux-in-wide-screen/">如何在Linux使用宽屏</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/09/How-to-use-Linux-in-wide-screen/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/09/How-to-use-Linux-in-wide-screen/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1，一般情况：
+ 如果你使用的是非Intel显卡的宽屏笔记本，那么，只需要手工修改<code>/etc/X11/xorg.conf</code>中的
+ Modes一行为Virtual 最佳分辨率即可。
+ 比如
+ <code>Virtual 1024 800</code></p>
+
+<p>2,如果你使用的是Intel显卡(比如dell的几款宽屏本)。
+ 1，安装855Resolution.</p>
+
+<p> 2，运行:
+ <code>gtf 1280 800 60</code>
+ 得到一个modeline
+ 比如：</p>
+
+<pre><code># 1280x800 @ 60.00 Hz (GTF) hsync: 49.68 kHz; pclk: 83.46 MHz Modeline
+"1280x800_60.00" 83.46 1280 1344 1480 1680 800 801 804 828 -HSync
++Vsync 
+</code></pre>
+
+<p> 3，把这个modeline拷贝到<code>/etc/X11/xorg.conf</code>中的Monitor段。
+ 4，把Modes一行，修改成<code>Modes “1280x800”</code>
+ 5，运行:
+ <code>855resolution -l</code>
+ 得到输出：</p>
+
+<pre><code> 855resolution version 0.4, by Alain Poirier Chipset: 855GM
+(id=0x35808086) VBIOS type: 2 VBIOS Version: 3104 Mode 30 : 640x480, 8
+bits/pixel Mode 32 : 800x600, 8 bits/pixel Mode 34 : 1024x768, 8
+bits/pixel Mode 38 : 1280x1024, 8 bits/pixel Mode 3a : 1600x1200, 8
+bits/pixel Mode 3c : 1920x1440, 8 bits/pixel Mode 41 : 640x480, 16
+bits/pixel Mode 43 : 800x600, 16 bits/pixel Mode 45 : 1024x768, 16
+bits/pixel Mode 49 : 1280x1024, 16 bits/pixel Mode 4b : 1600x1200, 16
+bits/pixel Mode 4d : 1920x1440, 16 bits/pixel Mode 50 : 640x480, 32
+bits/pixel Mode 52 : 800x600, 32 bits/pixel Mode 54 : 1024x768, 32
+bits/pixel Mode 58 : 1280x1024, 32 bits/pixel Mode 5a : 1600x1200, 32
+bits/pixel Mode 5c : 1920x1440, 32 bits/pixel Mode 7c : 1280x800, 8
+bits/pixel Mode 7d : 1280x800, 16 bits/pixel Mode 7e : 1280x800, 32
+bits/pixel
+</code></pre>
+
+<p>其中：<code>Mode 7d</code>一行，是我们想要的。</p>
+
+<p> 6，运行：
+ <code>855resolution 7d 1280 800</code>
+ 7，startx，这时候已经OK了。
+ 8，为了以后每次重新启动系统都能自动生效，把<code>855resolution 7d 1280 800</code>添加到<code>/etc/rc.d/rc.local</code>脚本中。
+ 这样每次启动都会自动配置好宽屏了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/09/How-to-use-Linux-in-the-Bluetooth/">怎样在Linux中使用蓝牙</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/09/How-to-use-Linux-in-the-Bluetooth/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/09/How-to-use-Linux-in-the-Bluetooth/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一，蓝牙存储设备</p>
+
+<p>蓝牙适配器： ISSC芯片, USB接口(市面上还有其他的一些品牌，大多没有问题)</p>
+
+<p>蓝牙手机：索爱T628</p>
+
+<p>蓝牙耳机：Jabra BT250(大陆地区型号是FS258，大概照顾中国人对BT的特殊理解和258的吉利数字)</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/11/09/How-to-use-Linux-in-the-Bluetooth/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/09/How-to-use-Linux-for-mobile-infrared-communication/">如何在Linux使用红外进行手机通讯</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/09/How-to-use-Linux-for-mobile-infrared-communication/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/09/How-to-use-Linux-for-mobile-infrared-communication/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>如何在Linux使用红外进行手机通讯</p>
+
+<p>1，准备软件：</p>
+
+<p><a href="http://irda.sourceforge.net/">irda-utils</a></p>
+
+<p><a href="http://www.gnokii.org/">gnokii</a></p>
+
+<p>红旗5.0已经包含</p>
+
+<p>2，配置irda：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/11/09/How-to-use-Linux-for-mobile-infrared-communication/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/">LDAP+SAMBA+Proftpd+SYSTEM AUTH集成配置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-08T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Windows的AD（Active Directory)是一个DAP(Directory Access
+Protocol)的一个完美演绎，使用AD创建的域，使得普通用户的登录信息于机器无关，而且可以实现单点登录（single sign
+on).目前Linux下面可以勉强达到这个水平的可能只有RADIUS。
+现在我要介绍的这个方案是基于LDAP的认证方式，也就是samba，
+ftp，system的认证信息都是来自ldap数据库，而不是原来的密码文件，这样做的好处是密码的统一管理，减少风险，比如你可能并不希望ftp，
+mail等帐号的认证用到系统帐号，这个时候你就可以考虑这个方案（当然你也可以使用像mysql这样的数据库）。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/04/mysql-forget-the-root-password-of-a-solution/">Mysql忘记root密码的一个解决办法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/04/mysql-forget-the-root-password-of-a-solution/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/04/mysql-forget-the-root-password-of-a-solution/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Windows:</p>
+
+<p>1.用系统管理员登陆系统。</p>
+
+<p>2.停止MySQL的服务。</p>
+
+<p>3.进入命令窗口，然后进入MySQL的安装目录，比如我的安装目录是c:mysql,进入C:mysqlbin</p>
+
+<p>4.跳过权限检查启动MySQL，</p>
+
+<pre><code>c:\mysql\bin&gt;mysqld-nt --skip-grant-tables
+</code></pre>
+
+<p>5.重新打开一个窗口，进入<code>c:\mysql\bin</code>目录，设置root的新密码</p>
+
+<pre><code>c:\mysql\bin&gt;mysqladmin -u root flush-privileges password "newpassword"
+c:\mysql\bin&gt;mysqladmin -u root -p shutdown 
+</code></pre>
+
+<p>将newpassword替换为你要用的root的密码，第二个命令会提示你输入新密码，重复第一个命令输入的密码。</p>
+
+<p>6.停止MySQL Server，用正常模式启动Mysql</p>
+
+<p>7．你可以用新的密码链接到Mysql了。</p>
+
+<p>Unix&amp;Linux：</p>
+
+<p>1.用root或者运行mysqld的用户登录系统；</p>
+
+<p>2．利用kill命令结束掉mysqld的进程；</p>
+
+<p>3．使用<code>--skip-grant-tables</code>参数启动MySQL Server</p>
+
+<pre><code>#mysqld_safe --skip-grant-tables &amp;
+</code></pre>
+
+<p>4.为root@localhost设置新密码</p>
+
+<pre><code>#mysqladmin -u root flush-privileges password "newpassword"
+</code></pre>
+
+<p>5．重启MySQL Server</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/04/Who-needs-a-desktop-application/">谁还需要桌面应用？［转贴］</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/04/Who-needs-a-desktop-application/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/04/Who-needs-a-desktop-application/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>文章来自<a href="http://pczou.bokee.com/">pczou</a></p>
+
+<p>&ldquo;网络即是计算机&#8221;是SUN80年代提出的，如今网络已经越来越重要了，如果公司的网络断了，现在的状况是无法收发email，一些服务器上的数据无法获取，但是还是可以写写文档，打打游戏。再过几年，情况可能就会更糟了，那个时候连这些工作脱离了网络也无法完成了。为什么，因为你的&#8221;纸”和&#8221;笔&#8221;已经全部被放置在了服务器上，你面前的计算机只是帮助你去获得所需的纸笔和资料。</p>
+
+<p>前几年，谈到替换MS Office，总是什么OpenOffice,
+永中&hellip;，不同的平台，相同的应用。这些&#8221;替代品&#8221;最好的结果也就是&#8221;替代品&#8221;，也许最终终结MS
+Office的会是这个叫做<a href="http://www.writely.com/">writely</a>的小东西：</p>
+
+<p><img src="http://static.flickr.com/33/55036394_c61e50bce6.jpg" alt="image" /></p>
+
+<p>除了传统的文档编辑功能外，由于writely与网络的天然联系，有派生出更多功能，比如：</p>
+
+<ol>
+<li>可以选择发布到internet上，共享给所有人。</li>
+<li>可以和一些同道(Collaborator)分享。</li>
+<li>实现多人编辑。几个人可以同时编辑一份文档，其他人的改变可以实时地反映出来。</li>
+<li>可以直接通过blogger API等协议发送到自己blog中。</li>
+</ol>
+
+
+<p>当然writely这类internet应用也有一些“独有”的问题：</p>
+
+<ol>
+<li>性能不佳。网络的速度（特别是internet的速度）还远远赶不上磁盘访问速度，导致打开大的文档（特别是有大量图片的文档）需要花费很长时间。</li>
+<li>编程困难。虽然现在已经有了一些改进编程效率的努力(比如backbase提供了一些控件)，但还是不如VB, Qt Designer方便。</li>
+<li>时有错误发生(Oops)，虽然writely目前还是beta版本，不过这类将JavaScript推动到极限的应用总是报出一些叫人匪夷所思的错误来。不过，基于internet的好处是，可以很方便地发送bug报告
+(有多少人填写过微软弹出来的问题报告？)。</li>
+</ol>
+
+
+<p>和一些新生事物一样，希望与问题并存，虽然问题还不少，不过面对雨后春笋一般冒出来的胖internet应用(Rich Internet
+Application) ，谁会不动心呢 (包括微软，看看kahuna)？</p>
+
+<p>Windows应用</p>
+
+<p>Linux应用</p>
+
+<p>Web应用</p>
+
+<p>MS Word</p>
+
+<p>Open Office, Red Office, WPS, 永中</p>
+
+<p><a href="http://www.writely.com/">writely</a></p>
+
+<p>Outlook/Exchange</p>
+
+<p>Evolution, Kontact, sendmail, postfix, gmail</p>
+
+<ul>
+<li><a href="http://www.zimbra.com/">zimbra</a></li>
+<li><a href="http://www.gmail.com/">gmail</a></li>
+<li><a href="http://publishblog.blogchina.com/control/blog/mail.start.com">Kahuna</a></li>
+</ul>
+
+
+<p>MS Excel</p>
+
+<p>Open Office&hellip;</p>
+
+<p><a href="http://www.numsum.com/">Numsum</a></p>
+
+<p>MSN</p>
+
+<p>gaim, kopete</p>
+
+<p><a href="http://www.meebo.com/">Meebo</a></p>
+
+<p>Visual Studio</p>
+
+<p>Qt, Gtk</p>
+
+<ul>
+<li><a href="http://www.bindows.net/">Bindows</a></li>
+<li><a href="http://www.backbase.com/">Backbase</a></li>
+</ul>
+
+
+<p>My Pictures</p>
+
+<p>F-Spot</p>
+
+<p><a href="http://www.flickr.com/">flickr</a></p>
+
+<p>还
+有一个非技术的因素是我相信internet应用前途无限。昨天给writely和zimbra各发了两个bug
+report，writely对中文的支持有些问题，而firefox连接本地运行的zimbra有timeout问题。两个问题早上都有了回应，而今天
+是星期日。一个值得在周末工作的项目必会成功。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/04/WEB-on-the-IM/">WEB上的IM</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/04/WEB-on-the-IM/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/11/04/WEB-on-the-IM/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>如果你没有安装ms messenger，linux下面的gaim,kopete,amsn等，你该怎么和别人通讯？
+ICQ呢？雅虎通呢？</p>
+
+<p>记得MS的msn explorer可以直接在上面聊天，不过他只能使用MSN，也只能在windows上使用。
+那么先来看看下面这张图片：</p>
+
+<p><img src="/uploads/meebo.png" alt="image" /></p>
+
+<p>上面便是答案，只要有网络，只有有浏览器，也许将来真的桌面什么都没有了，只是一个抓取资料的客户端而已。
+感兴趣的去看看吧。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/76/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/74/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

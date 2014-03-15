@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>All Data Lost - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="真是具有讽刺意味，昨天我才说完利用ext3grep工具来恢复删除的文件，结果今天我就很悲惨的删除了我两个OS的根文件系统加上最致命的HOME分区，我变得一无所有了。 故事是这样的： 我从solidot上看到了一篇文档（估计solidot自己也不知道），说是OpenSSH &lt; 5. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/07/23/all-data-lost">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">All Data Lost</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>真是具有讽刺意味，昨天我才说完利用<a href="http://blog.wgzhao.com/2009/07/22/recover-deleted-files-on-ext3-filesystem/">ext3grep工具来恢复删除的文</a>件，结果今天我就很悲惨的删除了我两个OS的根文件系统加上最致命的HOME分区，我变得一无所有了。</p>
+
+<p>故事是这样的：</p>
+
+<p>我从<a href="http://linux.solidot.org/">solidot</a>上看到了一篇文档（估计solidot自己也不知道），说是OpenSSH &lt; 5.2版本的都有远程溢出的漏洞，而且网络提供了源代码，这太正常不过了，每次和Linux相关的漏洞，一般都能找到攻击的源代码，于是我就下载了下来，编译没有问题。</p>
+
+<p>开始执行，第一次执行的时候，我用的普通账号，程序提示需要root权限。于是我再用root账号执行，结果死机了。</p>
+
+<!--more-->
+
+
+<p>到这里，我也觉得正常，因为我的这台机器不是没有死机过，况且，有可能是这个程序触发的，于是我掉电重启，结果发现系统启动不了，说找不到<code>/sbin/init</code>了，也许是文件系统需要修复的原因吧。</p>
+
+<p>我便重启到另外一个系统上，可惜这个系统不支持ext4文件系统，于是我边想办法找更新内核来支持，一边再尝试那个程序，看看这个系统上会不会死机，很幸运，没有死机。但是出了给出一个不怎么有用的信息外，nothing happend。<br/>
+于是我习惯性的执行了ls命令，可怕的<code>ls not found ,no such file or directory</code>出现了，我立刻执行其他命令，发现都不翼而飞了。</p>
+
+<p>难道。。。。文件系统被删除了？。。。。</p>
+
+<p>重启，再进入另外一个系统（我机器上有5个系统），挂载刚才出问题的系统的根文件系统，结果发现里面什么都没有了，是的，删除的很干净，什么都没有了。</p>
+
+<p>我这才意识到这次玩大了，我用普通账号执行过这个程序，是不是我的HOME也没有了。</p>
+
+<p>于是开始分析那个程序的源代码，我把代码发给了<a href="http://twitter.com/pczou">@pczou</a>，pczou告诉我，那不是真正的exploit代码，是一个木马程序，或者说是一个恶作剧，他唯一的功能就行执行<code>rm -rf \~/\* 2\&gt;/dev/null</code> ，当然这段代码是shellcode的。</p>
+
+<p>到这里，基本上没有什么想头了，我只能找恢复工具了，刚好昨天看到的<a href="http://wgzhao.com/2009/07/22/recover-undeleted-files-on-ext3-filesystem/">ext3grep</a>派上了用场，可惜它仅仅只能恢复ext3的文件系统，针对具有完整特性的ext4，它无能为力。</p>
+
+<p>于是我又找到了一个<a href="http://extundelete.sourceforge.net/">extundelete</a>的工具，它借鉴了ext3grep的代码，但是支持ext4。利用它，我恢复了部分数据，但是我几个最重要的目录不能恢复了。</p>
+
+<p>接着我用<a href="http://www.cgsecurity.org/wiki/PhotoRec">photorec</a>工具恢复出了14G的文件，可惜photorec恢复出来的文件都是以inode命名了，我看着那上百万个都是用数字命名的文件，头就大了，怎么会把inode转回去？我没有inode到filename的映射表，现在也不可能从当前的文件系统中找到了。</p>
+
+<p>我现在唯一能做的，就是暂时保留这个文件系统不动，等到某一天又办法了，再恢复吧。</p>
+
+<p>那个该死的exploit源代码名字是<code>OpenOwn.c</code>，为了不祸害大家，我就不给出链接了，当然如果你硬是要试试，不信邪，你可以googling，download,compile and execute，good luck! 这是日全食带来的霉运吗？</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-23T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/07/23/all-data-lost/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/07/23/all-data-lost/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/" title="Previous Post: 恢复ext3文件系统上被删除的文件">&laquo; 恢复ext3文件系统上被删除的文件</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/07/24/bought-three-books-2/" title="Next Post: 三本书到手">三本书到手 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/07/23/all-data-lost/';
+        var disqus_url = 'http://wgzhao.github.io/2009/07/23/all-data-lost/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

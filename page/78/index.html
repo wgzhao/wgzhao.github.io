@@ -1,0 +1,655 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="#!/bin/bashn=1;echo -n "$n " let "n = $n + 1" #note: let "n = n + 1" also worksecho -n "$n " : $((n=$n+1)) # ":" necessary beacause otherwise bash &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/78">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/06/02/bash-there-are-several-ways-of-calculating/">Bash里面计算的几种方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-06-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/06/02/bash-there-are-several-ways-of-calculating/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/06/02/bash-there-are-several-ways-of-calculating/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><pre><code>#!/bin/bashn=1;echo -n "$n "
+
+let "n = $n + 1" 
+#note: let "n = n + 1" also worksecho -n "$n "
+
+: $((n=$n+1)) # ":" necessary beacause otherwise bash attempts# + to interpret "$((n=$n+1))" as a commandecho -n "$n "
+
+n=$(($n + 1 ))echo -n "$n "
+
+: $[ n = $n + 1 ]echo -n "$n "
+
+n=$[ $n + 1 ]echo -n "$n "echo  -e
+
+exit 0
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/06/01/when-crm-can-get-such-feature/">什么时候CRM能达到这样的功能呢？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-06-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/06/01/when-crm-can-get-such-feature/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/06/01/when-crm-can-get-such-feature/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>CRM者，customer relationship manage,中文意为客户关系管理。看看下面这个流程，也许你就知道原来CRM可以达到这样的水平,\
+可是目前的CRM似乎还只是作为简单的客户信息记录和管理而已。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/06/01/when-crm-can-get-such-feature/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/31/Zen-and-the-internal-relations-Paoniu/">禅学与泡妞的内在联系</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/31/Zen-and-the-internal-relations-Paoniu/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/05/31/Zen-and-the-internal-relations-Paoniu/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>禅学与泡妞的内在联系让我们由浅入深的学习泡妞法门！</p>
+
+<p>第一个故事是放下的故事。</p>
+
+<p>有一天，老和尚带小和尚出去化缘回来，经过一条小河，河水上涨且无桥。一个mm想过去又怕水深.老和尚就背着mm过了河。回到寺里，小和尚问，师父你不是说男女授受不清吗？那你怎么还去背人？老和尚说我背女人在过完河后就把她放下了，你怎么现在还没有放下呢？
+ 这个故事的中心思想是：如果在街上看到ppmm，记得要多看几眼，不过看完后要把她彻底忘记！（注：写中心思想要摆事实，讲道理。）</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/05/31/Zen-and-the-internal-relations-Paoniu/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/30/zhongjue-paper-to-be-shallow-awareness-to-this-practice/">纸上得到终觉浅，觉知此事要躬行！</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/30/zhongjue-paper-to-be-shallow-awareness-to-this-practice/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/05/30/zhongjue-paper-to-be-shallow-awareness-to-this-practice/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天第一次真正意义上的出去做技术支持和实施。
+感觉和在公司自己做测试真的不一样，你会遇到很多的想不到的问题，你会遇到很多实际的问题。
+你需要灵活多变。你也许会发现软件的另外一层含义。
+今天的收获很大！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/29/linux-newbie-administrator-guide/">Linux新手系统管理员指南</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/29/linux-newbie-administrator-guide/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/05/29/linux-newbie-administrator-guide/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是一份针对一个Linux新手而言的指南。分别从为什么需要Linux，Linux安装，Linux资源，Linux基本操作，x－windows操作，基本配置，网络，Linux基本应用，Linux高级应用等方面介绍了Linux。
+ 对于一个Linux新手而言，相信看完这个指南，应当会对Linux有一个更详细的了解和认识。</p>
+
+<p><a href="http://linux-newbie.sunsite.dk/translations/chinese/lnag_ch_v2.01.pdf">Linux新手系统管理原指南PDF下载</a></p>
+
+<p><a href="http://linux-newbie.sunsite.dk/exports/lnag.sxw">Linux新手管理员指南openoffice版(英文)</a></p>
+
+<p><a href="http://linux-newbie.sunsite.dk/exports/lnag.doc">Linux新手管理员指南word版(英文)</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/23/men-and-women-on-the-road-of-life-love-is-just-a-part-of-a-required-course/">男女人生路上的必修课  爱情只是一部分</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/23/men-and-women-on-the-road-of-life-love-is-just-a-part-of-a-required-course/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/05/23/men-and-women-on-the-road-of-life-love-is-just-a-part-of-a-required-course/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一、送给女人</p>
+
+<p>工作计划与男友约会档期冲突，取前者……前者不会辜负你，而且越老越不会，除非你目前的工作是当三陪小姐。</p>
+
+<p> 只有小女孩才会用吸烟、夜游、多交男友表示成熟，你就不必了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/05/23/men-and-women-on-the-road-of-life-love-is-just-a-part-of-a-required-course/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/23/login-without-password-using-ssh/">登陆ssh不需要使用密码</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/23/login-without-password-using-ssh/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/05/23/login-without-password-using-ssh/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>每次登陆ssh都需要输入用户名和密码，我想作一个双机的互备。考虑密码隔断时间都需要修改，那我的备份程序也需要修改。因此就想使用不需要密码用ssh登陆机器，这样我就可以使用rsync，scp，rexec等命令来做的远程备份了。</p>
+
+<p>方法如下： 假设A，B两服务器，现在需要在A机上用root登陆B机，而不需要输入密码，那我们可按照下面的步骤来做：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/05/23/login-without-password-using-ssh/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/23/fc3-cookbook-a-delicious-dedicated-to-the-linux-novice/">FC3快餐－－一份献给Linux新手的美味</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/23/fc3-cookbook-a-delicious-dedicated-to-the-linux-novice/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/05/23/fc3-cookbook-a-delicious-dedicated-to-the-linux-novice/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是一份FC3的快速参考指南，对于一个还没有linux，而想使用linux，但是有害怕linux的人来说，这份快餐会很适合他们的口味。
+这份参考没有写什么很深奥的专业术语，都是一个桌面用户需要使用到的软件的使用。使用实际参考价值，献给那些准备走进linux殿堂的人吧。</p>
+
+<p><a href="http://bbs.xplore.cn/files/FC3cookie.pdf">下载FC3快餐</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/22/firefox-plug-in-really-good-weather/">FireFox的天气插件真不错！</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/22/firefox-plug-in-really-good-weather/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/05/22/firefox-plug-in-really-good-weather/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天装了一个FireFox的天气插件，感觉不错，可以预报多天的天气，也可以预报多个城市的天气，你可以把他放到菜单上，任务栏上，状态栏上，等等。方便了出行。
+而且是中文的，大家可以去试试哟。</p>
+
+<p>看看下面的截图：
+<img src="http://mlsx.xplore.cn/up/1116748817.png" alt="image" /></p>
+
+<p>下载地址：
+<a href="http://downloads.mozdev.org/forecastfox/forecastfox-0.7.1-ff-moz.xpi">http://downloads.mozdev.org/forecastfox/forecastfox-0.7.1-ff-moz.xpi</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/21/Linux-to-use-office-suite/">Linux好用的office套件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/21/Linux-to-use-office-suite/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/05/21/Linux-to-use-office-suite/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Linux下的office套件我基本上都使用了遍，包括自带的koffice，abiword，openoffice等。
+感觉openoffice还是不错，只是对ms的office兼容性还是有点勉强。
+后来又使用了永中office，发现他对ms的兼容性不错，还有自己的一些特征。只是有些ms的office文档的图片在永中office里面看不到。同时有时关闭永中office时会导致kde崩溃。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/05/21/Linux-to-use-office-suite/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/79/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/77/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

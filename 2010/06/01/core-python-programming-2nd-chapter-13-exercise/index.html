@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Core Python Programming 2nd Chapter 13 Exercise - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="这个章节的内容值得仔细阅读，而且不应该只读一遍。 我对比了第一版和第二版，后者在13节增加了一些内容。另外习题有所增加。
+还有一个现象就是因为第一版的翻译不是第二版的翻译，有些术语和语句风格有比较大的区别，在这一章就体现的更加明显了。 13-3,13-4:MoneyFmt 类里只有一个数据值(即, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2010/06/01/core-python-programming-2nd-chapter-13-exercise">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Core Python Programming 2nd Chapter 13 Exercise</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>这个章节的内容值得仔细阅读，而且不应该只读一遍。 我对比了第一版和第二版，后者在13节增加了一些内容。另外习题有所增加。<br/>
+还有一个现象就是因为第一版的翻译不是第二版的翻译，有些术语和语句风格有比较大的区别，在这一章就体现的更加明显了。</p>
+
+<blockquote><p>13-3,13-4:MoneyFmt 类里只有一个数据值(即,金额),和五个方法(你可以随意编写其他方法)。<br/>
+__init__()构造器对数据进行初始化,<br/>
+update()方法把数据值替换成一个新值,<br/>
+__nonzero__()是布尔型的,当数据值非零时返回True,<br/>
+__repr__()方法以浮点数的形式返回金额;而<br/>
+__str__()方法采用和dollarize()一样的字符格式显示该值。<br/>
+(a) 编写 update()方法,以实现数据值的修改功能。 <br/>
+(b) 以你已经编写的dollarize()的代码为基础,编写__str__()方法的代码 &copy;纠正__nonzero__()方法中的错误,这个错误认为所有小于 1 的数值,例如, 美分($0.50),50返回假值(False)。<br/>
+(d) 附加题: 允许用户通过一个可选参数指定是把负数数值显示在一对尖括号里还是显示一个负号。默认参数是使用标准的负号。</p></blockquote>
+
+<!--more-->
+
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e13-3.py could not be found</p>
+
+<p>这个类执行的结果大致如下,假定上述文件保存为e13-3.py。下面的结果在iPython环境下测试</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">chapter13</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">cash</span> <span class="o">=</span> <span class="n">chapter13</span><span class="o">.</span><span class="n">MoneyFmt</span><span class="p">(</span><span class="mf">123.45</span><span class="p">,</span><span class="s">&#39;&lt;&gt;&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">cash</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="mf">123.45</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span> <span class="k">print</span> <span class="n">cash</span>
+</span><span class='line'><span class="err">$</span><span class="mf">123.45</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">8</span><span class="p">]:</span> <span class="n">cash</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mf">100000.4567</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="n">cash</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">9</span><span class="p">]:</span> <span class="mf">100000.4567</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">10</span><span class="p">]:</span> <span class="k">print</span> <span class="n">cash</span>
+</span><span class='line'><span class="err">$</span><span class="mi">100</span><span class="p">,</span><span class="mf">000.4567</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">11</span><span class="p">]:</span> <span class="n">cash</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">-</span><span class="mf">0.3</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">12</span><span class="p">]:</span> <span class="n">cash</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">12</span><span class="p">]:</span> <span class="o">-</span><span class="mf">0.29999999999999999</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">13</span><span class="p">]:</span> <span class="k">print</span> <span class="n">cash</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="err">$</span><span class="mf">0.3</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">14</span><span class="p">]:</span> <span class="nb">repr</span><span class="p">(</span><span class="n">cash</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">14</span><span class="p">]:</span> <span class="s">&#39;-0.29999999999999999&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">15</span><span class="p">]:</span> <span class="sb">`cash`</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">15</span><span class="p">]:</span> <span class="s">&#39;-0.29999999999999999&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">16</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">cash</span><span class="p">)</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">16</span><span class="p">]:</span> <span class="s">&#39;&lt; $0.3&gt;&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>13-7.数据类。提供一个 time 模块的接口,允许用户按照自己给定时间的格式,比如: “MM/DD/YY,” “MM/DD/YYYY,”
+“DD/MM/YY,” “DD/MM/ YYYY,” “Mon DD, YYYY,” 或是标准 的 Unix 日期格式: “Day Mon DD, HH:MM:SS YYYY” 来查看日期。你的类应该维护一个日期值,并 用给定的时间创建一个实例。如果没有给出时间值,程序执行时会默认采用当前的系统时间。<br/>
+还包 括另外一些方法:
+update()按给定时间或是默认的当前系统时间修改数据值 <br/>
+display() 以代表时间格式的字符串做参数,并按照给定时间的格式显示: <br/>
+&lsquo;MDY&rsquo; ==>MM/DD/YY <br/>
+&lsquo;MDYY&rsquo; ==> MM/DD/YYYY <br/>
+&lsquo;DMY&rsquo; ==> DD/MM/YY <br/>
+&lsquo;DMYY&rsquo; ==>DD/MM/YYYY <br/>
+&lsquo;MODYY&rsquo; ==> Mon DD, YYYY
+如果没有提供任何时间格式,默认使用系统时间或 ctime()的格式</p></blockquote>
+
+<p>下面的类实现里，现实格式比题目有更宽松的要求，年，月，日的顺序可以任意。<br/>
+只有最后一种情况MODYY或者MODY是固定格式的。代码如下：</p>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/date could not be found</p>
+
+<p>上述代码执行的结果如下：</p>
+
+<pre><code>$ ./chapter13.py 
+2010/05/31
+Feb 28,99
+</code></pre>
+
+<blockquote><p>13-8.堆栈类。一个堆栈(Stack)是一种具有后进先出(last-in-first-out,LIFO)特性的数据结构。我们可以把它想象成一个餐盘架。最先放上去的盘子将是最后一个取下来的,而最后一个放上去的盘子是最先被取下来的。你的类中应该有<br/>
+push()方法(向堆栈中压入一个数据项)和 <br/>
+pop()方法(从堆栈中移出一个数据项)。还有一个叫
+isempty()的布尔方法,如果堆栈是空的,返回布尔值1,否则返回 0;一个名叫 <br/>
+peek()的方法,取出堆栈顶部的数据项,但并不移除它。</p></blockquote>
+
+<p>Python里list数据类型本身已经具备堆栈的基本功能，因此只需要把list类型包装一下就行，下面是代码</p>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e13-8.py could not be found</p>
+
+<p>运行的结果类似如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">37</span><span class="p">]:</span> <span class="n">st</span> <span class="o">=</span> <span class="n">chapter13</span><span class="o">.</span><span class="n">MyStack</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">38</span><span class="p">]:</span> <span class="n">st</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class='line'><span class="n">stack</span> <span class="ow">is</span> <span class="n">empty</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">39</span><span class="p">]:</span> <span class="n">st</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="s">&#39;1&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">40</span><span class="p">]:</span> <span class="n">st</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">41</span><span class="p">]:</span> <span class="n">st</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">41</span><span class="p">]:</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">42</span><span class="p">]:</span> <span class="n">st</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">42</span><span class="p">]:</span> <span class="s">&#39;1&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">43</span><span class="p">]:</span> <span class="n">st</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">43</span><span class="p">]:</span> <span class="s">&#39;1&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">44</span><span class="p">]:</span> <span class="n">st</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class='line'><span class="n">Out</span><span class="p">[</span><span class="mi">44</span><span class="p">]:</span> <span class="s">&#39;1&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">In</span> <span class="p">[</span><span class="mi">45</span><span class="p">]:</span> <span class="n">st</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+</span><span class='line'><span class="n">stack</span> <span class="ow">is</span> <span class="n">empty</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>13-20.类的定制。改进脚本 time60.py,见 13.13.2 节,示例 13.3.</p></blockquote>
+
+<ul>
+<li>允许“空”实例化: 如果小时和分钟的值没有给出,默认为零小时、零分钟。</li>
+<li>用零占位组成两位数的表示形式,因为当前的时间格式不符合要求。如下面的示例,
+wed应该输出为“12:05.” <br/>
+>>> wed = <br/>
+Time60(12, 5) <br/>
+>>> wed 12:5</li>
+<li>除了用 hours (hr) 和 minutes (min)进行初始化外,还支持以下时间输入格式:
+一个由小时和分钟组成的元组(10, 30) <br/>
+一个由小时和分钟组成的字典({&lsquo;hr&rsquo;: 10,&lsquo;min&rsquo;: 30}) <br/>
+一个代表小时和分钟的字符串(&ldquo;10:30&rdquo;) <br/>
+附加题: 允许不恰当的时间字符串表示形式,如 “12:5”.</li>
+<li>我们是否需要实现__radd__()方法? 为什么? 如果不必实现此方法,那我们什么时候可 以或应该覆盖它?</li>
+<li>__repr__()函数的实现是有缺陷而且被误导的。我们只是重载了此函数,这样我们可以省 去使用 print 语句的麻烦,使它在解释器中很好的显示出来。
+但是,这个违背了一个原则:<br/>
+对于可估 值的 Python表达式,repr()总是应该给出一个(有效的)字符串表示形式。
+12:05 本身不是一个合法 的 Python 表达式,但Time60(&lsquo;12:05&rsquo;)是合法的。请实现它。</li>
+<li>添加六十进制(基数是 60)的运算功能。
+下面示例中的输出应该是 19:15,而不是18:75: <br/>
+>>> thu = Time60(10, 30) <br/>
+>>> fri = Time60(8, 45) <br/>
+>>> thu fri 18:75</li>
+</ul>
+
+
+<p>根据题目的要求，自行增加了对初始化数据的简单校验</p>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e13-20.py could not be found</p>
+
+<pre><code>In [2]: from chapter13 import Time60
+
+In [3]: a = Time60('12:05')
+
+In [4]: a
+Out[4]: (12:5)
+
+In [5]: print a
+(12:05)
+
+In [6]: b = Time60({'hr':22,'min':57})
+
+In [7]: b
+Out[7]: (22:57)
+
+In [8]: a + b
+Out[8]: (35:2)
+
+In [9]: print a + b
+(35:02)
+In [10]: c = Time60(12,'a')
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+
+/home/wgzhao/cpp2nd-exercise/ in ()
+
+/home/wgzhao/cpp2nd-exercise/chapter13.py in __init__(self, obj1, obj2)
+    190                 self.__min = obj2
+    191             else:
+--&gt; 192                 raise TypeError,'Time60 requires string,dict and numeric pair'
+    193         elif type(obj1) == type({}):
+    194             if obj1.has_key('hr') and obj1.has_key('min'):
+
+TypeError: Time60 requires string,dict and numeric pair
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-01T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2010/06/01/core-python-programming-2nd-chapter-13-exercise/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2010/06/01/core-python-programming-2nd-chapter-13-exercise/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2010/05/31/core-python-programming-2nd-chapter-11-exercise/" title="Previous Post: core python programming 2nd chapter 11 exercise">&laquo; core python programming 2nd chapter 11 exercise</a>
+      
+      
+        <a class="basic-alignment right" href="/2010/06/05/core-python-programming-2nd-chapter-18-exercise/" title="Next Post: core python programming 2nd chapter 18 exercise">core python programming 2nd chapter 18 exercise &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2010/06/01/core-python-programming-2nd-chapter-13-exercise/';
+        var disqus_url = 'http://wgzhao.github.io/2010/06/01/core-python-programming-2nd-chapter-13-exercise/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

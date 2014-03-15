@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="突然想到了裸设备，linux下的裸设备(raw
+device)一直都不是理解得很清楚，特别是用户问及到裸设备的时候，我到真不知道如何才是正确的解释，或者说能让用户相信我的说法。 今天做了一些功课，算是又多了解了一些东西吧。 为什么裸设备需要绑定或者说映射到已经存在的块设备上？ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/40">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/07/09/Linux-gab-bare-equipment/">瞎扯linux裸设备</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/07/09/Linux-gab-bare-equipment/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/09/Linux-gab-bare-equipment/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>突然想到了裸设备，linux下的裸设备(raw
+device)一直都不是理解得很清楚，特别是用户问及到裸设备的时候，我到真不知道如何才是正确的解释，或者说能让用户相信我的说法。</p>
+
+<p>今天做了一些功课，算是又多了解了一些东西吧。</p>
+
+<p>为什么裸设备需要绑定或者说映射到已经存在的块设备上？
+这恐怕是用户问得最多的问题，我之前的回答都是linux下就是需要绑定。用户一般立刻会回一句，那为什么Unix就不用要呢？
+虽然我觉得这种比较没有太多含义，毕竟我们说Linux和Unix非常相似，但是再相似，也不是相同呀，凭什么Unix不做绑定或者映射，Linux就一定要按照这种设计模式呀？</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/07/09/Linux-gab-bare-equipment/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/07/05/bad-chinaunicom-charing/">还没有开通就收费，联通计费系统谁做的？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/07/05/bad-chinaunicom-charing/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/05/bad-chinaunicom-charing/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这段时间一直在投诉联通，间隔也投诉了一下移动。我不能偏心，至少对两个移动运营商都投诉了。</p>
+
+<p>投诉联通是因为我的掌中宽带让我及其郁闷，简直就是浪费我的生命。每天高峰期，我至少需要花2个小时才能上网，当然2个小时后，高峰期也过去了。
+之前给他们打电话，他们总是给出下面几个解决方案：</p>
+
+<p>1）把卡拔出来，重新插一下<br/>
+2）重启系统<br/>
+3）重新安装系统<br/>
+4）检查联通UIM卡<br/>
+5）检查无线上网卡</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/07/05/bad-chinaunicom-charing/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/07/03/Oracle-10g-Performance-Tuning/">Oracle 10g 性能调优</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-03T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/07/03/Oracle-10g-Performance-Tuning/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/03/Oracle-10g-Performance-Tuning/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>偶然找到了这篇pdf文档，记得还是去年年初参加一个什么回忆时，oracle的工程师当时做的一个报告。
+贴出来和大家共享。
+文档40页，简单介绍了oracle
+10g调优的一些方法，包括从操作系统和数据库本身，ppt形式，英文文档。[file]attachment/200707/oracle_tuning.pdf.zip[/file]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/06/30/ftpfs-do-what/">Ftpfs能带来什么？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/06/30/ftpfs-do-what/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/06/30/ftpfs-do-what/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>之前以为没有基于<a href="http://fuse.sourceforge.net/">fuse</a>的ftpfs，看来是我错了，你能想到的，肯定别人也想到了。</p>
+
+<p>之所以需要ftpfs，是因为很多空间提供商都仅仅只是提供了ftp的账号，而不会提供远程登录的方式。这对我管理站点来说，是一个很大的麻烦。举一个简单的例子，我为了减少传送时间，我会把文件打包传送，但是到了服务器段，我该如何解压呢？不知道ftp服务器真的是没有这个功能，还是我不清楚如何使用，反正这类问题够呛的。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/06/30/ftpfs-do-what/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/06/29/Pure-version-of-the-Linux-desktop-google/">纯正Linux版本的google桌面</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/06/29/Pure-version-of-the-Linux-desktop-google/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/06/29/Pure-version-of-the-Linux-desktop-google/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>和之前google推出的linux版本pisca采用wine模拟不同，这次推出的google桌面完全是native开发，因此需要gtk的支持。
+大小7.3M。有打好包的rpm，deb，也有源代码可以下载。</p>
+
+<p>其功能和windows，MAC OS下的功能一致。</p>
+
+<p>我也刚安装上，windows下的goole桌面当然没有用过了，所以没有太多好说了，还是看官方怎么吹的吧：
+<a href="http://googlechinablog.com/2007/06/linux-beta.html">给企鹅置家具——谷歌桌面 Linux
+版（Beta）发布</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/06/28/Comparison-tired-recently/">最近比较累</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/06/28/Comparison-tired-recently/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/06/28/Comparison-tired-recently/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近比较累
+身体累
+心也有点累
+英语也没有早读了
+技术文档很久没有看了
+博客也没有更新了
+也许这种状态还需要持续一段时间。</p>
+
+<p>也许，也许，8月份回归正常吧！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/06/24/Finally-bought-a-soya-bean-milk/">终于买了豆浆机</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/06/24/Finally-bought-a-soya-bean-milk/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/06/24/Finally-bought-a-soya-bean-milk/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>从说要买，到最后把机器拿回家，花费1个多月，效率总是怎么低下呀！
+买回来马上试了五谷的方式，因为不要等泡黄豆的时间。混合了黑米，小米，花生，红枣，枸杞等，看上去应该很营养。
+从加点，到喝道五谷浆，需要18分钟的样子。至于味道吗？看着和喝着毕竟是两码事情，谈不上味道好喝，也就是能喝下去的样子。不过清理现场就比较费劲了，豆浆机不太好洗，还要保证电机部分别沾水，是一个费时的活。</p>
+
+<p>半夜，开始打泡好的黄豆，费时和打五谷差不多，打出来和街上卖的豆浆看上去一样，我们开始说不过滤豆渣吧，营养些，结果发现真难喝下去，掐喉咙，过滤后，觉得还不错。只是泡豆子需要花一些时间。
+ 先试着用两天看看。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/06/21/linux-enterprise-cluster/">ebook&#8211;Linux Enterprise Cluster</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/06/21/linux-enterprise-cluster/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/06/21/linux-enterprise-cluster/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://nostarch.com/images/cluster_cov.gif" alt="image" />
+[file]<a href="http://epasser.aydc.com.cn/digitalAssets/ebooklibrary//ebook/c0c07c75-9091-44e4-adfe-88bc42d1e15a.zip">http://epasser.aydc.com.cn/digitalAssets/ebooklibrary//ebook/c0c07c75-9091-44e4-adfe-88bc42d1e15a.zip</a>[/file]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/06/21/Martial-arts-version-of-the-rumored-non-clear/">武林外传非清晰版</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/06/21/Martial-arts-version-of-the-rumored-non-clear/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/06/21/Martial-arts-version-of-the-rumored-non-clear/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>武林外传上部80集。
+在线流媒体格式，但是我知道现在很多下载工具都支持下载，比如我正用迅雷(for linux)下载呢。</p>
+
+<p>下面是下载列表，可以直接导入到迅雷下载中。
+[file]attachment/200706/wuliwaizhua.lst.gz[/file]</p>
+
+<p>Update：因为下载的文件名没有安装集数来命名，而且也没有规律，因此下载下来后，播放次序很麻烦，我写了一个简单的脚本，可以把每一个文件修改为集数命名的文件。
+下面下面的文件，在你下载的视频文件目录下执行sh ./fix.txt就好了。
+[file]attachment/200707/fix.txt[/file]</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/06/11/bought-a-new-bed-change-layout/">买了新床，换了布局</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-06-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/06/11/bought-a-new-bed-change-layout/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/06/11/bought-a-new-bed-change-layout/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>总算是把床买了下来，前面好几次都没有买下来都是因为觉得太贵。不过这次买下床和床垫，却远远超过之前我和lancy的预算。
+实木床太多名堂了，什么松木啦，什么桦木呀，什么榉木呀，红木呀，每一种又分好多种，头都搞晕了，最后买了大自然的榉木床和床垫。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/06/11/bought-a-new-bed-change-layout/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/41/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/39/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

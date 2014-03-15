@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>\[/sbin学习\]p\*命令 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="有一段时间没有学习sbin下的命令了。
+跳过o开头的命令是因为o开头只有三个命令，而且都是和Oracle的ocfs有关，所以这里就不研究了。
+p开头的命令不少，近20个。 pack_cis：与PCMCIA有关，编译PCMCIA卡信息结构。 pam_cosonle_apply：在系统终端上， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/04/17/commands-start-p">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">\[/sbin学习\]p\*命令</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>有一段时间没有学习sbin下的命令了。
+跳过o开头的命令是因为o开头只有三个命令，而且都是和Oracle的ocfs有关，所以这里就不研究了。
+p开头的命令不少，近20个。</p>
+
+<p><strong>pack_cis</strong>：与PCMCIA有关，编译PCMCIA卡信息结构。</p>
+
+<p><strong>pam_cosonle_apply</strong>：在系统终端上，针对用户设置或者收回权限。他是PAM相关的工具。
+如果<code>/var/run/console.lock</code>存在，则针对该文件的用户授权;如果没有，则根据缺省文件
+<code>/etc/security/console.perms</code>的规则来授权。<br/>
+这个命令以及<code>pam_timestamp_check</code>,<code>pam_tally</code>都属于PAM程序</p>
+
+<!--more-->
+
+
+<p><strong>pam_console_setowner</strong>：设置console的属主，他属于UDEV包.</p>
+
+<p><strong>parted</strong>： 强大的磁盘管理工具，类似fdisk功能，但是个人觉得其功能比fdisk强大。其中值得说的一点就是在已经占用的磁盘上进行操作，不需要重启生效，这点就比fdisk强。比如你的hda已经在使用了（你的根文件系统），这时你希望在hda上再创建一个分区，如果使用fdisk工具，保存的时候肯定会提示要你重启才生效，因为设备busy。但是parted却不会。
+另外一点是fdisk程序只有在你输入w命令后，所有的命令才真实生效，而parted不是这样，执行后，立刻生效（也许我还没有找到undo的功能），所以这点要注意。
+发现一个有意思的现象：addpart，delpart的功能是删除分区和增加分区，那么很自然的应该属于parted程序的功能，因此按理，这两个命令连带partprobe和parted属于同一个包。但事实是addpart,delpart属于util-linux包。不知道为什么要这么来归类？</p>
+
+<p>Linux下没有图形化的磁盘管理工具一直是普通用户抱怨的地方，因为不要期望所有人都来使用fdisk，parted这样的命令。不过现在好了，给予parted的<a href="http://qtparted.sf.net">qtparted</a>就是一个GUI的程序。一个典型的界面如下：</p>
+
+<p><img src="http://farm1.static.flickr.com/199/462602952_1828ced79a.jpg?v=0" alt="image" /></p>
+
+<p>其中hda6是我的LVM，在qtparted中并不识别（需要识别吗？试试rflvm吧）。
+网上有关parted的介绍并不多，所以还是看看man手册吧。</p>
+
+<p><strong>partx</strong>：partx同样属于parted的包，而是linux-util,虽然长像parted之类的。这个命令和addpart，delpart一样，没有man手册，没有info信息，没有<code>--help</code>。只好找google，得到这个这么<a href="http://www.ussg.iu.edu/hypermail/linux/kernel/0003.2/1887.html">一篇文章</a>。可以看看。</p>
+
+<p><strong>pivot_root</strong>：改变根文件系统。他的基本用法是：<code>pivot_root new_root put_old</code><br/>
+表示把当前处理的根文件系统移到<code>put_old</code>目录，然后把<code>new_root</code>作为当前的根文件系统。<br/>
+这个命令更多的时候用在系统启动时。我们知道现在的Linux启动时，都需要一个initrd的核心参数，这个initrd后面接着的压缩文件很多情况下就是一个文件系统。<br/>
+内核引导后，会首先把initrd的参数挂载，把他当成根文件系统，处理完必要的事务后，再把核心参数root置顶的设备挂载上来，然后使用<code>pivot_root</code>命令切换整个根文件系统，接着执行/sbin/init程序来继续引导系统。LSB的linux发行版本，引导时会把initrd镜像挂载到/initrd目录下。所以你会发现根目录下有一个initrd目录，但是他是空的，如果我删除他，系统引导的时候就会报错，我怎么知道的？因为我干过这样的傻事。</p>
+
+<p>man手册中举了几个例子，可以进一步解释<code>pivot_root</code>的作用。不过对于改变根文件系统，我们可能首先想到的是chroot，chroot似乎也有这个功能，那么他和<code>pivot_root</code>有什么差别呢？<br/>
+主要的差别是<code>pivot_root</code>有意识的切换一个完整的系统到新的根目录，然后可以移走之前需要依赖的老的系统，因此你可以umount掉之前的根文件系统，就当做之前没有发生过原来它是运行的操作系统一样。
+而chroot则有意识的申请一个单独进程的全部生命周期，他和系统的其他部分一起在老的根目录下一起运行，当chrooted进程退出后，系统不会发生改变。</p>
+
+<p>注：不建议大家测试这个命令，这时我测试后得出的结果。至少我做完后，我是靠重启系统来恢复原状的(真实原因是对这个命令还是了解得不太多。)</p>
+
+<p><strong>portmap</strong>：DARPA(美国国防部高级研究计划局)端口到RPC程序号的映射。也就是提供把RPC程序号转换成DARPA协议端口的服务。更统属的称呼应该就是端口映射(谁关心到底从什么协议转什么协议呢？)。<br/>
+当一个RPC服务开始时，它告诉portmap它将侦听哪个端口号，以及它准备为什么RPC程序号提供服务。<br/>
+但一个客户端希望对指定的程序号做RPC调用时，他将首先链接服务器上的portmap程序(服务)来决定RPC包应该发往哪个端口。<br/>
+portmap应该在RPC服务调用之前启动。<br/>
+典型的应用应该是NFS了。运行一个NFS服务当前需要启动的服务有：portmap，nfs和nfslock。不启动portmap而单独启动nfs， fslock服务提供NFS服务时，我遇到过两种错误：</p>
+
+<p>1）非常长的时间才能mount上<br/>
+2）直接报给出的服务不可用。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-17T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/04/17/commands-start-p/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/04/17/commands-start-p/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/04/16/party-2/" title="Previous Post: 同学小聚">&laquo; 同学小聚</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/04/18/Temptress-Moon-related/" title="Next Post: 有关风月">有关风月 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/04/17/commands-start-p/';
+        var disqus_url = 'http://wgzhao.github.io/2007/04/17/commands-start-p/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

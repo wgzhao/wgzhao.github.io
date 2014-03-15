@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>自动更新ssh公钥的ssh连接脚本 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="Update: 因为Openssh 5.0p1已经具备更新公钥的功能，因此该脚本不再更新。 谢谢wirlfly的提醒 ssh是在Linux下最常用的工具，安全，小巧，且不失强大。 唯一的一个遗憾是，当需要连接的机器的公钥发生改变时，ssh并不会自动更新存储在本地($HOME/.ssh/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2008/05/29/Automatic-Updates-ssh-public-key-ssh-to-connect-the-script">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">自动更新ssh公钥的ssh连接脚本</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>Update: 因为<a href="http://mlsx.xplore.cn/create-distribution-packages-with-checkinstall/">Openssh 5.0p1已经具备更新公钥的功能</a>，因此该脚本不再更新</strong>。 谢谢wirlfly的提醒</p>
+
+<p>ssh是在Linux下最常用的工具，安全，小巧，且不失强大。</p>
+
+<p>唯一的一个遗憾是，当需要连接的机器的公钥发生改变时，ssh并不会自动更新存储在本地(<code>$HOME/.ssh/known_hosts</code>)的公钥，这个时候你需要手动更新。我的一般做法是删除该行。</p>
+
+<!--more-->
+
+
+<p>而有些ssh工具具有自动更新公钥的能力，比如windows下常用的<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">putty</a>,<a href="http://www.csie.ntu.edu.tw/~piaip/pietty/">pietty</a></p>
+
+<p>我一直都认为ssh这个命令应该有这个功能，但是我都没有找到。我还记得<a href="http://pczou.xplore.cn">pczou</a>曾经给出过一个让ssh自动更新公钥的patch，可惜，每次OpenSSh升级，都需要重新编译，很麻烦。</p>
+
+<p>于是写了下面的这个小脚本，用来方便添加新公钥，和修改已经更新的公钥。</p>
+
+<p>脚本主要是利用了OpenSSH自带的<code>ssh-keyscan</code>命令。使用的参数和ssh使用时没有任何区别，实际上，最后是把你输入参数原封不动的传递给ssh命令，但是因为需要分析参数，主要要获得端口号（如果指定的话）和主机名（或者ip地址）。所以对参数的位置一些限制，<strong>主要是要求主机名或者ip地址这个参数一定是最后一个参数</strong>。</p>
+
+<p>原因是我暂时还不知道如何从一堆的参数中识别出哪个是主机名（ip地址还好识别一点），端口号还是比较用以识别，因为他有一个-p打头的参数。所以我暂时的解决办法把这个参数放到最后。
+这样我只需要使用<code>eval host=$$#</code>就可以得到主机名/IP地址了。如果大家能提供给我好的识别它的方法，那么这个限制就可以取消了。</p>
+
+<p>另外就是保存在<code>known_hosts</code>文件里的主机名/IP地址不能采取加密的方式，我不知道其他发行办法默认是怎么样。我知道的红旗软件的各类发行版本默认不会加密，但是Ubuntu的会。<br/>
+所以如果使用ubuntu的话，首先的修改<code>/etc/ssh/ssh_config</code>文件，把其中的
+<code>HashKnownHosts yes</code>
+注释掉或者改成no，然后保存。只所以这样，是因为我在bash下不知道如何hash一个字符串（对bash的了解还是很差劲的）,如果有人告诉我如何hash一个字符串，那么这个限制也可以取消了。</p>
+
+<p>最后一个是暂时只对RSA算法的公钥进行处理，对DSA的算法不理睬。当然，如果你一开始保存的是DSA算法的公钥，我还是会去处理的。我的做法是，如果当前要连接的主机公钥已经存在了，我会去查询你用的什么算法，是ssh-rsa，还是ssh-dss，然后根据这个算法扫描出需要连接的机器的公钥;如果不存在，我则直接采取RSA算法来扫描。</p>
+
+<p>罗嗦了半天，还是贴出代码比较直观</p>
+
+<figure class='code'><figcaption><span> (akssh.sh)</span> <a href='/downloads/code/akssh.sh'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="c">###################################</span>
+</span><span class='line'><span class="c"># auto update ssh pub key </span>
+</span><span class='line'><span class="c"># Author: mlsx</span>
+</span><span class='line'><span class="c"># version: 1.0</span>
+</span><span class='line'><span class="c"># limited</span>
+</span><span class='line'><span class="c"># 1) the hostname or ip address must be the last arguments</span>
+</span><span class='line'><span class="c"># 2) the hostname or ip address can not encrypt</span>
+</span><span class='line'><span class="c"># 3) just use RSA algorithm</span>
+</span><span class='line'><span class="c"># @todo</span>
+</span><span class='line'><span class="c"># 1) ip address or hostname has been encrypted</span>
+</span><span class='line'><span class="c"># 2) more encrypted method beside rsa </span>
+</span><span class='line'><span class="c"># 3) ip address or hostname can give any position</span>
+</span><span class='line'><span class="c">#############################################</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">KEY</span><span class="o">=</span><span class="nv">$HOME</span>/.ssh/known_hosts
+</span><span class='line'>which ssh-keyscan &gt;/dev/null 2&gt;&amp;1
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;command ssh-keyscan not find in current path&quot;</span>
+</span><span class='line'><span class="nb">exit </span>65
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="nv">SCAN</span><span class="o">=</span><span class="sb">`</span>which ssh-keyscan<span class="sb">`</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">SSH</span><span class="o">=</span><span class="sb">`</span>which ssh<span class="sb">`</span> <span class="c">#you have not ssh command ?</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c">#obtain two arguments if it has: host and port</span>
+</span><span class='line'><span class="c">#specify port?</span>
+</span><span class='line'><span class="nv">port</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$*</span> |egrep -o <span class="s2">&quot;\-p.\w*.([0-9])*&quot;</span> |awk <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span>;<span class="k">then </span>
+</span><span class='line'><span class="nv">port</span><span class="o">=</span><span class="s2">&quot;22&quot;</span> <span class="c">#default ssh port</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="c">#get  the last argument ,given it must be the hostame or ipaddress</span>
+</span><span class='line'><span class="nb">eval </span><span class="nv">host</span><span class="o">=</span><span class="se">\$</span><span class="nv">$#</span>
+</span><span class='line'><span class="c">#cut the username and @ symbol ,if it has</span>
+</span><span class='line'><span class="nv">host</span><span class="o">=</span><span class="k">${</span><span class="nv">host</span><span class="p">##*@</span><span class="k">}</span>
+</span><span class='line'><span class="c">#KEY file has the host&#39;s pub key?</span>
+</span><span class='line'><span class="c">#not hash ip address or hostname</span>
+</span><span class='line'><span class="nv">curkey</span><span class="o">=</span><span class="sb">`</span>grep <span class="s2">&quot;$host &quot;</span> <span class="nv">$KEY</span><span class="sb">`</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -ne 0 <span class="o">]</span>;<span class="k">then</span>
+</span><span class='line'>  <span class="c">#@todo</span>
+</span><span class='line'>  <span class="c">#may ip address or hostname has been hashed</span>
+</span><span class='line'>  <span class="c">#------------</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c">#invoke ssh command  directly </span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;no key&quot;</span>
+</span><span class='line'>  <span class="c">#add the new key</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;add new key&quot;</span>
+</span><span class='line'>  <span class="nv">newkey</span><span class="o">=</span><span class="sb">`</span><span class="nv">$SCAN</span> -t ssh-rsa <span class="nv">$host</span> 2&gt;/dev/null<span class="sb">`</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s2">&quot;$newkey&quot;</span> &gt;&gt; <span class="nv">$KEY</span>
+</span><span class='line'>  <span class="nv">$SSH</span> <span class="nv">$*</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>  <span class="c">#compare pub key</span>
+</span><span class='line'>  <span class="nv">stype</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$curkey</span> |awk <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span> <span class="c"># pub key encrypt type</span>
+</span><span class='line'>  <span class="nv">newkey</span><span class="o">=</span><span class="sb">`</span><span class="nv">$SCAN</span> -t <span class="nv">$stype</span> <span class="nv">$host</span> 2&gt;/dev/null<span class="sb">`</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$curkey&quot;</span> <span class="o">==</span> <span class="s2">&quot;$newkey&quot;</span> <span class="o">]</span>;<span class="k">then</span>
+</span><span class='line'>      <span class="c">#nothing to do</span>
+</span><span class='line'>      <span class="nb">echo</span> <span class="s2">&quot;key not change&quot;</span>
+</span><span class='line'>      <span class="nv">$SSH</span> <span class="nv">$*</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'><span class="k">      </span><span class="nb">echo</span> <span class="s2">&quot;update key&quot;</span>
+</span><span class='line'>      <span class="c">#update pub key</span>
+</span><span class='line'>      grep -v <span class="s2">&quot;$host &quot;</span> <span class="nv">$KEY</span> &gt;/tmp/key.<span class="nv">$$</span>
+</span><span class='line'>      <span class="nb">echo</span> <span class="s2">&quot;$newkey&quot;</span> &gt;&gt;/tmp/key.<span class="nv">$$</span>
+</span><span class='line'>      mv -f /tmp/key.<span class="nv">$$</span> <span class="nv">$KEY</span>
+</span><span class='line'>      <span class="c">#O.K, go through ssh </span>
+</span><span class='line'>      <span class="nv">$SSH</span>  <span class="nv">$*</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="nb">exit </span>0
+</span><span class='line'>
+</span><span class='line'><span class="c">##################################</span>
+</span><span class='line'><span class="c">#Changelog</span>
+</span><span class='line'><span class="c"># 2008.5.29 original version</span>
+</span><span class='line'><span class="c">###################################</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>鉴于上次写的IP切换器脚本，没有写示例程序，导致很多人不知道用，真是失败，所以这次叫上示例。</p>
+
+<p>下面的例子都是正确的做法(假定脚本名称是akssh)：</p>
+
+<pre><code> $akssh usernam@22.24.56.66 $akssh -X -p 44 xplore.cn 
+</code></pre>
+
+<p>下面的例子是不成功的，主要是没有把主机/IP地址放最后</p>
+
+<pre><code> $akssh username@22.24.56.66 -X 
+ $akssh -p 44 xplore.cn -lroot
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-05-29T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2008/05/29/Automatic-Updates-ssh-public-key-ssh-to-connect-the-script/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2008/05/29/Automatic-Updates-ssh-public-key-ssh-to-connect-the-script/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2008/05/28/bags-association/" title="Previous Post: 环保袋联想">&laquo; 环保袋联想</a>
+      
+      
+        <a class="basic-alignment right" href="/2008/05/30/After-the-pay-of-mind/" title="Next Post: 加薪后的心情">加薪后的心情 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2008/05/29/Automatic-Updates-ssh-public-key-ssh-to-connect-the-script/';
+        var disqus_url = 'http://wgzhao.github.io/2008/05/29/Automatic-Updates-ssh-public-key-ssh-to-connect-the-script/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

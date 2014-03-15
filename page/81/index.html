@@ -1,0 +1,923 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="上周三，Adobe公司发布了最新的Acrobat
+Reader7.0,这次与以往不同的是它还发布了Linux下面的版本同样是7.0版，只是目前属于beta测试版。 点击这里看具体新闻
+好不容易找了一个下载的地方下载 点击这里下载adobe 7.0 如果上面不能下载，看下面两个地址 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/81">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/01/10/Linux-following-the-latest-Adobe-Acrobat-Reader-7.0/">最新的Linux下面的Adobe Acrobat Reader 7.0</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-01-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/01/10/Linux-following-the-latest-Adobe-Acrobat-Reader-7.0/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/01/10/Linux-following-the-latest-Adobe-Acrobat-Reader-7.0/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>上周三，Adobe公司发布了最新的Acrobat
+Reader7.0,这次与以往不同的是它还发布了Linux下面的版本同样是7.0版，只是目前属于beta测试版。</p>
+
+<p><a href="http://bbs.xplore.cn/viewtopic.php?t=1292">点击这里看具体新闻</a>
+好不容易找了一个下载的地方下载</p>
+
+<p><a href="http://home.balticom.lv/mihails/AdbeRdr70_linux_enu.0.beta1.tar.bz2">点击这里下载adobe 7.0</a></p>
+
+<p>如果上面不能下载，看下面两个地址</p>
+
+<p><a href="http://cie.xtu.edu.cn/snl/software/AdbeRdr70_linux_enu.tar.gz">AdbeRdr70安装程序</a></p>
+
+<p><a href="http://cie.xtu.edu.cn/snl/software/acrobatreader.tar.gz">5.0.8的简体中文字体</a></p>
+
+<p>可以只安装安装程序。不需要安装中文字体也能看中文的pdf。</p>
+
+<p>好家伙安装起来居然要110M。</p>
+
+<p>不过安装很顺利。于是测试了一下，发现真的很不错。</p>
+
+<p>对大部分的中文pdf文档也支持，特别是中文书签，同样也支持了。</p>
+
+<p>已知bug：</p>
+
+<p>1.发现如果你的pdf文档在中文目录里面，它会告诉你找不到这个文档，看来对中文目录支持得不够好。      我采用的是gb2312的编码，不知道使用utf-8编码会不会支持！</p>
+
+<p>2.openoffice生成的pdf文档，如果含有中文，似乎不能显示，而使用永中office生成的pdf可以，不过是点阵字体，很丑。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/">双网卡负载均衡及路径切换配置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-01-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.前言
+双网卡负载均衡其实很早就在linux内核里面实现了，我见到的最早的版本是2.2.10的内核。不过那个时候还没要作为缺省功能编译到内核里面去，如果你需要这个功能你需要编译内核，然后选中bonding相关选项。我最早使用了bonding是在我最毕业设计时，在iSCSI技术里面加入了bonding技术。</p>
+
+<p>通过测试发现对于小数据包的传送，单网卡比双网卡要快，这当然也是正常的，只有在大数据传送的情况下，它才能显示优势，比如流媒体文件的传输。2.4.x以后的内核就把bonding技术作为缺省功能编译进去了，而且还加入了路径切换的功能，那就更加完美了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/01/02/my-new-year-life/">我的新年生活！</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-01-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/01/02/my-new-year-life/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2005/01/02/my-new-year-life/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2004年12月31日4点，电话停机，ADSL停止。失去与外界的联系！</p>
+
+<p>2005年1月1日16：14，与高中同学畅饮，趴倒于床上！2</p>
+
+<p>005年1月2日10：59,从酒醉中醒来！这就是我的新年生活！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/12/28/data-structure-and-algorithm-c-language/">数据结构及算法C语言实现代码集[推荐下载]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-12-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/12/28/data-structure-and-algorithm-c-language/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/12/28/data-structure-and-algorithm-c-language/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这个附件包含了大学数据结构课程和算法分析课程讲述的全部问题的C语言实现，推荐大家下载
+下面是文档包含的内容:</p>
+
+<pre>
+二分查找1.c
+二分查找2.c
+二叉树.c
+其它
+
+单元加
+单循环链表.c
+单链表.c
+图.c
+字符
+定长串.c
+
+小写数字转为大写数字
+带头结点双链循环线性表.c
+底层编程
+效验算法
+数学问题
+数据结构
+数组
+文件程序
+求进制
+汉诺塔
+硬币情况
+逆阵
+链串.c
+链栈.c
+链队列.c
+问题算法
+顺序栈.c
+顺序表.c
+顺序队列.c
+
+./其它:
+c语言窗体实例.zip
+傻瓜递归.c
+冒泡法改进.c
+小字库DIY-.c
+小字库DIY.c
+小白鼠钻迷宫.c
+扫描码.C
+挽救软盘.c
+汉字字模.c
+神经元模型.c
+穷举搜索法.c
+简单数据库.c
+编程汉字问题.txt
+编随机数.c
+试题.C
+递堆法.C
+
+./单元加:
+erre2.c
+erre.c
+数组完全单元.c
+栈单元加.c
+
+./字符:
+单词倒转.c
+反出字符.c
+回文.c
+字符串查找.c
+字符编辑.c
+字符编辑技术(插入和删除) .c
+
+./小写数字转为大写数字:
+小写数字转换成大写数字1.c
+小写数字转换成大写数字2.c
+小写数字转换成大写数字3.c
+
+./底层编程:
+asm.c
+C标志符命名源程序.c
+ping.c
+winsock2.c
+时间陷阱.c
+检出错误.c
+检测鼠标.c
+
+./效验算法:
+C.BAT
+CMCRC.COM
+Crctable.c
+
+./数学问题:
+乘法矩阵.c
+凉东问题
+十五人排序.c
+叠代整除.c
+四分砝码.c
+圆周率
+多位阶乘2.c
+多位阶乘.c
+大加数.c
+大小倍约.c
+大整数.c
+完数.c
+小孩分糖果.c
+小明买书
+平方根.c
+数学算法
+桃子猴问题
+灯塔问题.c
+百鸡百钱.c
+简单计算器.c
+苹果纠纷
+递推.c
+逻辑移动.c
+阶乘递归.c
+阿姆斯特朗数.c
+黑白.c
+
+./数学问题/凉东问题:
+32.c
+re.c
+数组递归退出2.c
+数组递归退出.c
+
+./数学问题/圆周率:
+圆周率.c
+狐狸圆周率.cpp
+
+./数学问题/小明买书:
+小明买书.c
+小明买书.cpp
+
+./数学问题/数学算法:
+余弦曲线.c
+余弦直线.c
+符号图形.c
+绘制圆.c
+
+./数学问题/桃子猴问题:
+_notes
+乘方函数桃子猴.c
+桃子猴.c
+猴子和桃.c
+递归桃猴.c
+题目.txt
+
+./数学问题/桃子猴问题/_notes:
+
+./数学问题/苹果纠纷:
+ff.c
+苹果分法.c
+
+./数据结构:
+二叉排序树.c
+二叉树实例.c
+单链表
+双链表正排序.c
+各种排序法.c
+哈夫曼算法.c
+哈慢树.c
+大整数.c
+建树和遍历.c
+排序法.c
+推箱子.c
+数据结构2.c
+数据结构3.c
+数据结构.c
+无向图.c
+栈操作.c
+线性顺序存储结构.c
+线索化二叉树.c
+迷宫.c
+迷宫问题.c
+逆波兰计算器.c
+递归车厢.c
+队列.c
+
+./数据结构/单链表:
+ww.c
+冒泡排序.c
+单链表1.c
+单链表2.c
+单链表.c
+单链表倒序.c
+单链表的处理全集.c
+建立链表1.c
+节点.c
+质因子.c
+链表十五人排序.c
+链表（递归）.c
+
+./数组:
+数字移动.c
+数组操作.c
+杨辉三角形.c
+桶排序.c
+矩阵转换.c
+螺旋数组1.c
+螺旋数组2.c
+
+./文件程序:
+实例1.c
+实例2.c
+实例3.c
+文件加密.c
+文件复制.c
+文件连接.c
+自我复制.c
+读写文本文件.c
+输出自已.c
+
+./求进制:
+16进制10进制.c
+二进制数2.c
+二进制数.c
+
+./汉诺塔:
+四塔1.c
+四塔2.c
+换位递归.c
+汉诺塔2.c
+汉诺塔.c
+诺汉塔画图版.c
+非递归.c
+
+./硬币情况:
+for循环的.c
+硬币分法.c
+
+./逆阵:
+简单逆阵.c
+逆矩阵.c
+逆阵.c
+
+./问题算法:
+N皇后问题回溯算法.c
+万年历
+动态计算网络最长最短路线.c
+矩阵乘法动态规划.c
+网络最短路径Dijkstra算法.c
+货郎担分枝限界图形演示.c
+货郎担限界算法.c
+骑士遍历
+
+./问题算法/万年历:
+万年历.c
+万年历的算法 .c
+
+./问题算法/骑士遍历:
+骑士遍历1.c
+骑士遍历2.c
+骑士遍历回逆.c
+</pre>
+
+
+<p>下载地址：
+<a href="http://dl.getdropbox.com/u/220586/datastruct.rar">http://dl.getdropbox.com/u/220586/datastruct.rar</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/">使用 Head 和 Tail 以块方式读取文本流</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-12-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>如果你想只处理文件的一部分，譬如头几行或后几行，你可以使用 head（它将头 10 行发送至标准输出）或 tail（它将后 10 行发送至标准输出）。
+您可以通过使用<code>-n</code>选项改变这些命令发送至其标准输出的行数（当然，输出结果将随 XF86Config 文件的内容而不同）：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/12/26/Skills-The-cat-merger-documents/">技巧：用 Cat 合并文件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-12-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/12/26/Skills-The-cat-merger-documents/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/12/26/Skills-The-cat-merger-documents/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>您常常需要将几个文件处理成一个文件并将这种处理的结果保存到一个单独的输出文件。cat（“concatenate”的缩写）命令在其输入上接受一个或多个文件并将它们作为一个单独的文件打印到它的输出。例如，<code>cat chapter01 chapter02 chapter03 &gt; book</code> 将三个chapterXX 文件保存在一个单独的 book 文件中。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2004/12/26/Skills-The-cat-merger-documents/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/12/25/Christmas-blessing/">圣诞祝福</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-12-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/12/25/Christmas-blessing/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/12/25/Christmas-blessing/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>圣诞节到了，祝大家圣诞快乐，元旦快乐！</p>
+
+<p>摘录一些好玩的圣诞祝福短信</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2004/12/25/Christmas-blessing/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/12/22/PHP-with-batch-files-to-download/">用PHP实现批量文件下载</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-12-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/12/22/PHP-with-batch-files-to-download/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/12/22/PHP-with-batch-files-to-download/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>以前用perl写过一个类似的程序,但是因为我的perl学得很差,因此那个程序我就不知道如何升级了.\
+今天我又用PHP实现了同样的功能.现在定义版本为0.01,想把这个做完整一点.todo里面列出我接下来要做的事情.\
+具体使用方法写在前面的注释里面了.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2004/12/22/PHP-with-batch-files-to-download/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/12/22/Firefox-Crazy/">Firefox也疯狂</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-12-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/12/22/Firefox-Crazy/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/12/22/Firefox-Crazy/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>能大家已经看到很多有关Firefox 1.0自11月19日发布1.0正式版以来，下载量已经突破1000万的报道了，而这个数字只是官方的统计，不包括从各种镜像站点和其它地方下载，包括与FC3的集成。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2004/12/22/Firefox-Crazy/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/12/18/Simple-floppy-disk-to-crack-encryption/">简单破解加密软盘</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-12-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/12/18/Simple-floppy-disk-to-crack-encryption/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/12/18/Simple-floppy-disk-to-crack-encryption/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>使用软盘做钥匙盘在我的记忆中似乎是很遥远的事情了，第一次见到是一套计算机等级考试的软件。
+如果使用文件的复制的方法把软盘的资料copy到另外一个软盘，那肯定会告诉你这不是一张有效的钥匙盘。
+那个时候也没有想到比较好的办法。<br/>
+&lt;!-more&mdash;>
+今天又有人拿一个钥匙盘过来，问我能不能破解，我的第一反应就是使用linux的dd命令。
+操作过程如下:
+1.插入正确的钥匙盘，执行下面的命令</p>
+
+<pre><code>#dd if=/dev/fd0 of=fd0.img 
+</code></pre>
+
+<p>2.取出钥匙盘，插入你要复制的空白软盘(当然不是空白的也没有什么问题)，执行下面的命令：</p>
+
+<pre><code>#dd if=fd0.img of=/dev/fd0
+</code></pre>
+
+<p>ok，取出你的复制的软盘，测试一下，看有没有问题！</p>
+
+<p>申明：本方法仅供研究参考，采用此方法进行任何非法操作，本人不负任何责任！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/82/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/80/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
