@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>配置nginx - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="这应该算是老掉牙的技术了，但是就是这老掉牙的技术，今天却折腾了我几个小时。 首先是到网络找一些文档，因为转来转去的原因（我痛恨一切不自己产生内容，却到处抓取内容还不完整的网站），基本上只有几篇比较完整的配置文档，无一例外，都是采取源代码编译，编译php,编译mysql，编译nginx， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2010/03/23/setup-nginx-and-fastcgi">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">配置nginx</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>这应该算是老掉牙的技术了，但是就是这老掉牙的技术，今天却折腾了我几个小时。</p>
+
+<p>首先是到网络找一些文档，因为转来转去的原因（我痛恨一切不自己产生内容，却到处抓取内容还不完整的网站），基本上只有几篇比较完整的配置文档，无一例外，都是采取源代码编译，编译php,编译mysql，编译nginx，编译memcache，编译eaccelerator，编译everthing。<br/>
+似乎只有这样才是王道，才是问题的解决版本。</p>
+
+<p>我讨厌编译，我只需要配置。我如果跳过编译，只看配置，在我的系统上就会出现无法解析php的情况。</p>
+
+<!--more-->
+
+
+<p>最好的文档还是官方文档，仔细看了看官方文档，不用编译还是能解决我的问题的。以下是我的配置过程流水帐。 系统是CentOS 5.4。默认的仓库没有nginx，php的版本还在5.0.x上。</p>
+
+<p>需要更新。我就整合在一个文件里(·/etc/yum.repos.d/extra.rep·)</p>
+
+<pre><code>[epel]
+name=Extra Packages for Enterprise Linux 5 - $basearch
+#baseurl=http://download.fedoraproject.org/pub/epel/5/$basearch
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-5&amp;arch=$basearch
+failovermethod=priority
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL
+
+[epel-debuginfo]
+name=Extra Packages for Enterprise Linux 5 - $basearch - Debug
+#baseurl=http://download.fedoraproject.org/pub/epel/5/$basearch/debug
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-debug-5&amp;arch=$basearch
+failovermethod=priority
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL
+gpgcheck=1
+
+[epel-source]
+name=Extra Packages for Enterprise Linux 5 - $basearch - Source
+#baseurl=http://download.fedoraproject.org/pub/epel/5/SRPMS
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-source-5&amp;arch=$basearch
+failovermethod=priority
+enabled=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL
+gpgcheck=1
+</code></pre>
+
+<p>现在使用yum开始升级你的系统，安装你需要的nginx，还有安装<code>spawn-fcgi</code>包吧。
+为了便于软件的升级，我们尽可能不改动软件默认的配置，尽可能设置自己的配置文件。
+首先在<code>/etc/nginx/</code>目录下创建<code>fcgi.conf</code>文件，内容如下：</p>
+
+<pre><code>fastcgi_pass   127.0.0.1:9000;
+fastcgi_index  index.php;
+include        /etc/nginx/fastcgi_params;
+fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+</code></pre>
+
+<p>从虚拟主机的角度考虑，我们在<code>/etc/nginx/conf.d/</code>目录下创建<code>virtual.conf</code>文件，内容如下:</p>
+
+<pre><code>server {
+    listen       80;
+    server_name  www.foo.com foo.com
+   root  /your/webroot/path/;
+    location / {
+        root   /your/webroot/path/;
+        index  index.shtml index.html index.php;
+    }
+    location ~ \.php$ {
+        include /etc/nginx/fcgi.conf;
+        }
+}
+</code></pre>
+
+<p>里要主机针对每一个虚拟主机要增加一个<code>SCRIPT_FILENAME</code>的参数，使用绝对路径设置脚本的位置，这里我尝试了网络上传说的<code>$document_root</code>参数，无论怎么设置，均不凑效。</p>
+
+<p><strong>Update 2010-09-14:</strong></p>
+
+<p>如果想要<code>$document_root</code>这个参数生效，就必须在<code>server</code>指令段里指定<code>root</code>参数。否则<code>$document_root</code>不生效。</p>
+
+<p>这样设置后，包括网络上流传的修改<code>php.ini</code>文件都不需要做了。</p>
+
+<p>如果这里有一个通用参数的话，那么就可以把这张包行到<code>fcgi.conf</code>文件里，这样每一个虚拟主机的配置就只要<code>include fcgi.conf</code>就可以了。嗯，应该有这样的参数，只是我暂时还没有找到。
+然后，增加一个<code>/etc/init.d/fastcgi-php</code>的起停脚本，如下：</p>
+
+<p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/fastcig-php could not be found</p>
+
+<p>根据你的需要可以调整最上面的参数，其中注意<code>SERVER_SPAWN</code>和<code>SERVER_CHILDS</code>参数，他们分别用来设置spawn进程和fork进程的个数。启动时总的进程个数等于</p>
+
+<p><code>(SERVER_SPAWN + 1） * SERVER\_CHILDS</code>。
+上面的例子表示启动php-cgi进程9*3=27个。</p>
+
+<p>最后做一些扫尾的工作：</p>
+
+<pre><code>#chkconfig --add fastcgi-php
+#chkconfig fastcgi-php on
+#chkconfig nginx on
+#chkconfig mysqld on
+#service mysqld start
+#service fastcgi-php start
+#service nginx start
+</code></pre>
+
+<p>好了，可以写的测试脚本了，看看html是否可以解析，php是否可以解析。</p>
+
+<p>上面的配置方法，不需要修改网络上盛传的php.ini文件,fastcgi_params文件等。而且可以利用yum直接升级这些软件包，而不是每次下载源代码不停的<code>./configure;make;make install</code>。那是一个痛苦的过程。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-23T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>, <a class='category' href='//categories/webkai-fa/'>WEB开发</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2010/03/23/setup-nginx-and-fastcgi/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2010/03/23/setup-nginx-and-fastcgi/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2010/03/23/google-python-class/" title="Previous Post: google的python视频教程含下载地址">&laquo; google的python视频教程含下载地址</a>
+      
+      
+        <a class="basic-alignment right" href="/2010/03/26/blog-move-to-hongkong/" title="Next Post: 我在香港欢迎你">我在香港欢迎你 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2010/03/23/setup-nginx-and-fastcgi/';
+        var disqus_url = 'http://wgzhao.github.io/2010/03/23/setup-nginx-and-fastcgi/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

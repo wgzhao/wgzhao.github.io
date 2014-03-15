@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Tag-based Filesystem - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="这两天和同事在讨论传统分类和标签(tag,label)的问题，突然想起很早以前看到的一个视频，讲述的是下一代文件系统的特征，是真正桌面应用，其中提到了标签，也就是用户关注不再文件系统这个层次，而是逻辑层。
+所以，我想到了基于标签的文件系统，“我总不是第一个想到的”，google一把后， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2008/06/24/tag-based-filesystem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Tag-based Filesystem</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>这两天和同事在讨论传统分类和标签(tag,label)的问题，突然想起很早以前看到的一个视频，讲述的是下一代文件系统的特征，是真正桌面应用，其中提到了标签，也就是用户关注不再文件系统这个层次，而是逻辑层。<br/>
+所以，我想到了基于标签的文件系统，“我总不是第一个想到的”，google一把后，果然发现有不少组织在做这个，也下载了一些代码，不过目前都处于原型阶段，生产应用恐怕还是有些难度。</p>
+
+<!--more-->
+
+
+<p>
+其中目前稍微成熟的是tagsistant(<a href="http://www.tagsistant.net/">http://www.tagsistant.net/)</a>)，它基于FUSE(<a href="http://fuse.sf.net/">http://fuse.sf.net</a>，再一次说明FUSE真是好东西)，是一个语义文件系统，其目标是采用标签(tag,label)的方式分类文件，而不是传统的目录结构。<br/>
+当然，它是一个文件系统，因此它底层还是要基于目录这种结构来存储文件。不过tagsistant使用目录还有一个意思，就是把目录当成一个标签，但是多个目录之间可以存在与（AND）或者或（OR）的逻辑关系。<br/>
+目录和目录本身具有包含和相等关系，也就将来能包括笛卡尔集的全部吧。 <br/>
+tagsistant给出了一个例子，说明了这点：</p>
+
+<pre><code>In our example, we’ll assume that tags/ is a directory which is
+under tagsistant control, and that, inside this directory there
+are two directories called “music” and “photo”, filled as in the
+following scheme:
+
+tags/
+music/
+song1.mp3
+song2.wav
+photo/
+img_3233.jpg
+img_3459.jpg
+
+Assuming this hierarchy is a Tagsistant managed space, the files
+song1.mp3 and song2.wav are tagged as music, and the files
+img_3233.jpg and img_3459.jpg are tagged as photo. Let suppose that
+image img_3233.jpg and file song2.wav came from a friend named
+Jack and you want to record that information inside your Tagsistant
+space. All you have to do is:
+
+$ mkdir tags/jack/
+$ cp music/song2.wav tags/jack/
+$ cp photo/img_3233.jpg tags/jack/
+
+Resulting hierarchy will be as follows:
+
+tags/
+music/
+song1.mp3
+song2.wav
+photo/
+img_3233.jpg
+img_3459.jpg
+jack/
+img_3233.jpg
+song2.wav
+
+You may ask: that can be done with a normal filesystem. And you’ll be
+right. But with a difference. Tagsistant will store song2.wav and
+img_3233.jpg just one time, saving space.
+
+But having such a hierarchy would be of little or no help in searching
+your files if you are not able to perform a logical query. Here enters
+Tagsistant. Using the path, a concept your are already used to play with,
+you can perform queries inside a Tagsistant space. How? Look at following
+example:
+
+$ ls tags/jack/
+AND/ OR/ song2.wav img_3233.jpg
+$ ls tags/jack/AND/
+photo/ music/
+$ ls tags/jack/AND/music/
+song2.wav
+$
+
+The path “jack/AND/music/” will result in all the files tagged as both
+“jack” and “music”. The AND special directory can be used to create a
+set of criteria which should match togheter to fullfill the query. As
+opposite, the OR special directory allows more powerful queries, by
+concatenating the results of more than one set of AND-chained criteria.
+
+As an example:
+
+$ ls tags/jack/AND/music/
+song2.wav
+$ ls tags/photos/
+img_3233.jpg img_3459.jpg
+$ ls tags/jack/AND/music/OR/photos/
+song2.wav img_3233.jpg img_3459.jpg
+$
+</code></pre>
+
+<p>我试用了一下，初始化数据到不是一个难题，目前困难的是没有一个优化的查询结构，现在还是依赖目录这种模式，只是加入了逻辑运算，类似下面这样：</p>
+
+<p><img src="uploads/1212460730_28219673.png" title="&#34;tag-based filesystem&#34;" alt="&#34;tag-based filesystem&#34;"></p>
+
+<p>其中的“AND”是逻辑词，不是一个目录，develop和os是两个目录，当然也是标签。那个ppt文档就是同时打上了os和develop的标签。当然实际上只存储了一份。</p>
+
+<p>要真的实用，还需要一段路要走，期待着！</p>
+
+<p>Update: 另外尝试的几个是：</p>
+
+<p>1) <strong>Tag-based</strong> file sytem in Python 清华大学章淼老师的一个开源项目
+<a href="http://py-tag-fs.sourceforge.net/">http://py-tag-fs.sourceforge.net/</a></p>
+
+<p>2) <strong>tagfsai</strong> 一个AI界面，但是没有搞明白能用到什么程序，也许才刚刚开始吧<br/>
+<a href="http://tagfs.googlecode.com/">http://tagfs.googlecode.com</a> 3</p>
+
+<p>3) <strong>tag-perl</strong> 一个简单的perl程序，给每一个文件增加若干个标签，只有命令行方式<br/>
+<a href="http://blueslugs.com/~sch/tag/tag-latest.pl">http://blueslugs.com/~sch/tag/tag-latest.pl</a></p>
+
+<p>4) <strong>tag2find:</strong> windows平台的一个文件浏览器扩展，我还没有测试，有windows系统的，可以尝试，是商业版本
+<a href="http://www.tag2find.com/">http://www.tag2find.com</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-24T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2008/06/24/tag-based-filesystem/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2008/06/24/tag-based-filesystem/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2008/06/24/kung-fu-panda/" title="Previous Post: 看完《功夫熊猫》">&laquo; 看完《功夫熊猫》</a>
+      
+      
+        <a class="basic-alignment right" href="/2008/06/30/check-ip-address-with-bash/" title="Next Post: 用bash校验IP地址">用bash校验IP地址 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2008/06/24/tag-based-filesystem/';
+        var disqus_url = 'http://wgzhao.github.io/2008/06/24/tag-based-filesystem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

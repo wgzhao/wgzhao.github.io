@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>RAID 6：使用双校验的独立访问 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="最近发现RAID6被越来越多的人提及，虽然早在1999年，Storage Technology公司就已经发布了iceberg
+RAID子系统，支持RAID6，但是由于各种原因，RAID6并未像它的弟弟RAID5，甚至RAID1那么流行。
+为了不落伍，今天仔细看了RAID6的一些实现原理，特记录下来 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2006/08/12/RAID-6-double-check-the-use-of-independent-access">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">RAID 6：使用双校验的独立访问</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>最近发现RAID6被越来越多的人提及，虽然早在1999年，Storage Technology公司就已经发布了iceberg
+RAID子系统，支持RAID6，但是由于各种原因，RAID6并未像它的弟弟RAID5，甚至RAID1那么流行。
+为了不落伍，今天仔细看了RAID6的一些实现原理，特记录下来：</p>
+
+<!--more-->
+
+
+<p>RAID6提供两级冗余，即阵列中的两个驱动器失败时，阵列仍然能够继续工作一般而言，RAID 6的实现代价要比其他级的R A I
+D高，这是因为RAID 6需要支持两级简约的操作，即不仅要支持数据的恢复，又要支持校验的恢复，这使RAID6控制器比其他级RAID更复杂和更昂贵。</p>
+
+<ol>
+<li><p>RAID6的校验数据<br/>
+当对每个数据块执行写操作时， RAID6做两个独立的校验计算，因此，它能够支持两个磁盘的失败。为了实现这个思想，目前基本上有两个已经接受的方法，尽管将来还会有其他方法出现：
+• 使用多种算法，如X O R和某种其他的函数。
+• 在不同的数据分条或者磁盘上，使用排列的数据。</p></li>
+<li><p>RAID6的一维冗余<br/>
+RAID6的第一种方法是用两种不同的方法计算校验数据。实现这个思想最容易的方法之一是用两个校验磁盘支持数据磁盘，第一个校验磁盘支持一种校验算法，而第二个磁盘支持另一种校验算法，使用两种算法称为<code>P + Q</code>校验。一维冗余是指使用另一个校验磁盘，但所包含的分块数据是相同的。
+例如，P校验值可能由XOR函数产生，这样，Q校验函数需要是其他的某种操作，一个很有力的侯选者是Reed
+Solomon误差修正编码的变体，这个误差修正编码一般用于磁盘和磁带驱动器。假如两个磁盘失败，那么，通过求解带有两个变量的方程，可以恢复两个磁盘上的数据，这是一个代数方法，可以由硬件辅助处理器加速求解。</p></li>
+<li><p>一维校验RAID6的数据映射  <br/>
+下图图显示了一维RAID6实现的数据映射，它给出了两个不同的校验值，一个标志校验数据A函数，另一个标志校验数据B函数。为了避免关于RAID4的写开销，按照RAID5的方式，这两种数据分布于整个阵列。<br/>
+<img src="/uploads/raid6_1.jpg" alt="image" /><br/>
+一维RAID 6阵列的数据映射</p></li>
+<li><p>RAID 6的二维冗余<br/>
+二维冗余基于这样一个概念：阵列可以逻辑地以矩阵的行和列安排。因此，数据的排列以行和列来表示，校验数据可作为阵列空间的正交矢量来计算。为了实现这个方法，每一个数据分块都属于两个正交（分离和独立）的分条，不存在将阵列中任何其他分条写入相同校验位置的可能性。
+这种方法可简单地看作M×N的矩阵，M个校验磁盘需要N个校验计算， N个校验磁盘需要M个校验计算。这种安排需要校验磁盘的总数为M +
+N。当行和列数相等且阵列的大小增加时，这种类型的阵列的校验开销将减小。例如，一个3×3的9个磁盘的阵列有6个校验磁盘，校验开销占66%。然而，当阵列包含100个磁盘，按10×10配置时，需要20个校验磁盘，校验开销占20%。
+二维方法的优点之一是可以利用同样的算法计算校验数据，这大大简化了用于简约功能操作的数学例程，如数据和校验的恢复。它既可以使用阵列管理软件中的单个程序，也可以使用同样的硬件辅助实现。</p></li>
+<li><p>二维RAID6阵列的数据映射
+下图显示了二维RAID6 子系统的数据s映射，所显示的矩阵排列即磁盘排列。事实上，没有必要精确地遵从这个原则，也可以使用分区而不使用磁盘建立矩阵。并且，也没有一个如何构造矩阵的确定的规则。一般而言，不要将几排独立的阵列构造成矩阵，如果这样做的话，需要阵列具有完全相同的分区大小和分条深度。<br/>
+而由属于同一个阵列的分区逻辑地构造矩阵将容易得多。<br/>
+<img src="/uploads/raid6_2.jpg" alt="image" /><br/>
+二维RAID 6阵列的数据映射</p></li>
+</ol>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-12T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2006/08/12/RAID-6-double-check-the-use-of-independent-access/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2006/08/12/RAID-6-double-check-the-use-of-independent-access/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/08/11/openfiler-friendly-enterprise-storage-management-platform/" title="Previous Post: openfiler--友好的企业级存储管理平台">&laquo; openfiler--友好的企业级存储管理平台</a>
+      
+      
+        <a class="basic-alignment right" href="/2006/08/13/Let-me-hug-you-sleep/" title="Next Post: 让我拥抱你入梦">让我拥抱你入梦 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2006/08/12/RAID-6-double-check-the-use-of-independent-access/';
+        var disqus_url = 'http://wgzhao.github.io/2006/08/12/RAID-6-double-check-the-use-of-independent-access/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

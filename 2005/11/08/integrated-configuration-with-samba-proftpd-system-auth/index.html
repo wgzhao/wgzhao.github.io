@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>LDAP+SAMBA+Proftpd+SYSTEM AUTH集成配置 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="Windows的AD（Active Directory)是一个DAP(Directory Access
+Protocol)的一个完美演绎，使用AD创建的域，使得普通用户的登录信息于机器无关，而且可以实现单点登录（single sign
+on). &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">LDAP+SAMBA+Proftpd+SYSTEM AUTH集成配置</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-08T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Windows的AD（Active Directory)是一个DAP(Directory Access
+Protocol)的一个完美演绎，使用AD创建的域，使得普通用户的登录信息于机器无关，而且可以实现单点登录（single sign
+on).目前Linux下面可以勉强达到这个水平的可能只有RADIUS。
+现在我要介绍的这个方案是基于LDAP的认证方式，也就是samba，
+ftp，system的认证信息都是来自ldap数据库，而不是原来的密码文件，这样做的好处是密码的统一管理，减少风险，比如你可能并不希望ftp，
+mail等帐号的认证用到系统帐号，这个时候你就可以考虑这个方案（当然你也可以使用像mysql这样的数据库）。</p>
+
+<!--more-->
+
+
+<p>好了，废话不说了，现在看如何搭建这样的一个服务：
+一、准备工作
+这个方案于系内核的关系不是很大，主要是以来的几个服务。基本上，你的系统需要下面的几个包：
+openldap nss_ldap openldap-serversAX smbldap-tools openldap-clients
+proftpd
+其中smbldap-tools是一个方便我们配置和修改ldap数据库的perl程序组,Fedora
+Core似乎没有安装这个软件,那么你可以到下面的地址来下载:
+<a href="http://www.idealx.org/prj/samba/index.fr.html">http://www.idealx.org/prj/samba/index.fr.html</a></p>
+
+<p>如果这些软件你都已经有了,那我们开始配置了.</p>
+
+<p>二、配置ldap
+修改<code>/etc/openldap/slapd.con</code>f文件，加入samba的schema，修改rootdn和passwd。
+下面是我的配置信息</p>
+
+<pre><code>include /etc/openldap/schema/core.schema include
+/etc/openldap/schema/cosine.schema include
+/etc/openldap/schema/inetorgperson.schema include
+/etc/openldap/schema/nis.schema include
+/etc/openldap/schema/samba.schema include
+/etc/openldap/schema/redhat/autofs.schema database bdb suffix
+"dc=mlsx,dc=com" rootdn "cn=Manager,dc=mlsx,dc=com" rootpw abc123
+</code></pre>
+
+<p>这里的rootpw使用的明文，实际上你可以使用加密的方法。比如你需要abc123这个密码，但是用密文显示，那你可以这样做：</p>
+
+<pre><code>#slappasswd -h{ SSHA } -s abc123 
+{ SSHA}fkowonfOAxYXUa+ygm4fDvwGtEVubD9L 
+</code></pre>
+
+<p>然后把rootpw那行替换成下面的这行</p>
+
+<pre><code>rootpw {SSHA }fkowonfOAxYXUa+ygm4fDvwGtEVubD9L
+</code></pre>
+
+<p>保存好，现在启动你的ldap服务。
+<code>#/etc/init.d/ldap start</code></p>
+
+<p>三、添加数据。
+向ldap数据库添加数据有三种方法，一是编写ldif文件，导入数据，二是使用某些ldap的管理工具（比如phpldapadmin,一个类似phpmysqladmin的工具),三是使用smbldap-tools工具集。
+这里我们使用第三种方式。
+首先修改<code>/etc/samba/smbldap_bind.conf</code>文件，添加必要信息如下：
+<code>masterDN="cn=Manager,dc=mlsx,dc=com" masterPw="abc123"</code>
+然后执行：</p>
+
+<pre><code>[root@ha191 samba]# smbldap-populate.pl
+Using builtin directory structure
+adding new entry: dc=mlsx,dc=com
+adding new entry: ou=Users,dc=mlsx,dc=com
+adding new entry: ou=Groups,dc=mlsx,dc=com
+adding new entry: ou=Computers,dc=mlsx,dc=com
+adding new entry: uid=Administrator,ou=Users,dc=mlsx,dc=com
+adding new entry: uid=nobody,ou=Users,dc=mlsx,dc=com
+adding new entry: cn=Domain Admins,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Domain Users,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Domain Guests,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Administrators,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Users,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Guests,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Power Users,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Account Operators,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Server Operators,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Print Operators,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Backup Operators,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Replicator,ou=Groups,dc=mlsx,dc=com
+adding new entry: cn=Domain Computers,ou=Groups,dc=mlsx,dc=com
+</code></pre>
+
+<p>基本信息已经导入。在开始添加帐号信息之前，需要配置samba。</p>
+
+<p>四、配置samba
+samba默认使用smbpasswd程序来认证帐号。这里我们使用ldap来认证，需要修改和增加的配置如下：</p>
+
+<pre><code>passdb backend=ldapsam:ldap://172.16.81.191
+ldap admin dn=cn=Manager,dc=mlsx,dc=com
+ldap suffix=dc=mlsx,dc=com
+add machine script=smbldap-useradd -w “%u”
+add user script=smbldap-useradd -m “%u”
+ldap delete dn=yes
+add group script=smbldap-groupadd -p “%u”
+add user to group script=smbldap-groupmod -m “%u” “%g”
+</code></pre>
+
+<p>至于其他配置就和没有什么不同了。
+好了，现在启动samba。
+<code>#/etc/init.d/smb start</code></p>
+
+<p>给samba设置连接ldap的密码。
+<code>[root@ha191 openldap]# smbpasswd -w abc123 Setting stored password for "cn=Manager,dc=mlsx,dc=com" in secrets.tdb</code></p>
+
+<p>到现在为止，我们可以添加帐号信息了。使用下面的命令</p>
+
+<p><code>#smbldap-useradd.pl -a -m -c "fine account" smb1 #smbldap-passwd smb1</code></p>
+
+<p>使用这个帐号就可以连接到你的samba服务器了。</p>
+
+<p>五、修改系统认证
+如果希望系统也能使用这个帐号登录，那么需要修改系统的认证方式。
+如果有authconfig配置工具，你可以使用这个工具来方便配置，配置流程如下：
+<code>#authconfig</code></p>
+
+<p><img src="/uploads/authconfig_1.png" alt="image" /></p>
+
+<p><img src="/uploads/authconfig_2.png" alt="image" /></p>
+
+<p>有的authconfig看到的可能是下面这个样子：</p>
+
+<p><img src="/uploads/authconfig_3.png" alt="image" /></p>
+
+<p><img src="/uploads/authconfig_4.png" alt="image" /></p>
+
+<p>确定后，会重启nscd服务。
+如果没有这个配置工具，那就只能手工修改<code>/etc/pam.d/system-auth</code>文件，修改如下：</p>
+
+<pre><code>#cat /etc/pam.d/system-auth
+#%PAM-1.0
+# This file is auto-generated.
+# User changes will be destroyed the next time authconfig is run.
+auth required /lib/security/$ISA/pam_env.so
+auth sufficient /lib/security/$ISA/pam_unix.so likeauth nullok
+auth sufficient /lib/security/$ISA/pam_ldap.so use_first_pass
+auth required /lib/security/$ISA/pam_deny.so
+
+account required /lib/security/$ISA/pam_unix.so
+account [default=bad success=ok user_unknown=ignore service_err=ignore system_err=ignore authinfo_unavail=ignore] /lib/security/$ISA/pam_ldap.so
+
+password required /lib/security/$ISA/pam_cracklib.so retry=3 type=
+password sufficient /lib/security/$ISA/pam_unix.so nullok use_authtok md5 shadow
+password sufficient /lib/security/$ISA/pam_ldap.so use_authtok
+password required /lib/security/$ISA/pam_deny.so
+
+session required /lib/security/$ISA/pam_limits.so
+session required /lib/security/$ISA/pam_unix.so
+session optional /lib/security/$ISA/pam_ldap.so
+</code></pre>
+
+<p>保存后，切换到终端，尝试使用smb1帐号登录。
+如果你使用的是RedFlag Linux 4系列产品，那么上面的操作你可能没有办法让你从系统登录，你需要升级的你的nss_ldap库。</p>
+
+<p>六、配置proftpd
+proftpd 默认使用系统帐号来认证，这对于想对外提供ftp服务的人来说，显然是一个痛苦的决定，因为系统帐号过多，对于管理是一个很麻烦的问题，还有就是如何申请
+ftp帐号也是一个问题，于是我们希望能够使用其他方式来提供帐号认证。ldap显然是一个不错的主意，我们看看如果配置proftpd使得其认证可以用
+ldap完成。
+其实配置proftpd完成ldap认证，很简单，你只需要在你的字段加入下面几行，重启ftp就可以了。</p>
+
+<pre><code>LDAPServer 172.16.81.191
+LDAPDNInfo cn=manager,dc=mlsx,dc=com abc123
+LDAPDoAuth on ou=Users,dc=mlsx,dc=com
+</code></pre>
+
+<p>现在你使用smb1这个帐号登录ftp服务看看，是不是很方便？</p>
+
+<p>七、其他配置
+其实你还有使用ldap来做其他服务器的认证，比如apache。上面的配置都是使用了比较方便的配置工具，如果你对ldap比较熟悉，那你也完全可以自己编写ldif文件来设置帐号信息。</p>
+
+<p>八、有用的工具
+管理ldap也有一些有用的工具，其中比较有名的是phpmysqladmin的姊妹工具－－phpldapadmin了，它秉承了phpmysqladmin工具的直观，方便，功能强大的特点。下面是他的一个截图：</p>
+
+<p><img src="/uploads/phpldapadmin.png" alt="image" /></p>
+
+<p>phpldapadmin的官方网址是：</p>
+
+<p><a href="http://phpldapadmin.sourceforge.net/">http://phpldapadmin.sourceforge.net/</a></p>
+
+<p>另外还有一个基于java的工具LDAPBrowser，下面是他的截图：</p>
+
+<p><img src="/uploads/ldapbrowser.png" alt="image" />
+该软件的官方网址是：
+<a href="http://www-unix.mcs.anl.gov/~gawor/ldap/">http://www-unix.mcs.anl.gov/~gawor/ldap/</a></p>
+
+<p>九、后记
+在刚准备这个方案时，因为对ldap不了解，所以花了不少时间，同时也走了不少弯路，如果大家在配置过程中也遇到这样的问题，建议大家先了解ldap，这样会达到事半功倍的效果。
+接下来我想实现openwebmail等一切认证可以支持第三方认证的软件来使用ldap认证。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-08T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2005/11/04/mysql-forget-the-root-password-of-a-solution/" title="Previous Post: mysql忘记root密码的一个解决办法">&laquo; mysql忘记root密码的一个解决办法</a>
+      
+      
+        <a class="basic-alignment right" href="/2005/11/09/How-to-use-Linux-for-mobile-infrared-communication/" title="Next Post: 如何在Linux使用红外进行手机通讯">如何在Linux使用红外进行手机通讯 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/';
+        var disqus_url = 'http://wgzhao.github.io/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>几种常见的NoSQL数据库关键特性列表 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="NoSQL根据不同的数据模型，大致可以分为4类，分别是键值对存储(Key-Value Stores)，列族存储(Column Families)，文档数据库(Document Databases)以及图形数据库(Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2012/08/20/several-popular-nosql-databases-key-features-list">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">几种常见的NoSQL数据库关键特性列表</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-20T13:50:00+08:00" pubdate data-updated="true">Aug 20<span>th</span>, 2012</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>根据不同的数据模型，大致可以分为4类，分别是键值对存储(Key-Value Stores)，列族存储(Column Families)，文档数据库(Document Databases)以及图形数据库(Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反。</p>
+
+<p>下面我根据最近看的一些资料，列出了目前常见的<a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>数据库系统的一些主要特性，不一定都正确。另外，后面列了一些参考资料，偏向于<a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>，个人觉得还不错。</p>
+
+<ul>
+<li><p> Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a></p>
+
+<ul>
+<li>由Google开发</li>
+<li>闭源产品</li>
+<li>通过SSTable实现持久化</li>
+<li>通过<a href="http://research.google.com/archive/chubby.html" title="chubby lock service">Chubby</a>实现一致性</li>
+<li>key-value存储</li>
+</ul>
+</li>
+<li><p> <a href="http://hbase.apache.org" title="Hbase home">HBase</a></p>
+
+<ul>
+<li>Apache基金项目，开发语言为Java</li>
+<li>Apache License 2.0 许可</li>
+<li>Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的开源版本</li>
+<li>为<a href="http://hadoop.apache.org" title="open source software framework">Hadoop</a>的后端数据库</li>
+<li>通过HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
+<li>着重于CP</li>
+<li>通过memtable/SStable实现持久化</li>
+<li>通过<a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现一致性</li>
+<li>支持多主节点(multi-master)</li>
+</ul>
+</li>
+</ul>
+
+
+<!--more-->
+
+
+<p></p>
+
+<ul>
+<li><p> <a href="http://hypertable.com" title="Hypertable">Hypertable</a></p>
+
+<ul>
+<li>由Inkomi公司前员工发起，其中包括百度，Rediff,Zvents等公司赞助，后成立Hypertable公司。</li>
+<li>GPLv2 许可</li>
+<li>开发语言为C++</li>
+<li>Goole <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的另外一个开源实现,但比<a href="http://hbase.apache.org" title="Hbase home">HBase</a>要快</li>
+<li>着重CP</li>
+<li>通过<a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>通信</li>
+<li>通过memtable/SStable实现持久化</li>
+<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" title="Multiversion concurrency control">MVCC</a></li>
+<li>查询通过类似SQL的HQL</li>
+<li>通过Hypersace算法(<a href="http://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95" title="Paxos 算法">Paxos算法</a>)实现一致性</li>
+</ul>
+</li>
+<li><p> Apache <a href="http://cassandra.apache.org" title="Apache Cassandra">Cassandra</a></p>
+
+<ul>
+<li>由<a href="http://www.facebook.com" title="facebook">Facebook</a>开发，开发语言为Java</li>
+<li>Apache License 2.0 许可</li>
+<li>Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的数据模型，<a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Amazon</a>的基础架构</li>
+<li>面向列的key-value存储</li>
+<li>通过提交日志来实现持久化，类似<a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>里的<a href="http://www.postgresql.org/docs/9.1/static/wal-intro.html" title="Write-Ahead Log">WAL</a></li>
+<li>跨节点的最后一致性(Eventually Consistent)实现</li>
+<li>着重于<a href="http://en.wikipedia.org/wiki/CAP_theorem" title="Consistency,Availablitiy,Partition tolerance">CAP</a>里的AP</li>
+<li>客户端通过<a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>协议通讯，查询通过<a href="http://zh.wikipedia.org/wiki/MapReduce" title="Map Reduce">Map-Reduce</a></li>
+</ul>
+</li>
+<li><p> Apache <a href="http://couchdb.apache.org" title="CouchDB">CouchDB</a></p>
+
+<ul>
+<li>主要开发者包括<a href="http://www.bbc.co.uk" title="BBC">BBC</a>和<a href="http://www.engineyard.com" title="cloud platform for RoR and PHP">Engine Yard</a></li>
+<li>Apache License 2.0 许可</li>
+<li>开发语言为<a href="http://www.erlang.org" title="Erlang Programming Language">Erlang</a></li>
+<li>key-value 文档存储</li>
+<li>通过只附加(append-only)B+树实现持久化</li>
+<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" title="Multiversion concurrency control">MVCC</a></li>
+<li>着重于AP</li>
+<li>通过HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
+<li>支持多主(multi-master)复制</li>
+<li>通过文档或JavaScript函数(<a href="http://zh.wikipedia.org/wiki/MapReduce" title="Map Reduce">Map-Reduce</a>)进行查询</li>
+<li>无一致性实现，需要通过应用端解决</li>
+</ul>
+</li>
+<li><p> <a href="http://www.mongodb.org" title="MongoDB">MongoDB</a></p>
+
+<ul>
+<li>主要开发者包括<a href="http://www.sourceforge.net" title="source forge">Sourceforge</a>,<a href="http://foursquare.com" title="foursquare">Foursquare</a>,<a href="http://bit.ly" title="bit.ly shorten url">Bit.ly</a> 和 <a href="http://www.github.com" title="Github">Github</a></li>
+<li>开发语言为C++</li>
+<li>AGPLv3 许可</li>
+<li>key-value 文档存储</li>
+<li>通过复制加快照实现持久化</li>
+<li>就地更新(in place update)，无版本，无只附加日志</li>
+<li>着重于CP</li>
+<li>数据通过BSON(二进制<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>)存储</li>
+<li>自有的通信协议</li>
+<li>主从复制</li>
+<li>支持地理空间索引</li>
+</ul>
+</li>
+<li><p> <a href="http://project-voldemort.com" title="Voldemort distributed data store">Voldemort</a></p>
+
+<ul>
+<li>有<a href="http://www.linkedin.com" title="LinkedIn SNS">LinkedIn</a>开发,开发语言为Java</li>
+<li>key-value 文档存储</li>
+<li>基于上游的<a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Amazon</a></li>
+<li>通过可插拔的数据存储层(<a href="http://en.wikipedia.org/wiki/BerkeleyDB" title="Berkeley DB,BDB">BerkeleyDB</a>/<a href="http://www.mysql.com" title="MySQL">MySQL</a>)实现持久化</li>
+<li>着重AP</li>
+<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" title="Multiversion concurrency control">MVCC</a></li>
+<li><a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Dynamo</a> 分布式hash表(Distributed Hash Table,<a href="http://en.wikipedia.org/wiki/Distributed_hash_table" title="Distributed Hash Table">DHT</a>)实现,一致性hash(<a href="http://en.wikipedia.org/wiki/Consistent_hashing" title="Consistent Hashing">Consistent Hashing</a>)，向量时钟(<a href="http://en.wikipedia.org/wiki/Vector_clocks" title="Vector clock">Vector clock</a>)</li>
+<li>多种数据序列化格式(<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>,Java String, byte[],<a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>,Avro,<a href="http://en.wikipedia.org/wiki/Protobuf" title="Protocol Buffers">ProtoBuf</a>)</li>
+<li>自有的通信协议</li>
+</ul>
+</li>
+<li><p> <a href="http://www.redis.io" title="Redis">Redis</a></p>
+
+<ul>
+<li>由<a href="http://www.vmware.com" title="VMWare">VMWare</a>开发,开发语言为ANSI C</li>
+<li>key-value 文档存储</li>
+<li>内存数据库，通过快照实现持久化</li>
+<li>着重于CP</li>
+<li>无数据序列化格式</li>
+<li>类似POP3的自有通信协议</li>
+</ul>
+</li>
+<li><p> Tokyo <a href="http://fallabs.com/tokyocabinet/" title="Tokyo Cabinet">Cabinet</a>/<a href="http://fallabs.com/tokyotyrant/" title="network interface of Cabinet">Tyrant</a></p>
+
+<ul>
+<li>实现key-value 数据库管理，带网络守护进程(<a href="http://fallabs.com/tokyotyrant/" title="network interface of Cabinet">Tyrant</a>)</li>
+<li>通过<a href="http://www.postgresql.org/docs/9.1/static/wal-intro.html" title="Write-Ahead Log">WAL</a>和阴影拷贝分页实现持久化</li>
+<li>无数据序列化格式</li>
+<li>通信协议：Tokyo Tyrant Binrary Protocol,memcached compatible Text protocol,HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a></li>
+</ul>
+</li>
+<li><p> <a href="http://neo4j.org" title="neo4j: World's leading Graph Database">Neo4j</a></p>
+
+<ul>
+<li>有<a href="http://www.neotechnology.com%22" title="neotechnology graphs are anywhere">neo technology</a>开发</li>
+<li>开发语言为Java</li>
+<li>AGPLv3 和商业 双重许可</li>
+<li>图形化数据库</li>
+<li>通过<a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现HA</li>
+<li>通过<a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>,Java协议通信</li>
+<li>通过存储在磁盘的链接列表(linked-list)实现持久化</li>
+<li>节点遍历高效</li>
+<li>很好的纵向扩展性</li>
+<li>通过<a href="http://en.wikipedia.org/wiki/Sparql" title="SPARQL Protocol and RDF Query Language">SPARQL</a>查询</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>参考：</h3>
+
+<ol>
+<li><a href="http://www.scribd.com/doc/31669670/PostgreSQL-and-NoSQL">PostSQL and NoSQL</a></li>
+<li><a href="http://www.slideshare.net/slideshow/embed_code/7080449">NoSQL databases: why,what and when</a></li>
+<li><a href="http://research.google.com/archive/bigtable-osdi06.pdf">Bigtable:A Distributed Storage System for Structured Data</a></li>
+<li><a href="http://research.google.com/archive/chubby-osdi06.pdf">The Chubby lock service for lossely-coupled distrubuted systems</a></li>
+<li><a href="http://www.nosqlnotes.net/wp-content/uploads/Distributed_System_Engineering_Practice.pdf">分布式系统工程实践</a></li>
+<li><a href="http://rhass.blogspot.com">Robert Hass blog</a></li>
+<li><a href="http://momjian.us/main/blogs/pgblog.html">Bruce Momjian: Postgres Blog</a></li>
+<li><a href="http://pgsnake.blogspot.com/">Dave&rsquo;s Postgres Blog</a></li>
+<li><a href="http://dbmsmusings.blogspot.com/">DBMS Musings</a></li>
+<li> <a href="http://www.nosqlnotes.net/">NOSQL Notes</a></li>
+<li> <a href="http://blog.nosqlfan.com/">NoSQL Fan</a></li>
+<li> <a href="http://blog.sina.com.cn/kern0612">阳振坤的博客</a></li>
+<li> <a href="http://blog.2ndquadrant.com/">2ndQuadrant</a></li>
+<li> <a href="http://blog.163.com/digoal@126">The Heart,The World</a></li>
+</ol>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-20T13:50:00+08:00" pubdate data-updated="true">Aug 20<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/shu-ju-ku/'>数据库</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2012/08/20/several-popular-nosql-databases-key-features-list/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2012/08/20/several-popular-nosql-databases-key-features-list/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/08/19/calculate-a-table-size-in-postgresql/" title="Previous Post: 在PostgreSQL里计算一个表的大小">&laquo; 在PostgreSQL里计算一个表的大小</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/08/21/explaining-the-postgresql-query-optimizer/" title="Next Post: PostgreSQL查询优化简介">PostgreSQL查询优化简介 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2012/08/20/several-popular-nosql-databases-key-features-list/';
+        var disqus_url = 'http://wgzhao.github.io/2012/08/20/several-popular-nosql-databases-key-features-list/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

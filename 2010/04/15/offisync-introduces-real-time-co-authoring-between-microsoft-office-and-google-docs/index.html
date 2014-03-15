@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>OffiSync Ms Office 于Google Docs同步工具 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="如果你同时使用MS Office和 Google Docs，那么OffiSync工具也许就是你需要的。他能快速在两者之间同步。
+可惜目前仅支持Windows平台的自家Office，我等使用Openoffice和永中Office的人无望，何况还是在Linux平台。 下面是摘自谷奥的相关报道： &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2010/04/15/offisync-introduces-real-time-co-authoring-between-microsoft-office-and-google-docs">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">OffiSync Ms Office 于Google Docs同步工具</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>如果你同时使用MS Office和 <a href="http://docs.google.com/" title="Google Docs">Google Docs</a>，那么OffiSync工具也许就是你需要的。他能快速在两者之间同步。<br/>
+可惜目前仅支持Windows平台的自家Office，我等使用Openoffice和永中Office的人无望，何况还是在Linux平台。</p>
+
+<p>下面是摘自<a href="http://www.google.org.cn/posts/offisync-introduces-real-time-co-authoring-between-microsoft-office-and-google-docs.html" title="OffiSync">谷奥的相关报道</a>：</p>
+
+<!--more-->
+
+
+<p><a href="http://www.offisync.com/" title="Office Sync">OffiSync</a>宣布推出新版Office与<a href="http://docs.google.com/" title="Google Docs">Google Docs</a>的同步工具，它使基于桌面的Office软件与基于网页的<a href="http://docs.google.com/" title="Google Docs">Google Docs</a>连接了起来。最新的<a href="http://www.offisync.com/" title="Office Sync">OffiSync</a> V2只需要几分钟的设置，你就可以让Office与Google
+Docs实现真正的实时协作，而且不管你用的是什么版本的Office。其它新功能还包括改进的搜索，增加对<a href="http://sites.google.com/" title="Google Sites">Google Sites</a>的支持，可存储任意格式的文件。
+之前的<a href="http://www.offisync.com/" title="Office Sync">OffiSync</a>插件也可以整合到Office的工具栏里，作为一个新的菜单或ribbon标签页出现，在这里你可以打开、保存、搜索或分享一个Office文档到其它程序，比如Word、Excel或PowerPoint。对于<a href="http://docs.google.com/" title="Google Docs">Google Docs</a>来说，OffiSync只能让你访问<a href="http://docs.google.com/" title="Google Docs">Google Docs</a>里存放的文件，而无法提供实时编辑功能。
+而现在呢，<a href="http://www.offisync.com/" title="Office Sync">OffiSync</a>用户可以选择将他们当前编辑的文档实时保存到Office本地或者是<a href="http://docs.google.com/" title="Google Docs">Google
+Docs</a>云里，并可以发送给别人实时编辑。当别人编辑了你正在打开的这个文档的时候，Office用户会看到一个弹出消息框提示你这个文件已经改变了，此时你可以实时看到文档的变化，你也可以选择忽略他人的编辑，不要影响到自己当前打开的文档。
+这次更新的其它功能还包括：</p>
+
+<ul>
+<li>支持任意文件类型：你可以直接存储Office文档到<a href="http://docs.google.com/" title="Google Docs">Google Docs</a>，而不必转换成<a href="http://docs.google.com/" title="Google Docs">Google Docs</a>识别的格式</li>
+<li>改进对<a href="http://sites.google.com/" title="Google Sites">Google Sites</a>的支持：<a href="http://www.offisync.com/" title="Office Sync">OffiSync</a>可自动探测到你编辑的文档是存储在<a href="http://sites.google.com/" title="Google Sites">Google
+Sites</a>里的，所以也允许你编辑这些文档，你也可以直接在Google Sites里创建新文档</li>
+<li><a href="http://www.offisync.com/" title="Office Sync">OffiSync</a>任务栏：一个出现在Office里的侧边栏，可显示出协作者、最近的文档、在<a href="http://docs.google.com/" title="Google Docs">Google
+Docs</a>里加星的文档和最近分享的文档等等</li>
+<li>改进的整合搜索：整合了<a href="http://www.google.com/" title="Google">Google</a>网页搜索和<a href="http://www.google.com/" title="Google">Google</a>图片搜索，可直接在工具栏里完成</li>
+<li>支持下一代的Office软件</li>
+</ul>
+
+
+<p><a href="http://www.offisync.com/download.html">点此下载OffiSync V2插件</a>。<br/>
+继续观看OffiSync V2新功能演示视频：</p>
+
+<p><a href="http://www.youtube.com/watch?v=06Mw9R61xUs&amp;feature=player_embedded">原始视频地址</a>。<br/>
+Via<br/>
+<a href="http://www.readwriteweb.com/archives/offisync_introduces_real-time_co-authoring_between_microsoft_office_and_google_docs.php">ReadWriteWeb</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-04-15T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/webkai-fa/'>WEB开发</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2010/04/15/offisync-introduces-real-time-co-authoring-between-microsoft-office-and-google-docs/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2010/04/15/offisync-introduces-real-time-co-authoring-between-microsoft-office-and-google-docs/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2010/04/12/vpn-list/" title="Previous Post: VPN列表">&laquo; VPN列表</a>
+      
+      
+        <a class="basic-alignment right" href="/2010/04/17/linux-driver-for-broadcom4312-14e4-4135/" title="Next Post: Linux下安装Broadcom4312 802.11b/g(14e4:4315)驱动">Linux下安装Broadcom4312 802.11b/g(14e4:4315)驱动 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2010/04/15/offisync-introduces-real-time-co-authoring-between-microsoft-office-and-google-docs/';
+        var disqus_url = 'http://wgzhao.github.io/2010/04/15/offisync-introduces-real-time-co-authoring-between-microsoft-office-and-google-docs/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

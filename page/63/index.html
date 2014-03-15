@@ -1,0 +1,695 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="04年的时候，曾经做过一段时间的NAS开发，不过因为各种原因放弃了，前天，无意中发现了FreeNAS这个开源项目,项目虽然是去年10月成立的，但是发展较快，下载次数也达到了108,852之多。这个项目同时有一个中文网站,不过没有怎么更新。给管理员发了一封邮件希望能加入到项目的开发，也没有回信。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/63">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/10/freenas-the-open-source-nas/">freenas&#8211;开源的NAS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/10/freenas-the-open-source-nas/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/10/freenas-the-open-source-nas/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>04年的时候，曾经做过一段时间的NAS开发，不过因为各种原因放弃了，前天，无意中发现了<a href="http://freenas.sourceforge.net/">FreeNAS</a>这个开源项目,项目虽然是去年10月成立的，但是发展较快，下载次数也达到了108,852之多。这个项目同时有一个<a href="http://www.freenas.cn">中文网站</a>,不过没有怎么更新。给管理员发了一封邮件希望能加入到项目的开发，也没有回信。</p>
+
+<p>下面是我的安装手机，贴出来和大家共享：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/07/10/freenas-the-open-source-nas/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/09/inout-is-not-suitable-for-me-blog/">Inout并不适合我这样的blog</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/09/inout-is-not-suitable-for-me-blog/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/09/inout-is-not-suitable-for-me-blog/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.donews.com">DoNews</a>刚推出<a href="http://inout.donews.com">Inout</a>计划的时候，我申请了。但现在来看，似乎这样的计划并没有达到利益均衡的目的，至少对于我的blog是这样。下面是<a href="http://inout.donews.com/sites/site_2031.php">我inout上的记录</a>：
+ [有一种自由叫开源] mlsx的网络天空 联系该网站 所属分类： IT >> 网络 所在地区： 北京 省 北京 市
+网站说明   为您带去的流量 昨日: 0 总流量: 53 您为donews带来的流量 昨日: 1 总流量: 161
+所有与Linux相关的和网络相关的讨论，技术交流，是Linux爱好者的天堂！ mlsx的网络天空，Linux的天堂！
+因此，我决定取消其友情链接。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/08/Zaiyu-muticus/">再遇天仙子</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-08T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/08/Zaiyu-muticus/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/08/Zaiyu-muticus/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我的本本上的歌已经听了无数遍了，为了与时俱进，准备更新了，登录<a href="http://rachel.xplore.cn/">Rachel</a>的电脑，随机选了几首。搁到播放器列表里面，剩下来就是播放器的事情了。  突然，一段熟悉的旋律吸引了我，对，就是它，这是大二时，<a href="http://lawstar.xplore.cn/">lancy</a>
+很喜欢的一个flash－－剑侠情缘的主题曲－－天仙子。</p>
+
+<p>听着这熟悉的歌曲，不由得回想南苑6栋306那段永不熄灯的日子，那是一段夹着快乐，痛苦，郁闷，无赖和疲惫的日子，也是改变了我一生的日子&hellip;&hellip;.
+听到了歌曲，自然想去找原来看的Flash，网络真的是一个好东西，Google真是以为人民服务为荣，不多一会，找到了曾经看了无数遍的Flash。
+Flash也找到了，顺便再看看歌词吧，这个就容易找多了，贴出来，下次想看就可以直接看了。</p>
+
+<pre>
+冰雪少女入凡尘
+西子湖畔初见晴
+是非难解虚如影
+一腔爱
+一身恨
+一缕清风
+一丝魂
+仗剑携酒江湖行
+多少恩怨醉梦中
+募然回首万事空
+几重幕
+几棵松
+几层远峦
+几声钟
+几层远峦
+几声钟
+</pre>
+
+
+<p>Rachel建议我截取一段作为我手机的铃声，说我的神话主题曲放的时间也太长了，与时俱进，也应该换了。  ok，先到网上找到了一款名为SoundEditPro的音频编辑软件，很是方便，截取了前面的过门和谢雨欣哼唱的那段，共27秒。<br/>
+试播了几次，觉得不错。就是它了。
+把我剪辑的一段贴上来，如恰好也有喜欢的，可以拿去。同时也附上Flash。</p>
+
+<p><a href="/uploads/tianxianzi.mp3">天仙子剪辑</a></p>
+
+<p><a href="/uploads/tianxianzi.swf">天仙子Flash</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/07/Sino-Japanese-War-Victory/">抗日战争纪念日</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/07/Sino-Japanese-War-Victory/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/07/Sino-Japanese-War-Victory/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>永远也不要忘记69年前的今天，万恶的小日本挑起“卢沟桥事变”，发动了对中国的全面侵略。
+再看现在，战败的小日本，依然在为他们的侵略行为做着无耻的辩解，一而再，再而三的参拜供有杀害无数中国百姓的甲级战犯。
+对于日本这样的民族，我们就应该学习鲁迅先生在“论‘费厄泼赖’应该缓行”中提到了，对于日本这种被我们亲自打落水中的狗，“则虽用竹竿又在水中从而痛打之，似乎也非已甚”。
+可惜，现在的青年，那些哈韩哈日，整天吃着麦当劳，肯德基的少年们，有多少人知道今天是一个怎样的日子？</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/06/monday-morning-leadership/">看《周一清晨的领导课》有感</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-06T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/06/monday-morning-leadership/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/06/monday-morning-leadership/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://images.dangdang.com/images/8832839_b.jpg" alt="image" /></p>
+
+<p>成功的人是相似的，失败的人各有各的原因。</p>
+
+<p>无意中从<a href="http://www.rachel.xplore.cn">Rachel</a>那里看到了这本书，看看不到100页，文字也很稀疏，应该属于3小时阅读完的那种，虽然平常不太喜欢看这类书籍，不过急于寻找WC伴侣，也就翻开了第一页。
+呵，还写的真不错，它一个故事为线索，讲述了作为一个成功的经理人急需要做的几件事情。
+里面讲述的道理和我平常翻阅的一些类似的管理类书籍差不多，而且，让我感到惊喜的是，书本中讲述的大部分内容和道理又和余世维博士平常的一些现场管理培训是很相似的，我个人很喜欢余世维的讲座，特别是去用户现场的培训而不是在时代光华录制的讲座。所以特意将书中的一些挺有哲理的话摘录下来，算是一个总结吧。（写到这里，真的发现自己是一个文盲，不太会表达我要说的意思）。</p>
+
+<p>“尽管你当了经理后权力增加了，但同时你了失去过去可以享受的某些自由。”
+“真正的领导者只会花时间解决问题，而不是责备别人。”
+“当你把这些都写下来时，你便做出了实施的承诺。如果你只是口头上告诉我你想做什么，就不会对你构成约束。”
+“如果你想靠别人的领会来达到你的期望，最终你会感到失望。”
+“在炒公司鱿鱼前，他们已经先炒了上司的鱿鱼。”
+“领导者的‘要事’之一是消除迷惑。”
+“你应该学会远离管理黑洞，并与下属保持联系。”
+“你的职责并不是通过关照业绩最差雇融，来降低最低限。你应当通过承认并嘉奖超级明星来提高最上限。”
+“做正确的事并非轻而易举——事实上有时真的很难——但要记住，做正确的事始终都是正确的。”
+“作为领导者，最重要的任务是要雇佣合适的员工。”
+“生活中有很多事情都与生活态度、如何面对生活带来的苦恼有关。生活是美好的——即使境况恶化时也依然如此&#8221;
+ 领导学原则
+价值原则
+正直原则：绩效与领导者获得的信任程度成正比。
+责任原则：如果领导和下属都为自己的行为负责，绩效便会提高。
+ 委托原则：领导者雇佣并提拔有才能的员工，绩效便会提高。
+ 构想原则：如果领导者将自己的构想解释得一清二楚，而且抱有这种构想的原因也令人心悦诚服，绩效便会提高。
+同心协力原则
+交流原则：员工了解自己的职责，并因为取得成就而获得奖励，他们的绩效便会提高。 矛盾解决的原则：领导排除了压抑下属的障碍后，绩效会提高。
+乐观原则：绩效与领导的自尊心和态度成正比。 改变管理方式的原则：领导崇尚改革，而且积极地致力于改革事务，绩效会随之提高。
+投资原则
+授权原则：当员工要为自己的行为负责时，他们的绩效便会提高。
+勇气原则：领导直面影响员工的问题的能力越强，业绩愈会同比上升。
+ 榜样原则：领导成为正面的榜样时，业绩会提升。
+ 准备原则：领导越促进自身及员工的成长，绩效水平越高。</p>
+
+<p>在找这本书的电子版时，发现下面这个连接，有不少管理类的书，当然也包括了这本书的电子版
+<a href="http://www.tjcu.edu.cn/web/wangshangketang/yuanneike/guanlixue/sjxz.htm">http://www.tjcu.edu.cn/web/wangshangketang/yuanneike/guanlixue/sjxz.htm</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/03/To-lancy/">送给lancy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-03T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/03/To-lancy/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/03/To-lancy/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>15:00，T1次火车离开了北京，在北方求学三年的<a href="http://lawstar.xplore.cn">lancy</a>终究回到了南方，回到了生她养她的故乡。[color=#FF0000]<del>打</del>带着些许遗憾回到了家乡。
+一个怀着对美好未来[color=#FF0000]<del>用</del>憧憬的有志青年，有着贡献青春给伟大祖国首都的雄心壮志，但，终究<strong>[color=#FF0000]性别</strong>和<strong>[color=#ff0000]地域</strong>双重歧视强奸了她的意愿。
+而这种歧视也大抵会来强奸我，强奸我对美好生活的憧憬和为伟大祖国首都贡献青春的意愿。同时也将强奸了我对Linux的无限热爱和忠诚。
+于是，大约最后，我便和lancy一样，从哪里来，到哪里去罢了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/01/July-1-news-network/">7月1日的新闻联播</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/01/July-1-news-network/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/01/July-1-news-network/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2006年7月1日，青藏铁路正式通车。
+7月1日，中国共产党的生日。
+那么你认为7月1日的新闻联播会怎么报道？关键会采用什么样的顺序报道？
+按照平常的惯例，这天的新闻联播的头条是庆祝党的生日的大会，接下来是其他的重要的相关会议，然后报道青藏铁路开通。
+结果不是我想到的这样的，当天的新闻联播前面四条都是有关青藏铁路的新闻，而党的生日只有一条。
+我想，这应该表达的是政府希望更多的关注国计民生，同时也把关注国计民生放到了首位，这是一个好的信息&hellip;.
+真希望以后还能看到更多的这样的好的信息。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/06/28/firefox-tips/">Firefox Tips</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-06-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/06/28/firefox-tips/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/06/28/firefox-tips/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>地址栏中的命令的功能：</strong></p>
+
+<ul>
+<li>about: 显示Firefox的版本号，著作权声明等等。注意，包括冒号部分，否则会跑到www.about.com去。</li>
+<li>about:config 显示Firefox的控制台（面），列出了所有可供定制的设置项，自己动手捣鼓下应当很有意思。</li>
+<li>about:cache 显示内存和文件缓存的摘要，并提供链接指向更详细信息的文件。</li>
+<li>about:buildconfig 列出那些用于编译所用Firefox的设置项。</li>
+<li>about:plugins 列出安装的插件。</li>
+<li>about:credits 呵呵，一个彩蛋。</li>
+</ul>
+
+
+<p>有关加速firefox的方法参考下面的帖子：</p>
+
+<p><a href="http://mlsx.xplore.cn/read.php/13.htm">加速你的firefox</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/06/25/Shower-with-Chinese-characteristics/">有中国特色的阵雨</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-06-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/06/25/Shower-with-Chinese-characteristics/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/06/25/Shower-with-Chinese-characteristics/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>16:40 乌云翻滚，雷声大作，闪电霹雳，看似一场声势浩大的雷雨即将来临．</p>
+
+<p>17:00 小雨点点，游戏结束</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/06/23/text-version-of-the-star-wars-movies/">想看文字版的星球大战电影吗？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-06-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/06/23/text-version-of-the-star-wars-movies/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/06/23/text-version-of-the-star-wars-movies/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在dos或者shell下，确保连入网络，输入：
+telnet towel.blinkenlights.nl</p>
+
+<p>就可以看到字符的星球大战电影</p>
+
+<p>给出一个截图
+<img src="attachment/worldwar.png" alt="image" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/64/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/62/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

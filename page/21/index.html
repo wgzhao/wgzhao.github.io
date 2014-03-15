@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="自从KDE升级到KDE4.0以后，这个现象就出现了，一直以为是KDE的问题，但是后来推断出不是KDE的问题，而是输入法的问题，使用fcitx小企鹅输入法没有问题，使用scim/skim就会发生。 具体现象是这样的，在任何一个可以输入的地方输入一些字符（比如在终端下），切换到一个应用程序， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/21">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/08/27/Keyboard-is-often-no-response-to-the-interim-solution/">键盘时常出现临时无响应的解决办法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/08/27/Keyboard-is-often-no-response-to-the-interim-solution/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/08/27/Keyboard-is-often-no-response-to-the-interim-solution/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>自从KDE升级到KDE4.0以后，这个现象就出现了，一直以为是KDE的问题，但是后来推断出不是KDE的问题，而是输入法的问题，使用fcitx小企鹅输入法没有问题，使用scim/skim就会发生。</p>
+
+<p>具体现象是这样的，在任何一个可以输入的地方输入一些字符（比如在终端下），切换到一个应用程序，然后再切回刚才的那个可以输入的应用程序，大部分情况下，按任何键都没有响应，干等是不能解决问题的，需要来回在不同的应用程序之间做切换，同时不停的打开和关闭输入法，如此来回反复一两次，基本就可以了。这个现象出现的比较频繁，很讨厌，比如在和别人在IM上聊天的时候，经常性的不能输入了，别人还以为我不理他了，显得很不礼貌。</p>
+
+<p>解决的方法是，修改输入法的配置文件<code>/etc/X11/xinit/xinput.d/scim</code>
+把</p>
+
+<pre><code>GTK_IM_MODULE=xim
+QT_IM_MODULE=xim
+</code></pre>
+
+<p>两行改成</p>
+
+<pre><code>GTK_IM_MODULE=scim
+QT_IM_MODULE=scim
+</code></pre>
+
+<p>注销桌面，重新登录。</p>
+
+<p>到目前为止，这个现象没有发生了。希望这是正确的解决方法。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/08/25/Based-on-lighttpd-in-the-mysql-configuration-of-the-virtual-host/">在lighttpd上配置基于mysql的虚拟主机</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/08/25/Based-on-lighttpd-in-the-mysql-configuration-of-the-virtual-host/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/08/25/Based-on-lighttpd-in-the-mysql-configuration-of-the-virtual-host/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.lighttpd.net/">lighttpd</a>是一款轻量级的web服务，默认支持虚拟主机，但是我们希望通过增加一些简单的代码获得虚拟主机对mysql的支持。</p>
+
+<p>测试环境为kubuntu 8.04.1，大致的步骤如下</p>
+
+<p>1）下载必要的软件，包括lighttpd,mysql,python,python-mysqldb<br/>
+2）创建必要的数据库，数据表及测试数据<br/>
+3）给lighttpd添加自定义的配置文件</p>
+
+<p>下面详细叙述：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/08/25/Based-on-lighttpd-in-the-mysql-configuration-of-the-virtual-host/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/08/20/No-eth0/">没有eth0</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/08/20/No-eth0/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/08/20/No-eth0/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>标题描述不是很准确，其实是这样的一个小问题：为了省事，把一个安装的Linux系统一股脑拷贝到另外一台机器上，想省了安装和配置的时间。<br/>
+这样拷贝完后，系统启动没有问题，不过一些小问题还是很多，需要去修改配置，比如说，这种方式启动后，你会发现你的第一块网卡名字不是eth0，可能是eth1或者eth2，这取决于你拷贝过来的系统上原来有多少块网卡，如果只有一块网卡，那么现在的系统就是eth1，以此类推。</p>
+
+<p>其原因是udev搞的鬼，udev在<code>/etc/udev/rules.d/</code>下面搞了一个持久命名规则，对于网卡的持久命令，就采取了MAC地址的匹配方式，也就是类似下面这样：</p>
+
+<pre><code>SUBSYSTEM=="net", ACTION=="add", DRIVERS=="*", ATTR{address}=="00:19:b9:52:04:3d", \
+ATTR{type}=="1", KERNEL=="eth*",NAME="eth0"
+</code></pre>
+
+<p>上面的<code>ATTR{address}=="00:19:b9:52:04:3d"</code>匹配的就是机器网卡的MAC地址，显然这里填写的应该是拷贝的那台机器上的MAC地址，而不是当前机器的网卡MAC地址。</p>
+
+<p>找到了原因，解决办法就很简单了，要不修改上面的MAC地址，要不直接删除这行。然后重启。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/08/12/Wonderful-World-of-MySQL-Storage-Engines/">Wonderful World of MySQL Storage Engines</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/08/12/Wonderful-World-of-MySQL-Storage-Engines/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/08/12/Wonderful-World-of-MySQL-Storage-Engines/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是2008年开源大会上<a href="http://www.percona.com/">personal consulting
+experts</a>组织的一个有关MySQL存储引擎的简报，比较详细的分析了MySQL目前支持的存储引擎，分析了各种存储引擎适合哪些应用。最后给出了各种存储的引擎的性能。和大家分享</p>
+
+<p><a href="http://www.percona.com/files//presentations/OSCON2008-Wonderful-World-of%20MySQL-Storage-Engines.pdf">Wonderful World of MySQL Storage
+Engines</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/08/11/Olympic-opening-ceremony-of-the-two-shots/">奥运开幕式的两张截图</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/08/11/Olympic-opening-ceremony-of-the-two-shots/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/08/11/Olympic-opening-ceremony-of-the-two-shots/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1）经典蓝屏</p>
+
+<p><img src="http://lh3.ggpht.com/teamwolves/SJ5JYmES2fI/AAAAAAAAAuY/-GCRxuEbTOE/BlueScreen.jpg?imgmax=512" alt="image" /></p>
+
+<p>2）细节很重要<br/>
+<img src="http://img1.qq.com/2008/pics/12185/12185785.jpg" alt="image" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/08/02/I-have-a-TV/">I Have a TV</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-08-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/08/02/I-have-a-TV/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/08/02/I-have-a-TV/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>各种原因，还是买了一台电视机，创维的一台数字液晶电视。
+lancy一直以为买了电视机就可以看电视了，当被告知还要去搞有线时，她后悔买电视机了，看来肚子里的皮皮确实吸走了不少ta妈妈的DHA呀。</p>
+
+<p>找邻居借了一个建议无线天线，可惜一点信号都没有，打电话给客服，他们回答说用无线的话，估计会很闪，这个的原理是不是相当于20寸的液晶显示只设置<code>800＊600</code>的分比率一样的道理呀？
+怎么转那个天线，都没有信号。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/08/02/I-have-a-TV/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/07/31/unix-administrator-Tales-of-terror/">Unix管理员恐怖故事集</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/07/31/unix-administrator-Tales-of-terror/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/07/31/unix-administrator-Tales-of-terror/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>从一堆PDF文档中翻出来了的一个文档，估计下载了有很长时间了。</p>
+
+<p>讲述的是93年以前，在unix管理员身上发生的一些糗事，其中一些故事当然也在我身上发生过，有些是我操刀的，有些是在我眼皮底下看着别人用迅雷不及掩耳盗铃之势干的。</p>
+
+<p>54页的文档，其实是把在<code>comp.unix.admin</code>新闻组上讲述的一些故事编辑起来。
+看完后，对这些“犯下”的错误，大致可以归纳为下面几类：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/07/31/unix-administrator-Tales-of-terror/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/07/31/on-that-day-finally-came/">这一天总算来了</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/07/31/on-that-day-finally-came/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/07/31/on-that-day-finally-came/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Update 2011-12-31 </strong>  忘记Linux下的QQ吧，3年多了，依然没有更新。</p>
+
+<p>在Linux怎么上QQ？ <br/>
+<a href="http://www.pidgin.im">pigdin</a>?<br/>
+<a href="http://evaq.sf.net">evaqq</a>? <br/>
+<a href="http://lumaqq.linuxsir.org">lumaqq</a>?<br/>
+<a href="http://www.winehq.org">wine+qq ?</a>   (经过几个小时测试，如果你没有足够的耐心，还是继续使用上面的一个工具吧)</p>
+
+<p>OK忘记这些吧，这一天总算到来了，腾讯官方的Linux版本QQ已经发布了，虽然目前是预览版，但是至少说明腾讯开始注意到了Linux用户，这是一个好事情，值得称赞一下。</p>
+
+<p><del>不过我还没有使用，还在下载中。</del></p>
+
+<p>猛击这里获得官方版本（<a href="http://im.qq.com/qq/linux/download.shtml">http://im.qq.com/qq/linux/download.shtml</a>）</p>
+
+<p>Update： 已经安装登录了，目前的感受</p>
+
+<p>1）界面还不错，比较清新。
+2）标签式聊天窗口，这应该是符合Linux下的特征。<br/>
+3）目前只有聊天基本功能，支持群。没有截图，没有文件传送等 <br/>
+4）基本设置目前只有一个按钮，还没有实现。 <br/>
+5）保存密码无效，第二次登录还是空白<br/>
+6）用了不到5分钟，崩溃了一次 <br/>
+7）期待正式版本</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/07/28/MySQL-simply-connect-the-python-script/">python连接MySQL的简单脚本</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/07/28/MySQL-simply-connect-the-python-script/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/07/28/MySQL-simply-connect-the-python-script/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这纯粹做一个记录，下次要的时候，拿过来就好了。
+使用了MySQLdb的模块，如果是debian/ubuntu用户，可以使用<br/>
+<code>sudo apt-get install python-mysqldb</code>
+来安装
+其他发行版本也许可以用yum也能搞定，实在不行，从官方站点(<a href="http://mysql-python.sourceforge.net">http://mysql-python.sourceforge.net</a>)下载源代码吧。(sourceforge似乎解封了，不用翻墙了)</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/07/28/MySQL-simply-connect-the-python-script/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/07/23/unison-file-synchronization-tool/">Unison&#8211;文件同步工具</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-07-23T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/07/23/unison-file-synchronization-tool/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2008/07/23/unison-file-synchronization-tool/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>说道文件同步工具，第一个想到的估计是rsync，这确实是一个彪悍的工具，小巧但不失强大，而且机会所有的Linux发生版本都会自带，这便提高了他的知名度。</p>
+
+<p>但是rsync的内容同步是以来时间戳（不知道我理解得是否正确），比如对于两个文件内容不同，但是时间绰一致的两个文件，在rsync看来是没有区别的，因此不会去作同步。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/07/23/unison-file-synchronization-tool/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/22/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/20/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

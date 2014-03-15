@@ -1,0 +1,527 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>尝试Aptana - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="Eclipse一直是我做程序开发的首先开发工具(IDE)，不过我一直都觉得Eclipse对Java的支持远好于对其他语言的支持，比如PHP。所以在做PHP开发的时候，总觉得差了点什么，比如代码自动提示方面，对JavaScript支持方面。
+无意中，看到了Aptana，基于eclipse开发， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2008/11/09/Try-Aptana">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">尝试Aptana</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://www.eclipse.org">Eclipse</a>一直是我做程序开发的首先开发工具(IDE)，不过我一直都觉得Eclipse对Java的支持远好于对其他语言的支持，比如PHP。所以在做PHP开发的时候，总觉得差了点什么，比如代码自动提示方面，对JavaScript支持方面。
+无意中，看到了<a href="http://www.aptana.com">Aptana</a>，基于eclipse开发，从这点来看，就有了质量的保证，与eclipse的侧重点不同，aptana侧重对动态语言的支持，对于PHP，还能区分其函数是属于php4的还是php5，对javascript支持也非常好，不仅对Javascript的函数给出哪些浏览器支持的提示，而且也还支持大量的当前流行的JavaScript库。
+比如<a href="http://www.prototypejs.org/">Prototype</a>,<a href="http://dojotoolkit.org/">dojo</a>,<a href="http://jquery.com/">jquery</a>等。</p>
+
+<!--more-->
+
+
+<p>Aptana分为专业版和社区版，当然社区版的功能相比专业版而言要差一些，专业版呢，需要99美刀，其实应该算便宜，当然便宜归便宜，要我出这个钱，还是比较苦难的（好几厅奶粉呢！)
+于是，嘿嘿，就有下面的动作了</p>
+
+<p>注：以下的操作仅在Aptana Studio, build: 1.2.0.018852测试成功，其他版本理论也应该可以，但不保证。</p>
+
+<ol>
+<li><p>下载安装Aptana专业版
+从<a href="http://aptana.com/studio/download">http://aptana.com/studio/download</a> 选择你的需求下载，大约105M</p></li>
+<li><p>备份plugins目录下的<code>com.aptana.ide.core_1.2.0.018852.jar</code></p></li>
+<li><p>下载jad工具 <a href="http://www.kpdus.com/jad.html#download">http://www.kpdus.com/jad.html#download</a> 各种平台都支持，注意平台差别。</p></li>
+<li><p>用解压缩工具打开<code>com.aptana.ide.core_1.2.0.018852.jar</code>，把<code>/com/aptana/ide/core/licensing/下的ClientKey.class</code>解压出来。</p></li>
+<li><p>反编译class文件 运行<code>jad ClientKey.class</code>，不出意外，得到<code>ClientKey.jad</code>文件，其实这就是一个java文件。修改后缀为java，编辑这个文件，修改为下面这个样子（其实就是屏蔽一些校验函数)</p>
+
+<p> <figure class='code'><figcaption><span> (clientkey.java)</span> <a href='/downloads/code/clientkey.java'>download</a></figcaption></p></li>
+</ol>
+
+
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// Decompiled by Jad v1.5.8e. Copyright 2001 Pavel Kouznetsov.</span>
+</span><span class='line'><span class="c1">// Jad home page: http://www.geocities.com/kpdus/jad.html</span>
+</span><span class='line'><span class="c1">// Decompiler options: packimports(3) </span>
+</span><span class='line'><span class="c1">// Source File Name: ClientKey.java</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">aptana</span><span class="o">.</span><span class="na">ide</span><span class="o">.</span><span class="na">core</span><span class="o">.</span><span class="na">licensing</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.Calendar</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.TimeZone</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ClientKey</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="nf">ClientKey</span><span class="o">(</span><span class="kt">int</span> <span class="n">type</span><span class="o">,</span> <span class="n">String</span> <span class="n">email</span><span class="o">,</span> <span class="kt">long</span> <span class="n">expiration</span><span class="o">)</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="k">this</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">type</span><span class="o">;</span>
+</span><span class='line'> <span class="k">this</span><span class="o">.</span><span class="na">email</span> <span class="o">=</span> <span class="n">email</span><span class="o">;</span>
+</span><span class='line'> <span class="k">this</span><span class="o">.</span><span class="na">expiration</span> <span class="o">=</span> <span class="n">expiration</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isCloseToExpiring</span><span class="o">()</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">//not close</span>
+</span><span class='line'> <span class="cm">/*Calendar currentCalendar = Calendar.getInstance(GMT);</span>
+</span><span class='line'><span class="cm"> currentCalendar.add(2, 1);</span>
+</span><span class='line'><span class="cm"> return getExpiration().before(currentCalendar);*/</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isValid</span><span class="o">()</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">//success</span>
+</span><span class='line'> <span class="c1">//return email != null &amp;&amp; email != &quot;EMAILS_NON_MATCHING&quot;;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isCloseToMatching</span><span class="o">()</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">//close</span>
+</span><span class='line'> <span class="c1">//return email == &quot;EMAILS_NON_MATCHING&quot;;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isExpired</span><span class="o">()</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">//not trial edition</span>
+</span><span class='line'> <span class="c1">// Calendar currentCalendar = Calendar.getInstance(GMT);</span>
+</span><span class='line'> <span class="c1">// return currentCalendar.after(getExpiration());</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="n">String</span> <span class="nf">getEmail</span><span class="o">()</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="k">return</span> <span class="n">email</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="n">Calendar</span> <span class="nf">getExpiration</span><span class="o">()</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="n">Calendar</span> <span class="n">expirationCal</span> <span class="o">=</span> <span class="n">Calendar</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">GMT</span><span class="o">);</span>
+</span><span class='line'> <span class="n">expirationCal</span><span class="o">.</span><span class="na">setTimeInMillis</span><span class="o">(</span><span class="n">expiration</span><span class="o">);</span>
+</span><span class='line'> <span class="k">return</span> <span class="n">expirationCal</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isTrial</span><span class="o">()</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'> <span class="c1">//return type == 1;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isPro</span><span class="o">()</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'> <span class="c1">// return !isTrial();</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">shouldProPluginsRun</span><span class="o">()</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="k">if</span><span class="o">(</span><span class="n">isPro</span><span class="o">())</span>
+</span><span class='line'> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'> <span class="k">else</span>
+</span><span class='line'> <span class="k">return</span> <span class="o">!</span><span class="n">isExpired</span><span class="o">();</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">trimEncryptedLicense</span><span class="o">(</span><span class="n">String</span> <span class="n">encrypted</span><span class="o">)</span>
+</span><span class='line'> <span class="o">{</span>
+</span><span class='line'> <span class="n">String</span> <span class="n">newEncrypted</span> <span class="o">=</span> <span class="n">encrypted</span><span class="o">;</span>
+</span><span class='line'> <span class="n">newEncrypted</span> <span class="o">=</span> <span class="n">newEncrypted</span><span class="o">.</span><span class="na">trim</span><span class="o">();</span>
+</span><span class='line'> <span class="n">newEncrypted</span> <span class="o">=</span> <span class="n">newEncrypted</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;--begin-aptana-license--&quot;</span><span class="o">,</span>
+</span><span class='line'><span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'> <span class="n">newEncrypted</span> <span class="o">=</span> <span class="n">newEncrypted</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;--end-aptana-license--&quot;</span><span class="o">,</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'> <span class="n">newEncrypted</span> <span class="o">=</span> <span class="n">newEncrypted</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&quot;s+&quot;</span><span class="o">,</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'> <span class="k">return</span> <span class="n">newEncrypted</span><span class="o">;</span>
+</span><span class='line'> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">BEGIN_LICENSE_MARKER</span> <span class="o">=</span>
+</span><span class='line'><span class="s">&quot;--begin-aptana-license--&quot;</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">END_LICENSE_MARKER</span> <span class="o">=</span>
+</span><span class='line'><span class="s">&quot;--end-aptana-license--&quot;</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">PRO</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">TRIAL</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">TimeZone</span> <span class="n">GMT</span> <span class="o">=</span> <span class="n">TimeZone</span><span class="o">.</span><span class="na">getTimeZone</span><span class="o">(</span><span class="s">&quot;GMT&quot;</span><span class="o">);</span>
+</span><span class='line'> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">EMAILS_NON_MATCHING</span> <span class="o">=</span>
+</span><span class='line'><span class="s">&quot;EMAILS_NON_MATCHING&quot;</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ClientKey</span> <span class="n">EMPTY_KEY</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ClientKey</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="mi">0L</span><span class="o">);</span>
+</span><span class='line'> <span class="kd">private</span> <span class="n">String</span> <span class="n">email</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">private</span> <span class="kt">long</span> <span class="n">expiration</span><span class="o">;</span>
+</span><span class='line'> <span class="kd">private</span> <span class="kt">int</span> <span class="n">type</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div>
+
+
+<p></figure></p>
+
+<ol>
+<li><p>重新编译ClientKey.class <code>javac ClientKey.java</code> 得到一个新的ClientKey.class</p></li>
+<li><p>偷梁换柱 将新的<code>ClientKey.class</code>替换掉<code>com.aptana.ide.core_1.2.0.018852.jar</code>里对应的文件。</p></li>
+</ol>
+
+
+<p>现在应该是可以了。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-11-09T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='//categories/webkai-fa/'>WEB开发</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2008/11/09/Try-Aptana/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2008/11/09/Try-Aptana/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2008/10/25/Pipi/" title="Previous Post: 皮皮">&laquo; 皮皮</a>
+      
+      
+        <a class="basic-alignment right" href="/2008/11/12/Blog-moved-to-wordpress/" title="Next Post: 迁移blog到wordpress">迁移blog到wordpress &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/wgzhao">@wgzhao</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'wgzhao',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/wgzhao?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/wgzhao">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2008/11/09/Try-Aptana/';
+        var disqus_url = 'http://wgzhao.github.io/2008/11/09/Try-Aptana/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
