@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>红帽企业 Linux 4启动引导选项 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="红帽企业 Linux 4启动引导选项"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-11-15T16:00:00.000Z"><a href="/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/">11月 16 2005</a></time>
+      
+      
+  
+    <h1 class="title">红帽企业 Linux 4启动引导选项</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>也适合其他分发产品<br>引导时的命令参数  </p>
+<p>askmethod<br>该命令请你选择从红帽企业 Linux 光盘中引导时你想使用的安装方法。<br>apic<br>这个 x86 引导命令绕过在 Intel 440GX 芯片集 BIOS 中可能会普遍遇到的错误，它只应该使用安装程序内核来执行。<br>apm=allow_ints<br>这个 x86 引导命令改变挂起服务的处理方式（对于某些便携电脑来说可能是必要的）。<br><a id="more"></a><br>apm=off<br>这个 x86 引导命令禁用 APM（高级电源管理）。它很有用处，因为某些 BIOS 的电源管理（APM）问题重重，很容易崩溃。<br>apm=power_off<br>这个 x86 引导命令会使红帽企业 Linux 默认关闭（断电）系统。它对于不默认关闭的 SMP 系统来说有用。<br>apm=realmode_power_off<br>某些 BIOS 在基于 x86 的系统试图关闭（断电）机器时崩溃。该命令把操作方法从 Windows NT 方式改为 Windows 95<br>方式。<br>dd<br>这个参数会导致安装程序提示你使用驱动程序盘。<br>dd=url<br>这个参数会导致安装程序提示你使用来自指定 HTTP、FTP、或 NFS 网络地址的驱动程序映像。<br>display=IP:0<br>该命令允许远程显示转发。其中，IP 应该用你想充当显示系统的 IP 地址替换。<br>在你想用来显示的系统上，你必须执行 xhost +remotehostname 命令，这里的 remotehostname<br>是你运行显示命令的主机名称。使用 xhost +remotehostname<br>命令限制了对远程显示终端的访问，而且不允许来自没有被确切授予远程访问权的人员和系统的访问。<br>driverdisk<br>该命令执行的功能和 dd 命令相同，它还会在红帽企业 Linux 安装中提示你使用驱动程序盘。<br>ide=nodma<br>该命令禁用所有 IDE 设备上的 DMA，在遇到 IDE 相关的问题时可能有用。<br>linux upgradeany<br>该命令会放松对你的 /etc/redhat-release 文件的某些检查。如果你的 /etc/redhat-release<br>文件已从默认内容被改变了。在试图升级红帽企业 Linux 4 时就可能会找不到你的红帽企业 Linux 安装。只有在你现存的红帽企业 Linux<br>安装没有被检测到时才使用该选项。<br>mediacheck<br>该命令给你提供测试安装源完好性的机会（如果使用的是基于 ISO 的方法）。该命令可用于光盘、DVD、硬盘 ISO、和 NFS ISO<br>安装方法。在试图安装前先校验 ISO 映像的完整性会帮助你避免在安装中经常遇到的问题。<br>mem=xxxM<br>该命令允许你改变内核在机器上检测到的内存数量。在某些较老的仅能检测到 16MB<br>内存的系统上，以及某些较新的视频卡与主内存共享视频内存的机器上，你可能需要使用该命令。当执行这项命令时，xxx 应该用以 MB<br>为单位的内存数量替换。<br>nmi_watchdog=1<br>该命令启用内建的内核死锁检测器。它可以用来调试硬性内核锁定。通过执行定期的 NMI（不可屏蔽中断）中断，内核可以监控 CPU<br>是否被锁，并在需要时打印出调试消息。<br>noapic<br>这个 x86 引导命令告诉内核不要使用 APIC 芯片。它对于某些带有不良 APIC（如 Abit BP6）或错误重重的 BIOS<br>的母板有帮助。基于 NVIDIA nForce3 芯片集（如 ASUS SK8N）的系统有一个已知的问题。它在引导时间 IDE<br>探测时会挂起，或显示其它中断发送的问题。<br>noht<br>这个 x86 引导命令禁用超线程。<br>nofb<br>该命令禁用帧缓冲支持，允许安装程序在文本模式中运行。它可能是带有某些读屏硬件的辅助功能所必需的。<br>nomce<br>这个 x86 引导命令禁用在 CPU 上执行的自我诊断检查。内核默认启用 CPU 的自我诊断（称为机器检查意外，Machine Check<br>Exception）。在一些早期的 Compaq Pentium<br>系统上，你可能需要这个选项，因为它们不能正确支持处理器错误检查。几个其它便携电脑，尤其是那些使用 Radeon IGP<br>芯片集的便携电脑，可能也需要这个选项。<br>nopass<br>该命令禁止把键盘和鼠标信息传递给安装程序的第二阶段。当执行网络安装时，它可以用来在安装的第二阶段测试鼠标和键盘配置屏幕。<br>nopcmcia<br>该命令忽略系统上的任何 PCMCIA 控制器。<br>noprobe<br>该命令禁用硬件检测，相反，它提示用户来提供硬件信息。<br>noshell<br>该命令禁止在安装时进入第二虚拟控制台上的 shell。<br>nousb<br>该命令禁止在安装中载入 USB 支持。如果安装程序在进程早期容易挂起，该命令就能够起到作用。<br>nousbstorage<br>该命令在安装程序的载入程序中禁止载入 usbstorage 模块。它对 SCSI 系统上的设备排序可能有帮助。<br>numa=off<br>红帽企业 Linux 支持 AMD64 体系上的 NUMA（Non-Uniform Memory Access，不规范内存存取）。 虽然所有<br>CPU 能够存取不带 NUMA 支持的内存，在更新内核中存在的 NUMA 支持却能够导致内存分配尽可能地偏向于引发它们的 CPU，从而减少<br>CPU 间的内存交通。这能够在某些应用程序中显著地提高性能。要恢复到原始的无 NUMA 行为，指定这个引导选项。<br>reboot=b<br>这个 x86、AMD64 和 Intel® EM64T<br>命令改变内核试图重新引导机器的方式。如果系统关闭时内核被挂起，该命令会导致系统被成功地重新引导。<br>rescue<br>该命令将会运行救援模式。关于救援模式的详细信息，请参阅《红帽企业 Linux 系统管理指南》。<br>resolution=<br>告诉安装程序要运行哪种视频模式。它接受所有标准的分辨率，如 640x480、800x600、1024x768 等等。<br>serial<br>该命令启用串行控制台支持。<br>skipddc<br>这个 x86 引导命令跳过 ddc 显示器探测，这种探测在某些系统上会导致问题。<br>text<br>该命令禁用图形化安装程序，并强制安装程序在文本模式下运行。<br>updates<br>该命令会提示你插入包含更新（错误修正）的软盘。如果你执行的是网络安装，并且已把更新映像存放在服务器上的 RHupdates/<br>目录下，则不需要使用该命令。<br>vnc<br>该命令允许你从 VNC 服务器中安装。<br>vncpassword=<br>该命令设置用来连接 VNC 服务器的口令。  </p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

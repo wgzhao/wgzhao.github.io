@@ -1,0 +1,417 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Amanda集中备份实例 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Amanda集中备份实例"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-12T16:00:00.000Z"><a href="/2009/04/13/practice-amanda-backuping/">4月 13 2009</a></time>
+      
+      
+  
+    <h1 class="title">Amanda集中备份实例</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <img src="http://www.zmanda.com/images/header/logo-zmanda.gif" class="left" title="Amanda Network Backup">
+
+<p><a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver" target="_blank">Amanda</a> 高级马里兰自动网络磁盘归档 (Advanced Maryland Automatic Network Disk Archiver 网络备份软件是我第一次接触 Linux 就听到过，只是从来都没有使用过，有需要备份得时候，就是自己写写简单的脚本，使用 cron 来做定时任务，也能基本满足需求。虽然曾经起心想用 Amanda，但限于没有适合的环境，只能作罢。</p>
+<p>现在的情况有所不同了，有 4,5 台服务器需要备份，涉及到不同的平台，其备份特性应该达到或者至少朝企业级标准靠拢，因此，这几天看了看 Amanda 的文档，做了一些测试，目前在我的环境下配置成功，特记录下来和大家分享。<br><a id="more"></a><br>这次打算分两篇文档介绍，本篇是介绍文件备份，下一篇将介绍针对 MySQL 数据库的备份方法。 这次配置的大致流程如下：</p>
+<ol>
+<li>安装和配置 Amanda 备份服务器</li>
+<li>安装 Amanda 客户端</li>
+<li>配置服务器和客户端参数</li>
+<li>检验配置</li>
+<li>校验备份</li>
+<li>测试恢复</li>
+</ol>
+<p>下面的列表给出这次测试环境的网络和机器配置</p>
+<table><br><thead><br><tr valign="top"><br><th><br><p align="center">机器名</p><br></th><br><th><br><p align="center">要备份的文件</p><br></th><br><th><br><p align="center">OS</p><br></th><br><th width="75"><br><p align="center">是否压缩</p><br></th><br><th width="99"><br><p align="center">说明</p><br></th><br></tr><br></thead><br><tbody><br><tr valign="top"><br><td width="68"><br><p align="left">cp1.domain.com</p><br></td><br><td width="118"><br><p align="left">-</p><br></td><br><td width="105"><br><p align="left">Ubuntu 8.10</p><br></td><br><td width="75"><br><p align="center">Yes</p><br></td><br><td width="99"><br><p align="center">Amanda 服务端</p><br></td><br></tr><br><tr valign="top"><br><td width="68"><br><p align="left">cp2.domain.com</p><br></td><br><td width="118"><br><p align="left">/web/websites</p><br></td><br><td width="105"><br><p align="left">Asianux 3.0</p><br></td><br><td width="75"><br><p align="center">Yes</p><br></td><br><td width="99"><br><p align="center">客户端，运行大量网站</p><br></td><br></tr><br><tr valign="top"><br><td width="68"><br><p align="left">cp3.domain.com</p><br></td><br><td width="118"><br><p align="left">/opt/www</p><br></td><br><td width="105"><br><p align="left">CentOS 5.3</p><br></td><br><td width="75"><br><p align="center">Yes</p><br></td><br><td width="99"><br><p align="center">IDC 服务器，大量客户站点</p><br></td><br></tr><br></tbody><br></table>
+
+<h2 id=" 一、安装和配置 Amanda 服务 ">一、安装和配置 Amanda 服务</h2>
+<p>首先从官方站点现在对应 OS 的最新<a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver" target="_blank">Amanda</a>版本，我写这篇帖子的时候，针对 Ubuntu 8.10 的最新版本是 2.6.1p1, 可以从<br><a href="http://www.zmanda.com/download-amanda.php" target="_blank">http://www.zmanda.com/download-amanda.php</a><br>找到适合里的版本，包括服务端和客户端。   </p>
+<p>以下操作 cp1 机器上执行，如果没有特别说明，使用的帐号为 root。</p>
+<p>因为 ubuntu 仓库里自带的版本比较低，而且与官方版本在配置方面有些不同，所以建议先卸载自带的版本，然后安装下载的版本。<br><a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver" target="_blank">Amanda</a>服务的启动依赖<code>xinetd</code>超级服务，编辑或者创建<code>/etc/xinetd.d/amandaserver</code>文件，内容应该像下面这个样子：</p>
+<p>｛% gist 4449408 amandaserver %}</p>
+<p>重启 xinetd 服务   </p>
+<p><code>/etc/init.d/xinetd restart</code>  </p>
+<h2 id=" 二、安装客户端 ">二、安装客户端</h2>
+<p>用 root 登录 cp2 机器，下载对应的客户端并安装</p>
+<p>编辑或者创建<code>/etc/xinetd.d/amandaclient</code>，内容如下：</p>
+<script src="https://gist.github.com/4449414.js?file=amandaclient"></script>
+
+
+<p>重启 xinetd 服务<br><code>/etc/init.d/xinetd reload</code></p>
+<p>切换到<code>amandabackup</code>用户，编辑<code>/var/lib/amanda/.amandahosts</code>文件，增加下面一行<br><code>cp1.domain.com amandabackup amdump</code></p>
+<p>这表示允许 cp1 服务器能够连接到在 cp2 机器上的 amanda 客户端, 指令如下:</p>
+<pre><code>-<span class="ruby">su-<span class="number">3.2</span><span class="variable">$ </span>echo cp1.domain.com amandabackup amdump &gt;&gt; <span class="regexp">/var/lib</span><span class="regexp">/amanda/</span>.amandahosts
+</span>-<span class="ruby">su-<span class="number">3.2</span><span class="variable">$ </span>chmod <span class="number">700</span> /var/lib/amanda/.amandahosts</span>
+</code></pre><p>在<code>amandabackup</code>用户的主目录创建一个隐藏的密码文件，并设置合理的权限</p>
+<pre><code>-<span class="ruby">su-<span class="number">3.2</span><span class="variable">$ </span>chown <span class="symbol">amandabackup:</span>disk ~amandabackup/.am_passphrase
+</span>-<span class="ruby">su-<span class="number">3.2</span><span class="variable">$ </span>chmod <span class="number">700</span> ~amandabackup/.am_passphrase</span>
+</code></pre><p>到此，在 cp2 上的 amanda 客户端配置完成。<br>上述步骤在 cp3 服务器上同样执行一遍。 </p>
+<h2 id=" 三、配置备份参数 ">三、配置备份参数</h2>
+<p>用<code>amandabackup</code>帐号登录 cp1 机器，创建 Amanda 配置目录</p>
+<pre><code>root<span class="variable">@cp</span> <span class="symbol">etc:</span><span class="comment"># su - amandabackup -c mkdir /etc/amanda/FileBackup</span>
+</code></pre><p>拷贝<code>/var/lib/amanda/example/amanda.conf</code>文件到<code>/etc/amanda/FileBackup/</code>目录，这个<code>amanda.conf</code>文件就是<a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver" target="_blank">Amanda</a>服务最重要的配置文件了。</p>
+<p>当前这个配置文件有 700 多行，不过大部分是注释，对每一行配置参数给出比较详尽的解释，下面我指列出需要修改的一些配置参数，没有提到的，可以不用管他。</p>
+<p>打开<code>amanda.conf</code>文件，首先编辑下面这些内容：</p>
+<pre><code>org <span class="string">"Xplore Backup center"</span>                      <span class="comment"># your organization name for reports</span>
+mailto <span class="string">"root<span class="variable">@localhost</span>"</span>                        <span class="comment"># space separated list of operators at your site</span>
+tpchanger <span class="string">"chg-disk"</span>                           <span class="comment"># the tape-changer glue script</span>
+tapedev <span class="string">"file://yourpath/FileBackup/slots"</span>  <span class="comment"># the no-rewind tape device to be used</span>
+tapetype HARDDISK                              <span class="comment"># use hard disk intead of tapes (vtape config)</span>
+labelstr <span class="string">"^FileBackup-[0-9][0-9]<span class="variable">*$</span>"</span> <span class="comment"># label constraint regex: all tapes must match</span>
+</code></pre><p>我们这里用的是虚拟磁带，下面我们要定义虚拟磁带的大小，接着编辑文件，增加下面几行内容：</p>
+<pre><code>define tapetype HARDDISK {
+ comment <span class="string">"hard disk as virtual tape"</span>
+ <span class="built_in">length</span> <span class="number">20480</span> mbytes
+}
+</code></pre><p>接下来，我们需要定义认证模式，找到<code>define dumptype global</code>区段，在<code>}</code>之前，增加 <code>auth &quot;bsdtcp&quot;</code> 一行<br>切换到 root 帐号，创建备份缓存目录，并设置正确的拥有关系和权限. </p>
+<pre><code>root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment">#mkdir -p /dumps/amanda</span>
+root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment">#chown amandabackup:disk /dumps/amanda </span>
+root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment">#chmod 750 /dumps/amanda </span>
+</code></pre><p>接下来，我们需要创建虚拟磁带目录，在<code>amanda.conf</code>文件里，默认定义了缺省的磁带机槽位数为 25 个。</p>
+<pre><code>root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment">#mkdir -p /yourpath</span>
+root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment">#chown amandabackup:disk /yourpath</span>
+root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment">#chmod 750 /yourpath</span>
+root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment"># su - amandabackup</span>
+-su-<span class="number">3.2</span><span class="variable">$ </span>touch /etc/amanda/<span class="constant">FileBackup</span>/tapelist
+-su-<span class="number">3.2</span><span class="variable">$ </span>mkdir -p /yourpath/<span class="constant">FileBackup</span>/slots
+-su-<span class="number">3.2</span><span class="variable">$ </span>cd /yourpath/<span class="constant">FileBackup</span>/slots
+-su-<span class="number">3.2</span><span class="variable">$ </span>mkdir slot{<span class="number">1</span>..<span class="number">25</span>}
+-su-<span class="number">3.2</span><span class="variable">$ </span>ln -s slot1 data
+</code></pre><p>当前的磁带均没有打标签，在使用之前一定要打好标签，, 我们设定了定义磁带标签的规则 (<code>labelstr &quot;\^FileBackup-[0-9][0-9]\*$&quot;</code>)<br>可以使用下面的指令一次性打好标签 </p>
+<p>｛% gist 4449429 makelabel.sh %}</p>
+<p>接下来，我们做一个测试，看看这些槽位状态如何：</p>
+<script src="https://gist.github.com/4449434.js?file=slot_status"></script>
+
+
+<p>看上去一切正常，接下来，需要重置槽位   </p>
+<pre><code>-<span class="ruby">su-<span class="number">3.2</span><span class="variable">$ </span>amtape <span class="constant">FileBackup</span> reset <span class="symbol">changer:</span> got <span class="symbol">exit:</span> <span class="number">0</span>
+</span>        str:1 amtape: changer is reset,slot 1 is loaded
+</code></pre><p>接下来我们创建<code>/etc/amanda/FileBackup/disklist</code>文件，这个文件包括了所有客户端需要备份的数据定义，内容如下：</p>
+<pre><code>cp3<span class="preprocessor">.domain</span><span class="preprocessor">.com</span> /opt/www/sites  comp-user-tar
+cp2<span class="preprocessor">.domain</span><span class="preprocessor">.com</span>  /web/websites   comp-user-tar
+</code></pre><p>最后，我们用<code>amandabackup</code>帐号编辑<code>/var/lib/amanda/.amandahosts</code>文件，增加下面的几行，表示当做恢复的时候，客户端可以连接到备份服务端。</p>
+<pre><code>cp2<span class="preprocessor">.domain</span><span class="preprocessor">.com</span> root amindexd amidxtaped
+cp3<span class="preprocessor">.domain</span><span class="preprocessor">.com</span> root amindexd amidxtaped
+cp1<span class="preprocessor">.domain</span><span class="preprocessor">.com</span> root amindexd amidxtaped
+cp1<span class="preprocessor">.domain</span><span class="preprocessor">.com</span> amandabackup amdump
+</code></pre><h2 id=" 四、测试 ">四、测试</h2>
+<p>现在是测试的时候了，用<code>amandabackup</code>帐号登录 cp1 机器，运行<code>amcheck</code>程序来校验当前的配置是否已经可以运行备份了。</p>
+<pre><code>-su-3.2$ amcheck FileBackup
+<span class="header">Amanda Tape Server Host Check
+-----------------------------</span>
+Holding disk /dumps/amanda: 16777216 KB disk space available, using 16674816 KB
+slot 7:read label <span class="smartquote">`FileBackup-07'</span>, date <span class="smartquote">`X'</span>.
+<span class="label">NOTE: </span>skipping tape-writable test
+Tape FileBackup-07 label ok
+<span class="label">NOTE: </span>host info dir /etc/amanda/FileBackup/curinfo/cp1.domain.com does not exist
+<span class="label">NOTE: </span>it will be created on the next run.
+<span class="label">NOTE: </span>index dir /etc/amanda/FileBackup/index/cp1.domain.com does not exist
+<span class="label">NOTE: </span>it will be created on the next run.
+Server check took 1.633 seconds
+
+<span class="header">Amanda Backup Client Hosts Check
+--------------------------------</span>
+Client check: 3 hosts checked in 2.086 seconds.  0 problems found.
+
+(brought to you by Amanda 2.6.1p1)
+</code></pre><p>上面的测试结果表示一切正常，可以执行真正的备份了，还是在 cp1 机器上，用<code>amandabackup</code>帐号执行<code>amdump</code>命令<code>amdump FileBackup</code><br>这个命令没有任何输出，除非执行过程中报错，执行完后，将会发一封有关备份状态的细节信息邮件给<code>amanda.conf</code>里定义的收件人，内容大致如下：</p>
+<p>我们也可以运行<code>amadmin</code>命令来查询刚才备份的摘要信息</p>
+<p>看上去一切都不错，那就把备份加入到定时任务里吧。<br>用<code>amandabackup</code>帐号创建一个你自己需要的备份策略，类似下面这样：</p>
+<pre><code>-su-<span class="number">3.2</span><span class="variable">$ </span>crontab  -l
+<span class="comment"># m h  dom mon dow   command</span>
+<span class="number">0</span> <span class="number">3</span> * * * <span class="regexp">/usr/sbin</span><span class="regexp">/amdump FileBackup</span>
+</code></pre><p>到此，关于配置和校验我们都已经完成了，接下来我们完整最后一个最重要的步骤，那就是我们需要校验这些备份数据是否能够恢复，如果不能恢复，备份功能再强大，策略再好，那也没有任何含义。</p>
+<h2 id=" 五、恢复 ">五、恢复</h2>
+<p>假定我们需要恢复 cp3 上一些丢失的数据，首先用<code>amandabackup</code>帐号登录 cp2 机器，创建<code>/etc/amanda/amanda-client.conf</code>文件，内容如下：</p>
+<script src="https://gist.github.com/4449439.js?file=amanda-client.conf"></script>
+
+
+<p>然后使用 root 帐号运行<code>amrecover</code>命令来初始化 data 恢复过程</p>
+<pre><code>[root@cp3 ~]<span class="comment"># amrecover</span>
+AMRECOVER Version <span class="number">2.6</span><span class="number">.1</span>p1. Contacting server <span class="function_start"><span class="keyword">on</span></span> cp1.domain.com ...
+<span class="number">220</span> cp1 AMANDA index server (<span class="number">2.6</span><span class="number">.1</span>p1) ready.
+Setting restore <span class="type">date</span> <span class="keyword">to</span> today (<span class="number">2009</span>-<span class="number">04</span>-<span class="number">13</span>)
+<span class="number">200</span> Working <span class="type">date</span> <span class="keyword">set</span> <span class="keyword">to</span> <span class="number">2009</span>-<span class="number">04</span>-<span class="number">13.</span>
+<span class="number">200</span> Config <span class="keyword">set</span> <span class="keyword">to</span> FileBackup.
+<span class="number">200</span> Dump host <span class="keyword">set</span> <span class="keyword">to</span> cp3.domain.com.
+Use <span class="keyword">the</span> setdisk command <span class="keyword">to</span> choose dump disk <span class="keyword">to</span> recover
+amrecover&gt;
+</code></pre><p>接下的一些命令演示如何将特定的一些数据恢复到指定的目录（这里指定 /tmp)</p>
+<script src="https://gist.github.com/4449446.js?file=amrecover.sh"></script>
+
+
+<p>我们看看<code>/tmp</code>下面是不是已经有了我们刚才恢复的数据：</p>
+<pre><code>[root@cp3 ~]<span class="preprocessor"># tree  /tmp/admin/domain.com/subdomains/ |more</span>
+/tmp/admin/domain.com/subdomains/
+<span class="string">|-- 404</span>
+<span class="string">|   |-- bin</span>
+<span class="string">|   |   |-- bash</span>
+<span class="string">|   |   |-- cat</span>
+<span class="string">|   |   |-- echo</span>
+<span class="string">|   |   |-- false</span>
+<span class="string">|   |   |-- gunzip</span>
+<span class="string">|   |   |-- ls</span>
+<span class="string">|   |   |-- mkdir</span>
+<span class="string">|   |   |-- mv</span>
+<span class="string">|   |   |-- pwd</span>
+<span class="string">|   |   |-- rm</span>
+<span class="string">|   |   |-- scp</span>
+<span class="string">|   |   |-- sftp</span>
+<span class="string">|   |   |-- sh</span>
+<span class="string">|   |   |-- tar</span>
+<span class="string">|   |   |-- unzip</span>
+<span class="string">|   |   `-- zip</span>
+<span class="string">|   |-- cgi-bin</span>
+<span class="string">|   |-- dev</span>
+<span class="string">|   |   |-- null</span>
+<span class="string">|   |   |-- random</span>
+<span class="string">|   |   `-- urandom</span>
+......
+</code></pre><p>Ok, 到此为止，<a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver" target="_blank">Amanda</a>备份配置基本完成，当然我们很多的配置都是基于缺省定义，比如槽位数，备份周期等，更多详细的定义，可以参考<code>/usr/lib/amanda/example/amanda.conf</code>文件。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/amanda/">amanda</a>, <a href="/tags/备份/">备份</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2009/04/13/practice-amanda-backuping/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

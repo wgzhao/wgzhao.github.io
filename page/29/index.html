@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 29 页 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-05-29T16:00:00.000Z"><a href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/">5月 30 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/">device-mapper-multipath在Linux上的应用</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这两天一直在测试<a href="http://www.ibm.com" target="_blank">IBM</a> <a href="http://www-900.ibm.com/cn/servers/eserver/openpower/" target="_blank">OpenPower</a>上运行 RedFlag<br>DC5.0 for pSeries 是不是能够正常连接<a href="http://www.emc.com" target="_blank">EMC</a><a href="http://china.emc.com/products/systems//products/systems/clariion.jsp#cx" target="_blank">CLARiiON<br>CX 系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/dm/" target="_blank">device-mapper</a>的<a href="http://christophe.varoqui.free.fr/wiki/wakka.php?wiki=Home" target="_blank">device-mapper-multipath</a>工具。  </p>
+<p>具体的技术细节，大家可以看相关的连接。<br>下面是我的测试手记，大家 look 一下：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-05-26T16:00:00.000Z"><a href="/2006/05/27/Moving-in-May/">5月 27 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/05/27/Moving-in-May/">搬家在5月</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>累了一整天，总算又把自己的窝挪到了另外一个地方。离公司也近了 2 站。只是与<a href="http://blog.donews.com/glemir" target="_blank">glemir</a>的“同居”生活结束了。算算，这是我到北京的第五次搬家了，其时间跨度却不到 2 年，也许这次会成为我在北京的最后一次搬家，聊以下面的文字记录我的搬家史吧。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2006/05/27/Moving-in-May/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-05-25T16:00:00.000Z"><a href="/2006/05/26/vim-folding-feature-folding/">5月 26 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/05/26/vim-folding-feature-folding/">vim的折叠功能-folding</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>原始文档来自 biantaishabi, 下面是原始文档的连接<br><a href="http://feeds.feedburner.com/biantaishabi?m=398" target="_blank">http://feeds.feedburner.com/biantaishabi?m=398</a></p>
+<p><strong>建立折叠：</strong></p>
+<p>z 的意思就是他的形状， 像一个折叠的东西，折叠相关的命令都是 z 开头的， 新版本的拼写检查命令也有以 z 开头的。 f 的意思是 fold。<br>所以 zf 就是折叠。 你可以在 visual 模式下选定，再按 zf， 可以将选定的全部折叠。 也可以 zf9j， 这样可以将下面 9 行的内容折起来。<br>也可以用 marker， 还可以用行号：20，50，就可以把 20 行到五十行折叠起来 。 总之可以用一般的定位的方法来告诉 VIM 你要折叠那些地方。</p>
+<p>我觉得比较有用的是匹配括号的折叠， 移动到一个花括号{上，用 zfa}， 就可以将下面的匹配的花括号之间的内容折起来，<br>这样可以很方便的折起函数。 其他的折叠方法还有 zf/string， 可以折叠到下一个匹配的 string， 不过好像不太实用。</p>
+<p><strong>使用折叠：</strong></p>
+<p>移动的时候在前面加一个 z 就可以在折叠的地方移动， 比如 zj，就会跳到下一个折叠， zk 就是上一个。 要打开的话可以 zo，o 是 open 的意思，<br>zO 打开所有的折叠。 关上用 zc， c 是 close。 在 zO 之后用 zc 会关上所有打开的折叠。 折叠可以嵌套，<br>zr 可以打开第一层的折叠，zR 可以打开所有层的折叠， 与之对应的是 zm 和 zM， 是按层关上折叠。 比如说按 zm，<br>会从最里层的层叠关起，连续 zm 就会一直关到最上层的折叠。</p>
+<p>查找到了折叠里面会将折叠打开， 处理完了之后要自己将折叠关上。</p>
+<p><strong>折叠选项：</strong></p>
+<p>可以让 VIM 根据语法， 缩进，标记自动折叠。 用 set foldmethod=foldoption 来设定。 可以查看一下 foldmethod<br>。</p>
+<p><strong>保留折叠：</strong><br>要下一次打开的时候还保留折叠可以在离开的时候:mkview，再进来的时候:loadview 就可以了。<br>当然也可以将这两句加到 vimrc 里面让其自动完成。</p>
+<pre><code>au BufW<span class="keyword">in</span>Leave * mkview
+au BufW<span class="keyword">in</span>Enter * silent loadview
+</code></pre><p>这样每次就可以看到上次的折叠了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-05-24T16:00:00.000Z"><a href="/2006/05/25/Linux-log-server/">5月 25 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/05/25/Linux-log-server/">Linux日志系统</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Linux 一般采用 syslog 这样的守护进程来执行日志记录功能，他的配置文件是 /etc/syslog.conf，其基本格式为:<br><code>sector action</code> 中间一定是 tab 键而不是空格键 selector 用下面的格式指明正在发送日志消息的程序（即“设施”）和消息的严重性级别 <code>facility.level</code>设施的名称和严重性级别必须从已定义的一个简短列表中选择；程序不能使用自己定义的值。  </p>
+<p>设施分别为内核，为常用应用程序组，以及为本地编写的程序进行定义。<br>任何其他程序则归为普通设施“用户”类。selector 可以包含关键字<code>＊</code>和<code>none</code>，其含义分别为“所有的”或“什么都没有”。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2006/05/25/Linux-log-server/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-05-24T16:00:00.000Z"><a href="/2006/05/25/To-find-a-lot-of-old-friends/">5月 25 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/05/25/To-find-a-lot-of-old-friends/">找到很多老朋友</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>没有想到会找到很多老同学，都是初中的同学。<br>首先是双百通过中国同学录找到我的联系方式，我们聊得很开心，于是她便告诉我其他人的联系方式，并且要我加入 52、54 班联盟（QQ 号码 25226184）。在 QQ 群上找到了更多的同学，也大约知道了大家目前的状态。聊起初中的趣事，感觉仿佛发生在昨天。  </p>
+<p>其实我很少 QQ 的，特别是群就使用的更少了。主要是很少使用 Windows，而 Linux 上面的 QQ 软件，无论是 Lumaqq，openq-gaim，还是我现在用的 eva，丢失信息成了最大的问题。和我的朋友聊着聊着，便没有了下文。给朋友造成了很大的误会。<br>今天使用了 QQ 的群还有他的一些与群相关的功能，确实觉得方便。在朋友的聊天中，我们也会说，我喜欢 MSN，我喜欢 QQ。喜欢可能真的没有太多理由，先入为主很重要。很多人喜欢百事可乐，很多人却喜欢可口可乐，但是又有多少人能尝出他们的不同呢？所以同时使用 MSN 和 QQ 或许是一个好的办法。  </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-05-17T16:00:00.000Z"><a href="/2006/05/18/OpenPower720-how-you/">5月 18 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/05/18/OpenPower720-how-you/">OpenPower720怎么啦</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这次出差似乎很不利。<br>机器是 OpenPower 720 (具体型号是 9124-720-SN064429C)。<br>中午开箱验收机器，花了不少时间。到第一台机器上架，已经是到了午饭时间。<br>吃过午饭，一边验收另外一台机器，一边开始为系统 RAID，使用 IBM 自带的 Standalone Diagnostics 光盘自动配置。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2006/05/18/OpenPower720-how-you/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-05-09T16:00:00.000Z"><a href="/2006/05/10/Core-parameters-of-acceptable-manner-inconsistent/">5月 10 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/05/10/Core-parameters-of-acceptable-manner-inconsistent/">内核接受的参数方式不一致</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在<a href="http://blog.wgzhao.com/read.php/239.htm" target="_blank">ACPI 和 APIC 有什么关系？</a><br>中我谈到了 acpi 和 apic 的差别，以及内核如何接受这些参数的方法。  </p>
+<p>昨天去公安部解决 qlogic 2312 光纤卡加载后 kernel panic 的问题，现在很怪异，单核心加载没有问题，能正确识别到盘阵（IBM<br>Total Storage DS4500)，但是 SMP 核心会给出 SCSI 命令超时的错误，30 分钟后就会 kernel panic。尝试加了<code>apic=off</code>的核心参数，依然不管用。<br>只要想其他办法，比如更新驱动。但是无论怎么做，都是没有用。<br>后来查看了<code>/proc/interrupt</code>s 文件，发现 qla2300 驱动，单核心使用中断是 XT-PIC,SMP 核心也采用 XT－PIC，而不是期望的 IO-APIC-level，觉得可能是驱动没有正确处理 SMP 核心。但是这样的卡不是第一次使用，其他地方都可以，难道是机器 (IBM<br>x346) 和卡配合的问题? 查看了一下内核参数文档，发现 apic 的禁用方式写的是 noapic，反正是测试，于是重启机器使用 noapic 核心参数测试，结果发现成功了。<br>原来前面使用的<code>apic=off</code>是不正确的，但是显然禁止电源管理是采用<code>acpi=off</code>的参数形式。  为什么参数接受方式要弄得不一样呢？这其中有什么不知道的秘密吗？不解.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-04-18T16:00:00.000Z"><a href="/2006/04/19/Console-access/">4月 19 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/04/19/Console-access/">控制台访问</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>上午去测试一个加密卡设备权限会发生变化的问题，其实这个问题和我的声卡情况相似。我一般都采用不同用户登录我的系统。<br>系统启动时默认会把我的声卡设备权限设置为 0666, 但是使用的过程中权限会发生变化，变成缺省的 0600，导致普通用户不能使用声卡。<br>查了一些资料，得知这些设备的权限设置与文件<code>/etc/security/console.perms</code>文件有关，因此这里贴出我找到的有关该文件的一些说明：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2006/04/19/Console-access/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-04-16T16:00:00.000Z"><a href="/2006/04/17/iostat-output-analysis/">4月 17 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/04/17/iostat-output-analysis/">iostat 输出解析</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li>/proc/partitions  </li>
+</ol>
+<p>iostat 的数据的主要来源是 <code>/proc/partitions</code>，所以需要先看看<br><code>/proc/partitions</code> 中有些什么。  </p>
+<pre><code>    <span class="comment"># cat /proc/partitions  </span>
+    major minor   <span class="comment">#blocks name rio rmerge rsect ruse wio wmerge wsect wuse</span>
+    running <span class="keyword">use</span> <span class="title">aveq</span>  
+
+     3 0 19535040 <span class="title">hda</span> 12524 31127 344371 344360 12941 25534 308434 1097290
+    -1 15800720 28214662  
+     3 1 7172991 <span class="title">hda1</span> 13 71 168 140 0 0 0 0 0 140 140  
+     3 2 1 <span class="title">hda2</span> 0 0 0 0 0 0 0 0 0 0 0  
+     3 5 5116671 <span class="title">hda5</span> 100 477 665 620 1 1 2 30 0 610 650  
+     3 6 265041 <span class="title">hda6</span> 518 92 4616 2770 257 3375 29056 143880 0 46520 146650  
+     3 7 6980211 <span class="title">hda7</span> 11889 30475 338890 340740 12683 22158 279376 953380 0
+    509350 1294120  
+</code></pre><p>major: 主设备号。3 代表 hda。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2006/04/17/iostat-output-analysis/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-03-29T16:00:00.000Z"><a href="/2006/03/30/VG-resume-case/">3月 30 2006</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2006/03/30/VG-resume-case/">VG恢复一例</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>昨日去我们的一个用户那里解决 VG 突然丢失问题。<br>用户电话中声称：刚开始还是好好的，用 HA 的命令停止服务后，两个正在使用的 VG<br>不见了。<br>用 pvscan 命令，得到的结果是能找到四个 VG，但是另外两个报的是类似下面的信息：  </p>
+<pre><code>/dev/sde belongs <span class="keyword">to</span> unknown volumn <span class="keyword">group</span> <span class="string">"vgoradata"</span>  
+</code></pre><p>最开始做 LV 的机器重新安装了，因此找不到创建时的备份文件。<br>从硬件层次也考虑，依然无效。  </p>
+<p>而这两个 VG 是做过 vgexport 工作的。因而能在<code>/etc/lvmconf/</code>文件下面看到以这两<br>个 VG 名字命名的后缀为 conf 的文件。<br>后经高人指点，得知可以考虑使用 v<code>gcfgrestore</code>命令。<br>man 了一把，先采用<br><code>vgcfgrestore -f ./vgoradata.conf -n vgoradata -t /dev/sdb</code><br>的命令测试了一下，发现还能读出相关信息，觉得有戏。<br>因此开始考虑做实际的恢复（得知用户有数据备份，如果不成功，数据不会有影响）<br>遂执行下面的命令  </p>
+<pre><code>vgcfgrestore <span class="attribute">-f</span> <span class="built_in">.</span>/vgoradata<span class="built_in">.</span>conf <span class="attribute">-n</span> vgoradata <span class="attribute">-v</span> /dev/sdb 
+vgcfgrestore <span class="attribute">-f</span> <span class="built_in">.</span>/vgoradata<span class="built_in">.</span>conf <span class="attribute">-n</span> vgoradata <span class="attribute">-v</span> /dev/sdc 
+vgcfgrestore <span class="attribute">-f</span> <span class="built_in">.</span>/vgoradata<span class="built_in">.</span>conf <span class="attribute">-n</span> vgoradata <span class="attribute">-v</span> /dev/sdd  
+</code></pre><p>都报成功。<br>然后在用<code>pvscan</code>，正常，vgscan，正常，<code>vgchange -ay vgoradata</code>，mount 一切 ok！  </p>
+<p>于是采用同样的方法恢复另外一个，也 ok。  </p>
+<p>这是在有备份文件的情况下能这样做。而这两个文件应该是做 vgexport 生产的，但<br>是 VG 出故障之前，也就只做了<br>vgexport,vgimport 命令，这是这两个命令带来了好处，还是坏处呢？  </p>
+<p>为了以防万一，接下来给他们做了备份，命令如下：  </p>
+<p><code>vgcfgbackup vgoradata -v</code><br>这样把四个 VG 的信息都做了备份。  </p>
+<p><a href="http://www.chinalinuxpub.com/read.php?wid=834" target="_blank">Linux 逻辑盘卷管理 LVM 详解</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/28/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/30/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

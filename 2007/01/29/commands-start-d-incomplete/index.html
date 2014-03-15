@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>\[sbin学习\]d\*命令--未完成 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="\[sbin学习\]d\*命令--未完成"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-01-28T16:00:00.000Z"><a href="/2007/01/29/commands-start-d-incomplete/">1月 29 2007</a></time>
+      
+      
+  
+    <h1 class="title">\[sbin学习\]d\*命令--未完成</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>看了今天是无法完成 d* 命令的学习了，有几个重量级的命令都是 d 开头的，这就要一些时间，先把完成的一部分贴出来吧。<br>/sbin/ 下 d 开头的命令如下</p>
+<pre><code>debugfs delpart dhclient-script dmsetup dump dump<span class="preprocessor">.static</span>
+debugfs<span class="preprocessor">.ocfs</span>2 depmod dhcp6c dmsetup<span class="preprocessor">.static</span> dump_cis
+debugreiserfs dhclient dmraid dosfsck dumpe2fs
+</code></pre><p>其中 dump.static 软连接到 dump 命令，而 dump 程序是一个静态编译的命令。<br><a id="more"></a><br>debugfs,debufs.ocfs2,debugreiserfs 是文件系统调试工具，其中 debugfs 我使用过一次，起目的是希望恢复删除的某个文件。<br>但是实验表明，ext2 的文件系统有恢复的可能性，但是 ext3 却没有可能。在 ext3 文件系统官方站点的 FAQ 中，就有一个这样的问题，其中答案就是告诉你，采用 rm -f 方式删除的命令是没有办法恢复的，因为他不仅仅只是作删除的标记。<br>而 ocfs2 目前并不稳定，这是 Oracle 推出的一种文件系统，是为 Oracle 数据库的高可用服务的，但是在实际的项目中，ocfs 表现的并如人意。起文件系统都用得少，那么调试就更少了。<br>reiserfs 是 SuSe 发行版本中默认的文件系统格式，Redhat 和 RedFlag 缺省都是 ext2/ext3 的文件系统。  所以 debugreiserfs 也就没有用过了，加上 reiserfs 的开发者因为谋杀妻子的罪名被逮捕，因此这中文件系统前途还不知道怎么样。  </p>
+<p>其实说了这么多，就是给自己找一个借口，这几个调试工具我就不做深入的研究了，呵呵。以后遇到了再说吧。</p>
+<p>delpart 这 个命令很奇怪，没有 man 手册，没有 info 信息，帮助也是少得可怜，似乎很不符合 *nix 下程序开发的习惯。而他所属的 rpm 包又是 util-linux，这是一个工具集，因此 rpm -qi 也不能找到有用的信息。<br>那就只能从帮助和起程序命令来看了。<br>刚看到这个名字，我以为他是 parted 程序的一部分，结果不是。看帮助  </p>
+<pre><code>[root<span class="variable">@lancy</span> sbin]<span class="comment"># delpart  –help</span>
+<span class="symbol">usage:</span> delpart diskdevice partitionnr
+</code></pre><p>似乎也应该是和分区有关系。我的猜想是他应该是删除一个指定的分区。下面是我的实验过程</p>
+<p>首先把我的 U 盘分一个分区出来</p>
+<pre><code>[root<span class="property">@lancy</span> sbin]<span class="comment"># fdisk -l /dev/sda</span>
+Disk /dev/<span class="attribute">sda</span>: <span class="number">252</span> MB, <span class="number">252968960</span> bytes
+<span class="number">8</span> heads, <span class="number">61</span> sectors/track, <span class="number">1012</span> cylinders
+Units = cylinders <span class="keyword">of</span> <span class="number">488</span> * <span class="number">512</span> = <span class="number">249856</span> bytes
+Device Boot Start End Blocks Id System
+/dev/sda1 <span class="number">1</span> <span class="number">81</span> <span class="number">19733</span>+ <span class="number">83</span> Linux
+[root<span class="property">@lancy</span> sbin]<span class="comment"># delpart /dev/sda 1</span>
+[root<span class="property">@lancy</span> sbin]<span class="comment"># fdisk -l /dev/sda</span>
+Disk /dev/<span class="attribute">sda</span>: <span class="number">252</span> MB, <span class="number">252968960</span> bytes
+<span class="number">8</span> heads, <span class="number">61</span> sectors/track, <span class="number">1012</span> cylinders
+Units = cylinders <span class="keyword">of</span> <span class="number">488</span> * <span class="number">512</span> = <span class="number">249856</span> bytes
+Device Boot Start End Blocks Id System
+/dev/sda1 <span class="number">1</span> <span class="number">81</span> <span class="number">19733</span>+ <span class="number">83</span> Linux
+[root<span class="property">@lancy</span> sbin]<span class="comment"># delpart /dev/sda 1</span>
+<span class="attribute">BLKPG</span>: No such device <span class="keyword">or</span> address
+</code></pre><p>从实验来看，他应该是删除一个分区的，而且我们从 delpart 程序反馈信息来看，他认为他删除了 sda1，但是 fdisk 命令却认为这个分区还在。<br>接下来我测试这个分区是否能 mkfs</p>
+<pre><code>[root<span class="variable">@lancy</span> sbin]<span class="comment"># mkfs.ext2 /dev/sda1</span>
+mke2fs <span class="number">1.35</span> (<span class="number">28</span>-Feb-<span class="number">2004</span>)
+Could <span class="keyword">not</span> <span class="keyword">stat</span> /dev/sda1 — 没有那个文件或目录
+The device apparently does <span class="keyword">not</span> exist; did you specify it correctly?
+</code></pre><p>哈哈，看来真的已经删除了，但是为什么 fdisk 不这么认为呢？而且 parted 也认为这个分区是存在的</p>
+<pre><code>[root@lancy sbin]<span class="comment"># parted /dev/sda</span>
+GNU Parted <span class="number">1.6</span><span class="number">.19</span>
+Copyright (C) <span class="number">1998</span> – <span class="number">2004</span> Free Software Foundation, Inc.
+This program <span class="keyword">is</span> free software, covered <span class="keyword">by</span> <span class="keyword">the</span> GNU General Public License.
+This program <span class="keyword">is</span> distributed <span class="keyword">in</span> <span class="keyword">the</span> hope <span class="keyword">that</span> <span class="keyword">it</span> will be useful, <span class="keyword">but</span> WITHOUT ANY WARRANTY; <span class="keyword">without</span>
+even <span class="keyword">the</span> implied warranty <span class="keyword">of</span> MERCHANTABILITY <span class="keyword">or</span> FITNESS FOR A PARTICULAR PURPOSE. See <span class="keyword">the</span> GNU
+General Public License <span class="keyword">for</span> more details.
+使用 /dev/sda
+(parted) print
+/dev/sda 的磁盘几何结构：<span class="number">0.000</span>-<span class="number">241.250</span> 兆字节
+磁盘标签类型：msdos
+Minor 起始点 终止点 类型 文件系统 标志
+<span class="number">1</span> <span class="number">0.030</span> <span class="number">19.300</span> 主分区
+</code></pre><p>但是内核却认为这个分区已经不存在了</p>
+<pre><code>[root<span class="variable">@lancy</span> sbin]<span class="comment"># cat /proc/partitions</span>
+major minor <span class="comment">#blocks name</span>
+<span class="number">3</span> <span class="number">0</span> <span class="number">29302560</span> hda
+<span class="number">3</span> <span class="number">1</span> <span class="number">5246608</span> hda1
+<span class="number">3</span> <span class="number">2</span> <span class="number">5178600</span> hda2
+<span class="number">3</span> <span class="number">3</span> <span class="number">1</span> hda3
+<span class="number">3</span> <span class="number">4</span> <span class="number">13267768</span> hda4
+<span class="number">3</span> <span class="number">5</span> <span class="number">5606653</span> hda5
+<span class="number">8</span> <span class="number">0</span> <span class="number">247040</span> sda
+</code></pre><p>而使用 sfdisk 命令同样也认为 sda1 存在，但是在扫描 sda1 时停止</p>
+<pre><code>[root@lancy sbin]# sfdisk /dev/sda
+Checking that no-one <span class="keyword">is</span> <span class="keyword">using</span> this disk right now …
+OK
+Disk /dev/sda: <span class="number">1012</span> cylinders, <span class="number">8</span> heads, <span class="number">61</span> sectors/track
+<span class="keyword">Old</span> situation:
+Units = cylinders <span class="keyword">of</span> <span class="number">249856</span> bytes, blocks <span class="keyword">of</span> <span class="number">1024</span> bytes, counting <span class="keyword">from</span> <span class="number">0</span>
+Device Boot Start <span class="keyword">End</span> #cyls #blocks Id System
+/dev/sda1 <span class="number">0</span>+ <span class="number">80</span> <span class="number">81</span>- <span class="number">19733</span>+ <span class="number">83</span> Linux
+/dev/sda2 <span class="number">0</span> – <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="keyword">Empty</span>
+/dev/sda3 <span class="number">0</span> – <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="keyword">Empty</span>
+/dev/sda4 <span class="number">0</span> – <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="keyword">Empty</span>
+Input <span class="keyword">in</span> the following format; absent fields get a <span class="keyword">default</span> value.
+Usually you only need <span class="keyword">to</span> specify <span class="keyword">and</span> (<span class="keyword">and</span> perhaps ).
+/dev/sda1 :
+</code></pre><p>后面是 Ctrl+c 退出的。</p>
+<p>strace 了一下 fdisk 程序，没有找到原因。这个问题也暂时留下了。</p>
+<p>depmod：为 modprobe 工具提供一个正确的模块依赖性列表（modules.dep)。  这个命令对于新加入的模块能够像已经有的模块那样添加和删除起到了很好的作用。<br>我们知道在 Linux 中，内核模块是是在 /lib/modules/ 下面的。使用 insmod/modprobe 默认也是从这个目录去找你要加载的模块，除非你用 -f 来指定模块的路径。<br>而对于编译的内核模块，如果希望 modprobe 程序能够仅仅提供模块名就可以加载的话，那么至少要做两件事情。<br>1）将新的模块复制到正确的位置。<br>2）使用<code>depmod -A</code> 或者<code>depmod -a</code>来生产模块依赖性比列表。<br>其中－a 是表示所有模块都扫描一次，然后生成列表，而－A 表示进扫描新增的或者更新的模块，然后更新模块依赖性列表。<br>这两个参数是最常用的了。我目前也就仅仅用过这两个参数。刚才看了 man 手册，还有一些参数，比如－b 表示模块的基本路径在哪里，利用这个参数你可以将模块从 /lib/modules/ 中迁移出来。而 -n 参数表示仅仅只是打印出模块依赖性列表，而不写入，相当于仅仅是掩饰，而不会产生实际效果。</p>
+<p>dhclient,dhclient-script,dhcp6 这是 DHCP 协议中用的，一般我们都不会直接去执行这几个命令，而是配置他的配置文件和运行 /etc/rc.d/init.d/dhcpd 命令。所以这里也不深入研究了。</p>
+<p>dmraid  evice-Mapper 软 RAID 工具，他主要是用来执行设备发现，RAID 激活和 ATARAID 属性显示。因此我们需要和 RAID 制作工具一起来讲。<br>dmsetup：底层逻辑卷管理 (LVM), 这是 device-mapper 包中带的唯一一个可执行程序，除了那个静态版的 dmsetup.static。这个命令我想留到和 device-mapper-multipath 一起来研究，这里就不阐述了。</p>
+<p>dosfsck：检查和修复 MSDOS 文件系统，Linux 还真的有意思，居然来一个这样的工具，不过我从未在 Linux 下修复过 MS 的文件系统，总是感觉有点玄。而且我觉得也没有机会。服务器上吧，MS 的文件系统和 Linux 的文件系统是不会存在一个硬盘上的，服务器上需要双系统吗？自己的机器上，如果有 MS 的文件系统，那么就应该有其操作系统，那么自己的工具修复自己的东西就好了。当然也不排除这种可能性：以前是有双系统，而一些数据是放在 MS 的文件系统上的，后来觉得 MS 的系统不爽，于是咔嚓掉了。但是因为数据太多，其他分区也就不懂了，于是就出现了没有 MS 的系统，但是有 MS 的分区。这个时候是不是 dosfsck 能派上用场呢？</p>
+<p>dump：ext2/ext3 文件系统备份。dump 程序检查 ext2/3 文件系统上的文件，然后猜测那些文件需要备份。这些文件被复制到指定的磁盘，磁带或者其他存储介质上。他还可以作远程的备份。如果 dump 出来的数据大于指定的备份存储介质，他将分卷。dump 支持的参数比较多。</p>
+<p>-level#  dump 级别，0 是全备份，0 以上的数字是增量备份。历史原因，dump 程序一般只使用 0-9 这几个数字，不过现在的 dump 版本支持 9 以上的数字（但是，不同的数字意味着什么，man 手册中并没有说）</p>
+<p>-a     “自动大小 (auto-size)”. 忽略所有磁带的长度计算。他将一直写到磁带结束，对于大部分现在的磁带机，这中工作方式是最佳的，也是缺省模式。这种方式特别是在增加数据到一个磁带上或者具有硬件压缩功能的磁带机效果更好。</p>
+<p>-A  归档文件，在指定的归档文件上创建一个 dump 内容表 (table-of-contents)，将来可以被 restore(8) 程序用来判断一个正准备回复的文件是否在 dump 文件中.</p>
+<p>-b 块大小. 每个 dump 记录的 KB 数. 缺省是 10. 最大值是 1024, 不过与你的内核限制有关系.</p>
+<p>-B 记录数, 每卷的快数 (每块 1KB). 当 dump 程序发现到了存储介质的结尾时, 他会要求你更换卷.</p>
+<p>-D 文件. 设置存储之前先前完全或者增量 dump 信息的文件路径.</p>
+<p>-e inode 列表, 不准备 dump 的 inode 列表, 多个 inode 之间用逗号分隔, 你可以使用 stat(1) 命令来找到文件或者目录的 inode 值.</p>
+<p>-E 文件, 从文件中排除不 dump 的 inode, 文件格式采用一行一个 inode, 而且应该是排序的.</p>
+<p>-f 文件. 写备份到文件 ; 这可以是特定的设备文件, 比如 /dev/st0,/dev/fd0,/dev/sdc, 或者是一个普通文件, 或者是标准输出 (-)<br>多个文件采用逗号分隔. 每一个文件将存储一个 dump 卷. 如果文件命采用 host:file 或者 user@host:file 格式,dump 将使用 rmt(8) 程序将数据写入到远程机器指定的文件上 (改文件应该存在,dump 不会使用创建一个远程文件).</p>
+<p>-F 脚本, 在每一个磁带的最后执行这个脚本 (除了最后一盘磁带)</p>
+<p>-L 标签, 使用用户提供的字符串作为标签写入到 dump 都, 这样一来, 像 restore(8) 和 file(8) 程序就可以访问它. 标签的最大长度不能超过 LBLSIZE(当前是 16) 个字符, 而且字符串必须是\0 结尾.<br>（未完待续）</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/debugfs/">debugfs</a>, <a href="/tags/dmraid/">dmraid</a>, <a href="/tags/dmsetup/">dmsetup</a>, <a href="/tags/dump/">dump</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2007/01/29/commands-start-d-incomplete/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

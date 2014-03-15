@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>虚拟化技术漫谈－－介绍 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="虚拟化技术漫谈－－介绍"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-04-08T16:00:00.000Z"><a href="/2007/04/09/virtualization-technologies-discussion-introduction/">4月 9 2007</a></time>
+      
+      
+  
+    <h1 class="title">虚拟化技术漫谈－－介绍</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近想了解虚拟化技术的一些知识，虽然这不是第一次接触虚拟化概念，至少对起产品有过一些大致的了解，从最开始使用<a href="http://www.vmware.com/" target="_blank">vmware</a>, 到后来发现<a href="http://fabrice.bellard.free.fr/qemu/" target="_blank">qemu</a>，到现在比较火热的<a href="http://www.xensource.com/" target="_blank">Xen</a>，再到最近才知道的<a href="http://www.openvz.org/" target="_blank">openVZ</a>。</p>
+<p>虚拟化技术正开展得如火如荼. 在加上现在用户对虚拟化也提出了一些要求，因此学习了解虚拟化技术就不可避免了。这次学习，我想写三篇日志，分别是虚拟化技术的介绍，记录我了解到的一些虚拟化技术；接下来就是 openvz 的学习，只所以选择 openvz，而不是 xen，其实是从我工作的角度来考虑的，pczou 说在 RedFlag<br>DC5.0 上的 Xen 并不是很稳定，还需要一段时间的发展。<br>而 openvz 将在会出现在红旗 linux 的下一个版本中。所以我想还是先了解 openvz 吧；最后一篇就像记录一些于 openvz 或者说与虚拟化相关的一些高级话题，希望我能写道这篇 :)<br><a id="more"></a><br>OK，先聊聊我看到的虚拟化概念。</p>
+<p>为什么需要虚拟化</p>
+<p>虽然 IT 技术的迅猛发展，计算机性能突飞猛进，当前服务器资源的利用并不高，特别是 CPU 资源。从我们实施的现场来看，典型的机器配置是：</p>
+<pre><code>XEON CPU <span class="number">3.0</span>G * <span class="number">2</span>
+ECC MEM <span class="number">8</span>G
+SCSI <span class="number">15</span>Krpms <span class="number">46.7</span>G<span class="variable">*3</span>
+</code></pre><p>而这样的服务器利用大约在 10％左右，在行业有一句话，概括了这个现象：90% 的时间，90％的服务器，CPU 利用率不高于 10％！<br>这是其中一个原因，其次便是虽然服务器的增加，管理成本，复杂性显著提高，而灵活性，服务水平则降低。这些都促成了虚拟化技术的发展。</p>
+<p>虚拟化的好处</p>
+<p>个人觉得虚拟化技术的最大好处降低了成本，包括管理成本、硬件成本、软件、基础设施建设成本、电力成本，IT 管理员等，同时他提供了一个简单高效的 IT 管理模型，采用动态分配资源的方式，每一个应该程序可以动态的获取所需要的资源。虽然从另外一个侧面来将也提高了技术门口和再学习成本。但是相比其好处而言，应该可以忽略不计。</p>
+<p>另外它也降低了维护和补丁造成的宕机时间，可以在软件，硬件故障时快速备份恢复系统，虚拟技术环境下，部署 HA 高可用服务器群会变得更见容易。<br>减少开通、配置、补丁、恢复的维护时间，增强安全性、隔离性，可允许自动管理维护更加人性化也是它的优点。</p>
+<p> 常见的虚拟化技术</p>
+<p>虚拟化技术和分区技术 (partition) 是紧密结合在一起的，我能找到的虚拟化技术的发展，大概是这么四个阶段：硬件分区技术，虚拟机，准虚拟机和虚拟操作系统。</p>
+<p>这四种技术的典型代表如下：</p>
+<pre>
+类型                             代表产品 
+---------------------------------------------
+硬件分区             IBM/HP 等大型机硬件分区技术
+虚拟机                 （Virtual Machine Monitor） EMC VMware Mircosoft Virtual PC/Server Parallels 准虚拟机 （Para-Virtualization） Xen Project
+虚拟操作系统 （        OS Virtualization） SWsoft Virtuozzo/OpenVZ Project Sun Solaris Container HP vSE FreeBSD Jail Linux Vserver 
+</pre>
+
+<p>1. 硬件分区技术</p>
+<p>硬件分区技术如下图所示：硬件资源被划分成数个分区，每个分区享有独立的 CPU、内存，并安装独立的操作系统。在一台服务器上，存在有多个系统实例，同时启动了多个操作系统。</p>
+<p><img src="/uploads/hwpartition.png" alt="image"></p>
+<p>这种分区方法的主要缺点是缺乏很好的灵活性，不能对资源做出有效调配。随着技术的进步，现在对于资源划分的颗粒已经远远提升，例如在 IBM<br>AIX 系统上，对 CPU 资源的划分颗粒可以达到 0.1 个 CPU。这种分区方式，在目前的金融领域，比如银行信息中心，得到广泛采用。 </p>
+<p>2. 虚拟机技术</p>
+<p>在虚拟机技术（Virtual Machine Monitor）中，不再对底层的硬件资源进行划分，而是部署一个统一的 Host 系统。在 Host 系统上，加装了 Virtual Machine<br>Monitor，虚拟层作为应用级别的软件而存在，不涉及操作系统内核。虚拟层会给每个虚拟机模拟一套独立的硬件设备，包含 CPU、内存、主板、显卡、网卡等硬件资源，在其上安装所谓的 Guest 操作系统。最终用户的应用程序，运行在 Guest 操作系统中。如下图所示。</p>
+<p><img src="/uploads/vmm.png" alt=" 虚拟机技术 " title=" 虚拟机技术 "></p>
+<p>这种虚拟机运行的方式有一定的优点，比如能在一个节点上安装多个不同类型的操作系统；但缺点非常明显，虚拟硬件设备所消耗的巨大资源，大量代码需要被翻译执行，造成了性能的损耗，远超过了应用可接受的程度，使得其只能停留在实验室等特殊环境下，不能广泛的用于各种生产环境中。其代表产品有 EMC 旗下的 VMware 系列、微软旗下的 Virtual PC/Server 系列等。</p>
+<p>3. 准虚拟机技术</p>
+<p>为了改善虚拟机技术（Virtual Machine<br>Monitor）的性能，一种新的准虚拟化技术（Para-Virtualizion）技术诞生了。这种虚拟技术以 Xen 为代表，其特点是修改操作系统的内核，加入一个 Xen<br>Hypervisor 层。它允许安装在同一硬件设备上的多个系统可以同时启动，由 Xen Hypervisor 来进行资源调配。 </p>
+<p><img src="/uploads/pvmm.png" alt=" 准虚拟机技术 " title=" 准虚拟机技术 "></p>
+<p>在这种虚拟环境下，依然需要模拟硬件设备，安装 Guest 操作系统，并且还需要修改操作系统的内核。Xen 相对于传统的 Virtual Machine<br>Monitor，性能稍有提高，但并不十分显著。为了进一步提高性能，Intel 和 AMD 分别开发了 VT 和 Pacifica 虚拟技术，将虚拟指令加入到了 CPU 中。使用了 CPU 支持的硬件虚拟技术，将不再需要修改操作系统内核，而是由 CPU 指令集进行相应的转换操作。</p>
+<p>4. 操作系统虚拟化技术 </p>
+<p>最新的虚拟化技术已经发展到了操作系统虚拟化，以 SWsoft 的 Virtuozzo/OpenVZ 和 Sun 基于 Solaris 平台的 Container 技术为代表，其中 Virtuozzo 是商业解决方案，而 OpenVZ 是以 Virtuozzo 为基础的开源项目。他们的特点是一个单一的节点运行着唯一的操作系统实例。通过在这个系统上加装虚拟化平台，可以将系统划分成多个独立隔离的容器，每个容器是一个虚拟的操作系统，被称为虚拟环境（即 VE，Virtual<br>Environment），也被称为虚拟专用服务器（即 VPS，Virtual Private Server）。如下图所示： </p>
+<p><img src="/uploads/ve.png" alt=" 操作系统虚拟技术 " title=" 操作系统虚拟技术 "></p>
+<p>在操作系统虚拟化技术中，每个节点上只有唯一的系统内核，不虚拟任何硬件设备。此外，多个虚拟环境以模板的方式共享一个文件系统，性能得以大幅度提升。在生产环境中，一台服务器可根据环境需要，运行一个 VE/VPS，或者运行上百个 VE/VPS。所以，操作系统虚拟化技术是面向生产环境、商业运行环境的技术。</p>
+<p>下面是这四种技术的一个对比表</p>
+<p>因为比较大，所以这里仅仅给出连接</p>
+<p><a href="http://spreadsheets.google.com/pub?key=pkpNcN-unPI6qCz03DbPACA" target="_blank">几种常见虚拟化技术对比</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/技术技巧/">技术技巧</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/openvz/">openvz</a>, <a href="/tags/virtuozzo/">virtuozzo</a>, <a href="/tags/vmware/">vmware</a>, <a href="/tags/xen/">xen</a>, <a href="/tags/虚拟化/">虚拟化</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2007/04/09/virtualization-technologies-discussion-introduction/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

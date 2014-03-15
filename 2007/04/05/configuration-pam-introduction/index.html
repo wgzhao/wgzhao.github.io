@@ -1,0 +1,328 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>配置PAM－－介绍 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="配置PAM－－介绍"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-04-04T16:00:00.000Z"><a href="/2007/04/05/configuration-pam-introduction/">4月 5 2007</a></time>
+      
+      
+  
+    <h1 class="title">配置PAM－－介绍</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>PAM（Pluggable Authentication Modules）是一个好东西，在现代的 Linux 系统中已经必不可少了。<br>以前也接触过，也修改过他的一些配置，不过都是依葫芦画瓢，没有仔细看过有关说明文档。今天在 linux-mag 上看到了这样的文章，正好可以仔细阅读一番。<br>介绍分为两篇，这篇是介绍 PAM 的基本常识和配置文件的规则，下一篇是利用这些规则做一些联系。下面是阅读后的一些笔记：<br><a id="more"></a><br><strong>PAM 配置文件</strong></p>
+<p>大部分现代 Linux 发行版本都使用<code>/etc/pam.d/</code>下面的文件来配置 PAM。<br>这个目录下的每一个文件是以程序提供的服务命名的，有些软件包提供了缺省的 PAM 配置文件，你也可以自己选择配置，特别是采用不同的协议来实现认证手段，比如你可以使用本地认证工具来配置 su 程序，而采用 LDAP 的方式来认证 SSH 登录。  </p>
+<p>配置文件的目的是用来创建一个或多个模块堆栈来为每一个程序服务。一个模块堆栈是一系列 PAM 模块，他们被调用以和特定的程序进行交互。每一个模块执行一个特定的任务，比如为网络服务娇艳密码，坚持用户是否有新邮件。作为登录过程的一部分，模块也可以执行用来执行一些非认证的任务，有时会显得比较方便。<br>/etc/pam.d/ 下的配置文件格式都是由很多行组成，每行有下面四个域：</p>
+<pre><code>management_group control_flag <span class="class"><span class="keyword">module</span>[<span class="title">options</span>]</span>
+</code></pre><p>每一个域都有其特定的含义，解释如下：</p>
+<ul>
+<li>management_group PAM 服务的标识代码: auth 表示认证 (典型的就是校验密码), account<br>表示帐号管理（无密码帐号访问规则，比如检查该用户是否有有权访问请求的服务）, session<br>表示会话管理（处理灯入登出相关的内部事物）, password 表示密码维护（比如修改密码）。</li>
+<li>control_flag 这个域表述了 PAM 应该如何应答模块的返回代码。可能的值有 requisite, required,<br>sufficient, 和 optional. 这些值的详细描述清参考接下来的“PAM 模块堆栈”</li>
+<li>module 模块的名字，可以是独立的模块名，也可以是绝对路径。如果没有提供完整路径，PAM 通常在<code>/etc/security</code>/ 目录下寻找对应的模块。<br>一些通用的模块介绍，可以参考后面的“通用 PAM 模块”</li>
+<li>options 可选项，一般是包括传递给模块的一些参数，详细描述请参考“通用模块选项”<br>大部分 PAM 使用的服务都有自己的 PAM 配置文件，因此你需要对该对一个的配置文件。有一个文件特别要注意，就是<code>/etc/pam.d/system-auth</code>。这个文件定义了一套标准的模块堆栈，他们能被<code>pam_stack.so</code>模块调用，其意图是想为 PAM 修改提供一站式服务。通过修改<code>system-auth</code>，你可以改变绝大部分或者全部服务的应答方式。当然，不是所有的发行版本都使用这个配置文件，不过很多（包括<br>Fedora, Gentoo, Mandrake, RedHat,RedFlag) 都是这样做的。</li>
+</ul>
+<p>老系统通常使用单个<code>/etc/pam.conf</code>配置文件。这个文件的工作方式就等同于现在的<code>/etc/pam.d/</code>下的配置文件，除了每行开头需要一个引导入口来表示这个配置应用在哪个程序上之外。<br>因为这个基本都很少见了，所以这里也就不详细介绍了。</p>
+<p><strong>PAM 模块堆栈 (PAM Module Stacks)</strong></p>
+<p>一个 PAM 配置文件有一系列模块堆栈组成，他们安装相同的管理组集合在一起。当一个程序通过管理组来寻求处理时，PAM 依次调用每一个模块，最终根据每一个模块的返回值以及与此相关连的<code>control_flag</code>域来返回一个代码。<br>一个典型的认证堆栈类似下面这样</p>
+<pre><code>auth required pam_env<span class="preprocessor">.so</span>
+auth required pam_unix<span class="preprocessor">.so</span> likeauth nullok
+</code></pre><p>这个配置我文件意味着<code>pam_env.so</code>和<code>pam_unix.so</code>将依次调用，当 PAM 被要求认证用户的时候。<br>每一个模块有自己特定的任务来执行，后面会描述。<br>堆栈里的每一个模块返回成功或者失败代码，这些代码和模块的<code>control_flag</code>表示合作，用来最终返回一个结果，下面给出 control_flag 的总结：</p>
+<pre>
+             模块控制标识以及返回值表
+
+控制标志             成功结果                 失败结果
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+requisite             堆栈继续执行                         堆栈立刻以失败方式中断
+required             堆栈继续执行                         堆栈继续执行，但是以失败方式中断
+sufficient             堆栈立刻以成功方式中断，除非之前模块失败了     堆栈继续执行
+optional             堆栈继续执行                         堆栈继续执行，只有当模块丢失或者给出一个非决定性结果才失败。
+</pre>
+
+<p>理想情况下，不同模块的结果不会发生冲突，如果冲突了，那么规则能拒绝。<br>比如，假设你想配置一个计算机使用本地密码数据 (用<code>pam_unix.so</code>表达) 或通过 Kerberos(用<code>pam_krb5.so</code>表达) 服务来认证用户。你可能会这样写配置文件。</p>
+<pre><code>auth required pam_env<span class="preprocessor">.so</span>
+auth required pam_unix<span class="preprocessor">.so</span> likeauth nullok
+auth sufficient pam_krb5<span class="preprocessor">.so</span> try_first_pass
+</code></pre><p>(这个堆栈也包括了<code>pam_env.so</code>，<code>pam_deny.so</code>，现在你可以忽略)。这个例子指定<code>pam_krb5.so</code>是 sufficient 的。<br>其目标是当 Kerberos 服务宕了胡或者帐号没有存储在这里时，通过本地数据库也可以登录。<br>但问题就出在<code>pam_unix.so</code>的控制标识 required 上。他表示用户必须通过本地认证。<br>也就没有达到我们预期的目的，因为 Kerberos 模块没有起到作用。为了达到期望目标，我们应该把所有的模块的控制标志改成 sufficient 的。</p>
+<pre><code>auth required pam_env<span class="preprocessor">.so</span>
+auth sufficient pam_unix<span class="preprocessor">.so</span> likeauth nullok
+auth sufficient pam_krb5<span class="preprocessor">.so</span> try_first_pass
+</code></pre><p>但是，问题又来了，当一个模块成功后，他会忽略其后的任何一个模块。在这个例子中，不会有这个问题，但是一些缺省的配置会在认证堆栈中包括额外的模块。有时候忽略接下里的模块不是问题，但有时候却是（下一篇会提到多认证方式）。<br>大部分使用 PAM 的服务要求多堆栈的帮助。典型的就是登录服务，他使用 auth,account,session 堆栈，有时候甚至定义至少一个 password 模块。</p>
+<p><strong>通用 PAM 模块 (Common PAM Modules)</strong></p>
+<p>PAM 提供了非常多样的模块来帮助实现很多功能特征，另外，一些程序也提供了自己的 PAM 模块来扩展 PAM 功能。大部分模块可以在一个或多个管理组中工作。特命执行一项任务当他们作为一个堆栈的一部分被调用时同时也可以执行另外一项任务当作为另外一个管理组堆栈的一部分被调用时。</p>
+<p>下面的表给出了一些重要的 PAM 模块的解释，虽然这个表远不够完整。</p>
+<pre>
+                         通用 PAM 模块
+模块名称                         管理组                                 效果
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+pam_unix.so         auth, account, session, password    基于 /etc/passwd 和 /etc/shadow 认证用户
+pam_unix2.so         auth, account, session, password     pam_unix.so 变体，提供额外的一些功能
+pam_securetty.so     auth                                 阻止 root 登录，除非在 /etc/securetty 文件中设置 PAM_TTY 环境变量
+pam_env.so             auth                                 从 /etc/security/pam_env.conf 文件中设置环境变量
+pam_mail.so         auth,session                        根据指定的 dir=diretory 选项来检查邮件和给用户提供检查结果。
+pam_lastlog.so         auth                                 显示用户最后登录的消息
+pam_deny.so         auth, account, session, password     总是表示失败。
+pam_limits.so        session                             用来设置用户对 CPU，内存等资源的消耗限制，配置文件是 /etc/security/limits.conf
+pam_mkhomedir.so    session                             为用户创建一个家目录，如果它已经不存在了。这为那些通过网络登录服务器验证而登录的用户创造了便利。
+pam_pwcheck.so         password                             根据 /etc/login.defs 文件规则来检查用户密码，以便用户在修 改密码时提高安全度。
+pam_cracklib.so     password                             根据字典来检查密码，以确保密码至少显得显得比较安全和随机。
+pam_stack.so         auth, account, session, password     调用在 system-auth 的堆栈，返回其结果。
+</pre>
+
+<p>如果你仔细研究你的 PAM 配置文件，你应该可以看到上面的绝大部分模块。你也可以来确定这些模块的效果，比如我增加<code>pam_mail.so</code>模块看是否能达到上面说的作用。</p>
+<p><strong>通用模块选项 (Common Module Options)</strong></p>
+<p>大多数 PAM 模块接受可选项，而这些可选现对很多模块是非常有帮助的。更多的通用的可选现包括:</p>
+<ul>
+<li>debug         这个选项创建而外的调式输出，典型的是将其发送给系统日志。</li>
+<li>try_first_pass  大多数 auth 模块接受这个选项，它使得这个模块会去尝试堆栈里以前模块请求到的密码，如果这个密码不正确，这个模块会给出要求新密码的提示。</li>
+<li>use_first_pass   这个选项工作方式和<code>try_first_pass</code>非常相似，除了它不会显示需要第二次密码的提示。实际上，在这种情况下，这个模块返回一个失败代码。</li>
+<li>use_authtok        这个选项使得 auth 堆栈里的模块把密码当成令牌 (token) 传递给下一行。</li>
+<li>nullok         通常，处理密码的模块拒绝空 (empty,null) 密码。这个选项告诉他们接受这样的密码。</li>
+<li>shadow         接受这个选项的模块需要密切注意 shadow 文件的一些特征，比如密码年龄和过期时间。</li>
+</ul>
+<p>大部分情况下，你不用管这些选项，尽管有时你可以想使用他，特别是在增加认证工具的时候。比如<code>try_first_pass</code> 或<code>use_first_pass</code>经常用来和 auth 堆栈中的第二个认证模块联合起来。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/pam/">pam</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2007/04/05/configuration-pam-introduction/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

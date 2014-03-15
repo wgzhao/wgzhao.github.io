@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 3 页 | 归档：2009 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2009</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-07-21T16:00:00.000Z"><a href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/">7月 22 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/">恢复ext3文件系统上被删除的文件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>是的，我知道 ext3 文件系统上，一旦文件被删除 (rm -rf )，就几乎没有恢复的可能。<br>而且从 ext3 文件系统的<a href="http://batleth.sapienti-sat.org/projects/FAQs/ext3-faq.html" target="_blank">FAQ</a>中提到的一条也能印证这点：</p>
+<blockquote>
+<p>Q: How can I recover (undelete) deleted files from my ext3 partition?<br>Actually, you can’t! This is what one of the developers, Andreas  Dilger, said about it: </p>
+<blockquote>
+<p>In order to ensure that ext3 can safely resume<br> an unlink after a crash, it actually zeros out the block pointers in<br> the inode, whereas ext2 just marks these blocks as unused in the block<br> bitmaps and marks the inode as “deleted” and leaves the block pointers<br> alone.<em> </em>Your only hope is to “grep” for parts of your files that have<br> been deleted and hope for the best.</p>
+</blockquote>
+</blockquote>
+<p>但是，但是，这不是事实的全部，被删除文件的所有信息可能都还在磁盘上，包括块指针。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-07-15T16:00:00.000Z"><a href="/2009/07/16/troubleshooting-kernel-panic/">7月 16 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/07/16/troubleshooting-kernel-panic/">kernel panic故障排解</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><strong>Linux kernel panic</strong> 是很难定位和排查的重大故障, 一旦系统发生了 kernel panic，相关的日志信息非常少，而一种常见的排查方法—重现法—又很难实现，因此遇到 kernel panic 的问题，一般比较头疼。 </p>
+<p>没有一个万能和完美的方法来解决所有的 kernel panic 问题，这篇文章仅仅只是给出一些思路，一来如何解决 kernel panic 的问题，二来可以尽可能减少发生 kernel panic 的机会。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/07/16/troubleshooting-kernel-panic/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-07-09T16:00:00.000Z"><a href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/">7月 10 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/">fs-cache and cachefs for network filesystem</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>对于像 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System" target="_blank">NFS</a> 和 <a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System" target="_blank">AFS</a>这种网络文件系统而言，因为受网络的影响，使得对数据访问和存储的实时性就有了一定的挑战，特别是在早期 100Mb/s 的网络环境下（当然 10Mb/s 的网络环境就是一个噩耗了）。为了解决响应实效的问题，一种被称为<a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System" target="_blank">CacheFS</a>的本地缓存方案被开发出来，用来提供分布式文件系统的本地缓存。</p>
+<p>作为内核 2.6.30 的一部分， 一种<a href="http://kernelnewbies.org/Linux_2_6_30#head-29350000cec3a460e9f2af6360324670faf14b2" target="_blank">CacheFS 实现机制</a></p>
+<p>已经加入进来，当前它支持<a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System" target="_blank">NFS</a>和<a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System" target="_blank">AFS</a>，但是其他文件系统也能从中获得好处（文章后面会提到）<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-07-08T16:00:00.000Z"><a href="/2009/07/09/what-is-a-good-job/">7月 9 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/07/09/what-is-a-good-job/">什么样的职位才是好职位</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>看完了《杜拉拉升职记》，觉得书的最后，杜拉拉写给李都的那封如何“恰当的活法”中，提到的什么样的职位才是好职位，值得多读几遍，于是摘录下来，和大家分享：  </p>
+<h2 id=" 一、关于什么样的职位算好职位 ">一、关于什么样的职位算好职位</h2>
+<ol>
+<li><p>你的找一家好公司 什么是好公司?</p>
+<ol>
+<li>产品附加值高，生意好，并且从业务线看，具备持续发展的能力和前景 ;  </li>
+<li>有专业的 / 聪明能干的 / 经验丰富的 / 并且为人现实的管理层，在把握这公司，并且有保护一贯这样用人的制度的公司 ;</li>
+<li>有严格的财务制度，对预算、费用和利润等于投入产出有关的内容，敏感并且具有强控制力的公司 ;</li>
+<li>崇尚客户导向 / 市场导向 / 结果导向 / 执行力的公司 ;</li>
+<li><p>有专业严谨全面的流程和制度，并且其执行有利于推动业务的良性发展，具有控制性和实操性兼备的特点 ;</p>
+<p>总结起来，就是一家具有持续赢利能力的牛 B 公司 </p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/07/09/what-is-a-good-job/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-07-08T16:00:00.000Z"><a href="/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/">7月 9 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/">将virtualbox的vdi镜像文件转换成kvm的qcow静像文件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://www.virtualbox.org" title="VirtualBox" target="_blank">VirtualBox</a>是我非常喜爱的虚拟化软件，其简单方便，单不是强大的配置让我很喜欢，特别是在网络的配置上，更是灵活多变。</p>
+<p>不过最近要测试<a href="http://www.linux-kvm.org/page/Main_Page" title="KVM" target="_blank">KVM</a>，想把之前的<a href="http://www.virtualbox.org" title="VirtualBox" target="_blank">VirtualBox</a>跑的 vm 迁移到<a href="http://www.linux-kvm.org/page/Main_Page" title="KVM" target="_blank">KVM</a>上来，重要的是迁移镜像文件了，配置文件目前似乎没有什么好的办法。</p>
+<p>基本上是照着<a href="http://blog.bodhizazen.net/linux/convert-virtualbox-vdi-to-kvm-qcow/" target="_blank">这篇文章</a>来做的，只是我按照它的方法，在第一步出了状况，修改了一下，下面是详细步骤：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-06-30T16:00:00.000Z"><a href="/2009/07/01/btrfs-introduction-and-benchmark/">7月 1 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/07/01/btrfs-introduction-and-benchmark/">Btrfs介绍及性能测试</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Linux 原生的 ext4 文件系统目前已经在一些最新的 Linux 发布版本中包含了，我也使用了一段时间，和 ext3 相比，有所改善但是不是那种非常显著的干劲，更详细的情况可以参考这篇文章 (<a href="http://www.linux-mag.com/id/7271" target="_blank">ext4 文件系统：介绍及性能测试</a>)。<br>不过我一直向往<a href="http://www.oracle.com/cn/products/servers-storage/solaris/index.html" target="_blank">Solaris</a>上的<a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS" target="_blank">ZFS</a>，觉得那才是真正的企业级文件系统，COW,CDP 等功能让人着迷，虽然目前 linux 上已经有基于<a href="http://fuse.sourceforge.net/" target="_blank">fuse</a>的<a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS" target="_blank">ZFS</a>实现，但是性能上就大打折扣了，直到<a href="https://btrfs.wiki.kernel.org/" title="Btrfs" target="_blank">Btrfs</a>文件系统的出现，让我看到了未来：  </p>
+<p><a href="https://btrfs.wiki.kernel.org/" title="Btrfs" target="_blank">Btrfs</a> 承若将赋予这个文件系统许多类似 ZFS 的企业级特征，甚至在性能和亮点上要超过<a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS" target="_blank">ZFS</a>。事实上，很多 Linux 专家认为<a href="https://btrfs.wiki.kernel.org/" title="Btrfs" target="_blank">Btrfs</a>应该是 Linux 未来的 一个关键点。<br>不过目前<a href="https://btrfs.wiki.kernel.org/" title="Btrfs" target="_blank">Btrfs</a>目前还没有完全发布，不过相信很快大家就能用到了，在正式使用之前，我们不妨对它做一些了解，甚至可以对其进行一些性能上的测试。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/07/01/btrfs-introduction-and-benchmark/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-23T16:00:00.000Z"><a href="/2009/04/24/have-bought-house/">4月 24 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/04/24/have-bought-house/">从此做一个快乐的房奴</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>人生的第一笔大买卖比我想像的来得快很多，就在落笔的那一刹那，我和 lancy 的未来 20 年就这样轻松的典当了出去，既然典当已经成为事实，那就不如快乐的享受这这种压力。</p>
+<p>于是，开始有了期待，有了梦想，有了更多的对房子设计的讨论，于是就会想着接下来的几个月赶紧的过去，能够让我们随心设计属于自己的空间，期待着，期待，从今天起，就做一个快乐的房奴吧！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-17T16:00:00.000Z"><a href="/2009/04/18/want-to-buy-house/">4月 18 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/04/18/want-to-buy-house/">打算买房了</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这几天看了几个处房子，也许是因为买房的要求迫在眉睫，所以没有考虑太多了，lancy 他们单位刚好搞团购，价格呢，也还在我们的承受范围之内，因此就定了下来。今天去交了定金，一周时间内，准备米米，正式签订购房合同。</p>
+<p>恩，很快就要做房奴和负翁了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-14T16:00:00.000Z"><a href="/2009/04/15/backup-remote-mysql-with-zrm/">4月 15 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/04/15/backup-remote-mysql-with-zrm/">使用Amanda ZRM备份远程MySQL数据库</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <figure class="highlight 本文写道最后的时候，我才发现 ZRM"><figcaption><span>for MySQL 的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库 test1,test2，你备份了这两个数据库，某一天，test2 数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复 test2，而是直接把 test1,test2 都恢复。那这绝对是一个噩梦。 </span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.
+</pre></td></tr></table></figure>
+
+<p><strong>Update：</strong><br>原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager" target="_blank">ZRM</a>备份是可以指定恢复特定的数据库的，刚才今天 mwf 的站点数据库需要恢复，测试了一下，完全没有问题。<br>具体的恢复办法，请看文末。<br><a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager" target="_blank">Zmanda Recovery Manager(ZRM)</a>提供了备份 MySQL 数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html" target="_blank">官方的介绍</a>。下面给出一个备份的实例。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/04/15/backup-remote-mysql-with-zrm/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-12T16:00:00.000Z"><a href="/2009/04/13/practice-amanda-backuping/">4月 13 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/04/13/practice-amanda-backuping/">Amanda集中备份实例</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <img src="http://www.zmanda.com/images/header/logo-zmanda.gif" class="left" title="Amanda Network Backup">
+
+<p><a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver" target="_blank">Amanda</a> 高级马里兰自动网络磁盘归档 (Advanced Maryland Automatic Network Disk Archiver 网络备份软件是我第一次接触 Linux 就听到过，只是从来都没有使用过，有需要备份得时候，就是自己写写简单的脚本，使用 cron 来做定时任务，也能基本满足需求。虽然曾经起心想用 Amanda，但限于没有适合的环境，只能作罢。</p>
+<p>现在的情况有所不同了，有 4,5 台服务器需要备份，涉及到不同的平台，其备份特性应该达到或者至少朝企业级标准靠拢，因此，这几天看了看 Amanda 的文档，做了一些测试，目前在我的环境下配置成功，特记录下来和大家分享。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/04/13/practice-amanda-backuping/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2009/page/2/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/archives/2009/page/4/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

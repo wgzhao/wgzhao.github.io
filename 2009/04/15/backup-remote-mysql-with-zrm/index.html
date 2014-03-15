@@ -1,0 +1,483 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>使用Amanda ZRM备份远程MySQL数据库 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="使用Amanda ZRM备份远程MySQL数据库"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-14T16:00:00.000Z"><a href="/2009/04/15/backup-remote-mysql-with-zrm/">4月 15 2009</a></time>
+      
+      
+  
+    <h1 class="title">使用Amanda ZRM备份远程MySQL数据库</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <figure class="highlight 本文写道最后的时候，我才发现 ZRM"><figcaption><span>for MySQL 的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库 test1,test2，你备份了这两个数据库，某一天，test2 数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复 test2，而是直接把 test1,test2 都恢复。那这绝对是一个噩梦。 </span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.
+</pre></td></tr></table></figure>
+
+<p><strong>Update：</strong><br>原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager" target="_blank">ZRM</a>备份是可以指定恢复特定的数据库的，刚才今天 mwf 的站点数据库需要恢复，测试了一下，完全没有问题。<br>具体的恢复办法，请看文末。<br><a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager" target="_blank">Zmanda Recovery Manager(ZRM)</a>提供了备份 MySQL 数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html" target="_blank">官方的介绍</a>。下面给出一个备份的实例。<br><a id="more"></a><br>先介绍备份的环境，如果大家看过之前的那篇<a href="http://blog.wgzhao.com/2009/04/13/practice-amanda-backuping.html" target="_blank">Amanda 集中备份实例</a>，那么大概就知道是什么样的一个网络架构了，承接上文，这里备份服务器还是 cp1.domain.com，MySQL 数据库分别运行在 cp2.domain.com 和 cp3.domain.com 上，需要备份其所有的数据库。</p>
+<h2 id=" 一、服务端的安装和配置 ">一、服务端的安装和配置</h2>
+<p>首先从官方站点下载对应系统的服务端程序，然后安装。注意：服务端与 perl-DBI,MySQL-client 程序库有依赖关系，安装之前先安装这个两个包。<br>安装完后,<code>/etc/mysql-zrm/</code>是其配置文件的所在地。<code>/etc/mysql-zrm/</code>目录下有一个<code>mysql-zrm.conf</code>文件，这是最重要的配置文件。在<code>/etc/mysql-zrm/</code>目录下，你可以创建一些目录，每一个目录就是一个备份集的名称，我这里为了直观，采取了主机名的方式来创建备份集</p>
+<pre><code>mkdir /etc/mysql-zrm/{cp2<span class="preprocessor">.domain</span><span class="preprocessor">.com</span>,cp3<span class="preprocessor">.domain</span><span class="preprocessor">.com</span>}
+<span class="keyword">cp</span>  /etc/mysql-zrm/{mysql-zrm<span class="preprocessor">.conf</span>,cp2<span class="preprocessor">.domain</span><span class="preprocessor">.com</span>/,cp3<span class="preprocessor">.domain</span><span class="preprocessor">.com</span>/}
+</code></pre><p><code>/etc/mysql-zrm/mysql-zrm.conf</code> 可以做为全局配置文件，针对每一台需要备份的数据库的不同，可以在备份集目录里的<code>mysql-zrm.conf</code>再定义，这里的定义可以覆盖全局定义。<br>首先，我们把一些全局定义信息配置在<code>/etc/mysql-zrm/mysql-zrm.conf</code>文件里</p>
+<pre><code><span class="variable">#cat</span> /etc/mysql<span class="attribute">-zrm</span>/mysql<span class="attribute">-zrm</span><span class="built_in">.</span>conf
+backup<span class="attribute">-level</span><span class="subst">=</span><span class="number">0</span>
+backup<span class="attribute">-mode</span><span class="subst">=</span>logical
+backup<span class="attribute">-type</span><span class="subst">=</span>regular
+destination<span class="subst">=</span>/yourpath/db
+compress<span class="subst">=</span><span class="number">1</span>
+compress<span class="attribute">-plugin</span><span class="subst">=</span>/bin/gzip
+encrypt<span class="subst">=</span><span class="number">1</span>
+encrypt<span class="attribute">-plugin</span><span class="subst">=</span><span class="string">"/usr/share/mysql-zrm/plugins/encrypt.pl"</span>
+decrypt<span class="attribute">-option</span><span class="subst">=</span><span class="string">"-d"</span>
+<span class="literal">all</span><span class="attribute">-databases</span><span class="subst">=</span><span class="number">1</span>
+user<span class="subst">=</span><span class="string">"backup-user"</span>
+password<span class="subst">=</span><span class="string">"securepassword"</span>
+mailto<span class="subst">=</span><span class="string">"your＠domain.com"</span>
+</code></pre><p>上面的配置信息应该比较直观。 然后配置每一台 MySQL 服务器的一些特有参数</p>
+<pre><code><span class="variable">#cat</span> /etc/mysql<span class="attribute">-zrm</span>/cp2<span class="built_in">.</span>domain<span class="built_in">.</span>com/mysql<span class="attribute">-zrm</span><span class="built_in">.</span>conf
+host<span class="subst">=</span><span class="string">"cp2.domain.com"</span>
+destination<span class="subst">=</span>/yourpath/db
+
+<span class="variable">#cat</span> /etc/mysql<span class="attribute">-zrm</span>/cp3<span class="built_in">.</span>domain<span class="built_in">.</span>com/mysql<span class="attribute">-zrm</span><span class="built_in">.</span>conf
+host<span class="subst">=</span><span class="string">"cp3.domain.com"</span>
+destination<span class="subst">=</span>/yourpath/db
+</code></pre><p>创建加密的密码文件</p>
+<pre><code>[root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment"># touch /etc/mysql-zrm/.passphrase</span>
+[root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment"># echo encryptpass &gt; /etc/mysql-zrm/.passphrase</span>
+[root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment"># chmod 700 /etc/mysql-zrm/.passphrase</span>
+</code></pre><h2 id=" 二、配置客户端 ">二、配置客户端</h2>
+<p>这里有两台机器，cp2 和 cp3，因为我们备份的类型一样，所以 cp2 的配置过程和 cp3 的配置过程一样，这里只描述 cp2 的配置过程</p>
+<ol>
+<li><p>登录 cp2 服务器 </p>
+</li>
+<li><p>用 MySQL 的管理员帐号（一般是 root）登录 MySQL 数据库</p>
+</li>
+<li><p>创建一个用户备份的帐号并授予一定的权限, 帐号的定义在备份服务器的<code>/etc/mysql-zrm/mysql-zrm.conf</code>文件里有定义，这里帐号是<code>backup-user</code>，密码是<code>securepassword</code></p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>mysql&gt; grant select, insert, update, create, drop, reload, shutdown,
+    -&gt; alter, super, lock tables, replication client on *.* to
+    -&gt; 'backup-user'@'cp1.domain.com' identified by 'securepassword';
+</pre></td></tr></table></figure>
+
+<p>提示：如果你需要备份的数据库不是全部，那么在授权的时候，最好是指定，而不是上面的 *.* 方式，安全为主！ </p>
+<h2 id=" 三、测试备份 ">三、测试备份</h2>
+<p>配置还是比较简单的，现在我们开始测试。 首先的用 root 帐号登录 cp1 机器，然后执行下面的指令：</p>
+<pre><code>root@cp1:/etc/mysql-zrm# mysql-zrm <span class="comment">--action backup --backup-level 0 --backup-set cp3.domain.com</span>
+backup:INFO: ZRM for MySQL Community Edition - version 2.1
+cp3.domain.com:backup:INFO: <span class="operator"><span class="keyword">START</span> <span class="keyword">OF</span> BACKUP
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">START</span>: Initialization
+cp3.<span class="keyword">domain</span>.com:backup:INFO: The quick backup-type <span class="keyword">is</span> supported <span class="keyword">only</span> <span class="keyword">for</span> snapshot backups. Setting backup-type <span class="keyword">to</span> <span class="string">'regular'</span>
+cp3.<span class="keyword">domain</span>.com:backup:WARNING: Binary logging <span class="keyword">is</span> off.
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-<span class="keyword">set</span>=cp3.<span class="keyword">domain</span>.com
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-<span class="keyword">date</span>=<span class="number">20090415180321</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: mysql-server-os=Linux/Unix
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-type=regular
+cp3.<span class="keyword">domain</span>.com:backup:INFO: host=cp3<span class="number">.3</span>yidc.cn
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-<span class="keyword">date</span>-epoch=<span class="number">1239789801</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: mysql-zrm-version=ZRM <span class="keyword">for</span> MySQL Community Edition - version <span class="number">2.1</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: mysql-version=<span class="number">5.0</span><span class="number">.45</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-directory=/yourpath/db/cp3.<span class="keyword">domain</span>.com/<span class="number">20090415180321</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-<span class="keyword">level</span>=<span class="number">0</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-mode=logical
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">END</span>: Initialization
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">START</span>: Running pre backup plugin
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">END</span>: Running pre backup plugin
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">START</span>: Flushing logs
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">END</span>: Flushing logs
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">START</span>: Creating logical backup
+cp3.<span class="keyword">domain</span>.com:backup:INFO: logical-databases=apachelogs dtc fireyang hnnoritz mysql s567 wordpress
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">END</span>: Creating logical backup
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">START</span>: Calculating backup <span class="keyword">size</span> &amp; checksums
+cp3.<span class="keyword">domain</span>.com:backup:INFO: <span class="keyword">last</span>-backup=/csdata/backup/db/cp3.<span class="keyword">domain</span>.com/<span class="number">20090415180226</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-<span class="keyword">size</span>=<span class="number">4.04</span> MB
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">END</span>: Calculating backup <span class="keyword">size</span> &amp; checksums
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">START</span>: Compression/Encryption
+cp3.<span class="keyword">domain</span>.com:backup:INFO: compress=/bin/gzip
+cp3.<span class="keyword">domain</span>.com:backup:INFO: encrypt=/usr/share/mysql-zrm/plugins/encrypt.pl
+cp3.<span class="keyword">domain</span>.com:backup:INFO: decrypt-<span class="keyword">option</span>=-d
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-<span class="keyword">size</span>-compressed=<span class="number">0.46</span> MB
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">END</span>: Compression/Encryption
+cp3.<span class="keyword">domain</span>.com:backup:INFO: <span class="keyword">read</span>-locks-<span class="keyword">time</span>=<span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: flush-logs-<span class="keyword">time</span>=<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: compress-encrypt-<span class="keyword">time</span>=<span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-<span class="keyword">time</span>=<span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span>
+cp3.<span class="keyword">domain</span>.com:backup:INFO: backup-status=Backup succeeded
+cp3.<span class="keyword">domain</span>.com:backup:INFO: Backup succeeded
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">START</span>: Running post backup plugin
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">END</span>: Running post backup plugin
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">START</span>: Mailing backup report
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">END</span>: Mailing backup report
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">START</span>: Cleanup
+cp3.<span class="keyword">domain</span>.com:backup:INFO: PHASE <span class="keyword">END</span>: Cleanup
+cp3.<span class="keyword">domain</span>.com:backup:INFO: <span class="keyword">END</span> <span class="keyword">OF</span> BACKUP</span>
+</code></pre><p>以上是备份 cp3.domain.com 的数据库，用同样的指令可以备份 cp2.domain.com 数据库。 </p>
+<h2 id=" 四、检验 ">四、检验</h2>
+<p>如果上述备份过程没有报错，那么接下来就要看看备份的数据是不是有效了。在 cp1 机器上执行下面的指令</p>
+<pre><code>root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment"># mysql-zrm --action  verify-backup --backup-set cp3.domain.com</span>
+verify-<span class="symbol">backup:</span><span class="constant">INFO</span><span class="symbol">:</span> <span class="constant">ZRM</span> <span class="keyword">for</span> <span class="constant">MySQL</span> <span class="constant">Community</span> <span class="constant">Edition</span> - version <span class="number">2.1</span>
+cp3.domain.<span class="symbol">com:</span>verify-<span class="symbol">backup:</span><span class="constant">INFO</span><span class="symbol">:</span> <span class="constant">Verification</span> successful
+
+root<span class="variable">@cp1</span><span class="symbol">:~</span><span class="comment"># mysql-zrm --action  verify-backup --backup-set cp2.domain.com</span>
+verify-<span class="symbol">backup:</span><span class="constant">INFO</span><span class="symbol">:</span> <span class="constant">ZRM</span> <span class="keyword">for</span> <span class="constant">MySQL</span> <span class="constant">Community</span> <span class="constant">Edition</span> - version <span class="number">2.1</span>
+cp2.domain.<span class="symbol">com:</span>verify-<span class="symbol">backup:</span><span class="constant">INFO</span><span class="symbol">:</span> <span class="constant">Verification</span> successful
+</code></pre><p>校验都没有报错，我们还可以看看备份的性能，备份的详细信息等，更多的使用方式，可以查看<code>mysql-zrm(1)</code></p>
+<pre><code>root@cp1:~<span class="comment"># mysql-zrm --action report --show backup-performance-info </span>
+
+REPORT TYPE : backup-performance-info 
+
+backup_set  backup_date                  backup_level     backup_size  backup_size_compressed     backup_time
+<span class="comment">----------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+cp3.domain.com  Wed <span class="number">15</span> Apr <span class="number">2009</span> <span class="number">06</span>:<span class="number">03</span>:<span class="number">21</span>                <span class="number">0</span>         <span class="number">4.04</span> MB  <span class="number">0.46</span> MB                    <span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span>
+cp3.domain.com  Wed <span class="number">15</span> Apr <span class="number">2009</span> <span class="number">06</span>:<span class="number">02</span>:<span class="number">26</span>                <span class="number">0</span>         <span class="number">4.04</span> MB  <span class="number">0.46</span> MB                    <span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span>
+cp3.domain.com  Wed <span class="number">15</span> Apr <span class="number">2009</span> <span class="number">06</span>:<span class="number">01</span>:<span class="number">38</span>                <span class="number">0</span>         <span class="number">4.04</span> MB  <span class="number">0.46</span> MB                    <span class="number">00</span>:<span class="number">00</span>:<span class="number">03</span>
+cp2.domain.com  Wed <span class="number">15</span> Apr <span class="number">2009</span> <span class="number">05</span>:<span class="number">19</span>:<span class="number">57</span>                <span class="number">0</span>       <span class="number">315.05</span> MB  <span class="number">121.38</span> MB                  <span class="number">00</span>:<span class="number">02</span>:<span class="number">36</span>
+cp3.domain.com  Wed <span class="number">15</span> Apr <span class="number">2009</span> <span class="number">05</span>:<span class="number">19</span>:<span class="number">33</span>                <span class="number">0</span>         <span class="number">4.03</span> MB  <span class="number">0.46</span> MB                    <span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span>      
+
+root@cp1:~<span class="comment"># mysql-zrm --action list --backup-set cp3.domain.com</span>
+list:INFO: ZRM <span class="keyword">for</span> MySQL Community Edition - <span class="built_in">version</span> <span class="number">2.1</span>
+<span class="number">0</span> /csdata/backup/db/cp3.domain.com/<span class="number">20090415180321</span>
+Index File
+{   <span class="built_in">decrypt</span>-option=-d
+    backup-status=Backup succeeded
+    mysql-<span class="built_in">version</span>=<span class="number">5.0</span><span class="number">.45</span>
+    backup-<span class="built_in">date</span>=<span class="number">20090415180321</span>
+    mysql-zrm-<span class="built_in">version</span>=ZRM <span class="keyword">for</span> MySQL Community Edition - <span class="built_in">version</span> <span class="number">2.1</span>
+    <span class="built_in">compress</span>-<span class="built_in">encrypt</span>-<span class="built_in">time</span>=<span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span>
+    backup-type=regular
+    logical-databases=apachelogs dtc fireyang hnnoritz mysql s567 wordpress
+    mysql-server-os=Linux/Unix
+    backup-level=<span class="number">0</span>
+    <span class="keyword">last</span>-backup=/csdata/backup/db/cp3.domain.com/<span class="number">20090415180226</span>
+    backup-size-compressed=<span class="number">0.46</span> MB
+    backup-size=<span class="number">4.04</span> MB
+    <span class="built_in">encrypt</span>=/usr/share/mysql-zrm/plugins/<span class="built_in">encrypt</span>.pl
+    backup-<span class="built_in">set</span>=cp3.domain.com
+    backup-<span class="built_in">time</span>=<span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span>
+    host=cp3<span class="number">.3</span>yidc.cn
+    backup-<span class="built_in">directory</span>=/csdata/backup/db/cp3.domain.com/<span class="number">20090415180321</span>
+    flush-logs-<span class="built_in">time</span>=<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>
+    <span class="built_in">read</span>-locks-<span class="built_in">time</span>=<span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span>
+    <span class="built_in">compress</span>=/bin/gzip
+    backup-<span class="built_in">date</span>-epoch=<span class="number">1239789801</span>
+}
+</code></pre><h2 id=" 五、恢复 ">五、恢复</h2>
+<p>假定 cp2 服务器上的数据库<code>ehcpbackup20090403170240</code>丢失了（这里是我人工删除了这个库），我们看看如何从备份里恢复。</p>
+<ol>
+<li><p>登录 cp1 机器 </p>
+</li>
+<li><p>执行下面的命令，看看 cp2 机器上的数据库现在备份在哪里 (为了显示直观，输出结果有处理）</p>
+</li>
+</ol>
+<pre><code>    root@cp1:~<span class="preprocessor"># mysql-zrm-reporter --show restore-info --where backup-set=cp2.domain.com</span>
+
+    REPORT TYPE : restore-info 
+
+    backup_set  backup_date      backup_level  backup_directory
+    ------------------------------------------------------------------------------
+    cp3<span class="preprocessor">.domain</span><span class="preprocessor">.com</span>  <span class="number">15</span>/<span class="number">4</span> <span class="number">2009</span>    <span class="number">0</span>  /yourpath/db/cp2<span class="preprocessor">.domain</span><span class="preprocessor">.com</span>/<span class="number">20090415171957</span>
+</code></pre><ol>
+<li>然后执行真正的备份指令：</li>
+</ol>
+<pre><code>    root@cp1:~<span class="comment">#mysql-zrm --action restore --backup-set cp2.domain.com --source-directory \</span>
+     /yourpath/db/cp2.domain.com/<span class="number">20090415171957</span>
+    INFO: ZRM <span class="keyword">for</span> MySQL Enteprise Edition - <span class="built_in">version</span> <span class="number">1.1</span>
+    WARNING: Binary logging is off. Incremental backups cannot be done.
+    INFO: Restore done <span class="operator">in</span> <span class="number">169</span> <span class="built_in">seconds</span>.
+    MySQL server has been shutdown. Please restart <span class="keyword">after</span> verification.
+</code></pre><ol>
+<li>重启 cp2 机器上的 MySQL 服务。 </li>
+</ol>
+<p>到此恢复完成。 </p>
+<p><strong>Update:2009-04-29 </strong></p>
+<h3 id=" 恢复特定的数据库 ">恢复特定的数据库</h3>
+<p>以上恢复方式是恢复全部的数据库，如果仅仅是一个数据库坏了，那么我可以采取 <code>--database &quot;dbname1 dbname2&quot;</code>的方式恢复。比如：</p>
+<pre><code>root@cp1:~<span class="comment"># mysql-zrm --action restore --backup-set cp2.3yidc.cn --source-directory /csdata/backup/db/cp2.3yidc.cn/20090419030002/ --database "ewmwiki ewmuc" --verbose</span>
+restore:INFO: ZRM <span class="keyword">for</span> MySQL Community Edition - <span class="built_in">version</span> <span class="number">2.1</span>
+restore:INFO: Reading options <span class="built_in">from</span> <span class="built_in">file</span> /etc/mysql-zrm/mysql-zrm.conf
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: Reading options <span class="built_in">from</span> <span class="built_in">file</span> /etc/mysql-zrm/cp2<span class="number">.3</span>yidc.cn/mysql-zrm.conf
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: Using /usr/share/mysql-zrm/plugins/ssh-copy.pl <span class="keyword">as</span> <span class="operator">the</span> default plugin since copy-plugin has <span class="operator">not</span> been specified
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: The quick backup-type is supported only <span class="keyword">for</span> snapshot backups. Setting backup-type <span class="built_in">to</span> <span class="string">'regular'</span>
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: Mail address: mlsx.xplore@gmail.com is ok
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: ZRM Temporary configuration <span class="built_in">file</span> = /etc/mysql-zrm/cp2<span class="number">.3</span>yidc.cn/tmpbRcFA.conf
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: {
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     <span class="built_in">encrypt</span>-plugin=/usr/share/mysql-zrm/plugins/<span class="built_in">encrypt</span>.pl
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     backup-level=<span class="number">0</span>
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     <span class="built_in">encrypt</span>=/usr/share/mysql-zrm/plugins/<span class="built_in">encrypt</span>.pl
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     mailto=mlsx.xplore@gmail.com
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     all-databases=<span class="number">1</span>
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     destination=/csdata/backup/db
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     databases=ewmwiki ewmuc
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     <span class="built_in">decrypt</span>-option=-d
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     source-<span class="built_in">directory</span>=/csdata/backup/db/cp2<span class="number">.3</span>yidc.cn/<span class="number">20090419030002</span>/
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     host=cp2<span class="number">.3</span>yidc.cn
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     password=******
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     backup-mode=logical
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     backup-type=regular
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     <span class="built_in">compress</span>-plugin=/bin/gzip
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     user=backup-user
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     <span class="built_in">compress</span>=/bin/gzip
+cp2<span class="number">.3</span>yidc.cn:restore:INFO:     copy-plugin=/usr/share/mysql-zrm/plugins/ssh-copy.pl
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: }
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: Getting mysql variables
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: mysqladmin <span class="comment">--user="backup-user" --password="*****" --host="cp2.3yidc.cn" variables</span>
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: datadir is /var/lib/mysql/
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: mysql_version is <span class="number">5.0</span><span class="number">.45</span>
+cp2<span class="number">.3</span>yidc.cn:restore:WARNING: Binary logging is off.
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: InnoDB data <span class="built_in">file</span> are /var/lib/mysql/ibdata1
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: InnoDB <span class="built_in">log</span> dir is /var/lib/mysql/.
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: Command used is <span class="string">'cat "/csdata/backup/db/cp2.3yidc.cn/20090419030002/backup-data"  | "/usr/share/mysql-zrm/plugins/encrypt.pl" -d |  "/bin/gzip" -d  | tar  --same-owner -xpsC  "/csdata/backup/db/cp2.3yidc.cn/20090419030002/"  2&gt;/tmp/aAi1Fwp4DT'</span>
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: restoring <span class="keyword">using</span> <span class="command"><span class="keyword">command</span> <span class="title">mysql</span> --<span class="title">user</span>=<span class="string">"backup-user"</span> --<span class="title">password</span>=<span class="string">"*****"</span> --<span class="title">host</span>=<span class="string">"cp2.3yidc.cn"</span> -<span class="title">e</span> <span class="string">"set character_set_client=utf8;set character_set_connection=utf8;set character_set_database=utf8;set character_set_results=utf8;set character_set_server=utf8;source /tmp/hGKhPYbpB8;"</span></span>
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: Restored database(s) <span class="built_in">from</span> logical backup:  ewmwiki ewmuc
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: Removing all <span class="operator">of</span> <span class="operator">the</span> uncompressed/unencrypted data
+cp2<span class="number">.3</span>yidc.cn:restore:INFO: Restore done <span class="operator">in</span> <span class="number">30</span> <span class="built_in">seconds</span>
+</code></pre>
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/amanda/">amanda</a>, <a href="/tags/backup/">backup</a>, <a href="/tags/mysql/">mysql</a>, <a href="/tags/zrm/">zrm</a>, <a href="/tags/备份/">备份</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2009/04/15/backup-remote-mysql-with-zrm/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

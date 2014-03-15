@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>/etc/group,/etc/gshadow释疑 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="/etc/group,/etc/gshadow释疑"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-11T16:00:00.000Z"><a href="/2007/03/12/some-tips-about-group-and-gshadow/">3月 12 2007</a></time>
+      
+      
+  
+    <h1 class="title">/etc/group,/etc/gshadow释疑</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>下午<a href="http://weiling00.spaces.live.com/" target="_blank">welling</a>在 MSN 上问我，你知道 /etc/group 的第二项是什么意思吗？这项中! 和 x 分别代表什么意思呢？<br>之前我还真的没有注意到这个问题。于是先 man group 了一把，给出了的说明是  </p>
+<blockquote>
+<p>password the (encrypted) group password. If this field is empty, no<br>password is needed.</p>
+</blockquote>
+<p><a id="more"></a><br>从这个说明来看，应该是设置 group 的密码（之前我还不知道组也有密码一说）。但是现在这个说明太过于简单，  比如没有提及到一些特别字符，比如! 和 x，而这些字符在<code>/etc/passwd</code>文件的第二项是有不同含义的。<br>google 了一下，有找出了一个<code>/etc/gshadow</code>文件，到这里，我的猜测便认<code>为 /etc/group</code>的方式和<code>/etc/passwd</code>的方式一致。第二项表示密码，如果是空的，表示没有密码，如果是 x，表示该密码设置在对应的<code>/etc/gshadow</code>里。如果是!，应该表示禁止这个组。</p>
+<p>于是我把我的理解告诉了 welling，不过我说我没有时间来证明这点。</p>
+<p>现在有时间，我又 google 了一下，找了一篇比较全面的文章，是北南南北兄的“用户（User）和用户组（Group）配置文件详解”<br>，他给出了这样的一个解释：</p>
+<p>root:x:0:root,linuxsir<br>注：用户组 root，x 是密码段，表示没有设置密码，GID 是 0,root 用户组下包括 root、linuxsir 以及 GID 为 0 的其它用户（可以通过 /etc/passwd 查看）；；</p>
+<p>beinan:x:500:linuxsir<br>注：用户组 beinan，x 是密码段，表示没有设置密码，GID 是 500,beinan 用户组下包括 linuxsir 用户及 GID 为 500 的用户（可以通过 /etc/passwd 查看）；<br>linuxsir:x:502:linuxsir<br>注：用户组 linuxsir，x 是密码段，表示没有设置密码，GID 是 502,linuxsir 用户组下包用户 linuxsir 及 GID 为 502 的用户（可以通过 /etc/passwd 查看）；</p>
+<p>helloer:x:503:<br>注：用户组 helloer，x 是密码段，表示没有设置密码，GID 是 503,helloer 用户组下包括 GID 为 503 的用户，可以通过 /etc/passwd 查看；</p>
+<p>这就和我前面的猜想有点不对了。为了搞清楚到底是怎么样的，还是用事实来证明比较好。<br>验证步骤如下：</p>
+<p>1）用 root 帐号登录系统，先创建两个测试组 group1,group2，然后创建两个不同的测试用户 user1,user2, 其中 user1 分别属于组 group1,group2，而 user2 属于 group2.</p>
+<pre><code>[root<span class="variable">@dxs</span> ~]<span class="comment"># groupadd -g 1001 group1</span>
+[root<span class="variable">@dxs</span> ~]<span class="comment"># groupadd -g 1002 group2</span>
+[root<span class="variable">@dxs</span> ~]<span class="comment"># useradd -u 5001 -g 1001 -G 1001,1002 user1</span>
+[root<span class="variable">@dxs</span> ~]<span class="comment"># useradd -u 5002 -g 1002 -G 1002 user2</span>
+[root<span class="variable">@dxs</span> ~]<span class="comment"># tail -n 2 /etc/passwd</span>
+<span class="symbol">user1:</span><span class="symbol">x:</span><span class="number">5001</span><span class="symbol">:</span><span class="number">1001</span><span class="symbol">:</span><span class="symbol">:/home/user1</span><span class="symbol">:/bin/bash</span>
+<span class="symbol">user2:</span><span class="symbol">x:</span><span class="number">5002</span><span class="symbol">:</span><span class="number">1002</span><span class="symbol">:</span><span class="symbol">:/home/user2</span><span class="symbol">:/bin/bash</span>
+[root<span class="variable">@dxs</span> ~]<span class="comment"># tail -n 2 /etc/group</span>
+<span class="symbol">group1:</span><span class="symbol">x:</span><span class="number">1001</span><span class="symbol">:user1</span>
+<span class="symbol">group2:</span><span class="symbol">x:</span><span class="number">1002</span><span class="symbol">:user1</span>,user2
+</code></pre><p>2) 测试不同的 /etc/group 第二项设置而产生的不同结果。<br>首先，我们看看在默认值情况下，切换用户会发生什么情况：</p>
+<pre><code>[user1<span class="variable">@dxs</span> ~]<span class="variable">$ </span>touch first-user1-file
+[user1<span class="variable">@dxs</span> ~]<span class="variable">$ </span>mkdir first-user1-dir
+[user1<span class="variable">@dxs</span> ~]<span class="variable">$ </span>ls -lh
+总用量 <span class="number">4.0</span>K
+drwxr-xr-x <span class="number">2</span> user1 group1 <span class="number">4.0</span>K <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span><span class="number">04</span> first-user1-dir
+-rwxr–r– <span class="number">1</span> user1 group1 <span class="number">0</span> <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span><span class="number">04</span> first-user1-file
+[user1<span class="variable">@dxs</span> ~]<span class="variable">$ </span>newgrp group2
+[user1<span class="variable">@dxs</span> ~]<span class="variable">$ </span>touch second-user1-file
+[user1<span class="variable">@dxs</span> ~]<span class="variable">$ </span>mkdir second-user1-dir
+[user1<span class="variable">@dxs</span> ~]<span class="variable">$ </span>ls -ldh se*
+drwxr-xr-x <span class="number">2</span> user1 group2 <span class="number">4.0</span>K <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span><span class="number">10</span> second-user1-dir
+-rw-r–r– <span class="number">1</span> user1 group2 <span class="number">0</span> <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span>09 second-user1-file
+</code></pre><p>从这个结果来看，切换用户组后，并没有要求输入密码，同时通过创建文件和目录，可以知道的确已经切换帐号了。  这里不要输入密码的原因应该是 user1 因为已经同时属于 group1，group2 两个组了，因此这仅仅是内部的一次切换，不要输入密码。<br>下面我们重点来看看 user2  </p>
+<pre><code>[root<span class="variable">@dxs</span> ~]<span class="comment"># su – user2</span>
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>id
+uid=<span class="number">5002</span>(user2) gid=<span class="number">1002</span>(group2) groups=<span class="number">1002</span>(group2)
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>touch first-user2-file
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>mkdir first-user2-dir
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>ls -ldh fi*
+drwxr-xr-x <span class="number">2</span> user2 group2 <span class="number">4.0</span>K <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span><span class="number">13</span> first-user2-dir
+-rw-r–r– <span class="number">1</span> user2 group2 <span class="number">0</span> <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span><span class="number">13</span> first-user2-file
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>newgrp group1
+<span class="constant">Password</span><span class="symbol">:</span>
+<span class="symbol">newgrp:</span> <span class="constant">Permission</span> denied
+</code></pre><p>这里要求输入密码，但是我们并没有设置 group1 的密码，所以无论输入什么都会告知权限不允许，而此时的<code>/etc/group</code>中对应的项是字母 x，我们认为密码是在 /etc/gshadow 里，而又根据 /etc/passwd 的惯例，第一次创建帐号后，密码是锁定的，也就是无论你输入什么样的密码都不正确，所以这里的 group1 应该和也 /etc/passwd 同样的策略。<br>那么，如果我们把这个位置设置为空，是否意味着可以不要输入密码呢？我们试试</p>
+<pre><code>oot<span class="variable">@dxs</span> ~]<span class="comment"># tail -n 2 /etc/group</span>
+<span class="symbol">group1:</span><span class="symbol">:</span><span class="number">1001</span><span class="symbol">:user1</span>
+<span class="symbol">group2:</span><span class="symbol">x:</span><span class="number">1002</span><span class="symbol">:user1</span>,user2
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>newgrp group1
+<span class="constant">Password</span><span class="symbol">:</span>
+<span class="symbol">newgrp:</span> <span class="constant">Permission</span> denied
+</code></pre><p>还是需要你输入密码。直接敲回车也没有用。<br>再改成!，试试</p>
+<pre><code> [user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>newgrp group1 
+ <span class="constant">Password</span><span class="symbol">:</span> 
+ <span class="symbol">newgrp:</span> <span class="constant">Permission</span> denied 
+</code></pre><p>还是不行。</p>
+<p>这这点来看，无论这项如何设置，切换的时候都是需要密码的，那我我们就从 /etc/gshadow 上面着手看看。/etc/gshadow 的第二项默认是!, 我们分别改成 x 以及空字符看看效果（/etc/group 的第二项保留为空）</p>
+<pre><code>[root<span class="variable">@dxs</span> ~]<span class="comment"># grep 'group1' /etc/gshadow</span>
+<span class="symbol">group1:</span><span class="symbol">:</span><span class="symbol">:user1</span>
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>newgrp group1
+<span class="symbol">newgrp:</span> <span class="constant">Permission</span> denied
+[root<span class="variable">@dxs</span> ~]<span class="comment"># grep 'group1' /etc/gshadow</span>
+<span class="symbol">group1:</span><span class="symbol">x:</span><span class="symbol">:user1</span>
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>newgrp group1
+<span class="constant">Password</span><span class="symbol">:</span>
+<span class="symbol">newgrp:</span> <span class="constant">Permission</span> denied
+</code></pre><p>从这个实验来看似乎为空的时候直接就禁止了，没有给你输入密码的机会，而如果是 x，则和! 没有区别。<br>那我们试试有密码的情况是如何的：</p>
+<pre><code>[root@dxs ~]<span class="preprocessor"># gpasswd group1</span>
+Changing the password <span class="keyword">for</span> <span class="keyword">group</span> group1
+<span class="keyword">New</span> Password:(here input password abc123)
+Re-enter <span class="keyword">new</span> password:(same <span class="keyword">to</span> above)
+[root@dxs ~]<span class="preprocessor"># grep 'group1' /etc/gshadow</span>
+group1:XMjSjdI/JIo5E::user1
+</code></pre><p>很明显已经设置了组 group1 的密码。我们再切换试试</p>
+<pre><code>[root<span class="variable">@dxs</span> ~]<span class="comment"># su – user2</span>
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>id
+uid=<span class="number">5002</span>(user2) gid=<span class="number">1002</span>(group2) groups=<span class="number">1002</span>(group2)
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>newgrp group1
+<span class="constant">Password</span><span class="symbol">:</span>
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>pwd
+/home/user2
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>mkdir second-user2-dir
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>touch second-user2-file
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>ls -ldh *
+drwxr-xr-x <span class="number">2</span> user2 group2 <span class="number">4.0</span>K <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span><span class="number">13</span> first-user2-dir
+-rw-r–r– <span class="number">1</span> user2 group2 <span class="number">0</span> <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span><span class="number">13</span> first-user2-file
+drwxr-xr-x <span class="number">2</span> user2 group1 <span class="number">4.0</span>K <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span><span class="number">30</span> second-user2-dir
+-rw-r–r– <span class="number">1</span> user2 group1 <span class="number">0</span> <span class="number">3</span>月 <span class="number">12</span> <span class="number">20</span><span class="symbol">:</span><span class="number">30</span> second-user2-file
+[user2<span class="variable">@dxs</span> ~]<span class="variable">$ </span>id
+uid=<span class="number">5002</span>(user2) gid=<span class="number">1001</span>(group1) groups=<span class="number">1002</span>(group2)
+</code></pre><p>这这个结果来看，我们通过输入正确的密码切换了组，通过创建文件和目录可以印证这点。<br>id 命令更能清除的看到这点，user2 的 gid 由之前的 1002(group2) 变成了 1001(group1)。</p>
+<p>从这里总结来看是这样的</p>
+<p>1）/etc/group 文件的第二项表示密码，密码默认设置在 /etc/gshadow 文件文件。该项不存在特殊字符。<br>2）/etc/gshadow 的第二项保存对应组的密码，切换时需要提供该密码。当该项为空时，直接禁止组切换，如果是!,x 这样的字符，提供密码输入机会，但是无法切换，实际上他认为组的密码的密文是! 或者 x，因此!,x 在这里也不是特殊字符了。</p>
+<p>在要结束测试的时候，在 google 发现有一个帖子这样描述 unix 下的<code>/etc/group</code>文件中的第二项：</p>
+<blockquote>
+<p>Password Not used. Group administrators are provided instead of group passwords. See the /etc/security/group file for more information.</p>
+</blockquote>
+<p>于是到 linux 下对应的目录看了看，group 文件是没有，但是<code>group.conf</code>文件确有。默认里面只有注释。<br>这个文件属于 pam 包的，那也就意味着他与插入式认证有关。找到一段相关说明，大家可以看看：</p>
+<p>这个模块根据用户名和发起服务请求的终端，提供组分类功能。<br>   这个模块不对用户进行验证，而是为用户赋予组成员关系。这种组成员关系是根据用户请求的服务划分的，在<code>/etc/security/group.conf</code>文件中以文本的方式设置。<br>想要这个模块正常工作，需要准确设置 /<code>etc/security/group.conf</code>文件。其格式如下：</p>
+<pre><code> services; ttys; users; <span class="keyword">times</span>; groups
+</code></pre><p>前四项和<code>pam_time</code>配置文件:<code>/etc/security/pam_time.conf</code>或者 time.conf 中的相同。</p>
+<p>groups 是一些以逗号或者空格分开的文本字符串，表示一些组名。如果用户的应用程序满足前四项，则用户就被加入到第五项定义的组中。</p>
+<p>这个模块能否起作用取决于用户对文件系统的访问权限。这一点是指，一旦用户成为一个组的成员，这个用户就可能利用获得的权限试图建立一个 setgid 程序。而以后，如果这个用户不再属于这个组，他就可以通过这个程序非法回到这个组中。由于这个原因，用户具有写权限的文件系统需要非常严格的限制，如果文件系统在 mount 时，被设置为 nosuid，那用户就无法建立和执行这样的程序。因此，使用这个模块时，用户具有写权限的所有文件系统都需要使用 nosuid 参数 mount。<br><code>pam_group</code>的作用和<code>/etc/group</code>文件是并行的，如果用户被加入的这个模块定义的任何组中，同时也被加入到<code>/etc/group</code>文件中；反之亦然。</p>
+<p>ok，group 的问题先告一段落，再遇到问题，在研究。感谢 welling 向我提出的这个问题，又让我对<code>/etc/group</code>多了解了一层。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags//etc/security/group.conf/">/etc/security/group.conf</a>, <a href="/tags/group.conf/">group.conf</a>, <a href="/tags/gshadow/">gshadow</a>, <a href="/tags/newgrp/">newgrp</a>, <a href="/tags/pam_group.so/">pam_group.so</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2007/03/12/some-tips-about-group-and-gshadow/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

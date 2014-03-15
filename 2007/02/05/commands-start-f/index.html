@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>\[/sbin学习\]f\*命令 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="\[/sbin学习\]f\*命令"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-02-04T16:00:00.000Z"><a href="/2007/02/05/commands-start-f/">2月 5 2007</a></time>
+      
+      
+  
+    <h1 class="title">\[/sbin学习\]f\*命令</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/sbin 下 f 开头的命令如下</p>
+<blockquote>
+<p>fdisk fixfiles fsck.cramfs fsck.ext3 fsck.ocfs2 fsck.vfat fuser findfs<br>fsck fsck.ext2 fsck.msdos fsck.reiserfs fsck.xfs fxload </p>
+</blockquote>
+<p>其中 fsck.reiserfs 是 reiserfsck 命令的软连接，f 开头的命令中 fsck 命令套件占了绝大部分。<br>findfs: 根据标签 (label) 或者 UUID 号来查询文件系统。他会搜索整个磁盘，看是否有匹配的标签或者 UUID 没有，如果有，则打印到标注输出上。他也是<a href="http://e2fsprogs.sf.net" target="_blank">e2fsprogs</a>项目的一部分。<br><a id="more"></a><br>一个简单的例子：</p>
+<pre><code>[root<span class="variable">@lancy</span> sbin]<span class="comment"># findfs –help</span>
+<span class="constant">Usage</span><span class="symbol">:</span> findfs <span class="constant">LABEL</span>=|<span class="constant">UUID</span>=
+[root<span class="variable">@lancy</span> sbin]<span class="comment"># findfs LABEL=/</span>
+/dev/hda5
+[root<span class="variable">@lancy</span> sbin]<span class="comment"># findfs LABEL=/home</span>
+<span class="symbol">findfs:</span> <span class="constant">Unable</span> to resolve <span class="string">'LABEL=/home'</span>
+</code></pre><p>我没有搞清楚这个命令到底有什么用或者应该在什么情况下使用？因为知道 LABEL 或者 UUID 并不像平常知道某一个文件那样容易记住。所以他和 find 的使用范围相比，就小了很多了，难道他有意想不到的用途？</p>
+<p>fixfiles:  修复文件安全上下文 (security contexts)。这是一个 shell 脚本，主要是用来校正文件系统上的安全上下文数据库（扩展属性）。仔细看了帮助，也作了一些测试，没有明白他要表达什么，刚开始以为是他会恢复我原来修改过某些配置文件到初始状态，当经过测试，似乎不是这回事。所属于 policycoreutils<br>RPM 包，这是 SELinux 的一部分。</p>
+<p>一直以来 SElinux 都没有怎么用过，据说非常难配置，<sf.net>上记得一个项目就是做 SELinux 的配置文件前端。<br>看了从国防出来的产品还真的蛮复杂的。<br>唯一的一次使用了 SELinux 是在一次安装 FC4 的过程中，问我是否打开 SELinux，我想既然是完全，那就用吧。<br>因此打开了。安装后，马上要和其他电脑联网，主要要从别人的机器上 copy 东西到我的电脑上，首先使用 ftp 模式，打开默认的 vsftp，用普通动帐号登录，看上去一切正常，但是就是没有办法写入，以为是配置问题，于是把配置文件折腾个底朝天，结果还是无法写入。放弃，改用 SMB 共享，结果一样，无论我如何指定<code>writable=yes</code>，就是无法写入。最后还是要别人共享，copy 过来的。当时没有往这个方面想，因为人很着急，回来后，重启 Linux，启动过程看到了 enable SELinux 一项，于是马上想到，肯定是这个该死的东西，也没有去想如何配置了，直接 disable 了。</p>
+<p>fuser：使用文件或者套节字来表示识别进程。我常用的他的两个功能：查看我需要的进程和我要杀死我查到的进程。<br>比如当你想 umount 光驱的时候，结果系统提示你设备正在使用或者正忙，可是你又找不到到底谁使用了他。这个时候 fuser 可派上用场了。</p>
+<pre><code>[root@lancy sbin]# eject
+umount: /media/cdrom: device is busy
+umount: /media/cdrom: device is busy
+eject: unmount of <span class="smartquote">`/media/cdrom'</span> failed
+[root@lancy sbin]# fuser /mnt/cdrom
+/mnt/cdrom: 4561c 5382c
+[root@lancy sbin]# ps -ef |egrep <span class="emphasis">'(4561|5382)'</span> |grep -v grep
+root 4561 4227 0 20:13 pts/1 00:00:00 bash
+root 5382 4561 0 21:42 pts/1 00:00:00 vim Autorun.inf
+</code></pre><p>示例中，我想弹出光驱，系统告诉我设备忙着，于是采用 fuser 命令，参数是你文件或 scoket，fuser 将查出那些使用了他。<br>4561c,5382c 表示目前用两个进程在占用着 /mnt/cdrom，分别是 4561,5382, 进程 ID 后的字母表示占用资源的方式，有下面几种表示：  </p>
+<p> c 当前路径 (current directory.) 我的理解是表示这个资源的占用是以文件目录方式，也就是进进入了需要释放的资源的路径，这是最常用的资源占用方式。<br>e 正在运行可执行文件（executable being run.），比如运行了光盘上的某个程序<br>f 打开文件（ open file），缺省模式下 f 忽略。所以上面的例子中，虽然是开打了光盘上的 Autorun.inf 文件，但是给出的标识是 c，而不是 f。 r<br>root 目录（root directory）. 没有明白什么意思，难道是说进入了 /root 这个特定目录？<br>m mmap 文件或者共享库 ( mmap’ed file or shared library). 这应该是说某个进程使用了你要释放的资源的某个共享文件。 </p>
+<p>在查找的同时，你还可定指定一些参数，比如</p>
+<p> -k 杀死这些正在访问这些文件的进程。除非使用 -signal 修改信号，否则将发送 SIGKILL 信号。<br> -i 交互模式<br> -l 列出所有已知的信号名称。<br> -n 空间，选择不同的名字空间，可是 file,udp,tcp。默认是 file，也就是文件。<br> -signal 指定发送的信号，而不是缺省的 SIGKILL<br> -4 仅查询 IPV4 套接字<br> -6 仅查询 IPV6 套接字   </p>
+<ul>
+<li>重置所有的选项，将信息设回 SIGKILL</li>
+</ul>
+<p>再看下面的例子</p>
+<pre><code>[root<span class="variable">@lancy</span> sbin]<span class="comment"># fuser -l</span>
+<span class="constant">HUP</span> <span class="constant">INT</span> <span class="constant">QUIT</span> <span class="constant">ILL</span> <span class="constant">TRAP</span> <span class="constant">ABRT</span> <span class="constant">IOT</span> <span class="constant">BUS</span> <span class="constant">FPE</span> <span class="constant">KILL</span> <span class="constant">USR1</span> <span class="constant">SEGV</span> <span class="constant">USR2</span> <span class="constant">PIPE</span> <span class="constant">ALRM</span> <span class="constant">TERM</span>
+<span class="constant">STKFLT</span> <span class="constant">CHLD</span> <span class="constant">CONT</span> <span class="constant">STOP</span> <span class="constant">TSTP</span> <span class="constant">TTIN</span> <span class="constant">TTOU</span> <span class="constant">URG</span> <span class="constant">XCPU</span> <span class="constant">XFSZ</span> <span class="constant">VTALRM</span> <span class="constant">PROF</span> <span class="constant">WINCH</span> <span class="constant">IO</span> <span class="constant">PWR</span> <span class="constant">SYS</span>
+<span class="constant">UNUSED</span>
+</code></pre><p>现在我们试试 fuser -k 的威力：</p>
+<pre><code>root<span class="variable">@lancy</span> sbin]<span class="comment"># fuser -k /mnt/cdrom</span>
+/mnt/cdrom: <span class="number">4561</span>c <span class="number">5382</span>c
+<span class="keyword">kill</span> <span class="number">5382</span>: 没有那个进程
+No automatic removal. Please <span class="keyword">use</span> umount /media/cdrom
+[root<span class="variable">@lancy</span> sbin]<span class="comment"># eject</span>
+</code></pre><p>套节字方式的使用：</p>
+<pre><code>[root<span class="variable">@lancy</span> sbin]<span class="comment"># fuser -4 -n tcp 3306</span>
+<span class="symbol">here:</span> <span class="number">3306</span>
+<span class="number">3306</span>/<span class="symbol">tcp:</span> <span class="number">5595</span>
+[root<span class="variable">@lancy</span> sbin]<span class="comment"># ps -ef |grep 5595 |grep -v grep</span>
+mysql <span class="number">5595</span> <span class="number">5563</span> <span class="number">0</span> <span class="number">22</span><span class="symbol">:</span><span class="number">24</span> pts/<span class="number">0</span> <span class="number">00</span><span class="symbol">:</span><span class="number">00</span><span class="symbol">:</span><span class="number">00</span> /usr/libexec/mysqld –defaults-file=<span class="regexp">/etc/my</span>.cnf –basedir=<span class="regexp">/usr –datadir=/var</span><span class="regexp">/lib/mysql</span> –user=mysql –pid-file=<span class="regexp">/var/run</span><span class="regexp">/mysqld/mysqld</span>.pid –skip-locking –socket=<span class="regexp">/var/lib</span><span class="regexp">/mysql/mysql</span>.sock
+[root<span class="variable">@lancy</span> sbin]<span class="comment"># fuser -4 -n tcp 80</span>
+<span class="symbol">here:</span> <span class="number">80</span>
+<span class="number">80</span>/<span class="symbol">tcp:</span> <span class="number">5685</span> <span class="number">5688</span> <span class="number">5689</span> <span class="number">5690</span> <span class="number">5691</span> <span class="number">5692</span> <span class="number">5693</span> <span class="number">5694</span> <span class="number">5695</span>
+</code></pre><p>fxload: 为 EZ-USB 设别下载 firmware。<br>剩下的就是有关磁盘检查的 fsck 命令集了，这么命令的用法和 e2fsck 类似.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/findfs/">findfs</a>, <a href="/tags/fixfiles/">fixfiles</a>, <a href="/tags/fsck/">fsck</a>, <a href="/tags/fuser/">fuser</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2007/02/05/commands-start-f/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

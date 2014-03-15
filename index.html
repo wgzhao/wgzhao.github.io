@@ -1,0 +1,778 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-12-30T14:08:00.000Z"><a href="/2012/12/30/some-tips-for-mac-os-x/">12月 30 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>下面的这些 Mac 上使用的小技巧都来自<a href="http://pragprog.com/book/ktmack2/mac-kung-fu" target="_blank">《Mac Kung Fu(2nd edition)》</a> 这本书，改书讲述了超过 400 个使用 Mac 的技巧，但是个人感觉很多技巧并不是那么实用，因此这里只摘录了个人觉得用得上的一些技巧。更详细和完善的技巧，大家可以点击<a href="http://pragprog.com/book/ktmack2/mac-kung-fu" target="_blank">这里</a>.</p>
+<h3 id="FaceTime 呼叫自动应答 ">FaceTime 呼叫自动应答</h3>
+<p>如果有人通过 FaceTime 呼叫你，默认情况下，你是需要点击接受才能建立起呼叫的，怎么才能做到自动应答呢，我们可以通过下面的方法</p>
+<ol>
+<li><p>打开你喜欢的终端，输入下面的指令  </p>
+<p> <code>defaults write com.apple.FaceTime AutoAcceptInvites -bool TRUE</code></p>
+</li>
+<li><p>接下来，架设你希望 FaceTime ID(一般就是 Apple ID) 为 wgzhao@gmail.com 的人呼叫的时候，能够自动应答，那么就输入下面的指令：  </p>
+<p> <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add wgzhao@gmail.com</code></p>
+<p> 如果你希望能够自动应答的联系人是通过手机号码呼入进来的，那就把上面的邮件地址换成手机号码，不过要注意的是，手机号码前需要加上国码标志，比如中国是 +86, 那么指令类似如下：<br> <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add +8618612341234</code></p>
+</li>
+<li><p>重启 FaceTime，然后试试，应该就可以了。</p>
+</li>
+</ol>
+<p>如果你想删除自动应答，那很简单，删除上述两条指令就好了，类似如下：</p>
+<p><code>default delete com.apple.FaceTime AutoAcceptInvites    
+ default delete com.appple.FaceTime AutoAcceptInvitesFrom</code></p>
+<p> 当然，你可以直接编辑<code>~/Library/Preferences/com.apple.FaceTime.plist</code>文件来删除上述两项.</p>
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/12/30/some-tips-for-mac-os-x/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-24T14:04:00.000Z"><a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">8月 24 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://www.postgresql.com" title="PostgreSQL" target="_blank">PostgreSQL</a>下的几条 SQL 语句小技巧。</p>
+<h2 id=" 生成随机字符串 ">生成随机字符串</h2>
+<p>这个是从<a href="http://momjian.us/main/blogs/pgblog/2012.html" target="_blank">别人的 blog</a>上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="code"><pre>
+    <span class="operator"><span class="keyword">SELECT</span>(
+       <span class="keyword">SELECT</span> string_agg(x, <span class="string">''</span>)
+         <span class="keyword">FROM</span> (
+          <span class="keyword">SELECT</span> chr(ascii(<span class="string">'a'</span>) + floor(random() * <span class="number">26</span>)::<span class="keyword">integer</span>)
+               <span class="keyword">FROM</span> generate_series(<span class="number">1</span>, <span class="number">40</span> + b * <span class="number">0</span>)
+           ) <span class="keyword">AS</span> y(x)
+       )
+    <span class="keyword">FROM</span> generate_series(<span class="number">1</span>,<span class="number">5</span>) <span class="keyword">as</span> a(b);</span>
+                    string_agg                
+    <span class="comment">------------------------------------------</span>
+     hnwjotzpvihnglbcfamgffisgdyveqjlefvtzviu
+     ephkbjmgkznqevikyggdxpocvkvugdpktxuuhhbr
+     gohljpwiwclusawnkrirvxbovwjcdktjzbujrqrn
+     tdildezovigqfhfbdodgzxpzykiqbaeudmghqfwm
+     ncdtkiunxyuwwjvuuelvepqibwqrcneqphkzqenn
+    (5 rows)
+</pre></td></tr></table></figure>
+
+<p>生成的字符串在<code>[a-z]</code>之间，当然，你可以通过修改<code>chr(ascii(&#39;a&#39;)</code>和<code>floor(random() * 26)</code>这个算术来在更广泛的范围内获取随机字符。比如下面这个<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-22T02:25:00.000Z"><a href="/2012/08/22/some-way-to-io-statistics-on-linux/">8月 22 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>作为一个 Linux 系统管理员，统计各类 IO 是一项必不可少的工作。其统计工具中 iostat 显然又是最重要的一个统计手段。但是这里 iostat 不是本文的重点，因为这个工具的使用在网络上已经有大量的教程，可以供大家参考。这里主要是想介绍一些其他统计工具以来满足不同的需求。</p>
+<h3 id="iostat">iostat</h3>
+<p>iostat 的功能异常强大，输出项也特别多，比如下面这个例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="attribute">Device</span>: <span class="string">rrqm/s  wrqm/s  r/s     w/s    rkB/s    wkB/s    avgrq-sz avgqu-sz   await r_await w_await  svctm  %util</span>
+
+<span class="undefined">sda     0.00     0.50  173.50   73.50  3076.00   604.00    29.80   149.93    676.58   74.36 2098.15  4.05 100.00</span>
+</pre></td></tr></table></figure>
+
+<p>其各项的含义分别是：</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/08/22/some-way-to-io-statistics-on-linux/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-21T04:18:00.000Z"><a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">8月 21 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>总结一些有关<a href="http://www.postgresql.org" title="The world&#39;s most advanced open source database" target="_blank">PostgreSQL</a>查询计划，查询优化的相关内容，比较基础。</p>
+<p>SQL 是一种申明性 (declared) 语言，也就是说，它并不是一种程序。它没有其他编程语言里的流控制语言，比如 while，也无法控制操作顺序，比如有名的”goto”。</p>
+<p>SQL 只是描述一个结果，并非过程。</p>
+<p>结果一致，但如果过程不同，所带来的系统消耗可谓天差地远。所以所有的 RDBMS 里都需要有查询优化器来获得一条执行代价最小的方式来获取期望的结果。</p>
+<p>在<a href="http://www.postgresql.org" title="The world&#39;s most advanced open source database" target="_blank">PostgreSQL</a>里，和查询优化器紧密相连的便是查询计划。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-20T05:50:00.000Z"><a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">8月 20 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL" target="_blank">NoSQL</a>根据不同的数据模型，大致可以分为 4 类，分别是键值对存储 (Key-Value Stores)，列族存储 (Column Families)，文档数据库 (Document Databases) 以及图形数据库 (Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反。   </p>
+<p>下面我根据最近看的一些资料，列出了目前常见的<a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL" target="_blank">NoSQL</a>数据库系统的一些主要特性，不一定都正确。另外，后面列了一些参考资料，偏向于<a href="http://www.postgresql.org" title="The most advanced open source database" target="_blank">PostgreSQL</a>，个人觉得还不错。</p>
+<ul>
+<li>Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable" target="_blank">BigTable</a><ul>
+<li>由 Google 开发</li>
+<li>闭源产品</li>
+<li>通过 SSTable 实现持久化</li>
+<li>通过<a href="http://research.google.com/archive/chubby.html" title="chubby lock service" target="_blank">Chubby</a>实现一致性</li>
+<li>key-value 存储</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="http://hbase.apache.org" title="Hbase home" target="_blank">HBase</a><ul>
+<li>Apache 基金项目，开发语言为 Java</li>
+<li>Apache License 2.0 许可 </li>
+<li>Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable" target="_blank">BigTable</a>的开源版本</li>
+<li>为<a href="http://hadoop.apache.org" title="open source software framework" target="_blank">Hadoop</a>的后端数据库</li>
+<li>通过 HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer" target="_blank">REST</a>，使用<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation" target="_blank">JSON</a>协议通信</li>
+<li>着重于 CP</li>
+<li>通过 memtable/SStable 实现持久化</li>
+<li>通过<a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service" target="_blank">ZooKeeper</a>实现一致性</li>
+<li>支持多主节点 (multi-master)</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-19T04:05:00.000Z"><a href="/2012/08/19/calculate-a-table-size-in-postgresql/">8月 19 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/19/calculate-a-table-size-in-postgresql/">在PostgreSQL里计算一个表的大小</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在<a href="http://www.postgresql.org" title="The world&#39;s most advanced open source database" target="_blank">PostgreSQL</a>里如何查看或者一个表的大小呢? 方法很多，我们可以从简单到复杂看这件事情：</p>
+<p>首先创建一个简单表：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="code"><pre>wgzhao=# <span class="operator"><span class="keyword">create</span> <span class="keyword">table</span> t (id <span class="keyword">int</span>, name text);</span>
+
+<span class="operator"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span>
+
+
+-- inserto <span class="number">100</span>w records
+
+wgzhao=# <span class="keyword">insert</span> <span class="keyword">into</span> t <span class="keyword">select</span> generate_series(<span class="number">1</span>,<span class="number">1000000</span>),<span class="string">'wgzhao_'</span> || generate_series(<span class="number">1</span>,<span class="number">1000000</span>);</span>
+
+<span class="operator"><span class="keyword">INSERT</span> <span class="number">0</span> <span class="number">1000000</span>
+
+-- <span class="keyword">create</span> a index <span class="keyword">on</span> <span class="keyword">column</span> id：
+
+wgzhao=# <span class="keyword">create</span> index idx_t_id <span class="keyword">on</span> t(id);</span>
+
+<span class="operator"><span class="keyword">CREATE</span> INDEX
+
+--vacuum once
+
+wgzhao=# VACUUM t;</span>
+
+VACUUM
+
+wgzhao=# ANALYZE t;
+
+ANALYZE
+</pre></td></tr></table></figure>
+
+
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/08/19/calculate-a-table-size-in-postgresql/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-15T06:53:00.000Z"><a href="/2012/08/15/create-datediff-function-in-postgresql/">8月 15 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/15/create-datediff-function-in-postgresql/">简单实现一个基于postgresql的datediff函数</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在当前<a href="http://www.postgresql.org" title="The world&#39;s most advanced open source database" target="_blank">PostgreSQL</a>里，目前还没有一个能够以指定单位返回两个时间差的函数（如果有，请告诉我），比如返回两个时间相差的月份。</p>
+<p>我简单的写了一个函数，只是作为一个实现的思路，没有做过多的严禁判断。代码如下：  </p>
+<script src="https://gist.github.com/3357205.js?file=datediff.sql"></script>
+
+
+<p>简单测试如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="code"><pre>wgzhao=# <span class="operator"><span class="keyword">select</span> datediff(<span class="string">'year'</span>,<span class="string">'1970-12-2'</span>::<span class="keyword">date</span>,<span class="keyword">current_date</span>);</span>
+ datediff 
+<span class="comment">----------</span>
+       42
+(1 row)
+
+Time: 1.385 ms
+wgzhao=# <span class="operator"><span class="keyword">select</span> datediff(<span class="string">'month'</span>,<span class="string">'1970-12-2'</span>::<span class="keyword">date</span>,<span class="keyword">current_date</span>);</span>
+ datediff 
+<span class="comment">----------</span>
+      500
+(1 row)
+
+Time: 0.770 ms
+wgzhao=# <span class="operator"><span class="keyword">select</span> datediff(<span class="string">'day'</span>,<span class="string">'1970-12-2'</span>::<span class="keyword">date</span>,<span class="keyword">current_date</span>);</span>
+
+ datediff 
+<span class="comment">----------</span>
+    15232
+(1 row)
+
+Time: 0.602 ms
+wgzhao=# <span class="operator"><span class="keyword">select</span> version();</span>
+     version                                
+<span class="comment">---------------------</span>
+ PostgreSQL 9.1.4 , 64-bit
+(1 row)
+
+Time: 19.968 ms
+</pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-08-14T01:42:00.000Z"><a href="/2012/08/14/upgrade-blog-environment/">8月 14 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/08/14/upgrade-blog-environment/">升级blog编译环境</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>系统升级到 Mountain Lion 后，发现我的 blog 编译环境不能正常使用了，我的 blog 放弃<a href="http://www.wordpress.org" title="wordpress" target="_blank">wordpress</a>，采取了<a href="http://octopress.org" title="octopress: a blogging framework" target="_blank">octopress</a>，这玩意儿的好处是全静态，搬家的时候很容易，甚至可以随时搬迁到<a href="http://github.com" title="github" target="_blank">github</a>，<a href="http://www.dropbox.com" title="dropbox" target="_blank">dropbox</a>这类的空间上都没以问题。<br>麻烦的就是那套环境，<a href="http://www.ruby.org" title="ruby" target="_blank">ruby</a>本来也不熟悉，所以搞起来比较痛苦。<br>昨晚花了 3 个多小时才搞定，不停的清理环境，重新安装。<br>其中有两个问题记录如下<br>一个是 gcc 的问题，<a href="http://www.ruby.org" title="ruby" target="_blank">ruby</a>一些组件的编译并不支持 Mac 自带的 llvm-gcc 特性。因此需要自行编译一个 gcc，当然自己编译太痛苦了，幸运的是<a href="http://hpc.sourceforge.net/" title="High Performance Computer for Mac OS X" target="_blank">HPC for Mac OS X</a>网站已经编译好了针对 Mac 的，可以从其网站直接下载，省去的编译的痛苦<br>另外出现的一个问题是在执行<code>bundle install</code>的时候，会给出下面的报错  </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>creating Makefile  
+extconf.rb:21:in <span class="smartquote">`&lt;main&gt;'</span>: Only Darwin systems 
+greater than 8 (Mac OS X 10.5+) are supported (RuntimeError)
+</pre></td></tr></table></figure>
+
+<p>这个报错的原因是<a href="http://octopress.org" title="octopress: a blogging framework" target="_blank">octopress</a>需要的<a href="https://github.com/thibaudgg/rb-fsevent/" title="rb-fsevent" target="_blank">rb-fsevent</a>的版本是<code>0.4.3.1</code>，这个版本还不支持 Mountain Lion。简单的处理办法是修改<code>ext/extconf.rb</code>文件，找到 19 行，如下:<br><code>sdk_version    = { 9 =&gt; &#39;10.5&#39;, 10 =&gt; &#39;10.6&#39;, 11 =&gt; &#39;10.7&#39; }[darwin_version]</code><br>修改为<br><code>sdk_version    = { 9 =&gt; &#39;10.5&#39;, 10 =&gt; &#39;10.6&#39;, 11 =&gt; &#39;10.7&#39;,12=&gt;&#39;10.8&#39; }[darwin_version]</code></p>
+<p>删除第 24 行内容，如下 </p>
+<p><code>-isysroot #{xcode_path}/SDKs/MacOSX#{sdk_version}.sdk</code></p>
+<p>然后编译安装即可。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-04-07T08:51:00.000Z"><a href="/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/">4月 7 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/">用vsftpd和mysql创建一个虚拟用户ftp服务器</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>当前有这样的一个需求，我需要批量创建一个网站，比如我要创建一个<code>foo.com</code>的网站，我就会在<code>/web/</code>目录下创建一个<code>foo.com</code>的目录，WEB 服务器（我这里用的是<a href="http://nginx.org" title="nginx" target="_blank">nginx</a>）已经自动设置好解析。同时，我需要有一个对应的 ftp 账号来管理这个网站，但是我不希望使用系统账号，一来网站多了，系统账号必然多，而来我不希望管理网站的账号能通过 ssh 登陆，虽然 ssh 也可以配置哪些账号不允许登陆。但是不创建系统账号显然是最安全的做法。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-01-16T13:40:00.000Z"><a href="/2012/01/16/5-simple-ways-to-troubleshoot-using-strace/">1月 16 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/01/16/5-simple-ways-to-troubleshoot-using-strace/">使用strace工具故障排查的5种简单方法</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文源自<a href="http://www.hokstad.com/5-simple-ways-to-troubleshoot-using-strace.html" target="_blank">5 simple ways to troubleshoot using strace</a>，我做了一些摘译。  </p>
+<p>strace 是一个非常简单的工具，用来跟踪可执行程序的系统调用 (system call)。最简单的使用是，它追踪可行程序运行时的整个生命周期，输出每一个系统调用的名字，参数和返回值。<br>但是它还可以做更多的事情：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/01/16/5-simple-ways-to-troubleshoot-using-strace/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+  
+    <a href="/page/2/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

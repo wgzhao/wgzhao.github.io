@@ -1,0 +1,427 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>归档：2010/6 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2010/6</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-06-23T16:00:00.000Z"><a href="/2010/06/24/mapping-raw-devices-to-lvm-devices-on-redhat-as5-update-2-or-later/">6月 24 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/06/24/mapping-raw-devices-to-lvm-devices-on-redhat-as5-update-2-or-later/">redhat el5如何映射裸设备到逻辑卷</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>之前的版本如何做，这里不做描述，自行<a href="https://www.google.com.hk" target="_blank"><br>Google</a>。<br>之前通常的方法，在该版本，KERNEL 并不能直接获得设备名称或者主次设备号，我们需要通过<code>dmsetup</code>指令来间接获得。<br>一下操作的目录均在<code>/etc/udev/rules.d/</code>。 </p>
+<ol>
+<li><p>编辑 90-dm.rules 文件，注释掉下面这行<br>﻿<code>KERNEL==&quot;dm-[0-9]*&quot;, ACTION==&quot;add&quot;, OPTIONS+=&quot;ignore_device&quot;</code></p>
+</li>
+<li><p>编辑<code>60-raw.rules</code>文件，加入下面几行：</p>
+<pre><code> KERNEL!=<span class="string">"dm-[0-9]<span class="variable">*"</span>,GOTO="</span>skip_dm<span class="string">"
+ PROGRAM!="</span>/sbin/dmsetup  ls --<span class="keyword">exec</span> /bin/basename -j <span class="variable">%M</span> -<span class="keyword">m</span> <span class="variable">%m</span><span class="string">", GOTO="</span>skip_dm<span class="string">"
+ RESULT=="</span>vg1-lv1<span class="string">", RUN+="</span>/bin/sh -c <span class="string">'/bin/raw /dev/raw/raw1 $MAJOR $MINOR'</span><span class="string">"
+ LABEL=skip_dm</span>
+</code></pre><p>上面第一行代码表示如果不是 dm 设备，则直接跳到 skip_dm 处<br>第二行表示如果后面的指令返回为假（非 0 值），则跳到 skip_dm 处。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/06/24/mapping-raw-devices-to-lvm-devices-on-redhat-as5-update-2-or-later/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-06-09T16:00:00.000Z"><a href="/2010/06/10/core-python-programming-2nd-chapter-20-exercise/">6月 10 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/06/10/core-python-programming-2nd-chapter-20-exercise/">core python programming 2nd chapter 20 exercise</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这一章主要是网络客户端编程，讨论了包括 SMTP，POP3，FTP，URL 在内的一些编程技术。Python 针对网络编程有一个非常强大的模块，那就是<a href="http://twistedmatrix.com" target="_blank">Twisted</a>，这个工具太强大，以至于<a href="http://www.amazon.com/gp/product/0596100329?ie=UTF8&amp;tag=jpcalsjou-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0596100329" target="_blank">有专门的书籍</a>来讲述如何使用。</p>
+<p>后面的习题大部分都是写一些代码片段，比如获取一个页面，连接一个 FTP 服务器，连接你的邮箱。</p>
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/06/10/core-python-programming-2nd-chapter-20-exercise/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-06-08T16:00:00.000Z"><a href="/2010/06/09/core-python-programming-2nd-chapter-19-exercise/">6月 9 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/06/09/core-python-programming-2nd-chapter-19-exercise/">core python programming 2nd chapter 19 exercise</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>因为这一章是图形化编程，第一版和第二版都只是简单的描述了一下 Tkinter 如何使用。其他模块，比如 PyGtk,WxPython 更加是一笔带过了，所以要完成后面的习题，还得自己找一些资料看。</p>
+<p>关于 Tkinter 的资料，国内不过，基本上还是官方文档为主，Python 官方站点给出了一个关于 Tkinter 的专题，<a href="http://wiki.python.org/moin/TkInter" target="_blank">集中了一些资料</a>，感兴趣的可以看看。</p>
+<blockquote>
+<p>19–8. 简单的文本编辑器。在您上一题答案的基础上创建一个简单的文本编辑器。可以用剪贴板或读文件的方式<br>在一个文本域里显示一些文字供用户编辑。当用户退出程序时 (通过 QUIT 按钮或 Quit/Exit 菜单项)<br>会询问用户是否保存所作的修改。附加题: 给您的脚本添加一个拼写检查接口, 增加一个按钮或菜单项来对文件<br>进行拼写检查。拼写错误的词句应在文本域组件中用不同的背景或前景色高亮显示出来。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/06/09/core-python-programming-2nd-chapter-19-exercise/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-06-04T16:00:00.000Z"><a href="/2010/06/05/core-python-programming-2nd-chapter-18-exercise/">6月 5 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/06/05/core-python-programming-2nd-chapter-18-exercise/">core python programming 2nd chapter 18 exercise</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>18-4. 线程和文件。把练习 9-19 的答案做一些改进。我们要得到一个字节值, 一个文件名然后显示在文件中那个字节出现了多少次。假设这个文件非常的大。文件是可以有多个读者的, 那我们就可以创建多个线程, 每个线程负责文件的一部分。最后, 把所有的线程的结果相加。使用 timeit() 对单线程和多线程分别进行计时, 对性能的改进进行讨论。<br>18-5. 线程, 文件和正则表达式。你有一个非常大的 mailbox 文件——如果没有的话, 你可以把你所有的 e-mail 的原始信息放到一个文本文件中。你现在要做的是, 使用你在 15 章写的识别 e-mail 地址和网页 URL 的正则表达式, 分析出这个大文件里的所有的 e-mail 地址和 URL, 把这些链接写到一个.html(或.htm) 文件中。在这个文件生成时, 会自动显示一个浏览器, 打开这个文件, 显示所有的链接。使用多线程来分隔处理大文件和把结果写到一个新的.html 文件的操作。在浏览器中测试一下你的结果, 确保那些链接都能正常工作。<br>18-8. 线程池。修改例 18.9 的代码, 不再是一个生产者和一个消费者, 而是可以有任意个消费者线程 (一个线程池), 每个线程可以在任意时刻处理或消耗任意多个产品。<br>18-9. 文件, 创建一些线程来计算一些 (可能很大量的) 文件中一共有多少行。你可以选择要使用多少个线程。比较单线程与多线程的性能差异。提示: 回顾一下第 9 章 (文件和输入 输出) 的练习。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/06/05/core-python-programming-2nd-chapter-18-exercise/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-06-04T16:00:00.000Z"><a href="/2010/06/05/core-python-programming-2nd-chapter-9-exercise/">6月 5 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/06/05/core-python-programming-2nd-chapter-9-exercise/">core python programming 2nd chapter 9 exercise</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <blockquote>
+<p>9–1. 文件过滤. 显示一个文件的所有行, 忽略以井号 ( # ) 开头的行. 这个字符被用做 Python , Perl, Tcl, 等大多脚本文件的注释符号. 附加题: 处理不是第一个字符开头的注释.</p>
+</blockquote>
+<p>去掉以 # 开头的行比较好办，用 startswith 函数也行，用 string[0] 获得第一个字符也行。<br>麻烦的是如果要去掉行中间的注释，我这里采取用的是正规表达式（RE）方法，代码如下：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/06/05/core-python-programming-2nd-chapter-9-exercise/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2010-05-31T16:00:00.000Z"><a href="/2010/06/01/core-python-programming-2nd-chapter-13-exercise/">6月 1 2010</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2010/06/01/core-python-programming-2nd-chapter-13-exercise/">core python programming 2nd chapter 13 exercise</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这个章节的内容值得仔细阅读，而且不应该只读一遍。 我对比了第一版和第二版，后者在 13 节增加了一些内容。另外习题有所增加。<br>还有一个现象就是因为第一版的翻译不是第二版的翻译，有些术语和语句风格有比较大的区别，在这一章就体现的更加明显了。  </p>
+<blockquote>
+<p>13-3,13-4:MoneyFmt 类里只有一个数据值 (即, 金额), 和五个方法 (你可以随意编写其他方法)。<br>__init__() 构造器对数据进行初始化,<br>update() 方法把数据值替换成一个新值,<br>__nonzero__() 是布尔型的, 当数据值非零时返回 True,<br>__repr__() 方法以浮点数的形式返回金额 ; 而<br>__str__() 方法采用和 dollarize() 一样的字符格式显示该值。<br>(a) 编写 update() 方法, 以实现数据值的修改功能。<br>(b) 以你已经编写的 dollarize() 的代码为基础, 编写 __str__() 方法的代码 (c) 纠正 __nonzero__() 方法中的错误, 这个错误认为所有小于 1 的数值, 例如, 美分 ($0.50),50 返回假值 (False)。<br>(d) 附加题: 允许用户通过一个可选参数指定是把负数数值显示在一对尖括号里还是显示一个负号。默认参数是使用标准的负号。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2010/06/01/core-python-programming-2nd-chapter-13-exercise/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

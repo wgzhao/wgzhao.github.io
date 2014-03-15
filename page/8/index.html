@@ -1,0 +1,612 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 8 页 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-17T16:00:00.000Z"><a href="/2009/04/18/want-to-buy-house/">4月 18 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/04/18/want-to-buy-house/">打算买房了</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这几天看了几个处房子，也许是因为买房的要求迫在眉睫，所以没有考虑太多了，lancy 他们单位刚好搞团购，价格呢，也还在我们的承受范围之内，因此就定了下来。今天去交了定金，一周时间内，准备米米，正式签订购房合同。</p>
+<p>恩，很快就要做房奴和负翁了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-14T16:00:00.000Z"><a href="/2009/04/15/backup-remote-mysql-with-zrm/">4月 15 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/04/15/backup-remote-mysql-with-zrm/">使用Amanda ZRM备份远程MySQL数据库</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <figure class="highlight 本文写道最后的时候，我才发现 ZRM"><figcaption><span>for MySQL 的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库 test1,test2，你备份了这两个数据库，某一天，test2 数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复 test2，而是直接把 test1,test2 都恢复。那这绝对是一个噩梦。 </span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.
+</pre></td></tr></table></figure>
+
+<p><strong>Update：</strong><br>原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager" target="_blank">ZRM</a>备份是可以指定恢复特定的数据库的，刚才今天 mwf 的站点数据库需要恢复，测试了一下，完全没有问题。<br>具体的恢复办法，请看文末。<br><a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager" target="_blank">Zmanda Recovery Manager(ZRM)</a>提供了备份 MySQL 数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html" target="_blank">官方的介绍</a>。下面给出一个备份的实例。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/04/15/backup-remote-mysql-with-zrm/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-12T16:00:00.000Z"><a href="/2009/04/13/practice-amanda-backuping/">4月 13 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/04/13/practice-amanda-backuping/">Amanda集中备份实例</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <img src="http://www.zmanda.com/images/header/logo-zmanda.gif" class="left" title="Amanda Network Backup">
+
+<p><a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver" target="_blank">Amanda</a> 高级马里兰自动网络磁盘归档 (Advanced Maryland Automatic Network Disk Archiver 网络备份软件是我第一次接触 Linux 就听到过，只是从来都没有使用过，有需要备份得时候，就是自己写写简单的脚本，使用 cron 来做定时任务，也能基本满足需求。虽然曾经起心想用 Amanda，但限于没有适合的环境，只能作罢。</p>
+<p>现在的情况有所不同了，有 4,5 台服务器需要备份，涉及到不同的平台，其备份特性应该达到或者至少朝企业级标准靠拢，因此，这几天看了看 Amanda 的文档，做了一些测试，目前在我的环境下配置成功，特记录下来和大家分享。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/04/13/practice-amanda-backuping/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-04-09T16:00:00.000Z"><a href="/2009/04/10/crazy-way-to-install-linux/">4月 10 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/04/10/crazy-way-to-install-linux/">比较折腾的一种Linux系统安装方式</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Linux 系统是非常灵活的，不过一般都是通过安装介质或者安装内核来引导，然后安装。</p>
+<p>我这几天折腾的系统安装采取这种方式，比较另类，当然，说另类是好听，其实是比较变态。<br>为什么要这么干，听我徐徐道来：</p>
+<p>我有一台远程服务器，系统是 RedHat AS4 Update 1, 我想换成 Ubuntu 8.10 Server 版，我无法直接接触到机器，而且在整个安装的过程中间，网络不能断，ssh 服务不能断，因为我是通过 ssh 登录远程服务器的。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/04/10/crazy-way-to-install-linux/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-03-12T16:00:00.000Z"><a href="/2009/03/13/using-sudo-effectively/">3月 13 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/03/13/using-sudo-effectively/">用好sudo</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>sudo 工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的 root 访问权限。它是一个 setuid 程序，只需要输入用户自己的密码，就可以执行 sudo 后面的命令。<br>使用 root 帐号，运行 /usr/bin/visudo 来编辑那些用户可以调用 sudo 命令的用户列表，缺省的 sudo 列表看上去类似下面这样：</p>
+<pre><code> root <span class="keyword">ALL</span>=(<span class="keyword">ALL</span>) <span class="keyword">ALL</span>
+</code></pre><p>很不幸，很多系统管理直接把这条当作了模板，然后授权给其他用户，就像这样：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/03/13/using-sudo-effectively/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-11T16:00:00.000Z"><a href="/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/">2月 12 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/">\[/usr/sbin学习\]剩余的命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>离最近一次的命令学习估计是 2 年前的事情了，官方理由可以说是杂事多，实际理由还是停了一段时间后，很难捡起来。</p>
+<p>2009 年的计划中提到了需要把这个命令学习完成，这次从 g 开头的命令一直到 z 结尾的命令全部看一遍，主要是把以前没有看到的，或者以前不知道的一些命令参数记录下来，已经知道了的命令就不记录在这里了, 如此以来，发现要认真看的命令还真没有几个了，毕竟对系统管理员而言，/bin,/sbin/ 下的命令的重要性是高于 /usr/sbin/ 的。于是凑合着记录了三个：</p>
+<p><a href="http://www.wireshark.org/" target="_blank">wireshark</a>：乍一看，不知道这个命令做什么用的，man 了一下手册，到网络上搜寻了一把，才知道原来它是大名鼎鼎的 Ethereal 的化身呀，ethereal 估计很多用过 Linux 的人都知道，它是世界上最流行的网络分析工具之一，这个强大的工具可以捕捉网络中的数据，并未用户提供网络和上层协议的各种信息，它具有安装简便，简单易用，功能丰富等特征，值得一提的是，它还有一个非常容易操作的图形界面，当然如果你是 CLI 的死忠分析，也许 tshark 会成为你的最爱，tshark 是 wireshark 的 CLI 实现。</p>
+<p><a href="http://www.tripwire.org" target="_blank">tripwire</a>：*nix 系统下最著名的文件系统完整性检查工具，这个软件采取的核心技术就是对每个要监控的文件产生一个数字签名并保留下来。当数字签名不一致时，必定文件被修改过。当你要为你的系统安全着想的时候，你应该想起它！</p>
+<p>vipw：不是多么神奇和高深的命令，不带任何参数，运行后，直接打开<code>/etc/passwd</code>，于是我知道这个命令的意思了<code>vipw = vi /etc/passwd</code>，以为是一个脚本，然后 vipw 是一个地地道道的 ELF 文件，实际上他是 VIM 的 tiny 版的实现。<br>不晓得作者写这个程序的目的是什么？仅仅是为了方便编辑<code>/etc/passwd</code>？还是说万一系统没有安装编辑器，我还用它当做编辑器用，<br>又或者仅仅只是一个玩笑？不理解。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-02-09T16:00:00.000Z"><a href="/2009/02/10/memo-from-a-child-to-parents/">2月 10 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/02/10/memo-from-a-child-to-parents/">孩子给爸爸妈妈的备忘录</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ol>
+<li><p>不要娇惯我。我知道的非常清楚，不是我要什么就能得到什么的。有时我只是在试探你。</p>
+</li>
+<li><p>不要害怕在我面前坚持你的立场。我其实更喜欢你这样，因为这使我有安全感。</p>
+</li>
+<li><p>不要让我养成坏毛病。只有你才能在把它们消灭在萌芽状态。</p>
+</li>
+<li><p>不要让我感觉自己比实际要小，那样只能使我愚蠢地去充“大”个。</p>
+</li>
+<li><p>如果有可能，不要当众教训我。如果你在私下悄悄跟我说，我会更加注意的。</p>
+</li>
+<li><p>不要让我感觉自己犯的错误就像犯了罪一样，那只能搞乱我的价值观。</p>
+</li>
+<li><p>不要阻止我承担后果，有时我需要从教训中学习。</p>
+</li>
+<li><p>当我说“我恨你”时，不要生气。有时我恨的不是你，我恨的只是你那令我感到很渺小的权威。</p>
+</li>
+<li><p>我得了小病时，不要太在意我。有时生病可以使我得到我所需要的关注。</p>
+</li>
+<li><p>不要啰啰嗦嗦的。如果你那样的话，我只能通过装聋作哑来保护自己。</p>
+</li>
+<li><p>不要忘记，有时我会词不达意。这也是为什么我有时不能准确地表达自己。</p>
+</li>
+<li><p>当我问问题时，不要不耐烦。否则，你会发现我不再问你问题，而是从别的地方寻找答案。</p>
+</li>
+<li><p>不要出尔反尔，这样只能是我疑惑，并对你失去信任。</p>
+</li>
+<li><p>不要对我说我的恐惧是可笑的。它们是真真实实的，如果你能理解我，你就能更好地安慰我。</p>
+</li>
+<li><p>永远不要暗示你是完美的和不会犯错误的。否则当我发现事实与此相反时，我会感到很震惊的。</p>
+</li>
+<li><p>永远不要认为向我道歉有损你的尊严。一个诚实的道歉会使我感到温暖并加深我们的感情。</p>
+</li>
+<li><p>不要忘了我喜欢尝试。如果我不尝试就寸步难行，所以请你包容。</p>
+</li>
+<li><p>不要忘了我长得很快。你肯定觉得与我俱进非常困难，但是还是请你努力去做。</p>
+</li>
+<li><p>不要忘了离开了厚爱和理解我不会茁壮成长，但是，这一点我不需要提醒你把？</p>
+</li>
+<li><p>请保持身体健康，因为我需要你。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-09T16:00:00.000Z"><a href="/2009/01/10/happy-birthday-lancy/">1月 10 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/10/happy-birthday-lancy/">生日快乐,lancy</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><a href="http://lawstar.xplore.cn" target="_blank">lancy</a>当妈妈的第一个生日，可惜我不能当面给她庆祝了, 就在这里祝她生日快乐，每天都快乐，永远都快乐。</p>
+<p>不知道她当妈妈过生日和平常过生日的感想有什么区别，也许现在没有，等到了<a href="http://pp.xplore.cn" target="_blank">皮皮</a>能和她说“生日快乐”的时候就会有很大区别吧。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-01-06T16:00:00.000Z"><a href="/2009/01/07/2009-plan/">1月 7 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/01/07/2009-plan/">2009年计划</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>2008 年年初的时候，我做了一个<a href="http://blog.wgzhao.com/2008/01/01/planned-2008.html" target="_blank">年度计划</a>，现在是总结和做 2009 年计划的时候了。</p>
+<p>2008 年的计划现在来看基本都已经完成了，凤凰在 4 月份的时候去了玩了，至于米米嘛，应该说相比 2007 年有大幅度的增加，只是因为 10 月份的金融危机，导致目前还是单一经济收入，增加结构性收入这点没有实现。</p>
+<p>2008 年最重要的造人计划，显然获得了圆满成功，而且是心想事成（我一直想要一个女儿），看看现在的皮皮越来越可爱，就会觉得日子过得越来越有滋味。</p>
+<p>至于 2009 年，目前的计划是：</p>
+<ol>
+<li>好好抚养皮皮，这当然是我和 lancy 的责任，无须多说，只盼皮皮快快长大！</li>
+<li>米米当然还是很重要的，毕竟添了新人，所以还是要增加结构性收入的，同时也要有创造性收入</li>
+<li>如果金融危机不再加深，考虑在这年买房，暂时的想法是想带装修的，因为装修总是一个头疼的事情，如果是自己设计装修，不知道<a href="http://brisy.xplore.cn" target="_blank">Brisy</a>是否还记得以前的承诺呢？不过我想他肯定没有时间。<a href="http://mwf.my73.com" target="_blank">青韶</a>说如果我买了房子，他就送我一套价值 9999 的净水设备，其实我逼他送的，哈哈。这显然就是 2009 年最重要的事情了。</li>
+<li><p>想增加收入，当然得增加本事，所以专业技能方面还是得继续增强，2009 年打算在下面三个方面深入下去：</p>
+<ul>
+<li>数据库技术方面，想重点学习 Oracle 和 MySQL</li>
+<li>集群和虚拟化技术，个人觉得以后这方面会用得越来越多，在工作中碰到的案例也会越来越多，因此要多多强加</li>
+<li>系统管理技术，这是一个不断需要学习方向，2009 年打算学习 Python 语言，尝试用它来帮助我增加系统管理的便利性，自动化程度等。</li>
+</ul>
+</li>
+<li><p>增加知识面，就需要增加自己的阅读量、阅读面，因此 2009 年打算多看一些非专业类的书，文学类，经济类，历史类都应该看看，还是要多买一些书，电子版看上去还是没有阅读这样来得舒适和深刻。</p>
+</li>
+</ol>
+<p>暂时这些把，如果 2009 年我能完成上面的这些任务，特别是第 3 条，那可以说 2009 年就非常具有纪念意义了，加油！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-12-26T16:00:00.000Z"><a href="/2008/12/27/talk-about-rc-local/">12月 27 2008</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2008/12/27/talk-about-rc-local/">说说/etc/rc.d/rc.local</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><code>/etc/rc.d/rc.local</code>似乎是很多 linux 系统管理员的偏爱，因为凡是需要随系统自动启动的服务、程序等，只要系统没有提供 SysV 风格的启动脚本，就把这些需求都塞到<code>/etc/rc.d/rc.local</code>。</p>
+<p>当然，绝大部分情况下，你会发现这一切都工作得很正常，看上去也很美好。<br>不过，当你遇到了一些诡异的问题的时候，也许你应该好好的去看看<code>/etc/rc.d/rc.local</code>里都写了什么了？<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2008/12/27/talk-about-rc-local/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/7/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/9/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

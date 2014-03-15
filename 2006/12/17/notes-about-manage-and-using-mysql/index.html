@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>看《Manage and Using Mysql》的笔记 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="看《Manage and Using Mysql》的笔记"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2006-12-16T16:00:00.000Z"><a href="/2006/12/17/notes-about-manage-and-using-mysql/">12月 17 2006</a></time>
+      
+      
+  
+    <h1 class="title">看《Manage and Using Mysql》的笔记</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>今天的无线上网卡借了出去，也刚好有几个 SQL 语句不知道怎么写为好。其实用 MySQL 这么久了，还一直都没有系统的看过介绍和使用 MySQL 的书，大部分情况下是使用 phpMysqlAdmin 来管理，有些 SQL 语句也是简单的查询了官方的手册。</p>
+<p> 于是翻出了还是 02 年做完毕业设计就在我电脑上放着的 O’Reilly 2001 的《Manage &amp; Using MySQL》不过还是草稿版本，不是正式版本，针对的 MySQL 还是 3.22.29 版本。<br><a id="more"></a></p>
+<p>真是开卷有意呀，看到第 30 多页的时候，就解决了困扰我的一个问题，其实问题很简单，看来自己还是对 SQL 语言，MySQL 不够了解，因此趁机做一下笔记，把觉得比较好的地方，或者将来可能用得到的都记录下来。</p>
+<p> 1）字符类型存储空间的解释  </p>
+<p> MySQL 中有各种字符类型，以前我基本上都是使用 varchar 类型，偶尔使用 text。后来看到一个文章说使用 varchar 对搜索速度有一定的影响，因为不是<br>定长，因此后来就把 varchar 替换成了 char 类型。下面的表对常见的字符类型的存储空间给出了一个实例，值得一看。</p>
+<p> <img src="/uploads/spaceofcharacter.gif" alt="image"></p>
+<p> 2）MySQL 支持多行一次性插入。  </p>
+<p> 这是一个非标准的支持，如果你要考虑兼容和移植，那就不要使用了，给出例子：<br> <code>INSERT INTO foods VALUES (NULL, &#39;Oranges&#39;, 133, 0, 2, 39), (NULL,
+&#39;Bananas&#39;, 122, 0, 4, 29), (NULL, &#39;Liver&#39;, 232, 3, 15, 10)</code> </p>
+<p> 3）MySQL 还支持另外一种非标注的插入模式，那就是你可以一起制定列名和其值，有点类似 update 的语法，给出例子：<br> <code>INSERT INTO book SET title=’The Vampire Lestat’, author=’Anne Rice’;</code></p>
+<p> 4) 对 null 值的特殊操作符</p>
+<p>MySQL 对 null 的操作除了标准操作符以外，还特意提供了称之为 null-safe 的操作符 &lt;=&gt;，只有两个操作数同时为 null 或者同时不为 null 时才返回真。给出例子：</p>
+<pre><code> mysql&gt; SELECT <span class="number">1</span> &lt;=&gt; <span class="keyword">NULL</span>, <span class="keyword">NULL</span> &lt;=&gt; <span class="keyword">NULL</span>, <span class="number">1</span> &lt;=&gt; <span class="number">1</span>;
++------------+---------------+---------+ 
+| <span class="number">1</span> &lt;=&gt; <span class="keyword">NULL</span> | <span class="keyword">NULL</span> &lt;=&gt; <span class="keyword">NULL</span> | <span class="number">1</span> &lt;=&gt; <span class="number">1</span> | 
++------------+---------------+---------+ 
+| <span class="number">0</span> | <span class="number">1</span> | <span class="number">1</span> |
++------------+---------------+---------+ 
+<span class="number">1</span> row in set (<span class="number">0.00</span> sec) 
+</code></pre><p> 5) 支持 Perl 编程和 grep 用法的正规表达式来增强模式匹配。</p>
+<p> 在标准 SQL 语句中，能用于模式匹配的操作符是 LIKE，NOT LIKE。MySQL 扩展了这个功能，采用了类似 Perl 语法和 grep 命令语法的正规表达式来做模式匹配。语法规则如下：</p>
+<p> <img src="/uploads/regexp.gif" alt="image"></p>
+<p> 他的使用方法是将 like 替换成 regexp 操作符，给出几个例子：</p>
+<pre><code> mysql&gt; <span class="keyword">SELECT</span> * FROM BOOK;
+ +<span class="comment">---------+-----------------------------------------+---------------+</span>
+ | BOOK_ID | TITLE | AUTHOR |
+ +<span class="comment">---------+-----------------------------------------+---------------+</span>
+ | <span class="number">1</span> | Database Programming <span class="keyword">with</span> JDBC <span class="keyword">and</span> Java | George Reese |
+ | <span class="number">2</span> | JavaServer Pages | Hans Bergsten |
+ | <span class="number">3</span> | Java Distributed Computing | Jim Farley |
+ +<span class="comment">---------+-----------------------------------------+---------------+</span>
+ <span class="number">3</span> rows <span class="keyword">in</span> set (<span class="number">0.01</span> sec)
+</code></pre><p> — 查询包含 Java 的书名</p>
+<pre><code> mysql&gt; <span class="keyword">SELECT</span> TITLE <span class="keyword">FROM</span> BOOK <span class="keyword">WHERE</span> TITLE REGEXP <span class="comment">'Java';</span>
+ +-----------------------------------------+
+ | TITLE |
+ +-----------------------------------------+
+ | Database Programming <span class="keyword">with</span> JDBC <span class="keyword">and</span> Java |
+ | JavaServer Pages |
+ | Java Distributed Computing |
+ +-----------------------------------------+
+ <span class="number">3</span> rows <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.06</span> sec)
+</code></pre><p> — 查询以 Java 开头的书名</p>
+<pre><code> mysql&gt; <span class="keyword">SELECT</span> TITLE <span class="keyword">FROM</span> BOOK <span class="keyword">WHERE</span> TITLE REGEXP <span class="comment">'^Java';</span>
+ +----------------------------+
+ | TITLE |
+ +----------------------------+
+ | JavaServer Pages |
+ | Java Distributed Computing |
+ +----------------------------+
+ <span class="number">2</span> rows <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)
+</code></pre><p> — 查询以 Java 结尾的书名</p>
+<pre><code> mysql&gt; <span class="keyword">SELECT</span> TITLE <span class="keyword">FROM</span> BOOK <span class="keyword">WHERE</span> TITLE REGEXP <span class="comment">'Java$';</span>
+ +-----------------------------------------+
+ | TITLE |
+ +-----------------------------------------+
+ | Database Programming <span class="keyword">with</span> JDBC <span class="keyword">and</span> Java |
+ +-----------------------------------------+
+ <span class="number">1</span> row <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)
+</code></pre><p> 6）一些与日期有关的函数</p>
+<p> <code>from_unixtime()</code>：将 unix 时间戳转换成友好的日期格式, 参数为记录 unix 时间戳的整数。</p>
+<pre><code>mysql&gt; select * <span class="keyword">from</span> ss; 
++<span class="comment">----+------------+ </span>
+| <span class="property">id</span> | pubtime |
++<span class="comment">----+------------+ </span>
+| <span class="number">1</span> | <span class="number">1166064340</span> | 
++<span class="comment">----+------------+ </span>
+<span class="number">1</span> row <span class="keyword">in</span> <span class="keyword">set</span>(<span class="number">0.27</span> sec) 
+
+mysql&gt; select from_unixtime(pubtime) <span class="keyword">from</span> ss;
++<span class="comment">------------------------+ </span>
+| from_unixtime(pubtime) |
++<span class="comment">------------------------+ </span>
+| <span class="number">2006</span>-<span class="number">12</span>-<span class="number">14</span> <span class="number">10</span>:<span class="number">45</span>:<span class="number">40</span> |
++<span class="comment">------------------------+ </span>
+<span class="number">1</span> row <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec) 
+</code></pre><p> rand(): 取 [0,1] 之间的随机数 ;round()：和其他语言中的 round 函数类似功能。<br> — 随机打印 [1,35] 之间的数 </p>
+<pre><code>mysql&gt; select <span class="command">round</span>(rand()*<span class="number">34</span> + <span class="number">1</span>);
++<span class="comment">----------------------+ </span>
+| <span class="command">round</span>(rand()*<span class="number">34</span> + <span class="number">1</span>) |
++<span class="comment">----------------------+ </span>
+| <span class="number">14</span> | 
++<span class="comment">----------------------+ </span>
+<span class="number">1</span> row <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec) 
+mysql&gt; select <span class="command">round</span>(rand()*<span class="number">34</span> + <span class="number">1</span>);
++<span class="comment">----------------------+ </span>
+| <span class="command">round</span>(rand()*<span class="number">34</span> + <span class="number">1</span>) |
++<span class="comment">----------------------+ </span>
+| <span class="number">18</span> | 
++<span class="comment">----------------------+ </span>
+<span class="number">1</span> row <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec) 
+</code></pre><p> to_days(): 返回从公元元年开始到现在经过的天数，接受的参数可以是 unix 时间戳类型，也可以是 datetime 或者 date 类型（e.g 2006-01-01)。</p>
+<pre><code> mysql&gt; <span class="built_in">select</span> to_days(now()) - to_days(<span class="string">'2006-12-01'</span>) as days;
+
++<span class="comment">------+ </span>
+| days | 
++<span class="comment">------+ </span>
+| <span class="number">13</span> | 
++<span class="comment">------+ </span>
+<span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec) 
+</code></pre><p> DATE_FORMAT(date, format)：返回指定格式的日期。</p>
+<pre><code> mysql&gt; SELECT DATE_FORMAT(<span class="string">'1969-02-17'</span>, <span class="string">'%W, %M %D, %Y'</span>);
++<span class="comment">--------------------------------------------+ </span>
+|DATE_FORMAT(<span class="string">'1969-02-17'</span>, <span class="string">'%W, %M %D, %Y'</span>) |
++<span class="comment">--------------------------------------------+ </span>
+| Monday, February <span class="number">17</span>th,<span class="number">1969</span> 
+| +<span class="comment">--------------------------------------------+ </span>
+<span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.39</span>sec) 
+</code></pre><p> 下表给出了该函数能接受那些指定的格式：</p>
+<p>%a Short weekday name (Sun, Mon, etc.)<br>%b Short month name ( Jan, Feb, etc.)<br>%D Day of the month with ordinal suffix (1st, 2nd, 3rd, etc.)<br>%d Day of the month<br>%H 24-hour hour (always two digits, e.g., 01)<br>%h/%I 12-hour hour (always two digits, e.g., 09)<br>%i Minutes<br>%j Day of the year<br>%k 24-hour hour (one or two digits, e.g., 1)<br>%l 12-hour hour (one or two digits, e.g., 9)<br>%M Name of the month<br>%m Number of the month (January is 1).<br>%p AM or PM<br>%r 12-hour total time (including AM/PM)<br>%S Seconds (always two digits, e.g., 04)<br>%s Seconds (one or two digits, e.g., 4)<br>%T 24-hour total time<br>%U Week of the year (new weeks begin on Sunday)<br>%W Name of the weekday<br>%w Number of weekday (0 is Sunday)<br>%Y Four digit year<br>%y Two digit year<br>%% A literal “%” character.  </p>
+<p>类似日期的函数，MySQL 还提供了很多。这个链接可以看到目前 MySQL 提供的全部日期函数。</p>
+<p> 7) load: 从文件中导入数据</p>
+<p> 这个命令以前用过，还利用它做过坏事，呵呵。只是比较难得记住他的用法，因此也记录下来。<br> load 命令允许你从一个仅仅包含数据的文件中导入数据。<br> <code>load local infile &#39;books.dat&#39; into table books</code><br> 这个命令假设文件 books.dat 的内容是每一行对应一条记录，其中值之前用 tab 键分隔，空置 (null) 用 N 表示。<br> local 关键字表示告诉 mysql 命令行加载的文件和发出该命令的客户端是同一台机器。否则，它会在服务器上寻找该文件，当然你可以这样做，不过你需要得到相关的<br>授权。同时要记住的是非本地加载的文件，默认是从数据库安装目录开始寻找的 (在 Linux 里，默认是<code>/var/lib/mysq/</code>下）。这和后面要说的导出文件存放的位置规则是一致的。<br> 如果你的文件不是用 tab 键分隔的，而是别的字符，比如逗号 (,) 。那么你可以制定分隔符号来导入数据。</p>
+<p> <code>LOAD DATA LOCAL INFILE ’books.dat’ INTO TABLE BOOK FIELDS TERMINATED BY ’,’;</code> </p>
+<p> 如果文件中包含的数据和数据库中已有的数据相冲突，那么你可以使用关键字 replace 或者 ignore 来指定其行为，默认是 ignore。</p>
+<p> <code>LOAD DATA LOCAL INFILE &#39;books.dat&#39; REPLACE INTO TABLE BOOK</code></p>
+<p> 8) 从数据库中导出数据到文件 (Pulling from MySQL)</p>
+<p> MySQL 允许将 select 出来的结果写入到文件<br><code>SELECT * INTO OUTFILE ’books.dat’ FROM BOOK;</code></p>
+<p> 如果你并不希望用 tab 键分隔值，而是希望用的符号，比如逗号 (,) 来分隔，这样的好处是一些电子表格程序可以处理这些文件。那么你可以这样做：</p>
+<p> <code>SELECT * INTO OUTFILE ’books.dat’ FIELDS TERMINATED BY ’,’ FROM BOOK;</code></p>
+<p> 同时，你可以将每一个值用引号包含起来</p>
+<p> <code>SELECT * INTO OUTFILE ’books.dat’ FIELDS ENCLOSED BY ’&quot;’ TERMINATED BY ’,’ FROM BOOK;</code></p>
+<p> 当然，你可以考虑只有对类型是字符串类型的域的值用引号，其他就不必了。那么可以使用这样的命令</p>
+<p> <code>SELECT * INTO OUTFILE ’books.dat’ FIELDS OPTIONALLY ENCLOSED BY ’&quot;’ TERMINATED BY ’,’ FROM BOOK;</code></p>
+<p> 更详细的解释可以参考官方手册。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/数据库/">数据库</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/mysql/">mysql</a>, <a href="/tags/数据库/">数据库</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2006/12/17/notes-about-manage-and-using-mysql/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

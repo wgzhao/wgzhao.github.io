@@ -1,0 +1,569 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>归档：2005 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2005</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-12-25T16:00:00.000Z"><a href="/2005/12/26/qemu-two-way-Internet/">12月 26 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/12/26/qemu-two-way-Internet/">qemu的两种上网方式</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>本文就 qemu 模拟软件介绍虚拟机如何和主机及互联网通讯，测试环境<br>主机：redflag desktop 5.0 beta2<br>虚拟机: win98 se<br>qemu:qemu-0.7.0-6  </p>
+<h3 id="user_mode_network">user mode network</h3>
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2005/12/26/qemu-two-way-Internet/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-12-01T16:00:00.000Z"><a href="/2005/12/02/kerberos-authentication-configuration/">12月 2 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/12/02/kerberos-authentication-configuration/">kerberos 认证配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><strong>第一部分 Kerberos 协议介绍</strong>  </p>
+<p>在希腊神话中，Kerberos 是守护地狱之门的三头狗。在计算机世界里，美国麻省理工学院 (MIT) 把他们开发的这一网络认证系统命名为<br>Kerberos。 Kerberos 认证协议是由美国麻省理工学院 (MIT) 在 80 年代首先提出并实现的, 是该校 Athena 计划的一部分。  </p>
+<p>因为 Kerberos 是一个三方<br>认证协议，根据称为密匙分配中心（KDC）的第三方服务中心来验证网络中计算机相互的身份，并建立密匙以保证计算机间安全连接。Kerberos 协议基本<br>上是可行的并且有效的。KDC 有两个部分组成：认证服务器 AS 和票据授权服务器 TGS。Kerberos 是一种网络认证协议，允许一台计算机通过交换加密<br>消息在整个非安全网络上与另一台计算机互相证明身份。一旦身份得到验证，Kerberos 协议将会给这两台计算机提供密匙，以进行安全通讯对话。<br>Kerberos 协议可以认证试图等录上网用户的身份，并通过使用密匙密码为用户间的通信加密。总的来说，Kerberos<br>是一种基于私钥加密算法的，需要可信任的第三方作为认证服务器的网络认证系统。它允许在网络上通讯的实体互相证明彼此的身份，并且能够阻止旁听和重放等手<br>段的攻击。不仅如此，它还能够提供对通讯数据保密性和完整性的保护。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2005/12/02/kerberos-authentication-configuration/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-11-15T16:00:00.000Z"><a href="/2005/11/16/control-system-with-proc-fs/">11月 16 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/11/16/control-system-with-proc-fs/">使用 /proc 文件系统来控制系统</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>详细介绍有关 /proc 中每个文件的用法和确切信息超出了本文所涉及的范围。要获得任何关于本文没有涉及到的 /proc<br>文件的其它信息，一个最佳来源就是 Linux 内核源代码本身，它包含了一些非常优秀的文档。对于系统管理员，/proc<br>中的以下文件较有用。这不意味着它是一份详尽的说明，而只是日常使用中便于查阅的参考。</p>
+<h2 id="/proc/scsi">/proc/scsi</h2>
+<h3 id="/proc/scsi/scsi">/proc/scsi/scsi</h3>
+<p>作为系统管理员，需要了解的最有用内容是，在有热交换驱动器情况下，如何不重启系统就可以添加更多磁盘空间。假使不使用<br>/proc，您可以插入驱动器，但为了使系统识别新磁盘，必须随即重新引导系统。<br>这里，可以用以下命令来使系统识别新的驱动器：</p>
+<pre><code><span class="built_in">echo</span> <span class="string">"scsi add-single-device w x y z"</span> &gt; /proc/scsi/scsi
+</code></pre><p>为使该命令正常运行，必须指定正确的参数值 w、x、y 和 z，如下所示：<br>w 是主机适配器标识，第一个适配器为零（0）<br>x 是主机适配器上的 SCSI 通道，第一个通道为零（0）<br>y 是设备的 SCSI 标识<br>z 是 LUN 号，第一个 LUN 为零（0）<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2005/11/16/control-system-with-proc-fs/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-11-15T16:00:00.000Z"><a href="/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/">11月 16 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/">红帽企业 Linux 4启动引导选项</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>也适合其他分发产品<br>引导时的命令参数  </p>
+<p>askmethod<br>该命令请你选择从红帽企业 Linux 光盘中引导时你想使用的安装方法。<br>apic<br>这个 x86 引导命令绕过在 Intel 440GX 芯片集 BIOS 中可能会普遍遇到的错误，它只应该使用安装程序内核来执行。<br>apm=allow_ints<br>这个 x86 引导命令改变挂起服务的处理方式（对于某些便携电脑来说可能是必要的）。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-11-07T16:00:00.000Z"><a href="/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/">11月 8 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/">LDAP+SAMBA+Proftpd+SYSTEM AUTH集成配置</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Windows 的 AD（Active Directory) 是一个 DAP(Directory Access<br>Protocol) 的一个完美演绎，使用 AD 创建的域，使得普通用户的登录信息于机器无关，而且可以实现单点登录（single sign<br>on). 目前 Linux 下面可以勉强达到这个水平的可能只有 RADIUS。<br>现在我要介绍的这个方案是基于 LDAP 的认证方式，也就是 samba，<br>ftp，system 的认证信息都是来自 ldap 数据库，而不是原来的密码文件，这样做的好处是密码的统一管理，减少风险，比如你可能并不希望 ftp，<br>mail 等帐号的认证用到系统帐号，这个时候你就可以考虑这个方案（当然你也可以使用像 mysql 这样的数据库）。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-09-27T16:00:00.000Z"><a href="/2005/09/28/Some-of-the-samba-server-variables/">9月 28 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/09/28/Some-of-the-samba-server-variables/">samba服务器的一些变量</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>samba 配置文件中经常会用到一些变量，而这些变量也经常给我们带来巨大的便利，因此我把 samba 配置文件（smb.conf）中用到的一些变量。<br>每一个变量都是一 % 开头，后面是一个单独的大写或者小写字母，而且只能用在配置项的右边。<br>下面是具体的变量名称，至于其用法，大家可以参考默认的 smb.conf 文件。如果我利用他完成了漂亮的工作，我也会贴出来。</p>
+<h3 id=" 客户端变量 ">客户端变量</h3>
+<p>%a | 客户端的体系结构（例如 Samba，NT,Win98, 或者 Unknown）<br>%I | 客户端的 IP 地址（例如：192.168.220.100)<br>%m | 客户端的 NetBios 名<br>%M | 客户端的 DNS 名  </p>
+<h3 id=" 用户变量 ">用户变量</h3>
+<p>%g | %u 的基本组<br>%G | %U 的基本组<br>%H | %u 的 Home 目录<br>%u | 当前的 unix 用户名<br>%U | 被请求的客户端用户名 (不总是被 samba 使用)  </p>
+<h3 id=" 共享变量 ">共享变量</h3>
+<p>%p | 如果和 %p 不同,automounter 的路径对应共享的根目录<br>%P | 当前共享的根目录<br>%S | 但前共享的名称  </p>
+<h3 id=" 服务器变量 ">服务器变量</h3>
+<p>%d | 当前服务器进程的 ID<br>%h | Samba 服务器的 DNS 主机名<br>%L | Samba 服务器的 netbios 名<br>%N | Home 目录服务器, 来自 automount 的映射<br>%v | samba 版本  </p>
+<h3 id=" 其他变量 ">其他变量</h3>
+<p>%R | 经过协商的 SMB 协议<br>%T | 当前的日期和时间  </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-05-14T16:00:00.000Z"><a href="/2005/05/15/written-on-the-tanabata/">5月 15 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/05/15/written-on-the-tanabata/">写在七夕【转自glemir】</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>越来越欣赏 glemir 的才气，都发现似乎他可以去做一个放荡不羁的诗人了。<br>如果想看他更多的作品，<a href="http://glemir.xplore.cn" target="_blank">去他的 blog 吧</a>。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2005/05/15/written-on-the-tanabata/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-05-08T16:00:00.000Z"><a href="/2005/05/09/Engineers-have-to-use-a-quarter-of-the-time-to-reflect-on-great-ideas/">5月 9 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/05/09/Engineers-have-to-use-a-quarter-of-the-time-to-reflect-on-great-ideas/">工程师必须用四分之一的时间来思考了不起的点子</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Google 双雄: 创始人拉里·佩奇和谢尔盖·布林<br>作者：周坚毅 2003-9-13 21:02:44<br>出处：博客中国 (Blogchina.com) 原始出处： 经济观察报</p>
+<p>一天早晨，Google 网站的工程师们发现，搜索排行的榜首是这样一个冷僻词条：“卡罗尔·布雷迪的娘家”。为什么人们突然会对 20 世纪 70 年代的情景喜剧<br>布雷迪家庭》发生兴趣呢？原来，头一天晚上，在美国电视有奖竞猜节目“谁想成为百万富翁”中，有一道决定百万美元归属的关键问题：“卡罗尔·布雷迪的娘家姓什<br>？”节目主持人提出这个问题不过几秒钟，就有数以千计的人登录 Google 搜寻答案。另外，这项搜索请求在 Google 上形成 4 次查询高峰，正好与该节目在美<br>各时区依次播出的时间相吻合。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2005/05/09/Engineers-have-to-use-a-quarter-of-the-time-to-reflect-on-great-ideas/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-04-26T16:00:00.000Z"><a href="/2005/04/27/vnc-configuration-notes/">4月 27 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/04/27/vnc-configuration-notes/">VNC配置手记</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>其实配置 VNC 很简单。只要运行 vncserver 就好了.<br>运行完毕后，它会在家目录生成<code>.vnc</code>目录。 里面最重要的一个文件是 Xstartup。<br>然后你可以使用 <code>vncviewer yourremotehost:id</code> 就可以了。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2005/04/27/vnc-configuration-notes/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2005-04-25T16:00:00.000Z"><a href="/2005/04/26/To-find-a-husband/">4月 26 2005</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2005/04/26/To-find-a-husband/">找到了婆家</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>两个星期的找工作算是告一个段落了，我也找到了婆家。目前我在中科红旗上班，呵呵，总算是做自己喜欢做的事情了吧。<br>感觉不错，都是年轻人，都是 linux 的 fans，其实我喜爱的是 linux 的这种开源理念。<br>让人使用起来很自由。总算是摆脱了使用 windows 的恶梦了！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+  
+    <a href="/archives/2005/page/2/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 21 页 | 归档 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">归档</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-23T16:00:00.000Z"><a href="/2007/03/24/commands-start-n/">3月 24 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/24/commands-start-n/">\[/sbin学习\]n\*命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/sbin 下 n 开头的命令不多，而且基本上不常用</p>
+<blockquote>
+<p>nameif nash netplugd netreport new-kernel-pkg nologin</p>
+</blockquote>
+<p>nameif：基于 MAC 地址命名网络接口，他需要的配置文件是<code>/etc/mactab</code>。</p>
+<p>nash：另外一种 shell，主要用在引导镜像中的脚本中，比如<code>initrd.img</code>。</p>
+<p>netplugd：网络热插拔管理后台程序。</p>
+<p>netreport：网络接口修改通知，红旗自己写的程序。</p>
+<p>new-kernel-pkg：安装新内核，他能完成的功能有：<br>1) 创建，删除一个 initrd<br>2) 运行 depmod 或者删除 depmod 生成的文件<br>3) 从 grub/lilo 配置文件中增加或者删除一个内核镜像（通过 grubby）。  </p>
+<p>nolog：想拒绝一个帐号登录，就可以使用他了，man 手册中描述的是优雅的拒绝用户登录。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-21T16:00:00.000Z"><a href="/2007/03/22/commands-start-m/">3月 22 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/22/commands-start-m/">\[/sbin学习\]m\*命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/sbin 目录下 m 开头的命令可不少</p>
+<pre><code>mdadm          mii-tool    mkfs<span class="preprocessor">.cramfs</span>    mkfs<span class="preprocessor">.xfs</span>    mounted<span class="preprocessor">.ocfs</span>2  mpath_get_name          multipath<span class="preprocessor">.static</span>
+mdadm<span class="preprocessor">.static</span>   mingetty    mkfs<span class="preprocessor">.ext</span>2      mkinitrd    mount<span class="preprocessor">.ncp</span>      mpath_prio_alua
+mdassemble     minilogd    mkfs<span class="preprocessor">.ext</span>3      mkreiserfs  mount<span class="preprocessor">.ncpfs</span>    mpath_prio_emc
+mdevt          mkbootdisk  mkfs<span class="preprocessor">.msdos</span>     mkswap      mount<span class="preprocessor">.ocfs</span>2    mpath_prio_hds_modular
+mdmpd          mkdosfs     mkfs<span class="preprocessor">.ocfs</span>2     mkzonedb    mount<span class="preprocessor">.smb</span>      mpath_prio_netapp
+mgetty         mke2fs      mkfs<span class="preprocessor">.reiserfs</span>  modinfo     mount<span class="preprocessor">.smbfs</span>    multipath
+microcode_ctl  mkfs        mkfs<span class="preprocessor">.vfat</span>      modprobe    mpath_ctl      multipathd
+</code></pre><p>mkfs 系列命令占了很大一部分。 mdadm,mdadm.static: 这是和 RAID 相关的程序，他用来管理 Linux 下的软 RAID。<br>当前 Linux 提供的 RAID 级别有 LINEAR md 设备，RAID0 (striping),RAID1 (mirroring),RAID4,RAID5,RAID6,MULTIPATH 和 FAULTY.<br>这里说的 multipathq 其实并不是软 RAID 机制中的一部分，但是他会去调用。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/03/22/commands-start-m/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-20T16:00:00.000Z"><a href="/2007/03/21/return-to-the-redflag/">3月 21 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/21/return-to-the-redflag/">重回红旗</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不想写很多，只是想说一句：</p>
+<p>我重新回到了<a href="http://www.redflag-linux.com" target="_blank">红旗</a>，不过不在北京上班，而是在长沙。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-18T16:00:00.000Z"><a href="/2007/03/19/commands-start-l/">3月 19 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/19/commands-start-l/">\[/sbin学习\]l\*命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/sbin/ 下 l 开头的命令不多，列举如下：</p>
+<blockquote>
+<p>ldconfig lilo logsave loopctrl losetup lsmod lspci lsusb lvm lvm.static</p>
+</blockquote>
+<p>其中 lvm 是 lvm.static 的软连接。</p>
+<p>ldconfig：配置动态连接库，以便程序在编译和运行中动态连接这些程序库。与此相关的配置文件便是 /etc/ld.so.conf，后来的 ldconfig 的配置文件采取了现在流行的读取目录下的配置文件。所以 /etc/ld.so.conf.d 目录便是后来增加的。<br>我仅仅使用 ldconfig 的一个参数 -f，就是指定配置文件，这样的好处是，当我需要增加某一个目录的动态库时，我不要全部重建动态库缓存，命令程序运行时间短了很多。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/03/19/commands-start-l/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-16T16:00:00.000Z"><a href="/2007/03/17/i-winning/">3月 17 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/17/i-winning/">中奖了，中奖了！</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>感谢母亲在 28 年前的今天，忍受了人生最大的痛苦，生育了我！<br>中午，lancy 请我吃饭。随便点了几个菜，边聊边吃，结账时，顺便要了一张发票。<br>习惯性的刮着，虽然从来都没有中奖过，但是还是期望奇迹发现。<br>我是从中间刮起，随便刮了点，瞄了一眼，觉得出现的这个字好陌生呀，因为平常挂出来都是“付税光荣”，这次似乎不像“税”，也不像“光”，再看，是个“拾”字，我马上对 lancy 说，中奖了，lancy 不相信，说我骗她，我继续刮，前面居然是一个“伍”字，我兴奋的说”中奖了，伍拾呢！“，旁边的服务员也不相信，顺口说了一句”是付税光荣“，估计是他们这里还没有发现有人中奖过吧。  </p>
+<p>lancy 看我不像是骗她，立马抢了过去，再刮了一下，果然是伍拾，哈哈！  </p>
+<p>lancy 高兴的去服务台领奖，旁边的服务员也赶紧围了过来，纷纷说手气不错，赶紧去买六合彩。  </p>
+<p>这还是我们第一次发票上中奖呢，不容易呀，看这次的好运气能不能给我今年带来好运！  </p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-11T16:00:00.000Z"><a href="/2007/03/12/some-tips-about-group-and-gshadow/">3月 12 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/12/some-tips-about-group-and-gshadow/">/etc/group,/etc/gshadow释疑</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>下午<a href="http://weiling00.spaces.live.com/" target="_blank">welling</a>在 MSN 上问我，你知道 /etc/group 的第二项是什么意思吗？这项中! 和 x 分别代表什么意思呢？<br>之前我还真的没有注意到这个问题。于是先 man group 了一把，给出了的说明是  </p>
+<blockquote>
+<p>password the (encrypted) group password. If this field is empty, no<br>password is needed.</p>
+</blockquote>
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/03/12/some-tips-about-group-and-gshadow/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-08T16:00:00.000Z"><a href="/2007/03/09/today-left-5460/">3月 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/09/today-left-5460/">今日离开中国同学录</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>下午 5：40，打印出了离职报告，交给了部门经理，签字后又转移到总监手里。<br>至此，我在<a href="http://www.5460.net" title=" 中国同学录 " target="_blank">中国同学录</a><br>的工作告一段落了。这是我在回长沙后的第二份工作，第一份工作工作了 5 天，因为规定周六要上班和需要缴纳 3000 元的保证金而离开了。</p>
+<p>而现在的这份工作，我上了 58 天班，因为公司的体制和一些做人做事的方法，让我无法适应而离开。<br>不过就在准备离开的这两天，其实发生了很多事情，让我看到了一些平常我看不到的层面，只是觉得有点晚，因为之前我已经决定走了。</p>
+<p>有时我觉得我是不是过于挑剔或者过于自大了？是不是应该放下自己其实就没有资格有的臭架子，可是往往我有无法强迫自己去认同那些我不习惯的东西。</p>
+<p>我不习惯在办公室这样的公共场合还有人吸烟；我不习惯在办公室总是充斥着污言秽语和大肆喧哗；我不习惯成天的开会，虽然我并不要参加；我不习惯虽然说不提倡加班，但事实却不是这样。</p>
+<p>也许潜意识里，我还是热爱着 Linux，我已经在公司被 windows 压抑得几乎无法呼吸。我渴望自由！</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-03-06T16:00:00.000Z"><a href="/2007/03/07/commands-start-k/">3月 7 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/03/07/commands-start-k/">NaN</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/sbin 下 j 开头的命令没有，k 开头的也只有三个，而且比较简单<br>killall5: 发送中断信号给所有的进程，除了自己，它只接受一个参数，那就是中断信号数。<br>klogd: 系统内核日志 daemon 程序，一般有 /etc/init.d/syslogd 脚本来调用，有关日志系统的介绍，可以参考<br><a href="read.php/334.htm">Linux 日志文件系统</a>。<br>kmodule：没有任何说明和帮助，string 了一下，也没有看到什么有用的信息，执行了一下，输出了目前我的系统已经加载的内核模块，但是他的显示又和 lsmod 不同，比如声卡驱动，lsmod 打印可能会有 3，4 行信息，但是 Kmodule 仅仅一行，就是告诉你加载了什么类型的声卡驱动。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-02-11T16:00:00.000Z"><a href="/2007/02/12/have-read-chinese-painting/">2月 12 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/02/12/have-read-chinese-painting/">看完了《国画》</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><img src="http://www.douban.com/lpic/s1509506.jpg" alt="image">不知不觉又在 WC 中看完了一本书，想来人一天呆在 WC 的时间还是不少的（是不是这也是一个商机呢？比如提供可以翻阅的广告等）</p>
+<p>我想《<a href="http://www.douban.com/subject/1397659/" target="_blank">国画</a>》这本书之所以被禁，应该是他其中的对官场入木三分的刻画吧。</p>
+<p>只是边看的时候，我在想，书的出版是为了像人们揭示一个现实生活中的官场行为呢，还是要作为一个官场入职 ABC 的知道教材呢？至少我看完后，如果我去政府部门，那我会很本能的想到这本书，想到这本书所描述的一些为官“方法”。</p>
+<p>或许等我再看完《青瓷》，对此会有更多的理解的吧。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-02-11T16:00:00.000Z"><a href="/2007/02/12/commands-start-h/">2月 12 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/02/12/commands-start-h/">\[/sbin学习\]h\*命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/sbin 下 h 开头的命令不多，仅有 4 个<br>halt hdparm hotplug hwclock<br>halt: 停止系统，他和 reboot，poweroff 等命令属于同一个功能集。<br>halt 命令不不接参数，仅仅有几个选项来决定如何停止系统  </p>
+<p>-n: 停止系统前不做同步 (sync)，适合快速关机和那些仅仅只有只读访问的系统。<br>-w: 仅在 wtmp 文件中写一条 reboot 记录，然后退出，他的用处是什么？<br>-d: 不写 reboot 记录到 wtmp 文件中<br>-f: 强制停机 / 重启，但不调用 shutdown.shutdown 是一种安全的关闭系统的方式。<br>-p: 如果支持，系统关闭后掉电。否则只是停止系统.<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/02/12/commands-start-h/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/page/20/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/archives/page/22/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

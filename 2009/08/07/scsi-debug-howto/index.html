@@ -1,0 +1,505 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>linux kernel 2.6的scsi_debug适配器驱动 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="linux kernel 2.6的scsi_debug适配器驱动"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-08-06T16:00:00.000Z"><a href="/2009/08/07/scsi-debug-howto/">8月 7 2009</a></time>
+      
+      
+  
+    <h1 class="title">linux kernel 2.6的scsi_debug适配器驱动</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>因为搬家的原因，这篇文档，断断续续，翻译了一个多星期，翻译的过程中，发现自己对 SCSI 子系统还是不了解，所以有很多地方翻译得很晦涩，还是建议大家看原文档。<br>原文档的链接地址是：<br><a href="http://sg.danny.cz/sg/sdebug26.html" target="_blank">http://sg.danny.cz/sg/sdebug26.html</a><br>如果你实在是看着英文就头疼，那就对付着看我的翻译吧：<br><a id="more"></a><br>——开始翻译的分割线———-  </p>
+<p>想突然在你的机器上多出多达 140 个 SCSI 磁盘不？或者想突然有一个超过 1PB 的 SCSI 磁盘不？就像下面这样：</p>
+<pre><code># parted /dev/sdb <span class="keyword">unit</span> TB  <span class="keyword">print</span>
+Model: Linux scsi_debug (scsi)
+磁盘 /dev/sdb: <span class="number">1288</span>TB
+Sector <span class="keyword">size</span> (logical/physical): <span class="number">512</span>B/<span class="number">512</span>B
+分区表：gpt
+
+数字  开始：  End  大小  文件系统  Name  标志
+</code></pre><p>上面的磁盘来源于内核 2.6 自带的<code>scsi_debug</code>驱动，这个虚拟的存储适配器可以在调试 SCSI 存储时提供很多帮助，就像开发手机应用程序，你需要手机模拟器一样，更多详细的信息，请听我慢慢到来（实际上时自行理解加翻译官方说明)。  </p>
+<h2 id=" 介绍 ">介绍</h2>
+<p>scsi_debug 适配器驱动模拟一定数量的 SCSI 磁盘，每一个磁盘共享一定数量的内存充当存储空间。当模拟一个 SCSI 磁盘时，scsi_debug 的功能就是把内存当做磁盘。当模拟多个 SCSI 磁盘时，他们被当做是指向同一个存储设备的多条路径。驱动能够模拟非常大的磁盘,2TB 或者更大的磁盘内容都可以有效的内存里访问。<br>它支持一套较小但是有用的 SSI 命令集用来做原始错误检查。模拟磁盘的数量以及作为存储空间的共享内存大小可以在模块加载的时候作为参数指定，当然也可以编译进 initrd 文件里，通过文件来指定其参数。而且模拟的磁盘数量（或者适配器数量）可以在运行时通过 sysfs 文件系统来修改。各种错误条件可以选择生成测试反应上层内核和应用软件的异常情况。<br>scsi_debug 驱动的最开始在 kernel 2.4 里能找到，作者是 Eric Youngdale，Eric 用它来测试一些“新的”错误处理，他们在 kernel 2.2 里被引入，在 Kernel 2.4 已经扩充了。更详细的内容可以访问<a href="http://www.andante.org/scsi.html" target="_blank">Eric 的网站</a>。  </p>
+<h2 id=" 参数 ">参数</h2>
+<p>下面的列表给出了 scsi_debug 驱动模块所支持的参数</p>
+<pre>
+参数名称    缺省值   sysfs 访问   sysfs 写入生效时间     版本要求  说明
+------------------ --------- ------------- ------------------------ ------ 
+
+add_host    1         读写      立刻                    -       够在运行时态增减主机数（适配器数）
+delay       1         读写     下次命令                  -       单位是时钟滴答 (jiffies) (可配置为: 1 到 10 毫秒 (ms)) [1.78 版本: 非数据传输命令忽略 delay 参数]
+dev_size_mb 8         只读       -                      -       单位是 MB
+every_nth   0         读写     从现在到 n 个命令            -       错误注入，0 表示关闭
+fake_rw     0         读写     下次命令                 1.80     设置后，读写接受到后，不做操作
+max_luns    1         读写     下次正数 add_host 或者扫描   -       应答的 LUN 数，从 0 到 (max_luns - 1), 如果设置了 no_lun_0，那么就从 1 到 (max_luns - 1)
+no_lun_0    0         读写     下次正数 add_host 或者扫描   1.77    没有 Lun 0, 但是会依照 SPC-2 应答 INQUIRY 和 REPORT LUNS 指令
+num_parts   0         只读       -                            分区数
+num_tgts    1         读写     下次正数 add_host 或者扫描    -      每主机 (适配器）的目标段数（targets)
+opts        0         读写     一般是接下来的命令          -      0 表示安静模式，默诶有错误注入（1.81 版本里，设置 16 将注入 aborted_command 指令） 
+ptype       0         读写     下次正数 add_host 或者扫描    -      外围设备类型（0 表示磁盘）
+scsi_level  5         只读        -                      -      0 (no compliance), 1, 2 (SCSI-2), 3 (SPC), 4 (SPC-2), 5 (SPC-3), 6 (SPC-4)
+virtual_gb  0         读写     立刻, 下次 READ CAPACITY 指令 1.79  0 表示设备大小就是 dev_size_mb 设置的大小，如果 n\>0，大小为 n GB
+vpd_use_hostno   1   读写      下次正数 add_host 或者扫描     1.80   the driver generates serial numbers and SAS naa-5 addresses based on host number ("hostno"), target id and lun. When set to 0, the generated numbers ignore "hostno".
+
+</pre>
+
+<p>加载 scsi_debug 模块，应该给出 2 个（含）以上参数，参数之间用空格分开。<br>比如，我们用下面这个指令来模拟 140 个磁盘：</p>
+<p><code>odprobe scsi_debug max_luns=2 num_tgts=7 add_host=10</code></p>
+<p>10 个主机（适配器），每个主机（适配器）7 个目标端 (target)，每一个目标端 2 个 lun，一起 10 * 7 * 2 =140 个磁盘设备。<br>sysfs 可以用平常的方法操作，cat 读出内容，echo 写入内容，比如：</p>
+<pre><code><span class="preprocessor"># cd /sys/bus/pseudo/drivers/scsi_debug</span>
+<span class="preprocessor"># cat dev_size_mb</span>
+<span class="number">8</span>
+<span class="preprocessor"># echo 1 &gt; add_host</span>
+</code></pre><p><strong>add_host</strong> 参数缺省值为 1. 在 sysfs 里，如果给<code>add_host</code>写入 0, 表示什么都不做，如果写入一个正数，表示增加那么多个主机适配器，负数则相反。<br>每一个主机（适配器）上适用的 targetid 数不超过<strong>num_tgts</strong>的设定值，缺省为 1。<br><strong>max_luns</strong>的缺省值也是 1。这意味着，缺省条件下，每增减一个主机（适配器）就相应的增减 1 个 lun。当然，这三个参数的任意一个设置为 0, 将不会产生设备。<br>add_host 参数的使用，相当于是模拟主机（适配器）的热插拔。  </p>
+<p><strong>delay</strong>参数表示时钟滴答 (jiffies) 数量，表示驱动延时应答时间，缺省值为 1。设置为 0 或者为负数将会导致请求在完成前就将应答反馈给中间层 (mid-level)。当前的”jiffy”是内核空间的 jiffy（比如 HZ== i386 上的 1 ms)，而不是用户空间的 jiffy(比如 USER_HZ == i386 上的 10<br>ms）。虽然延时和立刻应答都允许，但是延时应答应该更现实一点。对于延时应答，将会使用内核时钟。（真实的适配器会在应答准备好时产生一个中断），对于快速 ramdisk 而言，可以设置 delay 为 0。那么以下的 SCSI 命令将会忽略<strong>delay</strong>参数而采取立刻应答方式，他们是：INQUIRY,<br>REPORT LUNS, REQUEST SENSE, SYNCHRONIZE CACHE and TEST UNIT READY。</p>
+<p><strong>dev_size_mb</strong><br>参数允许用户来指定虚拟存储的大小，单位是 MB，缺省是 8(MB)。可设置的最大值依赖于 vmalloc() 函数调用的容量大小。如果模块加载失败，并给出一个”cannot allocate memory”报错消息，那么你可以在启动的时候增加”vmalloc=nn{KMG}”的核心参数［具体的参数信息可以参考核心源代码文件：<strong>Documentation/kernel-parameters.txt</strong> 为虚拟存储而保留的内存如果初始化时为 0 时，会影响 sd(scsi disk) 驱动，使得块设备层 (block layer) 认为当前没有分区表。</p>
+<p>分区可以通过<strong>num_parts</strong>来模拟 (详细情况见下文）。所有虚拟的设备共享同一块内存。如果该参数值设置为 0 或者复述，<strong>dev_size_mb</strong>将会强制设置为 1, 表示使用 1MB 的内存。如果需要更大的模拟存储，可以使用<strong>virtual_gb</strong>参数（详见下文）</p>
+<p><strong>every_nth</strong>接受 10 进制数来作为参数。当数值大于 0 时，进来的命令将会计数，当条命令进来后，相关命令将会产生某种错误。当前有效的错误有：timeout(当”opts &amp; 4“为真) 和 RECOVERED_ERROR(当”opts &amp; 8”为真), 一旦进来的命令达到了值，则重置为 0.  </p>
+<p>举个例子，如果设置 every_nth 为 3,opts 设置为 4 就会导致每次第三个命令被忽略 (即 timeout)。如果 every_nth 没有设置，则使用缺省值 0, 表示 timeout 和 RECOVERD_ERROR 都不会产生。</p>
+<p>如果<strong>every_nth</strong>给出负数的话，一个内部命令计数器将会倒计数，当计数达到后，对每一个新进来的命令，持续产生错误条件。这个持续错误状态在驱动标志里是设置为 -1。如果设置为 0, 则上述情况不会发生。  </p>
+<p><strong>fake_rw</strong>参数通知 scsi_debug 驱动忽略掉所有的 READ 和 WRITE 命令，并返回 GOOD 状态值。缺省值为 0（表示处理 READ，WRITE 命令)。此参数主要用来测试。</p>
+<p><strong>max_luns</strong>参数允许 scsi_debug 能够应答的 lun 值的上限。如果设置为 2, 这会应答 lun 号分别为 0 和 1。如果<strong>max_luns</strong>是在 sysfs 里修改的，那么 scsi_debug 将会修改所有主机（适配器）上的<strong>scsi_host::max_lun</strong>数据结构域。<br><strong>max_luns</strong>由 sysfs 修改的话，它将在下一次增加主机 (看 add_host) 时生效，或者对任意存在的主机（适配器）扫描完后生效。中间层代码（mid level）扫描上层信息，但是不包括<strong>max_scsi_luns</strong>，它由系统启动或者模块加载时确定。</p>
+<p><strong>num_parts</strong>参数如果大于 0, 则会写入分区表信息到 ramdisk。缺省值为 0, 表示 ramdisk 简单的用 0 填充。如果值大于 0,num_parts，DOS 格式的主分区块写入逻辑块 0，所以，主分区数量也就限制在 4 个了。分区用 0x83 的 id 号表示，这意味着时”Linux”分区。如果没有指定分区，可以在之后使用 fdisk/parted 等工具来分区。</p>
+<p><strong>num_tgts</strong>参数指定每一个主机（适配器）有多个少目标端 (target)，应该设置为 0 或者大于 0 值。<br>如果<strong>num_tgts</strong>是在 sysfs 层修改，则会在下次增加主机 (适配器）或者扫描完成时生效。  </p>
+<p><strong>no_lun_0</strong>参数设置为非 0 值，会导致 INQUIRY 应答为 peripheral_qualifier==3, 表示当前没有实际的逻辑单元 (logical unit)，根据 SPC 规范，lun 0 仍然将会对 REPORT LUNS 命令做出响应。如果 REPORT LUNS 设置”select code”为 1 或者 2, 这其中的一个 lun 会成为 REPORT LUNS 知名逻辑单位 (lun 49409)，该参数的缺省值为 0。<br>如果 max_luns 大于 1(实际上，如果 max_luns=1，在 no_lun_0 被设置时,scsi_debug 将不会产生任何 scsi 设备), 那么 scsi_debug 产生的一个 LU 号是 1（跳过 0)。为了帮助逻辑单位扫描，SPC-3 要求 lun 0 仍然对 INQUIRY,REPORT LUNS 命令做出应答。知名逻辑单元 (wlun) 仅支持 INQUIRY,REPORT LUNS,REQUEST SENSE,TEST UNIT READY 等 SCSI 命令。为了使 wlan 看上去像一个通用 scsi 设备 (scsi generic,sg)，需要做下面一下操作：</p>
+<pre><code><span class="preprocessor"># modprobe scsi_debug no_lun_0=1 max_luns=2</span>
+<span class="preprocessor"># cd /sys/class/scsi_host/host0</span>
+<span class="preprocessor"># echo "- - 49409" &gt; scan</span>
+<span class="preprocessor">#</span>
+<span class="preprocessor"># lsscsi -g</span>
+[<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">1</span>]    disk    Linux    scsi_debug       <span class="number">0004</span>  /dev/sda  /dev/sg0
+[<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">49409</span>]wlun    Linux    scsi_debug       <span class="number">0004</span>  -         /dev/sg1
+</code></pre><p><strong>ptype</strong>参数允许 SCSI 外设类型被修改，缺省值为 0, 对应磁盘设备，1 表示磁带，3 表示处理器，5 时 dvd/cd，13 表示终结端子。</p>
+<p><strong>opts</strong>参数接受数值参数用来与几个服务标志做位或操作，支持的标志有：</p>
+<ul>
+<li>1 - “noisy” 标志: 所有入口指针的调用均被记录。</li>
+<li>2 - “medium error” 标志: 当扇区 0x1234(十进制是 4660）被读到时，模拟 SCSI MEDIUM<br>ERROR 错误信息</li>
+<li>4 - 忽略”nth”指令导致 timeout，every_nth !=0 时激活</li>
+<li>8 - 导致”nth”读或者写命令产生一个 RECOVERED_ERROR 错误. every_nth != 0 时激活</li>
+<li>16 - 导致”nth”读或者写命令产生一个 SAS 传输错误—-ABORTED_COMMAND(ack/nak timeout) 错误<br>.every_nth != 0 时激活</li>
+</ul>
+<p><strong>scsi_level</strong>参数是用来设置模拟的磁盘能够兼容的 ANSI SCSI 标准级别，INQUIRY 应答里包含了 ANSI SCSI 标准级别值（2 字节)</p>
+<p><strong>virtual_gb</strong>参数允许 scsi_debug 驱动模拟比物理内存大很多的存储设备。当<strong>virtual_gb</strong>参数为 0（0 是缺省值），模拟的存储设备最大值由 dev_siez_mb 参数来定义。virtual_gb 设置大于 0，READ CAPACITY 命令将应答为设置的参数大小，单位是 GB。<br>当然读写这么大模拟存储数据都是在物理内存范围之内。virtual_gb 大于或者等于 2048 时，需要 READ CAPACITY(16) 指令来显示大小，使用 READ(16)/WRITE(16) 访问超过 2048GB 外的数据。边界值是 2**32 -1 块（扇区），每块（扇区）512 字节。<br>virtual_gb 选项仅仅用来做测试，不要用来做数据存储实验。</p>
+<p><strong>vpd_use_hostno</strong>参数影响 scsi_debug 驱动产生序列号的方法，SAS 和 naa-5 address。vpd_use_hostno 设置为 1（缺省值）时，host<br>number(hostno),target_id,lun 用来产生序列号，SAS 和 naa-5 address。公式是<code>((hostno + 1) * 2000) + (target_id \* 1000) +
+lun)</code>。<br>vpd_use_hostno 设置为 0 的话，”hostno”在公式项里设置为 0, 这就使得多个模拟得主机（适配器）像是链接到相同的驱动器（比如：这里仅有”num_tgts * max_luns”个独立的模拟设备）。而内核会报告有”add_host * num_tgts * max_luns”个设备，不过上层的多路径软件能意识到他们的区别。  </p>
+<h2 id=" 支持的 SCSI 命令 ">支持的 SCSI 命令</h2>
+<p>下面列出了 scsi_debug 支持的 SCSI 命令，有些什么也不做（比如 SYNCHRONIZE CACHE)。有一些有趣的功能已经用中括号标记了。如果功能是在修订版本实现的（比如 1.76)，也已经标记了。</p>
+<ul>
+<li>ALLOW MEDIUM REMOVAL</li>
+<li>INQUIRY [vital product data pages: 0, 0x80, 0x83] [1.77: VPD pages:<br>0x85, 0x86, 0x87, 0x88, 0x89, 0xb0]</li>
+<li>LOG SENSE [1.78: temperature(0xd) and informational<br>exceptions(0x2f)] [1.80: support log subpages]</li>
+<li>MODE SELECT (6), MODE SELECT (10) [1.78: changeable pages: 0xa<br>(control) and 0x1c (informational exceptions)]</li>
+<li>MODE SENSE (6), MODE_SENSE (10) [sense pages: 1 (rw error<br>recovery), 2 (disconnect), 3 (format), 8 (caching), 0xa (control),<br>0x1c (informational exceptions), 0x3f (read all)] [1.77: subpage<br>support plus SAS pages: 0x19,0 0x19,1 and 0x19,2]</li>
+<li>READ (6), READ (10), READ(12), READ(16)</li>
+<li>READ CAPACITY (10), READ CAPACITY (16) [1.79: added 16 byte command]</li>
+<li>RELEASE (6), RELEASE (10)</li>
+<li>REPORT LUNS [1.77: shows REPORT LUNS wlun]</li>
+<li>REQUEST SENSE [1.79: shows MRIE=6 failure prediction, power states]</li>
+<li>RESERVE (6), RESERVE (10)</li>
+<li>REZERO UNIT (which is REWIND for tapes)</li>
+<li>SEND DIAGNOSTIC</li>
+<li>START STOP [1.78: maintains start and stop states, when stopped<br>fails media access commands]</li>
+<li>SYNCHRONIZE CACHE</li>
+<li>TEST UNIT READY [1.78: in stopped state gives appropriate error]</li>
+<li>VERIFY (10)</li>
+<li>WRITE (6), WRITE (10), WRITE (12), WRITE (16)</li>
+</ul>
+<p>以上指令的实现对于 SCSI 子系统探测和附加设备是足够了。fdisk, e2fsck,mount 等指令和 sg_utils 工具包都可以在这些模拟存储上操作。<br>现代 SCSI 设备使用 vital product page 0x83 来标识，scsi_debug 能产生“T10 vendor 标识”和“NAA”描述两种形式。前一种是一个 ASCII 字符出，类似“Linux scsi_debug 4000”，这里，4000 是<code>((hostno + 1 ) * 2000 + (target_id * 1000)+ lun)</code>。<br>在这个例子里，hostno 等于 1,target_id 和 lun 均等于 0.”NAA-5“描述符是一个 8 字节得二进制值，转成十六进制大概像这样：”51 23 45 60 00 00 0f a0“，这里 IEEE 公司 ID 是 0x123456（当然是假的），提供商特定 ID 号是最后 2 字节 0x0fa0，转成十进制就是 4000。<br>scsi_debug 里的读写指令是原子操作（比如，对一个 scsi_debug 设备做写操作不会中断对另外一个设备的读操作。因此一个读命令要不就是在同步写之前读取内存的内容，要不就是同步写之后读取。  </p>
+<h2 id=" 用法 ">用法</h2>
+<p>当驱动加载成功后，应该可以看到其他新加的设备：</p>
+<pre><code><span class="preprocessor"># modprobe scsi_debug</span>
+<span class="preprocessor"># lsscsi</span>
+[<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>]    disk   <span class="constant"> ATA </span>    <span class="constant"> WDC </span>WD3200BEVT-<span class="number">6</span> <span class="number">13.0</span>  /dev/sda
+[<span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>]    cd/dvd  TSSTcorp<span class="constant"> CDDVDW </span>TS-L633M  <span class="number">0200</span>  /dev/sr0
+[<span class="number">6</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>]    disk    Linux    scsi_debug       <span class="number">0004</span>  /dev/sdb
+</code></pre><p>这个例子中，sda,sr0 都是真实的设备，sdb 是一个 scsi_debug 虚拟磁盘。<br><code>fdisk /dev/sdb</code>命令可以对其进行分区。假设我们分一个分区，那么就是 sdb1 了，然后就是<code>mkfs.ext3 /dev/sdb1</code>了，现在 sdb1 就可以看成是真实的磁盘分区，可以挂载，读写和卸载了。</p>
+<p>有关 scsi_debug 驱动版本，当前参数和其他数据信息都可以在 /proc 文件系统里找到，就像下面这样：</p>
+<pre><code><span class="comment"># cat /proc/scsi/scsi_debug/6</span>
+scsi_debug adapter driver, <span class="built_in">version</span> <span class="number">1.81</span> [<span class="number">20070104</span>]
+num_tgts=<span class="number">1</span>, shared (ram) size=<span class="number">8</span> MB, opts=<span class="number">0x0</span>, every_nth=<span class="number">0</span>(curr:<span class="number">0</span>)
+delay=<span class="number">1</span>, max_luns=<span class="number">1</span>, scsi_level=<span class="number">5</span>
+sector_size=<span class="number">512</span> <span class="keyword">bytes</span>, cylinders=<span class="number">64</span>, heads=<span class="number">8</span>, sectors=<span class="number">32</span>
+<span class="built_in">number</span> <span class="operator">of</span> aborts=<span class="number">0</span>, device_reset=<span class="number">0</span>, bus_resets=<span class="number">0</span>, host_resets=<span class="number">0</span>
+dix_reads=<span class="number">0</span> dix_writes=<span class="number">0</span> dif_errors=<span class="number">0</span>
+</code></pre><h2 id=" 增减主机（适配器）和设备 ">增减主机（适配器）和设备</h2>
+<p>每一个独立的设备都可以通过 sysfs 和中间层（mid-level) 的”delete”程序写入值就可以删除。</p>
+<pre><code>root<span class="variable">@wgzhao</span>-<span class="symbol">nb:</span>~<span class="comment"># echo 1 &gt;/sys/class/scsi_device/6\:0\:0\:0/device/delete </span>
+root<span class="variable">@wgzhao</span>-<span class="symbol">nb:</span>~<span class="comment"># lsscsi </span>
+[<span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span>]    disk    <span class="constant">ATA</span>      <span class="constant">WDC</span> <span class="constant">WD3200BEVT</span>-<span class="number">6</span> <span class="number">13.0</span>  /dev/sda
+[<span class="number">1</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span>]    cd/dvd  <span class="constant">TSSTcorp</span> <span class="constant">CDDVDW</span> <span class="constant">TS</span>-<span class="constant">L633M</span>  <span class="number">0200</span>  /dev/sr<span class="number">0</span>
+</code></pre><p>通过以上方法删除的设备，当然也可以通过下面的命令把她重新加入进来：</p>
+<pre><code>root@wgzhao-nb:~<span class="comment"># lsscsi </span>
+[<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>]    disk    ATA      WDC WD3200BEVT-<span class="number">6</span> <span class="number">13.0</span>  /dev/sda
+[<span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>]    <span class="built_in">cd</span>/dvd  TSSTcorp CDDVDW TS-L633M  <span class="number">0200</span>  /dev/sr0
+[<span class="number">6</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>]    disk    Linux    scsi_debug       <span class="number">0004</span>  /dev/sdb
+</code></pre><p>在 echo 指令的三个数字分别表示 channel number,target number,lun，通配符 (-) 表示可以替代其中任何一个，甚至全部。</p>
+<pre><code>root<span class="variable">@wgzhao</span>-<span class="symbol">nb:</span>~<span class="comment"># echo "0 - -" &gt;/sys/class/scsi_host/host6/scan </span>
+root<span class="variable">@wgzhao</span>-<span class="symbol">nb:</span>~<span class="comment"># lsscsi </span>
+[<span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span>]    disk    <span class="constant">ATA</span>      <span class="constant">WDC</span> <span class="constant">WD3200BEVT</span>-<span class="number">6</span> <span class="number">13.0</span>  /dev/sda
+[<span class="number">1</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span>]    cd/dvd  <span class="constant">TSSTcorp</span> <span class="constant">CDDVDW</span> <span class="constant">TS</span>-<span class="constant">L633M</span>  <span class="number">0200</span>  /dev/sr<span class="number">0</span>
+[<span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span>]    disk    <span class="constant">Linux</span>    scsi_debug       <span class="number">0004</span>  /dev/sdb
+[<span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">1</span>]    disk    <span class="constant">Linux</span>    scsi_debug       <span class="number">0004</span>  /dev/sdc
+[<span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">2</span>]    disk    <span class="constant">Linux</span>    scsi_debug       <span class="number">0004</span>  /dev/sdd
+[<span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:</span><span class="number">0</span>]    disk    <span class="constant">Linux</span>    scsi_debug       <span class="number">0004</span>  /dev/sde
+[<span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:</span><span class="number">1</span>]    disk    <span class="constant">Linux</span>    scsi_debug       <span class="number">0004</span>  /dev/sdf
+[<span class="number">6</span><span class="symbol">:</span><span class="number">0</span><span class="symbol">:</span><span class="number">1</span><span class="symbol">:</span><span class="number">2</span>]    disk    <span class="constant">Linux</span>    scsi_debug       <span class="number">0004</span>  /dev/sdg
+</code></pre><p><code>echo &quot;0 - -&quot; &gt;scan</code>增加了 5 个设备,sdc 到 sdg。注意在”lun”位置的”-“号，如果 kernel 的<code>CONFIG_SCSI_MULTI_LUN</code>参数没有设置的话，依然只能探测到 lun 0。如果你知道或者一个 lun 号大于 0 的 lun 存在，那么你应该显式的给出这个数值。<br>主机（适配器）也能通过下面的指令增加或者减少:</p>
+<pre><code><span class="preprocessor"># cd /sys/bus/pseudo/drivers/scsi_debug/</span>
+<span class="preprocessor"># echo 1 &gt;add_host</span>
+<span class="preprocessor"># echo -2 &gt;add_host</span>
+<span class="preprocessor"># lsscsi </span>
+[<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>]    disk   <span class="constant"> ATA </span>    <span class="constant"> WDC </span>WD3200BEVT-<span class="number">6</span> <span class="number">13.0</span>  /dev/sda
+[<span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>]    cd/dvd  TSSTcorp<span class="constant"> CDDVDW </span>TS-L633M  <span class="number">0200</span>  /dev/sr0
+</code></pre><p>scsi_debug 驱动对它能创建的设备数没有任何限制。缺省情况下，驱动加载后，产生一个 SCSI 设备（属于一个主机（适配器））。更多的设备可以通过加载驱动时指定 add_host,num_tgts 和 / 或 max_luns 参数。<br>SCSI 设备数由这三个参数决定（缺省值都是 1）。<br>sysfs 也能够在 scsi_debug 加载后用来增加或者删除 SCSI 设备。两个策略可能用到：</p>
+<ul>
+<li>增加 num_tgts 或 max_luns 的值，然后使用像<code>echo &quot;0 -  -&quot;\&gt;scan</code>的指令作用在一个已经属于 scsi_debug 驱动的主机（适配器）上。</li>
+<li>使用类似<code>echo 3 &gt;add_host</code>的指令增加更多的主机（适配器），每一个新增的主机（适配器）将会产生 (<code>num_tgts * max_luns</code>) 个新 SCSI 设备。当然 num_tgts 或 max_luns 可以在调用<code>echo  3 &gt;add_host</code>之前进行修改。</li>
+</ul>
+<h2 id="SAS 独特性 ">SAS 独特性</h2>
+<p>scsi_debug 驱动有一个 SAS（Serial Attached SCSI（SAS））独特性的东西，对于应用程序所关心的，透过主端口（相对 1 号目标端口）访问它时，就像一个双端口 SAS 磁盘。<br>一种情况下，它在 SCSI 到 ATA 转换（SAT）层（SATL）背后伪装成一个 SATA 磁盘。<br>FC 双端口磁盘的大部分设置都是相同的。<br>驱动在 INQUIRY 应答里设置 MULTIP（multiport）位。以下 VPD 页是 SAS 或 SAT 规范：</p>
+<ul>
+<li>设备标识页 [0x83] (为 LU，访问目标端口和目标设备以及其他一些代号产生 naa-5 地址)</li>
+<li>SCSI 端口 [0x88] (全部端口显示 naa-5 地址)</li>
+<li>ATA 信息 [0x89] (在 SAS 域模拟 SATA 磁盘，在 SAT 定义)</li>
+</ul>
+<p>下面是几个 SAS 规范模式也 （mode page）</p>
+<ul>
+<li>协议规范端口页 (SAS): 短格式页 [0x19,0x0]</li>
+<li>协议规范端口页 (SAS): 物理控制器和发现子页 [0x19,0x1]</li>
+<li>协议规范端口页 (SAS): 共享模式子页 [0x19,0x2] (sas2 version)</li>
+</ul>
+<p>VPD 和模式页都可以通过用户空间程序，比如 sdparm，显示其信息，下面是一个例子：</p>
+<pre><code>root@wgzhao-nb:~# sdparm -i /dev/sdb
+    /dev/sdb: Linux     scsi_debug        <span class="number">0004</span>
+Device identification VPD page:
+  Addressed logical unit:
+    designator <span class="keyword">type</span>: T10 vendor identification,  code set: ASCII
+      vendor id: Linux   
+      vendor specific: scsi_debug      <span class="number">14000</span>
+    designator <span class="keyword">type</span>: NAA,  code set: Binary
+      <span class="number">0x53333330000036b0</span>
+  Target <span class="keyword">port</span>:
+    designator <span class="keyword">type</span>: Relative target <span class="keyword">port</span>,  code set: Binary
+     <span class="keyword">transport</span>: Serial Attached SCSI (SAS)
+      Relative target <span class="keyword">port</span>: <span class="number">0x1</span>
+    designator <span class="keyword">type</span>: NAA,  code set: Binary
+     <span class="keyword">transport</span>: Serial Attached SCSI (SAS)
+      <span class="number">0x52222220000036ae</span>
+    designator <span class="keyword">type</span>: Target <span class="keyword">port</span> <span class="keyword">group</span>,  code set: Binary
+     <span class="keyword">transport</span>: Serial Attached SCSI (SAS)
+      Target <span class="keyword">port</span> <span class="keyword">group</span>: <span class="number">0x700</span>
+  Target device that contains addressed lu:
+    designator <span class="keyword">type</span>: NAA,  code set: Binary
+     <span class="keyword">transport</span>: Serial Attached SCSI (SAS)
+      <span class="number">0x52222220000036ad</span>
+    designator <span class="keyword">type</span>: SCSI name <span class="typename">string</span>,  code set: UTF-<span class="number">8</span>
+     <span class="keyword">transport</span>: Serial Attached SCSI (SAS)
+      SCSI name <span class="typename">string</span>:
+      naa<span class="number">.52222220000036</span>AD
+</code></pre><p>下面是一个 SCSI 端口 VPD 页显示为双端口目标 (target) 的例子：</p>
+<pre><code>sdparm -i -p sp /dev/sdb
+    /dev/sdb: Linux     scsi_debug        <span class="number">0004</span>
+SCSI Ports VPD page:
+Relative <span class="keyword">port</span>=<span class="number">1</span>
+   Target <span class="keyword">port</span> descriptor(s):
+    designator <span class="keyword">type</span>: NAA,  code set: Binary
+     <span class="keyword">transport</span>: Serial Attached SCSI (SAS)
+      <span class="number">0x52222220000036ae</span>
+Relative <span class="keyword">port</span>=<span class="number">2</span>
+   Target <span class="keyword">port</span> descriptor(s):
+    designator <span class="keyword">type</span>: NAA,  code set: Binary
+     <span class="keyword">transport</span>: Serial Attached SCSI (SAS)
+      <span class="number">0x52222220000036af</span>
+</code></pre><p>注意：上面的输出意味着 INQUIRY 指令是通过模拟的 SAS 双端口目标的端口 1 (port A) 发送的。协议规范端口 - 物理控制器和发现模式子页 [0x19,0x1] 有对应 SCSI 端口 VPD 页的端口 / 物理 SAS 地址。</p>
+<pre><code>root@wgzhao-nb:~# sdparm -t sas -p pcd -l /dev/sdb
+    /dev/sdb: Linux     scsi_debug        <span class="number">0004</span>
+    Direct <span class="keyword">access</span> device specific parameters: WP=<span class="number">0</span>  DPOFUA=<span class="number">1</span>
+Phy control <span class="keyword">and</span> discover (SAS) [pcd] mode page:
+  PPID_1      <span class="number">6</span>  [cha: n, def:  <span class="number">6</span>]  <span class="keyword">Port</span><span class="attribute">'s</span> (<span class="keyword">transport</span>) protocol identifier
+  GENC        <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Generation code
+  NOP         <span class="number">2</span>  [cha: n, def:  <span class="number">2</span>]  Number <span class="keyword">of</span> phys
+  PHID        <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Phy identifier
+  ADT         <span class="number">1</span>  [cha: n, def:  <span class="number">1</span>]  Attached device <span class="keyword">type</span>
+  AREAS       <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached reason (other <span class="keyword">end</span> did link reset)
+  REAS        <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Reason (<span class="keyword">for</span> starting link reset)
+  NPLR        <span class="number">9</span>  [cha: n, def:  <span class="number">9</span>]  Negotiated logical link rate
+  ASIP        <span class="number">1</span>  [cha: n, def:  <span class="number">1</span>]  Attached SSP initiator <span class="keyword">port</span>
+  ATIP        <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached STP initiator <span class="keyword">port</span>
+  AMIP        <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached SMP initiator <span class="keyword">port</span>
+  ASTP        <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached SSP target <span class="keyword">port</span>
+  ATTP        <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached STP target <span class="keyword">port</span>
+  AMTP        <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached SMP target <span class="keyword">port</span>
+  SASA      <span class="number">0x52222220000036ae</span>  [cha: n, def:<span class="number">0x52222220000036ae</span>]  SAS address
+  ASASA     <span class="number">0x5111111000000001</span>  [cha: n, def:<span class="number">0x5111111000000001</span>]  Attached SAS address
+  APHID       <span class="number">2</span>  [cha: n, def:  <span class="number">2</span>]  Attached phy identifier
+  PMILR       <span class="number">8</span>  [cha: n, def:  <span class="number">8</span>]  Programmed minimum link rate
+  HMILR       <span class="number">8</span>  [cha: n, def:  <span class="number">8</span>]  Hardware minimum link rate
+  PMALR       <span class="number">9</span>  [cha: n, def:  <span class="number">9</span>]  Programmed maximum link rate
+  HMALR       <span class="number">9</span>  [cha: n, def:  <span class="number">9</span>]  Hardware maximum link rate
+  PHID<span class="number">.1</span>      <span class="number">1</span>  [cha: n, def:  <span class="number">1</span>]  Phy identifier
+  ADT<span class="number">.1</span>       <span class="number">1</span>  [cha: n, def:  <span class="number">1</span>]  Attached device <span class="keyword">type</span>
+  AREAS<span class="number">.1</span>     <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached reason (other <span class="keyword">end</span> did link reset)
+  REAS<span class="number">.1</span>      <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Reason (<span class="keyword">for</span> starting link reset)
+  NPLR<span class="number">.1</span>      <span class="number">9</span>  [cha: n, def:  <span class="number">9</span>]  Negotiated logical link rate
+  ASIP<span class="number">.1</span>      <span class="number">1</span>  [cha: n, def:  <span class="number">1</span>]  Attached SSP initiator <span class="keyword">port</span>
+  ATIP<span class="number">.1</span>      <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached STP initiator <span class="keyword">port</span>
+  AMIP<span class="number">.1</span>      <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached SMP initiator <span class="keyword">port</span>
+  ASTP<span class="number">.1</span>      <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached SSP target <span class="keyword">port</span>
+  ATTP<span class="number">.1</span>      <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached STP target <span class="keyword">port</span>
+  AMTP<span class="number">.1</span>      <span class="number">0</span>  [cha: n, def:  <span class="number">0</span>]  Attached SMP target <span class="keyword">port</span>
+  SASA<span class="number">.1</span>    <span class="number">0x52222220000036af</span>  [cha: n, def:<span class="number">0x52222220000036af</span>]  SAS address
+  ASASA<span class="number">.1</span>   <span class="number">0x5111111000000001</span>  [cha: n, def:<span class="number">0x5111111000000001</span>]  Attached SAS address
+  APHID<span class="number">.1</span>     <span class="number">3</span>  [cha: n, def:  <span class="number">3</span>]  Attached phy identifier
+  PMILR<span class="number">.1</span>     <span class="number">8</span>  [cha: n, def:  <span class="number">8</span>]  Programmed minimum link rate
+  HMILR<span class="number">.1</span>     <span class="number">8</span>  [cha: n, def:  <span class="number">8</span>]  Hardware minimum link rate
+  PMALR<span class="number">.1</span>     <span class="number">9</span>  [cha: n, def:  <span class="number">9</span>]  Programmed maximum link rate
+  HMALR<span class="number">.1</span>     <span class="number">9</span>  [cha: n, def:  <span class="number">9</span>]  Hardware maximum link rate
+</code></pre><p>其他更多的信息可以通过类似方法获得。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/sas/">sas</a>, <a href="/tags/scsi/">scsi</a>, <a href="/tags/scsi_debug/">scsi_debug</a>, <a href="/tags/spc/">spc</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2009/08/07/scsi-debug-howto/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 | 归档：2012 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2012</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-01-12T06:53:00.000Z"><a href="/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent/">1月 12 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent/">用sfex资源脚本来防止HA脑裂后共享磁盘数据被损坏的风险</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability" target="_blank">HA</a>部署众, 心跳无疑是最重要的组件，因此心跳也绝大部分你情况是冗余的，大部分都是用网络做心跳介质，因此一般认为是可靠的。但是，所有的事情都有意外，如果心跳出现了故障，到时<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability" target="_blank">HA</a>环境中的节点互相直接之间无法通信，就会出现脑裂 (Split Brain) 现象，出现这种情况后，会导致<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability" target="_blank">HA</a>监控的服务会在多个节点上同时运行，如果此时有共享存储，则会导致共享存储在多个节点上同时可写挂载，从而导致文件系统崩溃，数据丢失。这显然不是可以接受的情况。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-01-10T10:53:00.000Z"><a href="/2012/01/10/lsb-scripts-specification/">1月 10 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/01/10/lsb-scripts-specification/">LSB Scripts Specification</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id=" 什么是 LSB">什么是 LSB</h2>
+<p><a href="https://wiki.linuxfoundation.org/en/LSB_Wiki" title="Linux Standard Base" target="_blank">LSB</a>，即<strong>Linux 标准规范</strong>(英语:Linux Standard Base) 是一个在<a href="http://zh.wikipedia.org/wiki/Linux%E5%9F%BA%E9%87%91%E6%9C%83" title="Linux 基金会 " target="_blank">Linux 基金会</a>结构下对 Linux 发行版的联合项目，使 Linux 操作系统符合软件系统架构，或文件系统架构标准的规范及标准。<a href="https://wiki.linuxfoundation.org/en/LSB_Wiki" title="Linux Standard Base" target="_blank">LSB</a>基于<a href="http://zh.wikipedia.org/wiki/POSIX" title="POSIX" target="_blank">POSIX</a>，统一 UNIX 规范及其他开放标准，共在某些领域扩展它们。详细情况请参考相关链接。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2012/01/10/lsb-scripts-specification/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2012-01-04T01:24:00.000Z"><a href="/2012/01/04/2011-summary-and-2012-plan/">1月 4 2012</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2012/01/04/2011-summary-and-2012-plan/">2011年总结和2012年计划</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>2011 年刚来的时候，我在 IM 上的签名是：</p>
+<blockquote>
+<p>2011 年最大的愿望：安全的活着</p>
+</blockquote>
+<p>果不其然，2011 年对于生活在天朝的人们，经历了各种匪夷所思的“被随即死”，还好，我幸存了下来。算是完成了 2011 年的最大愿望吧。</p>
+<p>2011 年上半年浑浑噩噩，无所事事，<a href="http://blog.wgzhao.com" target="_blank">blog</a>也荒废了，只是用大量的<a href="http://twitter.com" target="_blank">twitter</a>来刷着版面。</p>
+<p>2011 年下半年换了一份工作，告别了工作 6 年的公司，告别了我热爱的事务，算是工作和兴趣分开吗？现在朝一个 DBA 方向努力着，但是，但是，也许兴趣真的是最好的老师，我拿不出对待<a href="http://www.linux.org" target="_blank">linux</a>的激情来，甚至连热情都很难拿出来，也许，这仅仅就是一份工作，打好这份工吧。</p>
+<p>2011 年，读了 43 本书，绝大部分都是浅尝辄止，大部分都是下半年读的，买了<a href="http://bb.sdo.com/" target="_blank">Bambook</a>后，读的书也多了些。</p>
+<p>2011 年 11 月，lanky 在犹豫了将近一年后，抛弃之前的选择，下手了<a href="http://vw.faw-vw.com/index.php/component/brand/?brand_id=2" target="_blank">大众高尔夫</a>，从最开始的开 40Km/h 都说头晕的人，到现在不小心开到 90Km/h 还说不知道，我也就安心的做个乘客好了。</p>
+<p>2011 年 11 月，总算开始说服自己离开电脑，开始健身，当然这其中 lancy 的淫威起了很大的作用，慢慢的喜欢上了一身汗后冲澡时的爽快感觉。凸起的肚子似乎也小了一些，至少体重在降低。</p>
+<p>2011 年 10 月后，皮皮开始在农村田间四处野着，没有钢筋水泥的阻挡，没有紧闭大门的约束，她快乐的玩着，<strong>安全</strong>的吃着，踏实的睡着，也就快速的长高着，也就随心的胖着，也就是没心没肺的不想着时时刻刻想着她的爸妈。</p>
+<p>2011 年最后的一天，因为被自己关在门外，于是破天荒人生第一次去电影院看了一场电影，也是第一次看 3D 电影。只可惜<a href="http://longmenfeijia.ent.sina.com.cn/main.html" target="_blank">《龙门飞甲》</a> 很难配上第一次这样的待遇。</p>
+<p>无论如何，2011 年就这样过去了，迎来了传说中的 2012 年。</p>
+<p>船票会是今年的重点吗？</p>
+<p>如果能看到 2012 年 12 月 22 日的太阳，那我 2012 年小小的计划原本是这样的：</p>
+<ol>
+<li>赚钱，赚钱，俗不可耐的赚钱，今年又会增加一个中国特色的高额消费：幼儿园</li>
+<li>考驾照，是的，我现在还没有这个玩意儿，一直都对汽车提不起兴趣，但是现在看到 lancy 开车那么累的样子，我想如果我会了，至少关键时刻可以替代一下吧，虽然我无证驾驶也搞了好几次了，但毕竟不保险</li>
+<li>买一台 MacBook Pro 或者 Mac Air，现在 90% 的时间在用 iMac，我希望移动办公也采用的同样的平台。用了 Mac 后，才知道好的软件应该是个什么样子，好的系统应该是如何的人性化，感谢在天堂的乔布斯。</li>
+<li>再多读一些书，无论是印刷的，还是 ebook，去年买的一些书还没有读完，比如<a href="http://book.douban.com/subject/4753971/" target="_blank">萧红全集</a>, 比如<a href="http://book.douban.com/series/5617" target="_blank">暮光之城系列</a>. 还是要坚持 22 点上床看书的习惯，嗯，坚持！</li>
+<li>坚持锻炼，2 个多月的锻炼让我体会到了神清气爽的感觉，看着体重计上显示的数字不再肆无忌惮的增加时，那种愉悦感无法用言语表达，坚持，坚持！</li>
+<li>坚持写 blog，哎，Blog 荒废差不多一年了，不能这样堕落下去了。今年的头三天就是整理了原来的博客，删除了 600 多篇无用的，过时的文章，整理了 800 多篇文章，放弃了之前用的<a href="http://www.wordpress.org" target="_blank">wordpress</a>，采用了当前广受技术宅男推崇的<a href="http://www.octopress.org" target="_blank">octopress</a>。今年希望能写道 200 篇帖子，当然越多越好，但是垃圾不要。</li>
+<li>安全的活着，嗯，我们这代人，生于计划，死于随机，活于奇迹。安全的活着依然是第一要务。I mean it !</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2012/" class="alignleft prev">上一页</a>
+  
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

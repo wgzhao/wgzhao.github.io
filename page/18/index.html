@@ -1,0 +1,567 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 18 页 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-07-09T16:00:00.000Z"><a href="/2007/07/10/ip-alias-and-secondary-ip-address/">7月 10 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/07/10/ip-alias-and-secondary-ip-address/">ip alias and secondary ip address</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>孤陋寡闻了，以前一直以为 ip 别名（ip aliase）和辅助 ip 地址（secondary ip<br>address）是一码事情。或者说是不知道还有 secondary ip address 一说。</p>
+<p>今天偶然翻阅<a href="http://mlsx.xplore.cn/read.php/715.htm" target="_blank">linux enterprise<br>cluster</a>时，提到了这样一句话：</p>
+<blockquote>
+<p>As of this writing, the Linux kernel supports both IP aliases and<br>secondary IP addresses, though IP aliases are deprecated in favor of<br>secondary IP addresses.</p>
+</blockquote>
+<p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/07/10/ip-alias-and-secondary-ip-address/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-07-08T16:00:00.000Z"><a href="/2007/07/09/Linux-gab-bare-equipment/">7月 9 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/07/09/Linux-gab-bare-equipment/">瞎扯linux裸设备</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>突然想到了裸设备，linux 下的裸设备 (raw<br>device) 一直都不是理解得很清楚，特别是用户问及到裸设备的时候，我到真不知道如何才是正确的解释，或者说能让用户相信我的说法。</p>
+<p>今天做了一些功课，算是又多了解了一些东西吧。</p>
+<p>为什么裸设备需要绑定或者说映射到已经存在的块设备上？<br>这恐怕是用户问得最多的问题，我之前的回答都是 linux 下就是需要绑定。用户一般立刻会回一句，那为什么 Unix 就不用要呢？<br>虽然我觉得这种比较没有太多含义，毕竟我们说 Linux 和 Unix 非常相似，但是再相似，也不是相同呀，凭什么 Unix 不做绑定或者映射，Linux 就一定要按照这种设计模式呀？<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/07/09/Linux-gab-bare-equipment/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-07-04T16:00:00.000Z"><a href="/2007/07/05/bad-chinaunicom-charing/">7月 5 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/07/05/bad-chinaunicom-charing/">还没有开通就收费，联通计费系统谁做的？</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这段时间一直在投诉联通，间隔也投诉了一下移动。我不能偏心，至少对两个移动运营商都投诉了。</p>
+<p>投诉联通是因为我的掌中宽带让我及其郁闷，简直就是浪费我的生命。每天高峰期，我至少需要花 2 个小时才能上网，当然 2 个小时后，高峰期也过去了。<br>之前给他们打电话，他们总是给出下面几个解决方案： </p>
+<p>1）把卡拔出来，重新插一下<br>2）重启系统<br>3）重新安装系统<br>4）检查联通 UIM 卡<br>5）检查无线上网卡<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/07/05/bad-chinaunicom-charing/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-06-10T16:00:00.000Z"><a href="/2007/06/11/bought-a-new-bed-change-layout/">6月 11 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/06/11/bought-a-new-bed-change-layout/">买了新床，换了布局</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>总算是把床买了下来，前面好几次都没有买下来都是因为觉得太贵。不过这次买下床和床垫，却远远超过之前我和 lancy 的预算。<br>实木床太多名堂了，什么松木啦，什么桦木呀，什么榉木呀，红木呀，每一种又分好多种，头都搞晕了，最后买了大自然的榉木床和床垫。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/06/11/bought-a-new-bed-change-layout/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-06-04T16:00:00.000Z"><a href="/2007/06/05/Our-age-of-advertising/">6月 5 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/06/05/Our-age-of-advertising/">我们这个年代的广告</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><img src="/uploads/1181053608_0.jpg" alt="image"><br>几次和朋友聊到小时候在电视里看到的广告词，让 80 年代的人听得一愣一愣，现在想来，那个时候的广告真的很直白，不像现在这么具有明星话，暧昧化。</p>
+<p>我第一次看到电视机，应该是在 89 年左右，那是 14 寸的黑白电视机，是我隔壁邻居家的，那时 CCTV1 正在播放《红楼梦》，每天晚上就跑过去看。于是也看到了和电视相互依存的广告，依稀记得一些，记录下来，也算是作为一个回忆吧：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/06/05/Our-age-of-advertising/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-05-30T16:00:00.000Z"><a href="/2007/05/31/last-commands/">5月 31 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/05/31/last-commands/">\[/sbin学习\]剩下的命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>总算是<code>/sbin</code>学习的最后一篇笔记了，从 t 到 z 开头的命令不太多，而且很多也是常用的，也只有那些基本用法，因此我就不记录到这里。</p>
+<p>tune2fs，这无疑是文件系统中强劲的命令了，虽然我我最常用的是修改需要做 fsck 之前的最大最大挂载次数。刚看了 man 手册，其实他的参数多着呢，很多文件系统元数据都可以修改，比如保留块大小，日志大小，挂载选项等。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/05/31/last-commands/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-05-30T16:00:00.000Z"><a href="/2007/05/31/man-command-not-works/">5月 31 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/05/31/man-command-not-works/">man不能用？</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不记得从哪里起，我的 man 不能用的，查看任何命令的 man 手册，基本都是给出下面的错误：</p>
+<pre><code>[root<span class="variable">@mlsx</span> dev]<span class="comment"># man man</span>
+<span class="constant">Error</span> executing formatting <span class="keyword">or</span> display command.
+<span class="constant">System</span> command (cd /usr/share/man &amp;&amp; (echo “.ll <span class="number">12.7</span>i”; echo “.pl <span class="number">1100</span>i”; <span class="regexp">/usr/bin</span><span class="regexp">/gunzip -c '/usr</span><span class="regexp">/share/man</span><span class="regexp">/man1/man</span>.<span class="number">1</span>.gz<span class="string">'; echo “.\\\”"; echo “.pl \n(nlu+10″) | /usr/bin/gtbl | nroff –legacy ISO-8859-1 -man -rLL=139n -rLT=139n 2&gt;/dev/null | /usr/bin/less -irs) exited with status 256.
+No manual entry for man</span>
+</code></pre><p>实际上，运行 man man 后，man 的帮助会一闪而过，然后给出下面的错误，你要是<code>man man &gt;/tmp/log</code>，再看 log 文件，man 手册已经出现了。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/05/31/man-command-not-works/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-05-27T16:00:00.000Z"><a href="/2007/05/28/commands-start-s/">5月 28 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/05/28/commands-start-s/">\[/sbin学习\]s\*命令</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>sfdisk 有四个主要的功能：列出一个分区的大小（块为单位），一个设备的所有分区，检查一个设备的分区表，重新分区一个设备。<br>其实我在平时用的最多的是第二个—列出一个设备的分区表。有了 fdisk 命令，为什么还要有 sfdisk 命令呢？我第一次具体使用 sfdisk 命令，还是在 HP<br>DL 系列机器上。HP 机器使用了 Smart<br>Array 阵列卡，其链接的 SCSI 在 linux 中识别出来的不是平常我们常认为的 sdx 设备，而是 cciss/c0d0px 这样的样子。<br>而这样的分区信息，使用 fdisk -l 是没有办法打印出来的，这个时候就要使用<code>sfdisk -l</code>命令了。这就使用到了 sfdisk 的第二个功能了。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/05/28/commands-start-s/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-05-26T16:00:00.000Z"><a href="/2007/05/27/recently-wanna-shopping/">5月 27 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/05/27/recently-wanna-shopping/">最近有购物倾向</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>最近有购物的倾向，也没有受什么刺激，就想买这个，买那个的。<br>最开始是一早晨就买了自行车，还买新的，二手不要。<br>接着想买一个豆浆机，这样早晨可以喝道自己做的豆浆了，去苏宁逛了一圈，lancy 想买九阳的。看了说明，了解价格。可以打豆浆和五谷的需要 399, 适合 2-4 口之家。只能打豆浆的 298。我们觉得应该买可以打五谷的，这样营养比较均衡一些，天天早晨喝豆浆，估计也会腻的。本着货比三家的原则，当时没有买，想看看其他商场的价格，估计也就是明天能搞定这个事情了。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/05/27/recently-wanna-shopping/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-05-24T16:00:00.000Z"><a href="/2007/05/25/Car-Owners-Group/">5月 25 2007</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2007/05/25/Car-Owners-Group/">有车一族</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不想每天去合作伙伴那里上班，所以今天一早去就买了一辆自行车。<br>其实一直想在要买一辆二手车的，不过大部分二手车都是“黑车”，本来和谐社会的精神，我就不添乱。<br>于是两百多大洋就不见了，为了防止被投，买了一把电动车的锁，希望能锁住。  </p>
+<p>好久没有骑自行车了，早晨起到公司楼下，果然是神清气爽呀。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2007/05/25/Car-Owners-Group/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/17/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/page/19/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

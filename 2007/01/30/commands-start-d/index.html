@@ -1,0 +1,348 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>\[sbin学习\]d\*学习--完成 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="\[sbin学习\]d\*学习--完成"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-01-29T16:00:00.000Z"><a href="/2007/01/30/commands-start-d/">1月 30 2007</a></time>
+      
+      
+  
+    <h1 class="title">\[sbin学习\]d\*学习--完成</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>接着上次没有完成的<a href="2007/01/29/commands-start-d-incomplete/">d 命令学习</a></p>
+<p>-S 大小评估。用来计算 dump 需要的空间，但是并不真正执行 dump 操作。这对增量备份有好处，因为可以知道需要多少存储介质。</p>
+<p>-T 时间。使用指定的时间来作为 dump 的时间，而不是从 /etc/dumpdates 里读取。这里时间的格式和 ctime(3) 的格式相同，遵守<br> RFC822 时区规范。他先下面的 -u 参数是互斥的。<br><a id="more"></a></p>
+<p>-u 成功 dump 后，更新 /etc/dumpdates 文件。<br>/etc/dumpdates 文件格式是人可以阅读的，每行记录一个时间，采取了叫宽松的格式。</p>
+<p>-y 写入磁带时压缩块，采用 lzo 链接库。</p>
+<p>-z<br>压缩级别，采用 zlib 库，这个参数仅在将数据 dump 到文件，管道或者磁带机时才有用，缺省值是 2. 注意指定这个值的时候，参数和值之间应该没有参数<br>（很多 Linux 下面的命令的参数都有这个小小的要求）<br>下面是一个压缩到文件的简单例子<br>    [root@lancy sbin]# dump -0 -f /tmp/rootdump /root<br>    DUMP: Date of this level 0 dump: Sun Jan 28 22:06:46 2007<br>    DUMP: Dumping /dev/hda5 (/ (dir root)) to /tmp/rootdump<br>    DUMP: Label: /<br>    DUMP: Writing 10 Kilobyte records<br>    DUMP: mapping (Pass I) [regular files]<br>    DUMP: mapping (Pass II) [directories]<br>    DUMP: estimated 15509 blocks.<br>    DUMP: Volume 1 started with block 1 at: Sun Jan 28 22:06:48 2007<br>    DUMP: dumping (Pass III) [directories]<br>    DUMP: ACLs in inode #2 won’t be dumped<br>    DUMP: ACLs in inode #187672 won’t be dumped<br>    DUMP: ACLs in inode #204060 won’t be dumped<br>    DUMP: ACLs in inode #674281 won’t be dumped<br>    DUMP: dumping (Pass IV) [regular files]<br>    DUMP: ACLs in inode #505922 won’t be dumped<br>    DUMP: ACLs in inode #505923 won’t be dumped<br>    DUMP: ACLs in inode #505924 won’t be dumped<br>    DUMP: ACLs in inode #505925 won’t be dumped<br>    DUMP: ACLs in inode #505926 won’t be dumped<br>    DUMP: ACLs in inode #505927 won’t be dumped<br>    ……<br>    DUMP: Closing /tmp/rootdump<br>    DUMP: Volume 1 completed at: Sun Jan 28 22:06:59 2007<br>    DUMP: Volume 1 15340 blocks (14.98MB)<br>    DUMP: Volume 1 took 0:00:11<br>    DUMP: Volume 1 transfer rate: 1394 kB/s<br>    DUMP: 15340 blocks (14.98MB) on 1 volume(s)<br>    DUMP: finished in 11 seconds, throughput 1394 kBytes/sec<br>    DUMP: Date of this level 0 dump: Sun Jan 28 22:06:46 2007<br>    DUMP: Date this dump completed: Sun Jan 28 22:06:59 2007<br>    DUMP: Average transfer rate: 1394 kB/s<br>    DUMP: DUMP IS DONE</p>
+<p>我们来看看 dump 出来的文件是有什么特征</p>
+<pre><code>[root<span class="variable">@lancy</span> sbin]<span class="comment"># file /tmp/rootdump</span>
+/tmp/rootdump: new-fs <span class="keyword">dump</span> file (little endian), This <span class="keyword">dump</span> Sun Jan <span class="number">28</span> <span class="number">22</span>:<span class="number">06</span>:<span class="number">46</span> <span class="number">2007</span>, Previous <span class="keyword">dump</span> Thu Jan <span class="number">1</span> 08:<span class="number">00</span>:<span class="number">00</span> <span class="number">1970</span>, Volume <span class="number">1</span>, Level zero, type: tape header, Label /, Filesystem / (dir root), Device /dev/hda5, Host lancy, Flags <span class="number">3</span>
+[root<span class="variable">@lancy</span> sbin]<span class="comment"># du -sh /tmp/rootdump</span>
+<span class="number">15</span>M /tmp/rootdump
+[root<span class="variable">@lancy</span> sbin]<span class="comment"># du -sh /root</span>
+<span class="number">15</span>M /root
+</code></pre><p>在不指定 -z 参数时，dump 是没有压缩效果的。<br>在看看压缩效果</p>
+<pre><code>[root<span class="variable">@lancy</span> sbin]<span class="comment"># dump -0 -z9 -f /tmp/rootdump.z9 /root ......</span>
+[root<span class="variable">@lancy</span> sbin]<span class="comment">#ls -h /tmp/rootdump.z9 -rw-r--r-- 1 root root 7.4M</span>
+<span class="constant">Jan</span> <span class="number">30</span> <span class="number">20</span><span class="symbol">:</span><span class="number">56</span> /tmp/rootdump.z9 
+</code></pre><p>看上去效果还不错</p>
+<p>dump_cis: 显示 PCMCIA 设别的信息。因为我的无线上网卡不这次，因此他仅仅给出了下面的信息</p>
+<pre><code>[root<span class="variable">@lancy</span> sbin]# dump_cis no pcmcia driver <span class="keyword">in</span> /<span class="keyword">proc</span>/devices
+</code></pre><p>dumpe2fs:   导出 ext2/ext3 文件系统信息，显然这也是一个重量级的工具，在文件系统出现损坏的情况下<br>用得着。他打印出文件系统的超级块和块组信息。我们先看一个具体的例子，下面是对我刚创建个一个分区的 dump 信息。</p>
+<pre><code>[root@lancy sbin]<span class="comment"># dumpe2fs /dev/sda1</span>
+dumpe2fs <span class="number">1.35</span> (<span class="number">28</span>-Feb-<span class="number">2004</span>)
+Filesystem volume <span class="property">name</span>: 
+Last mounted <span class="function_start"><span class="keyword">on</span></span>: 
+Filesystem UUID: f74b41c6-<span class="number">637</span>f-<span class="number">436</span>f-ab9c-e1cbd532abf8
+Filesystem magic <span class="type">number</span>: <span class="number">0xEF53</span>
+Filesystem revision <span class="comment">#: 1 (dynamic)</span>
+Filesystem features: has_journal resize_inode filetype sparse_super
+Default mount options: (none)
+Filesystem state: clean
+Errors behavior: Continue
+Filesystem OS type: Linux
+Inode <span class="command">count</span>: <span class="number">4944</span>
+Block <span class="command">count</span>: <span class="number">19732</span>
+Reserved block <span class="command">count</span>: <span class="number">986</span>
+Free blocks: <span class="number">17905</span>
+Free inodes: <span class="number">4933</span>
+First block: <span class="number">1</span>
+Block size: <span class="number">1024</span>
+Fragment size: <span class="number">1024</span>
+Reserved GDT blocks: <span class="number">77</span>
+Blocks per group: <span class="number">8192</span>
+Fragments per group: <span class="number">8192</span>
+Inodes per group: <span class="number">1648</span>
+Inode blocks per group: <span class="number">206</span>
+Filesystem created: Sun Jan <span class="number">28</span> <span class="number">21</span>:<span class="number">43</span>:<span class="number">19</span> <span class="number">2007</span>
+Last mount <span class="property">time</span>: n/a
+Last <span class="command">write</span> <span class="property">time</span>: Sun Jan <span class="number">28</span> <span class="number">21</span>:<span class="number">43</span>:<span class="number">19</span> <span class="number">2007</span>
+Mount <span class="command">count</span>: <span class="number">0</span>
+Maximum mount <span class="command">count</span>: <span class="number">26</span>
+Last checked: Sun Jan <span class="number">28</span> <span class="number">21</span>:<span class="number">43</span>:<span class="number">19</span> <span class="number">2007</span>
+Check interval: <span class="number">15552000</span> (<span class="number">6</span> months)
+Next check <span class="keyword">after</span>: Fri Jul <span class="number">27</span> <span class="number">21</span>:<span class="number">43</span>:<span class="number">19</span> <span class="number">2007</span>
+Reserved blocks uid: <span class="number">0</span> (user root)
+Reserved blocks gid: <span class="number">0</span> (group root)
+First inode: <span class="number">11</span>
+Inode size: <span class="number">128</span>
+Journal inode: <span class="number">8</span>
+Default directory hash: tea
+Directory Hash Seed: d1aef805-<span class="number">54e4</span>-<span class="number">4</span>d41-<span class="number">90</span>f7-e509a85a7028
+Journal backup: inode blocks
+Group <span class="number">0</span>: (Blocks <span class="number">1</span>-<span class="number">8192</span>)
+Primary superblock <span class="keyword">at</span> <span class="number">1</span>, Group descriptors <span class="keyword">at</span> <span class="number">2</span>-<span class="number">2</span>
+Block bitmap <span class="keyword">at</span> <span class="number">80</span> (+<span class="number">79</span>), Inode bitmap <span class="keyword">at</span> <span class="number">81</span> (+<span class="number">80</span>)
+Inode table <span class="keyword">at</span> <span class="number">82</span>-<span class="number">287</span> (+<span class="number">81</span>)
+<span class="number">6861</span> free blocks, <span class="number">1637</span> free inodes, <span class="number">2</span> directories
+Free blocks: <span class="number">1332</span>-<span class="number">8192</span>
+Free inodes: <span class="number">12</span>-<span class="number">1648</span>
+Group <span class="number">1</span>: (Blocks <span class="number">8193</span>-<span class="number">16384</span>)
+Backup superblock <span class="keyword">at</span> <span class="number">8193</span>, Group descriptors <span class="keyword">at</span> <span class="number">8194</span>-<span class="number">8194</span>
+Block bitmap <span class="keyword">at</span> <span class="number">8272</span> (+<span class="number">79</span>), Inode bitmap <span class="keyword">at</span> <span class="number">8273</span> (+<span class="number">80</span>)
+Inode table <span class="keyword">at</span> <span class="number">8274</span>-<span class="number">8479</span> (+<span class="number">81</span>)
+<span class="number">7905</span> free blocks, <span class="number">1648</span> free inodes, <span class="number">0</span> directories
+Free blocks: <span class="number">8480</span>-<span class="number">16384</span>
+Free inodes: <span class="number">1649</span>-<span class="number">3296</span>
+Group <span class="number">2</span>: (Blocks <span class="number">16385</span>-<span class="number">19731</span>)
+Block bitmap <span class="keyword">at</span> <span class="number">16385</span> (+<span class="number">0</span>), Inode bitmap <span class="keyword">at</span> <span class="number">16386</span> (+<span class="number">1</span>)
+Inode table <span class="keyword">at</span> <span class="number">16387</span>-<span class="number">16592</span> (+<span class="number">2</span>)
+<span class="number">3139</span> free blocks, <span class="number">1648</span> free inodes, <span class="number">0</span> directories
+Free blocks: <span class="number">16593</span>-<span class="number">19731</span>
+Free inodes: <span class="number">3297</span>-<span class="number">4944</span>
+</code></pre><p>从这个 dump 信息我们能够得到几个很重要的信息，无论对于你将来的正在备份，恢复还是文件系统修复都是至关重要的。</p>
+<p> Free blocks: 17905 // 能够存储数据的块大小<br> Free inodes: 4933 // 能够使用的 i 节点 Block<br> size: 1024 // 块大小<br>Primary superblock at 1，Backup superblock at 8193 // 主超级块以及备份超级块的位置   </p>
+<p>free blocks 和 block size 决定了存储数据的空间大小，同时 block size 在某些备份软件中是需要指定的。而 free<br>inode 表说明能够创建的文件或目录总和。<br>因为一个文件或目录需要占用一个 i 节点。因此即使你的空间还足够，但是你会发现你无法创建文件或者目录，<br>而提示却是空间不够，这个时候你可以用 dumpe2fs 来看看你还有多少 free inode。当然仅仅为了查看 i 节点的信息，不仅仅只有 dumpe2fs 能够<br>做得到。df -i 命令也可以查看到 i 节点的使用信息。  </p>
+<p>而适当的改变 block size 可以在同样空间里获得更多的 inode，这个我们在说 mkfs 的时候再讨论。</p>
+<p>superblock 无疑是整个文件系统的核心，类似通往文件系统存储空间的钥匙，没有了钥匙，你既无法继续存储数据，也无法取出原来的数据。  </p>
+<p>正是因为他是如此的重要，所以文件系统在一创建的就做了若干备份。而且空间越到，备份的数目越多，以我的根文件系统为例，大小是 5.3G.<br>其中超级块一共 8 个。一旦文件系统的超级块损坏，我们立刻可以使用<code>e2fsck -b xxxx</code>的方式启用备用的超级块。  </p>
+<p>这里的 xxx 就是你的备份超级块的位置，上面的例子中，第一个超级块备份位置是 8193，因此你可以使用<br> <code>e2fsck -b 8193 /dev/sda1</code>来恢复超级块。  </p>
+<p>除了这些重要信息外，对 dumpe2fs 的深入分析，甚至可以将一个一经无法通过恢复超级块来访问的文件系统的数据导出来。不过我现在还不<br>知道如何做，呵呵。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/dump/">dump</a>, <a href="/tags/dumpe2fs/">dumpe2fs</a>, <a href="/tags/mkfs/">mkfs</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2007/01/30/commands-start-d/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

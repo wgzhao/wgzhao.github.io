@@ -1,0 +1,574 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 | 归档：2009 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+<h2 class="archive-title">2009</h2>
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-10-18T16:00:00.000Z"><a href="/2009/10/19/happy-birthday-for-pipi/">10月 19 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/10/19/happy-birthday-for-pipi/">皮皮周岁</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>时间过的真快，到今天，皮皮整整一岁了。还能想起刚出生时的手忙脚乱。</p>
+<p>刚出生时，看上去真的小巧玲珑，因为脸型是削长的，所有看第一眼的人都怀疑皮皮只有 5 斤左右，而实际上，他有 6 斤九两，在标准体重范围内。   </p>
+<p>刚开始时，以为喂牛奶没有经验，不知道一餐要喂多少，结果皮皮无辜的挨了几顿饿，我和还医院的医生和护士吵了几架。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/10/19/happy-birthday-for-pipi/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-10-17T16:00:00.000Z"><a href="/2009/10/18/finding-your-mysql-high-availability-solution/">10月 18 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/10/18/finding-your-mysql-high-availability-solution/">寻找适合你的MySQL高可用解决方案</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>摘译自 <a href="http://tinyurl.com/bol3ou7" target="_blank">mysql performance blog</a></p>
+<p>需要 MySQL 高可用吗？</p>
+<p>问题似乎很明显，但是有时却忽略了。实际上这是一个投入和产出的问题，投入越大，你获得数据安全性就越高，所以这个问题可以归结为”你的服务器宕机成本是多少？“，如果你的宕机成本小于 $10/hour，那基本上你不需要高可用方案了，So，不用浪费时间看下文了。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/10/18/finding-your-mysql-high-availability-solution/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-09-03T16:00:00.000Z"><a href="/2009/09/04/superblock-write-last-time-is-in-the-future/">9月 4 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/09/04/superblock-write-last-time-is-in-the-future/">superblock write last time is in the future</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不记得是 ubuntu 升级到哪个核心版本的时候出现了这个问题，系统正常关闭，再启动的时候，就会提示根文件系统的超级块最后写入时间比当前实际时间快 8 个小时。<br>而 BIOS 时钟和系统时钟都是正确的。BIOS 里没有时区设置（我没有看到），系统设置的 CST 时区，以前没有遇到过，有人说是双系统的问题。<br>目前的解决办法是，修改<code>/etc/default/rcS</code>文件，添加或者修改类似下面这行：</p>
+<p>UTC=yes</p>
+<p>暂时没有出现这个问题了，但是不晓得是否是正解。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-08-25T16:00:00.000Z"><a href="/2009/08/26/options-of-bash/">8月 26 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/08/26/options-of-bash/">bash的可选项</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>可选项（options）设置用来改变 shell 或者脚本的行为。</p>
+<p><code>set</code>指令可以使得在一个脚本里设置可选项。<br>在脚本你需要设置可选项的地方，实用<code>set -o option-name</code>，或者采取缩写模式的<code>set -option-abbrev</code>。这两种形式效果等价。 比如<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/08/26/options-of-bash/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-08-23T16:00:00.000Z"><a href="/2009/08/24/here-documents-in-bash/">8月 24 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/08/24/here-documents-in-bash/">bash里的here document</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>不得不再一次说，<a href="http://tldp.org/LDP/abs/html" target="_blank">Advanced bash-scripting guide(a.k.a ABS)</a>这本书太强悍了，对于 bash 里的 Here<br>Document 用法，我说见过的其他关于 shell/bash 编程的书里，都是简单的介绍这个东西是做什么的，基本用法是什么，然后给出一个例子就完成了。<br>我也一直以为他就是为了便于多行的输入。但是看完<a href="http://tldp.org/LDP/abs/html" title="Advanced bash-scripting guide" target="_blank">ABS</a>对此<a href="http://tldp.org/LDP/abs/html/here-docs.html" target="_blank">一整章的介绍</a>，我才发现，其实 here<br>document 没有那么简单。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/08/24/here-documents-in-bash/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-08-20T16:00:00.000Z"><a href="/2009/08/21/regular-expressions-in-the-shell/">8月 21 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/08/21/regular-expressions-in-the-shell/">shell里的正规表达式</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>还是来自<a href="p://www.tldp.org/LDP/abs/html/">ABS</a> 最新版的摘录，这次是<a href="http://tldp.org/LDP/abs/html/regexp.html" target="_blank">第十七章</a>，关于正规表达式。以下是摘录和翻译。</p>
+<p>一个表达式是一串字符 这些字符表达的意思超出了字面意思，我们称之为<em>元字符 (metacharacters)</em>.</p>
+<p>正规表达式是一个字符或者元字符集，用来匹配或者模式 (patterns)。 一个正规表达式包含以下一个或者多个情形：<br><!--more--></p>
+<ul>
+<li><em>一个字符集</em>. 这些字符保留他们的字面意义。 最简单的正规表达式类型就是这种<em>仅</em>由这些字符组成，而没有元字符</li>
+<li><em>锚 (anchor)</em>. <em>锚</em> 指定正规表达式匹配的一行文本的位置。 比如, \^, 和 $ 就都成为锚。</li>
+<li><p><em>修饰符（Modifiers)</em>. 它扩展或者缩小 (<em>修改</em>)<br>正规表达式匹配的文本范围。修饰符包括星号 (*), 括号 ({,(,&lt;) 和反斜杠 (\)<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/08/21/regular-expressions-in-the-shell/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-08-19T16:00:00.000Z"><a href="/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/">8月 20 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/">用shell升级15位身份证到18位</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>写着好玩写的，纯粹是想知道最后那个校验码是怎么算出来的，具体的算法可以<a href="http://zh.wikipedia.org/wiki/%E6%A0%A1%E9%AA%8C%E7%A0%81" target="_blank">参考这里</a><br>更详细的例子，可以参考下面的链接：<br><a href="http://www.heybrain.com/notheal/article/1138.html" target="_blank">http://www.heybrain.com/notheal/article/1138.html</a>   </p>
+<p>我这里是用 shell 实现了，其实用 C 实现应该是最好的，毕竟算法的东西，C 还是要快很多，我本是打算用 C 的，结果发现我都忘记得差不多了，连最简单的申明数组并初始化都忘记了，于是只要用效率比较低的 shell，不过在做一些匹配和校验的时候，感觉比 C 要方便一些，不多说了，给代码<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-08-14T16:00:00.000Z"><a href="/2009/08/15/some-control-characters-in-bash/">8月 15 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/08/15/some-control-characters-in-bash/">bash里的一些控制字符</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>摘自<a href="http://tldp.org/LDP/abs/html/" target="_blank">Advanced Bash-Scripting Guide<br>V6.0.05</a>第部分第三章的<a href="http://tldp.org/LDP/abs/html/special-chars.html" target="_blank">特殊字符</a>中的片断，并做了翻译。</p>
+<ul>
+<li><code>Ctl-A</code>  将光标移到行首</li>
+<li><code>Ctl-B</code> 退格键（但是我在 ubuntu 9.10 bash 3.2.48 上测试却是向前移动光标，        并不删除该字符）</li>
+<li><code>Ctl-C</code> 中断. 中断一个前台任务</li>
+<li><code>Ctl-D</code> 从当前 shell 退出（类似 exit) <code>EOF</code> (end-of-file). 它也能中断在 stdin 的输入。<br>当在一个终端 (console) 或者虚拟终端 (比如 xterm) 里敲键盘时，<code>ctl-D</code><br>会删除当前光标下的字符. 如果当前没有任何字符了，则 <code>Ctl-D</code> 表示从当前会话退出，如果时 xterm 之类的窗口，则会关闭当前窗口。
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/08/15/some-control-characters-in-bash/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-08-09T16:00:00.000Z"><a href="/2009/08/10/reading-at-mcdonalds/">8月 10 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/08/10/reading-at-mcdonalds/">在麦当劳看书</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>我其实讨厌麦当劳，当然也不喜欢肯德基，我说的是他们提供的垃圾食品。</p>
+<p>但当离火车开走还有 4 个小时，又无处可去的时候，我还是希望找到麦当劳或者肯德基的。虽然火车站附近的大小快餐店一家接着一家，但是我想，大概没有人会去呆着那里休息的。很奇怪，在火车站附近没有看到麦当劳，也没有看到肯德基。于是我想到了去银行的营业大厅，那里还算干净，也有免费的空调可以吹。</p>
+<p>我一脚跨进建设银行的大门，一位着正装的女孩子连忙起身，问我“先生，您需要办理什么业务”，我环顾四周，说了句，不办什么，看看。那女孩估计知道了我是来噌位子的，连忙说，自动取款机在外面左侧。这女孩可真聪明，我也知道顺着她的台阶说，谢谢。<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/08/10/reading-at-mcdonalds/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+    <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2009-08-06T16:00:00.000Z"><a href="/2009/08/07/scsi-debug-howto/">8月 7 2009</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2009/08/07/scsi-debug-howto/">linux kernel 2.6的scsi_debug适配器驱动</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>因为搬家的原因，这篇文档，断断续续，翻译了一个多星期，翻译的过程中，发现自己对 SCSI 子系统还是不了解，所以有很多地方翻译得很晦涩，还是建议大家看原文档。<br>原文档的链接地址是：<br><a href="http://sg.danny.cz/sg/sdebug26.html" target="_blank">http://sg.danny.cz/sg/sdebug26.html</a><br>如果你实在是看着英文就头疼，那就对付着看我的翻译吧：<br>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2009/08/07/scsi-debug-howto/#more" class="more-link">Read More &rarr;</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  
+
+  <nav id="pagination">
+  
+    <a href="/archives/2009/" class="alignleft prev">上一页</a>
+  
+  
+    <a href="/archives/2009/page/3/" class="alignright next">下一页</a>
+  
+  <div class="clearfix"></div>
+</nav>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

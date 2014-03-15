@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>\[/sbin学习\]h\*命令 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="\[/sbin学习\]h\*命令"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2007-02-11T16:00:00.000Z"><a href="/2007/02/12/commands-start-h/">2月 12 2007</a></time>
+      
+      
+  
+    <h1 class="title">\[/sbin学习\]h\*命令</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>/sbin 下 h 开头的命令不多，仅有 4 个<br>halt hdparm hotplug hwclock<br>halt: 停止系统，他和 reboot，poweroff 等命令属于同一个功能集。<br>halt 命令不不接参数，仅仅有几个选项来决定如何停止系统  </p>
+<p>-n: 停止系统前不做同步 (sync)，适合快速关机和那些仅仅只有只读访问的系统。<br>-w: 仅在 wtmp 文件中写一条 reboot 记录，然后退出，他的用处是什么？<br>-d: 不写 reboot 记录到 wtmp 文件中<br>-f: 强制停机 / 重启，但不调用 shutdown.shutdown 是一种安全的关闭系统的方式。<br>-p: 如果支持，系统关闭后掉电。否则只是停止系统.<br><a id="more"></a><br>hdparm： 获取和设置硬盘参数，当我一次看到 hdparm 命令和其说明时，我以为我发现了一个秘笈，因为说明中提到，他可以设置一些关键的参数，让你的硬盘提速。同时在网上也找到了不少有关这个命令的介绍，大多数都说可以显著提高硬盘响应速度，还有很多人的标题干脆是“瞬间提高你的 Linux 的速度”。其实大部分介绍中，主要是修改两个参数，一个是设置 DMA 为 enable，另外一个是设置 I/0 为 32 位。<br>我测试过这两个参数，对硬盘的响应速度确实有很大的影响，特别是 DMA 的设置，有相差好几倍的效果。<br>然后实际上，后来的 Linux 分发版本，对于硬盘的优化早在系统启动中就已经做好了。<br>而我知道的是，仅仅只有 2.2 的内核默认是不打开 DMA 模式的，因此在 2.2 的内核，利用<code>hdparm -c 1 /dev/hdx</code>的方式来提高硬盘响应速度是有效果的，但是 2.2 的内核毕竟是古董了。<br>另外 hdparm 的 man 提到 hdparm 仅仅只是设置 ATA/IDE 硬盘参数，而对 SCSI 硬盘是没有用的，当然也对后来出现的 SATA,SAS 硬盘无效了。  我没有测试过 SCSI 硬盘，也没有测试过 SATA,SAS 硬盘，所以现在还不能给出一个确切的答案。</p>
+<p>我们看看后来的 linux 版本是如何在启动是针对不同硬盘做的优化的，下面的脚本片段来自<code>/etc/rc.d/rc.sysinit</code>文件</p>
+<pre><code><span class="comment"># Turn on harddisk optimization</span>
+<span class="comment"># There is only one file /etc/sysconfig/harddisks for all disks</span>
+<span class="comment"># after installing the hdparm-RPM. If you need different hdparm parameters</span>
+<span class="comment"># for each of your disks, copy /etc/sysconfig/harddisks to</span>
+<span class="comment"># /etc/sysconfig/harddiskhda (hdb, hdc…) and modify it.</span>
+<span class="comment"># Each disk which has no special parameters will use the defaults.</span>
+<span class="comment"># Each non-disk which has no special parameters will be ignored.</span>
+<span class="comment">#</span>
+disk[<span class="number">0</span>]=s;
+disk[<span class="number">1</span>]=hda; disk[<span class="number">2</span>]=hdb; disk[<span class="number">3</span>]=hdc; disk[<span class="number">4</span>]=hdd;
+disk[<span class="number">5</span>]=hde; disk[<span class="number">6</span>]=hdf; disk[<span class="number">7</span>]=hdg; disk[<span class="number">8</span>]=hdh;
+disk[<span class="number">9</span>]=hdi; disk[<span class="number">10</span>]=hdj; disk[<span class="number">11</span>]=hdk; disk[<span class="number">12</span>]=hdl;
+disk[<span class="number">13</span>]=hdm; disk[<span class="number">14</span>]=hdn; disk[<span class="number">15</span>]=hdo; disk[<span class="number">16</span>]=hdp;
+disk[<span class="number">17</span>]=hdq; disk[<span class="number">18</span>]=hdr; disk[<span class="number">19</span>]=hds; disk[<span class="number">20</span>]=hdt;
+<span class="keyword">if</span> [ -x /sbin/hdparm ]; <span class="keyword">then</span>
+<span class="keyword">for</span> device <span class="keyword">in</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">10</span> <span class="number">11</span> <span class="number">12</span> <span class="number">13</span> <span class="number">14</span> <span class="number">15</span> <span class="number">16</span> <span class="number">17</span> <span class="number">18</span> <span class="number">19</span> <span class="number">20</span>; <span class="keyword">do</span>
+<span class="built_in">unset</span> MULTIPLE_IO USE_DMA EIDE_32BIT LOOKAHEAD EXTRA_PARAMS
+<span class="keyword">if</span> [ <span class="operator">-f</span> /etc/sysconfig/harddisk<span class="variable">${disk[$device]}</span> ]; <span class="keyword">then</span>
+. /etc/sysconfig/harddisk<span class="variable">${disk[$device]}</span>
+HDFLAGS[<span class="variable">$device</span>]=
+<span class="keyword">if</span> [ -n “<span class="variable">$MULTIPLE_IO</span>” ]; <span class="keyword">then</span>
+HDFLAGS[<span class="variable">$device</span>]=”-q -m<span class="variable">$MULTIPLE_IO</span>”
+<span class="keyword">fi</span>
+<span class="keyword">if</span> [ -n “<span class="variable">$USE_DMA</span>” ]; <span class="keyword">then</span>
+HDFLAGS[<span class="variable">$device</span>]=”<span class="variable">${HDFLAGS[$device]}</span> -q <span class="operator">-d</span><span class="variable">$USE_DMA</span>”
+<span class="keyword">fi</span>
+<span class="keyword">if</span> [ -n “<span class="variable">$EIDE_32BIT</span>” ]; <span class="keyword">then</span>
+HDFLAGS[<span class="variable">$device</span>]=”<span class="variable">${HDFLAGS[$device]}</span> -q -c<span class="variable">$EIDE_32BIT</span>”
+<span class="keyword">fi</span>
+<span class="keyword">if</span> [ -n “<span class="variable">$LOOKAHEAD</span>” ]; <span class="keyword">then</span>
+HDFLAGS[<span class="variable">$device</span>]=”<span class="variable">${HDFLAGS[$device]}</span> -q -A<span class="variable">$LOOKAHEAD</span>”
+<span class="keyword">fi</span>
+<span class="keyword">if</span> [ -n “<span class="variable">$EXTRA_PARAMS</span>” ]; <span class="keyword">then</span>
+HDFLAGS[<span class="variable">$device</span>]=”<span class="variable">${HDFLAGS[$device]}</span> <span class="variable">$EXTRA_PARAMS</span>”
+<span class="keyword">fi</span>
+<span class="keyword">else</span>
+HDFLAGS[<span class="variable">$device</span>]=”<span class="variable">${HDFLAGS[0]}</span>”
+<span class="keyword">fi</span>
+<span class="keyword">if</span> [ <span class="operator">-e</span> “/proc/ide/<span class="variable">${disk[$device]}</span>/media” ]; <span class="keyword">then</span>
+hdmedia=`cat /proc/ide/<span class="variable">${disk[$device]}</span>/media`
+<span class="keyword">if</span> [ “<span class="variable">$hdmedia</span>” = “disk” -o <span class="operator">-f</span> “/etc/sysconfig/harddisk<span class="variable">${disk[$device]}</span>” ]; <span class="keyword">then</span>
+<span class="keyword">if</span> [ -n “<span class="variable">${HDFLAGS[$device]}</span>” ]; <span class="keyword">then</span>
+action $”Setting hard drive parameters <span class="keyword">for</span> <span class="variable">${disk[$device]}</span>: ” /sbin/hdparm <span class="variable">${HDFLAGS[$device]}</span> /dev/<span class="variable">${disk[$device]}</span>
+<span class="keyword">fi</span>
+<span class="keyword">fi</span>
+<span class="keyword">fi</span>
+<span class="keyword">done</span>
+<span class="keyword">fi</span>
+</code></pre><p>这段脚本是所有的 IDE 硬盘，根据<code>/etc/sysconfig/harddisks</code>文件的策略而设置硬盘的参数.  从这里我们似乎可以看出，sdx 设备并不再设置之内，由此是不是可以肯定 hdparm 对 SCSI 设备不支持呢？<br>我们再看看 harddisks 文件</p>
+<pre><code><span class="preprocessor">#</span>
+<span class="preprocessor"># WARNING !!!</span>
+<span class="preprocessor">#</span>
+<span class="preprocessor"># The kernel will autodetect the correct settings for most drives.</span>
+<span class="preprocessor"># Overriding these settings with hdparm can cause data corruption and/or</span>
+<span class="preprocessor"># data loss.</span>
+<span class="preprocessor"># Leave this file as it is unless you know exactly what you're doing !!</span>
+<span class="preprocessor">#</span>
+<span class="preprocessor">#</span>
+<span class="preprocessor">#</span>
+<span class="preprocessor"># These options are used to tune the hard drives -</span>
+<span class="preprocessor"># read the hdparm man page for more information</span>
+<span class="preprocessor"># Set this to 1 to enable DMA. This might cause some</span>
+<span class="preprocessor"># data corruption on certain chipset / hard drive</span>
+<span class="preprocessor"># combinations. This is used with the “-d” option</span>
+<span class="preprocessor"># USE_DMA=1</span>
+<span class="preprocessor"># Multiple sector I/O. a feature of most modern IDE hard drives,</span>
+<span class="preprocessor"># permitting the transfer of multiple sectors per I/O interrupt,</span>
+<span class="preprocessor"># rather than the usual one sector per interrupt. When this feature</span>
+<span class="preprocessor"># is enabled, it typically reduces operating system overhead for disk</span>
+<span class="preprocessor"># I/O by 30-50%. On many systems, it also provides increased data</span>
+<span class="preprocessor"># throughput of anywhere from 5% to 50%. Some drives, however (most</span>
+<span class="preprocessor"># notably the WD Caviar series), seem to run slower with multiple mode</span>
+<span class="preprocessor"># enabled. Under rare circumstances, such failures can result in</span>
+<span class="preprocessor"># massive filesystem corruption. USE WITH CAUTION AND BACKUP.</span>
+<span class="preprocessor"># This is the sector count for multiple sector I/O – the “-m” option</span>
+<span class="preprocessor">#</span>
+<span class="preprocessor"># MULTIPLE_IO=16</span>
+<span class="preprocessor"># (E)IDE 32-bit I/O support (to interface card)</span>
+<span class="preprocessor">#</span>
+<span class="preprocessor"># EIDE_32BIT=3</span>
+<span class="preprocessor"># Enable drive read-lookahead</span>
+<span class="preprocessor">#</span>
+<span class="preprocessor"># LOOKAHEAD=1</span>
+<span class="preprocessor"># Add extra parameters here if wanted</span>
+<span class="preprocessor"># On reasonably new hardware, you may want to try -X66, -X67 or -X68</span>
+<span class="preprocessor"># Other flags you might want to experiment with are -u1, -a and -m</span>
+<span class="preprocessor"># See the hdparm manpage (man hdparm) for details and more options.</span>
+<span class="preprocessor">#</span>
+EXTRA_PARAMS=
+</code></pre><p>从这个文件的注释我们能够看出，它将影响硬盘效果最明显的参数单独列了出来，而将其他参数放到了 EXTRA_PARAMS 里。<br>因此对于 hdparm 命令的众多参数而言，我们需要去了解的不太多。<br>hotplug:Linux 下热插拔支持脚本。<br>hwclock: 查询和设置硬件时钟 (RTC). 系统启动时，需要从硬件时钟中读出时间来设置系统系统，这个过程在<code>/etc/rc.d/rc.sysini</code>t 脚本中采用<code>hwclock $CLOCKFLAGS</code>的方式来实现。<br>这里的参数 $CLOCKFLAGS 分为两部分，一部分是—hctosys, 表示同步的方式是硬件时钟到系统时钟。另外一部分参数是时间设置的标准，是标准时间（utc），还是本地时间 (localtim).<br>而关闭系统时，则相反，似乎用 -systohc 的参数来将系统时钟同步到硬件时钟。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/halt/">halt</a>, <a href="/tags/hdparm/">hdparm</a>, <a href="/tags/hotplug/">hotplug</a>, <a href="/tags/hwclock/">hwclock</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2007/02/12/commands-start-h/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

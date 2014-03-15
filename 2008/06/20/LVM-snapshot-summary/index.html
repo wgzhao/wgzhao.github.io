@@ -1,0 +1,488 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>LVM snapshot简述 | Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+  
+  <meta name="description" content="Linux,SA,DBA,bigdata">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="LVM snapshot简述"/>
+  <meta property="og:site_name" content="Linux系统管理"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Linux系统管理" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Linux系统管理</a></h1>
+  <h2><a href="/">关注Linux系统管理，运维开发以及大数据</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2008-06-19T16:00:00.000Z"><a href="/2008/06/20/LVM-snapshot-summary/">6月 20 2008</a></time>
+      
+      
+  
+    <h1 class="title">LVM snapshot简述</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>这两天看了有关 LVM 快照 (snapshot) 的一些资料，加上 pczou 的一些指导，对 snapshot 有一些理解，记录如下，和大家共享：</p>
+<p><a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux" target="_blank">Logical Volume Manager (LVM)</a>) 提供了对任意一个 Logical Volume(LV) 做“快照”(snapshot) 的功能，以此来获得一个分区的状态一致性备份。<br>在某一个状态下做备份的时候，可能有应用正在访问某一个文件或者数据库，这就是使得备份的时候文件处于一个状态，而备份完后，文件却处于另外一个状态，从而造成备份的非一致性，这种状态恢复数据库数据几乎不会成功。<br><a id="more"></a><br>状态的解决办法是将其分区挂载为只读，然后通过数据库的表级别锁定 (table-level write locks) 甚至停止数据库来备份数据。所有这些方法无意严重影响了服务的可用性。使用 LVM snapshot 既可以获得一致性备份，又不会影响服务器的可用性。</p>
+<p>要提醒一点是，snapshot 这种方法仅对 LVM 有效，对于非 LVM 文件系统无效。</p>
+<p>snapshot 的实现有多种方式 (参考文章最后的连接)，这里说说 LVM 中 snapshot 的“写时复制”(copy on write) 的实现方法。</p>
+<p>当一个 snapshot 创建的时候，仅拷贝原始卷里数据的元数据 (meta-data)。创建的时候，并不会有数据的物理拷贝，因此 snapshot 的创建几乎是实时的，当原始卷上有写操作执行时，snapshot 跟踪原始卷块的改变，这个时候原始卷上将要改变的数据在改变之前被拷贝到 snapshot 预留的空间里，因此这个原理的实现叫做写时复制 (copy-on-write)。</p>
+<p>在写操作写入块之前，CoW 讲原始数据移动到 snapshot 空间里，这样就保证了所有的数据在 snapshot 创建时保持一致。而对于 snapshot 的读操作，如果是读取数据块是没有修改过的，那么会将读操作直接重定向到原始卷上，如果是要读取已经修改过的块，那么就读取拷贝到 snapshot 中的块。</p>
+<p>这样，通常的文件 I/0 流程有一个改变，那就是在文件系统和设备驱动之间增加了一个 cow 层，变成了下面这个样子：</p>
+<pre><code><span class="comment">file</span> <span class="comment">I/0</span> <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span>&gt; <span class="comment">filesystem</span> <span class="literal">-</span><span class="literal">-</span> &gt;<span class="comment">CoW</span> <span class="literal">-</span><span class="literal">-</span>&gt; <span class="comment">block</span> <span class="comment">I</span> <span class="comment">/O</span>
+</code></pre><p>下面的图也许可以比较容易了解 CoW 的原理：</p>
+<p><img src="/images/cow.gif" alt="image" title="Copy on Write"></p>
+<p>采取 CoW 实现方式时，snapshot 的大小并不需要和原始卷一样大，其大小仅仅只需要考虑两个方面：从 shapshot 创建到释放这段时间内，估计块的改变量有多大 ; 数据更新的频率。一旦<br>snapshot 的空间记录满了原始卷块变换的信息，那么这个 snapshot 立刻被释放，从而无法使用，从而导致这个 snapshot 无效。所以，非常重要的一点，一定要在 snapshot 的生命周期里，做完你需要做得事情。当然，如果你的 snapshot 大小和原始卷一样大，甚至还要大，那它的寿命就是“与天齐寿”了。</p>
+<p>snapshot 其实除了备份以外，还有很多其他用途</p>
+<h4 id=" 虚拟化 ">虚拟化</h4>
+<p>在使用 LVM2 时，快照可以不是只读的。这意味着，在创建快照之后， 可以像常规块设备一样挂载和读写快照。</p>
+<p>因为流行的虚拟化系统（比如 Xen、VMWare、Qemu 和 KVM）可以将块设备用作 guest 映像，所以可以创建这些映像的完整拷贝，并根据需要使用它们，它们就像是内存占用量很低的虚拟机。这样做的好处是部署迅速（创建快照的时间常常不超过几秒）和节省空间（guest 共享原映像的大多数数据）。</p>
+<p>设置的步骤如下：</p>
+<ol>
+<li>为原映像创建一个逻辑卷。</li>
+<li>使用这个 LV 作为磁盘映像安装 guest 虚拟机。</li>
+<li>暂停这个虚拟机。内存映像可以是一个常规文件，所有其他快照都放在里面。</li>
+<li>为原 LV 创建一个可读写的快照。</li>
+<li>使用快照卷作为磁盘映像生成一个新的虚拟机。如果需要的话，要修改网络 / 控制台设置。</li>
+<li>登录已经创建的虚拟机，修改网络设置 / 主机名。 </li>
+</ol>
+<p>完成这些步骤之后， 就可以让用户访问刚创建的虚拟机了。如果需要另一个虚拟机，那么只需重复步骤 4 到 6（所以不需要重新安装虚拟机）。还可以用一个脚本自动执行这些步骤。</p>
+<p>在使用完虚拟机之后， 可以停止虚拟机并销毁快照。</p>
+<h4 id=" 数据回溯 ">数据回溯</h4>
+<p>在一个生产系统上要执行一些操作，需要慎之又慎，即便在模拟环境中做过很多次测试都没有问题，但是并不能保证在生产环境就一定成功，于是这个时候，我们把系统做一个 snapshot，这样一旦新操作出现问题，立刻回溯到创建 snapshot 的时间点，当然你也可以认为这是一个备份的扩展使用。</p>
+<p>最后，我们举一些例子，加深对 snapshot 的理解。</p>
+<p>a) 创建一个 120M 的 snapshot，执行一些操作看看 CoW 的动作。</p>
+<p>我们举一个例子来说明如何创建和使用 snapshot。我们假定创建一个 120M 的 snapshot，这就意味着在 snapshot 生命周期里，你仅能有 120M 的数据量改变。</p>
+<p>下面的命令，为<code>/dev/vg/lvdata</code>创建<code>/dev/vg/lvdata-sp</code></p>
+<pre><code><span class="preprocessor"># lvcreate -L20M -s -n lvdata-sp /dev/vg/lvdata</span>
+
+Logical volume “lvdata-sp” created
+
+其中 lvdata 大小为<span class="number">120</span>MB。
+
+<span class="preprocessor"># lvdisplay /dev/vg/lvdata-sp</span>
+
+— Logical volume —
+
+LV Name /dev/vg/lvdata-sp
+
+VG Name vg
+
+LV<span class="constant"> UUID </span>Yl0fQU-Ve9T-lfmp-xJPq-Uwrd-RVVM-lDDVz0
+
+LV Write Access read/write
+
+LV snapshot status active destination <span class="keyword">for</span> /dev/vg/lvdata
+
+LV Status available
+
+<span class="preprocessor"># open 1</span>
+
+LV Size <span class="number">200.00</span> MB
+
+Current<span class="constant"> LE </span><span class="number">50</span>
+
+COW-table size <span class="number">20.00</span> MB
+
+COW-table<span class="constant"> LE </span><span class="number">5</span>
+
+Allocated to snapshot <span class="number">0.27</span>%
+
+Snapshot chunk size <span class="number">8.00</span> KB
+
+Segments <span class="number">1</span>
+
+Allocation inherit
+
+Read ahead sectors <span class="number">0</span>
+
+Block device <span class="number">253</span>:<span class="number">0</span>
+</code></pre><p>上面的 <code>Allocated to snapshot 0.27%</code>是我们关心的，表示目前还有<code>99.73%</code>的空间没有使用。</p>
+<p>我们尝试在 lvdata 创建一个 10M 的文件，再看看这个参数值。</p>
+<pre><code><span class="comment"># mount /dev/vg/lvdata /media/lvdata/</span>
+<span class="comment"># dd if=/dev/hda of=/media/lvdata/10M bs=1M count=10</span>
+
+<span class="number">10</span>+<span class="number">0</span> records <span class="operator">in</span>
+
+<span class="number">10</span>+<span class="number">0</span> records out
+
+<span class="number">10485760</span> <span class="keyword">bytes</span> (<span class="number">10</span> MB) copied, <span class="number">0.272393</span> <span class="built_in">seconds</span>, <span class="number">38.5</span> MB/s
+
+<span class="comment"># lvdisplay /dev/vg/lvdata-sp</span>
+
+— Logical volume —
+
+LV Name /dev/vg/lvdata-sp
+
+VG Name vg
+
+LV UUID Yl0fQU-Ve9T-lfmp-xJPq-Uwrd-RVVM-lDDVz0
+
+LV Write Access <span class="built_in">read</span>/<span class="built_in">write</span>
+
+LV snapshot status active destination <span class="keyword">for</span> /dev/vg/lvdata
+
+LV Status available
+
+<span class="comment"># open 0</span>
+
+LV Size <span class="number">200.00</span> MB
+
+Current LE <span class="number">50</span>
+
+COW-table size <span class="number">20.00</span> MB
+
+COW-table LE <span class="number">5</span>
+
+Allocated <span class="built_in">to</span> snapshot <span class="number">51.02</span>%
+
+Snapshot chunk size <span class="number">8.00</span> KB
+
+Segments <span class="number">1</span>
+
+Allocation inherit
+
+Read ahead sectors <span class="number">0</span>
+
+Block device <span class="number">253</span>:<span class="number">0</span>
+</code></pre><p><code>Allocated to snapshot51.02%</code>, 符合我们的预期。此时 snapshot 还剩下大概 10M 不到的空间了，如果我么再在 lvdata 上创建一个 12M 的文件，会发生什么呢？</p>
+<pre><code><span class="variable">#dd</span> <span class="keyword">if</span><span class="subst">=</span>/dev/hda of<span class="subst">=</span>/media/lvdata/<span class="number">12</span>M bs<span class="subst">=</span><span class="number">1</span>M count<span class="subst">=</span><span class="number">12</span>
+
+<span class="number">12</span><span class="subst">+</span><span class="number">0</span> <span class="keyword">records</span> <span class="keyword">in</span>
+
+<span class="number">12</span><span class="subst">+</span><span class="number">0</span> <span class="keyword">records</span> out
+
+<span class="number">12582912</span> <span class="built_in">bytes</span> (<span class="number">13</span> MB) copied, <span class="number">0.288311</span> seconds, <span class="number">43.6</span> MB/s
+
+device<span class="attribute">-mapper</span>: snapshots: Invalidating snapshot: Unable <span class="keyword">to</span> allocate exception<span class="built_in">.</span>
+</code></pre><p>创建文件的过程中，一个报错出现了，snapshot 已经无效。我们看看 snapshot 卷的详细信息。</p>
+<pre><code><span class="comment"># lvdisplay /dev/vg/lvdata-sp</span>
+
+/dev/vg/lvdata-sp: <span class="built_in">read</span> failed <span class="keyword">after</span> <span class="number">0</span> <span class="operator">of</span> <span class="number">4096</span> <span class="keyword">at</span> <span class="number">0</span>: Input/Out Error
+
+— Logical volume —
+
+LV Name /dev/vg/lvdata-sp
+
+VG Name vg
+
+LV UUID Yl0fQU-Ve9T-lfmp-xJPq-Uwrd-RVVM-lDDVz0
+
+LV Write Access <span class="built_in">read</span>/<span class="built_in">write</span>
+
+LV snapshot status INACTIVE destination <span class="keyword">for</span> /dev/vg/lvdata
+
+LV Status available
+
+<span class="comment"># open 0</span>
+
+LV Size <span class="number">200.00</span> MB
+
+Current LE <span class="number">50</span>
+
+COW-table size <span class="number">20.00</span> MB
+
+COW-table LE <span class="number">5</span>
+
+Snapshot chunk size <span class="number">8.00</span> KB
+
+Segments <span class="number">1</span>
+
+Allocation inherit
+
+Read ahead sectors <span class="number">0</span>
+</code></pre><p>整个 snapshot 卷已经出现 I/0 错误了，而且 snapshot 的状态也是“INACTIVE”。</p>
+<p>是否能挂载上来呢？</p>
+<pre><code><span class="comment"># mount /dev/vg/lvdata-sp /media/snapshot/</span>
+
+mount: you must specify <span class="keyword">the</span> filesystem type
+
+<span class="comment">#dmesg</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">0</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">1</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">2</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">3</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">4</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">5</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">6</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">7</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">8</span>
+
+Buffer I/O <span class="keyword">error</span> <span class="function_start"><span class="keyword">on</span></span> device dm-<span class="number">0</span>, logical block <span class="number">9</span>
+
+hfs: unable <span class="keyword">to</span> find HFS+ superblock
+</code></pre><p>从 dmesg 的错误信息来看，超级块的信息也丢失了</p>
+<p>尝试激活一下 lvdata-sp</p>
+<pre><code> <span class="comment"># lvchange -ay /dev/vg/lvdata-sp </span>
+ /dev/vg/lvdata-sp: <span class="built_in">read</span> failed <span class="keyword">after</span> <span class="number">0</span> <span class="operator">of</span> <span class="number">4096</span> <span class="keyword">at</span> <span class="number">0</span>: 输入 / 输出错误 
+</code></pre><p>恩，这个 snapshot 已经被释放了，所以剩下要做得事情就是删除它。</p>
+<pre><code><span class="comment"># lvremove /dev/vg/lvdata-sp </span>
+/dev/vg/lvdata-sp: <span class="built_in">read</span> failed <span class="keyword">after</span> <span class="number">0</span> <span class="operator">of</span> <span class="number">4096</span> <span class="keyword">at</span> <span class="number">0</span>: 输入 / 输出错误 
+Do you really want <span class="built_in">to</span> remove active logical volume <span class="string">"lvdata-sp"</span>? [y/n]: y 
+Logical volume <span class="string">"lvdata-sp"</span> successfully removed 
+</code></pre><p>b）利用 snapshot 在线备份 MySQL 数据库（或者其他数据库）</p>
+<p>流程是先做一个 flush 操作，并锁定表，任何创建 snapshot，任何解锁，然后备份数据，最后释放 snapshot。这样，MySQL 几乎不会中断其运行。</p>
+<pre><code> <span class="comment">FLUSH</span> <span class="comment">TABLES</span> <span class="comment">WITH</span> <span class="comment">READ</span> <span class="comment">LOCK;</span> 
+<span class="comment">\!</span> <span class="comment">lvcreate</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">size</span> <span class="comment">100m</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">snapshot</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">name</span> <span class="comment">snap</span> <span class="comment">/dev/VolGroup01/LogVol00</span> 
+<span class="comment">UNLOCK</span> <span class="comment">TABLES;</span> 
+</code></pre><p>接着做一些备份的工作</p>
+<pre><code><span class="keyword">mkdir</span> /snap
+
+mount /dev/VolGroup01/snap /snap
+
+<span class="comment"># This is where you back up whatever you need from /snap, e.g. rsync(1)</span>
+
+umount /snap
+
+lvremove /dev/VolGroup01/snap
+
+<span class="keyword">rmdir</span> /snap
+</code></pre><p>最后，感谢 pczou 抽出时间和我交流和指导！</p>
+<p>进一步阅读：</p>
+<p><a href="http://www.ibm.com/developerworks/tivoli/library/t-snaptsm1/index.html" target="_blank">﻿Understanding and exploiting snapshot technology for data protection, Part 1: Snapshot technology  overview</a></p>
+<p><a href="http://www.ibm.com/developerworks/cn/linux/l-lvm2/" target="_blank">逻辑卷管理</a></p>
+<p><a href="http://tldp.org/HOWTO/LVM-HOWTO/" target="_blank">LVM-HOWTO</a></p>
+<p>﻿<a href="http://www.howtoforge.com/linux_lvm_snapshots" target="_blank">Back Up (And Restore) LVM Partitions With LVM Snapshots</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Linux技术/">Linux技术</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/backup/">backup</a>, <a href="/tags/copy-on-write/">copy-on-write</a>, <a href="/tags/cow/">cow</a>, <a href="/tags/lvm/">lvm</a>, <a href="/tags/snapshot/">snapshot</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=null";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://wgzhao.com/2008/06/20/LVM-snapshot-summary/" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:wgzhao.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Linux技术/">Linux技术</a><small>152</small></li>
+  
+    <li><a href="/categories/WEB开发/">WEB开发</a><small>5</small></li>
+  
+    <li><a href="/categories/Linux技术/WEB开发/">WEB开发</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/">init</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/init/linux/">linux</a><small>1</small></li>
+  
+    <li><a href="/categories/lsb/">lsb</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/">mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/mysql/pam_mysql/">pam_mysql</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/">plan</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/">strace</a><small>1</small></li>
+  
+    <li><a href="/categories/plan/summary/">summary</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/">sys call</a><small>1</small></li>
+  
+    <li><a href="/categories/strace/sys call/troubleshooting/">troubleshooting</a><small>1</small></li>
+  
+    <li><a href="/categories/vsftp/">vsftp</a><small>1</small></li>
+  
+    <li><a href="/categories/我读我书/">我读我书</a><small>11</small></li>
+  
+    <li><a href="/categories/Linux技术/我读我书/">我读我书</a><small>5</small></li>
+  
+    <li><a href="/categories/技术技巧/">技术技巧</a><small>25</small></li>
+  
+    <li><a href="/categories/Linux技术/技术技巧/">技术技巧</a><small>4</small></li>
+  
+    <li><a href="/categories/数据库/">数据库</a><small>8</small></li>
+  
+    <li><a href="/categories/随心所想/">随心所想</a><small>111</small></li>
+  
+    <li><a href="/categories/我读我书/随心所想/">随心所想</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/21/explaining-the-postgresql-query-optimizer/">PostgreSQL查询优化简介</a>
+      </li>
+    
+      <li>
+        <a href="/2012/08/20/several-popular-nosql-databases-key-features-list/">几种常见的NoSQL数据库关键特性列表</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/12">十二月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08">八月 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04">四月 2012</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01">一月 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09">九月 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08">八月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/04">四月 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03">三月 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/08">八月 2010</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/07">七月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/06">六月 2010</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/05">五月 2010</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/04">四月 2010</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/03">三月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/02">二月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2010/01">一月 2010</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/12">十二月 2009</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/11">十一月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/10">十月 2009</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/09">九月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/08">八月 2009</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/07">七月 2009</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/04">四月 2009</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/03">三月 2009</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/02">二月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2009/01">一月 2009</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/12">十二月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/09">九月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/08">八月 2008</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/07">七月 2008</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/06">六月 2008</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/05">五月 2008</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/04">四月 2008</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/03">三月 2008</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/02">二月 2008</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2008/01">一月 2008</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/12">十二月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/11">十一月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/10">十月 2007</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/09">九月 2007</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/08">八月 2007</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/07">七月 2007</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/06">六月 2007</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/05">五月 2007</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/04">四月 2007</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/03">三月 2007</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/02">二月 2007</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2007/01">一月 2007</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/12">十二月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/11">十一月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/10">十月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/09">九月 2006</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/08">八月 2006</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/07">七月 2006</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/06">六月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/05">五月 2006</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/04">四月 2006</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/03">三月 2006</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2006/01">一月 2006</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/12">十二月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/11">十一月 2005</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/09">九月 2005</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/05">五月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/04">四月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/03">三月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2005/01">一月 2005</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/12">十二月 2004</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2004/10">十月 2004</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2014 wgzhao
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'wgzhao';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
