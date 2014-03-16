@@ -2,9 +2,9 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: 随心所想 | Linux系统管理]]></title>
-  <link href="http://wgzhao.github.io//categories/sui-xin-suo-xiang/atom.xml" rel="self"/>
+  <link href="http://wgzhao.github.io/categories/sui-xin-suo-xiang/atom.xml" rel="self"/>
   <link href="http://wgzhao.github.io/"/>
-  <updated>2014-03-16T21:28:32+08:00</updated>
+  <updated>2014-03-16T21:38:56+08:00</updated>
   <id>http://wgzhao.github.io/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -24,6 +24,7 @@
 <li>把blog从自有的VPS上迁移到了<a href="https://github.com">github</a>，也<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">定制了域名</a></li>
 <li>把blog的引擎有<a href="http://www.octopress.org">octopress</a>迁移到<a href="https://github.com/tommy351/hexo/">hexo</a>,octopress什么都好，就是当帖子数多了后，生成静态文件的时间太太太长了。吐槽的人很多，比如<a href="http://www.techelex.org/why-switch-blog-from-octopress-to-hexo/">这里</a>,<a href="https://github.com/jekyll/jekyll/issues/1855">这里</a>和<a href="http://lucifr.com/2013/01/02/from-octopress-to-hexo/">这里</a>。</li>
 <li>砍掉了很多过时的帖子，似乎没有次整理blog，都会删除部分帖子。记得从boblog到<a href="http://www.wordpress.com">wordpress</a>就砍掉了将近1/3的帖子，后来从wordpress迁移到<a href="http://www.octopress.org">octopress</a>又砍掉了不少帖子。这次迁移到hexo，又砍掉了将近1/3的帖子。</li>
+<li>域名从原来的<code>blog.wgzhao.com</code>迁移到<code>wgzhao.com</code>，前者将做301跳转.</li>
 </ol>
 
 ]]></content>

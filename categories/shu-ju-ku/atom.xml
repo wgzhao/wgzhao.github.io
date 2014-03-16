@@ -2,9 +2,9 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: 数据库 | Linux系统管理]]></title>
-  <link href="http://wgzhao.github.io//categories/shu-ju-ku/atom.xml" rel="self"/>
+  <link href="http://wgzhao.github.io/categories/shu-ju-ku/atom.xml" rel="self"/>
   <link href="http://wgzhao.github.io/"/>
-  <updated>2014-03-16T21:28:32+08:00</updated>
+  <updated>2014-03-16T21:38:56+08:00</updated>
   <id>http://wgzhao.github.io/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -500,123 +500,226 @@ for (j = 0; j &lt; length(hash_store(hash_key]); j++)
 
 <p>首先创建一个简单表：</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# create table t (id int, name text);</p>
-
-<p>CREATE TABLE</p>
-
-<p>&mdash; inserto 100w records</p>
-
-<p>wgzhao=# insert into t select generate_series(1,1000000),&lsquo;wgzhao_&rsquo; || generate_series(1,1000000);</p>
-
-<p>INSERT 0 1000000</p>
-
-<p>&mdash; create a index on column id：</p>
-
-<p>wgzhao=# create index idx_t_id on t(id);</p>
-
-<p>CREATE INDEX</p>
-
-<p>&mdash;vacuum once</p>
-
-<p>wgzhao=# VACUUM t;</p>
-
-<p>VACUUM</p>
-
-<p>wgzhao=# ANALYZE t;</p>
-
-<p>ANALYZE</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">create</span> <span class="k">table</span> <span class="n">t</span> <span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span> <span class="nb">text</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">CREATE</span> <span class="k">TABLE</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span> <span class="n">inserto</span> <span class="mi">100</span><span class="n">w</span> <span class="n">records</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">t</span> <span class="k">select</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000000</span><span class="p">),</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">wgzhao_</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span> <span class="o">||</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000000</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1000000</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span> <span class="k">create</span> <span class="n">a</span> <span class="k">index</span> <span class="k">on</span> <span class="k">column</span> <span class="n">id</span><span class="err">：</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">create</span> <span class="k">index</span> <span class="n">idx_t_id</span> <span class="k">on</span> <span class="n">t</span><span class="p">(</span><span class="n">id</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">CREATE</span> <span class="k">INDEX</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="k">vacuum</span> <span class="n">once</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">VACUUM</span> <span class="n">t</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">VACUUM</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">ANALYZE</span> <span class="n">t</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">ANALYZE</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <!--more-->
 
 
 <p>最简单的查看大小就是isql给出<code>\dt</code>指令</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# \dt t</p>
-
-<pre><code>       List of relations
-</code></pre>
-
-<p> Schema | Name | Type  | Owner  | Size</p>
-
-<p>&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;</p>
-
-<p> PUBLIC | t    | table | SYSTEM | 72 MB</p>
-
-<p>(1 row)</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="err">\</span><span class="n">dt</span> <span class="n">t</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>       <span class="n">List</span> <span class="k">of</span> <span class="n">relations</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="k">Schema</span> <span class="o">|</span> <span class="n">Name</span> <span class="o">|</span> <span class="k">Type</span>  <span class="o">|</span> <span class="k">Owner</span>  <span class="o">|</span> <span class="k">Size</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="k">PUBLIC</span> <span class="o">|</span> <span class="n">t</span>    <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="k">SYSTEM</span> <span class="o">|</span> <span class="mi">72</span> <span class="n">MB</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>还一个方法是用系统函数</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# select pg_size_pretty(pg_total_relation_size(&rsquo;t'));</p>
-
-<p> pg_size_pretty</p>
-
-<hr />
-
-<p> 72 MB</p>
-
-<p>(1 row)</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_total_relation_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">t</span><span class="err">&#39;</span><span class="p">));</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">pg_size_pretty</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">hr</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="mi">72</span> <span class="n">MB</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>我们也可以自己来计算：</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# select relname,reltuples,relpages from pg_class  where relname =&rsquo;t';</p>
-
-<p> relname | reltuples | relpages</p>
-
-<p>&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;</p>
-
-<p> t       |   1000000 |    12802</p>
-
-<p>(1 row)</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">relname</span><span class="p">,</span><span class="n">reltuples</span><span class="p">,</span><span class="n">relpages</span> <span class="k">from</span> <span class="n">pg_class</span>  <span class="k">where</span> <span class="n">relname</span> <span class="o">=&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">t</span><span class="err">&#39;</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">relname</span> <span class="o">|</span> <span class="n">reltuples</span> <span class="o">|</span> <span class="n">relpages</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">t</span>       <span class="o">|</span>   <span class="mi">1000000</span> <span class="o">|</span>    <span class="mi">12802</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>这个<code>relpages</code>只是表示包含的记录数，并没有包括索引。从这里也可以看出，一个<code>relpages</code>大概可以包含78个<code>reltupls</code>，也就是78条记录。</p>
 
 <p>如果表上有索引，则可以用下面的指令来计算出包括索引在内的<code>relpages</code>一起是多少：</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# select c2.relname,c2.relpages from pg_class  c,pg_class c2,pg_index i where c.relname = &rsquo;t' and c.oid = i.indrelid and c2.oid = i.indexrelid order by c2.relname;</p>
-
-<p> relname  | relpages</p>
-
-<p>&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;</p>
-
-<p> idx_t_id |     5567</p>
-
-<p>(1 row)</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">c2</span><span class="p">.</span><span class="n">relname</span><span class="p">,</span><span class="n">c2</span><span class="p">.</span><span class="n">relpages</span> <span class="k">from</span> <span class="n">pg_class</span>  <span class="k">c</span><span class="p">,</span><span class="n">pg_class</span> <span class="n">c2</span><span class="p">,</span><span class="n">pg_index</span> <span class="n">i</span> <span class="k">where</span> <span class="k">c</span><span class="p">.</span><span class="n">relname</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">t</span><span class="err">&#39;</span> <span class="k">and</span> <span class="k">c</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">indrelid</span> <span class="k">and</span> <span class="n">c2</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">indexrelid</span> <span class="k">order</span> <span class="k">by</span> <span class="n">c2</span><span class="p">.</span><span class="n">relname</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">relname</span>  <span class="o">|</span> <span class="n">relpages</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">idx_t_id</span> <span class="o">|</span>     <span class="mi">5567</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>一个<code>relpages</code>是一个<code>block_size</code>大小，因此我们就可以做下面的计算了：</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# select pg_size_pretty((5567 + 12802));</p>
-
-<p> pg_size_pretty</p>
-
-<hr />
-
-<p> 72 MB</p>
-
-<p>(1 row)</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">((</span><span class="mi">5567</span> <span class="o">+</span> <span class="mi">12802</span><span class="p">));</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">pg_size_pretty</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">hr</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="mi">72</span> <span class="n">MB</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>这样我们就计算出了大小。</p>
 
@@ -624,92 +727,175 @@ for (j = 0; j &lt; length(hash_store(hash_key]); j++)
 
 <p>我们看看：</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# update t set name = &lsquo;update_wgzhao&rsquo; where id &lt; 20000;</p>
-
-<p>UPDATE 19999</p>
-
-<p>wgzhao=# delete from t where id > 990000;</p>
-
-<p>DELETE 10000</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">update</span> <span class="n">t</span> <span class="k">set</span> <span class="n">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">update_wgzhao</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span> <span class="k">where</span> <span class="n">id</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">20000</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">UPDATE</span> <span class="mi">19999</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">delete</span> <span class="k">from</span> <span class="n">t</span> <span class="k">where</span> <span class="n">id</span> <span class="o">&gt;</span> <span class="mi">990000</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">DELETE</span> <span class="mi">10000</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>我们再用上面的方法计算一遍，看看有没有什么问题：</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# \dt t</p>
-
-<pre><code>       List of relations
-</code></pre>
-
-<p> Schema | Name | Type  | Owner  | Size</p>
-
-<p>&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;</p>
-
-<p> PUBLIC | t    | table | SYSTEM | 74 MB</p>
-
-<p>(1 row)</p>
-
-<p>wgzhao=# select pg_size_pretty(pg_total_relation_size(&rsquo;t'));</p>
-
-<p> pg_size_pretty</p>
-
-<hr />
-
-<p> 74 MB</p>
-
-<p>(1 row)</p>
-
-<p>wgzhao=# select relname,reltuples,relpages from pg_class  where relname =&rsquo;t';</p>
-
-<p> relname | reltuples | relpages</p>
-
-<p>&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;</p>
-
-<p> t       |   1000000 |    12802</p>
-
-<p>(1 row)</p>
-
-<p>wgzhao=# select c2.relname,c2.relpages from pg_class  c,pg_class c2,pg_index i where c.relname = &rsquo;t' and c.oid = i.indrelid and c2.oid = i.indexrelid order by c2.relname;</p>
-
-<p> relname  | relpages</p>
-
-<p>&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;</p>
-
-<p> idx_t_id |     5567</p>
-
-<p>(1 row)</p>
-
-<p>wgzhao=# select pg_size_pretty((5567 + 12802));</p>
-
-<p> pg_size_pretty</p>
-
-<hr />
-
-<p> 72 MB</p>
-
-<p>(1 row)</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="err">\</span><span class="n">dt</span> <span class="n">t</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>       <span class="n">List</span> <span class="k">of</span> <span class="n">relations</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="k">Schema</span> <span class="o">|</span> <span class="n">Name</span> <span class="o">|</span> <span class="k">Type</span>  <span class="o">|</span> <span class="k">Owner</span>  <span class="o">|</span> <span class="k">Size</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="k">PUBLIC</span> <span class="o">|</span> <span class="n">t</span>    <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="k">SYSTEM</span> <span class="o">|</span> <span class="mi">74</span> <span class="n">MB</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_total_relation_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">t</span><span class="s1">&#39;));&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;p&gt; pg_size_pretty&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;hr /&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;p&gt; 74 MB&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;p&gt;(1 row)&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&lt;p&gt;wgzhao=# select relname,reltuples,relpages from pg_class  where relname =&amp;rsquo;t&#39;</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">relname</span> <span class="o">|</span> <span class="n">reltuples</span> <span class="o">|</span> <span class="n">relpages</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">t</span>       <span class="o">|</span>   <span class="mi">1000000</span> <span class="o">|</span>    <span class="mi">12802</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">c2</span><span class="p">.</span><span class="n">relname</span><span class="p">,</span><span class="n">c2</span><span class="p">.</span><span class="n">relpages</span> <span class="k">from</span> <span class="n">pg_class</span>  <span class="k">c</span><span class="p">,</span><span class="n">pg_class</span> <span class="n">c2</span><span class="p">,</span><span class="n">pg_index</span> <span class="n">i</span> <span class="k">where</span> <span class="k">c</span><span class="p">.</span><span class="n">relname</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">t</span><span class="err">&#39;</span> <span class="k">and</span> <span class="k">c</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">indrelid</span> <span class="k">and</span> <span class="n">c2</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">indexrelid</span> <span class="k">order</span> <span class="k">by</span> <span class="n">c2</span><span class="p">.</span><span class="n">relname</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">relname</span>  <span class="o">|</span> <span class="n">relpages</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">idx_t_id</span> <span class="o">|</span>     <span class="mi">5567</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">((</span><span class="mi">5567</span> <span class="o">+</span> <span class="mi">12802</span><span class="p">));</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">pg_size_pretty</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">hr</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="mi">72</span> <span class="n">MB</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>问题来了，通过<code>relpages</code> 来计算表的大小不对了，删除的元组并没有反馈到<code>reltuples</code>里。怎么办呢，这个时候需要查询<code>pg_stat_user_tables</code>了</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# select n_tup_ins,n_tup_upd,n_tup_del from pg_stat_user_tables where relname = &rsquo;t';</p>
-
-<p> n_tup_ins | n_tup_upd | n_tup_del</p>
-
-<p>&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;</p>
-
-<p>   1000000 |     19999 |     10000</p>
-
-<p>(1 row)</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">n_tup_ins</span><span class="p">,</span><span class="n">n_tup_upd</span><span class="p">,</span><span class="n">n_tup_del</span> <span class="k">from</span> <span class="n">pg_stat_user_tables</span> <span class="k">where</span> <span class="n">relname</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">t</span><span class="err">&#39;</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">n_tup_ins</span> <span class="o">|</span> <span class="n">n_tup_upd</span> <span class="o">|</span> <span class="n">n_tup_del</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">+&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">mdash</span><span class="p">;</span><span class="o">&amp;</span><span class="n">ndash</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>   <span class="mi">1000000</span> <span class="o">|</span>     <span class="mi">19999</span> <span class="o">|</span>     <span class="mi">10000</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>在没有<code>vacuum</code>之前，不管是删除的还是更新的，都需要占用磁盘空间，从一开始我们知道一个<code>relpages</code>大概包含78条<code>reltuples</code>。</p>
 
@@ -717,19 +903,33 @@ for (j = 0; j &lt; length(hash_store(hash_key]); j++)
 
 <p><code>(19999 + 10000) /78 = 384</code>，因此计算表大小的时候还需要加上384个<code>reltuples</code>的大小</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=#  select pg_size_pretty((5567 + 12802 + 384) * current_setting(&lsquo;block_size&rsquo;));</p>
-
-<p> pg_size_pretty</p>
-
-<hr />
-
-<p> 73 MB</p>
-
-<p>(1 row)</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span>  <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">((</span><span class="mi">5567</span> <span class="o">+</span> <span class="mi">12802</span> <span class="o">+</span> <span class="mi">384</span><span class="p">)</span> <span class="o">*</span> <span class="n">current_setting</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">block_size</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;));</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">pg_size_pretty</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">hr</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="mi">73</span> <span class="n">MB</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <p>这个基本上就靠谱了</p>
 ]]></content>
@@ -743,55 +943,129 @@ for (j = 0; j &lt; length(hash_store(hash_key]); j++)
     <content type="html"><![CDATA[<p>在当前<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，目前还没有一个能够以指定单位返回两个时间差的函数（如果有，请告诉我），比如返回两个时间相差的月份。</p>
 
 <p>我简单的写了一个函数，只是作为一个实现的思路，没有做过多的严禁判断。代码如下：<br/>
-{% gist 3357205 datediff.sql %}</p>
+<div><script src='https://gist.github.com/3357205.js?file=datediff.sql'></script>
+<noscript><pre><code>--
+create or replace function datediff(m text,d1 date,d2 date) returns int as $$
+declare
+d1_year     int;
+d1_month    int;
+
+d2_year     int;
+d2_month    int;
+day int;
+
+begin
+ select extract(year from d1) into d1_year;
+ select extract(month from d1) into d1_month;
+
+ select extract(year from d2) into d2_year;
+ select extract(month from d2) into d2_month;
+
+if m = &#39;year&#39; then
+	return (d2_year - d1_year);
+elsif m = &#39;month&#39; then
+return (d2_year - d1_year) * 12 + (d2_month - d1_month);
+elsif m = &#39;day&#39; then
+ select d2 - d1 into day;
+ return day;
+end if;
+end;
+$$ language plpgsql;</code></pre></noscript></div>
+</p>
 
 <p>简单测试如下：</p>
 
-<p>{% codeblock lang:sql %}</p>
-
-<p>wgzhao=# select datediff(&lsquo;year&rsquo;,&lsquo;1970-12-2&rsquo;::date,current_date);</p>
-
-<h2> datediff </h2>
-
-<pre><code>   42
-</code></pre>
-
-<p>(1 row)</p>
-
-<p>Time: 1.385 ms
-wgzhao=# select datediff(&lsquo;month&rsquo;,&lsquo;1970-12-2&rsquo;::date,current_date);</p>
-
-<h2> datediff </h2>
-
-<pre><code>  500
-</code></pre>
-
-<p>(1 row)</p>
-
-<p>Time: 0.770 ms
-wgzhao=# select datediff(&lsquo;day&rsquo;,&lsquo;1970-12-2&rsquo;::date,current_date);</p>
-
-<h2> datediff </h2>
-
-<pre><code>15232
-</code></pre>
-
-<p>(1 row)</p>
-
-<p>Time: 0.602 ms
-wgzhao=# select version();</p>
-
-<pre><code> version                                
-</code></pre>
-
-<hr />
-
-<p> PostgreSQL 9.1.4 , 64-bit
-(1 row)</p>
-
-<p>Time: 19.968 ms</p>
-
-<p>{% endcodeblock %}</p>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">datediff</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="k">year</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="mi">1970</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">2</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;::</span><span class="nb">date</span><span class="p">,</span><span class="k">current_date</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;</span> <span class="n">datediff</span> <span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>   <span class="mi">42</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Time</span><span class="p">:</span> <span class="mi">1</span><span class="p">.</span><span class="mi">385</span> <span class="n">ms</span>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">datediff</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="k">month</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="mi">1970</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">2</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;::</span><span class="nb">date</span><span class="p">,</span><span class="k">current_date</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;</span> <span class="n">datediff</span> <span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="mi">500</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Time</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">770</span> <span class="n">ms</span>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">datediff</span><span class="p">(</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="k">day</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;,</span><span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="mi">1970</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">2</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;::</span><span class="nb">date</span><span class="p">,</span><span class="k">current_date</span><span class="p">);</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;</span> <span class="n">datediff</span> <span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="mi">15232</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Time</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">602</span> <span class="n">ms</span>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="k">version</span><span class="p">();</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span> <span class="k">version</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">hr</span> <span class="o">/&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span> <span class="n">PostgreSQL</span> <span class="mi">9</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">4</span> <span class="p">,</span> <span class="mi">64</span><span class="o">-</span><span class="nb">bit</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Time</span><span class="p">:</span> <span class="mi">19</span><span class="p">.</span><span class="mi">968</span> <span class="n">ms</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   
