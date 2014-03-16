@@ -9,10 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="6–5.字符串
-(a)更新你在练习 2-7 里面的方案,使之可以每次向前向后都显示一个字符串的一个字符.
-(b)通过扫描来判断两个字符串是否匹配(不能使用比较操作符或者 cmp()内建函数)。附加题:在你的方案里加入大小写区分.
-(c)判断一个字符串是否重现(后面跟前面的一致).附加题: &hellip;">
+  <meta name="description" content="E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的crontab特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前crontab文件，并确保他不能增加新的crontab文件所需的步骤。 A：假定用户test就是我们需要惩罚的用户，目前你的帐号是root。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -74,7 +71,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Core Python Programming 2nd Chapter 6 Exercise</a></h1>
+      <h1 class="entry-title"><a href="/2009/12/30/lah-chapter8-questions-key/">Linux系统管理技术手册第8章习题实践</a></h1>
     
     
       <p class="meta">
@@ -90,27 +87,30 @@
   
 
 
-<time datetime="2010-05-29T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-12-30T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Comments</a>
+           | <a href="/2009/12/30/lah-chapter8-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/12/30/lah-chapter8-questions-key/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><blockquote><p>6–5.字符串<br/>
-(a)更新你在练习 2-7 里面的方案,使之可以每次向前向后都显示一个字符串的一个字符.<br/>
-(b)通过扫描来判断两个字符串是否匹配(不能使用比较操作符或者 cmp()内建函数)。附加题:在你的方案里加入大小写区分.<br/>
-(c)判断一个字符串是否重现(后面跟前面的一致).附加题:在处理除了严格的回文之外,加入对例如控制符号和空格的支持。<br/>
-(d)接受一个字符,在其后面加一个反向的拷贝,构成一个回文字符串.</p></blockquote>
+  <div class="entry-content"><p>E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的crontab特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前crontab文件，并确保他不能增加新的crontab文件所需的步骤。</p>
+
+<p>A：假定用户test就是我们需要惩罚的用户，目前你的帐号是root。列出帐号test的crontab文件指令是：</p>
+
+<pre><code>root@wgzhao-nb:~# crontab -u test -l
+# m h  dom mon dow   command
+20 3 * * * /usr/bin/hugecmd
+</code></pre>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Read on &rarr;</a>
+      <a rel="full-article" href="/2009/12/30/lah-chapter8-questions-key/">Read on &rarr;</a>
     </footer>
   
 
@@ -122,7 +122,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/05/28/ipython-for-gedit/">Ipython for Gedit</a></h1>
+      <h1 class="entry-title"><a href="/2009/12/22/lah-chapter7-questions-key/">Linux系统管理技术手册第七章习题实践</a></h1>
     
     
       <p class="meta">
@@ -138,79 +138,25 @@
   
 
 
-<time datetime="2010-05-28T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-12-22T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/05/28/ipython-for-gedit/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/28/ipython-for-gedit/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.gedit.org">Gedit</a> 是我在linux下常用的图形化编辑器。特别是加了带终端的插件后，编写一些脚本来就方便很多了。在同一个界面上完成编辑，运行，调试的工作。</p>
-
-<p>最新学习Python，代码编辑当然不会有什么问题，虽然Gedit也有一个python的终端插件，但是python自带的终端感觉还是弱了点，比如没有语法高亮，没有代码提示和自动完成等。</p>
-
-<p>一般情况下，我都用 <a href="http://ipython.scipy.org/">iPython</a> 来替代Python做终端使用。</p>
-
-<p>本来想自己修改Gedit的python控制面板插件的，但是一想，我能想到的，肯定有人想到了，于是Google一番，:) ，果然有人做了这个工作，在google
-codes上<a href="http://code.google.com/p/gedit-ipythonconsole/">建立了项目</a>。</p>
-
-<p><img src="http://gedit-ipythonconsole.googlecode.com/files/ipythonconsole.png" alt="ipython for gedit" /></p>
-
-<p>这个项目果然建立得相当低碳，只有一个上述截图和一个下载链接，其他什么都没有。</p>
-
-<p>当然安装还是相当简单的,下载 <a href="http://github.com/nuxlli/gedit-ipythonconsole/tarball/master">当前的版本</a>。解压后，生成一个<code>nuxlli-gedit-ipythonconsole-e5ccabc</code>目录，把目录下的所有文件拷贝到<code>/usr/lib/gedit-2/plugins/</code>目录下，重启 Gedit，看看插件里是不是已经有了iPython。
-呃，<a href="http://dreampie.sourceforge.net/">Dreampie</a> 也是我非常喜欢的python终端，但是我没有找到对应的Gedit插件版本</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/05/28/core-python-programming-2nd-chapter-5-exercise/">Core Python Programming 2nd Chapter 5 Exercise</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-28T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/05/28/core-python-programming-2nd-chapter-5-exercise/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/">Comments</a>
+           | <a href="/2009/12/22/lah-chapter7-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/12/22/lah-chapter7-questions-key/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>思考再三，还是决定在blog记录下练习《<a href="http://book.douban.com/subject/3112503/">Python核心编程第二版</a>》习题的过程。<br/>
-英文原版书后是有有些习题答案的，但是基本上都是一些简单问题的答案，而且较少。练习是最好的学习，所以我打算尽可能把能练手的习题做一遍。</p>
+  <div class="entry-content"><p>很抱歉，前段时间一直出差，书太重，不可能带着跑，所以习题实践中断了一段时间，不过我不会放弃这个计划的。</p>
 
-<p>我手头只有第一版的印刷版，第二版是电子版，目前无法得知电子版是否和印刷版本一致。</p>
+<p>好了，废话少说。第七章习题较多，最后一个题目难度很大，按照书的前言描述，这应该可以当作一个学期的课程设计，所以暂时不实现（其实是我不善于编程，所以完成需要一个程序需要很长的时间）</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2010/05/28/core-python-programming-2nd-chapter-5-exercise/">Read on &rarr;</a>
+      <a rel="full-article" href="/2009/12/22/lah-chapter7-questions-key/">Read on &rarr;</a>
     </footer>
   
 
@@ -222,7 +168,7 @@ codes上<a href="http://code.google.com/p/gedit-ipythonconsole/">建立了项目
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/05/25/change-the-lcd-brightness-with-keyboard-shortcuts-html/">编写自己简单的屏幕亮度调整程序</a></h1>
+      <h1 class="entry-title"><a href="/2009/12/17/compress-utility-can-not-always-compress-files/">Compress指令并不是总是压缩文件</a></h1>
     
     
       <p class="meta">
@@ -238,25 +184,94 @@ codes上<a href="http://code.google.com/p/gedit-ipythonconsole/">建立了项目
   
 
 
-<time datetime="2010-05-25T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-12-17T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/05/25/change-the-lcd-brightness-with-keyboard-shortcuts-html/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/25/change-the-lcd-brightness-with-keyboard-shortcuts-html/">Comments</a>
+           | <a href="/2009/12/17/compress-utility-can-not-always-compress-files/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/12/17/compress-utility-can-not-always-compress-files/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>之前发了一个帖子说<a href="http://blog.wgzhao.com/2010/05/20/change-the-lcd-brightness.html">手工调整屏幕的亮度</a>，但是手工毕竟还是不方便，特别是要连续调亮和调暗的情况下，于是尝试写了个简单的脚本，用来连续调整，并通过和快捷键的绑定，最后达到ubuntu 9.10版本的调整屏幕亮度的效果。</p>
+  <div class="entry-content"><p>用户观察到了一个很有意思的现象，某一个目录下10个小文件，每一个大概都只有几十个字节。都是纯文本。分别对这10个文件用compress指令压缩，结果发现其中一个压缩不成功，也没有给出任何报错信息。</p>
 
-<p>步骤如下：</p>
+<p>将该文件传送到AIX 5上，使用compress压缩，则给出&#8221;file not change&#8221;的提示，依然没有压缩。</p>
+
+<p>给文件重命名，也不行。另外创建一个文件，然后把文件内容复制过去，也不行。</p>
+
+<p>我尝试用strace跟踪了compress压缩该文件的过程。发现压缩的确做了，但是最后却执行了unlink的操作，也就是把已经压缩好的文件删除了。</p>
+
+<p>为什么要删除呢？先看看compress的帮助吧，发现有这样一个参数的说明：</p>
+
+<blockquote><p>-f Forces output file to be generated, even if one already. exists,
+and even if no space is saved by compressing. If -f is not used, the
+user will be prompted if stdin is. a tty, otherwise, the output file
+will not be overwritten.</p></blockquote>
+
+<p>其中提到了压缩空间的问题。我猜测可能是压缩效率的问题。 于是用<code>compress -f</code>
+的方式，果然压缩成功了。<br/>
+比较压缩前和压缩后的大小，结果发现压缩后的文件还比压缩前的文件要大。难怪，所以-f提高了即使没有压缩空间。<br/>
+这倒是挺有意思，一来压缩一个文件，大小不减反增，比较少见。二来compress指令还去做比较？ 于是下载了compress 4.2 的源代码，大致看了一下，果然有这么一个判断：</p>
+
+<pre><code>if (bytes_out &gt;= bytes_in &amp;&amp; !(force))
+                exit_code = 2;
+</code></pre>
+
+<p><code>bytes_out</code>是压缩后的字节，<code>bytes_in</code>是读入的字节，也就是原始文件的大小。force对应的是-f的参数。</p>
+
+<p>没有想到，这开发人员还这么考虑呀。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/12/03/lah-chapter6-questions-key/">Linux系统管理技术手册第六章习题实践</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-12-03T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/12/03/lah-chapter6-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>E6.1 怎样决定用户的默认组？怎样改变它？</p>
+
+<p>A：感觉还是用户设置为默认的同名私有组作为默认组是比较恰当的。改变组的指令是<code>chgrp</code>。</p>
+
+<p>E6.2 说明下面这几个umask值的区别：077、027、022和755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？您可以给用户施加一个标准的umask吗？</p>
+
+<p>A：077，表示创建的缺省文件许可是600，027则是640，022则是644，755则是022。想成为新用户的全局默认值，一个办法是修改系统缺省的umask值，Fedora/RedHat系统是<code>/etc/bashrc</code>文件。Debian/Ubuntu系统是<code>/etc/profile</code>。或者直接修改<code>/etc/skel/.bash_profile</code>文件，增加umask的设定。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2010/05/25/change-the-lcd-brightness-with-keyboard-shortcuts-html/">Read on &rarr;</a>
+      <a rel="full-article" href="/2009/12/03/lah-chapter6-questions-key/">Read on &rarr;</a>
     </footer>
   
 
@@ -268,7 +283,7 @@ codes上<a href="http://code.google.com/p/gedit-ipythonconsole/">建立了项目
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/05/20/deploy-django-with-nginx/">Ubuntu Lucid下将django部署到nginx上</a></h1>
+      <h1 class="entry-title"><a href="/2009/11/27/lah-chapter5-questions-key/">Linux系统管理技术手册第五章习题实践</a></h1>
     
     
       <p class="meta">
@@ -284,50 +299,34 @@ codes上<a href="http://code.google.com/p/gedit-ipythonconsole/">建立了项目
   
 
 
-<time datetime="2010-05-20T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-11-27T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/05/20/deploy-django-with-nginx/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/20/deploy-django-with-nginx/">Comments</a>
+           | <a href="/2009/11/27/lah-chapter5-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/11/27/lah-chapter5-questions-key/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我说的都是偷懒的办法，也就是不重新编译nginx，也不从网络上下载最新的django版本，一切都是从Ubuntu的仓库中取。<br/>
-所以版本如下：</p>
+  <div class="entry-content"><p>这一章的习题比较简单，虽然难点是ACL，但是似乎作者很讨厌ACL，因此习题里，一个有关ACL的问题都没有。</p>
 
-<pre><code>﻿nginx 0.7.65-1ubuntu 
-python-django 1.1.1-2ubuntu1
+<p>E5.1 什么是umask？创建一个umask，对于属组或者其他人什么权限也不给。</p>
+
+<p>A：umask是一个三位八进制数字表示的变量，用来给shell设定新创建的文件的默认权限。 设置umask为0077即可，如下所示：</p>
+
+<pre><code>$ umask 0077
+$ touch test
+$ ls -l test
+-rw------- 1 wgzhao wgzhao 0 2009-11-27 20:11 test
 </code></pre>
 
-<p>假定创建的django项目在<code>/home/websites/pysites</code>下。
-首先，配置<code>Nginx</code>。只需要改动<code>/etc/nginx/sites-enable/default</code>文件的<code>location/</code>区域，增加几行代码，类似如下：</p>
-
-<pre><code>location / {
-    fastcgi_pass 127.0.0.1:8080;
-    root   /home/websites/public_html/pysites;
-    index  index.html index.htm;
-    include fastcgi_params;
-}
-</code></pre>
-
-<p>实际上就是增加了<code>fastcgi_pass</code>和<code>root</code>两行。 然后以<code>fastcgi</code>模式启动django</p>
-
-<pre><code>$ cd /home/websites/public_html/pysites
-$./manager.py runfcgi host=127.0.0.1 port=8080 --pythonpath=/home/websites/public_html/pysites
-</code></pre>
-
-<p>访问<a href="http://localhost/">http://localhost/</a> 是不是看到了首页。
-恩，一切看上去都很美好。 但是， 尝试访问
-<a href="http://localhost/path">http://localhost/path</a> 这里的URL地址试试？
-你就会发现，无论访问怎样的路径，都仅仅只是显示首页，而不是你期望的出现其他页面试图。 这是一个BUG，详细的情况参考这个链接 <a href="http://code.djangoproject.com/ticket/8874">#8874</a> <br/>
-解决的办法就是<br/>
-1. 从<a href="http://code.djangoproject.com/attachment/ticket/8874/wsgi.patch?format=raw">这里</a>(或者<a href="http://dl.dropbox.com/u/220586/wsgi.patch">这里</a>，需要翻/墙）下载补丁文件，放到<code>/usr/share/pyshared/django/core/handlers/</code>目录下，保存为<code>wsgi.patch</code>文件。<br/>
-2. 为了保险起见，备份上述目录下的<code>wsgi.py</code>文件 ( <code>cp wsgi.py wsgi_orig.py</code>) <br/>
-3. 应用补丁 patch -p0</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2009/11/27/lah-chapter5-questions-key/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -338,7 +337,7 @@ $./manager.py runfcgi host=127.0.0.1 port=8080 --pythonpath=/home/websites/publi
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/05/20/change-the-lcd-brightness/">手动调整笔记本LCD的亮度</a></h1>
+      <h1 class="entry-title"><a href="/2009/11/27/lah-chapter4-questions-key/">Linux系统管理技术手册第四章习题实践</a></h1>
     
     
       <p class="meta">
@@ -354,32 +353,27 @@ $./manager.py runfcgi host=127.0.0.1 port=8080 --pythonpath=/home/websites/publi
   
 
 
-<time datetime="2010-05-20T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-11-27T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/05/20/change-the-lcd-brightness/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/20/change-the-lcd-brightness/">Comments</a>
+           | <a href="/2009/11/27/lah-chapter4-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/11/27/lah-chapter4-questions-key/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>首先，找到下面的一个内核变量：</p>
+  <div class="entry-content"><p>E4.1 解释一个文件的UID和一个正在运行的进程的真实UID以及有效UID之间的关系。除了文件的访问控制外，进程的有效UID有什么用途？</p>
 
-<pre><code># cat /proc/acpi/video/IGFX/LCD/brightness 
-levels: 0 5 10 15 20 25 30 33 36 40 43 \ 
-46 50 55 60 65 70 75 80 83 86 90 93 96 100
-current: 100 
-</code></pre>
+<p>A：
+大部分情况下，文件的UID和运行的真实UID以及有效UID是一致的。但是对于<code>setuid</code>程序而言。进程的真实UID和有效UID就有区别了。比如<code>/usr/bin/passwd</code>程序。它的属主是<code>root（UID=0）</code>，如果一个用户（<code>UID=1000)</code>运行它，那么真实UID为1000，但是有效UID则为0。有效UID除了文件访问控制外，还能提升当前运行程序的“临时特权”。</p>
 
-<p>根据显卡的不同，变量的位置不同，变化的路径参数应该仅仅是“IGFX”这个值。
-上面显示了支持的亮度值，最低0，最高100，目前是100 想调暗一点，就直接 <code>echo 80 &gt; /proc/acpi/video/IGFX/LCD/brightness</code> 还算方便。</p>
-
-<p>可以考虑写成一个脚本，然后捆绑到快捷键上，也许就更灵活了。</p>
-
-<p>但是，为什么之前好好的快捷键，现在不行了呢？</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2009/11/27/lah-chapter4-questions-key/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -390,7 +384,7 @@ current: 100
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/05/12/dropbox-startup-lessons-learned/">Dropbox Startup Lessons Learned</a></h1>
+      <h1 class="entry-title"><a href="/2009/11/26/lah-chapter3-questions-key/">Linux系统管理技术手册第三章习题实践</a></h1>
     
     
       <p class="meta">
@@ -406,21 +400,24 @@ current: 100
   
 
 
-<time datetime="2010-05-12T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-11-26T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/05/12/dropbox-startup-lessons-learned/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/12/dropbox-startup-lessons-learned/">Comments</a>
+           | <a href="/2009/11/26/lah-chapter3-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="/uploads/2010/05/dropbox-startuplessonslearned-100423230315-phpapp02.ppt">Dropbox startup lessons learned</a></p>
+  <div class="entry-content"><p>E3.1 使用带有-perm选项的find命令在您的系统上找到5个setuid文件。对于每个文件，试述为什么对于让命令正确发挥其功能来说，setuid机制是必要的。</p>
 
-<p>悼念Dropbox</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2009/11/26/lah-chapter3-questions-key/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -431,7 +428,7 @@ current: 100
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/05/11/bookshelf/">书架一角</a></h1>
+      <h1 class="entry-title"><a href="/2009/11/24/lah-chapter2-questions-key/">Linux系统管理技术手册第二章习题实践</a></h1>
     
     
       <p class="meta">
@@ -447,22 +444,26 @@ current: 100
   
 
 
-<time datetime="2010-05-11T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-11-24T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/05/11/bookshelf/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/11/bookshelf/">Comments</a>
+           | <a href="/2009/11/24/lah-chapter2-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/11/24/lah-chapter2-questions-key/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="http://www.flickr.com/photos/mlsx/4597558263/" title="photo sharing"><img src="http://farm5.static.flickr.com/4062/4597558263_1a1f3d363a.jpg" alt="image" /></a></p>
+  <div class="entry-content"><p>E2.1 为什么在安装LILO引导加载程序之前先运行lilo -t很重要？该怎样引导一个名字不是vmlinuz的内核？</p>
 
-<p>原由
-<a href="http://www.flickr.com/people/mlsx/">mlsx</a> 上載。 太空荡，要买书！</p>
+<p>A： 任何引导程序在加载到MBR之前都应该检查配置文件的正确性，对于没有引导时可编辑特性的LILO更应如此，因此在执行lilo或者<code>lilo -v</code>之前，先执行<code>lilo -t</code> 来测试配置文件的正确性是一个良好的习惯。引导配置<code>/etc/lilo.conf</code>里可以通过image指令来指定内核的名字，和内核具体的命名没有关系。</p>
+
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2009/11/24/lah-chapter2-questions-key/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -473,7 +474,7 @@ current: 100
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/05/10/some-disappointed-about-new-house/">住新房的纠结</a></h1>
+      <h1 class="entry-title"><a href="/2009/11/23/linux-administration-handbook-question-answers/">Linux系统管理技术手册习题实践</a></h1>
     
     
       <p class="meta">
@@ -489,50 +490,27 @@ current: 100
   
 
 
-<time datetime="2010-05-10T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-11-23T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/05/10/some-disappointed-about-new-house/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/10/some-disappointed-about-new-house/">Comments</a>
+           | <a href="/2009/11/23/linux-administration-handbook-question-answers/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/11/23/linux-administration-handbook-question-answers/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>都不记得上一次更新是什么时候的事情了，4月份挺忙的，一个月飞了3次成都，本地还有几个事情，还有几个不能说的秘密。</p>
+  <div class="entry-content"><p>以前看《<a href="http://book.douban.com/subject/3042029/">Linux系统管理手册</a>》（以下简称LAH）电子版的时候，没有太注意每章后面的习题。</p>
 
-<p>好不容易捱到了5.1假期。<br/>
-lancy最后拍板搬家，于是5.1准备了一天，5.2中午11：30搬到了新家。<br/>
-稍微整理了一下。第二天就出差。  直到5.6才回来。</p>
+<p>现在买来印刷版看后，觉得这些习题有必要做一做，特别那些标有4颗星的，据说能作为整个学期的作业来完成，这不由得让我想起了《<a href="http://book.douban.com/subject/1130500/">计算机程序设计艺术</a>》艺术有关习题的介绍，不过那个太难了，都是偏向理论性的知识。<br/>
+这本LAH的习题偏向实践一些，应该相对来说容易做到吧。</p>
 
-<p>开始继续整理家里，刚还是一点都不适应，原来是所有的东西都在一个房间里，要找东西很容易。现在分散到几个房子，老是找不到东西了。</p>
-
-<p>好不容易清理完了，结果突然普通插座的电器开关合不上去了，以为是开关坏了，叫来物业工程部来看，说开关没坏，很有可能是有短路情况。这就比较麻烦了，马上通知装修公司，来人通过摇表检查是火线接地了，需要通过检查每一个线头来排查是哪一段出现了问题，这是个大问题，幸好厨房的插座还能用。本以为不再需要的插线板再一次派上了用场。</p>
-
-<p>2天后，原来安装电路的师傅来了，拆了地线，合上开关，然后接上地线，神奇的事情发生了，这次居然没有跳闸，手动跳下去，然后合上，也可以。打开电视，电脑，洗衣机，并行运行20分钟，还是没有跳闸。师傅给出的解释是可能某个插座里沾了水吧，电气开关很灵敏，一点不对劲，都会跳下去的。</p>
-
-<p>然后开始办宽带，询问了物业，所在物业可以代办，不过没有发票。想想算了，报销的事情也许不怎么靠谱了。上午交了钱，下午电信的美女给我打电话说你选择的号码是空号，可能是物业抄错了，需要更换，顺便像我推销套餐。约了美女上门详谈，仔细询问后，选择了其中一个套餐，需要想办法把交给物业的钱要回来，给楼长打电话问这种情况下，我怎么要回来钱。楼长说很麻烦，需要很多人签字，然后退钱。至少需要一个星期。电信的人也说是这样，很麻烦，但是我还是想去试试。直接跑到财务室，说明情况，说我选择的号码是空号，客服中心搞错了，剩下的号码我一个都不喜欢，我想等有了号码再办理，连带宽带也不办理了。然后和电信的美女合演了一出双簧，15分钟后，拿到了钱。直奔营业厅办理，结果发现连接到这里的光缆被人剪断了，暂时不能办理，我记得有“光缆无铜，偷也没用”的宣传语吗，怎么还没有深入人心呢？</p>
-
-<p>第二天电信的美女给我打电话说，选择了一个座机号码和一个手机号码，你看看怎么样，这号码呢，好的恐怕轮不到我们，别太差就行。我说行吧，她说等下给我送手机来。</p>
-
-<p>不多久，想起来了敲门声。一款功能强大的山寨手机出现在我眼前，什么功能都有。声音也很大，还真的比较适合老爸老妈。顺便要她帮我催一下安装宽带的事情。</p>
-
-<p>昨天上午11：30，安装宽带的还没有来，给电信的美女打电话，问今天是否能来，给我一个手机号码，说问问他，应该知道。马上拨过去，告诉我的地址，他说师傅刚才好这一片，下午会过来安装。</p>
-
-<p>2个小时后，安装电话和宽带的帅哥来了（真的是帅哥），手脚麻利的把书房，客厅的网络线，电话线接好。然后告诉我，虽然你有5个电话接口，但是估计用不了，电信规定一个帐号只能有一个电话。我帮你接上，有可能能用，有可能不能用，如果不能用，你保修的话，他们有可能不会帮你维修，因为你多接了电话。我问那平常人家多个电话怎么回事，答曰申请的分机，我再问分机如何申请，答曰60元一部。我说靠谱不？帅哥回答，电信纯粹扯蛋！！我无语了，思考再三，决定费掉所有房间的电话线和接口，只保留书房和客厅的。唉，我的钱呀，装修公司布这些线可收了不少钱，还有我的电话插线面板，也不少钱了。
-最后轮到皮皮房间的网线，检查发现8根线，断了6根。没法弄。</p>
-
-<p>今天上午打电话给装修公司，说有一根网线用不了，断了。装修公司派人来，开始准备重新插线，结果发现原来的线扯不动，估计是黄蜡管的缘故。这就比较恐怖了。查看了半天的线路图，拆了不少白板盒，实际查看线路，最后的办法是从弱点配电箱走线到临近客厅阳台的一个废弃的弱电盒，然后穿到主卧室，接着穿到主卧室的卫生间空白盒，再绕到皮皮房间的网线盒，等于围着房子绕了半圈，预计长度16米，还好没有超过25米。但有一个问题，客厅废弃的弱电盒已经被客厅墙上的装饰面板遮盖了，那么就需要在面板上钻控，而且还不能保证一个孔就能搞定问题，也许需要多钻几个。另外就是，没有人能保证这个方案就一定能保证线路可以穿过去。我心那个纠结呀。难道就是因为皮皮现在还小，还不需要用电脑就这么折腾她吗？可是皮皮离4岁很快了。我打算在4岁的时候给她一台电脑。</p>
-
-<p>无线？不是没有考虑过，可是辐射问题呢？从天花板走线？太丑。唉，暂时不好解决的问题，等到真的需要的时候再解决吧。告诉装修公司，你们也别折腾了，我也不想担心了，先这么着吧。这根线就这么废弃吧。你把当时弄这根线所花费的钱还给我，也不要双倍了，是多少钱就多少钱吧。刚办到新家，就接二连三的折腾，心烦了。</p>
-
-<p>到我这这篇blog的时候，废弃了4个电话线及接口，废弃了一根网络先及接口。书房的射灯太暗，当时应该坚持自己的想法，而不是应该相信所谓首席设计师的设计，需要更换成筒灯。书房天花板上的吊扇还没有安装，正在纠结中。</p>
-
-<p>两个浴室柜上方的镜前灯也没有安装，正在纠结中。。。。</p>
-
-<p>别人住新房都是高高兴兴，而我怎么总是这样纠结呢？难道因为这是农村？</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2009/11/23/linux-administration-handbook-question-answers/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -543,7 +521,7 @@ lancy最后拍板搬家，于是5.1准备了一天，5.2中午11：30搬到了�
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/05/02/going-to-my-new-home/">搬家前夕</a></h1>
+      <h1 class="entry-title"><a href="/2009/10/20/netfilter-packet-flow/">Netfilter Packet Flow</a></h1>
     
     
       <p class="meta">
@@ -559,17 +537,22 @@ lancy最后拍板搬家，于是5.1准备了一天，5.2中午11：30搬到了�
   
 
 
-<time datetime="2010-05-02T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-10-20T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/05/02/going-to-my-new-home/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/05/02/going-to-my-new-home/">Comments</a>
+           | <a href="/2009/10/20/netfilter-packet-flow/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/10/20/netfilter-packet-flow/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>搬家，搬家，今天已准备，明天就搬家。 从此远离城市，呼吸着夹着湘江水的空气，做一个快乐的城市边缘人。</p>
+  <div class="entry-content"><p><a href="http://www.flickr.com/photos/mlsx/4027652873/" title="photo sharing"><img src="http://farm4.static.flickr.com/3514/4027652873_c1a2cdc1e8.jpg" alt="image" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/mlsx/4027652873/">nf-packet-flow</a>，原由
+<a href="http://www.flickr.com/people/mlsx/">mlsx</a> 上載。</p>
+
+<p>很详细的一张netfilter包流程图，能直观的描述Netfilter/iptables的工作流程。</p>
 </div>
   
   
@@ -594,7 +577,7 @@ lancy最后拍板搬家，于是5.1准备了一天，5.2中午11：30搬到了�
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
       </li>
     
       <li class="post">

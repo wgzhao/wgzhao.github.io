@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux技术 | Linux系统管理]]></title>
   <link href="http://wgzhao.github.io//categories/linuxji-zhu/atom.xml" rel="self"/>
   <link href="http://wgzhao.github.io/"/>
-  <updated>2014-03-15T13:10:39+08:00</updated>
+  <updated>2014-03-16T16:52:39+08:00</updated>
   <id>http://wgzhao.github.io/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -295,212 +295,6 @@ wgzhao-nb:~# dstat  --disk --mem --proc --io --sys --filesystem --tcp --vm --out
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[用sfex资源脚本来防止HA脑裂后共享磁盘数据被损坏的风险]]></title>
-    <link href="http://wgzhao.github.io/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent/"/>
-    <updated>2012-01-12T14:53:00+08:00</updated>
-    <id>http://wgzhao.github.io/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent</id>
-    <content type="html"><![CDATA[<p>在<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability">HA</a>部署众,心跳无疑是最重要的组件，因此心跳也绝大部分你情况是冗余的，大部分都是用网络做心跳介质，因此一般认为是可靠的。但是，所有的事情都有意外，如果心跳出现了故障，到时<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability">HA</a>环境中的节点互相直接之间无法通信，就会出现脑裂(Split Brain)现象，出现这种情况后，会导致<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability">HA</a>监控的服务会在多个节点上同时运行，如果此时有共享存储，则会导致共享存储在多个节点上同时可写挂载，从而导致文件系统崩溃，数据丢失。这显然不是可以接受的情况。</p>
-
-<!--more-->
-
-
-<p>开源<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability">HA</a>解决方案&mdash;<a href="http://linux-ha.org/wiki/Heartbeat" title="Heartbeat">Heartbeat</a>&mdash;解决这个问题的方案是使用成为<a href="http://linux-ha.org/wiki/Fencing" title="Fencing">Fence</a>的设备，也就是电源管理设备，当发生脑裂情况时，<a href="http://linux-ha.org/wiki/Heartbeat" title="Heartbeat">Heartbeat</a>通知电源设备关闭该节点。目前绝大部分服务器都自带了这样的设备。</p>
-
-<p>虽然都自带了，但我必须承认，到目前为止，我真的还没有在<a href="http://linux-ha.org/wiki/Heartbeat" title="Heartbeat">Heartbeat</a>上部署过。我也一直在找一个靠谱的纯软件解决方案。这几天测试了<a href="http://linux-ha.org/wiki/Heartbeat" title="Heartbeat">Heartbeat</a>自带的<a href="http://www.linux-ha.org/wiki/Sfex_(resource_agent)" title="Shared Disk EXclusiveness control Program">SFEX</a> 工具，发现基本上可以帮我们防止因脑裂带来的共享磁盘存在数据解构的风险。<a href="http://www.linux-ha.org/wiki/Sfex_(resource_agent)" title="Shared Disk EXclusiveness control Program">SFEX</a>的原理是在一个独立的共享存储上的一个分区上写上锁信息，在一个分区上可以有多个锁信息（通过sfex_init -n 来指定），每一个锁信息可以对应一个数据分区。然后把Filesystem资源配置为依赖<a href="http://www.linux-ha.org/wiki/Sfex_(resource_agent)" title="Shared Disk EXclusiveness control Program">SFEX</a>资源，这样每次需要挂载数据分区时，都需要预先去读取锁信息，如果能获得锁信息，则可以挂载，否则不能挂载。</p>
-
-<h2>基本概念</h2>
-
-<ul>
-<li><a href="http://www.linux-ha.org/wiki/Sfex_(resource_agent)" title="Shared Disk EXclusiveness control Program">SFEX</a>,即Shared Disk File EXclusiveness Control Pogram，被定位一种<a href="http://www.linux-ha.org/wiki/OCF_Resource_Agents" title="Open Cluster Framework">OCF</a>资源，用于控制共享磁盘的所有权。</li>
-<li><a href="http://www.linux-ha.org/wiki/Sfex_(resource_agent)" title="Shared Disk EXclusiveness control Program">SFEX</a> 在共享磁盘上使用一个特定的分区,用来维护下列数据:
-
-<ul>
-<li>&ldquo;status&rdquo; 显示当前共享磁盘属于谁?</li>
-<li>&ldquo;node&rdquo; 显示所有权节点名称</li>
-<li>&ldquo;count&rdquo; 用于判断拥有者节点是否运行</li>
-</ul>
-</li>
-<li>通常把使用共享存储上的数据分区的资源(比如PostgreSQL)和<a href="http://www.linux-ha.org/wiki/Sfex_(resource_agent)" title="Shared Disk EXclusiveness control Program">SFEX</a>配置在一个组资源里</li>
-<li>所有权节点可以访问数据分区</li>
-</ul>
-
-
-<p><img src="http://farm8.staticflickr.com/7023/6683231303_e3e2eef26b.jpg" alt="sfex0" /></p>
-
-<ul>
-<li>什么时候可以获得所有权
-
-<ul>
-<li>无人有所有权</li>
-<li>节点能够判断另外一个节点已经宕机</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>时序图</h2>
-
-<h3>启动过程</h3>
-
-<p><a href="http://www.linux-ha.org/wiki/Sfex_(resource_agent)" title="Shared Disk EXclusiveness control Program">SFEX</a>可以在分值最高的节点上运行，此时，其他节点则无法同时访问共享存储（无法获得锁)</p>
-
-<h4>Node A</h4>
-
-<ol>
-<li>SFEX 从共享存储上读取数据从而获得"status"，通常"status"是"NO_OWNED"，表示当前没有节点有所有权。</li>
-<li>写数据到共享存储，内容包括"node=Node A" 和"status=OWNED"</li>
-<li>重读数据,获得"node=Node A"</li>
-<li>比较节点名是不是和当前节点一致,如果节点名没有改变,则Node A获得所有权</li>
-<li>SFEX 在监控共享存储的过程中增加"count"值,表明所有权节点在线</li>
-</ol>
-
-
-<p><img src="http://farm8.staticflickr.com/7008/6683231135_abcd4efb32.jpg" alt="sfex_seq4_st_access" /></p>
-
-<h3>心跳通信失败</h3>
-
-<h4>Node A</h4>
-
-<ol>
-<li>SFEX 通过心跳监控进程更新所有权</li>
-</ol>
-
-
-<h4>Node B</h4>
-
-<ol>
-<li>当心跳通信失败时,待命(stand by)节点(Node B)开始启动资源</li>
-<li>SFEX 从共享存储上读取数据</li>
-<li>等待一会儿，等待时间应该长于sfex监控间隔(interval)，在等待期间，它定期等待Node A的更新，以确保Node A 还在维护所有权</li>
-<li>重新读取数据</li>
-<li>检查"count"的新值，当两个"count"有差别时，它会认为Node A 还在线</li>
-<li>SFEX 启动进程停止</li>
-</ol>
-
-
-<p><img src="http://farm8.staticflickr.com/7163/6683230921_b70a739c6d.jpg" alt="sfex_seq3_nodedown" /></p>
-
-<h3>活动节点失效</h3>
-
-<h4>Node A</h4>
-
-<ol>
-<li>Node A 失效</li>
-</ol>
-
-
-<h4>Node B</h4>
-
-<ol>
-<li>等待一会，等待Node A 定期更新，但此时发现Node A 没有更新</li>
-<li>SFEX 重新读取数据</li>
-<li>检查"count"的新值，发现两个值相同，于是它认为Node A 已经失效了(down)</li>
-<li>写数据到共享存储，内容包括"node=Node B" 和 &ldquo;status=OWNED&rdquo;</li>
-<li>重读数据,获得"node=Node B"</li>
-<li>比较节点名是不是和当前节点一致,如果节点名没有改变,则Node B获得所有权</li>
-<li>然后启动后续资源</li>
-</ol>
-
-
-<p><img src="http://farm8.staticflickr.com/7169/6683230701_2bf943a5b7.jpg" alt="sfex_seq2_hbdown" /></p>
-
-<h2>配置步骤</h2>
-
-<h3>创建特定分区</h3>
-
-<p>首先,需要在共享存储上划出一个单独的小分区出来,不用多大,一个节点仅需要1Kb。因此100M足够了。假定是<code>/dev/sdb1</code>。</p>
-
-<h3>初始化</h3>
-
-<p><a href="http://www.linux-ha.org/wiki/Sfex_(resource_agent)" title="Shared Disk EXclusiveness control Program">SFEX</a>提供了<code>sfex_init</code>指令来初始化特定分区，使用方式如下<br/>
-<code>sfex_init -n 2 /dev/sdb1</code><br/>
-<code>-n</code>表示能创建多少个锁。假定你有2个数据分区，那就需要2个锁。
-注意，一旦初始化后，不能再增加锁的数量（暂时我没有看到如何增加）。因此要考虑数据分区的扩展性，所以建议多初始化几个锁。</p>
-
-<h3>测试分区</h3>
-
-<p><a href="http://www.linux-ha.org/wiki/Sfex_(resource_agent)" title="Shared Disk EXclusiveness control Program">SFEX</a>提供了<code>sfex_state</code>指令来测试分区信息是否有效，指令使用及输出结果如下：</p>
-
-<pre><code>    # sfex_stat -i 1 /dev/sdb1
-    control data:
-    magic: 0x53, 0x46, 0x45, 0x58
-    version: 1
-    revision: 3
-    blocksize: 512
-    numlocks: 3
-    lock data #1:
-    status: lock
-    count: 393
-    nodename: tsd1
-    status is UNLOCKED
-</code></pre>
-
-<p><code>-i 1</code>表示锁的位置，从1开始，以此类推。</p>
-
-<h3>配置HA</h3>
-
-<p>这个步骤就和平常没有什么区别了，每一个<code>Filesystem</code>资源，对应一个<code>sfex</code>资源，比如我测试的环境的<code>crm configure show</code>的部分结果如下：</p>
-
-<pre><code>    primitive prmData ocf:heartbeat:Filesystem \
-        params device="/dev/sdb2" fstype="ext4" directory="/misc" \
-        op monitor interval="3" \
-        meta target-role="Started"
-    primitive prmEx ocf:heartbeat:sfex \
-        params collision_timeout="1" lock_timeout="70" monitor_interval="10" \
-        index="1" device="/dev/sdb1"  monitor interval="10"
-    primitive sfex2 ocf:heartbeat:sfex \
-        params collision_timeout="5" lock_timeout="20" index="2" device="/dev/sdb1" \
-        op monitor interval="10"
-    primitive sfex2data ocf:heartbeat:Filesystem \
-        params device="/dev/sdb3" fstype="ext4" directory="/sfex2data" \
-        op monitor interval="10"
-    group grp1 prmEx prmData
-    group grp2 sfex2 sfex2data
-</code></pre>
-
-<p><code>prmEx</code> 和 <code>prmData</code> 是两个<code>sfex</code>资源，使用的锁位置分别是1和2。<br/>
-当前HA状态信息如下：</p>
-
-<pre><code>    Last updated: Thu Jan 12 18:07:11 2012
-    Last change: Fri Jan 13 00:27:19 2012
-    Stack: Heartbeat
-    Current DC: tsd1 (424e04a8-0b7c-4d6a-85cb-f005cbd1702d) - partition with quorum
-    Version: 1.1.6-1.fc15-b379478e0a66af52708f56d0302f50b6f13322bd
-    2 Nodes configured, unknown expected votes
-    4 Resources configured.
-    ============
-
-    Online: [ wgzhao-nb tsd1 ]
-
-    Resource Group: grp1
-         prmEx  (ocf::heartbeat:sfex):  Started tsd1
-         prmData    (ocf::heartbeat:Filesystem):    Started tsd1
-    Resource Group: grp2
-         sfex2  (ocf::heartbeat:sfex):  Started wgzhao-nb
-         sfex2data  (ocf::heartbeat:Filesystem):    Started wgzhao-nb
-</code></pre>
-
-<h3>心跳失效模拟测试</h3>
-
-<p>当前<code>prmEx</code>的锁所有权在<code>tsd1</code>节点上，<code>sfex2</code>在<code>wgzhao-nb</code>上。我们做一个手工模拟心跳失效测试，就是我们希望手工在<code>wgzhao-nb</code>上获得<code>prmEx</code>的锁。</p>
-
-<p>首先导出OCF的相关环境变量</p>
-
-<pre><code>    export OCF_ROOT=/usr/lib/ocf
-    export OCF_RESKEY_device=/dev/sdb1
-    export OCF_RESKEY_index=1
-    ./sfex start
-    sfex[11849]: INFO: sfex_daemon: starting...
-    sfex[11849]: DEBUG: sfex_monitor: started...
-    sfex[11849]: DEBUG: sfex_monitor: complete. sfex_daemon is not running.
-    sfex[11849]: ERROR: sfex_daemon failed to start.
-</code></pre>
-
-<p>从上述结果可以看出，如果心跳出现了故障，尝试在两个节点同时启动时，<code>sfex</code>报错，返回值为1，表示请求锁超时，这表明当一个节点已经获得所有权后，另外一个节点无法获得锁。</p>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[SQL查询工具网站的部署]]></title>
     <link href="http://wgzhao.github.io/2011/09/20/clone-explain-depesz-com-website/"/>
     <updated>2011-09-20T00:00:00+08:00</updated>
@@ -542,349 +336,6 @@ sql</code> 语句结构。
 <li>打开浏览器，访问 <a href="http://127.0.0.1:3000">http://127.0.0.1:3000</a>，看看是不是获得了和<a href="http://explain.depesz.com/">http://explain.depesz.com/</a> 一样的效果？</li>
 </ol>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[IP地址归属地查询]]></title>
-    <link href="http://wgzhao.github.io/2011/07/20/ip-location-search/"/>
-    <updated>2011-07-20T00:00:00+08:00</updated>
-    <id>http://wgzhao.github.io/2011/07/20/ip-location-search</id>
-    <content type="html"><![CDATA[<p>好吧，我承认，这是一个很不靠谱的标题，也是很欧特曼的标题了，只是那些很潮的人们可以理解在offline的情况下，*nix使用者们该如何很好的做到标题的功能呢？查询了一番，没有什么看上去很好的办法，于是自己根据纯真IP地址库，写了一个Python脚本，效率估计够呛，不过能正确查询到相关信息。
-你要做的是首先搜索一把纯真地址库，如何下载（一般是<code>qqwry.dat</code>)，而后copy我下面的代码，保存为.py文件，如何就可以获得类似我下面的这样的结果了：</p>
-
-<p><code>bash
-localhost:bin wgzhao$ ./ipsc.py 219.90.126.44  
-Country:   香港  Local:   第一线有限公司
-</code></p>
-
-<p>完整代码如下：</p>
-
-<!--more-->
-
-
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>ip location find (ipsc.py)</span> <a href='/downloads/code/ipsc.py'>download</a></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-<span class='line-number'>151</span>
-<span class='line-number'>152</span>
-<span class='line-number'>153</span>
-<span class='line-number'>154</span>
-<span class='line-number'>155</span>
-<span class='line-number'>156</span>
-<span class='line-number'>157</span>
-<span class='line-number'>158</span>
-<span class='line-number'>159</span>
-<span class='line-number'>160</span>
-</pre></td><td class='code'><pre><code class='py'><span class='line'><span class="c">#!/usr/bin/env python</span>
-</span><span class='line'><span class="c">#-*- coding:utf-8 -*-</span>
-</span><span class='line'><span class="n">__Author__</span> <span class="o">=</span> <span class="s">&quot;wgzhao(wgzhao AT gmail DOT com)&quot;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">struct</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">socket</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">floor</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">SEEK_SET</span>
-</span><span class='line'>
-</span><span class='line'><span class="sd">&quot;&quot;&quot;</span>
-</span><span class='line'><span class="sd">根据提供的ip地址查询归属地</span>
-</span><span class='line'><span class="sd">IP地址库依赖纯真IP地址库，最新版可以从网络上下载</span>
-</span><span class='line'>
-</span><span class='line'><span class="sd">&quot;&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">TQQwry</span><span class="p">:</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">StartIP</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="n">EndIP</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="n">Country</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'>    <span class="n">Local</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'>    <span class="n">CountryFlag</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="sd">&#39;&#39;&#39;标识 Country位置 </span>
-</span><span class='line'><span class="sd">	</span>
-</span><span class='line'><span class="sd">	  // 0x01, 随后3字节为Country偏移, 没有Local </span>
-</span><span class='line'><span class="sd">	</span>
-</span><span class='line'><span class="sd">	  // 0x02, 随后3字节为Country偏移，接着是Local </span>
-</span><span class='line'><span class="sd">	  // 其他, Country, Local, Local有类似的压缩。可能多重引用。 </span>
-</span><span class='line'><span class="sd">    &#39;&#39;&#39;</span>
-</span><span class='line'>    <span class="n">fp</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'>    <span class="n">nRet</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'>    <span class="n">FirstStartIp</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="n">LastStartIp</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="n">EndIpOff</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="n">QQWRY</span> <span class="o">=</span> <span class="s">&quot;qqwry.dat&quot;</span>  <span class="c">#根据自己文件的实际路径修改</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">IpToInt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Ip</span><span class="p">):</span>
-</span><span class='line'>		<span class="k">return</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">ntohl</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_aton</span><span class="p">(</span><span class="n">Ip</span><span class="p">))[</span><span class="mi">0</span><span class="p">]))))[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">IntToIp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Int</span><span class="p">):</span>
-</span><span class='line'>	  	<span class="k">return</span> <span class="n">socket</span><span class="o">.</span><span class="n">inet_ntoa</span><span class="p">(</span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s">&#39;I&#39;</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">htonl</span><span class="p">(</span><span class="n">Int</span><span class="p">)))</span>
-</span><span class='line'>	
-</span><span class='line'>    <span class="k">def</span>  <span class="nf">getStartIp</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">RecNo</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FirstStartIp</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">RecNo</span> <span class="o">*</span> <span class="mi">7</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">SEEK_SET</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">buf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">EndIpOff</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">StartIp</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span>  <span class="nf">getEndIp</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EndIpOff</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">buf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">EndIp</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">CountryFlag</span> <span class="o">=</span> <span class="nb">ord</span> <span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span>  <span class="nf">getCountry</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CountryFlag</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">CountryFlag</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">Country</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFlagStr</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EndIpOff</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">CountryFlag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
-</span><span class='line'>                <span class="bp">self</span><span class="o">.</span><span class="n">Local</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'>            <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>                <span class="bp">self</span><span class="o">.</span><span class="n">Local</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFlagStr</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EndIpOff</span> <span class="o">+</span> <span class="mi">8</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">Country</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFlagStr</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EndIpOff</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">Local</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFlagStr</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">tell</span> <span class="p">())</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span>  <span class="nf">getFlagStr</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="p">:</span>
-</span><span class='line'>        <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">):</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">SEEK_SET</span><span class="p">)</span>
-</span><span class='line'>            <span class="n">flag</span> <span class="o">=</span> <span class="nb">ord</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
-</span><span class='line'>                <span class="n">buf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">flag</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
-</span><span class='line'>                    <span class="bp">self</span><span class="o">.</span><span class="n">CountryFlag</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span class='line'>                    <span class="bp">self</span><span class="o">.</span><span class="n">EndIpOff</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">-</span> <span class="mi">4</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="n">offset</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
-</span><span class='line'>            <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>               <span class="k">break</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">offset</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">):</span>
-</span><span class='line'>            <span class="k">return</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">SEEK_SET</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getStr</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span>  <span class="nf">getStr</span> <span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span class='line'>        <span class="nb">str</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">):</span>
-</span><span class='line'>            <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="nb">ord</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-</span><span class='line'>               <span class="k">break</span>
-</span><span class='line'>            <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span> <span class="o">+</span> <span class="n">c</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">return</span> <span class="nb">str</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span>  <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dotip</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">ip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">IpToInt</span> <span class="p">(</span><span class="n">dotip</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">QQWRY</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="p">):</span>
-</span><span class='line'>            <span class="k">print</span> <span class="s">&quot;OpenFileError&quot;</span>
-</span><span class='line'>            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">buf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">read</span> <span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">FirstStartIp</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">LastStartIp</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">buf</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">RecordCount</span> <span class="o">=</span> <span class="n">floor</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">LastStartIp</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">FirstStartIp</span><span class="p">)</span> <span class="o">/</span> <span class="mi">7</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">RecordCount</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">Country</span> <span class="o">=</span> <span class="s">&quot;FileDataError&quot;</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'>            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">RangB</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="n">RangE</span> <span class="o">=</span> <span class="n">RecordCount</span>
-</span><span class='line'>        <span class="c">#Match ... </span>
-</span><span class='line'>        <span class="k">while</span> <span class="p">(</span><span class="n">RangB</span> <span class="o">&lt;</span> <span class="n">RangE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-</span><span class='line'>
-</span><span class='line'>          <span class="n">RecNo</span> <span class="o">=</span> <span class="n">floor</span><span class="p">((</span><span class="n">RangB</span> <span class="o">+</span> <span class="n">RangE</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>          <span class="bp">self</span><span class="o">.</span><span class="n">getStartIp</span> <span class="p">(</span><span class="n">RecNo</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">ip</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">StartIp</span><span class="p">):</span>
-</span><span class='line'>               <span class="n">RangB</span> <span class="o">=</span> <span class="n">RecNo</span>
-</span><span class='line'>               <span class="k">break</span>
-</span><span class='line'>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="n">ip</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">StartIp</span><span class="p">):</span>
-</span><span class='line'>            <span class="n">RangB</span> <span class="o">=</span> <span class="n">RecNo</span>
-</span><span class='line'>          <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>            <span class="n">RangE</span> <span class="o">=</span> <span class="n">RecNo</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">getStartIp</span> <span class="p">(</span><span class="n">RangB</span><span class="p">)</span>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">getEndIp</span> <span class="p">()</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">StartIp</span> <span class="o">&lt;=</span> <span class="n">ip</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EndIp</span> <span class="o">&gt;=</span> <span class="n">ip</span><span class="p">)):</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">nRet</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">getCountry</span> <span class="p">()</span>
-</span><span class='line'>        <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">nRet</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">Country</span> <span class="o">=</span> <span class="s">&#39;未知&#39;</span>
-</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">Local</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span class='line'>	
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">print</span> <span class="s">&quot;Usage: ipsc.py &lt;ip address&gt;&quot;</span>
-</span><span class='line'>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">65</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">wry</span> <span class="o">=</span> <span class="n">TQQwry</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</span><span class='line'>	<span class="c">#地址库里信息是gbk编码，程序是utf8编码，如果是乱码，注意你保存文件的编码格式</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Country:  &quot;</span><span class="p">,</span> <span class="n">wry</span><span class="o">.</span><span class="n">Country</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;gbk&#39;</span><span class="p">),</span> <span class="s">&quot; Local:  &quot;</span><span class="p">,</span> <span class="n">wry</span><span class="o">.</span><span class="n">Local</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&#39;gbk&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 ]]></content>
   </entry>
   
@@ -1016,6 +467,170 @@ checkinstall 1.6.2, Copyright 2009 Felipe Eduardo Sanchez Diaz Duran
 </code></pre>
 
 <p>从列出的依赖关系中，你就发现少了texlive-base包了。 如果你依赖的包很多，那么我们可以将上述过程自动化，非常方便。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ssh的三板斧]]></title>
+    <link href="http://wgzhao.github.io/2011/03/11/ssh-three-kill-features/"/>
+    <updated>2011-03-11T00:00:00+08:00</updated>
+    <id>http://wgzhao.github.io/2011/03/11/ssh-three-kill-features</id>
+    <content type="html"><![CDATA[<p>ssh的功能无比强悍，对于一个<strong>Unix/Linux</strong>而言，只要开放一个ssh服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下：</p>
+
+<h2>端口转发</h2>
+
+<p>端口转发，也就是-L参数的设置。以我的实际例子来说明吧，我在家里上网，设置的是局域网，IP地址是<code>192.168.100.101</code>。公司总部呢，也是用的是局域网地址，<code>172.16.0.0</code>网段。我需要访问公司内部的一台应用服务器，比如<code>172.16.81.111</code>。我该怎么办呢？恰好，公司有一台网关服务器，有两块网卡，一块是设置的公网IP地址，比如<code>219.99.12.23</code>。另外一块网卡，则是公司的内网的IP地址，比如<code>172.16.81.220</code>。这台服务器开启了SSH服务。那么我要做的便是执行下面的指令:</p>
+
+<!--more-->
+
+
+<p><code>ssh -f -N   -L 8080:172.16.81.111:80 wgzhao@219.99.12.23</code></p>
+
+<p>一旦登陆成功后，在自己的电脑上，打开浏览器，在地址栏，输入<a href="http://localhost:8080">http://localhost:8080</a>，你能看到什么呢？它等价于访问了<a href="http://172.16.81.111/">http://172.16.81.111/</a>。对就是访问了公司总部指定的服务器的WEB服务（假定80端口对应的是WEB服务）。
+当然，这里也要注意，如果自己的电脑已经使用了8080端口，则上述指令不会成功，换一个不常用的高端端口吧。
+这条指令，基本上可以让你无障碍的访问公司任何服务器的任何服务，甚至是SSH服务（前提是已授权访问）。嗯，想想看，如果上面的指令改成下面这样：</p>
+
+<p><code>ssh -f -N -L 8022:172.16.81.111:22 wgzhao@219.99.12.23</code> 然后你再执行</p>
+
+<p><code>ssh -p 8022  localhost</code>
+会是什么样的结果呢？ 此时，你已经通过ssh进入到了公司服务器。我们再进一步，把上述指令改成</p>
+
+<p><code>ssh -X -p 8022 localhost</code></p>
+
+<p>然后执行startx或者gnome-session或者其他的，结果又会是怎样呢？哈哈，其功能仅受限于您的想象力（感谢周立波提供此语句）。</p>
+
+<h2>端口绑定</h2>
+
+<p>端口绑定，也即ssh的-R参数配置。依然举个例子，不在一起的一个朋友，一台机器有些故障需要解决，我需要登陆到他的机器，第一个办法用不上，因为没有一台具有公网IP地址的网关机器。其他办法呢？显然Windows下的那套QQ远程，MSN远程都派不上用场了。怎么办？Linux只有Linux的解决办法。那就是利用可以通过ssh访问的一台有公网IP地址的机器。它可以是VPS，可以是独立主机，总之，只要能够让双方通过ssh访问得到就可以。
+首先，让我的朋友执行下面的指令：</p>
+
+<p><code>ssh -qTfN -R 9922:localhost:22  account@222.222.233.212</code></p>
+
+<p>执行成功后。
+我在执行下面的指令： <code>ssh account@222.222.233.212</code> 登陆成功后，可以执行</p>
+
+<p><code>netstat -lpnt |grep 9922</code></p>
+
+<p>你应该可以类似下面的输出：</p>
+
+<pre><code>$ netstat -ln |grep 9922 
+tcp        0      0  
+127.0.0.1:9922              0.0.0.0:*                   
+LISTEN       tcp        0      0 ::
+1:9922                    :::*                        
+LISTEN
+</code></pre>
+
+<p>这里的<code>9922</code>端口，实际上就是我朋友电脑上的ssh服务。立马在这台服务器上继续执行下面的指令吧：</p>
+
+<p><code>ssh -p 9922 puser@localhost</code></p>
+
+<p>puser是我朋友电脑上的账号。登陆成功后，我就进入了我朋友的电脑。OK，想干什么都可以做了。
+完成后，我朋友只需要把那条包含<code>9922</code>的进程<code>kill</code>就可以了。</p>
+
+<h2>动态端口转发</h2>
+
+<p>动态端口转发，也即-R参数的配置，它的目的是把本地指定的一个端口通过socket模式转发到指定的远程服务器上的特定端口。比如说，我在美国有一个VPS，有用SSH访问功能，如果我在本地执行下面的指令：</p>
+
+<p><code>ssh -D8580 -qnTfN account@myserver.example.com</code></p>
+
+<p>然后呢，比如，打开你的浏览器，设置代理ip地址为<code>127.0.0.1</code>，端口是<code>8580</code>，代理类型是<code>SOCKET5</code>，注意是5，SOCKET4不行（至少我没有测试成功）。设置完成后，虽然访问一些网站，比如<a href="http://blog.wgzhao.com">http://blog.wgzhao.com</a>，看能不能打开。如果能，就表示设置成功了。
+然后呢？然后你访问<a href="http://twitter.com">twitter</a>，<a href="http://www.facebook.com">facebook</a>，<a href="http://www.youtube.com">youtube</a>这些根本在实际上就不存在的网站呢？
+再然后呢？ 没有了。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在线扩容ext4文件系统]]></title>
+    <link href="http://wgzhao.github.io/2011/03/09/online-resizing-ext4-filesystem/"/>
+    <updated>2011-03-09T00:00:00+08:00</updated>
+    <id>http://wgzhao.github.io/2011/03/09/online-resizing-ext4-filesystem</id>
+    <content type="html"><![CDATA[<p>原来一个分区分得太小了（只有5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对ext3干过这样的事情，看了ext3上的<a href="https://ext4.wiki.kernel.org/index.php/Frequently_Asked_Questions#How_to_online_resize_the_Ext4_filesystem.3F">wiki介绍</a>，得知做法和原来的ext2/ext3一样（看来兼容性还是不错）。下面是我的扩容过程</p>
+
+<p>首先下载你要扩容的分区，这样当然是最保险的，如果你就是不想卸载，只要你别对其做写操作，也没有问题。</p>
+
+<!--more-->
+
+
+<p>接下来就是用fdisk删除该分区，然后用你期望的大小重建该分区。这里要注意的是，分区的开始扇区一定要和删除前保持一致，否则文件系统就会遭到破坏。下面是我的实际操作过程</p>
+
+<pre><code># fdisk /dev/sda
+
+Command (m for help): p
+
+Disk /dev/sda: 64.4 GB, 64424509440 bytes
+255 heads, 63 sectors/track, 7832 cylinders, total 125829120 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00067b51
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *          63    29302559    14651248+  83  Linux
+/dev/sda2        29302784    39061503     4879360   83  Linux
+
+Command (m for help): d
+Partition number (1-4): 2
+
+Command (m for help): n
+Command action
+   e   extended
+   p   primary partition (1-4)
+p
+Partition number (1-4, default 2): 
+Using default value 2
+First sector (29302560-125829119, default 29302560): 29302784
+Last sector, +sectors or +size{K,M,G} (29302784-125829119, default 125829119): +20G
+
+Command (m for help): p
+
+Disk /dev/sda: 64.4 GB, 64424509440 bytes
+255 heads, 63 sectors/track, 7832 cylinders, total 125829120 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00067b51
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *          63    29302559    14651248+  83  Linux
+/dev/sda2        29302784    71245823    20971520   83  Linux
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+
+WARNING: Re-reading the partition table failed with error 16: Device or resource busy.
+The kernel still uses the old table. The new table will be used at
+the next reboot or after you run partprobe(8) or kpartx(8)
+Syncing disks.
+</code></pre>
+
+<p>而后执行下面的指令</p>
+
+<pre><code># partprobe /dev/sda
+# e2fsck -f /dev/sda2
+e2fsck 1.41.12 (17-May-2010)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+data: 38934/305216 files (0.1% non-contiguous), 1140469/1219840 blocks
+[root@wgzhao-nb wgzhao]# resize2fs /dev/sda2 20G
+resize2fs 1.41.12 (17-May-2010)
+Resizing the filesystem on /dev/sda2 to 5242880 (4k) blocks.
+The filesystem on /dev/sda2 is now 5242880 blocks long.
+</code></pre>
+
+<p>我们再挂载上来，得到的就是我期望的大小了（20G）</p>
+
+<pre><code># df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1              14G  6.5G  7.2G  48% /
+tmpfs                 1.4G  296K  1.4G   1% /dev/shm
+/dev/sda2              20G  4.3G   16G  22% /data
+</code></pre>
 ]]></content>
   </entry>
   

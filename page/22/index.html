@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="我把硬盘上超过80％的空间都给了LVM，之后我需要从LVM中划出一个空间出来用作基本文件系统，上面的数据非常多，而且我也没有地方可以挪，之前的思路一直都是把重要数据挪走，然后重新分区，然后把数据拷贝回来。 今天早晨，突然想起PV是不是也有修改分区大小的功能呢，果然如此， &hellip;">
+  <meta name="description" content="以前有两篇关于linux内存的文章 再来一篇简单易懂的，适合技术支持人员解释给对Linux内存管理有疑问的用户： Linux的基本原则是没有资源应该被浪费。因此核心会使用尽可能多的RAM，来缓存来自本地和远程的文件系统的信息。系统做读写操作的时候，会将与当前运行的进程相关的数据尽量存储在RAM里。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,7 +71,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/07/17/reduce-the-logical-volume-pv-in-the-physical-size/">缩小逻辑卷中PV物理分区大小的一个例子</a></h1>
+      <h1 class="entry-title"><a href="/2007/02/03/Linux-memory-repeat-simple-calculation/">再说Linux内存简单计算</a></h1>
     
     
       <p class="meta">
@@ -87,27 +87,27 @@
   
 
 
-<time datetime="2008-07-17T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-02-03T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/07/17/reduce-the-logical-volume-pv-in-the-physical-size/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/07/17/reduce-the-logical-volume-pv-in-the-physical-size/">Comments</a>
+           | <a href="/2007/02/03/Linux-memory-repeat-simple-calculation/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/03/Linux-memory-repeat-simple-calculation/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>我把硬盘上超过80％的空间都给了LVM，之后我需要从LVM中划出一个空间出来用作基本文件系统，上面的数据非常多，而且我也没有地方可以挪，之前的思路一直都是把重要数据挪走，然后重新分区，然后把数据拷贝回来。</p>
+  <div class="entry-content"><p>以前有两篇关于linux内存的文章</p>
 
-<p>今天早晨，突然想起PV是不是也有修改分区大小的功能呢，果然如此，pvresize即使我需要的命令。为了安全起见，我备份了与分区和LVM相关的一些信息，比如MBR，比如sfdisk的的信息，比如PV，VG，LV的信息。</p>
+<p>再来一篇简单易懂的，适合技术支持人员解释给对Linux内存管理有疑问的用户：</p>
 
-<p>卸载所有lv的分区，开始冒险之旅。</p>
+<p>Linux的基本原则是没有资源应该被浪费。因此核心会使用尽可能多的RAM，来缓存来自本地和远程的文件系统的信息。系统做读写操作的时候，会将与当前运行的进程相关的数据尽量存储在RAM里。系统报告的缓存是缓冲和页缓存两者之和。缓存并不是在进程结束的时候被回收（你可能很快会启动另外一个进程，需要同样的数据），而是随需回收&mdash;比如，当你启动一个需要大量内存的进程时，Linux核心会从内存中回收缓存，将得到的内存分配给新的进程。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/07/17/reduce-the-logical-volume-pv-in-the-physical-size/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/02/03/Linux-memory-repeat-simple-calculation/">Read on &rarr;</a>
     </footer>
   
 
@@ -119,7 +119,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/07/11/something-of-the-past-days/">这几天的流水帐</a></h1>
+      <h1 class="entry-title"><a href="/2007/01/31/commands-start-e/">\[sbin学习\]e\*命令</a></h1>
     
     
       <p class="meta">
@@ -135,271 +135,268 @@
   
 
 
-<time datetime="2008-07-11T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-01-31T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/07/11/something-of-the-past-days/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/07/11/something-of-the-past-days/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>有快一周没有写任何东西了，原因很简单，时间来不及，南北跑了一趟，人还没有恢复过来，暂做一个流水帐吧。</p>
-
-<p>7.3晚上去北京的飞机，算是亲眼看到了传说中的三号航站楼，果然很大很气派，似乎有点奢侈。不过来不及多看，上了计程车，直奔“歌神”KTV，兄弟们都在那儿呢。</p>
-
-<p>一进包厢，果然是人头攒动，歌声，笑声打骂声，声声入耳，进门就被“那一夜的烟花”蹂躏了一番，还好，没有人立刻要我喝酒，大家关心的问我吃了没有，当然没吃呀，还是上飞机前在机场买了一个方便面呢，还是lancy逼我买的（很贵，很暴利）</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/07/11/something-of-the-past-days/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/07/11/Recently-updated-estimates-will-not-blog/">近段时间估计不会更新博客</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-07-11T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/07/11/Recently-updated-estimates-will-not-blog/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/07/11/Recently-updated-estimates-will-not-blog/">Comments</a>
+           | <a href="/2007/01/31/commands-start-e/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/31/commands-start-e/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>出差回来后，发现CDMA处于很不正常的状态，基本上没有办法使用，比如打开我的博客首页，十次中会有9次提示超时，一次能打开后，再点击里面的连接，仍然会给出远程服务器不能响应的错误。</p>
+  <div class="entry-content"><p>/sbin/下e开头的命令比较多，列举如下：</p>
 
-<p>打电话给联通是没有意义了，现在都重组了，都不知道该谁管了。</p>
-
-<p>所以，不知道什么时候能好，也不知道什么时候能正常上网。</p>
-
-<p>等我能正常上网了，我会尽快更新我的博客（希望这一天不是遥远的将来）</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/07/03/Hardware-or-software-problem/">硬件问题还是软件问题</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-07-03T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/07/03/Hardware-or-software-problem/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/07/03/Hardware-or-software-problem/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>PCserver上，一直跑着的系统和应用，突然之间执行大部分文件操作都出现I/O错误，屏幕不停的出现类似：</p>
-
-<pre><code> EXT3-fs error (devcie sd(1:0)) in start_transaction: Journal has aborted 
+<pre><code>e2fsck ela_remove elvtune evlfacility evlogmgr evSubagent
+e2image ela_remove_all ether-wake evlgentmpls evlogrmtd
+e2label ela_show ethtool evlnotify evlsend
+ela_add ela_show_all evlactiond evlnotifyd evltc
+ela_get_atts ela_sig_send evlconfig evlogd evlview
 </code></pre>
 
-<p>执行dmesg信息，有类似下面的错误</p>
+<p>e2fsck：检查和修复ext2/ext3文件系统，这似乎是目前Linux下唯一一个对文件系统做修复的工具。</p>
 
-<pre><code> scsi1 (0:0) rejecting I/O to offline device 
+<p>他同时也是一个双刃剑。在实际的文件系统修复经验中，我遇到了两难的问题。根文件系统损坏了，需要修复，系统会提示你要用e2fsck来修复。当然你可以按照他的提示去做，但是很可能，你会发现，等你修复完了，文件系统也能正常工作了，但是往往最重要的文件被修复得不加了。这不是开玩笑，而是有大量的案例。如果在修复和损坏之间取得一种平衡需要根据具体的情况来定夺。<br/>
+e2fsck接受的参数比较多，列举如下：<br/>
+功能说明：检查ext2文件系统的正确性。 <br/>
+ 参 数：
+ <pre>
+ -a 不询问使用者意见，便自动修复文件系统
+ -b 指定superblock，而不使用预设的superblock
+ -B 指定区块的大小，单位为字节
+ -c 一并执行badblocks，以标示损坏的区块
+ -C 将检查过程的信息完整记录在file descriptor中，使得整个检查
+ 过程都能完整监控
+ -d 显示排错信息
+ -f 即使文件系统没有错误迹象，仍强制地检查正确性
+ -F 执行前先清除设备的缓冲区
+ -l 将文件中指定的区块加到损坏区块列表
+ -L 先清除损坏区块列表，再将文件中指定的区块加到损坏区块
+ 列表。因此损坏区块列表的区块跟文件中指定的区块是一样的
+ -n 以只读模式开启文件系统，并采取非互动方式执行，所有的问题对
+ 话均设置以"no"回答
+ -p 不询问使用者意见，便自动修复文件系统
+ -r 此参数只为了兼容性而存在，并无实际作用
+ -s 如果文件系统的字节顺序不适当，就交换字节顺序，否则不做任何
+ 动作
+ -S 不管文件系统的字节顺序，一律交换字节顺序
+ -t 显示时间信息
+ -v 执行时显示详细的信息
+ -V 显示版本信息
+ -y 采取非互动方式执行，所有的问题均设置以"yes"回答。
+e2fsck执行后的传回值及代表意义如下：
+ 0 没有任何错误发生。
+ 1 文件系统发生错误，并且已经修正。
+ 2 文件系统发生错误，并且已经修正。
+ 4 文件系统发生错误，但没有修正。
+ 8 运作时发生错误。
+ 16 使用的语法发生错误。
+ 128 共享的函数库发生错误。
+</pre></p>
+
+<p>e2image：保存关键的ext2/ext3文件系统到文件。 <br/>
+e2image 可以用来创建ext2和ext3文件系统的镜像。<br/>
+e2image只解释需要被镜像的文件系统，而不是保存原始bit。<br/>
+e2image可以创建&#8221;raw&#8221;和&#8221;nomal&#8221;镜像，这两种方法都可以节约空间。<br/>
+因此，用e2image创建的镜像同硬盘上的文件系统有不同的hash，从这点上看，他是和dd命令不同的。
+但是如何将e2image创建的备份恢复出来呢？这点在e2image的help和man手册中都没有提到
+下面是一个实际的例子，分部创建了&#8221;raw&#8221;和&#8221;normal&#8221;镜像</p>
+
+<pre><code>root@lancy sbin]# e2image /dev/sda1 /tmp/e2image.data
+e2image 1.35 (28-Feb-2004)
+[root@lancy sbin]# ls -lh /tmp/e2image.data
+-rw——- 1 root root 625K 1月 31 21:18 /tmp/e2image.data
+[root@lancy sbin]# file /tmp/e2image.data
+/tmp/e2image.data: Linux rev 1.0 ext3 filesystem data
+[root@lancy sbin]# mount /tmp/e2image.data /misc -oloop
+mount: wrong fs type, bad option, bad superblock on /dev/loop0,
+or too many mounted file systems
+(could this be the IDE device where you in fact use
+ide-scsi so that sr0 or sda or so is needed?)
+
+[root@lancy sbin]# mount -r /tmp/e2image.data /tmp/e2image_raw_data
+mount: mount point /tmp/e2image_raw_data does not exist
+[root@lancy sbin]# e2image -r /dev/sda1 /tmp/e2image_raw_data
+e2image 1.35 (28-Feb-2004)
+
+[root@lancy sbin]# ls -lh /tmp/e2image_raw_data
+-rw——- 1 root root 20M 1月 31 21:20 /tmp/e2image_raw_data
+[root@lancy sbin]# file /tmp/e2image_raw_data
+/tmp/e2image_raw_data: Linux rev 1.0 ext3 filesystem data
+[root@lancy sbin]# mount /tmp/e2image_raw_data /misc -oloop
+[root@lancy sbin]# df -h
+Filesystem 容量 已用 可用 已用% 挂载点
+/tmp/e2image_raw_data 19M 1.2M 17M 7% /misc
+[root@lancy /]# mount /dev/sda1 /misc
+d[root@lancy /]# df -h
+Filesystem 容量 已用 可用 已用% 挂载点
+/dev/sda1 19M 1.2M 17M 7% /misc
 </code></pre>
 
-<p>scsi1是本地磁盘，看看机器本地磁盘的四个磁盘LED灯，一个都不亮，果然是典型的offline的状态。<br/>
-我开始估计是磁盘出问题了，导致offline的，而且不止一个磁盘出问题，因为做了RAID5,一个有问题，还不至于。</p>
+<p>e2label：显示或者修改ext2/ext3文件系统的标签。没有注意过从哪个版本开始，/etc/fstab文件里的挂载设备名不再是实际的设备名称了，取而代之的是其标签，这增加了其灵活性，特别是当删除并不是最后一个去分区时，在此分区前的设备号都会提前一位，如果/etc/fstab写入的是实际的设备名称，那显然这种情况下，系统也许找不到需要的设备。而采用标签的话，只要标签不重复，即使设备有sda变成了sdb，Linux系统依然能正常启动。
+这个命令非常简单。看下面的实例就明白了</p>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/07/03/Hardware-or-software-problem/">Read on &rarr;</a>
-    </footer>
-  
+<pre><code>[root@lancy sbin]# e2label /dev/sda1
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/06/30/check-ip-address-with-bash/">用bash校验IP地址</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-30T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/06/30/check-ip-address-with-bash/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/06/30/check-ip-address-with-bash/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>代码：</p>
-
-<figure class='code'><figcaption><span> (valid_ip.sh)</span> <a href='/downloads/code/valid_ip.sh'>download</a></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Test an IP address for validity:</span>
-</span><span class='line'><span class="c"># Usage:</span>
-</span><span class='line'><span class="c">#      valid_ip IP_ADDRESS</span>
-</span><span class='line'><span class="c">#      if [[ $? -eq 0 ]]; then echo good; else echo bad; fi</span>
-</span><span class='line'><span class="c">#   OR</span>
-</span><span class='line'><span class="c">#      if valid_ip IP_ADDRESS; then echo good; else echo bad; fi</span>
-</span><span class='line'><span class="c">#</span>
-</span><span class='line'><span class="k">function </span>valid_ip<span class="o">()</span>
-</span><span class='line'><span class="o">{</span>
-</span><span class='line'>  <span class="nb">local  </span><span class="nv">ip</span><span class="o">=</span><span class="nv">$1</span>
-</span><span class='line'>  <span class="nb">local  </span><span class="nv">stat</span><span class="o">=</span>1
-</span><span class='line'>
-</span><span class='line'>  <span class="k">if</span> <span class="o">[[</span> <span class="nv">$ip</span> <span class="o">=</span>~ ^<span class="o">[</span>0-9<span class="o">]{</span>1,3<span class="o">}</span><span class="se">\.</span><span class="o">[</span>0-9<span class="o">]{</span>1,3<span class="o">}</span><span class="se">\.</span><span class="o">[</span>0-9<span class="o">]{</span>1,3<span class="o">}</span><span class="se">\.</span><span class="o">[</span>0-9<span class="o">]{</span>1,3<span class="o">}</span><span class="nv">$ </span><span class="o">]]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">      </span><span class="nv">OIFS</span><span class="o">=</span><span class="nv">$IFS</span>
-</span><span class='line'>      <span class="nv">IFS</span><span class="o">=</span><span class="s1">&#39;.&#39;</span>
-</span><span class='line'>      <span class="nv">ip</span><span class="o">=(</span><span class="nv">$ip</span><span class="o">)</span>
-</span><span class='line'>      <span class="nv">IFS</span><span class="o">=</span><span class="nv">$OIFS</span>
-</span><span class='line'>      <span class="o">[[</span> <span class="k">${</span><span class="nv">ip</span><span class="p">[0]</span><span class="k">}</span> -le 255 <span class="o">&amp;&amp;</span> <span class="k">${</span><span class="nv">ip</span><span class="p">[1]</span><span class="k">}</span> -le 255 <span class="o">&amp;&amp;</span> <span class="k">${</span><span class="nv">ip</span><span class="p">[2]</span><span class="k">}</span> -le 255 <span class="o">&amp;&amp;</span> <span class="k">${</span><span class="nv">ip</span><span class="p">[3]</span><span class="k">}</span> -le 255 <span class="o">]]</span>
-</span><span class='line'>      <span class="nv">stat</span><span class="o">=</span><span class="nv">$?</span>
-</span><span class='line'>  <span class="k">fi</span>
-</span><span class='line'><span class="k">  return</span> <span class="nv">$stat</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># If run directly, execute some tests.</span>
-</span><span class='line'><span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;$(basename $0 .sh)&quot;</span> <span class="o">==</span> <span class="s1">&#39;valid_ip&#39;</span> <span class="o">]]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">  </span><span class="nv">ips</span><span class="o">=</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1"> 4.2.2.2</span>
-</span><span class='line'><span class="s1"> a.b.c.d</span>
-</span><span class='line'><span class="s1"> 192.168.1.1</span>
-</span><span class='line'><span class="s1"> 0.0.0.0</span>
-</span><span class='line'><span class="s1"> 255.255.255.255</span>
-</span><span class='line'><span class="s1"> 255.255.255.256</span>
-</span><span class='line'><span class="s1"> 192.168.0.1</span>
-</span><span class='line'><span class="s1"> 192.168.0</span>
-</span><span class='line'><span class="s1"> 1234.123.123.123</span>
-</span><span class='line'><span class="s1"> &#39;</span>
-</span><span class='line'>  <span class="k">for </span>ip in <span class="nv">$ips</span>
-</span><span class='line'>  <span class="k">do</span>
-</span><span class='line'><span class="k">      if </span>valid_ip <span class="nv">$ip</span>; <span class="k">then </span><span class="nv">stat</span><span class="o">=</span><span class="s1">&#39;good&#39;</span>; <span class="k">else </span><span class="nv">stat</span><span class="o">=</span><span class="s1">&#39;bad&#39;</span>; <span class="k">fi</span>
-</span><span class='line'><span class="k">          </span><span class="nb">printf</span> <span class="s2">&quot;%-20s: %s\n&quot;</span> <span class="s2">&quot;$ip&quot;</span> <span class="s2">&quot;$stat&quot;</span>
-</span><span class='line'>  <span class="k">done</span>
-</span><span class='line'><span class="k">fi</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>测试：</p>
-
-<pre><code>#sh valid_ip.sh
-4.2.2.2             : good
-a.b.c.d             : bad
-192.168.1.1         : good
-0.0.0.0             : good
-255.255.255.255     : good
-255.255.255.256     : bad
-192.168.0.1         : good
-192.168.0           : bad
-1234.123.123.123    : bad
+[root@lancy sbin]# e2label /dev/sda1 newlabel
+[root@lancy sbin]# e2label /dev/sda1
+newlabel
+[root@lancy sbin]#
 </code></pre>
+
+<p>tips:  系统在安装时建立的分区都有标签，一般根文件系统标签是/,而其他的就以挂载到某个目录为名称，比如/home,
+/usr，有人误解以为前面的斜线(/)是必须的，其实并不是这样，这仅仅是一种习惯而已。我上面的命令设置标签就没有用到/</p>
+
+<pre><code>ela_add ela_remove ela_show ela_sig_send
+ela_get_atts ela_remove_all ela_show_all
+evlactiond evlfacility evlnotify evlogd evlogrmtd evltc
+evlconfig evlgentmpls evlnotifyd evlogmgr evlsend evlview evSubagent
+</code></pre>
+
+<p>这是企业级日志系统的命令，属于evlog RPM包。具体的情况可以参考其<a href="http://evlog.sourceforge.net/%3C/%3E">官方网站</a></p>
+
+<p>elvtune：I/O电梯调试器，允许你调试每一个块设备的I／O电梯，但是还没有实现一路和二路电梯算法。
+同时对于LVM而言，调试器仅仅在物理卷(PV)上有效果，对逻辑卷（LV）没有用。
+不过这个命令要求的设备参数是/dev/blkdevX (X表示数字），我尝试传递/dev/sda1
+,/dev/hda1，均报告无效的参数。所以没有觉得这个命令到底能给我们带来什么，特别是在man手册的历史一项中这样写道：</p>
+
+<blockquote><p>Ioctls for tuning elevator behaviour were added in Linux 2.3.99-pre1.</p></blockquote>
+
+<p> 感觉应该是一个临时工具，但是他属于util-linux工具包，不解。</p>
+
+<p>ether-wake：这个命令用来产生和发送一个Wake-On-LAN(WOL)数据包(Magic
+Packer)包，用来重启软关机的机器。
+这个玩意没有办法测试，也不知道实际环境中是否用得多。</p>
+
+<p>ethtool显示或修改以太网卡的设置，这里的设置真的是硬件方面的，比如强制为半双工等。
+最开始我用这个命令是有一个用户说他的网卡明明是全双工的，为什么系统里看到的是半双工呀，有什么办法改吗？ifconfig 命令看了半天后
+没有找到好的设置方式，后来找到了这个ethtool，解决了问题。其实mii-tool也能做到这点，但是有些网卡驱动目前还与支持mii-tool工具。
+ethtool的命令比较复杂，参数也多，我们看几个例子，然后列出man手册。</p>
+
+<p>1）打印当前网卡的配置信息</p>
+
+<pre><code># ethtool eth0
+Settings for eth0:
+Supported ports: [ TP MII ]
+Supported link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Supports auto-negotiation: Yes
+Advertised link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Advertised auto-negotiation: No 注：自动协商关闭
+Speed: 100Mb/s // 100Mb
+Duplex: Full //全双工
+Port: MII /支持mii模式
+PHYAD: 32
+Transceiver: internal
+Auto-negotiation: off
+Supports Wake-on: pumbg
+Wake-on: d
+Current message level: 0×00000007 (7)
+Link detected: yes 
+</code></pre>
+
+<p>2）将网卡修改成10Mbps，半双工</p>
+
+<pre><code># ethtool -s eth1 speed 10 duplex half
+# ethtool eth1
+Settings for eth1:
+Supported ports: [ TP MII ]
+Supported link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Supports auto-negotiation: Yes
+Advertised link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Advertised auto-negotiation: No
+Speed: 10Mb/s # 10Mbps
+Duplex: Half #已经修改为半双工了
+Port: MII
+PHYAD: 32
+Transceiver: internal
+Auto-negotiation: off
+Supports Wake-on: pumbg
+Wake-on: d
+Current message level: 0×00000007 (7)
+Link detected: no
+</code></pre>
+
+<p>3）将网卡修改为100M，全双工</p>
+
+<pre><code># ethtool -s eth1 speed 100 duplex full
+# ethtool eth1
+Settings for eth1:
+Supported ports: [ TP MII ]
+Supported link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Supports auto-negotiation: Yes
+Advertised link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Advertised auto-negotiation: No
+Speed: 100Mb/s #
+Duplex: Full #
+Port: MII
+PHYAD: 32
+Transceiver: internal
+Auto-negotiation: off
+Supports Wake-on: pumbg
+Wake-on: d
+Current message level: 0×00000007 (7)
+Link detected: no
+</code></pre>
+
+<p>我们再看看man手册</p>
+
+<pre>
+ ethtool ethX #显示网卡的
+
+ ethtool -h #打印帮助
+
+ ethtool -a ethX #查询指定网卡的暂停(pause)参数信息
+
+ ethtool -A ethX [autoneg on|off] [rx on|off] [tx on|off] #设置暂停参数
+
+ ethtool -c ethX #查询指定网卡的联合(coalesc)信息
+
+ ethtool -C ethX [adaptive-rx on|off] [adaptive-tx on|off] [rx-usecs N]
+ [rx-frames N] [rx-usecs-irq N] [rx-frames-irq N] [tx-usecs N] [tx-
+ frames N] [tx-usecs-irq N] [tx-frames-irq N] [stats-block-usecs N]
+ [pkt-rate-low N] [rx-usecs-low N] [rx-frames-low N] [tx-usecs-low N]
+ [tx-frames-low N] [pkt-rate-high N] [rx-usecs-high N] [rx-frames-high
+ N] [tx-usecs-high N] [tx-frames-high N] [sample-interval N]
+ #设置指定网卡的联合信息
+
+ ethtool -g ethX #查询网卡的RX/TX参数信息
+
+ ethtool -G ethX [rx N] [rx-mini N] [rx-jumbo N] [tx N] #设置网卡的RX/TX参数
+
+ ethtool -i ethX #查询与网卡关联的驱动信息
+
+ ethtool -d ethX #重新获取和打印一个网卡的注册dump信息
+
+ ethtool -e ethX [raw on|off] [offset N] [length N] #重新获取和打印网卡的EEPROM
+dump信息
+
+ ethtool -E ethX [magic N] [offset N] [value N] #修改网卡的EEPROM字节
+
+ ethtool -k ethX #查询网卡的卸载(offload)信息
+
+ ethtool -K ethX [rx on|off] [tx on|off] [sg on|off] [tso on|off]
+#修改网卡的卸载参数
+
+ ethtool -r ethX #重启网卡的自动协商(auto-negotiation)功能，如果这个功能设置位可用的话
+
+ ethtool -t ethX [offline|online] #执行网卡自检程序
+
+ ethtool -s ethX [speed 10|100|1000] [duplex half|full]
+ [port tp|aui|bnc|mii] [autoneg on|off] [phyad N] [xcvr internal|exter-
+ nal] [wol p|u|m|b|a|g|s|d...] [sopass xx:yy:zz:aa:bb:cc] [msglvl N]
+#可以修改的参数值，用-s来标志
+</pre>
+
+
+<p>这些设置仅仅在当前生效，一旦重启网络或者重启系统，ethtool的设置将会失效。我们可以把ethtool的设置命令加入到ifcfg-ethX配置文件中。
+比如，你希望把第一块网卡设置为全双工，自适应和100M的方式，那么你可以在你的<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>文件中加入下面一行：
+ <code>ETHTOOL_OPTS="speed 100 duplex full autoneg off"</code></p>
 </div>
   
   
@@ -412,7 +409,7 @@ a.b.c.d             : bad
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/06/24/tag-based-filesystem/">Tag-based Filesystem</a></h1>
+      <h1 class="entry-title"><a href="/2007/01/30/commands-start-d/">\[sbin学习\]d\*学习&#8211;完成</a></h1>
     
     
       <p class="meta">
@@ -428,24 +425,28 @@ a.b.c.d             : bad
   
 
 
-<time datetime="2008-06-24T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-01-30T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/06/24/tag-based-filesystem/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/06/24/tag-based-filesystem/">Comments</a>
+           | <a href="/2007/01/30/commands-start-d/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/30/commands-start-d/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>这两天和同事在讨论传统分类和标签(tag,label)的问题，突然想起很早以前看到的一个视频，讲述的是下一代文件系统的特征，是真正桌面应用，其中提到了标签，也就是用户关注不再文件系统这个层次，而是逻辑层。<br/>
-所以，我想到了基于标签的文件系统，“我总不是第一个想到的”，google一把后，果然发现有不少组织在做这个，也下载了一些代码，不过目前都处于原型阶段，生产应用恐怕还是有些难度。</p>
+  <div class="entry-content"><p>接着上次没有完成的<a href="2007/01/29/commands-start-d-incomplete/">d命令学习</a></p>
+
+<p>-S 大小评估。用来计算dump需要的空间，但是并不真正执行dump操作。这对增量备份有好处，因为可以知道需要多少存储介质。</p>
+
+<p>-T 时间。使用指定的时间来作为dump的时间，而不是从/etc/dumpdates里读取。这里时间的格式和ctime(3)的格式相同，遵守
+ RFC822时区规范。他先下面的-u参数是互斥的。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/06/24/tag-based-filesystem/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/01/30/commands-start-d/">Read on &rarr;</a>
     </footer>
   
 
@@ -457,7 +458,7 @@ a.b.c.d             : bad
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/06/24/kung-fu-panda/">看完《功夫熊猫》</a></h1>
+      <h1 class="entry-title"><a href="/2007/01/29/commands-start-d-incomplete/">\[sbin学习\]d\*命令&#8211;未完成</a></h1>
     
     
       <p class="meta">
@@ -473,70 +474,31 @@ a.b.c.d             : bad
   
 
 
-<time datetime="2008-06-24T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-01-29T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/06/24/kung-fu-panda/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/06/24/kung-fu-panda/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>原本没用打算要看的，中午lancy打电话过来说要我下载，说听别人讲很好看，于是找刘要了有一个下载地址，从中午一直下载到下班，总算下载了下来。</p>
-
-<p>吃过晚饭，托过地板，电影开始。虽然从出现开头就知道了结尾，但是中间的一些细节还是比较有意思的，也挺搞笑的。</p>
-
-<p>整个片子的场景都是中国的元素，但是除此之外，恐怕再也没用其他东西是中国的了，思维模式，表情，表达模式都是好莱坞标准。当然电影阐述的一些哲理的东西算是中国的一些精髓。</p>
-
-<p>我之前没用看任何相关的一些宣传和花絮，所以我不知道为什么片子中会有很多汉语拼音来代替英语，比如乌龟不说“tortoise”，而说“wugui”，还有一些。难道是讽刺中国人说英语吗？</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/06/23/Based-on-the-SSL-certificate-configuration/">基于SSL的电子证书配置</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-23T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/06/23/Based-on-the-SSL-certificate-configuration/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/06/23/Based-on-the-SSL-certificate-configuration/">Comments</a>
+           | <a href="/2007/01/29/commands-start-d-incomplete/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/29/commands-start-d-incomplete/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>折腾了两天，基本完成，但是其实现原理，我还是不太了解，因此不敢长篇大论的来说SSL如何，电子证书如何。<br/>
-而且我现在也还不知道我现在完成的目标是不是真的就是可以用在实际项目的要求，<del>也不知道采取USB-KEY的方式能否验证通过</del>（经过实验，已经通过）。<br/>
-因此，仅记录我的实验步骤。</p>
+  <div class="entry-content"><p>看了今天是无法完成d*命令的学习了，有几个重量级的命令都是d开头的，这就要一些时间，先把完成的一部分贴出来吧。
+/sbin/下d开头的命令如下</p>
+
+<pre><code>debugfs delpart dhclient-script dmsetup dump dump.static
+debugfs.ocfs2 depmod dhcp6c dmsetup.static dump_cis
+debugreiserfs dhclient dmraid dosfsck dumpe2fs
+</code></pre>
+
+<p>其中dump.static软连接到dump命令，而dump程序是一个静态编译的命令。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/06/23/Based-on-the-SSL-certificate-configuration/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/01/29/commands-start-d-incomplete/">Read on &rarr;</a>
     </footer>
   
 
@@ -548,7 +510,7 @@ a.b.c.d             : bad
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/06/22/LaTex-and-related-information/">与LaTex有关的一些资料</a></h1>
+      <h1 class="entry-title"><a href="/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/">命令行发送html邮件和带附件的邮件</a></h1>
     
     
       <p class="meta">
@@ -564,40 +526,29 @@ a.b.c.d             : bad
   
 
 
-<time datetime="2008-06-22T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-01-28T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/06/22/LaTex-and-related-information/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/06/22/LaTex-and-related-information/">Comments</a>
+           | <a href="/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><strong>几个编辑器</strong></p>
+  <div class="entry-content"><p>在命令行发送带附件的邮件倒是很早就知道了，我的方法是采取最懒的，用<a href="http://www.mutt.org/">mutt</a>来把帮忙。命令很简单
+<code>echo "your email body" | mutt -s "here you subject" -a /path/to/mutt.tar.gz  your@email.com</code>
+当然如果你的邮件正文很长，那就可以采用重定向的方式了。</p>
 
-<ol>
-<li><p>LEd: LaTeX Editor (freeware)
-<a href="http://www.latexeditor.org/">http://www.latexeditor.org/</a></p></li>
-<li><p>MeWa &ndash; The Editor for LaTeX Source (open source software, inspired by TeXnicCenter)</p></li>
-</ol>
-
-
-<p><a href="http://www.meshwalk.com/latexeditor/">http://www.meshwalk.com/latexeditor/</a></p>
-
-<ol>
-<li><p>Texmaker (freeware): an unicode editor
-<a href="http://www.xm1math.net/texmaker/">http://www.xm1math.net/texmaker/</a></p></li>
-<li><p>WinShell (freeware):
-<a href="http://www.winshell.de/">http://www.winshell.de/</a></p></li>
-</ol>
-
+<p><code>mutt -s "here you subject" -a /path/to/mutt.tar.gz your@email.com</code>
+但是这种方式发送html格式正文的邮件却不成功，因为邮件头默认是text/plain格式的，不是text/html格式。
+网上有人说可以配置<code>~/.muttrc</code>来解决这个问题，但是我看了muttrc的man手册，也尝试了一下，但是没有结果。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/06/22/LaTex-and-related-information/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/">Read on &rarr;</a>
     </footer>
   
 
@@ -609,7 +560,7 @@ a.b.c.d             : bad
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/06/20/LVM-snapshot-on/">LVM Snapshot简述</a></h1>
+      <h1 class="entry-title"><a href="/2007/01/27/commands-start-c/">\[sbin学习\]c\*命令</a></h1>
     
     
       <p class="meta">
@@ -625,26 +576,227 @@ a.b.c.d             : bad
   
 
 
-<time datetime="2008-06-20T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-01-27T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/06/20/LVM-snapshot-on/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/06/20/LVM-snapshot-on/">Comments</a>
+           | <a href="/2007/01/27/commands-start-c/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/27/commands-start-c/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>这两天看了有关LVM快照(snapshot)的一些资料，加上pczou的一些指导，对snapshot有一些理解，记录如下，和大家共享：</p>
+  <div class="entry-content"><p>/sbin目录下c开头的命令也没有多少，列出如下</p>
 
-<p><a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux">Logical Volume Manager (LVM)</a>)提供了对任意一个Logical Volume(LV)做“快照”(snapshot)的功能，以此来获得一个分区的状态一致性备份。
-在某一个状态下做备份的时候，可能有应用正在访问某一个文件或者数据库，这就是使得备份的时候文件处于一个状态，而备份完后，文件却处于另外一个状态，从而造成备份的非一致性，这种状态恢复数据库数据几乎不会成功。</p>
+<pre><code>cardctl cardmgr change_console chkconfig clock consoletype cryptsetup ctrlaltdel
+</code></pre>
+
+<p>其中clock还是软连接。</p>
+
+<pre><code>[root@lancy sbin]# ls -l clock 
+lrwxrwxrwx 1 root root 7 9月 7 12:07 clock -&gt; hwclock
+</code></pre>
+
+<p>因此这个留待h*命令的时候来学习。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/06/20/LVM-snapshot-on/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/01/27/commands-start-c/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/25/commands-start-b/">\[sbin学习\]b\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/25/commands-start-b/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/25/commands-start-b/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin/b*命令不多，DC5.0下面仅仅3个</p>
+
+<p>badblocks,blkid和blockdev</p>
+
+<p>badblocks:<br/>
+对指定的设备找出坏块,他接受的参数不是太多，你可以指定开始块也结束块。还能用-f来指定是否需要对查找的分区进行修复，不过在man中对－f这个参数的描述是，
+永远都不要使用－f，除非你比这个命令更聪明。</p>
+
+<pre><code>[root@lancy sbin]# badblocks /dev/hda5 
+</code></pre>
+
+<p>man手册中提到一般不要直接执行badblocks命令，而是应该用e2fsck命令的－c参数来自动调用badblocks命令，他会查找坏块并标记起来，以便下次存储数据时，不会存储在这些坏块上。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/25/commands-start-b/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/24/commands-start-a/">\[sbin学习\]a\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/24/commands-start-a/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/24/commands-start-a/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>一直打算认真看完/sbin,/usr/sbin下面的命令，但是一直都托着，如果真的要找一个比较完整的时间来看这些命令，恐怕很难了。
+于是觉得看多少算多少吧，最开始的想法是从/sbin看起，从a打头的命令看起，但是发现，很多命令是紧密结合在一起，因此很难孤立的去学习某一个命令，因此，当有些命令有关联的时候，我就一起做介绍了。
+声明：所有的操作实例来自红旗DC5.0环境。您所用的分发版本可能和我的有不同的地方。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/24/commands-start-a/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/15/About-GRUB/">有关GRUB</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/15/About-GRUB/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/15/About-GRUB/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>开始看《Linux Troubleshooting for System Administrators and Power Users》顺便记录一些我新学到的东西。</p>
+
+<p>本书一开始就讲系统引导，启动和关机。这点其实也比较关键的，因为在实际的工作中也遇到过很多次，大部分情况下是GRUB（现在Lilo相对很少了）被完全破坏或者部分破坏。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/15/About-GRUB/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/12/system-maintenance-or-research-and-development/">系统维护还是研发？&#8211;上班的这两天</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/12/system-maintenance-or-research-and-development/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/01/12/system-maintenance-or-research-and-development/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不幸被Rachel言中了。我的工作岗位是研发，而且在我提出要转维护后，主管不同意的情况下，这两天我干的活主要还是技术支持加维护。</p>
+
+<p>上班第一天，主管说你看我们发邮件有错误，你看看是什么问题，我一看日志，嗯，很明显<code>“Permissions Denied"</code>，原来是邮件队列目录权限和属主设置有问题，于是改了一下，错误现象消失了。一看我解决了这个问题，马上就说你看我们发送邮件的到达率很低，你觉得是什么问题，这个问题就没有开始的容易解决了，仔细看了日志，发现主要是发送被拒绝。于是解释了一通垃圾邮件，MTA，认证的问题。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/12/system-maintenance-or-research-and-development/">Read on &rarr;</a>
     </footer>
   
 
@@ -668,7 +820,7 @@ a.b.c.d             : bad
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
       </li>
     
       <li class="post">

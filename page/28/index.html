@@ -9,8 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="我不知道现在的基层法院司法人员整体素质如何?比如是否真的都通过了国家司法考试,是否真的懂法.
-但是下面的这个案例,实在让我觉得这典型的是一个小学没有毕业的人给出的判定: ">
+  <meta name="description" content="今天去用户现场，遇到一个与NFS有关的怪异问题。 现象是这样的： 一个服务器配置成NFS服务器，假设导出目录是/mnt/datas，使用的参数是rw,sync,anonuid=501,anongid=501
+另外一个客户端在/etc/fstab中配置一条nfs挂载信息，参数是：
+hard,rw 在 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,7 +73,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/03/02/non-conformity-habit/">不符合习惯?</a></h1>
+      <h1 class="entry-title"><a href="/2006/07/27/nfs-weird-problem/">NFS的怪异问题</a></h1>
     
     
       <p class="meta">
@@ -88,250 +89,59 @@
   
 
 
-<time datetime="2008-03-02T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2006-07-27T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/03/02/non-conformity-habit/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/03/02/non-conformity-habit/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我不知道现在的基层法院司法人员整体素质如何?比如是否真的都通过了国家司法考试,是否真的懂法.
-但是下面的<a href="http://www.koubao.com/bao/2008-03/577.htm">这个案例</a>,实在让我觉得这典型的是一个小学没有毕业的人给出的判定:</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/03/02/non-conformity-habit/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/02/27/can-not-finish-for-a-while/">暂时完不成了</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-02-27T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/02/27/can-not-finish-for-a-while/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/02/27/can-not-finish-for-a-while/">Comments</a>
+           | <a href="/2006/07/27/nfs-weird-problem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/27/nfs-weird-problem/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>这两天想把本地的地址薄移到公用服务器上，采用LDAP数据库方式，这样我以后仅仅只需要维护一份联系人表单就好了。
-LDAP服务器搭建倒是很简单，也创建了需要的OU，但是在和kdepim里的kaddressbook做兼容性测试的时候遇到麻烦了。</p>
+  <div class="entry-content"><p>今天去用户现场，遇到一个与NFS有关的怪异问题。</p>
 
-<p>kaddressbook导出ldif格式时主要采用organizationalPerson作为他的主要objectclass，而organizationalPerson的灵活性和可扩展性很差，比如他不允许一个人有多个联系方式，也没有扩展的域来增加自己的东西。</p>
+<p>现象是这样的：</p>
 
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/02/27/can-not-finish-for-a-while/">Read on &rarr;</a>
-    </footer>
-  
+<p>一个服务器配置成NFS服务器，假设导出目录是<code>/mnt/datas</code>，使用的参数是<code>rw,sync,anonuid=501,anongid=501</code>
+另外一个客户端在<code>/etc/fstab</code>中配置一条nfs挂载信息，参数是：
+<code>hard,rw</code></p>
 
+<p>在<code>/mnt/data</code>s目录下面创建3个目录，A,B,C。A，B中各有一些文件，但是保证两个目录中的文件名唯一。
+在C目录中写了两个perl脚本，一个是将A目录中的文件先打开一下（使用fopen函数），然后将该文件移动到B目录，而另外一个perl脚本完成的任务则相反。两个脚本处于死循环状态。同时执行这两个脚本，运行都正常，没有任何报错。
+但是一旦你在A目录下连续的执行ls命令，会发现移动A目录文件的perl脚本退出，报告没有那个文件或者目录。</p>
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/02/25/kpf-KDE-public-file-server/">kpf:KDE公共文件服务器</a></h1>
-    
-    
-      <p class="meta">
-        
+<p>而去A目录看文件存在，使用ls -l 后，会报下面的错误：</p>
 
+<pre><code>#ls -l xorg.conf.12248 
+ls -l xorg.conf.12248: Invalid arguments
+-rw-r--r-- 1 root root 4384 2006-07-27 19:19 xorg.conf.12248 
+</code></pre>
 
+<p>但是大约10秒中后，再执行ls命令，错误信息不见了。
+也对perl脚本做过一些修改，但是还是有这样的错误发生。甚至写了类似这种功能的shell脚本和python脚本，也得到同样的错误。
+于是在NFS服务器端，修改<code>/etc/exports</code>文件，加入了<code>async</code>参数，还是没有什么效果。
+修改客户端，加入tcp参数，没有效果。</p>
 
+<p>加入sync参数，没有出问题，但是文件拷贝速度太慢了，大约2MB/s，用户根本就不能接受。</p>
 
+<p>也加入了<code>dirsync</code>参数也不管用。
+最后<a href="http://pczou.bokee.com">pczou</a>找到了一个参数，在客户端加入了<code>noac</code>参数。测试脚本通过。</p>
 
+<p>回来查了一些noac，原来是禁止attribute cache功能，在 man nfs中是这样说明的：</p>
 
+<blockquote><p>noac Disable all forms of attribute caching entirely. This
+ extracts a significant performance penalty but it allows
+ two different NFS clients to get reasonable results when
+ both clients are actively writing to a common export on
+ the server.</p></blockquote>
 
-
-  
-
-
-<time datetime="2008-02-25T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/02/25/kpf-KDE-public-file-server/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/02/25/kpf-KDE-public-file-server/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在Linux下你怎么共享文件？怎样搭建一个mini Web服务器？</p>
-
-<p>给Linux或者Unix共享文件还比较容易，直接开SSH服务就好了，这样想要哪个文件，直接sftp或者scp就好了。</p>
-
-<p>但是给Windows共享，麻烦多点，FTP服务也好，Samba服务也好，有一个问题不太好解决，就是共享路径的问题，也就是说每次当你需要共享另外一个目录下文件的时候，你需要修改配置文件，设定权限，重启服务，麻烦。Samba服务似乎还有不能跨网段的麻烦。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/02/25/kpf-KDE-public-file-server/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/02/24/received-ubuntu-cdrom/">收到了ubuntu的光盘</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-02-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/02/24/received-ubuntu-cdrom/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/02/24/received-ubuntu-cdrom/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>去年我曾在<a href="http://www.ubuntu.com">ubuntu官方站点</a>上要求<a href="shipit.ubuntu.com">邮寄过光盘</a>，无果。以为是我写错地址了，或者邮寄光盘程序出了问题。
-今年2月3日我又请求了一次光盘邮寄，到了3月7日还没有收到。站点上虽然说需要4-6周，但我想估计没戏了，于是又一次下了订单，这次我要求邮寄5张CD，我想在不行，我就要求邮寄8张，然后就是15张，总要成功一次吧。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/02/24/received-ubuntu-cdrom/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/02/24/colordiff-Highlight-Diff-output/">colordiff:高亮显示Diff输出</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-02-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/02/24/colordiff-Highlight-Diff-output/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/02/24/colordiff-Highlight-Diff-output/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在 Linux 下，使用 diff 命令可以对文件进行比较，从而了解其差异。不过，diff
-命令的输出结果以同色显示，对于这种差异的表现可能不够强烈。好在我们还可以通过<a href="http://colordiff.sourceforge.net/">ColorDiff</a>
-来加以改善。ColorDiff 是一个 Perl 脚本，它通过不同的颜色来高亮显示 diff 命令的输出结果，非常显眼。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/02/24/colordiff-Highlight-Diff-output/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/02/23/book-duku-2008/">预定了《读库》2008全年</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-02-23T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/02/23/book-duku-2008/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/02/23/book-duku-2008/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这是真正意义上的第一次网上购物，预定了<a href="http://pigu6.yculblog.com/">老六</a>的2008年全年<a href="http://blog.sina.com.cn/pigu6">《读库》</a>。</p>
-
-<p>记录一下以做纪念。</p>
+<p>网上也有一些连接说到了这个参数：
+<a href="http://lists.freebsd.org/pipermail/freebsd-bugs/2005-September/014747.html">http://lists.freebsd.org/pipermail/freebsd-bugs/2005-September/014747.html</a><br/>
+<a href="http://study.chyangwa.com/IT/AIX/aixcmds3/mount.htm">http://study.chyangwa.com/IT/AIX/aixcmds3/mount.htm</a><br/>
+<a href="http://blog.gmane.org/gmane.linux.nfs/month=20030201">http://blog.gmane.org/gmane.linux.nfs/month=20030201</a><br/>
+<a href="http://lists.scratchbox.org/pipermail/scratchbox-users/2005-November/000335.html">http://lists.scratchbox.org/pipermail/scratchbox-users/2005-November/000335.html</a><br/>
+<a href="http://www.linuxmine.com/1711.html">http://www.linuxmine.com/1711.html</a></p>
 </div>
   
   
@@ -344,7 +154,7 @@ LDAP服务器搭建倒是很简单，也创建了需要的OU，但是在和kdepi
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/02/23/Gtk-before-the-collapse-of-the-process-to-resolve-the-issue/">解决之前gtk程序崩溃的问题</a></h1>
+      <h1 class="entry-title"><a href="/2006/07/22/The-two-meet-today/">今日的两次聚会</a></h1>
     
     
       <p class="meta">
@@ -360,26 +170,189 @@ LDAP服务器搭建倒是很简单，也创建了需要的OU，但是在和kdepi
   
 
 
-<time datetime="2008-02-23T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2006-07-22T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/02/23/Gtk-before-the-collapse-of-the-process-to-resolve-the-issue/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/02/23/Gtk-before-the-collapse-of-the-process-to-resolve-the-issue/">Comments</a>
+           | <a href="/2006/07/22/The-two-meet-today/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/22/The-two-meet-today/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>昨天我说要<a href="http://blog.wgzhao.com/post/857/">尽量使用Qt开发的程序</a>，其中一个原因是我的绝大部分Gtk开发的程序在KDE环境下都会崩溃。
-<a href="http://hi.baidu.com/tpxc">听风同学</a>认为<a href="http://mlsx.xplore.cn/post/857/#blogcomment9311">我人品一定有问题</a>。还好有Rachel来帮我证明我人品没有问题（回到请你吃饭，太老土了，请你聊天吧）。</p>
+  <div class="entry-content"><p>自从搬了新家，双休就没有出去过，虽然说过很多次要去<a href="http://blog.donews.com/glemir">glemir</a>的新家，但总被我找各种藉口推脱了，但是我知道我是一定要去了，刚好wirlfly和mswish也要去，那就同去吧，也省得glemir做两次大餐。<br/>
+快10点起床，匆匆洗了个澡就出去了，还要有直达的公交车，颠簸了一个多小时，算是到了glemir的新居。</p>
 
-<p>为了证明我是冤枉的，我今天特意花了半天时间来看看到底是怎么回事。</p>
+<p>嗯，越往北，果然房屋的性价比就越高，三居室的房子，宽敞的客厅，一应俱全的家电，随处可及的窗外风景。相比我们在农大的住宿，显然是上升了N个档次。不过glemir显然比以前更累了，用他的话说，“倒不是累，却是什么都做不了”。所以宽带的介入似乎很有必要了，虽然我有时在想，网络浪费了我们多少时间，包括我在写这篇blog的时候，算是浪费我的时间吗？<br/>
+glmeir想跳槽，只是一直没有找到合适的单位，有时在一个公司，一个部门做久了，还真不知道自己还能做什么，想想我自己，如果我离开红旗，那我还能找一份不同的工作吗？我还能找一份与Linux无关的工作吗？似乎不太可能。好在glemir在现在的公司还没有做多久，加之他不如像我这样对Linux如此疯狂，或许在找工作上，他会比我顺利很多，但愿如此吧。<br/>
+wirlfly去SINA的可能性应该是100％了，不希望这次的offer又如同面试红旗一样，突发无来由的变故。<br/>
+因为答应了高中同学的离京聚会，所以没有在glemir那里呆多久，等他的宽带装好了，那么我们会有更多的交流时间了。<br/>
+高中同学在北京的，在我来之前有5个，而现在，一个在前年年底去深圳，问及理由，似乎没有理由。一个暂时去了香港，也不知是否还会回北京。而今天又有一个将于明天离开北京，还好，这次的理由很是正当和充分－－回<a href="http://www.csu.edu.cn">中南大学</a>深造！当然没有问为什么不选择继续工作，因为觉得这是很傻的问题。深造总是一件好事吧，虽然有看到，听到太多的研究生其实就是给自己的导师或者称为老板充当廉价的劳动力，而不是我们说的“研究”生。<br/>
+如此算来，高中同学中，在长沙的依然是最多数，而今日又增加了一位，而又或许不久的某一天，我也会是其中的一员。</p>
+
+<p>酒量似乎真的是锻炼出来的，三天不练口松，几日两次聚会，啤酒不超过4杯，却已经感觉头疼，而且不是一时半伙，直到现在还是头疼，而这离我喝的最早的一杯已经是11个小时了，最晚的一杯也有4个多小时了。<br/>
+或许真的是不能再喝酒了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/21/cooperation-uplinux-and-xplore/">Uplinux.com与Xplore.cn全面合作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/21/cooperation-uplinux-and-xplore/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/21/cooperation-uplinux-and-xplore/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>消息来源：
+<a href="http://www.uplinux.com/www/news/01/692.shtml">http://www.uplinux.com/www/news/01/692.shtml</a></p>
+
+<p>自由引领着<a href="http://www.linux.org/">Linux</a>，共同的憧憬让[color=#993300]UPLinux和[color=#0000ff]Xplore走到了一起，不是<a href="http://www.mop.com/">Mop</a>并购<a href="http://www.donews.com/">Donews</a>，不是<a href="http://www.sohu.com/">sohu</a>收购<a href="http://www.chinaren.com/">chinaren</a>，在纯自由的世界里，只有精神的融合，没有精神的收购！</p>
+
+<p>UPLinux.com创立于2001年，五年来，从&#8221;Linux安全网络&#8221;的个人站点，发展为 UPLinux
+升级站、UPLinux技术论坛，直到今天的 &ldquo;极限Linux&#8221;。在此期间得到了众多 Linux 爱好者的支持，也为大量
+Linux爱好者提供了服务器资源，为其创立开源项目提供技术支持。在人气旺盛的时期，网站在大家的建议下，先后两次成立了UPLinux技术团队，但是后来由于种种原因，团队的发展始终没有成形，网站也由于站长精力问题，不能全面为爱好者提供更好的技术资源。但UPLinux没有也不会放弃。</p>
+
+<p><a href="http://www.xplore.cn/">Xplore</a>创立于2004年，从国内仅有的几个网络存储实验室之一<a href="http://cie.xtu.edu.cn/snl/">湘潭大学SNL实验室</a>的里走出来的<a href="http://mlsx.xplore.cn/">mlsx</a>，将<a href="http://www.gnu.org/">
+GNU</a>的精神带到湘楚大地，很快，一群技术狂热者加入了这个团队，同年开通了Xplore.cn。Xplore.cn从信息并不发达的湖南走出来，在网路如此浮躁的今天，一直以Linux技术为主要方向。当然xplore也曾感到彷徨，是曲高和寡还是太过严肃？有了方向，还要有好的方式，事实上，xplore.cn一直在试着调整自己的表现形式。
+<img src="http://www.uplinux.com/ddimg/artlit/20060721/134432784lit.png" alt="image" />
+Uplinux 和Xplore都意识到需要改变的时候，同在国内最大的Linux发行商RedFlag Linux
+的两位站长走到了一起，几次沟通也促成了这次融合。互补，形成国内Linux的门户，是双方一直期待的。现在这些也有了眉目，论坛已经全面整合，形成了内容更加健壮更加明确的Linux社区。</p>
+
+<p>Xplore的原意在探索，UPLinux的原名叫极限Linux，但是我们知道，在探索Linux，探索自由的道路上，我们是永远没有极限的。一个全面、权威的Linux门户呼之欲出，让自由引导我们的目光，共同关注中国Linux的发展、关注现<a href="http://bbs.uplinux.com/">
+X-UPLinux</a>的发展！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/20/xplore-forum-for-a-new-starting-point/">Xplore论坛的新起点</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/20/xplore-forum-for-a-new-starting-point/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/20/xplore-forum-for-a-new-starting-point/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在<a href="http://mlsx.xplore.cn/read.php/404.htm">《xplore何去何从》</a>中，我提到了xplore将和<a href="http://www.uplinux.com">uplinux</a>合作的事情。
+其实这几天一直在忙着整合论坛的事，经过调试，与今天下午正式发布了整合后的新论坛。
+新论坛暂时命名为X-UPLinux，意为UPLinux Power By Xplore的想法，想要体现Xplore是技术中心，是引擎的特色。
+而论坛的新logo还是交给<a href="http://brisy.xplore.cn">brisy</a>，相信他能给我们新的震撼。
+新论坛整合了两个论坛的所有数据和用户，因此原来uplinux论坛的帐号和原xplore论坛帐号都能登录，不过基于特定论坛的一些内容可能丢失。毕竟molyx和discuz！并不是100％兼容的。
+整合的论坛有两种访问方式</p>
+
+<p><a href="http://bbs.uplinux.com">http://bbs.uplinux.com</a>
+<a href="http://bbs.xplore.cn">http://bbs.xplore.cn</a></p>
+
+<p>原来的
+<a href="http://www.uplinux.com/bbs/">http://www.uplinux.com/bbs/</a>
+<a href="http://www.xplore.cn/bbs/">http://www.xplore.cn/bbs/</a></p>
+
+<p>会做跳转。</p>
+
+<p>新论坛依然致力于提供最好的Linux服务，宽松的Linux讨论和技术交流。</p>
+
+<p>希望我们能为Linux fans提供更好的服务，更多的帮助。
+感谢2年来，大家对Xplore论坛的支持和关系，希望大家能急需支持我们的新论坛－－<a href="http://bbs.uplinux.com">X-UPLinux</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/18/What-xplore/">Xplore何去何从</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/18/What-xplore/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/07/18/What-xplore/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>很多人问我Xplore是什么意思，他和linux怎么会扯上关系。
+Xplore并不是你在google搜到的<a href="http://www.xplore.com.hk">Xplore品牌手机</a>，当然也不是xp知识库了（xplore
+== xp lore)。
+xplore就是Xplore，它只是我们为自己的工作室取的名字，它是取单词explorer的一部分，很显然，这是很多公司或者品牌取名的办法，而且我喜欢X开头的名字。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/02/23/Gtk-before-the-collapse-of-the-process-to-resolve-the-issue/">Read on &rarr;</a>
+      <a rel="full-article" href="/2006/07/18/What-xplore/">Read on &rarr;</a>
     </footer>
   
 
@@ -391,7 +364,7 @@ LDAP服务器搭建倒是很简单，也创建了需要的OU，但是在和kdepi
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/02/22/try-to-make-full-use-of-qt-based-software/">尝试尽量使用Qt开发的软件</a></h1>
+      <h1 class="entry-title"><a href="/2006/06/20/beijing-grid/">以服务人民为荣以背离人民为耻－－北京电力紧急送电</a></h1>
     
     
       <p class="meta">
@@ -407,29 +380,24 @@ LDAP服务器搭建倒是很简单，也创建了需要的OU，但是在和kdepi
   
 
 
-<time datetime="2008-02-22T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2006-06-20T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/02/22/try-to-make-full-use-of-qt-based-software/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/02/22/try-to-make-full-use-of-qt-based-software/">Comments</a>
+           | <a href="/2006/06/20/beijing-grid/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/06/20/beijing-grid/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>可能是因为最近频繁的升级KDE，曾还花了一天的时间安装了KDE4，匆匆预览了KDE4的一些新特征，值得期待。</p>
-
-<p>其后果是现在很多基于Gtk开发的软件运行时都会出现segment fault，然后core
-dump。包括了<a href="http://www.getfirefox.com">Firefox</a>，<a href="http://www.pidgin.im">Pidgin</a>
-，<a href="http://www.spicebird.com">SpiceBird</a>。这等于是废了，上不了网，聊不了天和看不了邮件。</p>
-
-<p>就把当做一个藉口吧，我要尝试更多的使用Qt开发的产品。</p>
+  <div class="entry-content"><p>家里的电表显示0001，随时都有进入黑暗的时候。可是去银行排了两天队，还是买不了，据“官方”说话是“连接服务器数据错误”。
+由于懒，又不想去很远而且不顺路的电力局买电，看来这两天就只能在黑暗中渡过了。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/02/22/try-to-make-full-use-of-qt-based-software/">Read on &rarr;</a>
+      <a rel="full-article" href="/2006/06/20/beijing-grid/">Read on &rarr;</a>
     </footer>
   
 
@@ -441,7 +409,7 @@ dump。包括了<a href="http://www.getfirefox.com">Firefox</a>，<a href="http:
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/02/21/nothing-is-impossible-vs-impossible-is-nothing/">Nothing Is Impossible vs. Impossible Is Nothing</a></h1>
+      <h1 class="entry-title"><a href="/2006/06/01/ocfs2-the-strange-problem/">Ocfs2的怪异问题</a></h1>
     
     
       <p class="meta">
@@ -457,26 +425,27 @@ dump。包括了<a href="http://www.getfirefox.com">Firefox</a>，<a href="http:
   
 
 
-<time datetime="2008-02-21T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2006-06-01T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/02/21/nothing-is-impossible-vs-impossible-is-nothing/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/02/21/nothing-is-impossible-vs-impossible-is-nothing/">Comments</a>
+           | <a href="/2006/06/01/ocfs2-the-strange-problem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/06/01/ocfs2-the-strange-problem/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>刚才和朋友聊天时，丢了一句nothing is impossbile，发送后，总觉得别扭，似乎不对。    是因为觉得Adidas的广告标语似乎是”impossible is nothing&#8221;。<br/>
-于是随手google了一把，结果发现这两种说法还真的都有。<br/>
-然后习惯的使用googlefight来看看哪种说法更流行，<a href="http://googlefight.com/index.php?lang=en_GB&amp;word1=nothing+is+impossible&amp;word2=impossible+is+nothings">结果nothing is impossible 高出impossible is
-nothing</a>。</p>
+  <div class="entry-content"><p>昨天和几个同事去一个用户现场解决不能对存储设备格式化成ocfs2的文件系统。</p>
+
+<p>IBM的服务器，IBM的光纤交换机，IBM的存储。硬件方面应该不存在兼容性问题。系统是红旗的DC5.0。</p>
+
+<p>刚到现场的时候，发现存储配置得有点问题，两台服务器看到的LUN并不一致，初步怀疑是配置问题，后来和用户协调，解决了这个问题。LUN的映射也达到了我们的要求，但是仍然是无法格式化ocfs2文件系统，只要格式化，并给出下面的报错信息</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/02/21/nothing-is-impossible-vs-impossible-is-nothing/">Read on &rarr;</a>
+      <a rel="full-article" href="/2006/06/01/ocfs2-the-strange-problem/">Read on &rarr;</a>
     </footer>
   
 
@@ -488,7 +457,7 @@ nothing</a>。</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/02/21/Lost-notice/">招领启事</a></h1>
+      <h1 class="entry-title"><a href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/">device-mapper-multipath在Linux上的应用</a></h1>
     
     
       <p class="meta">
@@ -504,27 +473,146 @@ nothing</a>。</p>
   
 
 
-<time datetime="2008-02-21T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2006-05-30T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/02/21/Lost-notice/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/02/21/Lost-notice/">Comments</a>
+           | <a href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/30/device-mapper-multipath-in-the-Linux-applications/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>照例打开我的邮箱，看到的基本上是我订阅的新闻资讯和一些例行邮件，突然发现一封邮件标题“我在美国2008-02-20”,乍一看以为是垃圾，再看，以为是顾总耐不住寂寞，从遥远的美国农村给我发一封电子邮件呢。</p>
+  <div class="entry-content"><p>这两天一直在测试<a href="http://www.ibm.com">IBM</a> <a href="http://www-900.ibm.com/cn/servers/eserver/openpower/">OpenPower</a>上运行RedFlag
+DC5.0 for pSeries是不是能够正常连接<a href="http://www.emc.com">EMC</a><a href="http://china.emc.com/products/systems//products/systems/clariion.jsp#cx">CLARiiON
+CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/dm/">device-mapper</a>的<a href="http://christophe.varoqui.free.fr/wiki/wakka.php?wiki=Home">device-mapper-multipath</a>工具。</p>
 
-<p>可看在邮件内容，不对劲了，这应该是关系暧昧的两人中间的邮件，为什么这么说的，最明显的就是最后一句
-先不说了，我要开始上课了。我想你。</p>
+<p>具体的技术细节，大家可以看相关的连接。
+下面是我的测试手记，大家look一下：</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/02/21/Lost-notice/">Read on &rarr;</a>
+      <a rel="full-article" href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/">Read on &rarr;</a>
     </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/27/Moving-in-May/">搬家在5月</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/27/Moving-in-May/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/27/Moving-in-May/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>累了一整天，总算又把自己的窝挪到了另外一个地方。离公司也近了2站。只是与<a href="http://blog.donews.com/glemir">glemir</a>的“同居”生活结束了。算算，这是我到北京的第五次搬家了，其时间跨度却不到2年，也许这次会成为我在北京的最后一次搬家，聊以下面的文字记录我的搬家史吧。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/05/27/Moving-in-May/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/26/vim-folding-feature-folding/">Vim的折叠功能-folding</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/26/vim-folding-feature-folding/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/05/26/vim-folding-feature-folding/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原始文档来自biantaishabi,下面是原始文档的连接
+<a href="http://feeds.feedburner.com/biantaishabi?m=398">http://feeds.feedburner.com/biantaishabi?m=398</a></p>
+
+<p><strong>建立折叠：</strong></p>
+
+<p>z的意思就是他的形状， 像一个折叠的东西，折叠相关的命令都是z开头的， 新版本的拼写检查命令也有以z开头的。 f的意思是fold。
+所以zf就是折叠。 你可以在visual模式下选定，再按zf， 可以将选定的全部折叠。 也可以zf9j， 这样可以将下面9行的内容折起来。
+也可以用marker， 还可以用行号：20，50，就可以把20行到五十行折叠起来 。 总之可以用一般的定位的方法来告诉VIM你要折叠那些地方。</p>
+
+<p>我觉得比较有用的是匹配括号的折叠， 移动到一个花括号{上，用zfa}， 就可以将下面的匹配的花括号之间的内容折起来，
+这样可以很方便的折起函数。 其他的折叠方法还有zf/string， 可以折叠到下一个匹配的string， 不过好像不太实用。</p>
+
+<p><strong>使用折叠：</strong></p>
+
+<p>移动的时候在前面加一个z就可以在折叠的地方移动， 比如zj，就会跳到下一个折叠， zk就是上一个。 要打开的话可以zo，o是open的意思，
+zO打开所有的折叠。 关上用zc， c是close。 在zO之后用zc会关上所有打开的折叠。 折叠可以嵌套，
+zr可以打开第一层的折叠，zR可以打开所有层的折叠， 与之对应的是zm和zM， 是按层关上折叠。 比如说按zm，
+会从最里层的层叠关起，连续zm就会一直关到最上层的折叠。</p>
+
+<p>查找到了折叠里面会将折叠打开， 处理完了之后要自己将折叠关上。</p>
+
+<p><strong>折叠选项：</strong></p>
+
+<p>可以让VIM根据语法， 缩进，标记自动折叠。 用set foldmethod=foldoption 来设定。 可以查看一下foldmethod
+。</p>
+
+<p><strong>保留折叠：</strong>
+要下一次打开的时候还保留折叠可以在离开的时候:mkview，再进来的时候:loadview就可以了。
+当然也可以将这两句加到vimrc里面让其自动完成。</p>
+
+<pre><code>au BufWinLeave * mkview
+au BufWinEnter * silent loadview
+</code></pre>
+
+<p>这样每次就可以看到上次的折叠了。</p>
+</div>
+  
   
 
 
@@ -547,7 +635,7 @@ nothing</a>。</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
       </li>
     
       <li class="post">

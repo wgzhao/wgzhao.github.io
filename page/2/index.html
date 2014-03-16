@@ -9,7 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="本文源自5 simple ways to troubleshoot using strace，我做了一些摘译。 strace 是一个非常简单的工具，用来跟踪可执行程序的系统调用(system call)。最简单的使用是，它追踪可行程序运行时的整个生命周期，输出每一个系统调用的名字，参数和返回值。 &hellip;">
+  <meta name="description" content="从 IRC #postgresql 频道了解到一个网站: http://explain.depesz.com 其口号是： A tool for finding a real cause for slow queries 方法是粘贴你的 explain
+sql 语句结构。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,217 +66,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/16/5-simple-ways-to-troubleshoot-using-strace/">使用strace工具故障排查的5种简单方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-16T21:40:00+08:00" pubdate data-updated="true">Jan 16<span>th</span>, 2012</time>
-        
-           | <a href="/2012/01/16/5-simple-ways-to-troubleshoot-using-strace/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2012/01/16/5-simple-ways-to-troubleshoot-using-strace/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>本文源自<a href="http://www.hokstad.com/5-simple-ways-to-troubleshoot-using-strace.html">5 simple ways to troubleshoot using strace</a>，我做了一些摘译。</p>
-
-<p>strace 是一个非常简单的工具，用来跟踪可执行程序的系统调用(system call)。最简单的使用是，它追踪可行程序运行时的整个生命周期，输出每一个系统调用的名字，参数和返回值。 <br/>
-但是它还可以做更多的事情：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/01/16/5-simple-ways-to-troubleshoot-using-strace/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent/">用sfex资源脚本来防止HA脑裂后共享磁盘数据被损坏的风险</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-12T14:53:00+08:00" pubdate data-updated="true">Jan 12<span>th</span>, 2012</time>
-        
-           | <a href="/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability">HA</a>部署众,心跳无疑是最重要的组件，因此心跳也绝大部分你情况是冗余的，大部分都是用网络做心跳介质，因此一般认为是可靠的。但是，所有的事情都有意外，如果心跳出现了故障，到时<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability">HA</a>环境中的节点互相直接之间无法通信，就会出现脑裂(Split Brain)现象，出现这种情况后，会导致<a href="http://zh.wikipedia.org/wiki/HA" title="High Availability">HA</a>监控的服务会在多个节点上同时运行，如果此时有共享存储，则会导致共享存储在多个节点上同时可写挂载，从而导致文件系统崩溃，数据丢失。这显然不是可以接受的情况。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/10/lsb-scripts-specification/">LSB Scripts Specification</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-10T18:53:00+08:00" pubdate data-updated="true">Jan 10<span>th</span>, 2012</time>
-        
-           | <a href="/2012/01/10/lsb-scripts-specification/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2012/01/10/lsb-scripts-specification/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>什么是LSB</h2>
-
-<p><a href="https://wiki.linuxfoundation.org/en/LSB_Wiki" title="Linux Standard Base">LSB</a>，即<strong>Linux标准规范</strong>(英语:Linux Standard Base)是一个在<a href="http://zh.wikipedia.org/wiki/Linux%E5%9F%BA%E9%87%91%E6%9C%83" title="Linux 基金会">Linux基金会</a>结构下对Linux发行版的联合项目，使Linux操作系统符合软件系统架构，或文件系统架构标准的规范及标准。<a href="https://wiki.linuxfoundation.org/en/LSB_Wiki" title="Linux Standard Base">LSB</a>基于<a href="http://zh.wikipedia.org/wiki/POSIX" title="POSIX">POSIX</a>，统一UNIX规范及其他开放标准，共在某些领域扩展它们。详细情况请参考相关链接。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2012/01/10/lsb-scripts-specification/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/01/04/2011-summary-and-2012-plan/">2011年总结和2012年计划</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-04T09:24:00+08:00" pubdate data-updated="true">Jan 4<span>th</span>, 2012</time>
-        
-           | <a href="/2012/01/04/2011-summary-and-2012-plan/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2012/01/04/2011-summary-and-2012-plan/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>2011年刚来的时候，我在IM上的签名是：</p>
-
-<blockquote><p>2011年最大的愿望：安全的活着</p></blockquote>
-
-<p>果不其然，2011年对于生活在天朝的人们，经历了各种匪夷所思的“被随即死”，还好，我幸存了下来。算是完成了2011年的最大愿望吧。</p>
-
-<p>2011年上半年浑浑噩噩，无所事事，<a href="http://blog.wgzhao.com">blog</a>也荒废了，只是用大量的<a href="http://twitter.com">twitter</a>来刷着版面。</p>
-
-<p>2011年下半年换了一份工作，告别了工作6年的公司，告别了我热爱的事务，算是工作和兴趣分开吗？现在朝一个DBA方向努力着，但是，但是，也许兴趣真的是最好的老师，我拿不出对待<a href="http://www.linux.org">linux</a>的激情来，甚至连热情都很难拿出来，也许，这仅仅就是一份工作，打好这份工吧。</p>
-
-<p>2011年，读了43本书，绝大部分都是浅尝辄止，大部分都是下半年读的，买了<a href="http://bb.sdo.com/">Bambook</a>后，读的书也多了些。</p>
-
-<p>2011年11月，lanky在犹豫了将近一年后，抛弃之前的选择，下手了<a href="http://vw.faw-vw.com/index.php/component/brand/?brand_id=2">大众高尔夫</a>，从最开始的开40Km/h都说头晕的人，到现在不小心开到90Km/h还说不知道，我也就安心的做个乘客好了。</p>
-
-<p>2011年11月，总算开始说服自己离开电脑，开始健身，当然这其中lancy的淫威起了很大的作用，慢慢的喜欢上了一身汗后冲澡时的爽快感觉。凸起的肚子似乎也小了一些，至少体重在降低。</p>
-
-<p>2011年10月后，皮皮开始在农村田间四处野着，没有钢筋水泥的阻挡，没有紧闭大门的约束，她快乐的玩着，<strong>安全</strong>的吃着，踏实的睡着，也就快速的长高着，也就随心的胖着，也就是没心没肺的不想着时时刻刻想着她的爸妈。</p>
-
-<p>2011年最后的一天，因为被自己关在门外，于是破天荒人生第一次去电影院看了一场电影，也是第一次看3D电影。只可惜<a href="http://longmenfeijia.ent.sina.com.cn/main.html">《龙门飞甲》</a> 很难配上第一次这样的待遇。</p>
-
-<p>无论如何，2011年就这样过去了，迎来了传说中的2012年。</p>
-
-<p>船票会是今年的重点吗？</p>
-
-<p>如果能看到2012年12月22日的太阳，那我2012年小小的计划原本是这样的：</p>
-
-<ol>
-<li>赚钱，赚钱，俗不可耐的赚钱，今年又会增加一个中国特色的高额消费：幼儿园</li>
-<li>考驾照，是的，我现在还没有这个玩意儿，一直都对汽车提不起兴趣，但是现在看到lancy开车那么累的样子，我想如果我会了，至少关键时刻可以替代一下吧，虽然我无证驾驶也搞了好几次了，但毕竟不保险</li>
-<li>买一台MacBook Pro或者Mac Air，现在90%的时间在用iMac，我希望移动办公也采用的同样的平台。用了Mac后，才知道好的软件应该是个什么样子，好的系统应该是如何的人性化，感谢在天堂的乔布斯。</li>
-<li>再多读一些书，无论是印刷的，还是ebook，去年买的一些书还没有读完，比如<a href="http://book.douban.com/subject/4753971/">萧红全集</a>,比如<a href="http://book.douban.com/series/5617">暮光之城系列</a>.还是要坚持22点上床看书的习惯，嗯，坚持！</li>
-<li>坚持锻炼，2个多月的锻炼让我体会到了神清气爽的感觉，看着体重计上显示的数字不再肆无忌惮的增加时，那种愉悦感无法用言语表达，坚持，坚持！</li>
-<li>坚持写blog，哎，Blog荒废差不多一年了，不能这样堕落下去了。今年的头三天就是整理了原来的博客，删除了600多篇无用的，过时的文章，整理了800多篇文章，放弃了之前用的<a href="http://www.wordpress.org">wordpress</a>，采用了当前广受技术宅男推崇的<a href="http://www.octopress.org">octopress</a>。今年希望能写道200篇帖子，当然越多越好，但是垃圾不要。</li>
-<li>安全的活着，嗯，我们这代人，生于计划，死于随机，活于奇迹。安全的活着依然是第一要务。I mean it !</li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -438,60 +228,6 @@ sql</code> 语句结构。
       
   <header>
     
-      <h1 class="entry-title"><a href="/2011/07/20/ip-location-search/">IP地址归属地查询</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-20T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2011/07/20/ip-location-search/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2011/07/20/ip-location-search/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>好吧，我承认，这是一个很不靠谱的标题，也是很欧特曼的标题了，只是那些很潮的人们可以理解在offline的情况下，*nix使用者们该如何很好的做到标题的功能呢？查询了一番，没有什么看上去很好的办法，于是自己根据纯真IP地址库，写了一个Python脚本，效率估计够呛，不过能正确查询到相关信息。
-你要做的是首先搜索一把纯真地址库，如何下载（一般是<code>qqwry.dat</code>)，而后copy我下面的代码，保存为.py文件，如何就可以获得类似我下面的这样的结果了：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>localhost:bin wgzhao<span class="nv">$ </span>./ipsc.py 219.90.126.44
-</span><span class='line'>Country:   香港  Local:   第一线有限公司
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>完整代码如下：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2011/07/20/ip-location-search/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
       <h1 class="entry-title"><a href="/2011/04/11/my-glasses-story/">配眼镜</a></h1>
     
     
@@ -541,7 +277,7 @@ sql</code> 语句结构。
       
   <header>
     
-      <h1 class="entry-title"><a href="/2011/04/01/bought-some-books/">买了一些书</a></h1>
+      <h1 class="entry-title"><a href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/">快速制作一个虚假deb格式软件包</a></h1>
     
     
       <p class="meta">
@@ -557,28 +293,266 @@ sql</code> 语句结构。
   
 
 
-<time datetime="2011-04-01T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2011-03-18T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2011/04/01/bought-some-books/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2011/04/01/bought-some-books/">Comments</a>
+           | <a href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/03/18/how-to-build-a-fake-deb-package-quickly/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>下午从邮政现场回来时，经过新华书店，本想去看看iOS的开发书，可是对计算机书架扫描了两遍也一无所获。至少去找一些休闲之类或者畅销书。后在书店和LP汇合，在离开书店前的最后15分钟，捡了一些书，共14本：</p>
+  <div class="entry-content"><p>把上面的代码保存为<code>dummy.c</code>。而后使用<code>autoscan</code>命令来粗昂间一个<code>configure</code>模板文件，命令如下</p>
 
-<p><a href="http://book.douban.com/subject/4753971/">《萧红全集》</a>（共5本），她是中国现代著名的女作家，恐怕也是“民国四大才女”中命运最悲惨的一个。她的文学作品的价值应该是被低估了。</p>
+<pre><code>$ autoscan 
+$ ls
+autoscan.log  configure.scan  dummy.c
+</code></pre>
 
-<p>《<a href="http://book.douban.com/subject/4742918/">1Q84 Book1</a>》，典型的畅销书了，豆瓣上好评率比较高，我觉得适合在火车上或者晚上临睡前看看。</p>
+<p>将生成的<code>configure.scan</code>文件保存为<code>configure.in</code>，并进行修改，只用保留下面几行内容就行了，我在文件里注释说明</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2011/04/01/bought-some-books/">Read on &rarr;</a>
+      <a rel="full-article" href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/">Read on &rarr;</a>
     </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/03/11/ssh-three-kill-features/">Ssh的三板斧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2011/03/11/ssh-three-kill-features/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/03/11/ssh-three-kill-features/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ssh的功能无比强悍，对于一个<strong>Unix/Linux</strong>而言，只要开放一个ssh服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下：</p>
+
+<h2>端口转发</h2>
+
+<p>端口转发，也就是-L参数的设置。以我的实际例子来说明吧，我在家里上网，设置的是局域网，IP地址是<code>192.168.100.101</code>。公司总部呢，也是用的是局域网地址，<code>172.16.0.0</code>网段。我需要访问公司内部的一台应用服务器，比如<code>172.16.81.111</code>。我该怎么办呢？恰好，公司有一台网关服务器，有两块网卡，一块是设置的公网IP地址，比如<code>219.99.12.23</code>。另外一块网卡，则是公司的内网的IP地址，比如<code>172.16.81.220</code>。这台服务器开启了SSH服务。那么我要做的便是执行下面的指令:</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2011/03/11/ssh-three-kill-features/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/03/09/online-resizing-ext4-filesystem/">在线扩容ext4文件系统</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2011/03/09/online-resizing-ext4-filesystem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/03/09/online-resizing-ext4-filesystem/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原来一个分区分得太小了（只有5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对ext3干过这样的事情，看了ext3上的<a href="https://ext4.wiki.kernel.org/index.php/Frequently_Asked_Questions#How_to_online_resize_the_Ext4_filesystem.3F">wiki介绍</a>，得知做法和原来的ext2/ext3一样（看来兼容性还是不错）。下面是我的扩容过程</p>
+
+<p>首先下载你要扩容的分区，这样当然是最保险的，如果你就是不想卸载，只要你别对其做写操作，也没有问题。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2011/03/09/online-resizing-ext4-filesystem/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/">Windows下压缩包在linux解压乱码的解决办法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-06T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我的系统是ubuntu 10.04 ，编码是<code>zh_CN.UTF-8</code>。
+我从网络上下载的绝大部分zip包，解压后，连带目录和文件都是乱码。在终端尝试更换LANG，LANGUAGE等环境变量，还是不能直接解决问题。</p>
+
+<p>而且用unzip解压后，无论你怎么设置convmv命令的编码参数，均不能解决问题。后通过7z工具算是暂时解决了这个问题。
+首先用apt安装7z工具包。 <br/>
+然后用下面的两条指令： <br/>
+1) <code>LANG=C 7z x xxx.zip</code> <br/>
+2) <code>convmv -f cp936 -t utf8 -r --notest *</code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/07/14/chroot-in-ssh-server/">在ssh服务里使用chroot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-14T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/07/14/chroot-in-ssh-server/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/07/14/chroot-in-ssh-server/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发ssh给用户，那么无疑能极大的增加用户操作的灵活性，但是ssh的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。</p>
+
+<p>幸而openSSH已经了解到了这点，目前的版本均支持chroot功能，下面我简单的描述一下在ubuntu
+10.04系统上如何实现，其他系统实现的原理相同，只是一些配置文件和指令不同而已。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/07/14/chroot-in-ssh-server/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/07/02/multiple-ssh-connects-with-the-same-session/">共享会话的ssh连接配置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-02T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/07/02/multiple-ssh-connects-with-the-same-session/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/07/02/multiple-ssh-connects-with-the-same-session/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>针对一个服务器需要同时开几个ssh连接，也许是同一个帐号链接，也许是不同的帐号，你是不死和厌烦了每次的都要输入密码？其实ssh链接可以做到共享会话的。
+一个办法是用一些ssh链接客户端，比如Windows下的<a href="http://www.vandyke.com/products/securecrt/">Secure
+CRT</a>，Linux下的<a href="http://projects.gnome.org/hotssh/">hotssh</a>。
+另外一个办法，就是自己修改ssh客户端配置文件，创建<code>~/.ssh/ssh_config</code>文件，加入下面的内容：</p>
+
+<pre><code>Host *
+ControlMaster auto ControlPath ~/.ssh/master-%r@%h:%p
+</code></pre>
+
+<p>当对服务器发起一个链接的时候，在<code>~/.ssh</code>目录下就会创建一个文件,当你退出所有多该服务器的链接是，该文件会自动删除。 现在就尝试吧</p>
+</div>
+  
   
 
 
@@ -601,7 +575,7 @@ sql</code> 语句结构。
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
       </li>
     
       <li class="post">

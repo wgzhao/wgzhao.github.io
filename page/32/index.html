@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="Apache自身并不支持中文目录，但是目前日本的webdev提供了mod_encoding插件来支持多字节目录。
-在AS5和Everest0.5pre2版本上测试通过，记录如下： 1）首先确定安装了httpd-devel包。如果没有安装之 ">
+  <meta name="description" content="经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的xml编程代码。
+由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。 首先申明：该代码不能保证再所有IE5.5以上的浏览器都能通过，我实在想不通，就IE那么烂的浏览器居然会有那么多人用， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,7 +72,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory/">让Apache支持中文目录</a></h1>
+      <h1 class="entry-title"><a href="/2004/10/19/paging-using-javascript-xml-xslt/">Javascript+xml+xslt实现动态分页</a></h1>
     
     
       <p class="meta">
@@ -88,435 +88,154 @@
   
 
 
-<time datetime="2007-12-04T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2004-10-19T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory/">Comments</a>
+           | <a href="/2004/10/19/paging-using-javascript-xml-xslt/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/10/19/paging-using-javascript-xml-xslt/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Apache自身并不支持中文目录，但是目前日本的<a href="http://webdav.todo.gr.jp">webdev</a>提供了<code>mod_encoding</code>插件来支持多字节目录。
-在AS5和Everest0.5pre2版本上测试通过，记录如下：</p>
+  <div class="entry-content"><p>经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的xml编程代码。<br/>
+由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。</p>
 
-<p>1）首先确定安装了httpd-devel包。如果没有安装之</p>
+<p>首先申明：该代码不能保证再所有IE5.5以上的浏览器都能通过，我实在想不通，就IE那么烂的浏览器居然会有那么多人用，光javascript报错就是等于没说，而且还能糊弄别人，和mozilla的javascript调试器相比，IE可以钻到地逢里面去了。<br/>
+好不容易下载了MS声称加强了的调试器，依然是小儿科，我真的不知道MS是不是把顾客当宝弄。<br/>
+算了，不说这些了，反正我的Jscript也没怎么学，就当成我无法理解MS的javascript吧。</p>
+
+<p>两个文件保存到了<a href="https://github.com">github</a>里，可以点击下面的链接下载：</p>
+
+<p><a href="https://gist.github.com/4419135">books_grid.xml</a></p>
+
+<p><a href="https://gist.github.com/4419146">grid.xsl</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/10/19/XSLT-instructions-finishing/">XSLT指令整理</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-10-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/10/19/XSLT-instructions-finishing/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/10/19/XSLT-instructions-finishing/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ol>
+<li><p>xsl:apply-imports
+允许引入的模板规则反转正常的引入次序,通常偏袒引入文档中的模板.这个表示,加入有2个同名模板,一个再用户的主要样式表中,另外一个在引入样式表中.那么将调用引入样式表中的那个模板.</p></li>
+<li><p>xsl:apply-templates 识别待处理的节点集,如何确定处理他们的模板规则.假如没有找到模板规则,则使用内置的模板规则.</p></li>
+<li><p>xsl:attribute 可以用来为结果元素添加属性.此元素向当前节点输出一个属性名称合数值.</p></li>
+<li><p>xsl:call-template 调用一个指定的模板</p></li>
+<li><p>xsl:choose
+在若干可选方案中定义一个选择.必须至少有一个xsl:when子体提供此条件及相关的输出模板.可以包括一个xsl:otherwise元素,并在所有测试(满足所要求的条件)失败时选择它.</p></li>
+<li><p>xsl:comment 用于为结果树创建注释.</p></li>
+<li><p>xsl:copy 提供节点&#8221;浅复制&#8221;.它在将元素节点复制给结果树时,不复制其子节点</p></li>
+<li><p>xsl:copy-of
+此节点提供节点&#8221;深复制&#8221;.它在将元素节点复制给结果树时,复制其子节点.这在将一个XML树转换为另外一个XML树时,非常有用</p></li>
+<li><p>xsl:element 可以在XSLT模板中用来计算结果树中的新元素.此节点在需要计算结果节点中待创建元素的名称或名字空间时,特别有用.</p></li>
+<li><p> xsl:fallback 用来确保正向兼容性.在XSLT的未来版本中,假如开发者使用了一个XSLT处理机不支持的XSLT指令,那么他们可以在定义一个<code>xsl:fallback</code>元素,为应该进行的处理提供其他选择</p></li>
+<li><p>xsl:for-each 利用XPath表达式选择节点集,并对节点集的每一个节点执行相同处理</p></li>
+<li><p>xsl:if 封闭仅在满足特定条件时实例化的模板主题.假如此表达式经测试为false,那么其中的内容将不传给结果树</p></li>
+<li><p>xsl:message 可用来输出一个消息.还可以用来终止样式表操作的执行</p></li>
+<li><p>xsl:number 用来在当前节点中插入一个格式化整数,和/或为输出格式化一个数字</p></li>
+<li><p>xsl:porcessing-instruction 用于在结果树创建一个处理指令</p></li>
+<li><p>xsl:text 可用来计算XSLT结果树中的文本节点</p></li>
+<li><p>xsl:value-of 将单个源节点的字符串复制给输出树.select属性定义需要求值的源节点.此指令始终为空</p></li>
+<li><p>xsl:variable 可用做最高级元素或模板中的指令.一旦使用,此元素在样式表中定义一个局部或全局变量.
+说明:只有上述表中的元素才允许出现在模板中.在一些特殊环境下,也允许下列元素以模板元素的子节点形式出现:</p></li>
+<li><p>xsl:param     元素可以用做最高级元素,或者是xsl:template元素的直接子体.用做最高级元素时,它定义全局参数.在xsl:template元素中使用时,它定义局部参数.</p></li>
+<li><p>xsl:with-param 此元素在<code>xsl:apply-templates</code>    或<code>xsl:call-template</code>元素使用.它给参数赋值,可以再调用模板时使用这些数值.由于没有用做<code>xsl:template</code>的子体,因此<code>xsl:with-param</code>元素并不是正式的XSLT指令.确切地说,它是XSLT指令的一个子体.</p></li>
+<li><p>xsl:sort 此元素再xsl:apply-templates或xsl:for-each元素中使用,他提供一个分类键,定义节点选择的顺序.</p></li>
+<li><p>xsl:when 元素在<code>xsl:choose</code>(一个指令)中使用.它提供一个待测试的条件,以及求值为true时采取的行动.</p></li>
+<li><p>xsl:otherwise 此元素在<code>xsl:choose</code>元素(一个指令)中使用,提供一个动作,再其他<code>xsl:choose</code>,<code>xsl:when</code>子体求值均为false时采用.</p></li>
+<li><p>xsl:document 这是<code>xslt1.1</code>中的元素,它允许产生多个结果树.</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/10/19/To-expand-the-functions-of-wget/">扩展wget的功能</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-10-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/10/19/To-expand-the-functions-of-wget/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2004/10/19/To-expand-the-functions-of-wget/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>问题：
+wget和curl是我非常喜爱的下载程序，可是却有这样的问题，比如当我要下载20个文件，这些文件至少名字不同，但是非常有规律，比如</p>
+
+<pre><code>http://www.example.com/01.html
+http://www.example.com/02.html
+..............
+http://www.example.com/99.html
+</code></pre>
+
+<p>如果<a href="http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81robots%E7%9A%84%E8%AF%9D%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8">http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81robots%E7%9A%84%E8%AF%9D%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8</a>
+<code>wget -r http://www.example.com/</code>
+来批量下载，但是这种情况很少，特别是http协议的(ftp的话都可以)
+于是我就想扩展这个功能。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/12/03/about-linux-gate-so-1-and-system-call/">About linux-gate.so.1 and System Call</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-12-03T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/12/03/about-linux-gate-so-1-and-system-call/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/12/03/about-linux-gate-so-1-and-system-call/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://blog.chinaunix.net/u/6303/">Joh Lee</a>上午给我推荐了一个帖子<a href="http://www.trilithium.com/johan/2005/08/linux-gate/">what is linux-gate.so.1?</a>，下午才看完，觉得解释得很清楚，帖子较多的评论也说明了这点。之前也曾有过关于linux-gate.so.1的疑惑，其表象就是linux-gate.so.1为什么找不到，却不知道什么原因，自己也没有去想办法解答这个疑惑。看完后，和John Lee聊天，说到要不我就我能理解的，尝试翻译一下，他觉得可以，至少没有坏处。遂开始着手，翻译到一半，突然想起，是不是已经有人已经做过的工作了呢，如果是，那我直接拿来主义就好了。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2007/12/03/about-linux-gate-so-1-and-system-call/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/12/02/Highlight-Diff-output/">高亮显示Diff输出</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-12-02T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/12/02/Highlight-Diff-output/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/12/02/Highlight-Diff-output/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>在 Linux 下，使用 diff 命令可以对文件进行比较，从而了解其差异。不过，diff
-命令的输出结果以同色显示，对于这种差异的表现可能不够强烈。好在我们还可以通过<a href="http://colordiff.sourceforge.net/">ColorDiff</a>
-来加以改善。ColorDiff 是一个 Perl 脚本，它通过不同的颜色来高亮显示 diff
-命令的输出结果，非常显眼。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2007/12/02/Highlight-Diff-output/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/11/30/Made-a-invitation/">发了请帖</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-30T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/11/30/Made-a-invitation/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/11/30/Made-a-invitation/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>暂时收集到了一部分同学朋友的常用email地址，昨晚通过我写的蹩脚程序群发了朋友们帮我制作的请帖。
-现在邮件服务器拒收比较严重，如果你还没有收到我发出的请帖，请留言告诉我，我再补发。谢谢！</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/11/29/wedding-invitation-funny-edition/">婚礼请帖(搞笑版)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-29T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/11/29/wedding-invitation-funny-edition/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/11/29/wedding-invitation-funny-edition/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>正式的请帖已经通过我的email脚本发出去了。轻松一下，改自网上的请帖。</p>
-
-<p>本人大喜日订在下月15日(2007.12.15)</p>
-
-<p>各位钱包还有半个多月的屯积时间！</p>
-
-<p> 当日现场备有刷卡机(未超过2000元需加手续费)及礼卷、股票质押服务！不然先押学生证、身份证也可以，一个月内补钱过来有效</p>
-
-<p> 凡出示失业遣散证明者可享1200早场特惠价。</p>
-
-<p> 科学园区工作者一律1600元起跳！</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2007/11/29/wedding-invitation-funny-edition/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/11/29/Welcome-to-our-wedding/">欢迎您光临我们的婚礼</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-29T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/11/29/Welcome-to-our-wedding/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/11/29/Welcome-to-our-wedding/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>2007.12.15,湘潭盘龙山庄大酒店，我和lancy等候您的光临，邀请大家一起来见证我人生最重要的时刻。</p>
-
-<p><img src="/uploads/wedding_invitation.jpg" alt="请帖" /></p>
-
-<p>我知道，有很多的朋友不能来现场祝福我们，但是朋友们，不管你们在哪里，我们都能感受到你们的祝福，也感谢大家的祝福，谢谢！</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/11/29/Invitation-to-do/">做请帖</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-29T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/11/29/Invitation-to-do/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/11/29/Invitation-to-do/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>本不准备发请帖的，那天朋友在网上说，不发请帖，电子版本的也要送一个撒。  <br/>
-想想也是，纸质的很难送到，但是电子的还是比较方便吧，特别是经常在网上的朋友们，这也算是一个正式邀请函，电话里通知，总感觉少了点什么。
-赶紧行动，到网上找了几个模板，也参考了别人的请帖，首先决定用flash的方式，可惜我不会做，只好搔扰fantasy.xu了，逼着他做了改了一遍又一遍。改完后，想把flash插入到邮件正文里，但是发现怎么都不行，到网上找了一些方法也不行，我想即便又方法，肯定也是针对特定的邮件客户端的，还是不要了，打算改成邮件里给出链接地址，点击后到我的blog上看到flash请帖。这样还能解决一个名字的问题，因为是针对每一个人发，因此需要有每一个人的名字，所以名字不能预先做到flash里，否则要做很多张，只好采用从url上获取名字的办法。  <br/>
-做完了，测试了下，觉得还可以，但是我们还是想最后能嵌入到邮件里，这样不用再开网页。flash这种试行估计比较困难了。
-那只能试试图片的方式了。<br/>
-于是又抓了忙得不可开交的brisy来帮我做图片，害得他昨晚10点多还在帮我弄，辛苦了。<br/>
-图片做好后，发现如果分别添加别人的名字，工作量就比较大了，所以决定把brisy做的请帖放到blog上，因为这不需要针对具体某个人。因此用不着写上名字。</p>
-
-<p>最后还要<a href="http://yufei1220.bokee.com">亦然飞飞</a>下班后，帮我做了一个海报式的请帖，插入到邮件中。</p>
-
-<p>非常感谢三位帮我制作请帖，我知道他们三位可能都没有办法来现场庆祝我们的婚礼，但是无论你们在哪里，我都能感受到你们的祝福。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/11/26/Set-the-hotel/">定下了酒店</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-26T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/11/26/Set-the-hotel/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/11/26/Set-the-hotel/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>定酒店不是一件容易的事情，特别是向我们这种情况。
-所以花了很长时间，也选择了很久，知道今天才把酒店定下来。
-现在一个担心的是，估计菜不够吃，哈哈。</p>
-
-<p>不过，似乎。。。。。。，一半婚礼酒席上我也从来没有吃饱过，不是婚宴不够隆重，不是菜不够，只是忘记了吃，应该是被新娘的美貌吸引去了吧，所谓秀色可餐也。呵呵</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/11/19/Personal-income-tax-should-be-shopping-here/">商场应该收个人所得税吗</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-19T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/11/19/Personal-income-tax-should-be-shopping-here/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/11/19/Personal-income-tax-should-be-shopping-here/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://mlsx.xplore.cn/read.php/804.htm">这两天逛街</a>时，商场搞了一个“六返一”的活动，就是你买6单价值都在50元以上的商品，商场随机抽取一单的价格全额返回给你，当然不是给你现金，而是通过电子货币的形式，返回到你的会员卡中，一年内消费都有效。返回时，要扣除20%的个人所得税，lancy和我都觉得在这个不可理解。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2007/11/19/Personal-income-tax-should-be-shopping-here/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/11/19/In-the-past-few-days-busy-shopping/">这几天忙逛街</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-11-19T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/11/19/In-the-past-few-days-busy-shopping/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2007/11/19/In-the-past-few-days-busy-shopping/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>似乎很忙，但是又说不上具体在忙什么，只是家里停电，加上又不能上网，于是这几天又折腾了一下我的linux系统，不过没有弄出什么名堂，双休倒是确实累，周六lancy参加完运动会，回来就动不了，但是过了不到1各小时，就说我们去逛街吧，休息一天都不肯。<br/>
-于是从下午3点出去，直到晚上10点多才回来，也就买了3,4件东西。我稍微统计了一下时间，抛开那些看一眼就走的，只说可以试试的，一半都会需要大约1个小时的时间。不过还好，我的衣服总算买好了。不过比原计划要买的价格低了近3/4。呵呵，又省钱了。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2007/11/19/In-the-past-few-days-busy-shopping/">Read on &rarr;</a>
+      <a rel="full-article" href="/2004/10/19/To-expand-the-functions-of-wget/">Read on &rarr;</a>
     </footer>
   
 
@@ -524,8 +243,6 @@
     </article>
   
   <div class="pagination">
-    
-      <a class="prev" href="/page/33/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -540,7 +257,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
       </li>
     
       <li class="post">

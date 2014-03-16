@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content=" 皮皮喝的奶粉一直都是在当地的母婴店购买的，也打过电话给厂商，确定了正牌产品。喝了这么久时间，还算不错，至少没有出现什么问题。 刚好有亲戚要从深圳回来，于是托他从香港买了相同牌子的奶粉过来，价格折算下来差不多。 也许是考虑到内地和香港的语言环境，社会背景等原因，两者的产品外包装还是相差比较大的。 ">
+  <meta name="description" content="/dev/sdb1挂载在/data/u01上 却不小心执行了tar -vczf /dev/sdb1 /data/u01,怎么办？ 我当时一直考虑的都是如何恢复这个sdb1的文件系统，于是我在本地做了一个测试。发现执行tar之后，mount是肯定不行了，提示需要指定文件系统类型。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,7 +71,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/03/24/wyeth-different-inland-hk/">奶粉在内地和香港的差别</a></h1>
+      <h1 class="entry-title"><a href="/2007/07/20/Did-not-come-to-mind/">脑子没有转过来</a></h1>
     
     
       <p class="meta">
@@ -87,29 +87,27 @@
   
 
 
-<time datetime="2009-03-24T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-07-20T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2009/03/24/wyeth-different-inland-hk/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/03/24/wyeth-different-inland-hk/">Comments</a>
+           | <a href="/2007/07/20/Did-not-come-to-mind/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/20/Did-not-come-to-mind/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><img class="left" src="/uploads/wyeth.jpg" title="&#34;同一奶粉品牌在内地和香港包装的差别&#34;" alt="&#34;同一奶粉品牌在内地和香港包装的差别&#34;"></p>
+  <div class="entry-content"><p>/dev/sdb1挂载在/data/u01上 却不小心执行了<code>tar -vczf /dev/sdb1 /data/u01</code>,怎么办？</p>
 
-<p>皮皮喝的奶粉一直都是在当地的母婴店购买的，也打过电话给厂商，确定了正牌产品。喝了这么久时间，还算不错，至少没有出现什么问题。</p>
-
-<p>刚好有亲戚要从深圳回来，于是托他从香港买了相同牌子的奶粉过来，价格折算下来差不多。</p>
-
-<p>也许是考虑到内地和香港的语言环境，社会背景等原因，两者的产品外包装还是相差比较大的。</p>
+<p>我当时一直考虑的都是如何恢复这个sdb1的文件系统，于是我在本地做了一个测试。发现执行tar之后，mount是肯定不行了，提示需要指定文件系统类型。执行mke2fs的时候，居然还能看到备份的超级块。不过前面的几个备份超级块都没有用了，\
+于是从选择最后一个备份的超级块，使用<code>e2fsck -b</code> 的方式恢复。给出了一个无效的ext3节点信息，然后就出现大量的需要你fixed的选项。<br/>
+一路下去后，确实能mount上了，但是什么数据都没有了。连lost+found里都是干干净净的。和重新mkfs没有差别。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2009/03/24/wyeth-different-inland-hk/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/07/20/Did-not-come-to-mind/">Read on &rarr;</a>
     </footer>
   
 
@@ -121,7 +119,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/03/23/replacement-of-the-msn-account/">更换了MSN帐号</a></h1>
+      <h1 class="entry-title"><a href="/2007/07/19/ionice-use/">Ionice的用途</a></h1>
     
     
       <p class="meta">
@@ -137,29 +135,26 @@
   
 
 
-<time datetime="2009-03-23T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-07-19T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2009/03/23/replacement-of-the-msn-account/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/03/23/replacement-of-the-msn-account/">Comments</a>
+           | <a href="/2007/07/19/ionice-use/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/19/ionice-use/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>昨天更换了MSN帐号，并把以前的联系人导入进来。</p>
-
-<p>今天有几个朋友为什么换帐号，之前不是用的挺好吗？</p>
-
-<p>其实，换MSN帐号不是一时头脑发热而做的决定，很早以前就想把那个 <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#x6d;&#108;&#115;&#x78;&#64;&#x6d;&#x73;&#110;&#x2e;&#99;&#111;&#x6d;">&#x6d;&#108;&#x73;&#x78;&#64;&#x6d;&#115;&#110;&#x2e;&#x63;&#111;&#109;</a> 给废了。主要原因是其邮箱的问题。</p>
-
-<p>虽然现在MSN的邮箱容量不是大问题了，但是垃圾邮件太多，无论我怎么设置，垃圾还是有那么多，更气愤的是MS官方的广告也非常多，这些邮件我还不能标志为垃圾邮件，典型的流氓行径。</p>
+  <div class="entry-content"><p>nice(1)很多人都知道,它主要是影响CPU调度的.而ionice则主要是影响磁盘调度的.<br/>
+使用ionice基本上在下面两种情况: <br/>
+1)虽然不需要太多磁盘IO,但是希望反应快速.<br/>
+2)有大量的磁盘IO需求,但是对时间没有太多要求,也就是不着急完成.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2009/03/23/replacement-of-the-msn-account/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/07/19/ionice-use/">Read on &rarr;</a>
     </footer>
   
 
@@ -171,7 +166,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/03/22/revive/">起死回生</a></h1>
+      <h1 class="entry-title"><a href="/2007/07/19/I-optimized-the-system/">优化我的系统</a></h1>
     
     
       <p class="meta">
@@ -187,76 +182,120 @@
   
 
 
-<time datetime="2009-03-22T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-07-19T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2009/03/22/revive/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/03/22/revive/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>一台服务器，上面跑的还是Fedora Core 2，算是很久远的操作系统了，现在连更新都找不到更新源了，于是打算升级，一开始是打算升级到Fedora
-10的，但是作为服务器，我对Fedora还是持怀疑态度，于是决定上CentOS 5.2，首先下载了所需要的ISO镜像文件。</p>
-
-<p>因为服务器不在身边，没法通过正常的方式安装，于是我想通过远程，直接升级RPM的方式看看能不能搞定，至少我以前这么干过，只是版本跨度没有这么大。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2009/03/22/revive/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/03/13/using-sudo-effectively/">用好sudo</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-03-13T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2009/03/13/using-sudo-effectively/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/03/13/using-sudo-effectively/">Comments</a>
+           | <a href="/2007/07/19/I-optimized-the-system/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/19/I-optimized-the-system/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>sudo工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的root访问权限。它是一个setuid程序，只需要输入用户自己的密码，就可以执行sudo后面的命令。<br/>
-使用root帐号，运行/usr/bin/visudo 来编辑那些用户可以调用sudo命令的用户列表，缺省的sudo列表看上去类似下面这样：</p>
+  <div class="entry-content"><p>虽然同样的机器下，使用Linux比windows xp或vista 更快，但是我希望Linux更快。
+刚做了三个方面的系统优化,系统整体性能提高40%,使用的方法和大家共享:</p>
 
-<pre><code> root ALL=(ALL) ALL
+<p>1) 磁盘优化
+这个以前也做过,不过每次都是单独做而已,没有和接下来的两条接合起来.方法就是使用hdparm命令了.
+优化后参数是:</p>
+
+<pre><code>[root@mlsx ~]# hdparm -v /dev/hda
+
+/dev/hda:
+multcount = 16 (on)
+IO_support = 0 (default 16-bit)
+unmaskirq = 0 (off)
+using_dma = 1 (on)
+keepsettings = 1 (on)
+readonly = 0 (off)
+readahead = 1024 (on)
+geometry = 16383/255/63, sectors = 117210240, start = 0
 </code></pre>
 
-<p>很不幸，很多系统管理直接把这条当作了模板，然后授权给其他用户，就像这样：</p>
+<p>具体的命令是:</p>
+
+<pre><code>#hdparm -d 1 /dev/hda
+#hdparm -m 16 /dev/hda
+#hdparm -a 1024 /dev/hda
+#hdparm -k 1 /dev/hda
+</code></pre>
+
+<p>通过优化磁盘参数,我的磁盘读写速度由原来的15.69M/S提升到了现在的23.57M/S,提高达50%.</p>
+
+<p>2)优化挂载参数
+因为是自己用,因此有些挂载参数可以加上,比如noatime,对于/boot而言(假设/boot是独立的分区),它仅仅是在启动的时候使用,因此给他加上一个noatime的参数是可以的.另外,我个人的数据和系统是分开的,因此系统坏了,系统被人攻击了(有可能吗?)我无所谓,因此给/也加上noatime参数.实际上,我把除了我存储个人数据的分区使用的defaults参数外,其他的都加上了noatime参数.
+就是在/etc/fstab文件里,对应行的defaults后面加上&#8221;,notime&#8221;就可以了.如果不想重启系统,那么执行类型下面的命令就好了
+<code>#mount -o remount,defaults,notime /</code></p>
+
+<p>3)空间换时间<br/>
+现在空间已经不是问题,因此空间换时间是划得来的.这个优化主要是为了提高应用程序的载入速度.<br/>
+有两个办法,如果是自己编译的程序,那么可以考虑采用静态(static)编译的方式,很多configure都给出静态编译的选项,这样就不用再动态载入库文件,快了很多.<br/>
+对于已经存在的程序呢,比如konsole.我们可以使用prelink命令来预先把需要载入的库链接好.</p>
+
+<pre><code>[root@mlsx ~]# ls -l /usr/bin/konsole 
+-rwxr-xr-x 1 root root 3704 04-10 17:04 /usr/bin/konsole 
+[root@mlsx ~]# prelink /usr/bin/konsole
+[root@mlsx ~]# ls -l /usr/bin/konsole 
+-rwxr-xr-x 1 root root 39556 04-10 17:04 /usr/bin/konsole 
+</code></pre>
+
+<p>体积是膨胀了一个数量级.但是载入速度也提高了一倍.
+我把<code>/usr/bin/</code>下的dcop开头的和kde开头的程序全部做了prelink。经过测试，系统整体性能提高了40%左右，比较爽。
+如果你的程序使用的库不在标注路径里，或者系统找不到，那么使用-l的参数。</p>
+
+<p>我的测试环境如下：</p>
+
+<p>三星X05笔记本标准配置，Everest 0.3版本，自己增加了N多程序。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/07/18/commands-study-b/">\[/usr/sbin学习\]b\*学习</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/07/18/commands-study-b/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/18/commands-study-b/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>bgpd：<a href="http://www.qugga.net">Quagga</a>软件包的一个程序，用来实现BGPv4等路由协议的程序。Quagga是一个路由程序套件，它提供了OSPFv2, OSPFv3, RIP v1 and v2, RIPng and BGP-4等协议的实现。用它，就可以把一个Linux系统改造成一个功能强大的路由器，和那些动则上十万百万的硬件路由器功能相当，对于SMB(Small
+Middle Business)而言,应该是非常不错的选择。</p>
+
+<p>Quagga还包括下面一些命令：
+<code>bgpd ospf6d ospfclient ospfd ripd ripngd watchquagga zebra</code>
+quagga的使用方式和使用cisco等网络设备厂商的设备差不多，可惜我对这些产品一窍不通，因此quagga这么好用的软件，对我来说，也就用处不大了，于是略过。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2009/03/13/using-sudo-effectively/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/07/18/commands-study-b/">Read on &rarr;</a>
     </footer>
   
 
@@ -268,7 +307,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/03/05/10-things-you-need-know-about-backup-solutions-for-mysql/">备份MySQL需要知道的十件事</a></h1>
+      <h1 class="entry-title"><a href="/2007/07/17/commands-study-a/">\[/usr/sbin/学习\]a\*命令</a></h1>
     
     
       <p class="meta">
@@ -284,23 +323,24 @@
   
 
 
-<time datetime="2009-03-05T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-07-17T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2009/03/05/10-things-you-need-know-about-backup-solutions-for-mysql/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/03/05/10-things-you-need-know-about-backup-solutions-for-mysql/">Comments</a>
+           | <a href="/2007/07/17/commands-study-a/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/17/commands-study-a/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>你使用过别人的备份方案来备份你的MySQL数据吗？你有多关心你的数据？你敢确定你现在正在运行的脚本就是可靠的，可恢复的备份，而且在运行过程中不会影响你的关键作业吗？在回答这个问题之前，先回答下面十个问题吧：</p>
+  <div class="entry-content"><p><code>/usr/sbin</code>下的命令明显比/sbin下的命令多了很多，因此<code>/usr/sbin</code>应该是一个比较长的学习过程。
+上次rachel问到我一个mke2fs的命令，我说我怎么没有看到过呀，结果她从我的/sbin学习中找出了这个命令，羞愧呀，学习的又很快忘记了，能记住的还是以前记得和经常使用的命令，真是需要学而时习之呀！</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2009/03/05/10-things-you-need-know-about-backup-solutions-for-mysql/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/07/17/commands-study-a/">Read on &rarr;</a>
     </footer>
   
 
@@ -312,7 +352,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/02/26/what-to-eat/">吃什么</a></h1>
+      <h1 class="entry-title"><a href="/2007/07/16/bus-old-road-new-campus/">6路车，老路，新校园</a></h1>
     
     
       <p class="meta">
@@ -328,62 +368,27 @@
   
 
 
-<time datetime="2009-02-26T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-07-16T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2009/02/26/what-to-eat/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/02/26/what-to-eat/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>吃吧，恐怕会被毒死，不吃呢，又会饿死，做动物难呀！</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/02/15/two-way-mysql-replication/">MySQL双向复制简单配置步骤</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-02-15T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2009/02/15/two-way-mysql-replication/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/02/15/two-way-mysql-replication/">Comments</a>
+           | <a href="/2007/07/16/bus-old-road-new-campus/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/16/bus-old-road-new-campus/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>MySQL从3.23版本起就已经内置了复制(Replication)的功能，我们可以配置成master-slave模式，也可以配置为master-master模式。方法很简单，这里就master-master的配置简单的记录下来,我这里测试环境是mysql 5.1.31，一个是自己用源代码编译的，一个是用的xampp1.7里自带的。</p>
+  <div class="entry-content"><p>因事周末回了一趟学校。
+坐上去学校的6路车后，我对lancy说，有好几年没有坐过6路车了吧。
+是呀，那个时候，学校联通外面的唯一公交车就是6路。如果没有记错了话，本市第一辆无人售票的公交车就是从6路开始的。坐了6年的6路车，当然很有感情了。</p>
+
+<p>我对lancy说，现在应该6路车不会再经过原来的老路了，都走新路了，我刚说完这话，6路车就用实际行动否定的我的猜测，在科技园的转口处并没有右拐，而是继续往前冲，看来又要免费体验一次蹦极的活动了。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2009/02/15/two-way-mysql-replication/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/07/16/bus-old-road-new-campus/">Read on &rarr;</a>
     </footer>
   
 
@@ -395,7 +400,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/">\[/usr/sbin学习\]剩余的命令</a></h1>
+      <h1 class="entry-title"><a href="/2007/07/12/So-you-really-toss/">真该这么折腾吗</a></h1>
     
     
       <p class="meta">
@@ -411,29 +416,28 @@
   
 
 
-<time datetime="2009-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-07-12T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/">Comments</a>
+           | <a href="/2007/07/12/So-you-really-toss/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/12/So-you-really-toss/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>离最近一次的命令学习估计是2年前的事情了，官方理由可以说是杂事多，实际理由还是停了一段时间后，很难捡起来。</p>
+  <div class="entry-content"><p>这是看《linux enterprise cluster》引发的，看完后，我才发现其实我真的不了解heartbeat和lvs。
+虽然我知道配置heartbeat+lvs有现成的文档，而且还是图文并茂的中文版本。但是另外一个方面我了解的是lvs和heartbeat毕竟不是一码事，只是heartbeat中集成了lvs罢了。</p>
 
-<p>2009年的计划中提到了需要把这个命令学习完成，这次从g开头的命令一直到z结尾的命令全部看一遍，主要是把以前没有看到的，或者以前不知道的一些命令参数记录下来，已经知道了的命令就不记录在这里了,如此以来，发现要认真看的命令还真没有几个了，毕竟对系统管理员而言，/bin,/sbin/下的命令的重要性是高于/usr/sbin/的。于是凑合着记录了三个：</p>
+<p>于是首先去看看heartbeat，很早前我电脑里就下载了来自SuSe实验室的《Linux-HA Heartbeat System
+Design》这篇论文，可惜一直都没有仔细看完，无奈英语太差呀。</p>
 
-<p><a href="http://www.wireshark.org/">wireshark</a>：乍一看，不知道这个命令做什么用的，man了一下手册，到网络上搜寻了一把，才知道原来它是大名鼎鼎的Ethereal的化身呀，ethereal估计很多用过Linux的人都知道，它是世界上最流行的网络分析工具之一，这个强大的工具可以捕捉网络中的数据，并未用户提供网络和上层协议的各种信息，它具有安装简便，简单易用，功能丰富等特征，值得一提的是，它还有一个非常容易操作的图形界面，当然如果你是CLI的死忠分析，也许tshark会成为你的最爱，tshark是wireshark的CLI实现。</p>
-
-<p><a href="http://www.tripwire.org">tripwire</a>：*nix系统下最著名的文件系统完整性检查工具，这个软件采取的核心技术就是对每个要监控的文件产生一个数字签名并保留下来。当数字签名不一致时，必定文件被修改过。当你要为你的系统安全着想的时候，你应该想起它！</p>
-
-<p>vipw：不是多么神奇和高深的命令，不带任何参数，运行后，直接打开<code>/etc/passwd</code>，于是我知道这个命令的意思了<code>vipw = vi /etc/passwd</code>，以为是一个脚本，然后vipw是一个地地道道的ELF文件，实际上他是VIM的tiny版的实现。<br/>
-不晓得作者写这个程序的目的是什么？仅仅是为了方便编辑<code>/etc/passwd</code>？还是说万一系统没有安装编辑器，我还用它当做编辑器用，<br/>
-又或者仅仅只是一个玩笑？不理解。</p>
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2007/07/12/So-you-really-toss/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -444,7 +448,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/02/10/memo-from-a-child-to-parents/">孩子给爸爸妈妈的备忘录</a></h1>
+      <h1 class="entry-title"><a href="/2007/07/10/ip-alias-and-secondary-ip-address/">Ip Alias and Secondary Ip Address</a></h1>
     
     
       <p class="meta">
@@ -460,41 +464,32 @@
   
 
 
-<time datetime="2009-02-10T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2009/02/10/memo-from-a-child-to-parents/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/02/10/memo-from-a-child-to-parents/">Comments</a>
+           | <a href="/2007/07/10/ip-alias-and-secondary-ip-address/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/10/ip-alias-and-secondary-ip-address/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><ol>
-<li><p>不要娇惯我。我知道的非常清楚，不是我要什么就能得到什么的。有时我只是在试探你。</p></li>
-<li><p>不要害怕在我面前坚持你的立场。我其实更喜欢你这样，因为这使我有安全感。</p></li>
-<li><p>不要让我养成坏毛病。只有你才能在把它们消灭在萌芽状态。</p></li>
-<li><p>不要让我感觉自己比实际要小，那样只能使我愚蠢地去充“大”个。</p></li>
-<li><p>如果有可能，不要当众教训我。如果你在私下悄悄跟我说，我会更加注意的。</p></li>
-<li><p>不要让我感觉自己犯的错误就像犯了罪一样，那只能搞乱我的价值观。</p></li>
-<li><p>不要阻止我承担后果，有时我需要从教训中学习。</p></li>
-<li><p>当我说“我恨你”时，不要生气。有时我恨的不是你，我恨的只是你那令我感到很渺小的权威。</p></li>
-<li><p>我得了小病时，不要太在意我。有时生病可以使我得到我所需要的关注。</p></li>
-<li><p>不要啰啰嗦嗦的。如果你那样的话，我只能通过装聋作哑来保护自己。</p></li>
-<li><p>不要忘记，有时我会词不达意。这也是为什么我有时不能准确地表达自己。</p></li>
-<li><p>当我问问题时，不要不耐烦。否则，你会发现我不再问你问题，而是从别的地方寻找答案。</p></li>
-<li><p>不要出尔反尔，这样只能是我疑惑，并对你失去信任。</p></li>
-<li><p>不要对我说我的恐惧是可笑的。它们是真真实实的，如果你能理解我，你就能更好地安慰我。</p></li>
-<li><p>永远不要暗示你是完美的和不会犯错误的。否则当我发现事实与此相反时，我会感到很震惊的。</p></li>
-<li><p>永远不要认为向我道歉有损你的尊严。一个诚实的道歉会使我感到温暖并加深我们的感情。</p></li>
-<li><p>不要忘了我喜欢尝试。如果我不尝试就寸步难行，所以请你包容。</p></li>
-<li><p>不要忘了我长得很快。你肯定觉得与我俱进非常困难，但是还是请你努力去做。</p></li>
-<li><p>不要忘了离开了厚爱和理解我不会茁壮成长，但是，这一点我不需要提醒你把？</p></li>
-<li><p>请保持身体健康，因为我需要你。</p></li>
-</ol>
+  <div class="entry-content"><p>孤陋寡闻了，以前一直以为ip别名（ip aliase）和辅助ip地址（secondary ip
+address）是一码事情。或者说是不知道还有secondary ip address一说。</p>
+
+<p>今天偶然翻阅<a href="http://mlsx.xplore.cn/read.php/715.htm">linux enterprise
+cluster</a>时，提到了这样一句话：</p>
+
+<blockquote><p>As of this writing, the Linux kernel supports both IP aliases and
+secondary IP addresses, though IP aliases are deprecated in favor of
+secondary IP addresses.</p></blockquote>
 
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2007/07/10/ip-alias-and-secondary-ip-address/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -505,7 +500,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2009/01/10/happy-birthday-lancy/">生日快乐,lancy</a></h1>
+      <h1 class="entry-title"><a href="/2007/07/09/Linux-gab-bare-equipment/">瞎扯linux裸设备</a></h1>
     
     
       <p class="meta">
@@ -521,21 +516,84 @@
   
 
 
-<time datetime="2009-01-10T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-07-09T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2009/01/10/happy-birthday-lancy/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2009/01/10/happy-birthday-lancy/">Comments</a>
+           | <a href="/2007/07/09/Linux-gab-bare-equipment/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/09/Linux-gab-bare-equipment/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="http://lawstar.xplore.cn">lancy</a>当妈妈的第一个生日，可惜我不能当面给她庆祝了,就在这里祝她生日快乐，每天都快乐，永远都快乐。</p>
+  <div class="entry-content"><p>突然想到了裸设备，linux下的裸设备(raw
+device)一直都不是理解得很清楚，特别是用户问及到裸设备的时候，我到真不知道如何才是正确的解释，或者说能让用户相信我的说法。</p>
 
-<p>不知道她当妈妈过生日和平常过生日的感想有什么区别，也许现在没有，等到了<a href="http://pp.xplore.cn">皮皮</a>能和她说“生日快乐”的时候就会有很大区别吧。</p>
+<p>今天做了一些功课，算是又多了解了一些东西吧。</p>
+
+<p>为什么裸设备需要绑定或者说映射到已经存在的块设备上？
+这恐怕是用户问得最多的问题，我之前的回答都是linux下就是需要绑定。用户一般立刻会回一句，那为什么Unix就不用要呢？
+虽然我觉得这种比较没有太多含义，毕竟我们说Linux和Unix非常相似，但是再相似，也不是相同呀，凭什么Unix不做绑定或者映射，Linux就一定要按照这种设计模式呀？</p>
+
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/2007/07/09/Linux-gab-bare-equipment/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/07/05/bad-chinaunicom-charing/">还没有开通就收费，联通计费系统谁做的？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/07/05/bad-chinaunicom-charing/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/07/05/bad-chinaunicom-charing/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这段时间一直在投诉联通，间隔也投诉了一下移动。我不能偏心，至少对两个移动运营商都投诉了。</p>
+
+<p>投诉联通是因为我的掌中宽带让我及其郁闷，简直就是浪费我的生命。每天高峰期，我至少需要花2个小时才能上网，当然2个小时后，高峰期也过去了。
+之前给他们打电话，他们总是给出下面几个解决方案：</p>
+
+<p>1）把卡拔出来，重新插一下<br/>
+2）重启系统<br/>
+3）重新安装系统<br/>
+4）检查联通UIM卡<br/>
+5）检查无线上网卡</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/07/05/bad-chinaunicom-charing/">Read on &rarr;</a>
+    </footer>
   
 
 
@@ -558,7 +616,7 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
       </li>
     
       <li class="post">

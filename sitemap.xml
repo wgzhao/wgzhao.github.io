@@ -1,3610 +1,1350 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://wgzhao.github.io/2003/12/29/my-golden-age-2/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2003/12/30/my-golden-age-3/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2003/12/31/my-golden-age-4/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2003/12/31/my-golden-age-5/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/01/01/my-golden-age-6/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/01/04/my-golden-age-7/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/01/05/my-golden-age-8/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/01/06/my-golden-age-9/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/08/22/goodbye-my-university/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/10/18/Linux-system-time-to-obtain/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/10/18/Tips-for-using-linux/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/10/19/Sort-of-XSLT-to-use-Notes/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
         <loc>http://wgzhao.github.io/2004/10/19/To-expand-the-functions-of-wget/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2004/10/19/XSLT-instructions-finishing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2004/10/19/paging-using-javascript-xml-xslt/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2004/11/15/to-use-linux-Mathematics-programming-function-of-small-problems/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2004/11/20/The-first-real-attempt-to-the-benefits-of-NFS/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/11/21/MS-three-laws/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/11/25/I-have-a-funny-chat-with-xinhe/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/11/29/Classic-lies/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/03/Difficult-to-dance/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/09/Rare-to-see/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/09/TeX-can-work-with-other-programs/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/09/TeX-course/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/13/kile-the-good-tex-gui-editor/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/18/Simple-floppy-disk-to-crack-encryption/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/22/Firefox-Crazy/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/22/PHP-with-batch-files-to-download/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/25/Christmas-blessing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-16T11:28:08+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2004/12/26/Skills-The-cat-merger-documents/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2004/12/28/data-structure-and-algorithm-c-language/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/01/02/my-new-year-life/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/01/10/Linux-following-the-latest-Adobe-Acrobat-Reader-7.0/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/01/11/train-tickets-tears/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/01/14/Home/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/03/03/Netease-interview/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/03/04/looking-for-work-still-in-progress/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/04/26/Data-were-lost/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/04/26/Linux-under-a-number-of-tips/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/04/26/To-find-a-husband/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/04/27/Use-ftp-to-upload-automatically-back-up-files/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/04/27/vnc-configuration-notes/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2005/05/09/Engineers-have-to-use-a-quarter-of-the-time-to-reflect-on-great-ideas/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/05/09/Impetuous-to-the-software-industry-have-%5Bposted%5D/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/09/keep-the-last-enthusiasm/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/12/the-performance-tuning-apache/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/15/30-year-old-former-seems-not-to-matter/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/15/science-paper-writing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/05/15/written-on-the-tanabata/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/16/On-low-quality-ads/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/05/16/PNG-to-experience-a-semi-transparent-picture-of-the-effects-of/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/16/viewpoint-of-puppy-love-by-luxun/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/05/20/To-do-with-the-technical-support-of-rogue-embarrassment/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/21/Linux-to-use-office-suite/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/22/firefox-plug-in-really-good-weather/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/05/23/fc3-cookbook-a-delicious-dedicated-to-the-linux-novice/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/23/login-without-password-using-ssh/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/05/23/men-and-women-on-the-road-of-life-love-is-just-a-part-of-a-required-course/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/29/linux-newbie-administrator-guide/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/05/30/zhongjue-paper-to-be-shallow-awareness-to-this-practice/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/05/31/Zen-and-the-internal-relations-Paoniu/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/06/01/when-crm-can-get-such-feature/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/06/02/bash-there-are-several-ways-of-calculating/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/06/06/Linux-and-Windows-virtual-memory-to-share/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/06/06/QQ-client-has-changed/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/06/13/Linux-infection-under-way-to-repair-the-program-grep/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/06/16/There-seems-to-be-learning-some-of-the-programming-language-of-the-need-to/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/08/03/Inner-Mongolia-Prairie-travel/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/08/24/textbooks-cover-the-cities-of-the-cultural-revolution/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/08/31/linux-resolution-to-amend-and-adjust-the-location-of-the-show/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/09/01/AC-97-sound-card-in-Linux%2C-how-to-drive-up/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/09/01/Magical-parameters-ls/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/09/01/act-as-nt-domain-using-linux/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/09/01/under-linux-compressed-file-decompression-guinness/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/09/12/Classic-12-months-of-life-sentiment/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/09/21/Detailed-GRUB/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/09/21/Li-Beijing-University-lecture-video-download/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/09/22/world-car-free-day/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/09/27/Li-Ao-interview/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/09/27/and-anti-word-is-the-right-word-zen/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/09/28/A-google-search-tips/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/09/28/Some-of-the-samba-server-variables/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/09/28/Wang-Yin-did-not-think-automatically-drop/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/04/WEB-on-the-IM/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/04/Who-needs-a-desktop-application/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/11/04/mysql-forget-the-root-password-of-a-solution/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/11/09/How-to-use-Linux-for-mobile-infrared-communication/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/09/How-to-use-Linux-in-the-Bluetooth/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/09/How-to-use-Linux-in-wide-screen/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/09/More-and-more-people-with-a-rich-breakfast/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/11/09/Which-acronym-for-the-bank-to-see-if-the-cattle/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/09/how-to-using-sd-mmc-card-reader-with-laptop/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/13/NB-faced-the-embarrassment-of-buying/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/11/13/Winbind-use-linux-system-and-achieve-windowsPDC-account-synchronization/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/11/14/Congratulations-Brisy-received-the-gold-medal%21/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/11/16/Used-to-install-the-hard-disk-installed-RHEL4U1-Notes/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/11/16/control-system-with-proc-fs/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/19/Enabling-Extension-Updates/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/21/speed-up-your-firefox/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/24/Qlogic2300-optical-card-failover-testing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/25/web2-introduced/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/11/27/AJAX-framework-summary/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/12/02/kerberos-authentication-configuration/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/12/13/firefox15-crazy-me-is-bug/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/12/16/Universities-also-stay-at-369-and-so-on/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/12/24/Credit-card-repayment-time/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/12/24/introduction-rss-feed-atom/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/12/24/zoundry-offline-blog-editor-and-publish-tool/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/12/26/Then-try-to-netvibes/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2005/12/26/qemu-two-way-Internet/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2005/12/27/ethernet-driver-bug/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2005/12/31/Telecommunications-across-the-DNS-server-address/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/01/03/confilt-df-and-du/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/01/05/Linux-version-of-Kingsoft/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/01/11/Linux-training-felt/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/01/12/It-took-time-to-sort-out-the-day-blog/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/01/12/ice-road/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/01/12/what-difference-between-acpi-and-apic/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/01/13/why-not-modify-the-logindefs-effective/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/01/17/buy-a-used-dopod-818/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/01/22/buy-a-class-from-baodao/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/01/29/Danian-Ye/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/01/30/suzhou-street-summer-palace-the-royal-temple/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/11/Linux-Knowledge-Base/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/12/web2-under-mainland/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/14/google-china-blog-released/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/14/valentine-day-equal-valentine-robbery/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/15/Google-Talk-for-Linux-far-away/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/15/intel-version-of-mac-os-x-10-was-broken/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/16/55-good-habits-can-make-a-better-world/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/16/sina-news-rss-output-fulltext/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/18/en-or-ng/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/19/education-of-the-enlightenment-ghost/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/02/21/what-happened-firefox/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/01/password-storage-site/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/03/01/troubleshooting-chinese-attachment-thunderbird-15/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/03/09/home-life-wedding/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/03/13/home-live-rural-road/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/18/web2-talks/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/23/results-do-not-miss-the-chance/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/23/reuse-qq/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/25/how-many-services-provided-by-google/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/26/Windos-to-install-gnome-theme/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/26/no-one-knows-you-are-a-dog-any-more/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/27/Why-can-not-this-two-day-visit-to-my-blog/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/28/A-check-with-the-name-of-the-water/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/03/28/x-windows-slow-start-in-particular-bug-is-it/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/03/29/Gmail-MSN-and-QQ-mail-icon/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/03/30/VG-resume-case/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/04/07/All-of-a-sudden-more-than-a-blog/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/04/12/Finally-out-of-the-claws-of-the-lenovo/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/04/12/celebrate-more-than-100000-visits/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/04/14/expect-to-make-your-task-easier-2/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/04/14/why-not-visit-google/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/04/17/iostat-output-analysis/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/04/19/Console-access/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/04/19/sage-is-a-good-RSS-reader/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/04/21/Remote-configuration-KDM-Login/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/04/24/linux-file-system-benchmarks/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/04/26/qualified-business/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2006/05/10/Core-parameters-of-acceptable-manner-inconsistent/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/10/One-less-Linux-users/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/10/vim7-release/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/11/In-addition-a-new-Linux-community/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/11/which-database-beijing-gotone-using/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/12/Rachel-has-blog/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/05/14/Google-Trends-people-look-at-the-distribution-of-the-Linux-version-of-the-degree-of-concern/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/16/5itag-updated-skin/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/16/Improved-5itag.com%2C-xplore.cn-performance/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/05/18/Mysql-to-amend-the-largest-number-of-connections/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/05/18/OpenPower720-how-you/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/19/To-my-colleagues-made-an-e-mail/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/21/Colleagues-waiting-for-the-tile/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/21/upgrade-to-gaim2/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/22/5itag-I-get-to-die-disruption/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/22/houjie-opening-his-word-art-typesettingu/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/23/Sleep-all-day/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/24/linux-file-system-restrictions/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/05/25/Linux-log-server/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/05/25/To-find-a-lot-of-old-friends/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/25/poweroff-weekend/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/26/EAccelerator-used-to-speed-up-php/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/05/26/vim-folding-feature-folding/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/05/27/Moving-in-May/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/05/28/Vim-keyboard/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2006/05/30/device-mapper-multipath-in-the-Linux-applications/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/01/Children-Day-are-them-happy/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/06/01/ocfs2-the-strange-problem/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/01/redhat-want-to-sns/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/02/shell-oil-company-as-a-warning/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/04/IBM-opened-AJAX-Technology-Resource-Center/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/04/Only-map-Live-free-or-die/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/04/hsk-chinese-language-proficiency-test/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/06/That-knowledge-is-so-used/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/06/07/All-the-world-to-wish-all-the-best-candidates/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/07/my-version-2-business-card/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/09/In-the-past-few-days-do-not-go-well/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/06/13/gbk-file-documents-with-each-other-utf8-conversion/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/17/IT-workers-of-the-luxury-shopping/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/06/20/beijing-grid/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/23/it-also-sourceforge-Tingbu-Zhu/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/23/text-version-of-the-star-wars-movies/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/25/Shower-with-Chinese-characteristics/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/06/28/firefox-tips/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/01/July-1-news-network/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/03/To-lancy/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/06/monday-morning-leadership/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/07/Sino-Japanese-War-Victory/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/08/Zaiyu-muticus/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/09/inout-is-not-suitable-for-me-blog/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/10/freenas-the-open-source-nas/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/15/Watermelon-really-can-not-eat-it/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/17/Look-at-the-ZFS/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/17/Tencent-a-box-of-weather-plug-in/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/07/18/What-xplore/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/20/surfing-internet-writing-email-so-hard/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/07/20/xplore-forum-for-a-new-starting-point/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/07/21/cooperation-uplinux-and-xplore/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/07/22/The-two-meet-today/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/23/Small-change-the-page-style/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/23/Visited-North-Canton/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/07/25/How-can-you-find-the-code/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/07/27/nfs-weird-problem/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/07/29/novell-suse-10-use-experience/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/07/30/user-level-file-system-fuse/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/07/31/Life-of-a-major-combat/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/08/01/unionfs-fuse-solve-the-problem-of-iso/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/08/03/Kunming-is-the-Vermicelli-eat-it%3F/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/08/05/China-Mobile-speed/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/08/06/This-is-not-the-look/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/08/08/happy-birthday-mam/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/08/10/grub-prompt-to-install-grub/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/08/11/kolab-alternative-exchange/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/08/11/openfiler-friendly-enterprise-storage-management-platform/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/08/12/RAID-6-double-check-the-use-of-independent-access/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/08/13/Let-me-hug-you-sleep/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T20:31:04+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/08/14/The-long-felt/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/08/15/Notes-day/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2006/08/16/device-mapper-multipath-of-supernatural-events-1/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2006/08/16/device-mapper-multipath-of-supernatural-events-2/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2006/08/17/device-mapper-multipath-of-supernatural-events-3/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2006/08/18/device-mapper-multipath-of-supernatural-events-4/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/08/21/Weird-dream/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/08/21/sigh-of-love-to-freecloudz/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/08/25/Storage-study-exchange/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/08/26/Press-the-button-to-send-a-message-of-the-moment/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/08/29/Buy-a-train-ticket/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/08/30/another-valentine-day/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/08/31/beijing-goodbye-and-redflag-goodbye/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/09/10/have-bought-the-art-of-unix-programming-chinese-edition/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/09/13/how-far-from-the-information-highway/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/09/14/get-the-random-number-in-specific-range/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/09/15/the-new-features-about-bc/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/09/16/seq-command/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T20:39:14+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/09/17/other-use-about-dd-command/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/09/17/some-tips-here-document/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/09/18/sept-18th-anniversary/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/09/21/floor-13-and-floor-14/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/09/25/master-foo-and-methodologist/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/09/26/master-foo-discoursers-gui/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/09/28/master-foo-discourses-unix-nature/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/10/02/10010-faint/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/10/07/CDMA-signal-in-the-country-will-not-do/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/10/10/mastering-what-it-means/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/10/11/Hans-Reiser-was-arrested-by-the-police/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/10/11/Web-page-designers-must-have-13-Firefox-plug-in/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/10/12/you-find-a-job/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/10/13/With-the-further-development-of-cooperation/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/10/14/ext4-file-system-by-adding-linux-kernel/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/10/15/linux-kernel-support-for-real-time/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/10/16/This-was-of-no-confidence-in-Linux/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/10/17/ipod-with-the-virus%3F/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2006/10/18/That-there-is-the-mouse-with-his-left-hand-benefits/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/10/20/Google-adsense-is-not-easy-to-apply/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/10/21/Tao-Shu-find-a-good-place/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/10/25/MySQL-upgrade-garbled-talk-about-the-issues/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2006/10/26/the-conclusions-of-dicussion-setuid-with-wirlfly/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/10/27/wirlfly-and-his-feelings-about-apue/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/10/28/study-computer-from-baby/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2006/10/29/advanced-programming-in-the-unix-environment-version-2nd/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/10/30/have-bought-a-small-bookshelf/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/10/31/my-dot-xplore-dot-cn-come-soone/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/01/Over-excited-last-night/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/03/utf8_unicode_ci-with-utf8_general_ci/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/05/saddam-was-going-to-die/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/11/05/support-firefox-browser-is-set-to-the-homepage-of-the-javascript/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/11/06/feelings-interview/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/11/08/Stay-up-all-night-with-floods/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/11/08/With-the-promotion-of-six-degrees-theory-MyXplore/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/08/personalized-home-page-my-dot-xplore-dot-cn/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/09/fix-two-bugs/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/09/xinhe-advice-to-myxplore/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/10/add-some-content-to-myxplore/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/10/submit-bugs-and-advice-here/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/11/11/The-reason-can-not-find-a-job/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/12/chinese-wikipedia-is-really-open/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/13/being-using-orkut/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/15/talk-about-seo/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/11/15/talk-about-the-food-basket/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/11/15/webos-with-the-personalized-home-page-select-one-or-combined/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/16/I-have-a-winning/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/16/google-app-refuse/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/17/Map-does-not-speak/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/11/17/docbook-latex-or-wiki/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/18/Guess-who-this-is-all-ads/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/11/20/forwarding-information-be-careful-you-do-find-a-scapegoat/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/20/two-posts-i-seen-yesterday/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/11/21/When-Lenovo-suffered-win98/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/11/24/party-party-and-party/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/25/I-despise-so-to-speak/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/27/today-bad-luck/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/11/28/washing-clothes-to-washing-and-electric-ovens-both-work/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/29/99-tips-using-email/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/29/plan-a-failure-turn-to-plan-b/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/11/30/spambot-attacks/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/12/02/bought-a-computer/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/12/04/History-has-always-been-the-victor-in-history/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/04/development-with-gnu/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/04/submit-to-google-at-opportunity-time/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/12/05/Linux-Maintenance-Checklist/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/06/Yet-Another-web-based-office/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/07/about-kylinux/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/12/07/amway-not-good-thing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/08/have-read-winning-or-losing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/10/disaster-die-it-will-be-after-the-blessing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/12/11/analysis-linux-memory-process/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/12/13/When-the-file-system-inconsistency/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/12/17/Kerosene-lamp-nostalgia/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2006/12/17/notes-about-manage-and-using-mysql/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/18/To-take-a-look-at-the-SQL/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2006/12/20/linux-throubleshooting-for-system-administrators-and-power-users/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/21/JSON-ajax-the-right-hand-man/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/25/Wanli-15/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/25/i-do-not-need-christmas/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/26/nostalgia-yesterday-night/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2006/12/29/In-the-past-two-days-tossing-things/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/01/happy-new-year/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/04/notebook-come-back-from-the-dead/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/05/bad-vista/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/07/modify-my-resume/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/09/interview-refused-one/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/01/10/ministry-of-railways-finally-did-a-right-thing/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/10/return-of-the-interview/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/10/what-kind-of-college-students-we-need/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2007/01/12/system-maintenance-or-research-and-development/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/15/About-GRUB/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/17/today-heavy-snow/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/18/google-letter/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/18/mailgraph-good-statistical-tools-to-postfix/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/24/commands-start-a/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/24/my73-perhaps-disappear/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/25/commands-start-b/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/26/Advertisement/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/26/Thank-you-to-help-me-advertise-glemir/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/01/27/The-earliest-human-love-poems/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/27/commands-start-c/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/29/commands-start-d-incomplete/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/30/commands-start-d/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/01/31/commands-start-e/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/01/31/google-dot-cn-database-is-different-from-google-dot-com/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/02/01/Shame-KMT-positive-record-of-the-Anti-Japanese-War-battlefield/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/02/03/Linux-memory-repeat-simple-calculation/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/02/04/have-read-jiang-ze-ming-biography/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/02/05/commands-start-f/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/02/08/In-the-past-two-days-with-Rachel/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/02/09/commands-start-g/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/02/12/commands-start-h/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/02/12/have-read-chinese-painting/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/02/12/what-intercity-bus-we-want/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/02/14/valentine-day-gifts/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/02/15/Red-letters/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/02/27/Spring-Festival-has-witnessed-the-strange-status-quo/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/02/28/N-random-access-to-the-database-be-recorded-in-several-ways/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/03/01/Js-dynamic-cross-border-settlement-of-the-issue-by-value/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/01/simple-small-bandwidth-test-script/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/02/javascript-get-all-data-from-form/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/04/Want-to-buy-a-bed/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/05/king-shampoo-good/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/07/commands-start-k/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/08/work-as-network-engineer-tonight/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/09/today-left-5460/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/11/Abacus/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/12/some-tips-about-group-and-gshadow/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/15/oracle-performance-tuning-system-part/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/16/php-class-manipulate-excel/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/17/i-winning/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/19/commands-start-l/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/21/return-to-the-redflag/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/22/commands-start-m/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/23/troubleshooting-jdk15-garbled/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/24/commands-start-n/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/03/26/free-unix-linux-environment-experience-and-testing/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/03/27/let-history-command-show-time/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/27/use-pam-abl-plugin-prevent-attacking-ssh/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/28/chat-with-rachel-coming-from-taiwan/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/03/30/master-udev/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/01/notes-about-ibm-linux-cluster-solution/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/04/05/Please-do-not-send-me-Microsoft-Office-documents/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/05/configuration-pam-introduction/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/05/telephone-records-talking-with-95555/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/07/xplore-welcome-pczou/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2007/04/09/virtualization-technologies-discussion-introduction/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/10/practice-pam/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/11/find-page_size/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/04/14/Personal-Financial-Planning-notes-reading-notes/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/04/16/Linux-Distribution-Timeline/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/16/party-2/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/17/commands-start-p/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/04/18/Temptress-Moon-related/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/04/19/thunderbird2-late/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/04/20/can-not-be-too-much-heart-a-business-trip-to-find-room-in-mind/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/22/read-double-side-glue/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/22/read-history/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/04/22/the-world-is-flat/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2007/04/23/Two-card-set-in-the-same-segment-of-the-IP-address-of-the-problem/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/04/25/Books-such-as-the-right-home/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/05/01/calculating-god/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/05/04/ctf-zm17318/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/05/05/breakthrough-talent-bottleneck/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/05/13/Ashes/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/05/17/what-can-help-noapic-and-acpioff/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/05/21/commands-start-r/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/05/22/mengzi-and-zhouyi/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/05/25/Car-Owners-Group/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/05/25/jiingye-donghongjiulv/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/05/27/recently-wanna-shopping/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/05/28/commands-start-s/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/05/31/last-commands/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/05/31/man-command-not-works/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/06/05/Our-age-of-advertising/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/06/11/bought-a-new-bed-change-layout/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/06/21/Martial-arts-version-of-the-rumored-non-clear/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/06/21/linux-enterprise-cluster/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/06/24/Finally-bought-a-soya-bean-milk/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/06/28/Comparison-tired-recently/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/06/29/Pure-version-of-the-Linux-desktop-google/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/06/30/ftpfs-do-what/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/07/03/Oracle-10g-Performance-Tuning/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/05/bad-chinaunicom-charing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/09/Linux-gab-bare-equipment/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/07/10/fcitx-to-go-and-those-who-despise-the-so-called-master/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/10/ip-alias-and-secondary-ip-address/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/07/11/To-kill-or-change-the-system/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/12/So-you-really-toss/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/16/bus-old-road-new-campus/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/17/commands-study-a/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/07/18/Details-reflect-the-personality/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/18/commands-study-b/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/07/18/empire-afterglow/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/19/I-optimized-the-system/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/07/19/crack-new-oriental-flash-player-tutorial/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/19/ionice-use/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/20/Did-not-come-to-mind/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/21/Strange-phenomenon-card/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/22/An-Inconvenient-Truth/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2007/07/22/people-in-the-world-is-not-easy-to-come-sperm-war/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/23/commands-study-start-c-d/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/25/commands-study-start-f/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/07/27/The-strange-thing-is-very-common/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/07/30/Bought-a-cooking-pot-and-start/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/07/31/I-was-wrong/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/01/left-nothing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/03/Human-sin/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/08/03/read-zuozhuan/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/04/Mount-error/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/08/06/dream-and-reality/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/06/undefined-reference-libqtgui/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/07/Death-of-23-times-in-the-collapse-of/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/10/not-citizen-only-farmers/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/11/quickly-build-websites-using-cakephp/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/08/12/use-of-the-database-management-program-dbvisualizer/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/14/add-change-some-options-for-firefox/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/14/my-left-and-right-side/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/15/Zhao-totem/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2007/08/15/crazy-fund-result-can-not-get-cash-from-bank/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/08/19/male-promble-or-female/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/20/samsung-x05-good-bye/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/21/Three-months-to-discuss-such-results%3F/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/24/Named-Show-Desktop/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/26/americans-how-to-invest-the-stock-market/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/08/28/HTML-5-new-elements/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/08/29/configure-apache-svn-trac/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/09/01/Absurd-dream/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/09/01/restore-missing-lvm/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/09/02/bear-killed-after-cattle-to-it/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/09/18/sound-the-alarm-bell-do-not-forget-national-humiliation/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/09/30/Windows-as-the-transformation-of-Linux/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/09/30/guess-cctv-news-broadcast/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/09/30/no-longer-speak-from-20070901-to-20070930/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/01/11-Notes-%281%29/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/02/Notes-11-%282%29/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/03/national-day-memo-3/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/04/national-day-memo-4/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/07/national-day-memo-5/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/10/chow-tai-fook-wedding-ring/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/10/11/NFS-wrong-reason-given-by-server-Permission-denied-for-another-reason/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/11/system-system-error-no-route-to-host/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/10/12/Notes-stay-up-all-night/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
-        <loc>http://wgzhao.github.io/2007/10/12/Silverfall-week-sharply-pendant/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/10/15/Love-on-the-road-of-the-Long-March-as-a-new-starting-point/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <loc>http://wgzhao.github.io/2007/10/15/Love/</loc>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/10/20/Group_concat-found/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
-        <loc>
-            http://wgzhao.github.io/2007/10/21/Windows-in-the-use-of-IFS-visit-the-Linux-partition/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/22/Guys-and-Dolls/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/23/Phone-troubles/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/10/29/IBM-DS3200-storage-controller-change-a-single-two-step/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/10/31/In-exchange-for-right-hand-mouse/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/11/05/have-a-chance-do-liabilities/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <loc>http://wgzhao.github.io/2007/10/29/DS3200-convert-two-ctl-single-ctl/</loc>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/11/06/physicaldrive0/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/11/13/In-recent-days-the-Internet-can-not-be/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/11/19/I-bought-stocks/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/11/19/In-the-past-few-days-busy-shopping/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/11/19/Personal-income-tax-should-be-shopping-here/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/11/26/Set-the-hotel/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/11/29/Invitation-to-do/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/11/29/Welcome-to-our-wedding/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/11/29/wedding-invitation-funny-edition/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/11/30/Made-a-invitation/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/12/02/Highlight-Diff-output/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/12/03/about-linux-gate-so-1-and-system-call/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
-        <loc>
-            http://wgzhao.github.io/2007/12/04/So-that-Chinese-support-for-the-Apache-Directory/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/12/05/Dream/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/12/11/The-photo-interim-Qiangpai/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/12/22/To-consider-the-formula-to-make-money/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <loc>http://wgzhao.github.io/2007/12/04/Apache-support-chinese-dir-access/</loc>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2007/12/24/the-first-step-formula-to-make-money-advertising/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2007/12/28/Twitter-play/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2007/12/31/In-the-Linux-platform-for-mobile-phones-under-the-management-of-windows/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2007/12/31/Memorable-in-2007/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/01/new-year-wishing-email/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/01/planned-2008/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/02/can-access-feedburner/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/04/use-cdma-under-linux/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/06/soya-bean-milk/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/06/yakuake-just-this/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/16/busy-doing-nothing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/17/waitting-kde4/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/19/feel-spicebird/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/21/stock/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/22/something-about-school/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/28/hope-me-backing-home/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/29/Ready-to-start/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/31/Back-to-Changsha/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/31/Happy-Birthday/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/01/31/how-cold/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/03/Answer-by-name/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/03/have-a-holiday/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/04/linux-with-cdma/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/13/the-love-mattress/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/14/Whole-family-forward/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/14/littleutils-practical-gadget/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/15/slee-early-and-get-up-early/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/21/Lost-notice/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2008/02/21/nothing-is-impossible-vs-impossible-is-nothing/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/22/try-to-make-full-use-of-qt-based-software/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2008/02/23/Gtk-before-the-collapse-of-the-process-to-resolve-the-issue/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/02/23/book-duku-2008/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/02/24/colordiff-Highlight-Diff-output/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/02/24/received-ubuntu-cdrom/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/02/25/kpf-KDE-public-file-server/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/02/27/can-not-finish-for-a-while/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/02/non-conformity-habit/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/03/lyx-has-more-feature/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/06/LyX-how-to-import-Chinese-TeX-file/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/06/Sanshierli/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/08/have-received-duku-package/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/08/iscsitarget-0-4-15-too-old/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/03/10/no-time/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/03/11/I-guess-the-story/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2008/03/11/lyx-how-to-a-beamer-into-the-type-of-document/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/12/To-restore-the-lost-partition/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/13/lyx-and-xetex/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/17/27-missing-kiss/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/03/17/about-linux-system-call/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2008/03/18/check-gmail-at-regular-intervals-with-kcheckgmail/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/03/25/Mental-and-physical-exhaustion/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/03/29/beamer-study-notes/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2008/04/01/Titlesec-the-use-of-macro-package-set-up-the-title-format/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/04/01/what-on-earth-happened/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/04/02/To-expose-the-truth/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/04/02/Value-60RMB/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/04/02/received-the-duku-0801/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/04/13/how-much-inodes-do-you-need/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/04/15/Office-of-the-joke-2/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/04/26/Look-up-update/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/04/27/The-use-of-kde4/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/04/28/Was-partprobe/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/04/29/The-simplest-example-of-the-use-of-ACLs/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/04/29/create-user-batched-with-newusers-command/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/05/04/I-was-working/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/05/04/party/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2008/05/08/Xslt-not-in-the-double-counting-of-the-elements-of-a-simple-method/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2008/05/13/For-the-earthquake-disaster-in-the-dead-compatriots-mast/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/05/14/Mind-a-little-table/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/05/19/Mourning-for-the-victims/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/05/23/about-my-subscribe/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/05/27/IP-switch-script/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/05/28/bags-association/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2008/05/29/Automatic-Updates-ssh-public-key-ssh-to-connect-the-script/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/05/30/After-the-pay-of-mind/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/05/30/Premier-Wen-Jiabao-on-facebook/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2008/05/30/creation-of-a-binary-package-with-checkinstall/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/06/01/pipi-or-chouchou/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/06/03/SMS/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/06/05/get-pictures-from-ppt-files/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/06/13/power-off/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/06/16/haixi/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/06/17/Dd-give-a-progress-report/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/06/17/simple-steps-enable-postfix-with-sasl/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
-        <loc>http://wgzhao.github.io/2008/06/18/firefox-3-released/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/06/18/wine-1-finally-released/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/06/20/LVM-snapshot-on/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/06/22/LaTex-and-related-information/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <loc>http://wgzhao.github.io/2008/06/20/LVM-snapshot-summary/</loc>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/06/23/Based-on-the-SSL-certificate-configuration/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/06/24/kung-fu-panda/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/06/24/tag-based-filesystem/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/06/30/check-ip-address-with-bash/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/07/03/Hardware-or-software-problem/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/07/11/Recently-updated-estimates-will-not-blog/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/07/11/something-of-the-past-days/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2008/07/17/reduce-the-logical-volume-pv-in-the-physical-size/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/07/23/unison-file-synchronization-tool/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/07/28/MySQL-simply-connect-the-python-script/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/07/31/on-that-day-finally-came/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/07/31/unix-administrator-Tales-of-terror/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/08/02/I-have-a-TV/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/08/11/Olympic-opening-ceremony-of-the-two-shots/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/08/12/Wonderful-World-of-MySQL-Storage-Engines/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/08/20/No-eth0/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2008/08/25/Based-on-lighttpd-in-the-mysql-configuration-of-the-virtual-host/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2008/08/27/Keyboard-is-often-no-response-to-the-interim-solution/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/08/28/rkhunter-rootkit-checker/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2008/08/29/Maildir-mail-format-will-be-converted-to-mbox-format/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/08/30/reuses-an-existing-logical-volume-number/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/09/07/SCSI-Sense-Key-Chart/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/09/10/Telecom-complaints/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/09/11/Dynamic-Host-Configuration-apache-virtual/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/09/20/vlock-lock-your-terminal/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/09/24/sky-as-quilt-and-land-as-bed/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/10/03/gtalk-Conference-Room/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/10/11/Received-a-net-purchase-of-the-book/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/10/11/convert-html-to-word-doc-format-with-php/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/10/12/Thank-you-for-the-time-being-not-yet-born/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/10/15/Matrimony/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/10/16/Admission/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/10/25/Pipi/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/11/09/Try-Aptana/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/11/12/Blog-moved-to-wordpress/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/11/13/to-give-up-the-title-with-a-url-as-a-way/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/11/18/google-free-subscription-to-the-weather/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/11/18/thank-you-for-pczou-pipi-gift/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/12/05/fedora-started/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/12/10/setup-vpn-with-hamachi/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/12/17/mondo-can-not-restore-my-system/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/12/17/virtualbox-using-a-usb-device-tips/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/12/18/zfs-fuse-poor-performance/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/12/19/mysql-can-not-start/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/12/21/bo-opened-the-5th-anniversary/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2008/12/21/nagios-configuration-profile/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2008/12/27/talk-about-rc-local/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/01/07/2009-plan/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/01/10/happy-birthday-lancy/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/02/10/memo-from-a-child-to-parents/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/02/15/two-way-mysql-replication/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/02/26/what-to-eat/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2009/03/05/10-things-you-need-know-about-backup-solutions-for-mysql/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/03/13/using-sudo-effectively/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/03/22/revive/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/03/23/replacement-of-the-msn-account/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/03/24/wyeth-different-inland-hk/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/03/28/pay-for-xplore-cn-domain/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/03/31/move-to-america/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/04/10/crazy-way-to-install-linux/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/04/10/reselling-web-space/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/04/13/practice-amanda-backuping/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/04/15/backup-remote-mysql-with-zrm/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/04/18/want-to-buy-house/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/04/24/have-bought-house/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/04/28/bought-three-books/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/05/02/install-google-earth-under-ubuntu-904/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/05/14/bad-news/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/05/14/heaven-no-cars/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/05/20/linux-networking-cookbook/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/05/29/pid-must-bigger-than-ppid/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/06/01/uniform-kernel-testing-report/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/06/04/quotations/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/06/05/open-source-software-lecture/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/06/09/google-auxiliary-translation/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/06/09/pc-anti-spam/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/06/16/changsha-linux-user-group-in-douban/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2009/06/17/linux-administration-handbook-online-reading/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/06/22/biostime-is-not-france/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/06/26/xiao-tuan-yuan/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/06/28/install-adobe-air-on-64-bit-linux-distro/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/07/01/btrfs-introduction-and-benchmark/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/01/sun-pinyin-ime/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/02/gedit-encoding-auto-detected/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/03/1587-a-year-of-no-significance/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/04/rapoo-8200-wireless-keyboard-mouse/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/07/09/what-is-a-good-job/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/12/buy-liangwendao-and-liuyu-books/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/15/google-gear-for-firefox-35/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/07/16/troubleshooting-kernel-panic/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2009/07/18/readout-on-secretary-chu-china-meetings-on-clean-energy/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/23/all-data-lost/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/24/bought-three-books-2/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/25/auto-rename-for-pdf-and-chm-files/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/07/31/moving/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/08/07/scsi-debug-howto/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/08/08/xuzhig-and-gongmeng/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/08/10/reading-at-mcdonalds/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/08/15/some-control-characters-in-bash/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/08/17/linux-kernel-dangerous-exploit/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/08/18/compile-ati-driver-under-kernel-2-6-31/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/08/24/here-documents-in-bash/</loc>
-        <lastmod>2014-03-15T13:10:33+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/08/26/options-of-bash/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/08/31/order-four-books/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/09/02/google-pinyin-for-linux/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/09/04/superblock-write-last-time-is-in-the-future/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/09/10/a-linux-trojan-sample/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/09/14/shv4-rootkit/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/09/16/a-perl-ddos-attack-sample/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2009/09/24/using-oracle-xe-client-connect-oracle-server/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/09/25/works-using-two-monitors/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/09/29/learning-database/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2009/10/01/always-love-your-country-but-never-trust-your-government/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/10/09/holiday-feeling/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2009/10/18/finding-your-mysql-high-availability-solution/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/10/19/connect-twitter/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/10/19/happy-birthday-for-pipi/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2009/10/20/change-the-default-mysql-data-storage-path-w/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/10/20/netfilter-packet-flow/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/10/23/rhce-troubleshooting-rpm-package/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2009/11/11/using-sogou-pinyin-clound-client-on-ibus-platform/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/11/18/buy-books/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2009/11/23/linux-administration-handbook-question-answers/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/11/24/lah-chapter2-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/11/27/lah-chapter4-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/11/27/lah-chapter5-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/12/15/calico-wedding/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2009/12/17/compress-utility-can-not-always-compress-files/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/12/22/lah-chapter7-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2009/12/27/videos-for-pipi/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2009/12/30/lah-chapter8-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/01/01/2010-hope/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/01/01/2010-plan/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/01/15/lah-chapter10-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/01/19/google-and-gfw/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/01/20/pipi-washing/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/02/23/pipi-clothes-1/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/02/23/pipi-clothes-2/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/02/24/lah-chapter12-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/02/25/lah-chapter13-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/03/02/lah-chapter16-questions-key/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/03/14/take-back-ubuntu/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/03/15/linux-can-not-access-hp-hsv-storage/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2010/03/19/parser-html-and-xml-using-simple-html-dom-class/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/03/23/google-python-class/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/03/23/setup-nginx-and-fastcgi/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/03/26/blog-move-to-hongkong/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/03/29/surfing-internet-1/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/04/01/bug-wgzhao-dot-com-domain/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/04/01/google-ssl-searching-with-single-page/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/04/02/move-mysql-database-directory-in-ubuntu/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/04/03/new-begin/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/04/05/access-twitter-using-dabr/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/04/06/using-ipv6-in-ubuntu-910/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/04/08/recoup-id-card/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/04/12/vpn-list/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2010/04/15/offisync-introduces-real-time-co-authoring-between-microsoft-office-and-google-docs/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/04/17/linux-driver-for-broadcom4312-14e4-4135/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/04/24/flights-always-delay/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/04/24/pipi-health-check/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/05/02/going-to-my-new-home/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/05/10/some-disappointed-about-new-house/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/05/11/bookshelf/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/05/12/dropbox-startup-lessons-learned/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/05/20/change-the-lcd-brightness/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/05/20/deploy-django-with-nginx/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2010/05/25/change-the-lcd-brightness-with-keyboard-shortcuts-html/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/05/28/ipython-for-gedit/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/05/29/core-python-programming-2nd-chapter-6-exercise/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/05/30/core-python-programming-2nd-chapter-8-exercise/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/05/31/core-python-programming-2nd-chapter-11-exercise/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/06/01/core-python-programming-2nd-chapter-13-exercise/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-18-exercise/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-9-exercise/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/06/09/core-python-programming-2nd-chapter-19-exercise/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/06/10/core-python-programming-2nd-chapter-20-exercise/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2010/06/11/identify-duplicate-files-whithin-given-directory/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2010/06/13/how-to-apparmor-allows-launching-chrome-browser-from-evince/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/06/18/correct-ed2k-links-with-python/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/06/24/mapping-raw-devices-to-lvm-devices-on-redhat-as5-update-2-or-later/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/07/02/multiple-ssh-connects-with-the-same-session/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2010/07/14/chroot-in-ssh-server/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/08/19/matrix-keyboard/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/08/23/record-linux-desktop-using-ffmpeg/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2010/08/24/public-dns-servers/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2011/03/09/online-resizing-ext4-filesystem/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2011/03/11/ssh-three-kill-features/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2011/03/18/how-to-build-a-fake-deb-package-quickly/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2011/04/01/bought-some-books/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2011/04/11/my-glasses-story/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2011/07/20/ip-location-search/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2011/08/07/install-mac-os-x-lion-with-dell-e6410/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2011/09/20/clone-explain-depesz-com-website/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2012/01/04/2011-summary-and-2012-plan/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2012/01/10/lsb-scripts-specification/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>
-            http://wgzhao.github.io/2012/01/12/heartbeat-prevent-from-destruction-of-data-on-shared-disk-due-to-split-brain-by-using-sfex-resource-agent/
-        </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
-    </url>
-    <url>
-        <loc>http://wgzhao.github.io/2012/01/16/5-simple-ways-to-troubleshoot-using-strace/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-16T16:50:43+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2012/08/14/upgrade-blog-environment/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2012/08/15/create-datediff-function-in-postgresql/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2012/08/19/calculate-a-table-size-in-postgresql/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2012/08/20/several-popular-nosql-databases-key-features-list/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2012/08/21/explaining-the-postgresql-query-optimizer/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2012/08/22/some-way-to-io-statistics-on-linux/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>
             http://wgzhao.github.io/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/
         </loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/2012/12/30/some-tips-for-mac-os-x/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <lastmod>2014-03-15T16:01:20+08:00</lastmod>
     </url>
     <url>
-        <loc>http://wgzhao.github.io/2013/01/14/block-youku-ads-cleanly/</loc>
-        <lastmod>2014-03-15T12:58:09+08:00</lastmod>
+        <loc>http://wgzhao.github.io/2014/03/16/move-to-github/</loc>
+        <lastmod>2014-03-16T11:04:34+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/blog/archives/</loc>
-        <lastmod>2014-03-15T13:10:33+08:00</lastmod>
+        <lastmod>2014-03-16T16:50:43+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/</loc>
-        <lastmod>2014-03-15T13:10:33+08:00</lastmod>
+        <lastmod>2014-03-16T16:50:43+08:00</lastmod>
     </url>
     <url>
         <loc>http://wgzhao.github.io/robots.txt</loc>

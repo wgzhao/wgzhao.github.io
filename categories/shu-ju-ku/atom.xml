@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 数据库 | Linux系统管理]]></title>
   <link href="http://wgzhao.github.io//categories/shu-ju-ku/atom.xml" rel="self"/>
   <link href="http://wgzhao.github.io/"/>
-  <updated>2014-03-15T13:10:39+08:00</updated>
+  <updated>2014-03-16T16:52:39+08:00</updated>
   <id>http://wgzhao.github.io/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -1070,73 +1070,178 @@ $$ language plpgsql;</code></pre></noscript></div>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Ubuntu下移动mysql数据库位置]]></title>
-    <link href="http://wgzhao.github.io/2010/04/02/move-mysql-database-directory-in-ubuntu/"/>
-    <updated>2010-04-02T00:00:00+08:00</updated>
-    <id>http://wgzhao.github.io/2010/04/02/move-mysql-database-directory-in-ubuntu</id>
-    <content type="html"><![CDATA[<p>本来呢，这是一挺简单的活。
-停止数据库,把数据库文件移动到你指定的位置，设置好目录权限。修改<code>my.cnf</code>文件。
-主要是修改datadir的参数。基本上就OK了。</p>
+    <title type="html"><![CDATA[寻找适合你的MySQL高可用解决方案]]></title>
+    <link href="http://wgzhao.github.io/2009/10/18/finding-your-mysql-high-availability-solution/"/>
+    <updated>2009-10-18T00:00:00+08:00</updated>
+    <id>http://wgzhao.github.io/2009/10/18/finding-your-mysql-high-availability-solution</id>
+    <content type="html"><![CDATA[<p>摘译自 <a href="http://tinyurl.com/bol3ou7">mysql performance blog</a></p>
 
-<p>但是，Ubuntu下偏偏多了一个<code>Apparmor</code>的工具，据说是作为<code>SELinux</code>的一种替代方案。<br/>
-最开始我还不知道有这玩意儿存在。</p>
+<p>需要MySQL高可用吗？</p>
+
+<p>问题似乎很明显，但是有时却忽略了。实际上这是一个投入和产出的问题，投入越大，你获得数据安全性就越高，所以这个问题可以归结为”你的服务器宕机成本是多少？“，如果你的宕机成本小于$10/hour，那基本上你不需要高可用方案了，So，不用浪费时间看下文了。</p>
 
 <!--more-->
 
 
-<p>
-按照原来在RHEL上迁移默认数据库路径的方法在Ubuntu上做了一遍,启动数据库的时候，无论你怎么设置目录的权限，属主和属组，都是会<code>error -13</code>的错误。<br/>
-是说权限不够。但是我切换到mysql帐号下，mkdir,touch都很正常呀了。<br/>
-Google了半天，其中有人提到了Apparmor这东西。果然在<code>/etc/apparmor.d/</code>目录下看到<code>usr.sbin.mysqld</code>的配置文件，里面记录了mysqld可以对哪些路径进行操作的定义。按照规则修改，重启Apparmor服务。再重启mysql服务就正常了。</p>
+<p>如何确定哪种高可用方案对你最好？</p>
 
-<p>这里记录下我的搬迁过程，无过程无真相：</p>
+<p>当前，MySQL高可用有下面几种，从简单到非常复杂，我们排列一下</p>
 
-<ol>
-<li>设置你的位置，我这里设定在<code>/home/websites/database</code>下面。数据文件放在<code>/home/websites/database/mysql</code>目录下，pid文件，错误日志放在<code>/home/websites/database/var</code>目录下。
-<code>cp -a /var/lib/mysql /home/websites/database</code><br/>
-至于<code>/var/run/mysqld</code>这些就不要了。</li>
-<li><p>设置权限，其中<code>/home/websites/database</code>这些只要有<code>rx</code>权限。<code>/home/websites/database/mysql</code>目录属主和属组都是<code>mysql</code>.而<code>/home/websites/database/var</code>
-目录属主是<code>mysql</code>，组是<code>root</code>。</p></li>
-<li><p>修改<code>/etc/apparmor.d/usr.sbin.mysqld</code>根据上面的描述，文件修改成下面这个样子：</p>
+<ul>
+<li>MySQL replication with manual failover</li>
+<li>Master-Master with MMM manager</li>
+<li>Heartbeat/SAN</li>
+<li>Heartbeat/DRBD</li>
+<li>NDB Cluster</li>
+</ul>
 
-<pre><code> # vim:syntax=apparmor
- # Last Modified: Tue Jun 19 17:37:30 2007
- #include 
 
- /usr/sbin/mysqld {
-   #include 
-   #include 
-   #include 
-   #include 
-   #include 
+<p>就目前为止，可能不是上面的某一个方案就能完全适合你，大部分情况下是多种方案联合起来。要选择上面哪种方案，其实还是取决于你的对宕机时间的容忍，越复杂的方案，宕机时间越短，但是成本也就越高，需要仔细计算你的预算。</p>
 
-   capability dac_override,
-   capability sys_resource,
-   capability setgid,
-   capability setuid,
+<h2>你需要哪个级别的HA？</h2>
 
-   network tcp,
+<p>所有的技术都不能保证100%的系统有效，同样，不同的技术提供的系统有效级别也不同。因此第一个重要的考虑因素便是有效级别，下面有一个对各种解决方案提供的有效级别评估表</p>
 
-   /etc/hosts.allow r,
-   /etc/hosts.deny r,
+<pre>
 
-   /etc/mysql/*.pem r,
-   /etc/mysql/conf.d/ r,
-   /etc/mysql/conf.d/* r,
-   /etc/mysql/my.cnf r,
-   /usr/sbin/mysqld mr,
-   /usr/share/mysql/** r,
-   /home/websites/database/var/mysqld_error.log rw,
-   /home/websites/database/mysql/ r,
-   /home/websites/database/mysql/** rwk,
-   /home/websites/var/ r,
-   /home/websites/var/* rw,
-   /home/websites/var/mysqld.pid w,
-   /home/websites/var/mysqld.sock w,
- }
-</code></pre></li>
-<li><p>重启Apparmor服务，启动MySQL服务。查看<code>/home/webistes/database/var</code>目录下的<code>mysqld_error.log</code>文件，看看有什么报错没有，看看该目录下有没有<code>mysql.sock</code>和<code>mysqld.pid</code>，如果有的话，表示成功了。如果有包权限的问题。你可以su到mysql帐号，尝试在<code>/home/websites/database/mysql</code>目录下建立文件，创建目录看看。</p></li>
-</ol>
+  有效级别                            宕机时间( per year)
+                                                   
+  Simple replication               98 to 99%        3天15小时 ~ 7天
+
+  Master-Master with MMM manager   99%              3天15小时
+
+  Heartbeat/SAN (depends on SAN)   99.5% to 99.9%   43.8小时 ～ 8.8小时
+
+  Heartbeat/DRBD                   99.9%            8.8小时
+
+  NDB Cluster                      99.999%          5分钟
+ 
+</pre>
+
+
+<p>根据上表，如果你的要求是99.99%，那么你可能只能选择NDB Cluster了，但是你只是要求99%，那选择范围就宽了很多。实际上，评估使用哪个有效级别还是很难的，需要仔细思辩。</p>
+
+<h2>能承受数据丢失吗？</h2>
+
+<p>显然，相对有效级别而言，可能你更关心数据的安全，你很可能使用innoDB存储引擎，因为MyISAM缺乏事务交易，而且不同步数据到磁盘。<br/>
+同样的，MySQL replication 采取异步处理，尽管它在master和slave之间传输数据非常快，但是仍然有丢失数据的机会。<br/>
+如果你能承受数据丢失，那么，你可以考虑“MySQL replication” 和“Master-Master with MMM manager"，否则，你就只能考虑别的方案了。</p>
+
+<pre>
+  --------------------         -----------
+                                  数据100%安全
+                                   
+  MySQL replication                否
+                                   
+  Master-Master with MMM manager   否
+                                 
+  Heartbeat/SAN (depends on SAN)   是
+                                   
+  Heartbeat/DRBD                   是
+                                   
+  NDB Cluster                      是
+                                   
+  -------------------------   -----------
+</pre>
+
+
+<h2>你的应用程序仅用到了MyISAM特性吗？</h2>
+
+<p>包括全文索引，GIS索引在内的特性仅被MyISAM支持。“MySQL replication"和"Master-Master with MMM
+manager"解决方案对MyISAM支持的非常好。取决于你的应用程序，MyISAM全文索引可以被另外的搜索引擎替代，比如<a href="www.sphinxsearch.com/">Sphinx</a>替代，这样可以打破只能使用MyISAM存储引擎的限制。对于GIS索引，目前还没有替代的方案。</p>
+
+<pre>
+
+                                   HA 解决方案
+                            
+
+ 需要MyISAM全文索引或GIS索引           “MySQL replication” 和 “Master-Master with MMM manager”
+                            
+  不使用任何MyISAM特性                 所有
+                            
+  可以用Sphinx替换MyISAM的全文索引      所有
+                            
+</pre>
+
+
+<h2>什么是写负载</h2>
+
+<p>上述的HA解决方案在写负载方面并不相同。因为复制(replication)实现的原因，slave上仅有一个线程能处理写操作。如果复制主机(master)是多核CPU，而且有使用多线程的写操作，那么slave就可能无法和master保持一致。如果使用Linux下的共享存储模拟<a href="http://www.drbd.org">DRBD</a>,大致能较低30%的写负载（严重依赖硬件条件），在写能力方面，你可以参考下面的表格</p>
+
+<pre>
+  -------------------------------- ------
+                                  写能力
+                                   
+
+  MySQL replication                正常
+                                   
+
+  Master-Master with MMM manager   正常
+                                   
+
+  Heartbeat/SAN (depends on SAN)   优秀
+                                   
+
+  Heartbeat/DRBD                   好
+                                   
+
+  NDB Cluster                      优秀
+                                   
+  -------------------------------- ------
+</pre>
+
+
+<h2>为什么样的增长度做计划</h2>
+
+<p>因为NDB Cluster是一个集成的共享环境（将数据库分隔到多台服务器上），如果你需要这个功能，你可以认真考虑这个方案，否则，除去写能力外，其他方案大致相等。</p>
+
+<h2>职员或者技术支持公司水平如何</h2>
+
+<p>有效级别和解决方案的复杂度有着直接的正比关系。为了达到期望的有效级别，内部或者外部维护HA配置的职员，就必须具备同等的能力和经验，参考下表：</p>
+
+<pre>
+  -------------------------------- -----------------------------
+                                  专业级别
+                                   
+
+  MySQL replication                一般 MySQL DBA 水平，加上一些系统管理能力
+
+  Master-Master with MMM manager   较好的MySQL DBA 水平，加上较好的系统管理能力
+
+  Heartbeat/SAN (depends on SAN)   较高的MySQL DBA 水平，较强的系统管理能力
+                                   
+
+  Heartbeat/DRBD                   较高的MySQL DBA 水平，较强的系统管理能力
+
+  NDB Cluster                      对NDB知识非常了解，很高的MySQL以及系统管理技能
+  -------------------------------- -----------------------------
+</pre>
+
+
+<h2>你有多少米米</h2>
+
+<p>最有一个需要考虑的问题便是预算了，复杂意味着昂贵。我们考虑项目的两个阶段。第一个是基本测试，也就是方案论证，包括硬件测试，数据导入，基本测试和文档化。<br/>
+另外一个阶段就是迁移到生产线，包括多方面测试，消防预演，完整的文档，监控，报警，备份，迁移，迁移后监控等。  <br/>
+当然，这是迁移HA解决方案到产品线最安全的做法。下表是基于行业一般水平制的两个阶段需要的时间，考虑到一些非预计问题，所有时间都留有余地</p>
+
+<pre>
+  -------------------------------- ------- ---------
+                                  概念认证   迁移到生产线
+                                           
+
+  MySQL replication                4小时     12小时
+
+  Master-Master with MMM manager   8小时     24小时
+
+  Heartbeat/SAN (depends on SAN)   32小时    120小时
+
+  Heartbeat/DRBD                   40小时    120小时
+
+  NDB Cluster                      40小时    120+ 小时
+  -------------------------------- ------- ---------
+</pre>
+
+
 
 ]]></content>
   </entry>

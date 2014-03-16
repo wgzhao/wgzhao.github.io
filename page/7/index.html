@@ -9,7 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="直接访问https://www.google.com似乎会重定向到http://www.google.com。维基百科上有个小朋友做了一个页面，利用google的API来做到完全链接。基于它的页面，我做了少许修改。 现在你只需要下载这压缩文件，解压后得到一个html页面，打开这个html页面。 &hellip;">
+  <meta name="description" content="是的，我知道ext3文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。
+而且从ext3文件系统的FAQ中提到的一条也能印证这点： Q: How can I recover (undelete) deleted files from my ext3 partition? &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,7 +72,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/04/01/google-ssl-searching-with-single-page/">使用Google SSL搜索</a></h1>
+      <h1 class="entry-title"><a href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/">恢复ext3文件系统上被删除的文件</a></h1>
     
     
       <p class="meta">
@@ -87,232 +88,36 @@
   
 
 
-<time datetime="2010-04-01T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-07-22T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/04/01/google-ssl-searching-with-single-page/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/04/01/google-ssl-searching-with-single-page/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>直接访问<a href="https://www.google.com">https://www.google.com</a>似乎会重定向到<a href="http://www.google.com">http://www.google.com</a>。维基百科上有个小朋友做了一个页面，利用google的API来做到完全链接。基于它的页面，我做了少许修改。</p>
-
-<p>现在你只需要下载这压缩文件，解压后得到一个html页面，打开这个html页面。<br/>
-OK，试试你想要的搜索！</p>
-
-<p><a href="http://www.adrive.com/public/33f8d3a55c815028c1e3adb76144e65d4689db682ff3ff056c830d407230cb14.html">猛击这里下载</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/04/01/bug-wgzhao-dot-com-domain/">购买了wgzhao.com新域名</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-04-01T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/04/01/bug-wgzhao-dot-com-domain/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/04/01/bug-wgzhao-dot-com-domain/">Comments</a>
+           | <a href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>在CN域名越来越严厉，越来越不靠谱的情况下，我就只能为帝国主义贡献GDP了。在<a href="http://name.com">name.com</a>上花了8.99刀买了wgzhao.com。因此自动绑定了Google App。正好打算使用一下。因此本来打算用<a href="http://wgzhao.com">http://wgzhao.com</a>
-做blog的网址了，现在就只能用<a href="http://blog.wgzhao.com">http://blog.wgzhao.com</a>。连www.wgzhao.com都被Google App“霸占”了（当然你可以不选择在它那里开通网站）。
-OK，到目前为止，域名在非天朝，服务器在非天朝，我总算可以和无比和谐的ICP备案彻底说拜拜了。</p>
+  <div class="entry-content"><p>是的，我知道ext3文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。<br/>
+而且从ext3文件系统的<a href="http://batleth.sapienti-sat.org/projects/FAQs/ext3-faq.html">FAQ</a>中提到的一条也能印证这点：</p>
 
-<p>P.S
-本来打算在<a href="http://godaddy.com">godaddy.com</a>上买的，结果发现他的SSL证书过期了，同时加上他比name.com上要贵2刀，于是就选择了name.com。不过听说<a href="http://godaddy.com">godaddy.com</a>上的服务很多。</p>
-</div>
-  
-  
+<blockquote><p>Q: How can I recover (undelete) deleted files from my ext3 partition?<br/>
+Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, said about it:</p>
 
+<blockquote><p>In order to ensure that ext3 can safely resume
+ an unlink after a crash, it actually zeros out the block pointers in
+ the inode, whereas ext2 just marks these blocks as unused in the block
+ bitmaps and marks the inode as &ldquo;deleted&rdquo; and leaves the block pointers
+ alone.<em> </em>Your only hope is to &ldquo;grep&rdquo; for parts of your files that have
+ been deleted and hope for the best.</p></blockquote></blockquote>
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/03/29/surfing-internet-1/">翻墙办法一</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-03-29T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/03/29/surfing-internet-1/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/03/29/surfing-internet-1/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>使用&#8221;赛风&#8221;突破封锁，访问页面速度比较快，使用方便，不需要下载软件。<br/>
-但是，也存在需要邀请码才能注册，容易被封锁等缺点。<br/>
-数字时代版&#8221;赛风&#8221;无需注册邀请码。<br/>
-一旦被封，我们将通过邮件、GFW Blog等及时公布新地址。<br/>
- <strong>使用方法非常简单：</strong></p>
-
-<ol>
-<li><p>访问<a href="http://war2wall.info">http://war2wall.info</a>，阅读并同意&#8221;隐私协议&#8221;，点&#8221;agree&#8221;
-<img src="/uploads/2010/03/1.png" title="注册" alt="首先注册" /></p></li>
-<li><p>点&#8221;agree&#8221;后，就可以进入被屏蔽的<a href="http://chinadigitaltimes.net/">中国数字时代(China Digital Times)</a>的首页。你已翻墙成功 。请点页面上方小方框&#8221;Create
-account&#8221;，注册帐号。注册成功后，一旦现在的代理网址被封，我们将发送新的地址到您注册时用的电子邮箱，确保您及时获得新的代理地址。</p></li>
-</ol>
-
-
-<p><img src="/uploads/2010/03/2.png" alt="选择创建帐号" /></p>
-
-<ol>
-<li>注册。Language项，选中文、英文等。 Username项，填用户名。E-mail address项，填电子邮箱地址，我们推荐你用gmail。Password项，填密码。 Verify password项，重复刚才输入的密码。Security
-code项，填下方的认证码。都填完后，点最下面的&#8221;creat account&#8221;，即完成注册。</li>
-</ol>
-
-
-<p><img src="/uploads/2010/03/3.png" alt="填写注册信息" /></p>
-
-<ol>
-<li>访问其他被封锁的网站。很简单。在页面上方小方框输入您想访问的被墙网址，点&#8221;go&#8221;，就可以突破封锁。</li>
-</ol>
-
-
-<p><img src="/uploads/2010/03/4.png" alt="image" /></p>
-
-<p><img src="/uploads/2010/03/1.png" alt="image" /></p>
-
-<p>本文转自:
-<a href="http://feedproxy.google.com/~r/chinagfwblog/~3/vcJmbqV3AZ0/blog-post_7729.html">多伦多大学公民实验室和中国数字时代联合推出翻墙利器：新版&#8221;赛风&#8221;（无需邀请码）</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/03/26/blog-move-to-hongkong/">我在香港欢迎你</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-03-26T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/03/26/blog-move-to-hongkong/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/03/26/blog-move-to-hongkong/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>谷歌说欢迎来到我们的新家。我要说，欢迎来到我的新blog！</p>
-
-<p>内容不变，变化的是服务器，也搬迁到了香港。和谷歌不同的是，他是从“最民主，最开放，最自由”的中国大陆搬迁到了香港。而我是从“万恶的资本主义美国”搬迁的。</p>
-
-<p>算上这次，这应该是第5次搬迁了。从省内几个地方，到国内几个地方，然后到美国，然后到香港。还跑得挺远了。 但是我知道，这绝对不是最后一次。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/03/23/setup-nginx-and-fastcgi/">配置nginx</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-03-23T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/03/23/setup-nginx-and-fastcgi/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/03/23/setup-nginx-and-fastcgi/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这应该算是老掉牙的技术了，但是就是这老掉牙的技术，今天却折腾了我几个小时。</p>
-
-<p>首先是到网络找一些文档，因为转来转去的原因（我痛恨一切不自己产生内容，却到处抓取内容还不完整的网站），基本上只有几篇比较完整的配置文档，无一例外，都是采取源代码编译，编译php,编译mysql，编译nginx，编译memcache，编译eaccelerator，编译everthing。<br/>
-似乎只有这样才是王道，才是问题的解决版本。</p>
-
-<p>我讨厌编译，我只需要配置。我如果跳过编译，只看配置，在我的系统上就会出现无法解析php的情况。</p>
+<p>但是，但是，这不是事实的全部，被删除文件的所有信息可能都还在磁盘上，包括块指针。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2010/03/23/setup-nginx-and-fastcgi/">Read on &rarr;</a>
+      <a rel="full-article" href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/">Read on &rarr;</a>
     </footer>
   
 
@@ -324,7 +129,7 @@ code项，填下方的认证码。都填完后，点最下面的&#8221;creat acc
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/03/23/google-python-class/">Google的python视频教程含下载地址</a></h1>
+      <h1 class="entry-title"><a href="/2009/07/16/troubleshooting-kernel-panic/">Kernel Panic故障排解</a></h1>
     
     
       <p class="meta">
@@ -340,137 +145,25 @@ code项，填下方的认证码。都填完后，点最下面的&#8221;creat acc
   
 
 
-<time datetime="2010-03-23T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-07-16T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/03/23/google-python-class/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/03/23/google-python-class/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://code.google.com/edu/">google university</a>
-推出了针对python的教程，适合python初学者，当然也适合我这样的菜鸟啦。除了有教学素材，习题以外，更难到的是，有全套的视频，但是（这里省去100000字），生为贵国屁/民，是无福观看了，人家放在<a href="http://www.youtube.com">youtube</a>上了。<br/>
-国内视频网站暂时没有看到“盗版”。
-VPN，自/由/门，无/界，大家各显神通吧。</p>
-
-<p>我正在HK搭建的服务器上以480K/s的速度欢快的下载着。</p>
-
-<p>希望能传到国内某一个空间上，为大家谋福利。你要是等不及了，那就尝试下面的地址吧。</p>
-
-<p><a href="http://www.youtube.com/watch?v=tKTZoB2Vjuk">http://www.youtube.com/watch?v=tKTZoB2Vjuk</a><br/>
-<a href="http://www.youtube.com/watch?v=EPYupizJYQI">http://www.youtube.com/watch?v=EPYupizJYQI</a><br/>
-<a href="http://www.youtube.com/watch?v=haycL41dAhg">http://www.youtube.com/watch?v=haycL41dAhg</a><br/>
-<a href="http://www.youtube.com/watch?v=kWyoYtvJpe4">http://www.youtube.com/watch?v=kWyoYtvJpe4</a><br/>
-<a href="http://www.youtube.com/watch?v=uKZ8GBKmeDM">http://www.youtube.com/watch?v=uKZ8GBKmeDM</a><br/>
-<a href="http://www.youtube.com/watch?v=Nn2KQmVF5Og">http://www.youtube.com/watch?v=Nn2KQmVF5Og</a><br/>
-<a href="http://www.youtube.com/watch?v=IcteAbMC1Ok">http://www.youtube.com/watch?v=IcteAbMC1Ok</a></p>
-
-<p>前三个是第一天的教程，后4个是第二天的。</p>
-
-<p>具体的情况，请<a href="http://code.google.com/intl/zh-CN/edu/languages/google-python-class/">移步到这里</a>。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/03/19/parser-html-and-xml-using-simple-html-dom-class/">PHP Simple HTML DOM Parser 是一个不错的html/xml分析类</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-03-19T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/03/19/parser-html-and-xml-using-simple-html-dom-class/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/03/19/parser-html-and-xml-using-simple-html-dom-class/">Comments</a>
+           | <a href="/2009/07/16/troubleshooting-kernel-panic/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/16/troubleshooting-kernel-panic/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>用php解析html/xml文件，PHP内置了几个类，但是要不就是目前处理能力过于简单，用户编码太多，要不就是对文档的要求很严格。刚好今天要用php抓取大量网页的特定内容，在<a href="http://sf.net">sf.net</a>
-上找到了这个称为<a href="http://simplehtmldom.sourceforge.net/index.htm">PHP Simple HTML DOM Parse</a> 类。单个文件，目前36k。官方给出的特性和要求是：</p>
+  <div class="entry-content"><p><strong>Linux kernel panic</strong> 是很难定位和排查的重大故障,一旦系统发生了kernel panic，相关的日志信息非常少，而一种常见的排查方法—重现法&mdash;又很难实现，因此遇到kernel panic的问题，一般比较头疼。</p>
 
-<ul>
-<li>相当简单的方式操作HTML</li>
-<li>要求PHP 5 以上</li>
-<li>支持无效的HTML</li>
-<li>类似jQuery的选择器来查找元素</li>
-<li>单行代码就可以从HTML页面抓取内容。</li>
-</ul>
-
-
-<p>支持无效的HTML很重要，网络上能严格通过w3c验证的网站太少了，大部分网站的很多标签都非封闭的，而大部分DOM解析器都是以XML方式处理，而XML对标签的封闭就要求很严格了，因此大部分网页无法使用这种函数来处理。</p>
-
-<p>一个强大的选择器来查询和定位要找的元素至关重要，jQuery无疑在这方面做的相当棒。而这个类就采用了jQuery类似的查询方式，官方网络上也给出大量的例子来说明这点。</p>
-
-<p>可惜的是，目前还不支持xpath查询方式，如果xpath查找，那就更强悍了，希望早日能看到这个功能。
-想进一步了解，可以看 <a href="http://simplehtmldom.sourceforge.net/manual.htm">在线文档</a>。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/03/15/linux-can-not-access-hp-hsv-storage/">Linux无法识别存储的一个低级问题</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-03-15T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/03/15/linux-can-not-access-hp-hsv-storage/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/03/15/linux-can-not-access-hp-hsv-storage/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>上午同事打电话过来，说某项目中，咱们的系统无法识别到HP的存储。HBA卡是Qlogic 2400系列的.驱动是最新的，而且卡已经正常工作了，在dmesg里能看到HP存储的型号，但是就是看不到存储磁盘。不过有一个提示信息，具体的日志是这样：</p>
+<p>没有一个万能和完美的方法来解决所有的kernel panic问题，这篇文章仅仅只是给出一些思路，一来如何解决kernel panic的问题，二来可以尽可能减少发生kernel panic的机会。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2010/03/15/linux-can-not-access-hp-hsv-storage/">Read on &rarr;</a>
+      <a rel="full-article" href="/2009/07/16/troubleshooting-kernel-panic/">Read on &rarr;</a>
     </footer>
   
 
@@ -482,7 +175,7 @@ VPN，自/由/门，无/界，大家各显神通吧。</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/03/14/take-back-ubuntu/">还是使用ubuntu</a></h1>
+      <h1 class="entry-title"><a href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/">Fs-cache and Cachefs for Network Filesystem</a></h1>
     
     
       <p class="meta">
@@ -498,20 +191,81 @@ VPN，自/由/门，无/界，大家各显神通吧。</p>
   
 
 
-<time datetime="2010-03-14T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/03/14/take-back-ubuntu/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/03/14/take-back-ubuntu/">Comments</a>
+           | <a href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>考虑到工作的便利性，评估了<a href="http://fedoraproject.org">fedora</a> 12 3天后，开始从ubuntu迁移到fedora 12,使用了不到一周，不堪忍受，还是用回<a href="http://www.ubuntu.com">ubuntu</a>。 原因：</p>
+  <div class="entry-content"><p>对于像 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a> 和 <a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a>这种网络文件系统而言，因为受网络的影响，使得对数据访问和存储的实时性就有了一定的挑战，特别是在早期100Mb/s的网络环境下（当然10Mb/s的网络环境就是一个噩耗了）。为了解决响应实效的问题，一种被称为<a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a>的本地缓存方案被开发出来，用来提供分布式文件系统的本地缓存。</p>
+
+<p>作为内核2.6.30的一部分， 一种<a href="http://kernelnewbies.org/Linux_2_6_30#head-29350000cec3a460e9f2af6360324670faf14b2">CacheFS 实现机制</a></p>
+
+<p>已经加入进来，当前它支持<a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a>和<a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a>，但是其他文件系统也能从中获得好处（文章后面会提到）</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/09/what-is-a-good-job/">什么样的职位才是好职位</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/09/what-is-a-good-job/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/09/what-is-a-good-job/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>看完了《杜拉拉升职记》，觉得书的最后，杜拉拉写给李都的那封如何“恰当的活法”中，提到的什么样的职位才是好职位，值得多读几遍，于是摘录下来，和大家分享：</p>
+
+<h2>一、关于什么样的职位算好职位</h2>
 
 <ol>
-<li>仓库的不稳定，使用国外的仓库把，太慢，国内虽然有不好快速的仓库（比如sohu，比如163），但是都不太稳定。动不动就出现hash值不一致，要不就是<code>yum  search</code>的时候能找到软件包，但是安装的时候却出现404的错误。无语。</li>
+<li>你的找一家好公司 什么是好公司?
+
+<ol>
+<li>产品附加值高，生意好，并且从业务线看，具备持续发展的能力和前景;</li>
+<li>有专业的/聪明能干的/经验丰富的/并且为人现实的管理层，在把握这公司，并且有保护一贯这样用人的制度的公司;</li>
+<li>有严格的财务制度，对预算、费用和利润等于投入产出有关的内容，敏感并且具有强控制力的公司;</li>
+<li>崇尚客户导向/市场导向/结果导向/执行力的公司;</li>
+<li>有专业严谨全面的流程和制度，并且其执行有利于推动业务的良性发展，具有控制性和实操性兼备的特点;</li>
+</ol>
+
+
+<p> 总结起来，就是一家具有持续赢利能力的牛B公司</p></li>
 </ol>
 
 
@@ -519,7 +273,7 @@ VPN，自/由/门，无/界，大家各显神通吧。</p>
   
   
     <footer>
-      <a rel="full-article" href="/2010/03/14/take-back-ubuntu/">Read on &rarr;</a>
+      <a rel="full-article" href="/2009/07/09/what-is-a-good-job/">Read on &rarr;</a>
     </footer>
   
 
@@ -531,7 +285,7 @@ VPN，自/由/门，无/界，大家各显神通吧。</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/2010/03/02/lah-chapter16-questions-key/">Linux系统管理技术手册第十六章习题实践</a></h1>
+      <h1 class="entry-title"><a href="/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/">将virtualbox的vdi镜像文件转换成kvm的qcow静像文件</a></h1>
     
     
       <p class="meta">
@@ -547,27 +301,254 @@ VPN，自/由/门，无/界，大家各显神通吧。</p>
   
 
 
-<time datetime="2010-03-02T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2009-07-09T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2010/03/02/lah-chapter16-questions-key/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/03/02/lah-chapter16-questions-key/">Comments</a>
+           | <a href="/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>★ E16.1 研究您本地的NFS设置。使用了NFS吗？还是有别的不同解决方法？采取了自动安装方式吗？有什么样的权衡考虑？</p>
+  <div class="entry-content"><p><a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a>是我非常喜爱的虚拟化软件，其简单方便，单不是强大的配置让我很喜欢，特别是在网络的配置上，更是灵活多变。</p>
 
-<p>A：以前在网站备份的时候使用过NFS，但是后来放弃了，主要是因为NFS在大I/O的情况下，容易出现崩溃的情况。<br/>
-当然因为挂载点少，所以自动安装方式就没有必要了，越简单，越安全。<br/>
-现在采取了rsync的方式，通过SSH隧道传输数据，相比NFS要稳定和安全。</p>
+<p>不过最近要测试<a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a>，想把之前的<a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a>跑的vm迁移到<a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a>上来，重要的是迁移镜像文件了，配置文件目前似乎没有什么好的办法。</p>
+
+<p>基本上是照着<a href="http://blog.bodhizazen.net/linux/convert-virtualbox-vdi-to-kvm-qcow/">这篇文章</a>来做的，只是我按照它的方法，在第一步出了状况，修改了一下，下面是详细步骤：</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2010/03/02/lah-chapter16-questions-key/">Read on &rarr;</a>
+      <a rel="full-article" href="/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/07/01/btrfs-introduction-and-benchmark/">Btrfs介绍及性能测试</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/07/01/btrfs-introduction-and-benchmark/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/07/01/btrfs-introduction-and-benchmark/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Linux原生的ext4文件系统目前已经在一些最新的Linux发布版本中包含了，我也使用了一段时间，和ext3相比，有所改善但是不是那种非常显著的干劲，更详细的情况可以参考这篇文章(<a href="http://www.linux-mag.com/id/7271">ext4文件系统：介绍及性能测试</a>)。<br/>
+不过我一直向往<a href="http://www.oracle.com/cn/products/servers-storage/solaris/index.html">Solaris</a>上的<a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS">ZFS</a>，觉得那才是真正的企业级文件系统，COW,CDP等功能让人着迷，虽然目前linux上已经有基于<a href="http://fuse.sourceforge.net/">fuse</a>的<a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS">ZFS</a>实现，但是性能上就大打折扣了，直到<a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a>文件系统的出现，让我看到了未来：</p>
+
+<p><a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a> 承若将赋予这个文件系统许多类似ZFS的企业级特征，甚至在性能和亮点上要超过<a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS">ZFS</a>。事实上，很多Linux专家认为<a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a>应该是Linux未来的 一个关键点。<br/>
+不过目前<a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a>目前还没有完全发布，不过相信很快大家就能用到了，在正式使用之前，我们不妨对它做一些了解，甚至可以对其进行一些性能上的测试。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/07/01/btrfs-introduction-and-benchmark/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/04/24/have-bought-house/">从此做一个快乐的房奴</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/04/24/have-bought-house/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/04/24/have-bought-house/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>人生的第一笔大买卖比我想像的来得快很多，就在落笔的那一刹那，我和lancy的未来20年就这样轻松的典当了出去，既然典当已经成为事实，那就不如快乐的享受这这种压力。</p>
+
+<p>于是，开始有了期待，有了梦想，有了更多的对房子设计的讨论，于是就会想着接下来的几个月赶紧的过去，能够让我们随心设计属于自己的空间，期待着，期待，从今天起，就做一个快乐的房奴吧！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/04/18/want-to-buy-house/">打算买房了</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/04/18/want-to-buy-house/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/04/18/want-to-buy-house/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这几天看了几个处房子，也许是因为买房的要求迫在眉睫，所以没有考虑太多了，lancy他们单位刚好搞团购，价格呢，也还在我们的承受范围之内，因此就定了下来。今天去交了定金，一周时间内，准备米米，正式签订购房合同。</p>
+
+<p>恩，很快就要做房奴和负翁了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/04/15/backup-remote-mysql-with-zrm/">使用Amanda ZRM备份远程MySQL数据库</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/04/15/backup-remote-mysql-with-zrm/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/04/15/backup-remote-mysql-with-zrm/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><del>本文写道最后的时候，我才发现ZRM for MySQL的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库test1,test2，你备份了这两个数据库，某一天，test2数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复test2，而是直接把test1,test2都恢复。那这绝对是一个噩梦。
+但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.</del></p>
+
+<p><strong>Update：</strong><br/>
+原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">ZRM</a>备份是可以指定恢复特定的数据库的，刚才今天mwf的站点数据库需要恢复，测试了一下，完全没有问题。<br/>
+具体的恢复办法，请看文末。
+<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">Zmanda Recovery Manager(ZRM)</a>提供了备份MySQL数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html">官方的介绍</a>。下面给出一个备份的实例。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/04/15/backup-remote-mysql-with-zrm/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/04/13/practice-amanda-backuping/">Amanda集中备份实例</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/04/13/practice-amanda-backuping/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2009/04/13/practice-amanda-backuping/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img class="left" src="http://www.zmanda.com/images/header/logo-zmanda.gif" title="&#34;Amanda Network Backup&#34;" alt="&#34;Amanda Network Backup&#34;"> <br/>
+<a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver">Amanda</a> 高级马里兰自动网络磁盘归档 (Advanced Maryland Automatic Network Disk Archiver网络备份软件是我第一次接触Linux就听到过，只是从来都没有使用过，有需要备份得时候，就是自己写写简单的脚本，使用cron来做定时任务，也能基本满足需求。虽然曾经起心想用Amanda，但限于没有适合的环境，只能作罢。</p>
+
+<p>现在的情况有所不同了，有4,5台服务器需要备份，涉及到不同的平台，其备份特性应该达到或者至少朝企业级标准靠拢，因此，这几天看了看Amanda的文档，做了一些测试，目前在我的环境下配置成功，特记录下来和大家分享。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/04/13/practice-amanda-backuping/">Read on &rarr;</a>
     </footer>
   
 
@@ -591,7 +572,7 @@ VPN，自/由/门，无/界，大家各显神通吧。</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
       </li>
     
       <li class="post">

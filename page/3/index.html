@@ -9,8 +9,11 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="把上面的代码保存为dummy.c。而后使用autoscan命令来粗昂间一个configure模板文件，命令如下 $ autoscan $ ls
-autoscan.log configure.scan dummy.c 将生成的configure.scan文件保存为configure.in，并进行修改 &hellip;">
+  <meta name="description" content="之前的版本如何做，这里不做描述，自行
+Google。
+之前通常的方法，在该版本，KERNEL并不能直接获得设备名称或者主次设备号，我们需要通过dmsetup指令来间接获得。
+一下操作的目录均在/etc/udev/rules.d/。 编辑90-dm.rules文件，注释掉下面这行
+﻿KERNEL &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,437 +69,6 @@ autoscan.log configure.scan dummy.c 将生成的configure.scan文件保存为con
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/">快速制作一个虚假deb格式软件包</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-18T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2011/03/18/how-to-build-a-fake-deb-package-quickly/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>把上面的代码保存为<code>dummy.c</code>。而后使用<code>autoscan</code>命令来粗昂间一个<code>configure</code>模板文件，命令如下</p>
-
-<pre><code>$ autoscan 
-$ ls
-autoscan.log  configure.scan  dummy.c
-</code></pre>
-
-<p>将生成的<code>configure.scan</code>文件保存为<code>configure.in</code>，并进行修改，只用保留下面几行内容就行了，我在文件里注释说明</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/03/11/ssh-three-kill-features/">Ssh的三板斧</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-11T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2011/03/11/ssh-three-kill-features/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2011/03/11/ssh-three-kill-features/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>ssh的功能无比强悍，对于一个<strong>Unix/Linux</strong>而言，只要开放一个ssh服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下：</p>
-
-<h2>端口转发</h2>
-
-<p>端口转发，也就是-L参数的设置。以我的实际例子来说明吧，我在家里上网，设置的是局域网，IP地址是<code>192.168.100.101</code>。公司总部呢，也是用的是局域网地址，<code>172.16.0.0</code>网段。我需要访问公司内部的一台应用服务器，比如<code>172.16.81.111</code>。我该怎么办呢？恰好，公司有一台网关服务器，有两块网卡，一块是设置的公网IP地址，比如<code>219.99.12.23</code>。另外一块网卡，则是公司的内网的IP地址，比如<code>172.16.81.220</code>。这台服务器开启了SSH服务。那么我要做的便是执行下面的指令:</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2011/03/11/ssh-three-kill-features/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2011/03/09/online-resizing-ext4-filesystem/">在线扩容ext4文件系统</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-03-09T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2011/03/09/online-resizing-ext4-filesystem/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2011/03/09/online-resizing-ext4-filesystem/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>原来一个分区分得太小了（只有5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对ext3干过这样的事情，看了ext3上的<a href="https://ext4.wiki.kernel.org/index.php/Frequently_Asked_Questions#How_to_online_resize_the_Ext4_filesystem.3F">wiki介绍</a>，得知做法和原来的ext2/ext3一样（看来兼容性还是不错）。下面是我的扩容过程</p>
-
-<p>首先下载你要扩容的分区，这样当然是最保险的，如果你就是不想卸载，只要你别对其做写操作，也没有问题。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2011/03/09/online-resizing-ext4-filesystem/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/08/24/public-dns-servers/">Public DNS Servers</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-24T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/08/24/public-dns-servers/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/08/24/public-dns-servers/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Norton DNS (198.153.192.1, 198.153.194.1)<br/>
-OpenDNS (208.67.222.222,208.67.220.220)<br/>
-OpenDNS Family (208.67.222.123, 208.67.220.123) <br/>
-Comodo Secure DNS (156.154.70.22, 156.156.71.22)<br/>
-ScrubIt DNS (67.138.54.100,207.225.209.66)<br/>
-DNS Advantage (156.154.70.1, 156.154.71.1)</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/08/23/record-linux-desktop-using-ffmpeg/">抓取LINUX桌面的视频</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-23T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/08/23/record-linux-desktop-using-ffmpeg/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/08/23/record-linux-desktop-using-ffmpeg/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><code>$ ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq /tmp/out.mpg</code></p>
-
-<p>我们在一些视频网站上看到别人的3D桌面怎么怎么酷的视频，通常就是这么来的，ffmpeg可以直接解码X11的图形，并转换到相应输出格式。<br/>
-ffmpeg的通常用法是，根据一堆参数，输出一个文件，输出文件通常放最后，下面解析下几个参数：</p>
-
-<p><code>-f x11grab</code> 指定输入类型。  因为x11的缓冲区不是普通的视频文件可以侦测格式，必须指定后<code>ffmpeg</code>才知道如何获得输入。</p>
-
-<p><code>-s wxga</code> 设置抓取区域的大小。wxga是<code>1366*768</code>的标准说法，也可以换成<code>-s 800×600</code>的写法。</p>
-
-<p><code>-r 25</code> 设置帧率，即每秒抓取的画面数。</p>
-
-<p><code>-i :0.0</code> 设置输入源，本地X默认在0.0 -sameq 保持跟输入流一样的图像质量，以用来后期处理。</p>
-
-<p>至于其他ffmpeg的用法，可以参考下面两篇文章：</p>
-
-<p><a href="http://www.catonmat.net/blog/how-to-extract-audio-tracks-from-youtube-videos/">How to Extract Audio Tracks from YouTube Videos</a></p>
-
-<p><a href="http://www.catonmat.net/blog/converting-youtube-flvs-to-a-better-format-with-ffmpeg">Converting YouTube Flash Videos to a Better Format with ffmpeg</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/08/19/matrix-keyboard/">山寨版Matrix</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-19T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/08/19/matrix-keyboard/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/08/19/matrix-keyboard/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.flickr.com/photos/mlsx/4906513189/" title="photo sharing"><img src="http://farm5.static.flickr.com/4095/4906513189_a7d50ef3b7.jpg" alt="image" /></a>
-<a href="http://www.flickr.com/photos/mlsx/4906513189/">山寨版Matrix</a>，原由
-<a href="http://www.flickr.com/people/mlsx/">mlsx</a> 上載。</p>
-
-<p>用皮皮的架子鼓架空笔记本，增加散热能力。</p>
-
-<p>用从用户处讹来的原状IBM键盘做主键盘。 笔记本键盘主要用做快捷键。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/">Windows下压缩包在linux解压乱码的解决办法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-06T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>我的系统是ubuntu 10.04 ，编码是<code>zh_CN.UTF-8</code>。
-我从网络上下载的绝大部分zip包，解压后，连带目录和文件都是乱码。在终端尝试更换LANG，LANGUAGE等环境变量，还是不能直接解决问题。</p>
-
-<p>而且用unzip解压后，无论你怎么设置convmv命令的编码参数，均不能解决问题。后通过7z工具算是暂时解决了这个问题。
-首先用apt安装7z工具包。 <br/>
-然后用下面的两条指令： <br/>
-1) <code>LANG=C 7z x xxx.zip</code> <br/>
-2) <code>convmv -f cp936 -t utf8 -r --notest *</code></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/07/14/chroot-in-ssh-server/">在ssh服务里使用chroot</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-14T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/07/14/chroot-in-ssh-server/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/07/14/chroot-in-ssh-server/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发ssh给用户，那么无疑能极大的增加用户操作的灵活性，但是ssh的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。</p>
-
-<p>幸而openSSH已经了解到了这点，目前的版本均支持chroot功能，下面我简单的描述一下在ubuntu
-10.04系统上如何实现，其他系统实现的原理相同，只是一些配置文件和指令不同而已。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2010/07/14/chroot-in-ssh-server/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/07/02/multiple-ssh-connects-with-the-same-session/">共享会话的ssh连接配置</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-02T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/07/02/multiple-ssh-connects-with-the-same-session/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2010/07/02/multiple-ssh-connects-with-the-same-session/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>针对一个服务器需要同时开几个ssh连接，也许是同一个帐号链接，也许是不同的帐号，你是不死和厌烦了每次的都要输入密码？其实ssh链接可以做到共享会话的。
-一个办法是用一些ssh链接客户端，比如Windows下的<a href="http://www.vandyke.com/products/securecrt/">Secure
-CRT</a>，Linux下的<a href="http://projects.gnome.org/hotssh/">hotssh</a>。
-另外一个办法，就是自己修改ssh客户端配置文件，创建<code>~/.ssh/ssh_config</code>文件，加入下面的内容：</p>
-
-<pre><code>Host *
-ControlMaster auto ControlPath ~/.ssh/master-%r@%h:%p
-</code></pre>
-
-<p>当对服务器发起一个链接的时候，在<code>~/.ssh</code>目录下就会创建一个文件,当你退出所有多该服务器的链接是，该文件会自动删除。 现在就尝试吧</p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -561,6 +133,442 @@ Google</a>。
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/06/10/core-python-programming-2nd-chapter-20-exercise/">Core Python Programming 2nd Chapter 20 Exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/06/10/core-python-programming-2nd-chapter-20-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/06/10/core-python-programming-2nd-chapter-20-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这一章主要是网络客户端编程，讨论了包括SMTP，POP3，FTP，URL在内的一些编程技术。Python针对网络编程有一个非常强大的模块，那就是<a href="http://twistedmatrix.com">Twisted</a>，这个工具太强大，以至于<a href="http://www.amazon.com/gp/product/0596100329?ie=UTF8&amp;tag=jpcalsjou-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0596100329">有专门的书籍</a>来讲述如何使用。</p>
+
+<p>后面的习题大部分都是写一些代码片段，比如获取一个页面，连接一个FTP服务器，连接你的邮箱。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/06/10/core-python-programming-2nd-chapter-20-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/06/09/core-python-programming-2nd-chapter-19-exercise/">Core Python Programming 2nd Chapter 19 Exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/06/09/core-python-programming-2nd-chapter-19-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/06/09/core-python-programming-2nd-chapter-19-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>因为这一章是图形化编程，第一版和第二版都只是简单的描述了一下Tkinter如何使用。其他模块，比如PyGtk,WxPython更加是一笔带过了，所以要完成后面的习题，还得自己找一些资料看。</p>
+
+<p>关于Tkinter的资料，国内不过，基本上还是官方文档为主，Python官方站点给出了一个关于Tkinter的专题，<a href="http://wiki.python.org/moin/TkInter">集中了一些资料</a>，感兴趣的可以看看。</p>
+
+<blockquote><p>19–8.简单的文本编辑器。在您上一题答案的基础上创建一个简单的文本编辑器。可以用剪贴板或读文件的方式
+在一个文本域里显示一些文字供用户编辑。当用户退出程序时(通过 QUIT 按钮或 Quit/Exit 菜单项)
+会询问用户是否保存所作的修改。附加题:给您的脚本添加一个拼写检查接口,增加一个按钮或菜单项来对文件
+进行拼写检查。拼写错误的词句应在文本域组件中用不同的背景或前景色高亮显示出来。</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/06/09/core-python-programming-2nd-chapter-19-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/06/05/core-python-programming-2nd-chapter-9-exercise/">Core Python Programming 2nd Chapter 9 Exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/06/05/core-python-programming-2nd-chapter-9-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-9-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>9–1.文件过滤. 显示一个文件的所有行, 忽略以井号( # )开头的行. 这个字符被用做Python , Perl, Tcl, 等大多脚本文件的注释符号. 附加题: 处理不是第一个字符开头的注释.</p></blockquote>
+
+<p>去掉以#开头的行比较好办，用startswith函数也行，用string[0]获得第一个字符也行。<br/>
+麻烦的是如果要去掉行中间的注释，我这里采取用的是正规表达式（RE）方法，代码如下：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/06/05/core-python-programming-2nd-chapter-9-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/06/05/core-python-programming-2nd-chapter-18-exercise/">Core Python Programming 2nd Chapter 18 Exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/06/05/core-python-programming-2nd-chapter-18-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-18-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>18-4. 线程和文件。把练习 9-19 的答案做一些改进。我们要得到一个字节值,一个文件名然后显示在文件中那个字节出现了多少次。假设这个文件非常的大。文件是可以有多个读者的,那我们就可以创建多个线程,每个线程负责文件的一部分。最后,把所有的线程的结果相加。使用timeit()对单线程和多线程分别进行计时,对性能的改进进行讨论。<br/>
+18-5. 线程,文件和正则表达式。你有一个非常大的 mailbox 文件——如果没有的话,你可以把你所有的 e-mail 的原始信息放到一个文本文件中。你现在要做的是,使用你在 15 章写的识别 e-mail 地址和网页 URL 的正则表达式,分析出这个大文件里的所有的 e-mail 地址和 URL,把这些链接写到一个.html(或.htm)文件中。在这个文件生成时,会自动显示一个浏览器,打开这个文件,显示所有的链接。使用多线程来分隔处理大文件和把结果写到一个新的.html 文件的操作。在浏览器中测试一下你的结果,确保那些链接都能正常工作。<br/>
+18-8. 线程池。修改例 18.9 的代码,不再是一个生产者和一个消费者,而是可以有任意个消费者线程(一个线程池),每个线程可以在任意时刻处理或消耗任意多个产品。   <br/>
+18-9. 文件, 创建一些线程来计算一些(可能很大量的)文件中一共有多少行。你可以选择要使用多少个线程。比较单线程与多线程的性能差异。提示:回顾一下第 9 章(文件和输入 输出)的练习。</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/06/05/core-python-programming-2nd-chapter-18-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/06/01/core-python-programming-2nd-chapter-13-exercise/">Core Python Programming 2nd Chapter 13 Exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/06/01/core-python-programming-2nd-chapter-13-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/06/01/core-python-programming-2nd-chapter-13-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这个章节的内容值得仔细阅读，而且不应该只读一遍。 我对比了第一版和第二版，后者在13节增加了一些内容。另外习题有所增加。<br/>
+还有一个现象就是因为第一版的翻译不是第二版的翻译，有些术语和语句风格有比较大的区别，在这一章就体现的更加明显了。</p>
+
+<blockquote><p>13-3,13-4:MoneyFmt 类里只有一个数据值(即,金额),和五个方法(你可以随意编写其他方法)。<br/>
+__init__()构造器对数据进行初始化,<br/>
+update()方法把数据值替换成一个新值,<br/>
+__nonzero__()是布尔型的,当数据值非零时返回True,<br/>
+__repr__()方法以浮点数的形式返回金额;而<br/>
+__str__()方法采用和dollarize()一样的字符格式显示该值。<br/>
+(a) 编写 update()方法,以实现数据值的修改功能。 <br/>
+(b) 以你已经编写的dollarize()的代码为基础,编写__str__()方法的代码 &copy;纠正__nonzero__()方法中的错误,这个错误认为所有小于 1 的数值,例如, 美分($0.50),50返回假值(False)。<br/>
+(d) 附加题: 允许用户通过一个可选参数指定是把负数数值显示在一对尖括号里还是显示一个负号。默认参数是使用标准的负号。</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/06/01/core-python-programming-2nd-chapter-13-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/05/31/core-python-programming-2nd-chapter-11-exercise/">Core Python Programming 2nd Chapter 11 Exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/05/31/core-python-programming-2nd-chapter-11-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/05/31/core-python-programming-2nd-chapter-11-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>11–7. 用 map() 进 行 函 数 式 编 程 。 <br/>
+给 定 一 对 同 一 大 小 的 列 表 , 如 [1 , 2 , 3] 和[&lsquo;abc&rsquo;,&lsquo;def&rsquo;,&lsquo;ghi&rsquo;,&hellip;.],将两个标归并为一个由每个列表元素组成的元组的单一的表,以使我们的结果看起来像这样:<br/>
+{[(1,&lsquo;abc&rsquo;), (2, &lsquo;def&rsquo;), (3, &lsquo;ghi&rsquo;), &hellip;}.</p></blockquote>
+
+<p>实现代码如下：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/05/31/core-python-programming-2nd-chapter-11-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/05/30/core-python-programming-2nd-chapter-8-exercise/">Core Python Programming 2nd Chapter 8 Exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/05/30/core-python-programming-2nd-chapter-8-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/05/30/core-python-programming-2nd-chapter-8-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>8–2. 循环. 编写一个程序, 让用户输入三个数字: (f)rom, (t)o, 和 (i)ncrement . 以 i 为步长, 从 f计数到 t , 包括 f 和 t . <br/>
+例如, 如果输入的是 f == 2, t == 26, i == 4 , <br/>
+程序将输出 2, 6, 10,
+14, 18, 22, 26.</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/05/30/core-python-programming-2nd-chapter-8-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Core Python Programming 2nd Chapter 6 Exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>6–5.字符串<br/>
+(a)更新你在练习 2-7 里面的方案,使之可以每次向前向后都显示一个字符串的一个字符.<br/>
+(b)通过扫描来判断两个字符串是否匹配(不能使用比较操作符或者 cmp()内建函数)。附加题:在你的方案里加入大小写区分.<br/>
+(c)判断一个字符串是否重现(后面跟前面的一致).附加题:在处理除了严格的回文之外,加入对例如控制符号和空格的支持。<br/>
+(d)接受一个字符,在其后面加一个反向的拷贝,构成一个回文字符串.</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/05/28/core-python-programming-2nd-chapter-5-exercise/">Core Python Programming 2nd Chapter 5 Exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/05/28/core-python-programming-2nd-chapter-5-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>思考再三，还是决定在blog记录下练习《<a href="http://book.douban.com/subject/3112503/">Python核心编程第二版</a>》习题的过程。<br/>
+英文原版书后是有有些习题答案的，但是基本上都是一些简单问题的答案，而且较少。练习是最好的学习，所以我打算尽可能把能练手的习题做一遍。</p>
+
+<p>我手头只有第一版的印刷版，第二版是电子版，目前无法得知电子版是否和印刷版本一致。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/05/28/core-python-programming-2nd-chapter-5-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/page/4/">&larr; Older</a>
@@ -578,7 +586,7 @@ Google</a>。
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
       </li>
     
       <li class="post">

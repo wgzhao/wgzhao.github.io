@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="自从KDE升级到KDE4.0以后，这个现象就出现了，一直以为是KDE的问题，但是后来推断出不是KDE的问题，而是输入法的问题，使用fcitx小企鹅输入法没有问题，使用scim/skim就会发生。 具体现象是这样的，在任何一个可以输入的地方输入一些字符（比如在终端下），切换到一个应用程序， &hellip;">
+  <meta name="description" content="/sbin/下l开头的命令不多，列举如下： ldconfig lilo logsave loopctrl losetup lsmod lspci lsusb lvm lvm.static 其中lvm是lvm.static的软连接。 ldconfig：配置动态连接库， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,7 +71,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/08/27/Keyboard-is-often-no-response-to-the-interim-solution/">键盘时常出现临时无响应的解决办法</a></h1>
+      <h1 class="entry-title"><a href="/2007/03/19/commands-start-l/">\[/sbin学习\]l\*命令</a></h1>
     
     
       <p class="meta">
@@ -87,89 +87,30 @@
   
 
 
-<time datetime="2008-08-27T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-03-19T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/08/27/Keyboard-is-often-no-response-to-the-interim-solution/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/08/27/Keyboard-is-often-no-response-to-the-interim-solution/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>自从KDE升级到KDE4.0以后，这个现象就出现了，一直以为是KDE的问题，但是后来推断出不是KDE的问题，而是输入法的问题，使用fcitx小企鹅输入法没有问题，使用scim/skim就会发生。</p>
-
-<p>具体现象是这样的，在任何一个可以输入的地方输入一些字符（比如在终端下），切换到一个应用程序，然后再切回刚才的那个可以输入的应用程序，大部分情况下，按任何键都没有响应，干等是不能解决问题的，需要来回在不同的应用程序之间做切换，同时不停的打开和关闭输入法，如此来回反复一两次，基本就可以了。这个现象出现的比较频繁，很讨厌，比如在和别人在IM上聊天的时候，经常性的不能输入了，别人还以为我不理他了，显得很不礼貌。</p>
-
-<p>解决的方法是，修改输入法的配置文件<code>/etc/X11/xinit/xinput.d/scim</code>
-把</p>
-
-<pre><code>GTK_IM_MODULE=xim
-QT_IM_MODULE=xim
-</code></pre>
-
-<p>两行改成</p>
-
-<pre><code>GTK_IM_MODULE=scim
-QT_IM_MODULE=scim
-</code></pre>
-
-<p>注销桌面，重新登录。</p>
-
-<p>到目前为止，这个现象没有发生了。希望这是正确的解决方法。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/08/25/Based-on-lighttpd-in-the-mysql-configuration-of-the-virtual-host/">在lighttpd上配置基于mysql的虚拟主机</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-08-25T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/08/25/Based-on-lighttpd-in-the-mysql-configuration-of-the-virtual-host/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/08/25/Based-on-lighttpd-in-the-mysql-configuration-of-the-virtual-host/">Comments</a>
+           | <a href="/2007/03/19/commands-start-l/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/19/commands-start-l/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><a href="http://www.lighttpd.net/">lighttpd</a>是一款轻量级的web服务，默认支持虚拟主机，但是我们希望通过增加一些简单的代码获得虚拟主机对mysql的支持。</p>
+  <div class="entry-content"><p>/sbin/下l开头的命令不多，列举如下：</p>
 
-<p>测试环境为kubuntu 8.04.1，大致的步骤如下</p>
+<blockquote><p>ldconfig lilo logsave loopctrl losetup lsmod lspci lsusb lvm lvm.static</p></blockquote>
 
-<p>1）下载必要的软件，包括lighttpd,mysql,python,python-mysqldb<br/>
-2）创建必要的数据库，数据表及测试数据<br/>
-3）给lighttpd添加自定义的配置文件</p>
+<p>其中lvm是lvm.static的软连接。</p>
 
-<p>下面详细叙述：</p>
+<p>ldconfig：配置动态连接库，以便程序在编译和运行中动态连接这些程序库。与此相关的配置文件便是/etc/ld.so.conf，后来的ldconfig的配置文件采取了现在流行的读取目录下的配置文件。所以/etc/ld.so.conf.d目录便是后来增加的。
+我仅仅使用ldconfig的一个参数-f，就是指定配置文件，这样的好处是，当我需要增加某一个目录的动态库时，我不要全部重建动态库缓存，命令程序运行时间短了很多。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/08/25/Based-on-lighttpd-in-the-mysql-configuration-of-the-virtual-host/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/03/19/commands-start-l/">Read on &rarr;</a>
     </footer>
   
 
@@ -181,7 +122,7 @@ QT_IM_MODULE=scim
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/08/20/No-eth0/">没有eth0</a></h1>
+      <h1 class="entry-title"><a href="/2007/03/17/i-winning/">中奖了，中奖了！</a></h1>
     
     
       <p class="meta">
@@ -197,28 +138,26 @@ QT_IM_MODULE=scim
   
 
 
-<time datetime="2008-08-20T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-03-17T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/08/20/No-eth0/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/08/20/No-eth0/">Comments</a>
+           | <a href="/2007/03/17/i-winning/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/17/i-winning/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>标题描述不是很准确，其实是这样的一个小问题：为了省事，把一个安装的Linux系统一股脑拷贝到另外一台机器上，想省了安装和配置的时间。<br/>
-这样拷贝完后，系统启动没有问题，不过一些小问题还是很多，需要去修改配置，比如说，这种方式启动后，你会发现你的第一块网卡名字不是eth0，可能是eth1或者eth2，这取决于你拷贝过来的系统上原来有多少块网卡，如果只有一块网卡，那么现在的系统就是eth1，以此类推。</p>
+  <div class="entry-content"><p>感谢母亲在28年前的今天，忍受了人生最大的痛苦，生育了我！<br/>
+中午，lancy请我吃饭。随便点了几个菜，边聊边吃，结账时，顺便要了一张发票。<br/>
+习惯性的刮着，虽然从来都没有中奖过，但是还是期望奇迹发现。<br/>
+我是从中间刮起，随便刮了点，瞄了一眼，觉得出现的这个字好陌生呀，因为平常挂出来都是“付税光荣”，这次似乎不像“税”，也不像“光”，再看，是个“拾”字，我马上对lancy说，中奖了，lancy不相信，说我骗她，我继续刮，前面居然是一个“伍”字，我兴奋的说”中奖了，伍拾呢！“，旁边的服务员也不相信，顺口说了一句”是付税光荣“，估计是他们这里还没有发现有人中奖过吧。</p>
 
-<p>其原因是udev搞的鬼，udev在<code>/etc/udev/rules.d/</code>下面搞了一个持久命名规则，对于网卡的持久命令，就采取了MAC地址的匹配方式，也就是类似下面这样：</p>
+<p>lancy看我不像是骗她，立马抢了过去，再刮了一下，果然是伍拾，哈哈！</p>
 
-<pre><code>SUBSYSTEM=="net", ACTION=="add", DRIVERS=="*", ATTR{address}=="00:19:b9:52:04:3d", \
-ATTR{type}=="1", KERNEL=="eth*",NAME="eth0"
-</code></pre>
+<p>lancy高兴的去服务台领奖，旁边的服务员也赶紧围了过来，纷纷说手气不错，赶紧去买六合彩。</p>
 
-<p>上面的<code>ATTR{address}=="00:19:b9:52:04:3d"</code>匹配的就是机器网卡的MAC地址，显然这里填写的应该是拷贝的那台机器上的MAC地址，而不是当前机器的网卡MAC地址。</p>
-
-<p>找到了原因，解决办法就很简单了，要不修改上面的MAC地址，要不直接删除这行。然后重启。</p>
+<p>这还是我们第一次发票上中奖呢，不容易呀，看这次的好运气能不能给我今年带来好运！</p>
 </div>
   
   
@@ -231,7 +170,7 @@ ATTR{type}=="1", KERNEL=="eth*",NAME="eth0"
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/08/12/Wonderful-World-of-MySQL-Storage-Engines/">Wonderful World of MySQL Storage Engines</a></h1>
+      <h1 class="entry-title"><a href="/2007/03/12/some-tips-about-group-and-gshadow/">/etc/group,/etc/gshadow释疑</a></h1>
     
     
       <p class="meta">
@@ -247,114 +186,27 @@ ATTR{type}=="1", KERNEL=="eth*",NAME="eth0"
   
 
 
-<time datetime="2008-08-12T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-03-12T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/08/12/Wonderful-World-of-MySQL-Storage-Engines/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/08/12/Wonderful-World-of-MySQL-Storage-Engines/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这是2008年开源大会上<a href="http://www.percona.com/">personal consulting
-experts</a>组织的一个有关MySQL存储引擎的简报，比较详细的分析了MySQL目前支持的存储引擎，分析了各种存储引擎适合哪些应用。最后给出了各种存储的引擎的性能。和大家分享</p>
-
-<p><a href="http://www.percona.com/files//presentations/OSCON2008-Wonderful-World-of%20MySQL-Storage-Engines.pdf">Wonderful World of MySQL Storage
-Engines</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/08/11/Olympic-opening-ceremony-of-the-two-shots/">奥运开幕式的两张截图</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-08-11T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/08/11/Olympic-opening-ceremony-of-the-two-shots/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/08/11/Olympic-opening-ceremony-of-the-two-shots/">Comments</a>
+           | <a href="/2007/03/12/some-tips-about-group-and-gshadow/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/12/some-tips-about-group-and-gshadow/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>1）经典蓝屏</p>
+  <div class="entry-content"><p>下午<a href="http://weiling00.spaces.live.com/">welling</a>在MSN上问我，你知道/etc/group的第二项是什么意思吗？这项中!和x分别代表什么意思呢？
+之前我还真的没有注意到这个问题。于是先man group了一把，给出了的说明是</p>
 
-<p><img src="http://lh3.ggpht.com/teamwolves/SJ5JYmES2fI/AAAAAAAAAuY/-GCRxuEbTOE/BlueScreen.jpg?imgmax=512" alt="image" /></p>
-
-<p>2）细节很重要<br/>
-<img src="http://img1.qq.com/2008/pics/12185/12185785.jpg" alt="image" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/08/02/I-have-a-TV/">I Have a TV</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-08-02T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/08/02/I-have-a-TV/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/08/02/I-have-a-TV/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>各种原因，还是买了一台电视机，创维的一台数字液晶电视。
-lancy一直以为买了电视机就可以看电视了，当被告知还要去搞有线时，她后悔买电视机了，看来肚子里的皮皮确实吸走了不少ta妈妈的DHA呀。</p>
-
-<p>找邻居借了一个建议无线天线，可惜一点信号都没有，打电话给客服，他们回答说用无线的话，估计会很闪，这个的原理是不是相当于20寸的液晶显示只设置<code>800＊600</code>的分比率一样的道理呀？
-怎么转那个天线，都没有信号。</p>
+<blockquote><p>password the (encrypted) group password. If this field is empty, no
+password is needed.</p></blockquote>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/08/02/I-have-a-TV/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/03/12/some-tips-about-group-and-gshadow/">Read on &rarr;</a>
     </footer>
   
 
@@ -366,7 +218,7 @@ lancy一直以为买了电视机就可以看电视了，当被告知还要去搞
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/07/31/unix-administrator-Tales-of-terror/">Unix管理员恐怖故事集</a></h1>
+      <h1 class="entry-title"><a href="/2007/03/09/today-left-5460/">今日离开中国同学录</a></h1>
     
     
       <p class="meta">
@@ -382,28 +234,119 @@ lancy一直以为买了电视机就可以看电视了，当被告知还要去搞
   
 
 
-<time datetime="2008-07-31T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-03-09T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/07/31/unix-administrator-Tales-of-terror/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/07/31/unix-administrator-Tales-of-terror/">Comments</a>
+           | <a href="/2007/03/09/today-left-5460/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/09/today-left-5460/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>从一堆PDF文档中翻出来了的一个文档，估计下载了有很长时间了。</p>
+  <div class="entry-content"><p>下午5：40，打印出了离职报告，交给了部门经理，签字后又转移到总监手里。<br/>
+至此，我在<a href="http://www.5460.net" title="中国同学录">中国同学录</a> <br/>
+的工作告一段落了。这是我在回长沙后的第二份工作，第一份工作工作了5天，因为规定周六要上班和需要缴纳3000元的保证金而离开了。</p>
 
-<p>讲述的是93年以前，在unix管理员身上发生的一些糗事，其中一些故事当然也在我身上发生过，有些是我操刀的，有些是在我眼皮底下看着别人用迅雷不及掩耳盗铃之势干的。</p>
+<p>而现在的这份工作，我上了58天班，因为公司的体制和一些做人做事的方法，让我无法适应而离开。
+不过就在准备离开的这两天，其实发生了很多事情，让我看到了一些平常我看不到的层面，只是觉得有点晚，因为之前我已经决定走了。</p>
 
-<p>54页的文档，其实是把在<code>comp.unix.admin</code>新闻组上讲述的一些故事编辑起来。
-看完后，对这些“犯下”的错误，大致可以归纳为下面几类：</p>
+<p>有时我觉得我是不是过于挑剔或者过于自大了？是不是应该放下自己其实就没有资格有的臭架子，可是往往我有无法强迫自己去认同那些我不习惯的东西。</p>
+
+<p>我不习惯在办公室这样的公共场合还有人吸烟；我不习惯在办公室总是充斥着污言秽语和大肆喧哗；我不习惯成天的开会，虽然我并不要参加；我不习惯虽然说不提倡加班，但事实却不是这样。</p>
+
+<p>也许潜意识里，我还是热爱着Linux，我已经在公司被windows压抑得几乎无法呼吸。我渴望自由！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/07/commands-start-k/">[/sbin学习]k*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/07/commands-start-k/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/07/commands-start-k/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin下j开头的命令没有，k开头的也只有三个，而且比较简单
+killall5:发送中断信号给所有的进程，除了自己，它只接受一个参数，那就是中断信号数。
+klogd:系统内核日志daemon程序，一般有/etc/init.d/syslogd脚本来调用，有关日志系统的介绍，可以参考
+<a href="read.php/334.htm">Linux日志文件系统</a>。
+kmodule：没有任何说明和帮助，string了一下，也没有看到什么有用的信息，执行了一下，输出了目前我的系统已经加载的内核模块，但是他的显示又和lsmod不同，比如声卡驱动，lsmod打印可能会有3，4行信息，但是Kmodule仅仅一行，就是告诉你加载了什么类型的声卡驱动。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/02/12/what-intercity-bus-we-want/">我需要什么样的城际公交</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/02/12/what-intercity-bus-we-want/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/12/what-intercity-bus-we-want/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>周六去湘潭，一改乘坐火车站附近的大巴的习惯，要去尝试刚开通不久的长株潭城际公交。
+开始以为从长沙出发到湘潭和株洲的公交车应该在同一个出发点，结果到了东塘后，才发现这里仅仅是到株洲的公交，去往湘潭的，应该在侯家塘坐车。</p>
+
+<p>又辗转到侯家塘，果然发现有辆公交车停在那里。之前看过报纸，说公交车全程是5块。结果今天一问，才发现全程是14块，到我我下车的地方是11块，大约是2块钱一站。相比从火车站附近的大巴18块的票价而言，也算便宜了7块钱，两人单次就是14块，来回一趟28，算算似乎可以。于是就上车了。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/07/31/unix-administrator-Tales-of-terror/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/02/12/what-intercity-bus-we-want/">Read on &rarr;</a>
     </footer>
   
 
@@ -415,7 +358,7 @@ lancy一直以为买了电视机就可以看电视了，当被告知还要去搞
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/07/31/on-that-day-finally-came/">这一天总算来了</a></h1>
+      <h1 class="entry-title"><a href="/2007/02/12/have-read-chinese-painting/">看完了《国画》</a></h1>
     
     
       <p class="meta">
@@ -431,39 +374,23 @@ lancy一直以为买了电视机就可以看电视了，当被告知还要去搞
   
 
 
-<time datetime="2008-07-31T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/07/31/on-that-day-finally-came/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/07/31/on-that-day-finally-came/">Comments</a>
+           | <a href="/2007/02/12/have-read-chinese-painting/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/12/have-read-chinese-painting/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p><strong>Update 2011-12-31 </strong>  忘记Linux下的QQ吧，3年多了，依然没有更新。</p>
+  <div class="entry-content"><p><img src="http://www.douban.com/lpic/s1509506.jpg" alt="image" />不知不觉又在WC中看完了一本书，想来人一天呆在WC的时间还是不少的（是不是这也是一个商机呢？比如提供可以翻阅的广告等）</p>
 
-<p>在Linux怎么上QQ？ <br/>
-<a href="http://www.pidgin.im">pigdin</a>?<br/>
-<a href="http://evaq.sf.net">evaqq</a>? <br/>
-<a href="http://lumaqq.linuxsir.org">lumaqq</a>?<br/>
-<a href="http://www.winehq.org">wine+qq ?</a>   (经过几个小时测试，如果你没有足够的耐心，还是继续使用上面的一个工具吧)</p>
+<p>我想《<a href="http://www.douban.com/subject/1397659/">国画</a>》这本书之所以被禁，应该是他其中的对官场入木三分的刻画吧。</p>
 
-<p>OK忘记这些吧，这一天总算到来了，腾讯官方的Linux版本QQ已经发布了，虽然目前是预览版，但是至少说明腾讯开始注意到了Linux用户，这是一个好事情，值得称赞一下。</p>
+<p>只是边看的时候，我在想，书的出版是为了像人们揭示一个现实生活中的官场行为呢，还是要作为一个官场入职ABC的知道教材呢？至少我看完后，如果我去政府部门，那我会很本能的想到这本书，想到这本书所描述的一些为官“方法”。</p>
 
-<p><del>不过我还没有使用，还在下载中。</del></p>
-
-<p>猛击这里获得官方版本（<a href="http://im.qq.com/qq/linux/download.shtml">http://im.qq.com/qq/linux/download.shtml</a>）</p>
-
-<p>Update： 已经安装登录了，目前的感受</p>
-
-<p>1）界面还不错，比较清新。
-2）标签式聊天窗口，这应该是符合Linux下的特征。<br/>
-3）目前只有聊天基本功能，支持群。没有截图，没有文件传送等 <br/>
-4）基本设置目前只有一个按钮，还没有实现。 <br/>
-5）保存密码无效，第二次登录还是空白<br/>
-6）用了不到5分钟，崩溃了一次 <br/>
-7）期待正式版本</p>
+<p>或许等我再看完《青瓷》，对此会有更多的理解的吧。</p>
 </div>
   
   
@@ -476,7 +403,7 @@ lancy一直以为买了电视机就可以看电视了，当被告知还要去搞
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/07/28/MySQL-simply-connect-the-python-script/">python连接MySQL的简单脚本</a></h1>
+      <h1 class="entry-title"><a href="/2007/02/12/commands-start-h/">\[/sbin学习\]h\*命令</a></h1>
     
     
       <p class="meta">
@@ -492,27 +419,32 @@ lancy一直以为买了电视机就可以看电视了，当被告知还要去搞
   
 
 
-<time datetime="2008-07-28T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/07/28/MySQL-simply-connect-the-python-script/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/07/28/MySQL-simply-connect-the-python-script/">Comments</a>
+           | <a href="/2007/02/12/commands-start-h/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/12/commands-start-h/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>这纯粹做一个记录，下次要的时候，拿过来就好了。
-使用了MySQLdb的模块，如果是debian/ubuntu用户，可以使用<br/>
-<code>sudo apt-get install python-mysqldb</code>
-来安装
-其他发行版本也许可以用yum也能搞定，实在不行，从官方站点(<a href="http://mysql-python.sourceforge.net">http://mysql-python.sourceforge.net</a>)下载源代码吧。(sourceforge似乎解封了，不用翻墙了)</p>
+  <div class="entry-content"><p>/sbin下h开头的命令不多，仅有4个<br/>
+halt hdparm hotplug hwclock<br/>
+halt:停止系统，他和reboot，poweroff等命令属于同一个功能集。
+halt命令不不接参数，仅仅有几个选项来决定如何停止系统</p>
+
+<p>-n: 停止系统前不做同步(sync)，适合快速关机和那些仅仅只有只读访问的系统。<br/>
+-w: 仅在wtmp文件中写一条reboot记录，然后退出，他的用处是什么？<br/>
+-d: 不写reboot记录到wtmp文件中<br/>
+-f: 强制停机/重启，但不调用shutdown.shutdown是一种安全的关闭系统的方式。<br/>
+-p: 如果支持，系统关闭后掉电。否则只是停止系统.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/07/28/MySQL-simply-connect-the-python-script/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/02/12/commands-start-h/">Read on &rarr;</a>
     </footer>
   
 
@@ -524,7 +456,7 @@ lancy一直以为买了电视机就可以看电视了，当被告知还要去搞
       
   <header>
     
-      <h1 class="entry-title"><a href="/2008/07/23/unison-file-synchronization-tool/">Unison&#8211;文件同步工具</a></h1>
+      <h1 class="entry-title"><a href="/2007/02/09/commands-start-g/">\[/sbin学习\] G\*命令</a></h1>
     
     
       <p class="meta">
@@ -540,25 +472,78 @@ lancy一直以为买了电视机就可以看电视了，当被告知还要去搞
   
 
 
-<time datetime="2008-07-23T00:00:00+08:00" pubdate data-updated="true"></time>
+<time datetime="2007-02-09T00:00:00+08:00" pubdate data-updated="true"></time>
         
-           | <a href="/2008/07/23/unison-file-synchronization-tool/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.github.io/2008/07/23/unison-file-synchronization-tool/">Comments</a>
+           | <a href="/2007/02/09/commands-start-g/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/09/commands-start-g/">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>说道文件同步工具，第一个想到的估计是rsync，这确实是一个彪悍的工具，小巧但不失强大，而且机会所有的Linux发生版本都会自带，这便提高了他的知名度。</p>
+  <div class="entry-content"><p>/sbin下g开头的命令如下：</p>
 
-<p>但是rsync的内容同步是以来时间戳（不知道我理解得是否正确），比如对于两个文件内容不同，但是时间绰一致的两个文件，在rsync看来是没有区别的，因此不会去作同步。</p>
+<blockquote><p>generate-modprobe.conf getkey grub grub-install grub-terminfo genhostid
+getmd grubby grub-md5-crypt</p></blockquote>
+
+<p>generate-modprobe.conf:  将原来的module.conf文件迁移到modprobe.conf文件。这是2.4内核到2.6内核后驱动模块配置的一个改变。</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/2008/07/23/unison-file-synchronization-tool/">Read on &rarr;</a>
+      <a rel="full-article" href="/2007/02/09/commands-start-g/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/02/05/commands-start-f/">\[/sbin学习\]f\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/02/05/commands-start-f/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/05/commands-start-f/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin下f开头的命令如下</p>
+
+<blockquote><p>fdisk fixfiles fsck.cramfs fsck.ext3 fsck.ocfs2 fsck.vfat fuser findfs<br/>
+fsck fsck.ext2 fsck.msdos fsck.reiserfs fsck.xfs fxload</p></blockquote>
+
+<p>其中fsck.reiserfs是reiserfsck命令的软连接，f开头的命令中fsck命令套件占了绝大部分。
+findfs:根据标签(label)或者UUID号来查询文件系统。他会搜索整个磁盘，看是否有匹配的标签或者UUID没有，如果有，则打印到标注输出上。他也是<a href="http://e2fsprogs.sf.net">e2fsprogs</a>项目的一部分。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/02/05/commands-start-f/">Read on &rarr;</a>
     </footer>
   
 
@@ -582,7 +567,7 @@ lancy一直以为买了电视机就可以看电视了，当被告知还要去搞
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/2013/01/14/block-youku-ads-cleanly/">彻底屏蔽优酷广告</a>
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
       </li>
     
       <li class="post">
