@@ -62,8 +62,8 @@ div.entry-content > p:first-of-type:first-letter
 </form>
   
 <ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
 </ul>
 
 </nav>
@@ -132,7 +132,7 @@ Kerberos 的用户是：name/instance@REALM 。</p>
 KDC 中所负责的一个域数据库称作为 Realm。这个数据库中存放有该网络范围内的所有 Principal 和它们的密钥，数据库的内容被 Kerberos
 的认证服务器 AS 和票据授权服务器 TGS 所使用。Realm 通常是永远是大写的字符,并且在大多数 Kerberos 系统的配置中，一般 Realm 和该网络环境的 DNS 域是一致的。与第二部分之间用‘@’分隔，缺省为本地的 Realm。</p>
 
-<p> 比如，Principal “ cnhawk/<a href="&#109;&#x61;&#105;&#108;&#x74;&#x6f;&#58;&#104;&#97;&#119;&#107;&#46;&#116;&#104;&#x65;&#x39;&#46;&#99;&#x6f;&#109;&#x40;&#84;&#72;&#69;&#x39;&#x2e;&#67;&#79;&#x4d;">&#104;&#x61;&#x77;&#x6b;&#x2e;&#x74;&#x68;&#x65;&#57;&#x2e;&#x63;&#111;&#x6d;&#64;&#x54;&#x48;&#x45;&#57;&#x2e;&#67;&#x4f;&#77;</a> ” 表示 Realm “ THE9.COM
+<p> 比如，Principal “ cnhawk/<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#58;&#104;&#x61;&#x77;&#x6b;&#x2e;&#116;&#104;&#x65;&#x39;&#x2e;&#x63;&#111;&#x6d;&#64;&#x54;&#x48;&#x45;&#57;&#x2e;&#67;&#x4f;&#77;">&#104;&#x61;&#x77;&#x6b;&#x2e;&#x74;&#104;&#101;&#x39;&#46;&#x63;&#x6f;&#x6d;&#64;&#x54;&#x48;&#x45;&#57;&#46;&#x43;&#x4f;&#77;</a> ” 表示 Realm “ THE9.COM
 ”中主机 hawk.the9.com 上的用户 cnhawk ，而 Principal “ host/hawk.the9.com @THE9.COM ”则通常用来表示 Realm “ THE9.COM”中主机 hawk.the9.com。</p>
 
 <p> Credential：
@@ -310,6 +310,8 @@ server kdc.rfkrb.com</p>
   
   
   
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
 </div>
 
     
@@ -362,14 +364,10 @@ server kdc.rfkrb.com</p>
 </section>
 <section>
 <h1>QR-Code</h1>
-<a href="/2005/12/02/kerberos-authentication-configuration/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/12/02/kerberos-authentication-configuration/" alt="post-qrcode"></a></section>
+<a href="/2005/12/02/kerberos-authentication-configuration/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2005/12/02/kerberos-authentication-configuration/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
-</section>
-<section>
-  <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='//categories/linuxji-zhu' style='font-size: 160.0%'>Linux技术(151)</a> <a href='//categories/webkai-fa' style='font-size: 102.3841059602649%'>WEB开发(6)</a> <a href='//categories/wo-du-wo-shu' style='font-size: 106.35761589403974%'>我读我书(16)</a> <a href='//categories/ji-zhu-ji-qiao' style='font-size: 111.52317880794702%'>技术技巧(29)</a> <a href='//categories/shu-ju-ku' style='font-size: 103.17880794701986%'>数据库(8)</a> <a href='//categories/sui-xin-suo-xiang' style='font-size: 144.90066225165563%'>随心所想(113)</a> </span>
 </section>
 
   
@@ -403,6 +401,15 @@ server kdc.rfkrb.com</p>
 </script>
 
 
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 
