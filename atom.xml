@@ -4,7 +4,7 @@
   <title><![CDATA[Linux系统管理]]></title>
   <link href="http://wgzhao.github.io/atom.xml" rel="self"/>
   <link href="http://wgzhao.github.io/"/>
-  <updated>2014-03-16T21:53:09+08:00</updated>
+  <updated>2014-03-16T21:55:08+08:00</updated>
   <id>http://wgzhao.github.io/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -43,7 +43,7 @@
 <li><p>打开你喜欢的终端，输入下面的指令</p>
 
 <p> <code>defaults write com.apple.FaceTime AutoAcceptInvites -bool TRUE</code></p></li>
-<li><p>接下来，架设你希望 FaceTime ID(一般就是 Apple ID)为 <a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x77;&#x67;&#122;&#x68;&#x61;&#x6f;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#46;&#99;&#111;&#x6d;">&#x77;&#x67;&#122;&#x68;&#97;&#111;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#111;&#109;</a> 的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
+<li><p>接下来，架设你希望 FaceTime ID(一般就是 Apple ID)为 <a href="&#109;&#x61;&#105;&#108;&#116;&#x6f;&#58;&#x77;&#x67;&#x7a;&#x68;&#x61;&#x6f;&#x40;&#103;&#109;&#x61;&#105;&#108;&#46;&#99;&#x6f;&#x6d;">&#119;&#103;&#x7a;&#104;&#x61;&#x6f;&#x40;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#109;</a> 的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
 
 <p> <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add wgzhao@gmail.com</code></p>
 

@@ -29,11 +29,13 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
 div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
 code {text-indent: 0em;}
 div.entry-content > p:first-of-type {text-indent: 0em;}
 div.entry-content > p:first-of-type:first-letter
   {font-size:180%;font-weight:bold;}
+</style>
 
   
 
@@ -200,7 +202,7 @@ done
 <p>A：暂时找不到拥有大量帐号的机器，我就用<code>/usr/share</code>作为目标替代吧。首先测试脚本，一般来说，这种要求，应该当行脚本可以搞定： <code>du -s \* |sort -rn |head -n 10</code> 接下就是把这个结果发送出去，那么采取 mail 指令好了，先把上述结果保存到一个临时文件，然后把这个临时文件的内容当作邮件正文发出去。采用管道方式，连临时文件都省略了。</p>
 
 <p><code>du -s \* |sort -rn |head -n 10 |mail -s "statistic report"</code>
-<a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#114;&#x6f;&#x6f;&#116;&#64;&#108;&#111;&#99;&#97;&#x6c;&#x68;&#x6f;&#x73;&#116;&#x2e;&#108;&#111;&#x63;&#97;&#x6c;&#100;&#111;&#109;&#97;&#105;&#x6e;">&#x72;&#x6f;&#x6f;&#x74;&#64;&#108;&#111;&#x63;&#97;&#108;&#104;&#x6f;&#x73;&#116;&#46;&#108;&#111;&#x63;&#97;&#x6c;&#x64;&#111;&#109;&#x61;&#105;&#110;</a> 收信如下：</p>
+<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#114;&#x6f;&#x6f;&#116;&#64;&#x6c;&#111;&#99;&#97;&#108;&#x68;&#111;&#115;&#x74;&#x2e;&#x6c;&#x6f;&#x63;&#97;&#x6c;&#100;&#111;&#109;&#x61;&#105;&#x6e;">&#x72;&#111;&#x6f;&#116;&#x40;&#x6c;&#111;&#99;&#97;&#108;&#x68;&#111;&#115;&#x74;&#46;&#x6c;&#x6f;&#x63;&#97;&#x6c;&#100;&#111;&#109;&#97;&#x69;&#x6e;</a> 收信如下：</p>
 
 <pre><code>[root@localhost locale]# mail
 Mail version 8.1 6/6/93.  Type ? for help.
