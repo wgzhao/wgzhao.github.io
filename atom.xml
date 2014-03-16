@@ -4,7 +4,7 @@
   <title><![CDATA[Linux系统管理]]></title>
   <link href="http://wgzhao.github.io/atom.xml" rel="self"/>
   <link href="http://wgzhao.github.io/"/>
-  <updated>2014-03-16T19:35:14+08:00</updated>
+  <updated>2014-03-16T19:46:59+08:00</updated>
   <id>http://wgzhao.github.io/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -18,10 +18,14 @@
     <link href="http://wgzhao.github.io/2014/03/16/move-to-github/"/>
     <updated>2014-03-16T18:49:59+08:00</updated>
     <id>http://wgzhao.github.io/2014/03/16/move-to-github</id>
-    <content type="html"><![CDATA[<p>这两天把荒废了一年多的blog又整理了一下，做了几件事情：
-1. 把blog从自有的VPS上迁移到了<a href="https://github.com">github</a>，也<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">定制了域名</a>
-2. 把blog的引擎有<a href="http://www.octopress.org">octopress</a>迁移到<a href="https://github.com/tommy351/hexo/">hexo</a>,octopress什么都好，就是当帖子数多了后，生成静态文件的时间太太太长了。吐槽的人很多，比如<a href="http://www.techelex.org/why-switch-blog-from-octopress-to-hexo/">这里</a>,<a href="https://github.com/jekyll/jekyll/issues/1855">这里</a>和<a href="http://lucifr.com/2013/01/02/from-octopress-to-hexo/">这里</a>。
-3. 砍掉了很多过时的帖子，似乎没有次整理blog，都会删除部分帖子。记得从boblog到<a href="http://www.wordpress.com">wordpress</a>就砍掉了将近1/3的帖子，后来从wordpress迁移到<a href="http://www.octopress.org">octopress</a>又砍掉了不少帖子。这次迁移到hexo，又砍掉了将近1/3的帖子。</p>
+    <content type="html"><![CDATA[<p>这两天把荒废了一年多的blog又整理了一下，做了几件事情：</p>
+
+<ol>
+<li>把blog从自有的VPS上迁移到了<a href="https://github.com">github</a>，也<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">定制了域名</a></li>
+<li>把blog的引擎有<a href="http://www.octopress.org">octopress</a>迁移到<a href="https://github.com/tommy351/hexo/">hexo</a>,octopress什么都好，就是当帖子数多了后，生成静态文件的时间太太太长了。吐槽的人很多，比如<a href="http://www.techelex.org/why-switch-blog-from-octopress-to-hexo/">这里</a>,<a href="https://github.com/jekyll/jekyll/issues/1855">这里</a>和<a href="http://lucifr.com/2013/01/02/from-octopress-to-hexo/">这里</a>。</li>
+<li>砍掉了很多过时的帖子，似乎没有次整理blog，都会删除部分帖子。记得从boblog到<a href="http://www.wordpress.com">wordpress</a>就砍掉了将近1/3的帖子，后来从wordpress迁移到<a href="http://www.octopress.org">octopress</a>又砍掉了不少帖子。这次迁移到hexo，又砍掉了将近1/3的帖子。</li>
+</ol>
+
 ]]></content>
   </entry>
   
