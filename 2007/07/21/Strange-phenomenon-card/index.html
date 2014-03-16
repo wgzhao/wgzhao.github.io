@@ -9,9 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="联想昭阳Exxx笔记本，BCM4401 10/100自适应网卡，安装红旗桌面5。
-默认加载驱动是bcm4401,IP地址采用DHCP模式，网络启动的时候，报错正常，但是网卡没有获得IP地址。dmesg看信息有NIC Link
-Down。但是系统任务栏上的网卡状态链路是好的，mii- &hellip;">
+  <meta name="description" content="联想昭阳 Exxx 笔记本，BCM4401 10/100 自适应网卡，安装红旗桌面 5。默认加载驱动是 bcm4401,IP 地址采用 DHCP 模式，网络启动的时候，报错正常，但是网卡没有获得 IP 地址。dmesg 看信息有 NIC Link
+Down。但是系统任务栏上的网卡状态链路是好的， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +30,11 @@ Down。但是系统任务栏上的网卡状态链路是好的，mii- &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,26 +100,23 @@ Down。但是系统任务栏上的网卡状态链路是好的，mii- &hellip;">
   </header>
 
 
-<div class="entry-content"><p>联想昭阳Exxx笔记本，BCM4401 10/100自适应网卡，安装红旗桌面5。<br/>
-默认加载驱动是bcm4401,IP地址采用DHCP模式，网络启动的时候，报错正常，但是网卡没有获得IP地址。dmesg看信息有NIC Link
-Down。但是系统任务栏上的网卡状态链路是好的，<code>mii-tool</code>也是link ok的。</p>
+<div class="entry-content"><p>联想昭阳 Exxx 笔记本，BCM4401 10/100 自适应网卡，安装红旗桌面 5。默认加载驱动是 bcm4401,IP 地址采用 DHCP 模式，网络启动的时候，报错正常，但是网卡没有获得 IP 地址。dmesg 看信息有 NIC Link
+Down。但是系统任务栏上的网卡状态链路是好的，<code>mii-tool</code>也是 link ok 的。</p>
 
 <!--more-->
 
 
-<p>执行<code>ifup eth0</code>，报告获取IP正常，但是还是没有得到IP地址，指定IP地址后，\
-也ping不通网络中的其他机器IP地址。看到驱动目录还有一个b44.ko驱动，加载之，报错，说IRQ错误。<br/>
-想起之前也遇到过这类网卡的怪异问题，于是拿出<code>noapic acpi=off</code>大法，重新启动系统后，Link 已经UP了，但是是获不到IP地址，指定后也ping不通其他机器。dmesg消息中有“Flow control is off for TX and
+<p>执行<code>ifup eth0</code>，报告获取 IP 正常，但是还是没有得到 IP 地址，指定 IP 地址后，\
+也 ping 不通网络中的其他机器 IP 地址。看到驱动目录还有一个 b44.ko 驱动，加载之，报错，说 IRQ 错误。想起之前也遇到过这类网卡的怪异问题，于是拿出<code>noapic acpi=off</code>大法，重新启动系统后，Link 已经 UP 了，但是是获不到 IP 地址，指定后也 ping 不通其他机器。dmesg 消息中有“Flow control is off for TX and
 off for RX”。</p>
 
-<p>询问Rachel，她建议我更新驱动，于是从<a href="http://www.broadcom.com">官方站点</a>下载其<a href="http://www.broadcom.com/docs/driver_download/440x/linux-1.00g.zip">对应驱动</a>，该驱动也是2006年的，看来不怎么新了。编译后，驱动模块是b44.ko。重新加载，效果依然。</p>
+<p>询问 Rachel，她建议我更新驱动，于是从<a href="http://www.broadcom.com">官方站点</a>下载其<a href="http://www.broadcom.com/docs/driver_download/440x/linux-1.00g.zip">对应驱动</a>，该驱动也是 2006 年的，看来不怎么新了。编译后，驱动模块是 b44.ko。重新加载，效果依然。</p>
 
-<p>没有想到平常百试百灵的acpi和noapic都不行了，看来这个问题不简单，艾，联想呀，在我的经历中，联想的机器我就没有顺利过。<br/>
-在自信看dmesg信息，发现似乎是IRQ冲突的问题。主要是IRQ11,前面说找到了这样的设备，后面又说是空的，很是奇怪，实在没有办法，去BIOS里看看吧，在devices control里发现有LAN的信息也有VLAN的信息，为什么会有VLAN的信息呢，不管它，先disable再说。紧挨着的设备还有MODEM和1394,干脆全部DISABLE好了，保存后再进系统，哈哈，获得IP地址了。但是dmesg里“Flow control is off for TX and off for
-RX”的消息还是有，不过网络已经OK了，也能上网，只是这个网络获取IP地址有的奇怪，通常的情况下，<code>ifup eth0</code>,出现的信息，只要有done后，用<code>ifconfig eth0</code>看，肯定是能看到IP地址的，但是这个不是，大概延时2秒钟。不知原因。</p>
+<p>没有想到平常百试百灵的 acpi 和 noapic 都不行了，看来这个问题不简单，艾，联想呀，在我的经历中，联想的机器我就没有顺利过。在自信看 dmesg 信息，发现似乎是 IRQ 冲突的问题。主要是 IRQ11,前面说找到了这样的设备，后面又说是空的，很是奇怪，实在没有办法，去 BIOS 里看看吧，在 devices control 里发现有 LAN 的信息也有 VLAN 的信息，为什么会有 VLAN 的信息呢，不管它，先 disable 再说。紧挨着的设备还有 MODEM 和 1394,干脆全部 DISABLE 好了，保存后再进系统，哈哈，获得 IP 地址了。但是 dmesg 里“Flow control is off for TX and off for
+RX”的消息还是有，不过网络已经 OK 了，也能上网，只是这个网络获取 IP 地址有的奇怪，通常的情况下，<code>ifup eth0</code>,出现的信息，只要有 done 后，用<code>ifconfig eth0</code>看，肯定是能看到 IP 地址的，但是这个不是，大概延时 2 秒钟。不知原因。</p>
 
-<p>那么到底是DISABLE哪个管用呢，还是这三个都需要DISABLE呢。于是开始了Rachel称之为的“折腾”，因为有三个选项，\
-再加上内核参数，所以一起有12种组合，折腾完后，得出的结论是必须把上面三个设备也就是MODEM，1394，VLAN都必须DISABLE，\同时需要增加<code>noapic acpi=off</code>的参数。</p>
+<p>那么到底是 DISABLE 哪个管用呢，还是这三个都需要 DISABLE 呢。于是开始了 Rachel 称之为的“折腾”，因为有三个选项，\
+再加上内核参数，所以一起有 12 种组合，折腾完后，得出的结论是必须把上面三个设备也就是 MODEM，1394，VLAN 都必须 DISABLE，\同时需要增加<code>noapic acpi=off</code>的参数。</p>
 
 <p>OK，折腾到此结束，谢谢各位！</p>
 </div>
@@ -209,8 +210,8 @@ RX”的消息还是有，不过网络已经OK了，也能上网，只是这个�
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/07/21/Strange-phenomenon-card/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/21/Strange-phenomenon-card/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/07/21/Strange-phenomenon-card/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/21/Strange-phenomenon-card/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

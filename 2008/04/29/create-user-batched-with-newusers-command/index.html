@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="使用useradd和passwd两个命令批量创建账号时，密码的输入不太好解决。后来我要wirlfly专门写了一个可以从命令行读取密码并创建的命令。只是不太通用。 今天发现shadow-utils软件包里，包含了一个newusers的命令，他采取读取文件的方式创建用户，包括密码。 &hellip;">
+  <meta name="description" content="使用 useradd 和 passwd 两个命令批量创建账号时，密码的输入不太好解决。后来我要 wirlfly 专门写了一个可以从命令行读取密码并创建的命令。只是不太通用。 今天发现shadow-utils软件包里，包含了一个 newusers 的命令，他采取读取文件的方式创建用户，包括密码。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,21 +99,21 @@
   </header>
 
 
-<div class="entry-content"><p>使用useradd和passwd两个命令批量创建账号时，密码的输入不太好解决。后来我要wirlfly专门写了一个可以从命令行读取密码并创建的命令。只是不太通用。</p>
+<div class="entry-content"><p>使用 useradd 和 passwd 两个命令批量创建账号时，密码的输入不太好解决。后来我要 wirlfly 专门写了一个可以从命令行读取密码并创建的命令。只是不太通用。</p>
 
-<p>今天发现<code>shadow-utils</code>软件包里，包含了一个newusers的命令，他采取读取文件的方式创建用户，包括密码。文件采取一行指定一个账号的相关信息方式，其格式和<code>/etc/passwd</code>一致。</p>
+<p>今天发现<code>shadow-utils</code>软件包里，包含了一个 newusers 的命令，他采取读取文件的方式创建用户，包括密码。文件采取一行指定一个账号的相关信息方式，其格式和<code>/etc/passwd</code>一致。</p>
 
 <!--more-->
 
 
-<p>举一个例子，假设要创建user1,user2,&hellip;.user10，密码和账号名称相同，组属于自己组。那么我首先可以创建一个文件，假定是newuserfile</p>
+<p>举一个例子，假设要创建 user1,user2,&hellip;.user10，密码和账号名称相同，组属于自己组。那么我首先可以创建一个文件，假定是 newuserfile</p>
 
 <pre><code>#cat newuserfile user1:user1:501:501::/home/user1:/bin/bash
 user2:user2:502:502::/home/user2:/bin/bash ........
 user10:user10:501:501::/home/user10:/bin/bash 
 </code></pre>
 
-<p>然后使用<code>newusers newuserfile</code>的指令创建这10个账号。</p>
+<p>然后使用<code>newusers newuserfile</code>的指令创建这 10 个账号。</p>
 
 <p>创建完成后，会在<code>/etc/passwd</code>,<code>/etc/shadow</code>,<code>/etc/group</code>里创建对应的信息，<code>/home</code>下也会有对应的文件夹。但是它仅仅是创建账号，并不会给每一个账号的家目录复制<code>/etc/skel</code>里的内容，所以这点还得自己动手，当然这个就比较方便了。</p>
 </div>
@@ -202,8 +207,8 @@ user10:user10:501:501::/home/user10:/bin/bash
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/04/29/create-user-batched-with-newusers-command/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/04/29/create-user-batched-with-newusers-command/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/04/29/create-user-batched-with-newusers-command/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/04/29/create-user-batched-with-newusers-command/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

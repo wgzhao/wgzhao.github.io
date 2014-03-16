@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="Johnwoolee打电话问我如何计算一个固定大小的分区的inodes个数，也就是inodes和blocksize之间的计算关系。
-我记得以前我接触过这个问题，记得和一个比率参数有关系。再次参看mkfs.ext3的man手册，记忆唤起来了，同时也增加了新的认识。 mkfs.ext3缺省情况下， &hellip;">
+  <meta name="description" content="Johnwoolee 打电话问我如何计算一个固定大小的分区的 inodes 个数，也就是 inodes 和 blocksize 之间的计算关系。我记得以前我接触过这个问题，记得和一个比率参数有关系。再次参看 mkfs.ext3 的 man 手册，记忆唤起来了，同时也增加了新的认识。 mkfs. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,15 +99,14 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://johnwoolee.cublog.cn/">Johnwoolee</a>打电话问我如何计算一个固定大小的分区的inodes个数，也就是inodes和blocksize之间的计算关系。
-我记得以前我接触过这个问题，记得和一个比率参数有关系。再次参看mkfs.ext3的man手册，记忆唤起来了，同时也增加了新的认识。</p>
+<div class="entry-content"><p><a href="http://johnwoolee.cublog.cn/">Johnwoolee</a> 打电话问我如何计算一个固定大小的分区的 inodes 个数，也就是 inodes 和 blocksize 之间的计算关系。我记得以前我接触过这个问题，记得和一个比率参数有关系。再次参看 mkfs.ext3 的 man 手册，记忆唤起来了，同时也增加了新的认识。</p>
 
 <!--more-->
 
 
-<p>mkfs.ext3缺省情况下，是根据blocksize和bytes-per-inode来计算出一个文件系统在格式化时有多少inodes的。不过，我觉得应该之和bytes-per-inode有关，因为mkfs.ext3会根据每一个bytes-per-inode大小来创建一个inode，因此刨除保留块，超级块外，一个分区剩下的大小除以这个bytes-per-inode就大约是inode的个数。</p>
+<p>mkfs.ext3 缺省情况下，是根据 blocksize 和 bytes-per-inode 来计算出一个文件系统在格式化时有多少 inodes 的。不过，我觉得应该之和 bytes-per-inode 有关，因为 mkfs.ext3 会根据每一个 bytes-per-inode 大小来创建一个 inode，因此刨除保留块，超级块外，一个分区剩下的大小除以这个 bytes-per-inode 就大约是 inode 的个数。</p>
 
-<p>我做了一个实验，3GB大小的磁盘，分别指定blocksize和bytes-per-inode，得到的inode个数列表如下：</p>
+<p>我做了一个实验，3GB 大小的磁盘，分别指定 blocksize 和 bytes-per-inode，得到的 inode 个数列表如下：</p>
 
 <pre>
 ---------------------------------------------------------------------------------------
@@ -126,10 +129,9 @@ blocksize                bytes-per-inode                 number-inode
 
 <p>(bytes-per-inode) * (number-inode) =~ 3GB (filesystem size)</p>
 
-<p>因为在mkfs.ext3中，blocksize最小为1024,而bytes-per-inode最小不能小于blocksize，因此指定bytes-per-inode为1024可以获得最大inode个数。</p>
+<p>因为在 mkfs.ext3 中，blocksize 最小为 1024,而 bytes-per-inode 最小不能小于 blocksize，因此指定 bytes-per-inode 为 1024 可以获得最大 inode 个数。</p>
 
-<p>当然，如果你还嫌不够，-N的参数也许能满足变态要求的你，-N表示你来指定希望的inodes个数，这下，你该满足了吧。
-不过，也不是不限制的，我尝试指定filesystem size(bytes)个数时，报错了。</p>
+<p>当然，如果你还嫌不够，-N 的参数也许能满足变态要求的你，-N 表示你来指定希望的 inodes 个数，这下，你该满足了吧。不过，也不是不限制的，我尝试指定 filesystem size(bytes)个数时，报错了。</p>
 
 <pre><code>root@wgzhao:~# mkfs.ext3 -n -N 3145728000 /dev/sdb
 mke2fs 1.40.3 (05-Dec-2007)
@@ -145,21 +147,21 @@ mke2fs 1.40.3 (05-Dec-2007)
 /dev/sdb: Cannot create filesystem with requested number of inodes while setting up superblock
 </code></pre>
 
-<p>太大的inodes个数，导致超级块无法创建。</p>
+<p>太大的 inodes 个数，导致超级块无法创建。</p>
 
-<p>到底最大能为多少为inodes个数, 当不知道的时候，就穷举，我针对我的这个3GB空间大小，得到最后的最大inodes值，为12255232</p>
+<p>到底最大能为多少为 inodes 个数, 当不知道的时候，就穷举，我针对我的这个 3GB 空间大小，得到最后的最大 inodes 值，为 12255232</p>
 
-<p>接下来就是看看12255232这个数字有什么秘密隐藏在里面了。</p>
+<p>接下来就是看看 12255232 这个数字有什么秘密隐藏在里面了。</p>
 
 <p><code>3145728000 / 12255232 = 256.68 ~= 256</code></p>
 
-<p>也就是说折算成bytes-per-inode应该是256了。</p>
+<p>也就是说折算成 bytes-per-inode 应该是 256 了。</p>
 
-<p>这样的话，一个分区创建为ext3文件系统时，最大的inode个数大约是</p>
+<p>这样的话，一个分区创建为 ext3 文件系统时，最大的 inode 个数大约是</p>
 
 <p><code>filesystem size (bytes) / 256</code></p>
 
-<p>为了验证这个结果，我继续做了一个测试，当我把分区扩大到4GB时，inode个数大约应该是</p>
+<p>为了验证这个结果，我继续做了一个测试，当我把分区扩大到 4GB 时，inode 个数大约应该是</p>
 
 <p><code>4294967296 / 256 = 16777216</code> 个</p>
 
@@ -188,11 +190,11 @@ Superblock backups stored on blocks:
 499608, 705208
 </code></pre>
 
-<p>实际最大值为16318465，比我预计的小了很多。</p>
+<p>实际最大值为 16318465，比我预计的小了很多。</p>
 
 <p>4294967296 / 16318465 = 263.1 > 256</p>
 
-<p>我想中间的差距应该是超级块等信息占用了一些block吧，具体还不是太清楚。</p>
+<p>我想中间的差距应该是超级块等信息占用了一些 block 吧，具体还不是太清楚。</p>
 
 <p>顺便给出一个文件系统最大磁盘大小数据表</p>
 
@@ -215,10 +217,10 @@ NFSv3 (client side)     8 EiB               8 EiB
 </pre>
 
 
-<p>有关ext2/3的更多详细信息，可以IBM开发网站上有赵蔚的一篇文章&mdash;<a href="http://www.ibm.com/developerWorks/cn/linux/filesystem/ext2/">Ext2
+<p>有关 ext2/3 的更多详细信息，可以 IBM 开发网站上有赵蔚的一篇文章&mdash;<a href="http://www.ibm.com/developerWorks/cn/linux/filesystem/ext2/">Ext2
 文件系统的硬盘布局</a>.</p>
 
-<p>我这里也整理成了<a href="http://blog.wgzhao.com/uploads/ext2_layout.gz">pdf</a>
+<p>我这里也整理成了 <a href="http://blog.wgzhao.com/uploads/ext2_layout.gz">pdf</a>
 ，和大家分享.</p>
 </div>
 
@@ -311,8 +313,8 @@ NFSv3 (client side)     8 EiB               8 EiB
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/04/13/how-much-inodes-do-you-need/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/04/13/how-much-inodes-do-you-need/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/04/13/how-much-inodes-do-you-need/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/04/13/how-much-inodes-do-you-need/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

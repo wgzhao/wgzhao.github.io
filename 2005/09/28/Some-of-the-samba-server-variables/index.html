@@ -9,9 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="samba配置文件中经常会用到一些变量，而这些变量也经常给我们带来巨大的便利，因此我把samba配置文件（smb.conf）中用到的一些变量。
-每一个变量都是一%开头，后面是一个单独的大写或者小写字母，而且只能用在配置项的右边。
-下面是具体的变量名称，至于其用法，大家可以参考默认的smb. &hellip;">
+  <meta name="description" content="samba 配置文件中经常会用到一些变量，而这些变量也经常给我们带来巨大的便利，因此我把 samba 配置文件（smb.conf）中用到的一些变量。每一个变量都是一%开头，后面是一个单独的大写或者小写字母，而且只能用在配置项的右边。下面是具体的变量名称，至于其用法，大家可以参考默认的 smb. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,42 +99,40 @@
   </header>
 
 
-<div class="entry-content"><p>samba配置文件中经常会用到一些变量，而这些变量也经常给我们带来巨大的便利，因此我把samba配置文件（smb.conf）中用到的一些变量。
-每一个变量都是一%开头，后面是一个单独的大写或者小写字母，而且只能用在配置项的右边。
-下面是具体的变量名称，至于其用法，大家可以参考默认的smb.conf文件。如果我利用他完成了漂亮的工作，我也会贴出来。</p>
+<div class="entry-content"><p>samba 配置文件中经常会用到一些变量，而这些变量也经常给我们带来巨大的便利，因此我把 samba 配置文件（smb.conf）中用到的一些变量。每一个变量都是一%开头，后面是一个单独的大写或者小写字母，而且只能用在配置项的右边。下面是具体的变量名称，至于其用法，大家可以参考默认的 smb.conf 文件。如果我利用他完成了漂亮的工作，我也会贴出来。</p>
 
 <h3>客户端变量</h3>
 
-<p>%a | 客户端的体系结构（例如Samba，NT,Win98,或者Unknown）<br/>
-%I | 客户端的IP地址（例如：192.168.220.100)<br/>
-%m | 客户端的NetBios名<br/>
-%M | 客户端的DNS名</p>
+<p>%a | 客户端的体系结构（例如 Samba，NT,Win98,或者 Unknown）<br/>
+%I | 客户端的 IP 地址（例如：192.168.220.100)<br/>
+%m | 客户端的 NetBios 名<br/>
+%M | 客户端的 DNS 名</p>
 
 <h3>用户变量</h3>
 
-<p>%g | %u的基本组<br/>
-%G | %U的基本组<br/>
-%H | %u的Home目录<br/>
-%u | 当前的unix用户名<br/>
-%U | 被请求的客户端用户名(不总是被samba使用)</p>
+<p>%g | %u 的基本组<br/>
+%G | %U 的基本组<br/>
+%H | %u 的 Home 目录<br/>
+%u | 当前的 unix 用户名<br/>
+%U | 被请求的客户端用户名(不总是被 samba 使用)</p>
 
 <h3>共享变量</h3>
 
-<p>%p | 如果和%p不同,automounter的路径对应共享的根目录<br/>
+<p>%p | 如果和%p 不同,automounter 的路径对应共享的根目录<br/>
 %P | 当前共享的根目录<br/>
 %S | 但前共享的名称</p>
 
 <h3>服务器变量</h3>
 
-<p>%d | 当前服务器进程的ID <br/>
-%h | Samba服务器的DNS主机名<br/>
-%L | Samba服务器的netbios名<br/>
-%N | Home目录服务器,来自automount的映射<br/>
-%v | samba版本</p>
+<p>%d | 当前服务器进程的 ID <br/>
+%h | Samba 服务器的 DNS 主机名<br/>
+%L | Samba 服务器的 netbios 名<br/>
+%N | Home 目录服务器,来自 automount 的映射<br/>
+%v | samba 版本</p>
 
 <h3>其他变量</h3>
 
-<p>%R | 经过协商的SMB协议<br/>
+<p>%R | 经过协商的 SMB 协议<br/>
 %T | 当前的日期和时间</p>
 </div>
 
@@ -224,8 +225,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2005/09/28/Some-of-the-samba-server-variables/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/09/28/Some-of-the-samba-server-variables/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2005/09/28/Some-of-the-samba-server-variables/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/09/28/Some-of-the-samba-server-variables/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

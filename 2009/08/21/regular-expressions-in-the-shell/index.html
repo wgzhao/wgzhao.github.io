@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="还是来自ABS 最新版的摘录，这次是第十七章，关于正规表达式。以下是摘录和翻译。 一个表达式是一串字符 这些字符表达的意思超出了字面意思，我们称之为元字符(metacharacters). 正规表达式是一个字符或者元字符集，用来匹配或者模式(patterns)。 &hellip;">
+  <meta name="description" content="还是来自 ABS 最新版的摘录，这次是第十七章，关于正规表达式。以下是摘录和翻译。 一个表达式是一串字符 这些字符表达的意思超出了字面意思，我们称之为元字符(metacharacters). 正规表达式是一个字符或者元字符集，用来匹配或者模式(patterns)。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,7 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>还是来自<a href="p://www.tldp.org/LDP/abs/html/">ABS</a> 最新版的摘录，这次是<a href="http://tldp.org/LDP/abs/html/regexp.html">第十七章</a>，关于正规表达式。以下是摘录和翻译。</p>
+<div class="entry-content"><p>还是来自 <a href="p://www.tldp.org/LDP/abs/html/">ABS</a> 最新版的摘录，这次是<a href="http://tldp.org/LDP/abs/html/regexp.html">第十七章</a>，关于正规表达式。以下是摘录和翻译。</p>
 
 <p>一个表达式是一串字符 这些字符表达的意思超出了字面意思，我们称之为<em>元字符(metacharacters)</em>.</p>
 
@@ -117,17 +122,16 @@
 <p>正规表达式主要用来文本匹配和字符串操作。一个正规表达式匹配单个字符或者字符集&mdash;字符串或者其一部分。</p>
 
 <ul>
-<li>星号  * &mdash; 匹配任意多个字符包括0个字符 &ldquo;1133*&rdquo; 匹配 11 + 一个或者多个3: 113, 1133,
+<li>星号  * &mdash; 匹配任意多个字符包括 0 个字符 &ldquo;1133*&rdquo; 匹配 11 + 一个或者多个 3: 113, 1133,
 1133333, 等等。</li>
-<li>点 .  &mdash; 匹配任意一个字符，除了新行(newline)。 &ldquo;13.&rdquo; 匹配 13 + 任意一个字符（包括空格）:    1133, 11333, 但是不包括13 。</li>
+<li>点 .  &mdash; 匹配任意一个字符，除了新行(newline)。 &ldquo;13.&rdquo; 匹配 13 + 任意一个字符（包括空格）:    1133, 11333, 但是不包括 13 。</li>
 <li>脱字符  ^ &mdash; 匹配一行的开始，但是也依赖上下文，有时表示一个字符集的反面，即不匹配这个字符集。</li>
 <li>美元符  $ &mdash; 匹配一行的结尾。 &ldquo;XXX$&rdquo; 匹配以 XXX 结尾的行。 &ldquo;^$&#8221;匹配空白行。</li>
-<li><p>中括号 [&hellip;] &mdash; 在正规表达式里匹配一个封闭字符集的单个字符。 &ldquo;[xyz]&rdquo; 匹配x, y, 或    z中的任何一个字符 &ldquo;[c-n]&rdquo; 匹配c 到 n范围字符集中的任何一个 &ldquo;[B-Pk-y]&rdquo; 匹配任何B到P和k到y的字符.</p>
+<li><p>中括号 [&hellip;] &mdash; 在正规表达式里匹配一个封闭字符集的单个字符。 &ldquo;[xyz]&rdquo; 匹配 x, y, 或    z 中的任何一个字符 &ldquo;[c-n]&rdquo; 匹配 c 到 n 范围字符集中的任何一个 &ldquo;[B-Pk-y]&rdquo; 匹配任何 B 到 P 和 k 到 y 的字符.</p>
 
 <p>&ldquo;[a-z0-9]&rdquo; 匹配任意一个小写字母或者数字。 &ldquo;[^b-d]&rdquo; 匹配任意字符，除了 b 到 d 的字符集之外。</p>
 
-<p>在这里实例中 ^ 除正规表达式的负面或者相反面的意思（类似shell里的 ! 符号的作用)。
-将多个中括号表达式合在一起，通常用来匹配单词模式。&#8221;[Yy][Ee][Ss]&ldquo; 匹配 yes, Yes, YES,yEs,等等。 <br/>
+<p>在这里实例中 ^ 除正规表达式的负面或者相反面的意思（类似 shell 里的 ! 符号的作用)。将多个中括号表达式合在一起，通常用来匹配单词模式。&#8221;[Yy][Ee][Ss]&ldquo; 匹配 yes, Yes, YES,yEs,等等。 <br/>
 &rdquo;[0-9][0-9][0-9]&ndash;[0-9][0-9]&ndash;[0-9][0-9][0-9][0-9]&ldquo;
 匹配任意社会安全码。</p></li>
 <li>反斜杠  \ &mdash; 转义 特殊字符，使得该字符按照字面意思来解释（因此，它就不再是特殊字符了）。 &ldquo;\$&rdquo;   取回&#8221;$&ldquo;符号本身的意思，而不是正规表达式里表示行尾的意思。 同样的， &rdquo;&#92;&ldquo; 表示&rdquo;\&ldquo; 符号的本意。</li>
@@ -178,8 +182,8 @@ Run   grep &quot;1133*&quot;  on this file.           # Match.
 <p>额外的一些元字符添加到基本集合里用在 egrep, awk, 和 Perl 里。</p>
 
 <ul>
-<li>问号  ? &mdash; 匹配0个或者一个正规表达式之前的字符，通常用来匹配单个字符。</li>
-<li><p>加号  + &mdash; 匹配正规表达式之前的一个或者多个字符，和 * 类似，但是不匹配0个字符。</p>
+<li>问号  ? &mdash; 匹配 0 个或者一个正规表达式之前的字符，通常用来匹配单个字符。</li>
+<li><p>加号  + &mdash; 匹配正规表达式之前的一个或者多个字符，和 * 类似，但是不匹配 0 个字符。</p>
 
 <pre><code># GNU versions of sed and awk can use "+",
 # but it needs to be escaped.
@@ -193,8 +197,8 @@ echo a111b | gawk '/a1+b/'
 </code></pre></li>
 <li><p>转义的 &ldquo;大括号/花括号&rdquo;  \{ \} &mdash;
 表示正规表达式匹配的数量。和尖括号一样，必须转义，否则只表示其本意。这个表达方式不是正规表达式集合的一部分。<br/>
-&ldquo;[0-9]\{5\}&rdquo; 准确匹配5个字符。 大括号在&#8221;经典&#8221; (非POSIX兼容)版的
-awk里并不作为正规表达式生效。但是，GNU 扩展版本的 <em>awk</em>, <strong>gawk</strong> 提供了 &mdash;re-interval
+&ldquo;[0-9]\{5\}&rdquo; 准确匹配 5 个字符。 大括号在&#8221;经典&#8221; (非 POSIX 兼容)版的
+awk 里并不作为正规表达式生效。但是，GNU 扩展版本的 <em>awk</em>, <strong>gawk</strong> 提供了 &mdash;re-interval
 可选参数使其有效（不需要转义）。</p>
 
 <pre><code>bash$ echo 2222 | gawk --re-interval '/2{3}/'
@@ -202,7 +206,7 @@ awk里并不作为正规表达式生效。但是，GNU 扩展版本的 <em>awk</
 </code></pre>
 
 <p><strong>Perl</strong> 和一些 <strong>egrep</strong> 版本并不要求转义大括号。</p></li>
-<li><p>圆括号 ( ) &mdash; 封装一组正规表达式。用expr提取子串或者接管道(&ldquo;|&rdquo;)操作时，这个表达式就显得有用。</p></li>
+<li><p>圆括号 ( ) &mdash; 封装一组正规表达式。用 expr 提取子串或者接管道(&ldquo;|&rdquo;)操作时，这个表达式就显得有用。</p></li>
 <li><p>| &ldquo;或&rdquo; 表示匹配可选字符集中的某一个。</p>
 
 <pre><code>bash$ egrep 're(a|e)d' misc.txt
@@ -212,10 +216,10 @@ People who read seem to be better informed than those who do not.
 <li><p><strong>POSIX 字符类.</strong> [:class:] 指定一个字符范围用来匹配的一种替代方案</p></li>
 <li>[:alnum:] 匹配字母或者数字字符。等价于 A-Za-z0-9.</li>
 <li>[:alpha:] 匹配字母。 等价于 A-Za-z.</li>
-<li>[:blank:] 匹配空格或者tab健。</li>
+<li>[:blank:] 匹配空格或者 tab 健。</li>
 <li>[:cntrl:] 匹配控制字符。</li>
 <li>[:digit:] 匹配数字（十进制）。等价于 0-9.</li>
-<li>[:graph:] (图形打印字符)。匹配ASCII码在33 &ndash; 126 范围的字符。和下面提到的 [:print:]    相同，但是除空格字符除外。</li>
+<li>[:graph:] (图形打印字符)。匹配 ASCII 码在 33 &ndash; 126 范围的字符。和下面提到的 [:print:]    相同，但是除空格字符除外。</li>
 <li>[:lower:]匹配小写字母。 等价于 a-z.</li>
 <li>[:print:] (可打印字符)。 匹配 ASCII 码在 32 &ndash; 126 范围的字符。和上面提到的 [:graph:]
 相同，不过还要加上空格字符。</li>
@@ -244,7 +248,7 @@ then       #  POSIX char class
 </ul>
 
 
-<p>在筛选，文件转换或者I/0流操作中，Sed, awk, 和 Perl, 带一个正规表达的参数在脚本里用来过滤(filter)。</p>
+<p>在筛选，文件转换或者 I/0 流操作中，Sed, awk, 和 Perl, 带一个正规表达的参数在脚本里用来过滤(filter)。</p>
 </div>
 
 
@@ -336,8 +340,8 @@ then       #  POSIX char class
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/08/21/regular-expressions-in-the-shell/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/21/regular-expressions-in-the-shell/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="同事打电话询问LVM故障的处理办法，其实我对LVM也是一知半解，只是恰好在用户现场解决过几次有关LVM的故障。
-这次故障的发生是因为不小心，把grub的信息写入到了阵列设备上，而阵列设备是用来做LVM的，导致的结果是pvscan可以得到pv信息，lvscan也能得到lv信息，但是 &hellip;">
+  <meta name="description" content="同事打电话询问 LVM 故障的处理办法，其实我对 LVM 也是一知半解，只是恰好在用户现场解决过几次有关 LVM 的故障。这次故障的发生是因为不小心，把 grub 的信息写入到了阵列设备上，而阵列设备是用来做 LVM 的，导致的结果是 pvscan 可以得到 pv 信息，lvscan 也能得到 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,16 +99,15 @@
   </header>
 
 
-<div class="entry-content"><p>同事打电话询问LVM故障的处理办法，其实我对LVM也是一知半解，只是恰好在用户现场解决过几次有关LVM的故障。<br/>
-这次故障的发生是因为不小心，把grub的信息写入到了阵列设备上，而阵列设备是用来做LVM的，导致的结果是pvscan可以得到pv信息，lvscan也能得到lv信息，但是
-vgscan却不能。 使用vgcfgrestore命令恢复后，正常了。为了重现用户的现象，我做了另外一个实验，不是vg信息找不到，而是找不到对应
-uuid号的设备，过程如下：</p>
+<div class="entry-content"><p>同事打电话询问 LVM 故障的处理办法，其实我对 LVM 也是一知半解，只是恰好在用户现场解决过几次有关 LVM 的故障。这次故障的发生是因为不小心，把 grub 的信息写入到了阵列设备上，而阵列设备是用来做 LVM 的，导致的结果是 pvscan 可以得到 pv 信息，lvscan 也能得到 lv 信息，但是
+vgscan 却不能。 使用 vgcfgrestore 命令恢复后，正常了。为了重现用户的现象，我做了另外一个实验，不是 vg 信息找不到，而是找不到对应
+uuid 号的设备，过程如下：</p>
 
 <!--more-->
 
 
 <ol>
-<li><p>创建pv，vg，lv</p>
+<li><p>创建 pv，vg，lv</p>
 
 <pre><code> [root@lancy ~]# pvcreate /dev/mdp0
  Physical volume "/dev/mdp0" successfully created
@@ -133,7 +136,7 @@ uuid号的设备，过程如下：</p>
     No volume groups found
 
 
-pv，vg，lv都找不到了，但是vg01-lv01这个设备还是存在的，而且也能mount。不过估计重启后就找不到了。于是恢复。
+pv，vg，lv 都找不到了，但是 vg01-lv01 这个设备还是存在的，而且也能 mount。不过估计重启后就找不到了。于是恢复。
 </code></pre>
 
 <ol>
@@ -146,8 +149,8 @@ pv，vg，lv都找不到了，但是vg01-lv01这个设备还是存在的，而�
  Restore failed.
 </code></pre>
 
-<p> 看来vgcfgrestore不是万能的，怎么办？</p></li>
-<li><p>重写uuid</p>
+<p> 看来 vgcfgrestore 不是万能的，怎么办？</p></li>
+<li><p>重写 uuid</p>
 
 <p> [root@lancy bin]# pvcreate &mdash;uuid fPsp4D-aaxu-YMGZ-gqGn-sbUq-fZE0-YnCbwz &mdash;restorefile /etc/lvm/archive/vg01_00001.vg /dev/mdp0
  Couldn&rsquo;t find device with uuid &lsquo;fPsp4D-aaxu-YMGZ-gqGn-sbUq-fZE0-YnCbwz&rsquo;.
@@ -255,8 +258,8 @@ pv，vg，lv都找不到了，但是vg01-lv01这个设备还是存在的，而�
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/09/01/restore-missing-lvm/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/09/01/restore-missing-lvm/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/09/01/restore-missing-lvm/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/09/01/restore-missing-lvm/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

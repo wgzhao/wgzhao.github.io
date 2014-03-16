@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/dev/sdb1挂载在/data/u01上 却不小心执行了tar -vczf /dev/sdb1 /data/u01,怎么办？ 我当时一直考虑的都是如何恢复这个sdb1的文件系统，于是我在本地做了一个测试。发现执行tar之后，mount是肯定不行了，提示需要指定文件系统类型。 &hellip;">
+  <meta name="description" content="/dev/sdb1 挂载在/data/u01 上 却不小心执行了tar -vczf /dev/sdb1 /data/u01,怎么办？ 我当时一直考虑的都是如何恢复这个 sdb1 的文件系统，于是我在本地做了一个测试。发现执行 tar 之后，mount 是肯定不行了，提示需要指定文件系统类型。执行 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,19 +99,18 @@
   </header>
 
 
-<div class="entry-content"><p>/dev/sdb1挂载在/data/u01上 却不小心执行了<code>tar -vczf /dev/sdb1 /data/u01</code>,怎么办？</p>
+<div class="entry-content"><p>/dev/sdb1 挂载在/data/u01 上 却不小心执行了<code>tar -vczf /dev/sdb1 /data/u01</code>,怎么办？</p>
 
-<p>我当时一直考虑的都是如何恢复这个sdb1的文件系统，于是我在本地做了一个测试。发现执行tar之后，mount是肯定不行了，提示需要指定文件系统类型。执行mke2fs的时候，居然还能看到备份的超级块。不过前面的几个备份超级块都没有用了，\
-于是从选择最后一个备份的超级块，使用<code>e2fsck -b</code> 的方式恢复。给出了一个无效的ext3节点信息，然后就出现大量的需要你fixed的选项。<br/>
-一路下去后，确实能mount上了，但是什么数据都没有了。连lost+found里都是干干净净的。和重新mkfs没有差别。</p>
+<p>我当时一直考虑的都是如何恢复这个 sdb1 的文件系统，于是我在本地做了一个测试。发现执行 tar 之后，mount 是肯定不行了，提示需要指定文件系统类型。执行 mke2fs 的时候，居然还能看到备份的超级块。不过前面的几个备份超级块都没有用了，\
+于是从选择最后一个备份的超级块，使用<code>e2fsck -b</code> 的方式恢复。给出了一个无效的 ext3 节点信息，然后就出现大量的需要你 fixed 的选项。一路下去后，确实能 mount 上了，但是什么数据都没有了。连 lost+found 里都是干干净净的。和重新 mkfs 没有差别。</p>
 
 <!--more-->
 
 
-<p>今天突然想起，不就是执行了一个tar命令吗，平常如果这里不是sdb1,而是xxx.tar.gz，那么想都不想直接<code>tar -vxzf
-xxx.tar.gz</code>就行了。也没有人规定名字一定得是xxx.tar.gz呀。所以应该<code>tar -vxzf /dev/db1</code>是可以解压数据出来的。</p>
+<p>今天突然想起，不就是执行了一个 tar 命令吗，平常如果这里不是 sdb1,而是 xxx.tar.gz，那么想都不想直接<code>tar -vxzf
+xxx.tar.gz</code>就行了。也没有人规定名字一定得是 xxx.tar.gz 呀。所以应该<code>tar -vxzf /dev/db1</code>是可以解压数据出来的。</p>
 
-<p>再说了，往磁带机上备份，不就是这样做的，只是把设备换成了st0而已。</p>
+<p>再说了，往磁带机上备份，不就是这样做的，只是把设备换成了 st0 而已。</p>
 
 <p>于是测试一下来验证我的想法。</p>
 
@@ -137,7 +141,7 @@ tar: 由于前面延迟的错误而退出
 总计 0
 </code></pre>
 
-<p>看来是有问题。首先<code>mdp0</code>的大小在这里变了，实际大小应该是500+M，这里变成了24G，而且不一定都是24G，我测试的过程中，还出现了1.5T呢。但这个不重要，重要的是现在没法列出tar进去的数据，当然这些数据也就无从恢复了。其原因应该是源数据和目的地是一致的，结果导致数据的丢失。</p>
+<p>看来是有问题。首先<code>mdp0</code>的大小在这里变了，实际大小应该是 500+M，这里变成了 24G，而且不一定都是 24G，我测试的过程中，还出现了 1.5T 呢。但这个不重要，重要的是现在没法列出 tar 进去的数据，当然这些数据也就无从恢复了。其原因应该是源数据和目的地是一致的，结果导致数据的丢失。</p>
 
 <p>如果源和目的不是一致的话，会怎么样呢？我再测试：</p>
 
@@ -166,8 +170,7 @@ tar: Child died with signal 13
 tar: 由于前面延迟的错误而退出
 </code></pre>
 
-<p>虽然最后有报错，但是数据都能列出来，当然也能解压出来。同样我测试超过500M的数据tar进去，同样也可以恢复出来。<br/>
-实际上，后面的这个做法，等于把一个块设备当成磁带机再用。不同的是，块设备不会自动走带，所以再做一次tar的话，块设备上，之前的数据就会被覆盖。</p>
+<p>虽然最后有报错，但是数据都能列出来，当然也能解压出来。同样我测试超过 500M 的数据 tar 进去，同样也可以恢复出来。实际上，后面的这个做法，等于把一个块设备当成磁带机再用。不同的是，块设备不会自动走带，所以再做一次 tar 的话，块设备上，之前的数据就会被覆盖。</p>
 </div>
 
 
@@ -259,8 +262,8 @@ tar: 由于前面延迟的错误而退出
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/07/20/Did-not-come-to-mind/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/20/Did-not-come-to-mind/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/07/20/Did-not-come-to-mind/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/20/Did-not-come-to-mind/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

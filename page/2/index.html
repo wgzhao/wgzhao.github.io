@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="从 IRC #postgresql 频道了解到一个网站: http://explain.depesz.com 其口号是： A tool for finding a real cause for slow queries 方法是粘贴你的 explain
-sql 语句结构。 &hellip;">
+sql 语句结构。他可以根据结果生成 HTML &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ sql 语句结构。 &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -64,7 +69,10 @@ sql 语句结构。 &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -103,10 +111,7 @@ sql 语句结构。 &hellip;">
 <blockquote><p>A tool for finding a real cause for slow queries</p></blockquote>
 
 <p>方法是粘贴你的 <code>explain
-sql</code> 语句结构。
-他可以根据结果生成HTML格式的解释页面，其中用不同颜色来标识子语句所占用的资源情况，其中颜色越深，标识所占用的资源越多。<br/>
-同时它还给出了两张统计列表，一张是按照索引类型来统计占用的时间，及比率；另外一种是根据SQL语句中涉及到的表来统计查询每张表所占用的时间及比率。
-不仅如此，这个网站代码还是开源的，托管在github上。地址为：
+sql</code> 语句结构。他可以根据结果生成 HTML 格式的解释页面，其中用不同颜色来标识子语句所占用的资源情况，其中颜色越深，标识所占用的资源越多。同时它还给出了两张统计列表，一张是按照索引类型来统计占用的时间，及比率；另外一种是根据 SQL 语句中涉及到的表来统计查询每张表所占用的时间及比率。不仅如此，这个网站代码还是开源的，托管在 github 上。地址为：
 <a href="https://github.com/depesz/explain.depesz.com">https://github.com/depesz/explain.depesz.com</a></p>
 
 <p>下面是搭建过程：</p>
@@ -153,7 +158,7 @@ sql</code> 语句结构。
   </header>
 
 
-  <div class="entry-content"><p>Mac 系统自带的VPN连接配置倒是方便，但是有一个毛病（或者说我还没有不知道使用）,那就是对于通过VPN获取的路有信息，要不就是全部忽略，要不就是所有的IP流出都通过vpn的路由，相当于由VPN的路由指定了缺省路由。用户没有办法手工增加特定路由。这点就不如Linux下的网络管理工具，比如Gnome的nm-applet使用起来就很方便。</p>
+  <div class="entry-content"><p>Mac 系统自带的 VPN 连接配置倒是方便，但是有一个毛病（或者说我还没有不知道使用）,那就是对于通过 VPN 获取的路有信息，要不就是全部忽略，要不就是所有的 IP 流出都通过 vpn 的路由，相当于由 VPN 的路由指定了缺省路由。用户没有办法手工增加特定路由。这点就不如 Linux 下的网络管理工具，比如 Gnome 的 nm-applet 使用起来就很方便。</p>
 
 <p>当然，在图形界面配置上没有，不代码在命令行或者特殊的配置文件没有，下面我们就通过配置文件来解决这个问题。</p>
 
@@ -199,14 +204,14 @@ sql</code> 语句结构。
   </header>
 
 
-  <div class="entry-content"><p>我的iMac升级到10.7后，就一直想把我的Dell E6410笔记本上的Mac OS X Snow Leopard
-升级到Lion，可惜有前几次的失败后，都有点不想折腾了，真的Mac机器，升级还是非常容易的，比如我的iMac，前后只用了30分钟。</p>
+  <div class="entry-content"><p>我的 iMac 升级到 10.7 后，就一直想把我的 Dell E6410 笔记本上的 Mac OS X Snow Leopard
+升级到 Lion，可惜有前几次的失败后，都有点不想折腾了，真的 Mac 机器，升级还是非常容易的，比如我的 iMac，前后只用了 30 分钟。</p>
 
-<p>下午有点休闲时间，刚好皮皮也睡觉了，还是手痒一把，参考了远景论坛上的几个帖子（附后）以及强大的Google，这次居然成功的升级到了10.7.2，不容易呀！特意记录一下过程，和大家分享：</p>
+<p>下午有点休闲时间，刚好皮皮也睡觉了，还是手痒一把，参考了远景论坛上的几个帖子（附后）以及强大的 Google，这次居然成功的升级到了 10.7.2，不容易呀！特意记录一下过程，和大家分享：</p>
 
 <ol>
-<li><p>准备Lion镜像，这个基本上大网站都有下载了，这里推荐 <a href="http://imzdl.com/">http://imzdl.com/</a> ，资料都靠谱，而且下载速度还不错。</p></li>
-<li><p>如何烧录Lion镜像，请参考下面这个连接： <a href="http://itc.do-johodai.ac.jp/~s0823612/">http://itc.do-johodai.ac.jp/~s0823612/</a></p></li>
+<li><p>准备 Lion 镜像，这个基本上大网站都有下载了，这里推荐 <a href="http://imzdl.com/">http://imzdl.com/</a> ，资料都靠谱，而且下载速度还不错。</p></li>
+<li><p>如何烧录 Lion 镜像，请参考下面这个连接： <a href="http://itc.do-johodai.ac.jp/~s0823612/">http://itc.do-johodai.ac.jp/~s0823612/</a></p></li>
 </ol>
 
 
@@ -254,10 +259,9 @@ sql</code> 语句结构。
   </header>
 
 
-  <div class="entry-content"><p>下午去宝岛配了一副眼镜，又花了一大笔，在回来的公交车上，回想了我这几天配眼镜，带眼镜的往事，有些感慨，唠唠叨叨记录一下吧：<br/>
-一直到高二，我的眼睛还是挺好的，不说1.5，也在1.2以上，坐在最后一排，大晴天的情况下，看黑板一点问题都没有。</p>
+  <div class="entry-content"><p>下午去宝岛配了一副眼镜，又花了一大笔，在回来的公交车上，回想了我这几天配眼镜，带眼镜的往事，有些感慨，唠唠叨叨记录一下吧：一直到高二，我的眼睛还是挺好的，不说 1.5，也在 1.2 以上，坐在最后一排，大晴天的情况下，看黑板一点问题都没有。</p>
 
-<p>到了高三，题海战术来了，于是对眼睛的利用率也到了及其无耻的程度。那个时候穷呀，说穷，可能觉得矫情，就说节省吧（一个月30块的生活费还有的剩）。</p>
+<p>到了高三，题海战术来了，于是对眼睛的利用率也到了及其无耻的程度。那个时候穷呀，说穷，可能觉得矫情，就说节省吧（一个月 30 块的生活费还有的剩）。</p>
 
 <p>那个时候，别说课外教材了，就是草稿纸，都很缺。记得我一个算较远的亲戚了，给我送来了一叠带横线的浅蓝色稿纸，纸很薄，算起来张数就很多了。很是兴奋，于是非常节约的写，怎么个节约法呢，一张新的稿纸，先用自动铅笔用一遍，两面都写。因为自动铅笔写上去其实颜色很浅的，看的时候非常吃力，写第一面还好一点，接着写第二面的时候，眼镜就看得比较难受了。</p>
 
@@ -354,11 +358,11 @@ autoscan.log  configure.scan  dummy.c
   </header>
 
 
-  <div class="entry-content"><p>ssh的功能无比强悍，对于一个<strong>Unix/Linux</strong>而言，只要开放一个ssh服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下：</p>
+  <div class="entry-content"><p>ssh 的功能无比强悍，对于一个<strong> Unix/Linux </strong>而言，只要开放一个 ssh 服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下：</p>
 
 <h2>端口转发</h2>
 
-<p>端口转发，也就是-L参数的设置。以我的实际例子来说明吧，我在家里上网，设置的是局域网，IP地址是<code>192.168.100.101</code>。公司总部呢，也是用的是局域网地址，<code>172.16.0.0</code>网段。我需要访问公司内部的一台应用服务器，比如<code>172.16.81.111</code>。我该怎么办呢？恰好，公司有一台网关服务器，有两块网卡，一块是设置的公网IP地址，比如<code>219.99.12.23</code>。另外一块网卡，则是公司的内网的IP地址，比如<code>172.16.81.220</code>。这台服务器开启了SSH服务。那么我要做的便是执行下面的指令:</p>
+<p>端口转发，也就是-L 参数的设置。以我的实际例子来说明吧，我在家里上网，设置的是局域网，IP 地址是<code>192.168.100.101</code>。公司总部呢，也是用的是局域网地址，<code>172.16.0.0</code>网段。我需要访问公司内部的一台应用服务器，比如<code>172.16.81.111</code>。我该怎么办呢？恰好，公司有一台网关服务器，有两块网卡，一块是设置的公网 IP 地址，比如<code>219.99.12.23</code>。另外一块网卡，则是公司的内网的 IP 地址，比如<code>172.16.81.220</code>。这台服务器开启了 SSH 服务。那么我要做的便是执行下面的指令:</p>
 
 </div>
   
@@ -402,7 +406,7 @@ autoscan.log  configure.scan  dummy.c
   </header>
 
 
-  <div class="entry-content"><p>原来一个分区分得太小了（只有5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对ext3干过这样的事情，看了ext3上的<a href="https://ext4.wiki.kernel.org/index.php/Frequently_Asked_Questions#How_to_online_resize_the_Ext4_filesystem.3F">wiki介绍</a>，得知做法和原来的ext2/ext3一样（看来兼容性还是不错）。下面是我的扩容过程</p>
+  <div class="entry-content"><p>原来一个分区分得太小了（只有 5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对 ext3 干过这样的事情，看了 ext3 上的 <a href="https://ext4.wiki.kernel.org/index.php/Frequently_Asked_Questions#How_to_online_resize_the_Ext4_filesystem.3F">wiki 介绍</a>，得知做法和原来的 ext2/ext3 一样（看来兼容性还是不错）。下面是我的扩容过程</p>
 
 <p>首先下载你要扩容的分区，这样当然是最保险的，如果你就是不想卸载，只要你别对其做写操作，也没有问题。</p>
 
@@ -448,12 +452,9 @@ autoscan.log  configure.scan  dummy.c
   </header>
 
 
-  <div class="entry-content"><p>我的系统是ubuntu 10.04 ，编码是<code>zh_CN.UTF-8</code>。
-我从网络上下载的绝大部分zip包，解压后，连带目录和文件都是乱码。在终端尝试更换LANG，LANGUAGE等环境变量，还是不能直接解决问题。</p>
+  <div class="entry-content"><p>我的系统是 ubuntu 10.04 ，编码是<code>zh_CN.UTF-8</code>。我从网络上下载的绝大部分 zip 包，解压后，连带目录和文件都是乱码。在终端尝试更换 LANG，LANGUAGE 等环境变量，还是不能直接解决问题。</p>
 
-<p>而且用unzip解压后，无论你怎么设置convmv命令的编码参数，均不能解决问题。后通过7z工具算是暂时解决了这个问题。
-首先用apt安装7z工具包。 <br/>
-然后用下面的两条指令： <br/>
+<p>而且用 unzip 解压后，无论你怎么设置 convmv 命令的编码参数，均不能解决问题。后通过 7z 工具算是暂时解决了这个问题。首先用 apt 安装 7z 工具包。然后用下面的两条指令： <br/>
 1) <code>LANG=C 7z x xxx.zip</code> <br/>
 2) <code>convmv -f cp936 -t utf8 -r --notest *</code></p>
 </div>
@@ -494,10 +495,10 @@ autoscan.log  configure.scan  dummy.c
   </header>
 
 
-  <div class="entry-content"><p>对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发ssh给用户，那么无疑能极大的增加用户操作的灵活性，但是ssh的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。</p>
+  <div class="entry-content"><p>对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发 ssh 给用户，那么无疑能极大的增加用户操作的灵活性，但是 ssh 的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。</p>
 
-<p>幸而openSSH已经了解到了这点，目前的版本均支持chroot功能，下面我简单的描述一下在ubuntu
-10.04系统上如何实现，其他系统实现的原理相同，只是一些配置文件和指令不同而已。</p>
+<p>幸而 openSSH 已经了解到了这点，目前的版本均支持 chroot 功能，下面我简单的描述一下在 ubuntu
+10.04 系统上如何实现，其他系统实现的原理相同，只是一些配置文件和指令不同而已。</p>
 
 </div>
   
@@ -541,10 +542,8 @@ autoscan.log  configure.scan  dummy.c
   </header>
 
 
-  <div class="entry-content"><p>针对一个服务器需要同时开几个ssh连接，也许是同一个帐号链接，也许是不同的帐号，你是不死和厌烦了每次的都要输入密码？其实ssh链接可以做到共享会话的。
-一个办法是用一些ssh链接客户端，比如Windows下的<a href="http://www.vandyke.com/products/securecrt/">Secure
-CRT</a>，Linux下的<a href="http://projects.gnome.org/hotssh/">hotssh</a>。
-另外一个办法，就是自己修改ssh客户端配置文件，创建<code>~/.ssh/ssh_config</code>文件，加入下面的内容：</p>
+  <div class="entry-content"><p>针对一个服务器需要同时开几个 ssh 连接，也许是同一个帐号链接，也许是不同的帐号，你是不死和厌烦了每次的都要输入密码？其实 ssh 链接可以做到共享会话的。一个办法是用一些 ssh 链接客户端，比如 Windows 下的 <a href="http://www.vandyke.com/products/securecrt/">Secure
+CRT</a>，Linux 下的 <a href="http://projects.gnome.org/hotssh/">hotssh</a>。另外一个办法，就是自己修改 ssh 客户端配置文件，创建<code>~/.ssh/ssh_config</code>文件，加入下面的内容：</p>
 
 <pre><code>Host *
 ControlMaster auto ControlPath ~/.ssh/master-%r@%h:%p
@@ -597,8 +596,8 @@ ControlMaster auto ControlPath ~/.ssh/master-%r@%h:%p
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/2/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/2/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/2/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/2/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="here document 就是一段特殊目的的代码块. 他使用I/O 重定向的形式来将一个命令序列传递到一个交互程序或者命令中, 比如ftp, cat, 或者ex 文本编辑器. COMMAND &lt;
+  <meta name="description" content="here document 就是一段特殊目的的代码块. 他使用 I/O 重定向的形式来将一个命令序列传递到一个交互程序或者命令中, 比如 ftp, cat, 或者 ex 文本编辑器. COMMAND &lt;
 ...
-InputComesFromHERE limit string 用来划定命令序列的范围 &hellip;">
+InputComesFromHERE limit string &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@ InputComesFromHERE limit string 用来划定命令序列的范围 &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,15 +101,15 @@ InputComesFromHERE limit string 用来划定命令序列的范围 &hellip;">
   </header>
 
 
-<div class="entry-content"><p>here document 就是一段特殊目的的代码块. 他使用I/O 重定向的形式来将一个命令序列传递到一个交互程序或者命令中, 比如ftp, cat, 或者ex 文本编辑器.</p>
+<div class="entry-content"><p>here document 就是一段特殊目的的代码块. 他使用 I/O 重定向的形式来将一个命令序列传递到一个交互程序或者命令中, 比如 ftp, cat, 或者 ex 文本编辑器.</p>
 
 <pre><code>COMMAND &lt;
 ...
 InputComesFromHERE
 </code></pre>
 
-<p>limit string 用来划定命令序列的范围(译者注: 两个相同的limit string 之间就是命令序列) .
-特殊符号 &lt;&lt; 用来表识limit string. 这个符号具有重定向文件的输出到程序或命令的输入的作用.</p>
+<p>limit string 用来划定命令序列的范围(译者注: 两个相同的 limit string 之间就是命令序列) .
+特殊符号 &lt;&lt; 用来表识 limit string. 这个符号具有重定向文件的输出到程序或命令的输入的作用.</p>
 
 <!--more-->
 
@@ -116,7 +121,7 @@ command #2
 …
 </code></pre>
 
-<p>而here document 的形式看上去是如下的样子:</p>
+<p>而 here document 的形式看上去是如下的样子:</p>
 
 <pre><code>#!/bin/bash
 interactive-program &lt; 3 command #1
@@ -125,10 +130,10 @@ command #2
 LimitString
 </code></pre>
 
-<p>选择一个名字非常诡异的limit string 将会避免命令列表和limit string 重名的问题.
-即使是某些不大可能的工具, 如vi 也可以使用here document.</p>
+<p>选择一个名字非常诡异的 limit string 将会避免命令列表和 limit string 重名的问题.
+即使是某些不大可能的工具, 如 vi 也可以使用 here document.</p>
 
-<p>1）使用vi创建一个文件，并写入内容</p>
+<p>1）使用 vi 创建一个文件，并写入内容</p>
 
 <pre><code>#cat fakevi.sh
 #!/bin/bash
@@ -156,11 +161,11 @@ ZZ
 x23LimitStringx23
 #----------End here document-----------#
 
-# 注意上边^[是一个转义符,键入Ctrl+v 就行,
+# 注意上边^[是一个转义符,键入 Ctrl+v 就行,
 #+ 事实上它是键.
 
-# Bram Moolenaar 指出这种方法不能正常地用在'vim'上, ( Bram Moolenaar 是vim 作者),
-#+ 因此这里使用了/bin/vi而不是vim，直接输入vi,调用的可能是vim,可以看看你的alias列表中是#+否 有vi的定义
+# Bram Moolenaar 指出这种方法不能正常地用在'vim'上, ( Bram Moolenaar 是 vim 作者),
+#+ 因此这里使用了/bin/vi 而不是 vim，直接输入 vi,调用的可能是 vim,可以看看你的 alias 列表中是#+否 有 vi 的定义
 exit 0
 </code></pre>
 
@@ -174,8 +179,7 @@ This is line 1 of the example file.
 This is line 2 of the example file.
 </code></pre>
 
-<p>2）多行消息输出
-使用echo来打印单行消息非常有用，但是在打印消息块的时候就麻烦了一点，这个时候我们可以使用cat here document的的方式来解决</p>
+<p>2）多行消息输出使用 echo 来打印单行消息非常有用，但是在打印消息块的时候就麻烦了一点，这个时候我们可以使用 cat here document 的的方式来解决</p>
 
 <pre><code>#!/bin/bash
 cat &lt; this is line 1
@@ -185,7 +189,7 @@ EndMsg
 exit 0
 </code></pre>
 
-<p>这样可以打印上面的三行信息，用tab键退后是为了代码好看，但是带来的影响是tab键也将被输出，这可能不是我们所期望的，我们可以使用 here document 来解决，看看下面的例子</p>
+<p>这样可以打印上面的三行信息，用 tab 键退后是为了代码好看，但是带来的影响是 tab 键也将被输出，这可能不是我们所期望的，我们可以使用 here document 来解决，看看下面的例子</p>
 
 <pre><code>#!/bin/bash
 cat &lt;&lt;-EndMsg
@@ -199,7 +203,7 @@ exit 0
 <p>看看打印的结果有什么不同？</p>
 
 <p>3）参数替换
-here document 支持参数和命令替换. 所以也可以给here document 的消息体传递不同的参数,
+here document 支持参数和命令替换. 所以也可以给 here document 的消息体传递不同的参数,
 这样相应的也会修改输出. <br/>
 看下面的代码</p>
 
@@ -215,9 +219,7 @@ exit 0
 
 <p>4）禁止参数替换</p>
 
-<p>在here document 的开头引用或转义”limit string”会使得here document 的消息体中的参数替
-换被禁用.这在需要某些原始输出时很有用。
-再看下面的代码，看看输出和上面的有什么不同</p>
+<p>在 here document 的开头引用或转义”limit string”会使得 here document 的消息体中的参数替换被禁用.这在需要某些原始输出时很有用。再看下面的代码，看看输出和上面的有什么不同</p>
 
 <pre><code>#!/bin/bash
 NAME=${1:-"Mr. smith"}
@@ -237,8 +239,7 @@ cat &lt;&lt;EndMsg
 
 <p>禁用了参数替换后, 将允许输出文本本身. 产生脚本甚至是程序 代码就是这种用法的用途之一.</p>
 
-<p>5）here document与函数 <br/>
-同一脚本中的函数也可以接受here document 的输出作为自身的参数.看下面的代码</p>
+<p>5）here document 与函数同一脚本中的函数也可以接受 here document 的输出作为自身的参数.看下面的代码</p>
 
 <pre><code>#!/bin/bash
 printsomething()
@@ -258,8 +259,7 @@ exit 0
 
 <p>5）匿名 here document</p>
 
-<p>做一个假命令来从一个here document 中接收输出. 这么做事实上就是创建了
-一个”匿名”的here document.
+<p>做一个假命令来从一个 here document 中接收输出. 这么做事实上就是创建了一个”匿名”的 here document.
 看看下面的代码</p>
 
 <pre><code>#!/bin/bash
@@ -268,8 +268,7 @@ TESTVARIABLES
 exit 0
 </code></pre>
 
-<p>上边的这种技术当然也可以用来注释掉一段正在使用的代码, 如果你有某些特定调试要求的话
-这将比对每行都敲入”#”来得方便的多, 而且如果你想恢复的话, 还得将添加上的”#”删除掉.
+<p>上边的这种技术当然也可以用来注释掉一段正在使用的代码, 如果你有某些特定调试要求的话这将比对每行都敲入”#”来得方便的多, 而且如果你想恢复的话, 还得将添加上的”#”删除掉.
 看下面的代码</p>
 
 <pre><code>#!/bin/bash
@@ -281,7 +280,7 @@ DebugIt
 exit 0
 </code></pre>
 
-<p>这样这段for循环代码就注释了，下次要使用，只需要删除:&lt;关于这种小技巧的另一个应用就是能够产生自文档化(self-documenting)的脚本.</p>
+<p>这样这段 for 循环代码就注释了，下次要使用，只需要删除:&lt;关于这种小技巧的另一个应用就是能够产生自文档化(self-documenting)的脚本.</p>
 
 <pre><code>#!/bin/bash
 # self-document.sh: 自文档化(self-documenting)的脚本
@@ -317,18 +316,15 @@ echo "Listing of "$directory":"; echo
 exit 0
 </code></pre>
 
-<p>注意: Here document 创建临时文件, 但是这些文件将在打开后被删除, 并且不能够被任何其
-他进程所存取.</p>
+<p>注意: Here document 创建临时文件, 但是这些文件将在打开后被删除, 并且不能够被任何其他进程所存取.</p>
 
 <pre><code>[root@lancy bin]# bash -c 'lsof -a -p $$ -d0' &lt; &gt;EOF
 COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
 lsof 6238 root 0r REG 3,5 0 212880 /tmp/sh-thd-1158429626 (deleted)
 </code></pre>
 
-<p>警告: 结束的limit string, 就是here document 最后一行的limit string, 必须开始于第一
-个字符位置. 它的前面不能够有任何前置的空白. 而在这个limit string 后边的空白也会
-引起异常问题. 空白将会阻止limit string 的识别.
-(以上部分内容来自ABS一书)</p>
+<p>警告: 结束的 limit string, 就是 here document 最后一行的 limit string, 必须开始于第一个字符位置. 它的前面不能够有任何前置的空白. 而在这个 limit string 后边的空白也会引起异常问题. 空白将会阻止 limit string 的识别.
+(以上部分内容来自 ABS 一书)</p>
 </div>
 
 
@@ -420,8 +416,8 @@ lsof 6238 root 0r REG 3,5 0 212880 /tmp/sh-thd-1158429626 (deleted)
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/09/17/some-tips-here-document/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/09/17/some-tips-here-document/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/09/17/some-tips-here-document/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/09/17/some-tips-here-document/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

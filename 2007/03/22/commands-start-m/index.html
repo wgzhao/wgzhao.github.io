@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/sbin目录下m开头的命令可不少 mdadm mii-tool mkfs.cramfs mkfs.xfs mounted.ocfs2 mpath_get_name multipath.static
-mdadm.static mingetty mkfs.ext2 mkinitrd mount. &hellip;">
+  <meta name="description" content="/sbin 目录下 m 开头的命令可不少 mdadm mii-tool mkfs.cramfs mkfs.xfs mounted.ocfs2 mpath_get_name multipath.static
+mdadm.static mingetty mkfs.ext2 mkinitrd mount &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ mdadm.static mingetty mkfs.ext2 mkinitrd mount. &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,7 +100,7 @@ mdadm.static mingetty mkfs.ext2 mkinitrd mount. &hellip;">
   </header>
 
 
-<div class="entry-content"><p>/sbin目录下m开头的命令可不少</p>
+<div class="entry-content"><p>/sbin 目录下 m 开头的命令可不少</p>
 
 <pre><code>mdadm          mii-tool    mkfs.cramfs    mkfs.xfs    mounted.ocfs2  mpath_get_name          multipath.static
 mdadm.static   mingetty    mkfs.ext2      mkinitrd    mount.ncp      mpath_prio_alua
@@ -106,20 +111,18 @@ mgetty         mke2fs      mkfs.reiserfs  modinfo     mount.smbfs    multipath
 microcode_ctl  mkfs        mkfs.vfat      modprobe    mpath_ctl      multipathd
 </code></pre>
 
-<p>mkfs系列命令占了很大一部分。 mdadm,mdadm.static:这是和RAID相关的程序，他用来管理Linux下的软RAID。
-当前Linux提供的RAID级别有LINEAR md设备，RAID0 (striping),RAID1 (mirroring),RAID4,RAID5,RAID6,MULTIPATH和FAULTY.
-这里说的multipathq其实并不是软RAID机制中的一部分，但是他会去调用。</p>
+<p>mkfs 系列命令占了很大一部分。 mdadm,mdadm.static:这是和 RAID 相关的程序，他用来管理 Linux 下的软 RAID。当前 Linux 提供的 RAID 级别有 LINEAR md 设备，RAID0 (striping),RAID1 (mirroring),RAID4,RAID5,RAID6,MULTIPATH 和 FAULTY.
+这里说的 multipathq 其实并不是软 RAID 机制中的一部分，但是他会去调用。</p>
 
 <!--more-->
 
 
-<p>文章中也提到了mdadm的一些用法。
-mdmpd：监控MD multipath设备的daemon程序。<br/>
-mii-tool：查看，管理独立介质接口状态，这是一个过时的程序了，目前代替他功能的程序是eth-tool，具体可以参考这篇文章。<br/>
+<p>文章中也提到了 mdadm 的一些用法。
+mdmpd：监控 MD multipath 设备的 daemon 程序。<br/>
+mii-tool：查看，管理独立介质接口状态，这是一个过时的程序了，目前代替他功能的程序是 eth-tool，具体可以参考这篇文章。<br/>
 mkbootdisk：制作启动磁盘，不知道现在还有多少人使用他，现在看到的服务器似乎都没有软驱了。<br/>
-mkfs.*：这是制作文件系统的程序集，如果什么都不考虑，仅仅是制作文件系统的话，那直接mkfs  了。但是如果你要从存储数据的性质，读写速度，存放文件个数等方面着想，那就不得不考虑mkfs命令集的一些参数了。<br/>
-mkinitrd：重做镜像文件，这个命令在更新了一些核心驱动模块的时候，用得着。比如更新了SCSI卡的驱动，增加驱动模块的一些参数等，一般来说，
-如果修改了<code>/etc/modprobe.con</code>f中块设备文件的配置参数，就应该重新制作镜像文件，方法倒是很简单 <code>mkinitrd /boot/newinitrd.img `uname -r`</code><br/>
+mkfs.*：这是制作文件系统的程序集，如果什么都不考虑，仅仅是制作文件系统的话，那直接 mkfs  了。但是如果你要从存储数据的性质，读写速度，存放文件个数等方面着想，那就不得不考虑 mkfs 命令集的一些参数了。<br/>
+mkinitrd：重做镜像文件，这个命令在更新了一些核心驱动模块的时候，用得着。比如更新了 SCSI 卡的驱动，增加驱动模块的一些参数等，一般来说，如果修改了<code>/etc/modprobe.con</code>f 中块设备文件的配置参数，就应该重新制作镜像文件，方法倒是很简单 <code>mkinitrd /boot/newinitrd.img `uname -r`</code><br/>
 modinfo：显示内核模块的一些信息，包括作者，描述，授权方式，核心参数等，其中有的还包括了模块依赖性的描述，比如:</p>
 
 <pre><code># modinfo e100.ko
@@ -140,10 +143,9 @@ alias:          pci:v00008086d00001034sv*sd*bc02sc00i*
 .........................................
 </code></pre>
 
-<p>从这个命令的输出我们可以看出e100.ko这个模块目前的版本是3.5.10，他依赖模块mii.ko，同时，可以传递一个参数debug，用于调试。</p>
+<p>从这个命令的输出我们可以看出 e100.ko 这个模块目前的版本是 3.5.10，他依赖模块 mii.ko，同时，可以传递一个参数 debug，用于调试。</p>
 
-<p>mount.*：文件系统挂载命令，这些命令的前端程序就是mount,类似mkfs一样。<br/>
-这个命令恐怕是linux下最常用的命令之一了。所以大家都比较熟悉，我这里仅仅记录几个平常不怎么常用的几个参数</p>
+<p>mount.*：文件系统挂载命令，这些命令的前端程序就是 mount,类似 mkfs 一样。这个命令恐怕是 linux 下最常用的命令之一了。所以大家都比较熟悉，我这里仅仅记录几个平常不怎么常用的几个参数</p>
 
 <p><strong>重新挂载为只读(可写)</strong></p>
 
@@ -156,7 +158,7 @@ lost+found  one
 touch: cannot touch `/misc/two': Read-only file system
 </code></pre>
 
-<p><strong>猜测某个文件系统的类型,谢谢pczou提示</strong></p>
+<p><strong>猜测某个文件系统的类型,谢谢 pczou 提示</strong></p>
 
 <pre><code>[root@mlsx tmp]# mount --guess-fs /dev/hda3
 ext3
@@ -252,8 +254,8 @@ ext3
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/03/22/commands-start-m/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/03/22/commands-start-m/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/03/22/commands-start-m/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/03/22/commands-start-m/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

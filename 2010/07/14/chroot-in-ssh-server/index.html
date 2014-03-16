@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发ssh给用户，那么无疑能极大的增加用户操作的灵活性，但是ssh的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。 幸而openSSH已经了解到了这点，目前的版本均支持chroot功能， &hellip;">
+  <meta name="description" content="对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发 ssh 给用户，那么无疑能极大的增加用户操作的灵活性，但是 ssh 的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。 幸而 openSSH 已经了解到了这点，目前的版本均支持 chroot 功能， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,26 +99,24 @@
   </header>
 
 
-<div class="entry-content"><p>对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发ssh给用户，那么无疑能极大的增加用户操作的灵活性，但是ssh的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。</p>
+<div class="entry-content"><p>对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发 ssh 给用户，那么无疑能极大的增加用户操作的灵活性，但是 ssh 的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。</p>
 
-<p>幸而openSSH已经了解到了这点，目前的版本均支持chroot功能，下面我简单的描述一下在ubuntu
-10.04系统上如何实现，其他系统实现的原理相同，只是一些配置文件和指令不同而已。</p>
+<p>幸而 openSSH 已经了解到了这点，目前的版本均支持 chroot 功能，下面我简单的描述一下在 ubuntu
+10.04 系统上如何实现，其他系统实现的原理相同，只是一些配置文件和指令不同而已。</p>
 
 <!--more-->
 
 
 <ol>
-<li><p>确定chroot目录
-按照传统，chroot的目录都在/var/chroot/下面。我们遵循这种传统，将目录限定在/var/chroot/sshd下面。</p></li>
-<li><p>创建必要的目录和文件。<br/>
-我们需要在/var/chroot/sshd下创建一个最小的系统环境，特别是需要有交互终端，如果用到一个系统高级的功能，还需要一些特定的设备文件。因为我们这里只是演示最基本的功能，复杂的的功能，可以根据错误提示要按需增加需要的资源。</p>
+<li><p>确定 chroot 目录按照传统，chroot 的目录都在/var/chroot/下面。我们遵循这种传统，将目录限定在/var/chroot/sshd 下面。</p></li>
+<li><p>创建必要的目录和文件。我们需要在/var/chroot/sshd 下创建一个最小的系统环境，特别是需要有交互终端，如果用到一个系统高级的功能，还需要一些特定的设备文件。因为我们这里只是演示最基本的功能，复杂的的功能，可以根据错误提示要按需增加需要的资源。</p>
 
-<pre><code>  $sudo mkdir -p /var/chroot/sshd/{bin,home,etc} 
-  $sudo apt-get install busybox-static 
-  $sudo cp /bin/busybox /var/chroot/sshd/bin/  
+<pre><code> $sudo mkdir -p /var/chroot/sshd/{bin,home,etc} 
+ $sudo apt-get install busybox-static 
+ $sudo cp /bin/busybox /var/chroot/sshd/bin/  
 </code></pre>
 
-<p>每次敲 <code>busybox</code> 显然不够环保，我们还是做一些额外的工作，将所有内置的busybox命令都用软链接的方式导出来，下面的python脚本能快速帮你做到这点。</p></li>
+<p>每次敲 <code>busybox</code> 显然不够环保，我们还是做一些额外的工作，将所有内置的 busybox 命令都用软链接的方式导出来，下面的 python 脚本能快速帮你做到这点。</p></li>
 </ol>
 
 
@@ -139,14 +142,13 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>只需要在<code>/var/chroot/sshd/bin/</code>下面执行这个脚本就好了。
-为了能让chroot环境能正确识别用户，组等信息，我们需要在etc目录下创建passwd,group,shadow等文件。而用户登录验证的时候，依赖的是chroot之前的<code>/etc/{passwd,shadow,group}</code>文件，这里我们采取硬链接方式来解决这个问题</p>
+<p>只需要在<code>/var/chroot/sshd/bin/</code>下面执行这个脚本就好了。为了能让 chroot 环境能正确识别用户，组等信息，我们需要在 etc 目录下创建 passwd,group,shadow 等文件。而用户登录验证的时候，依赖的是 chroot 之前的<code>/etc/{passwd,shadow,group}</code>文件，这里我们采取硬链接方式来解决这个问题</p>
 
 <pre><code>    $cd /var/chroot/sshd/etc 
     $sudo ln -n /etc/{passwd,group,shadow}
 </code></pre>
 
-<p>当然，如果你的/var和/并不是在一个分区上，那么硬链接就不能工作，那你可以尝试在/etc和/var/chroot/sshd/etc来个同步工具。</p>
+<p>当然，如果你的/var 和/并不是在一个分区上，那么硬链接就不能工作，那你可以尝试在/etc 和/var/chroot/sshd/etc 来个同步工具。</p>
 
 <ol>
 <li><p>创建测试帐号 我们不用之前的用户帐号，是因为我们需要对帐号的基本信息做一些修改，我们不想破坏你现在的环境，因为来一个测试帐号是比较安全的。<br/>
@@ -157,8 +159,7 @@
 <code>test:x:1001:1001::/home/test:/bin/sh</code> <br/>
 接着创建密码
 <code>$sudo passwd test</code></p></li>
-<li><p>修改openssh-server配置文件
-编辑<code>/etc/ssh/sshd_config</code>文件，在最后一行增加<code>chrootDirectory</code>指令来指定<code>chroot</code>的路径，类似如下：
+<li><p>修改 openssh-server 配置文件编辑<code>/etc/ssh/sshd_config</code>文件，在最后一行增加<code>chrootDirectory</code>指令来指定<code>chroot</code>的路径，类似如下：
 <code>chrootDirectory /var/chroot/sshd</code> 保存退出。</p></li>
 <li><p>测试，测试 以上步骤完成后，执行
 <code>$sudo /etc/init.d/sshd reload</code>
@@ -268,8 +269,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/07/14/chroot-in-ssh-server/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/07/14/chroot-in-ssh-server/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/07/14/chroot-in-ssh-server/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/07/14/chroot-in-ssh-server/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

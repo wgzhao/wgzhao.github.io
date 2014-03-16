@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚， &hellip;">
+  <meta name="description" content="来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,17 +100,15 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   </header>
 
 
-<div class="entry-content"><p>来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其三</p>
+<div class="entry-content"><p>来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其三</p>
 
-<p>将前两天配置的机器重新安装，重新调试multipath，数据读写都没有任何问题，估计昨天出错的原因是原来的VG是在一个控制器使用下的情况配置的，导致现在双控制器下读写不正常。但是multipath却出现了路径不能&#8221;愈合&#8221;的现象，既拔掉一根光纤线后，一个路径失效(假设sde),然后重新介入，发现该路径依然无效。同时使用multipath -v3时还是会给出下面的错误：</p>
+<p>将前两天配置的机器重新安装，重新调试 multipath，数据读写都没有任何问题，估计昨天出错的原因是原来的 VG 是在一个控制器使用下的情况配置的，导致现在双控制器下读写不正常。但是 multipath 却出现了路径不能&#8221;愈合&#8221;的现象，既拔掉一根光纤线后，一个路径失效(假设 sde),然后重新介入，发现该路径依然无效。同时使用 multipath -v3 时还是会给出下面的错误：</p>
 
 <pre><code>path not correctly configured for failover
 </code></pre>
 
-<p>该信息很难在网络上找到对应的资源。
-而multipathd服务也会在路径失效的情况下异常退出。而该daemon程序就是用来检查路径状态和恢复链路的服务程序。
-重启multipathd服务后，会给出下面的错误：</p>
+<p>该信息很难在网络上找到对应的资源。而 multipathd 服务也会在路径失效的情况下异常退出。而该 daemon 程序就是用来检查路径状态和恢复链路的服务程序。重启 multipathd 服务后，会给出下面的错误：</p>
 
 <pre><code>device-mapper: dm-multipath: Failing path 8:48.
 device-mapper: dm-multipath: Failing path 8:80.
@@ -113,7 +116,7 @@ device-mapper: dm-multipath: Failing path 8:32.
 device-mapper: dm-multipath: Failing path 8:64.
 </code></pre>
 
-<p>从这个错误信息来看，multipathd并不认为路径状态是好的，虽然你可以正常读写每一条路径。因此使用multipath -ll看到下面的信息</p>
+<p>从这个错误信息来看，multipathd 并不认为路径状态是好的，虽然你可以正常读写每一条路径。因此使用 multipath -ll 看到下面的信息</p>
 
 <pre><code>[root@SZFIMSDB ~]# multipath -ll
 3600601609f70140076916a71f81edb11
@@ -126,11 +129,9 @@ device-mapper: dm-multipath: Failing path 8:64.
 \_ 10:0:1:0 sdf 8:80 [faulty][active]
 </code></pre>
 
-<p>后面的<code>[faulty]</code>是表示路径的状态，faulty表示当前无法处理I／0请求。这应该是不能路径不能愈合的原因。
-无数电话和研发沟通后，研发认为是工具在误报，可以考虑换一个multipath版本测试或者重新编译新的multipath。</p>
+<p>后面的<code>[faulty]</code>是表示路径的状态，faulty 表示当前无法处理 I／0 请求。这应该是不能路径不能愈合的原因。无数电话和研发沟通后，研发认为是工具在误报，可以考虑换一个 multipath 版本测试或者重新编译新的 multipath。</p>
 
-<p>测试了DC5.0 sp1自带的0.4.5-12的版本和研发先前给我的0.4.5-6的版本，还是有这个错误。<br/>
-修改过无数种multipath的配置，仍然无效。</p>
+<p>测试了 DC5.0 sp1 自带的 0.4.5-12 的版本和研发先前给我的 0.4.5-6 的版本，还是有这个错误。修改过无数种 multipath 的配置，仍然无效。</p>
 </div>
 
 
@@ -222,8 +223,8 @@ device-mapper: dm-multipath: Failing path 8:64.
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/08/17/device-mapper-multipath-of-supernatural-events-3/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/08/17/device-mapper-multipath-of-supernatural-events-3/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/08/17/device-mapper-multipath-of-supernatural-events-3/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/08/17/device-mapper-multipath-of-supernatural-events-3/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

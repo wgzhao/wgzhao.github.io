@@ -9,14 +9,10 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="问题来自我的blog上的littlemouse的留言： 你好,我是个xslt新手,我能问你个问题吗?如何处理重复计数问题?比如我要计算不同人的个数,但是有的人名字重复了很多次,但是是同一个人,这样的问题如何解决呢?
-非常感谢! 我们举个例子来说明： 假定xml文件如下： 1
+  <meta name="description" content="问题来自我的 blog 上的 littlemouse 的留言： 你好,我是个 xslt 新手,我能问你个问题吗?如何处理重复计数问题?比如我要计算不同人的个数,但是有的人名字重复了很多次,但是是同一个人,这样的问题如何解决呢?
+非常感谢! 我们举个例子来说明： 假定 xml 文件如下： 1
 2
-3
-4
-5
-6
-7 &hellip;">
+3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -36,6 +32,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -101,9 +102,9 @@
   </header>
 
 
-<div class="entry-content"><p>问题来自我的blog上的littlemouse的留言：</p>
+<div class="entry-content"><p>问题来自我的 blog 上的 littlemouse 的留言：</p>
 
-<blockquote><p>你好,我是个xslt新手,我能问你个问题吗?如何处理重复计数问题?比如我要计算不同人的个数,但是有的人名字重复了很多次,但是是同一个人,这样的问题如何解决呢?
+<blockquote><p>你好,我是个 xslt 新手,我能问你个问题吗?如何处理重复计数问题?比如我要计算不同人的个数,但是有的人名字重复了很多次,但是是同一个人,这样的问题如何解决呢?
 非常感谢!</p></blockquote>
 
 <p>我们举个例子来说明：</p>
@@ -111,7 +112,7 @@
 <!--more-->
 
 
-<p>假定xml文件如下：</p>
+<p>假定 xml 文件如下：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -130,9 +131,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>我需要计算这个xml文档里有多少个SPEAKER，当然不带重复的，上面的例子中，我们得到的结果应该是2,而不是应该是3.</p>
+<p>我需要计算这个 xml 文档里有多少个 SPEAKER，当然不带重复的，上面的例子中，我们得到的结果应该是 2,而不是应该是 3.</p>
 
-<p>下面是计算结果的xslt片断</p>
+<p>下面是计算结果的 xslt 片断</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -154,12 +155,12 @@
 <pre><code>   count(//SPEAKER[not(.=preceding::SPEAKER)])
 </code></pre>
 
-<p>稍微解释一下<code>//SPEAKER</code> 表示搜索根节点下所有的SPEAKER子节点，然后使用带有方框的谓词<code>not(.=preceding::SPEARK)</code>来表示目前找到的子节点不应该和之前找到的子节点相同，符号<code>.</code>表示当前节点。 <br/>
-<code>preceding::SPEAKER</code>表示之前的所有SPEAKER子节点，这是典型的xpath语法。<code>=</code>是逻辑表示，表示相同，然后使用<code>not</code>谓词否定。</p>
+<p>稍微解释一下<code>//SPEAKER</code> 表示搜索根节点下所有的 SPEAKER 子节点，然后使用带有方框的谓词<code>not(.=preceding::SPEARK)</code>来表示目前找到的子节点不应该和之前找到的子节点相同，符号<code>.</code>表示当前节点。 <br/>
+<code>preceding::SPEAKER</code>表示之前的所有 SPEAKER 子节点，这是典型的 xpath 语法。<code>=</code>是逻辑表示，表示相同，然后使用<code>not</code>谓词否定。</p>
 
-<p>这样，我们就得到了所有SPEAKER子节点的列表，且不重复，最后使用count函数来计算这个列表的个数，得到最后我们需要的结果。</p>
+<p>这样，我们就得到了所有 SPEAKER 子节点的列表，且不重复，最后使用 count 函数来计算这个列表的个数，得到最后我们需要的结果。</p>
 
-<p>xslt其实是很强大的，可惜我很久没有用过它了，不过程序开发，特别是不做数据的管理，很难用到它。</p>
+<p>xslt 其实是很强大的，可惜我很久没有用过它了，不过程序开发，特别是不做数据的管理，很难用到它。</p>
 </div>
 
 
@@ -251,8 +252,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/05/08/Xslt-not-in-the-double-counting-of-the-elements-of-a-simple-method/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/05/08/Xslt-not-in-the-double-counting-of-the-elements-of-a-simple-method/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/05/08/Xslt-not-in-the-double-counting-of-the-elements-of-a-simple-method/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/05/08/Xslt-not-in-the-double-counting-of-the-elements-of-a-simple-method/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

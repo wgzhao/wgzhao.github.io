@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="NoSQL根据不同的数据模型，大致可以分为4类，分别是键值对存储(Key-Value Stores)，列族存储(Column Families)，文档数据库(Document Databases)以及图形数据库(Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反。 &hellip;">
+  <meta name="description" content="NoSQL根据不同的数据模型，大致可以分为 4 类，分别是键值对存储(Key-Value Stores)，列族存储(Column Families)，文档数据库(Document Databases)以及图形数据库(Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,32 +99,32 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>根据不同的数据模型，大致可以分为4类，分别是键值对存储(Key-Value Stores)，列族存储(Column Families)，文档数据库(Document Databases)以及图形数据库(Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反。</p>
+<div class="entry-content"><p><a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>根据不同的数据模型，大致可以分为 4 类，分别是键值对存储(Key-Value Stores)，列族存储(Column Families)，文档数据库(Document Databases)以及图形数据库(Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反。</p>
 
-<p>下面我根据最近看的一些资料，列出了目前常见的<a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>数据库系统的一些主要特性，不一定都正确。另外，后面列了一些参考资料，偏向于<a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>，个人觉得还不错。</p>
+<p>下面我根据最近看的一些资料，列出了目前常见的 <a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>数据库系统的一些主要特性，不一定都正确。另外，后面列了一些参考资料，偏向于 <a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>，个人觉得还不错。</p>
 
 <ul>
 <li><p> Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a></p>
 
 <ul>
-<li>由Google开发</li>
+<li>由 Google 开发</li>
 <li>闭源产品</li>
-<li>通过SSTable实现持久化</li>
-<li>通过<a href="http://research.google.com/archive/chubby.html" title="chubby lock service">Chubby</a>实现一致性</li>
-<li>key-value存储</li>
+<li>通过 SSTable 实现持久化</li>
+<li>通过 <a href="http://research.google.com/archive/chubby.html" title="chubby lock service">Chubby</a>实现一致性</li>
+<li>key-value 存储</li>
 </ul>
 </li>
 <li><p> <a href="http://hbase.apache.org" title="Hbase home">HBase</a></p>
 
 <ul>
-<li>Apache基金项目，开发语言为Java</li>
+<li>Apache 基金项目，开发语言为 Java</li>
 <li>Apache License 2.0 许可</li>
 <li>Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的开源版本</li>
-<li>为<a href="http://hadoop.apache.org" title="open source software framework">Hadoop</a>的后端数据库</li>
-<li>通过HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
-<li>着重于CP</li>
-<li>通过memtable/SStable实现持久化</li>
-<li>通过<a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现一致性</li>
+<li>为 <a href="http://hadoop.apache.org" title="open source software framework">Hadoop</a>的后端数据库</li>
+<li>通过 HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用 <a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
+<li>着重于 CP</li>
+<li>通过 memtable/SStable 实现持久化</li>
+<li>通过 <a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现一致性</li>
 <li>支持多主节点(multi-master)</li>
 </ul>
 </li>
@@ -135,58 +140,58 @@
 <li><p> <a href="http://hypertable.com" title="Hypertable">Hypertable</a></p>
 
 <ul>
-<li>由Inkomi公司前员工发起，其中包括百度，Rediff,Zvents等公司赞助，后成立Hypertable公司。</li>
+<li>由 Inkomi 公司前员工发起，其中包括百度，Rediff,Zvents 等公司赞助，后成立 Hypertable 公司。</li>
 <li>GPLv2 许可</li>
-<li>开发语言为C++</li>
-<li>Goole <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的另外一个开源实现,但比<a href="http://hbase.apache.org" title="Hbase home">HBase</a>要快</li>
-<li>着重CP</li>
-<li>通过<a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>通信</li>
-<li>通过memtable/SStable实现持久化</li>
+<li>开发语言为 C++</li>
+<li>Goole <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的另外一个开源实现,但比 <a href="http://hbase.apache.org" title="Hbase home">HBase</a>要快</li>
+<li>着重 CP</li>
+<li>通过 <a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>通信</li>
+<li>通过 memtable/SStable 实现持久化</li>
 <li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" title="Multiversion concurrency control">MVCC</a></li>
-<li>查询通过类似SQL的HQL</li>
-<li>通过Hypersace算法(<a href="http://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95" title="Paxos 算法">Paxos算法</a>)实现一致性</li>
+<li>查询通过类似 SQL 的 HQL</li>
+<li>通过 Hypersace 算法(<a href="http://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95" title="Paxos 算法">Paxos 算法</a>)实现一致性</li>
 </ul>
 </li>
 <li><p> Apache <a href="http://cassandra.apache.org" title="Apache Cassandra">Cassandra</a></p>
 
 <ul>
-<li>由<a href="http://www.facebook.com" title="facebook">Facebook</a>开发，开发语言为Java</li>
+<li>由 <a href="http://www.facebook.com" title="facebook">Facebook</a>开发，开发语言为 Java</li>
 <li>Apache License 2.0 许可</li>
 <li>Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的数据模型，<a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Amazon</a>的基础架构</li>
-<li>面向列的key-value存储</li>
-<li>通过提交日志来实现持久化，类似<a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>里的<a href="http://www.postgresql.org/docs/9.1/static/wal-intro.html" title="Write-Ahead Log">WAL</a></li>
+<li>面向列的 key-value 存储</li>
+<li>通过提交日志来实现持久化，类似 <a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>里的 <a href="http://www.postgresql.org/docs/9.1/static/wal-intro.html" title="Write-Ahead Log">WAL</a></li>
 <li>跨节点的最后一致性(Eventually Consistent)实现</li>
-<li>着重于<a href="http://en.wikipedia.org/wiki/CAP_theorem" title="Consistency,Availablitiy,Partition tolerance">CAP</a>里的AP</li>
-<li>客户端通过<a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>协议通讯，查询通过<a href="http://zh.wikipedia.org/wiki/MapReduce" title="Map Reduce">Map-Reduce</a></li>
+<li>着重于 <a href="http://en.wikipedia.org/wiki/CAP_theorem" title="Consistency,Availablitiy,Partition tolerance">CAP</a>里的 AP</li>
+<li>客户端通过 <a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>协议通讯，查询通过 <a href="http://zh.wikipedia.org/wiki/MapReduce" title="Map Reduce">Map-Reduce</a></li>
 </ul>
 </li>
 <li><p> Apache <a href="http://couchdb.apache.org" title="CouchDB">CouchDB</a></p>
 
 <ul>
-<li>主要开发者包括<a href="http://www.bbc.co.uk" title="BBC">BBC</a>和<a href="http://www.engineyard.com" title="cloud platform for RoR and PHP">Engine Yard</a></li>
+<li>主要开发者包括 <a href="http://www.bbc.co.uk" title="BBC">BBC</a>和 <a href="http://www.engineyard.com" title="cloud platform for RoR and PHP">Engine Yard</a></li>
 <li>Apache License 2.0 许可</li>
-<li>开发语言为<a href="http://www.erlang.org" title="Erlang Programming Language">Erlang</a></li>
+<li>开发语言为 <a href="http://www.erlang.org" title="Erlang Programming Language">Erlang</a></li>
 <li>key-value 文档存储</li>
 <li>通过只附加(append-only)B+树实现持久化</li>
 <li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" title="Multiversion concurrency control">MVCC</a></li>
-<li>着重于AP</li>
-<li>通过HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
+<li>着重于 AP</li>
+<li>通过 HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用 <a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
 <li>支持多主(multi-master)复制</li>
-<li>通过文档或JavaScript函数(<a href="http://zh.wikipedia.org/wiki/MapReduce" title="Map Reduce">Map-Reduce</a>)进行查询</li>
+<li>通过文档或 JavaScript 函数(<a href="http://zh.wikipedia.org/wiki/MapReduce" title="Map Reduce">Map-Reduce</a>)进行查询</li>
 <li>无一致性实现，需要通过应用端解决</li>
 </ul>
 </li>
 <li><p> <a href="http://www.mongodb.org" title="MongoDB">MongoDB</a></p>
 
 <ul>
-<li>主要开发者包括<a href="http://www.sourceforge.net" title="source forge">Sourceforge</a>,<a href="http://foursquare.com" title="foursquare">Foursquare</a>,<a href="http://bit.ly" title="bit.ly shorten url">Bit.ly</a> 和 <a href="http://www.github.com" title="Github">Github</a></li>
-<li>开发语言为C++</li>
+<li>主要开发者包括 <a href="http://www.sourceforge.net" title="source forge">Sourceforge</a>,<a href="http://foursquare.com" title="foursquare">Foursquare</a>,<a href="http://bit.ly" title="bit.ly shorten url">Bit.ly</a> 和 <a href="http://www.github.com" title="Github">Github</a></li>
+<li>开发语言为 C++</li>
 <li>AGPLv3 许可</li>
 <li>key-value 文档存储</li>
 <li>通过复制加快照实现持久化</li>
 <li>就地更新(in place update)，无版本，无只附加日志</li>
-<li>着重于CP</li>
-<li>数据通过BSON(二进制<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>)存储</li>
+<li>着重于 CP</li>
+<li>数据通过 BSON(二进制 <a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>)存储</li>
 <li>自有的通信协议</li>
 <li>主从复制</li>
 <li>支持地理空间索引</li>
@@ -195,13 +200,13 @@
 <li><p> <a href="http://project-voldemort.com" title="Voldemort distributed data store">Voldemort</a></p>
 
 <ul>
-<li>有<a href="http://www.linkedin.com" title="LinkedIn SNS">LinkedIn</a>开发,开发语言为Java</li>
+<li>有 <a href="http://www.linkedin.com" title="LinkedIn SNS">LinkedIn</a>开发,开发语言为 Java</li>
 <li>key-value 文档存储</li>
-<li>基于上游的<a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Amazon</a></li>
+<li>基于上游的 <a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Amazon</a></li>
 <li>通过可插拔的数据存储层(<a href="http://en.wikipedia.org/wiki/BerkeleyDB" title="Berkeley DB,BDB">BerkeleyDB</a>/<a href="http://www.mysql.com" title="MySQL">MySQL</a>)实现持久化</li>
-<li>着重AP</li>
+<li>着重 AP</li>
 <li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" title="Multiversion concurrency control">MVCC</a></li>
-<li><a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Dynamo</a> 分布式hash表(Distributed Hash Table,<a href="http://en.wikipedia.org/wiki/Distributed_hash_table" title="Distributed Hash Table">DHT</a>)实现,一致性hash(<a href="http://en.wikipedia.org/wiki/Consistent_hashing" title="Consistent Hashing">Consistent Hashing</a>)，向量时钟(<a href="http://en.wikipedia.org/wiki/Vector_clocks" title="Vector clock">Vector clock</a>)</li>
+<li><a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Dynamo</a> 分布式 hash 表(Distributed Hash Table,<a href="http://en.wikipedia.org/wiki/Distributed_hash_table" title="Distributed Hash Table">DHT</a>)实现,一致性 hash(<a href="http://en.wikipedia.org/wiki/Consistent_hashing" title="Consistent Hashing">Consistent Hashing</a>)，向量时钟(<a href="http://en.wikipedia.org/wiki/Vector_clocks" title="Vector clock">Vector clock</a>)</li>
 <li>多种数据序列化格式(<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>,Java String, byte[],<a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>,Avro,<a href="http://en.wikipedia.org/wiki/Protobuf" title="Protocol Buffers">ProtoBuf</a>)</li>
 <li>自有的通信协议</li>
 </ul>
@@ -209,19 +214,19 @@
 <li><p> <a href="http://www.redis.io" title="Redis">Redis</a></p>
 
 <ul>
-<li>由<a href="http://www.vmware.com" title="VMWare">VMWare</a>开发,开发语言为ANSI C</li>
+<li>由 <a href="http://www.vmware.com" title="VMWare">VMWare</a>开发,开发语言为 ANSI C</li>
 <li>key-value 文档存储</li>
 <li>内存数据库，通过快照实现持久化</li>
-<li>着重于CP</li>
+<li>着重于 CP</li>
 <li>无数据序列化格式</li>
-<li>类似POP3的自有通信协议</li>
+<li>类似 POP3 的自有通信协议</li>
 </ul>
 </li>
 <li><p> Tokyo <a href="http://fallabs.com/tokyocabinet/" title="Tokyo Cabinet">Cabinet</a>/<a href="http://fallabs.com/tokyotyrant/" title="network interface of Cabinet">Tyrant</a></p>
 
 <ul>
-<li>实现key-value 数据库管理，带网络守护进程(<a href="http://fallabs.com/tokyotyrant/" title="network interface of Cabinet">Tyrant</a>)</li>
-<li>通过<a href="http://www.postgresql.org/docs/9.1/static/wal-intro.html" title="Write-Ahead Log">WAL</a>和阴影拷贝分页实现持久化</li>
+<li>实现 key-value 数据库管理，带网络守护进程(<a href="http://fallabs.com/tokyotyrant/" title="network interface of Cabinet">Tyrant</a>)</li>
+<li>通过 <a href="http://www.postgresql.org/docs/9.1/static/wal-intro.html" title="Write-Ahead Log">WAL</a>和阴影拷贝分页实现持久化</li>
 <li>无数据序列化格式</li>
 <li>通信协议：Tokyo Tyrant Binrary Protocol,memcached compatible Text protocol,HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a></li>
 </ul>
@@ -229,16 +234,16 @@
 <li><p> <a href="http://neo4j.org" title="neo4j: World's leading Graph Database">Neo4j</a></p>
 
 <ul>
-<li>有<a href="http://www.neotechnology.com%22" title="neotechnology graphs are anywhere">neo technology</a>开发</li>
-<li>开发语言为Java</li>
+<li>有 <a href="http://www.neotechnology.com%22" title="neotechnology graphs are anywhere">neo technology</a>开发</li>
+<li>开发语言为 Java</li>
 <li>AGPLv3 和商业 双重许可</li>
 <li>图形化数据库</li>
-<li>通过<a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现HA</li>
-<li>通过<a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>,Java协议通信</li>
+<li>通过 <a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现 HA</li>
+<li>通过 <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>,Java 协议通信</li>
 <li>通过存储在磁盘的链接列表(linked-list)实现持久化</li>
 <li>节点遍历高效</li>
 <li>很好的纵向扩展性</li>
-<li>通过<a href="http://en.wikipedia.org/wiki/Sparql" title="SPARQL Protocol and RDF Query Language">SPARQL</a>查询</li>
+<li>通过 <a href="http://en.wikipedia.org/wiki/Sparql" title="SPARQL Protocol and RDF Query Language">SPARQL</a>查询</li>
 </ul>
 </li>
 </ul>
@@ -354,8 +359,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2012/08/20/several-popular-nosql-databases-key-features-list/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/20/several-popular-nosql-databases-key-features-list/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2012/08/20/several-popular-nosql-databases-key-features-list/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/20/several-popular-nosql-databases-key-features-list/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

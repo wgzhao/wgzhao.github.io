@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="PostgreSQL下的几条SQL语句小技巧。 生成随机字符串 这个是从别人的blog上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里 1
+  <meta name="description" content="PostgreSQL下的几条 SQL 语句小技巧。 生成随机字符串这个是从别人的 blog 上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里 1
 2
 3
 4
@@ -24,7 +24,7 @@
 13
 14
 15
-16 SELECT( SELECT string_agg(x, &#39 &hellip;">
+16 SELECT( SELECT string_agg(x &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -44,6 +44,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -109,11 +114,9 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>下的几条SQL语句小技巧。</p>
+<div class="entry-content"><p><a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>下的几条 SQL 语句小技巧。</p>
 
-<h2>生成随机字符串</h2>
-
-<p>这个是从<a href="http://momjian.us/main/blogs/pgblog/2012.html">别人的blog</a>上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里</p>
+<h2>生成随机字符串这个是从<a href="http://momjian.us/main/blogs/pgblog/2012.html">别人的 blog</a> 上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里</h2>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -196,9 +199,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>当记录有改动时，自动更新其时间戳</h2>
-
-<p>这个功能我记得在<a href="http://www.mysql.com" title="mysql">MySQL</a>里是自动有的，对于类型是<code>date</code>，和<code>timestamp</code>的时候，可以选择修改时更新。但是在<a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>里，提供到了利用<a href="http://www.postgresql.org/docs/9.1/static/rules-update.html">rule</a>的方式来和另外一个表联动修改。和我这里的需求有些差别，我这里的需求时，假定有一列的类型为<code>timestamp</code>，只要这一行有改动，那么就需要更新这个<code>timestamp</code>列。我们可以通过构建一个函数和一个触发器来达到目的，比如：</p>
+<h2>当记录有改动时，自动更新其时间戳这个功能我记得在 <a href="http://www.mysql.com" title="mysql">MySQL</a>里是自动有的，对于类型是<code>date</code>，和<code>timestamp</code>的时候，可以选择修改时更新。但是在 <a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>里，提供到了利用 <a href="http://www.postgresql.org/docs/9.1/static/rules-update.html">rule</a> 的方式来和另外一个表联动修改。和我这里的需求有些差别，我这里的需求时，假定有一列的类型为<code>timestamp</code>，只要这一行有改动，那么就需要更新这个<code>timestamp</code>列。我们可以通过构建一个函数和一个触发器来达到目的，比如：</h2>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -299,9 +300,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>获得刚插入一行的ID号</h2>
+<h2>获得刚插入一行的 ID 号</h2>
 
-<p>和<a href="http://www.mysql.com" title="mysql">MySQL</a>的<code>last_insert</code>函数类似，需要获得刚执行<code>insert</code>语句的<code>ID</code>号。这在<a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>里用的是<code>insert</code>语句的<code>returning</code>子语句，对于<code>ID</code>列是否是自增（有序列）都生效，下面分别举一个<code>ID</code>是<code>serial</code>类型的和<code>ID</code>是<code>int</code>类型的例子：</p>
+<p>和 <a href="http://www.mysql.com" title="mysql">MySQL</a>的<code>last_insert</code>函数类似，需要获得刚执行<code>insert</code>语句的<code>ID</code>号。这在 <a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>里用的是<code>insert</code>语句的<code>returning</code>子语句，对于<code>ID</code>列是否是自增（有序列）都生效，下面分别举一个<code>ID</code>是<code>serial</code>类型的和<code>ID</code>是<code>int</code>类型的例子：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -466,8 +467,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

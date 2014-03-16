@@ -9,10 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="本文就qemu模拟软件介绍虚拟机如何和主机及互联网通讯，测试环境
-主机：redflag desktop 5.0 beta2
+  <meta name="description" content="本文就 qemu 模拟软件介绍虚拟机如何和主机及互联网通讯，测试环境主机：redflag desktop 5.0 beta2
 虚拟机: win98 se
-qemu:qemu-0.7.0-6 user mode network 这种方式实现虚拟机上网很简单，类似vmware里的nat， &hellip;">
+qemu:qemu-0.7.0-6 user mode network 这种方式实现虚拟机上网很简单，类似 vmware 里的 nat，qemu &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,6 +31,11 @@ qemu:qemu-0.7.0-6 user mode network 这种方式实现虚拟机上网很简单�
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -97,8 +101,7 @@ qemu:qemu-0.7.0-6 user mode network 这种方式实现虚拟机上网很简单�
   </header>
 
 
-<div class="entry-content"><p>本文就qemu模拟软件介绍虚拟机如何和主机及互联网通讯，测试环境<br/>
-主机：redflag desktop 5.0 beta2<br/>
+<div class="entry-content"><p>本文就 qemu 模拟软件介绍虚拟机如何和主机及互联网通讯，测试环境主机：redflag desktop 5.0 beta2<br/>
 虚拟机: win98 se<br/>
 qemu:qemu-0.7.0-6</p>
 
@@ -107,14 +110,14 @@ qemu:qemu-0.7.0-6</p>
 <!--more-->
 
 
-<p>这种方式实现虚拟机上网很简单，类似vmware里的nat，qemu启动时加入<code>-net user</code>参数，虚拟机里使用dhcp方式，即可与互联网通信，但是这种方式虚拟机与主机的通信不方便。</p>
+<p>这种方式实现虚拟机上网很简单，类似 vmware 里的 nat，qemu 启动时加入<code>-net user</code>参数，虚拟机里使用 dhcp 方式，即可与互联网通信，但是这种方式虚拟机与主机的通信不方便。</p>
 
 <h3>tap/tun network</h3>
 
-<p> 这种方式要比user mode复杂一些，但是设置好后 虚拟机&lt;&mdash;>互联网 虚拟机&lt;&mdash;>主机 通信都很容易</p>
+<p> 这种方式要比 user mode 复杂一些，但是设置好后 虚拟机&lt;&mdash;>互联网 虚拟机&lt;&mdash;>主机 通信都很容易</p>
 
-<p>这种方式设置上类似vmware的host-only,qemu使用tun/tap设备在主机上增加一块虚拟网络设备(tun0),然后就可以象真实网卡一样配置它.<br/>
- 首先需要内核支持tun设备，可以查看是不是有下面的模块文件<br/>
+<p>这种方式设置上类似 vmware 的 host-only,qemu 使用 tun/tap 设备在主机上增加一块虚拟网络设备(tun0),然后就可以象真实网卡一样配置它.<br/>
+ 首先需要内核支持 tun 设备，可以查看是不是有下面的模块文件<br/>
   <code>/lib/modules/2.6.9-5.34DT/kernel/drivers/net/tun.ko</code><br/>
  如果存在，则执行下面的命令，否则重新编译模块。<code>modprobe tun</code></p>
 
@@ -123,7 +126,7 @@ qemu:qemu-0.7.0-6</p>
 <pre><code>    #lsmod |grep tun tun 8704 0   
 </code></pre>
 
-<p> OK,相关设备已经准备好了，还需要一个tun/tap的初始化脚本 :</p>
+<p> OK,相关设备已经准备好了，还需要一个 tun/tap 的初始化脚本 :</p>
 
 <pre><code> cat /etc/qemu-ifup :   
  #!/bin/sh 
@@ -132,15 +135,15 @@ qemu:qemu-0.7.0-6</p>
 
 <p> 再给予<code>qemu-ifu</code>p x 执行权限放在<code>/etc</code>下就可以了。</p>
 
-<p> 这个脚本只能root用户执行，如果需要普通用户使用qemu，就需要改成<code>sudo /sbin/ifconfig .....</code>再设置sudo相关权限。</p>
+<p> 这个脚本只能 root 用户执行，如果需要普通用户使用 qemu，就需要改成<code>sudo /sbin/ifconfig .....</code>再设置 sudo 相关权限。</p>
 
-<p> 启动qemu后，它会在主机上增加一块虚拟网络设备(tun0):</p>
+<p> 启动 qemu 后，它会在主机上增加一块虚拟网络设备(tun0):</p>
 
-<p> 现在就可以启动qemu配置虚拟机网络参数了，和vmware host-only一样:</p>
+<p> 现在就可以启动 qemu 配置虚拟机网络参数了，和 vmware host-only 一样:</p>
 
-<p> ip与tun0相同网段,gateway为tun0 ip 其余参数与tun0相同,dns与主机相同：</p>
+<p> ip 与 tun0 相同网段,gateway 为 tun0 ip 其余参数与 tun0 相同,dns 与主机相同：</p>
 
-<p> 与host-only一样，这样只实现了虚拟机&lt;&mdash;&mdash;>主机间通信,还需要设置router,nat才可以连上互联网</p>
+<p> 与 host-only 一样，这样只实现了虚拟机&lt;&mdash;&mdash;>主机间通信,还需要设置 router,nat 才可以连上互联网</p>
 
 <pre><code>#echo 1   &gt; /proc/sys/net/ipv4/ip_forward   
 #iptables -t nat -A POSTROUTING -o eth0 -s 192.168.0.0/24 -j MASQUERADE   
@@ -238,8 +241,8 @@ qemu:qemu-0.7.0-6</p>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2005/12/26/qemu-two-way-Internet/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/12/26/qemu-two-way-Internet/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2005/12/26/qemu-two-way-Internet/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/12/26/qemu-two-way-Internet/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

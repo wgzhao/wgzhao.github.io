@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="您常常需要将几个文件处理成一个文件并将这种处理的结果保存到一个单独的输出文件。cat（“concatenate”的缩写）命令在其输入上接受一个或多个文件并将它们作为一个单独的文件打印到它的输出。例如，cat chapter01 chapter02 chapter03 &gt; book &hellip;">
+  <meta name="description" content="您常常需要将几个文件处理成一个文件并将这种处理的结果保存到一个单独的输出文件。cat（“concatenate”的缩写）命令在其输入上接受一个或多个文件并将它们作为一个单独的文件打印到它的输出。例如，cat chapter01 chapter02 chapter03 &gt; book 将三个 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,14 +99,14 @@
   </header>
 
 
-<div class="entry-content"><p>您常常需要将几个文件处理成一个文件并将这种处理的结果保存到一个单独的输出文件。cat（“concatenate”的缩写）命令在其输入上接受一个或多个文件并将它们作为一个单独的文件打印到它的输出。例如，<code>cat chapter01 chapter02 chapter03 &gt; book</code> 将三个chapterXX 文件保存在一个单独的 book 文件中。</p>
+<div class="entry-content"><p>您常常需要将几个文件处理成一个文件并将这种处理的结果保存到一个单独的输出文件。cat（“concatenate”的缩写）命令在其输入上接受一个或多个文件并将它们作为一个单独的文件打印到它的输出。例如，<code>cat chapter01 chapter02 chapter03 &gt; book</code> 将三个 chapterXX 文件保存在一个单独的 book 文件中。</p>
 
 <!--more-->
 
 
 <p>输入文件按照它们在 cat 命令后的排列顺序被打印，因此，要调换信息的顺序，就必须先调换输入文件的顺序。此外，当需要处理的文件数目对于您来说过大而无法手工输入这些文件的名称时，您可以使用通配符，如在 <code>cat chapter* &gt;book</code> 中使用的那样，记住，文件名将会按升序排列。当您突然发现 chapter13 被发送到输出中时会在 chapter2 之前，而会在 chapter02 之后时，这会引起很有意思的问题。</p>
 
-<p>当 cat 的输出没有被重定向到一个文件或另一个命令的标准输出时，cat 表现出来的行为与多数命令行工具一样，即将其输出发送到控制台。这意味着您可以使用 cat 来显示文件；例如，您可以使用<code>cat /etc/passwd</code> 来显示系统密码文件的内容。为方便起见，您应该用 less查看大文件，如在 less /etc/passwd 中那样（您可以通过输入 man less 学习更多关于 less 的知识）。</p>
+<p>当 cat 的输出没有被重定向到一个文件或另一个命令的标准输出时，cat 表现出来的行为与多数命令行工具一样，即将其输出发送到控制台。这意味着您可以使用 cat 来显示文件；例如，您可以使用<code>cat /etc/passwd</code> 来显示系统密码文件的内容。为方便起见，您应该用 less 查看大文件，如在 less /etc/passwd 中那样（您可以通过输入 man less 学习更多关于 less 的知识）。</p>
 
 <p>尽管 cat 主要用于合并文件，您还可以将它用于输入的简单自动处理。例如，您可以使用一个单独的空白行来除去多行空白行（使用 -s
 选项），这是一个在您将源代码公诸于世前进行清除工作的好办法。遗憾的是，cat
@@ -121,8 +126,7 @@ default, Red Hat 6.0 and later now use a font server independent of
 <p>于读取配置文件和 HTML 页面的源文件，特别是那些由脚本生成的插入了不必要新行的源文件，以及那些包含大型条件结构（其各个项之间已经用空行分开）的源文件来说，空白行紧缩是一个方便的技巧。</p>
 
 <p>cat 的另外一个重要的功能是它可以对行进行编号。这种功能对于程序文档的编制以及法律和科学文档的编制很方便。打印在左边的行号使得参考文档的某一部分变得容易。这在编程、科学研究、业务报告或甚至是立法工作中都是非常重要的。对行进行编号功能有两个选项：-b
-选项（只能对非空白行进行编号）和 -n 选项（可以对所有行进行编号）：
-清单 2. 对行进行编号</p>
+选项（只能对非空白行进行编号）和 -n 选项（可以对所有行进行编号）：清单 2. 对行进行编号</p>
 
 <pre><code>$ cat -b /etc/X11/XF86Config 
 ... 
@@ -306,8 +310,8 @@ F^@^@ ^@M-9^@^H^@^@M-sM-$M-G^E(l!M-@M-^?
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2004/12/26/Skills-The-cat-merger-documents/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2004/12/26/Skills-The-cat-merger-documents/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2004/12/26/Skills-The-cat-merger-documents/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2004/12/26/Skills-The-cat-merger-documents/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

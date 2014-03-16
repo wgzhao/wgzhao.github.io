@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="写找个豆腐干帖子的目的是让让自己记住一个最快最简单的ACLs配置有哪些配置。网络上已经有很多长篇大论描述ACLs了。 首先讲对应的分区挂载的时候增加acl选项，在/etc/fstab对应一行的defaults后面增加acl就好了。作为测试，下面的方法来得更快 mount -o remount, &hellip;">
+  <meta name="description" content="写找个豆腐干帖子的目的是让让自己记住一个最快最简单的 ACLs 配置有哪些配置。网络上已经有很多长篇大论描述 ACLs 了。 首先讲对应的分区挂载的时候增加 acl 选项，在/etc/fstab 对应一行的 defaults 后面增加 acl 就好了。作为测试，下面的方法来得更快 mount -o &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,39 +99,39 @@
   </header>
 
 
-<div class="entry-content"><p>写找个豆腐干帖子的目的是让让自己记住一个最快最简单的ACLs配置有哪些配置。网络上已经有很多长篇大论描述ACLs了。</p>
+<div class="entry-content"><p>写找个豆腐干帖子的目的是让让自己记住一个最快最简单的 ACLs 配置有哪些配置。网络上已经有很多长篇大论描述 ACLs 了。</p>
 
 <!--more-->
 
 
 <ol>
-<li>首先讲对应的分区挂载的时候增加acl选项，在/etc/fstab对应一行的defaults后面增加acl就好了。作为测试，下面的方法来得更快</li>
+<li>首先讲对应的分区挂载的时候增加 acl 选项，在/etc/fstab 对应一行的 defaults 后面增加 acl 就好了。作为测试，下面的方法来得更快</li>
 </ol>
 
 
 <p><code>mount -o remount,defaults,acl /dev/hda7 /</code></p>
 
-<p>如果mount命令显示类似下面的样子，就OK了</p>
+<p>如果 mount 命令显示类似下面的样子，就 OK 了</p>
 
 <pre><code># mount
 /dev/hda7 on / type ext3 (rw,acl)
 </code></pre>
 
 <ol>
-<li><p>搞一个例子先，假设四个账号 user1,user2,nfs1,www1，其中user1,nfs1,www1都属于组project1,但user2不是。创建一个<code>user1:project1</code>的目录，假定为project1</p>
+<li><p>搞一个例子先，假设四个账号 user1,user2,nfs1,www1，其中 user1,nfs1,www1 都属于组 project1,但 user2 不是。创建一个<code>user1:project1</code>的目录，假定为 project1</p>
 
 <pre><code> # ls -ld /home/project1/
  drwxrwx–x 2 user1 project1 4096 Apr 29 16:53 /home/project1/
 </code></pre>
 
-<p> 这种情况下,user1,nfs1,www1是能进入到找个目录，并创建文件的，但是user2不行</p>
+<p> 这种情况下,user1,nfs1,www1 是能进入到找个目录，并创建文件的，但是 user2 不行</p>
 
 <pre><code> $ id
  uid=5002(user2) gid=5003(user2) groups=5003(user2)
  $ ls -l /home/project1/
  ls: /home/project1/: Permission denied
 </code></pre></li>
-<li><p>创建允许user2读目录project1的ACL访问权限</p>
+<li><p>创建允许 user2 读目录 project1 的 ACL 访问权限</p>
 
 <pre><code> $ id
  uid=503(user1) gid=5002(project1) groups=503(user1),5002(project1)
@@ -152,7 +157,7 @@
  group::rwx
  mask::rwx
 </code></pre></li>
-<li><p>看看user2是不是已经有权限了</p>
+<li><p>看看 user2 是不是已经有权限了</p>
 
 <p> $ id
  uid=5002(user2) gid=5003(user2) groups=5003(user2)</p>
@@ -254,8 +259,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/04/29/The-simplest-example-of-the-use-of-ACLs/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/04/29/The-simplest-example-of-the-use-of-ACLs/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/04/29/The-simplest-example-of-the-use-of-ACLs/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/04/29/The-simplest-example-of-the-use-of-ACLs/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

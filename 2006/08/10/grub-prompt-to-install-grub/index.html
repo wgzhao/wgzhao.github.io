@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="一直在找如何在grub丢失，只剩下grub>的情况下，直接安装grub菜单，而不是输入root,kernel,initrd一堆命令后进入系统，再使用grub-install来安装grub。
-今天Rachel从她的笔记本上找到了这条命令，果然管用，记录如下： grub>install (hd0,4 &hellip;">
+  <meta name="description" content="一直在找如何在 grub 丢失，只剩下 grub>的情况下，直接安装 grub 菜单，而不是输入 root,kernel,initrd 一堆命令后进入系统，再使用 grub-install 来安装 grub。今天 Rachel 从她的笔记本上找到了这条命令，果然管用，记录如下： grub> &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,12 +99,10 @@
   </header>
 
 
-<div class="entry-content"><p>一直在找如何在grub丢失，只剩下grub>的情况下，直接安装grub菜单，而不是输入root,kernel,initrd一堆命令后进入系统，再使用grub-install来安装grub。
-今天<a href="http://rachel.xpore.cn">Rachel</a>从她的笔记本上找到了这条命令，果然管用，记录如下：
+<div class="entry-content"><p>一直在找如何在 grub 丢失，只剩下 grub>的情况下，直接安装 grub 菜单，而不是输入 root,kernel,initrd 一堆命令后进入系统，再使用 grub-install 来安装 grub。今天 <a href="http://rachel.xpore.cn">Rachel</a> 从她的笔记本上找到了这条命令，果然管用，记录如下：
  grub>install (hd0,4)/boot/grub/stage1 (hd0) (hd0,4)/boot/grub/stage2 p
 (hd0,4)/boot/grub/grub.conf
-注意：
-这里表示根文件系统是hda5，同时boot没有单独分出来。如果你的boot是单独分出来的，那么“(hd0,4)/boot”两处就要修改成你的boot分区了。</p>
+注意：这里表示根文件系统是 hda5，同时 boot 没有单独分出来。如果你的 boot 是单独分出来的，那么“(hd0,4)/boot”两处就要修改成你的 boot 分区了。</p>
 </div>
 
 
@@ -192,8 +194,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/08/10/grub-prompt-to-install-grub/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/08/10/grub-prompt-to-install-grub/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/08/10/grub-prompt-to-install-grub/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/08/10/grub-prompt-to-install-grub/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

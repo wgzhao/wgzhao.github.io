@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="接着上次没有完成的d命令学习 -S 大小评估。用来计算dump需要的空间，但是并不真正执行dump操作。这对增量备份有好处，因为可以知道需要多少存储介质。 -T 时间。使用指定的时间来作为dump的时间，而不是从/etc/dumpdates里读取。这里时间的格式和ctime(3)的格式相同，遵守 &hellip;">
+  <meta name="description" content="接着上次没有完成的 d 命令学习 -S 大小评估。用来计算 dump 需要的空间，但是并不真正执行 dump 操作。这对增量备份有好处，因为可以知道需要多少存储介质。 -T 时间。使用指定的时间来作为 dump 的时间，而不是从/etc/dumpdates 里读取。这里时间的格式和 ctime(3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,25 +99,23 @@
   </header>
 
 
-<div class="entry-content"><p>接着上次没有完成的<a href="2007/01/29/commands-start-d-incomplete/">d命令学习</a></p>
+<div class="entry-content"><p>接着上次没有完成的 <a href="2007/01/29/commands-start-d-incomplete/">d 命令学习</a></p>
 
-<p>-S 大小评估。用来计算dump需要的空间，但是并不真正执行dump操作。这对增量备份有好处，因为可以知道需要多少存储介质。</p>
+<p>-S 大小评估。用来计算 dump 需要的空间，但是并不真正执行 dump 操作。这对增量备份有好处，因为可以知道需要多少存储介质。</p>
 
-<p>-T 时间。使用指定的时间来作为dump的时间，而不是从/etc/dumpdates里读取。这里时间的格式和ctime(3)的格式相同，遵守
- RFC822时区规范。他先下面的-u参数是互斥的。</p>
+<p>-T 时间。使用指定的时间来作为 dump 的时间，而不是从/etc/dumpdates 里读取。这里时间的格式和 ctime(3)的格式相同，遵守
+ RFC822 时区规范。他先下面的-u 参数是互斥的。</p>
 
 <!--more-->
 
 
-<p>-u 成功dump后，更新/etc/dumpdates文件。
-/etc/dumpdates文件格式是人可以阅读的，每行记录一个时间，采取了叫宽松的格式。</p>
+<p>-u 成功 dump 后，更新/etc/dumpdates 文件。
+/etc/dumpdates 文件格式是人可以阅读的，每行记录一个时间，采取了叫宽松的格式。</p>
 
-<p>-y 写入磁带时压缩块，采用lzo链接库。</p>
+<p>-y 写入磁带时压缩块，采用 lzo 链接库。</p>
 
 <p>-z
-压缩级别，采用zlib库，这个参数仅在将数据dump到文件，管道或者磁带机时才有用，缺省值是2.注意指定这个值的时候，参数和值之间应该没有参数
-（很多Linux下面的命令的参数都有这个小小的要求）
-下面是一个压缩到文件的简单例子</p>
+压缩级别，采用 zlib 库，这个参数仅在将数据 dump 到文件，管道或者磁带机时才有用，缺省值是 2.注意指定这个值的时候，参数和值之间应该没有参数（很多 Linux 下面的命令的参数都有这个小小的要求）下面是一个压缩到文件的简单例子</p>
 
 <pre><code>[root@lancy sbin]# dump -0 -f /tmp/rootdump /root
 DUMP: Date of this level 0 dump: Sun Jan 28 22:06:46 2007
@@ -149,7 +152,7 @@ DUMP: Average transfer rate: 1394 kB/s
 DUMP: DUMP IS DONE
 </code></pre>
 
-<p>我们来看看dump出来的文件是有什么特征</p>
+<p>我们来看看 dump 出来的文件是有什么特征</p>
 
 <pre><code>[root@lancy sbin]# file /tmp/rootdump
 /tmp/rootdump: new-fs dump file (little endian), This dump Sun Jan 28 22:06:46 2007, Previous dump Thu Jan 1 08:00:00 1970, Volume 1, Level zero, type: tape header, Label /, Filesystem / (dir root), Device /dev/hda5, Host lancy, Flags 3
@@ -159,8 +162,7 @@ DUMP: DUMP IS DONE
 15M /root
 </code></pre>
 
-<p>在不指定-z参数时，dump是没有压缩效果的。
-在看看压缩效果</p>
+<p>在不指定-z 参数时，dump 是没有压缩效果的。在看看压缩效果</p>
 
 <pre><code>[root@lancy sbin]# dump -0 -z9 -f /tmp/rootdump.z9 /root ......
 [root@lancy sbin]#ls -h /tmp/rootdump.z9 -rw-r--r-- 1 root root 7.4M
@@ -169,13 +171,12 @@ Jan 30 20:56 /tmp/rootdump.z9
 
 <p>看上去效果还不错</p>
 
-<p>dump_cis:显示PCMCIA设别的信息。因为我的无线上网卡不这次，因此他仅仅给出了下面的信息</p>
+<p>dump_cis:显示 PCMCIA 设别的信息。因为我的无线上网卡不这次，因此他仅仅给出了下面的信息</p>
 
 <pre><code>[root@lancy sbin]# dump_cis no pcmcia driver in /proc/devices
 </code></pre>
 
-<p>dumpe2fs:   导出ext2/ext3文件系统信息，显然这也是一个重量级的工具，在文件系统出现损坏的情况下
-用得着。他打印出文件系统的超级块和块组信息。我们先看一个具体的例子，下面是对我刚创建个一个分区的dump信息。</p>
+<p>dumpe2fs:   导出 ext2/ext3 文件系统信息，显然这也是一个重量级的工具，在文件系统出现损坏的情况下用得着。他打印出文件系统的超级块和块组信息。我们先看一个具体的例子，下面是对我刚创建个一个分区的 dump 信息。</p>
 
 <pre><code>[root@lancy sbin]# dumpe2fs /dev/sda1
 dumpe2fs 1.35 (28-Feb-2004)
@@ -241,31 +242,27 @@ Free blocks: 16593-19731
 Free inodes: 3297-4944
 </code></pre>
 
-<p>从这个dump信息我们能够得到几个很重要的信息，无论对于你将来的正在备份，恢复还是文件系统修复都是至关重要的。</p>
+<p>从这个 dump 信息我们能够得到几个很重要的信息，无论对于你将来的正在备份，恢复还是文件系统修复都是至关重要的。</p>
 
 <p> Free blocks: 17905 //能够存储数据的块大小 <br/>
- Free inodes: 4933 //能够使用的i节点 Block<br/>
+ Free inodes: 4933 //能够使用的 i 节点 Block<br/>
  size: 1024 //块大小<br/>
 Primary superblock at 1，Backup superblock at 8193 //主超级块以及备份超级块的位置</p>
 
-<p>free blocks和block size决定了存储数据的空间大小，同时block size在某些备份软件中是需要指定的。而free
-inode表说明能够创建的文件或目录总和。<br/>
-因为一个文件或目录需要占用一个i节点。因此即使你的空间还足够，但是你会发现你无法创建文件或者目录，
-而提示却是空间不够，这个时候你可以用dumpe2fs来看看你还有多少free inode。当然仅仅为了查看i节点的信息，不仅仅只有dumpe2fs能够
-做得到。df -i命令也可以查看到i节点的使用信息。</p>
+<p>free blocks 和 block size 决定了存储数据的空间大小，同时 block size 在某些备份软件中是需要指定的。而 free
+inode 表说明能够创建的文件或目录总和。因为一个文件或目录需要占用一个 i 节点。因此即使你的空间还足够，但是你会发现你无法创建文件或者目录，而提示却是空间不够，这个时候你可以用 dumpe2fs 来看看你还有多少 free inode。当然仅仅为了查看 i 节点的信息，不仅仅只有 dumpe2fs 能够做得到。df -i 命令也可以查看到 i 节点的使用信息。</p>
 
-<p>而适当的改变block size可以在同样空间里获得更多的inode，这个我们在说mkfs的时候再讨论。</p>
+<p>而适当的改变 block size 可以在同样空间里获得更多的 inode，这个我们在说 mkfs 的时候再讨论。</p>
 
 <p>superblock 无疑是整个文件系统的核心，类似通往文件系统存储空间的钥匙，没有了钥匙，你既无法继续存储数据，也无法取出原来的数据。</p>
 
-<p>正是因为他是如此的重要，所以文件系统在一创建的就做了若干备份。而且空间越到，备份的数目越多，以我的根文件系统为例，大小是5.3G.
-其中超级块一共8个。一旦文件系统的超级块损坏，我们立刻可以使用<code>e2fsck -b xxxx</code>的方式启用备用的超级块。</p>
+<p>正是因为他是如此的重要，所以文件系统在一创建的就做了若干备份。而且空间越到，备份的数目越多，以我的根文件系统为例，大小是 5.3G.
+其中超级块一共 8 个。一旦文件系统的超级块损坏，我们立刻可以使用<code>e2fsck -b xxxx</code>的方式启用备用的超级块。</p>
 
-<p>这里的xxx就是你的备份超级块的位置，上面的例子中，第一个超级块备份位置是8193，因此你可以使用
+<p>这里的 xxx 就是你的备份超级块的位置，上面的例子中，第一个超级块备份位置是 8193，因此你可以使用
  <code>e2fsck -b 8193 /dev/sda1</code>来恢复超级块。</p>
 
-<p>除了这些重要信息外，对dumpe2fs的深入分析，甚至可以将一个一经无法通过恢复超级块来访问的文件系统的数据导出来。不过我现在还不
-知道如何做，呵呵。</p>
+<p>除了这些重要信息外，对 dumpe2fs 的深入分析，甚至可以将一个一经无法通过恢复超级块来访问的文件系统的数据导出来。不过我现在还不知道如何做，呵呵。</p>
 </div>
 
 
@@ -357,8 +354,8 @@ inode表说明能够创建的文件或目录总和。<br/>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/01/30/commands-start-d/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/01/30/commands-start-d/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/01/30/commands-start-d/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/01/30/commands-start-d/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

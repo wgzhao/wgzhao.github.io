@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="VirtualBox是我非常喜爱的虚拟化软件，其简单方便，单不是强大的配置让我很喜欢，特别是在网络的配置上，更是灵活多变。 不过最近要测试KVM，想把之前的VirtualBox跑的vm迁移到KVM上来，重要的是迁移镜像文件了，配置文件目前似乎没有什么好的办法。 基本上是照着这篇文章来做的， &hellip;">
+  <meta name="description" content="VirtualBox 是我非常喜爱的虚拟化软件，其简单方便，单不是强大的配置让我很喜欢，特别是在网络的配置上，更是灵活多变。 不过最近要测试 KVM，想把之前的 VirtualBox 跑的 vm 迁移到 KVM 上来，重要的是迁移镜像文件了，配置文件目前似乎没有什么好的办法。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,9 +99,9 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a>是我非常喜爱的虚拟化软件，其简单方便，单不是强大的配置让我很喜欢，特别是在网络的配置上，更是灵活多变。</p>
+<div class="entry-content"><p><a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a> 是我非常喜爱的虚拟化软件，其简单方便，单不是强大的配置让我很喜欢，特别是在网络的配置上，更是灵活多变。</p>
 
-<p>不过最近要测试<a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a>，想把之前的<a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a>跑的vm迁移到<a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a>上来，重要的是迁移镜像文件了，配置文件目前似乎没有什么好的办法。</p>
+<p>不过最近要测试 <a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a>，想把之前的 <a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a> 跑的 vm 迁移到 <a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a> 上来，重要的是迁移镜像文件了，配置文件目前似乎没有什么好的办法。</p>
 
 <p>基本上是照着<a href="http://blog.bodhizazen.net/linux/convert-virtualbox-vdi-to-kvm-qcow/">这篇文章</a>来做的，只是我按照它的方法，在第一步出了状况，修改了一下，下面是详细步骤：</p>
 
@@ -104,7 +109,7 @@
 
 
 <ol>
-<li><p>将vdi镜像文件转换成裸格式文件<br/>
+<li><p>将 vdi 镜像文件转换成裸格式文件<br/>
 <code># VBoxManage clonehd axs3.vdi /home/wgzhao/axs3.img --format RAW</code> 如果你的转换很顺利，那没有什么好说的，但是如果你获得类似我这样的错误：</p>
 
 <pre><code>  ERROR: Cannot register the hard disk
@@ -135,17 +140,17 @@
     fc88e910-2919-4dc0-bce2-08b10ad409fc
 </code></pre>
 
-<p>上面是在我机器上的实际转换输出，其中uuid的来源就是第一个命令失败给出的输出里的uuid号。我发现如果你指定镜像文件的全路径，是不会出现上面的问题的。</p>
+<p>上面是在我机器上的实际转换输出，其中 uuid 的来源就是第一个命令失败给出的输出里的 uuid 号。我发现如果你指定镜像文件的全路径，是不会出现上面的问题的。</p>
 
 <ol>
-<li>将裸镜像文件转换成qcow格式镜像文件<br/>
+<li>将裸镜像文件转换成 qcow 格式镜像文件<br/>
 <code>#kvm-img convert -f raw axs3.img -O qcow2 axs3.qcow</code></li>
 </ol>
 
 
 <p>如果没有报错，就算成功了。你可以测试一把：<code>#kvm -hda axs3.qcow</code>就知道结果了。</p>
 
-<p>当然以上方法也是适合<a href="http://qemu.org">qemu</a>的。</p>
+<p>当然以上方法也是适合 <a href="http://qemu.org">qemu</a> 的。</p>
 </div>
 
 
@@ -237,8 +242,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/07/09/convert-virtualbox-vdi-to-kvm-qcow/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

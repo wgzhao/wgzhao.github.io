@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的crontab特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前crontab文件，并确保他不能增加新的crontab文件所需的步骤。 A：假定用户test就是我们需要惩罚的用户，目前你的帐号是root。 &hellip;">
+  <meta name="description" content="E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的 crontab 特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前 crontab 文件，并确保他不能增加新的 crontab 文件所需的步骤。 A：假定用户 test 就是我们需要惩罚的用户， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -63,7 +68,10 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -97,9 +105,9 @@
   </header>
 
 
-  <div class="entry-content"><p>E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的crontab特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前crontab文件，并确保他不能增加新的crontab文件所需的步骤。</p>
+  <div class="entry-content"><p>E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的 crontab 特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前 crontab 文件，并确保他不能增加新的 crontab 文件所需的步骤。</p>
 
-<p>A：假定用户test就是我们需要惩罚的用户，目前你的帐号是root。列出帐号test的crontab文件指令是：</p>
+<p>A：假定用户 test 就是我们需要惩罚的用户，目前你的帐号是 root。列出帐号 test 的 crontab 文件指令是：</p>
 
 <pre><code>root@wgzhao-nb:~# crontab -u test -l
 # m h  dom mon dow   command
@@ -194,15 +202,15 @@
   </header>
 
 
-  <div class="entry-content"><p>用户观察到了一个很有意思的现象，某一个目录下10个小文件，每一个大概都只有几十个字节。都是纯文本。分别对这10个文件用compress指令压缩，结果发现其中一个压缩不成功，也没有给出任何报错信息。</p>
+  <div class="entry-content"><p>用户观察到了一个很有意思的现象，某一个目录下 10 个小文件，每一个大概都只有几十个字节。都是纯文本。分别对这 10 个文件用 compress 指令压缩，结果发现其中一个压缩不成功，也没有给出任何报错信息。</p>
 
-<p>将该文件传送到AIX 5上，使用compress压缩，则给出&#8221;file not change&#8221;的提示，依然没有压缩。</p>
+<p>将该文件传送到 AIX 5 上，使用 compress 压缩，则给出&#8221;file not change&#8221;的提示，依然没有压缩。</p>
 
 <p>给文件重命名，也不行。另外创建一个文件，然后把文件内容复制过去，也不行。</p>
 
-<p>我尝试用strace跟踪了compress压缩该文件的过程。发现压缩的确做了，但是最后却执行了unlink的操作，也就是把已经压缩好的文件删除了。</p>
+<p>我尝试用 strace 跟踪了 compress 压缩该文件的过程。发现压缩的确做了，但是最后却执行了 unlink 的操作，也就是把已经压缩好的文件删除了。</p>
 
-<p>为什么要删除呢？先看看compress的帮助吧，发现有这样一个参数的说明：</p>
+<p>为什么要删除呢？先看看 compress 的帮助吧，发现有这样一个参数的说明：</p>
 
 <blockquote><p>-f Forces output file to be generated, even if one already. exists,
 and even if no space is saved by compressing. If -f is not used, the
@@ -210,15 +218,13 @@ user will be prompted if stdin is. a tty, otherwise, the output file
 will not be overwritten.</p></blockquote>
 
 <p>其中提到了压缩空间的问题。我猜测可能是压缩效率的问题。 于是用<code>compress -f</code>
-的方式，果然压缩成功了。<br/>
-比较压缩前和压缩后的大小，结果发现压缩后的文件还比压缩前的文件要大。难怪，所以-f提高了即使没有压缩空间。<br/>
-这倒是挺有意思，一来压缩一个文件，大小不减反增，比较少见。二来compress指令还去做比较？ 于是下载了compress 4.2 的源代码，大致看了一下，果然有这么一个判断：</p>
+的方式，果然压缩成功了。比较压缩前和压缩后的大小，结果发现压缩后的文件还比压缩前的文件要大。难怪，所以-f 提高了即使没有压缩空间。这倒是挺有意思，一来压缩一个文件，大小不减反增，比较少见。二来 compress 指令还去做比较？ 于是下载了 compress 4.2 的源代码，大致看了一下，果然有这么一个判断：</p>
 
 <pre><code>if (bytes_out &gt;= bytes_in &amp;&amp; !(force))
                 exit_code = 2;
 </code></pre>
 
-<p><code>bytes_out</code>是压缩后的字节，<code>bytes_in</code>是读入的字节，也就是原始文件的大小。force对应的是-f的参数。</p>
+<p><code>bytes_out</code>是压缩后的字节，<code>bytes_in</code>是读入的字节，也就是原始文件的大小。force 对应的是-f 的参数。</p>
 
 <p>没有想到，这开发人员还这么考虑呀。</p>
 </div>
@@ -263,9 +269,9 @@ will not be overwritten.</p></blockquote>
 
 <p>A：感觉还是用户设置为默认的同名私有组作为默认组是比较恰当的。改变组的指令是<code>chgrp</code>。</p>
 
-<p>E6.2 说明下面这几个umask值的区别：077、027、022和755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？您可以给用户施加一个标准的umask吗？</p>
+<p>E6.2 说明下面这几个 umask 值的区别：077、027、022 和 755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？您可以给用户施加一个标准的 umask 吗？</p>
 
-<p>A：077，表示创建的缺省文件许可是600，027则是640，022则是644，755则是022。想成为新用户的全局默认值，一个办法是修改系统缺省的umask值，Fedora/RedHat系统是<code>/etc/bashrc</code>文件。Debian/Ubuntu系统是<code>/etc/profile</code>。或者直接修改<code>/etc/skel/.bash_profile</code>文件，增加umask的设定。</p>
+<p>A：077，表示创建的缺省文件许可是 600，027 则是 640，022 则是 644，755 则是 022。想成为新用户的全局默认值，一个办法是修改系统缺省的 umask 值，Fedora/RedHat 系统是<code>/etc/bashrc</code>文件。Debian/Ubuntu 系统是<code>/etc/profile</code>。或者直接修改<code>/etc/skel/.bash_profile</code>文件，增加 umask 的设定。</p>
 
 </div>
   
@@ -309,11 +315,11 @@ will not be overwritten.</p></blockquote>
   </header>
 
 
-  <div class="entry-content"><p>这一章的习题比较简单，虽然难点是ACL，但是似乎作者很讨厌ACL，因此习题里，一个有关ACL的问题都没有。</p>
+  <div class="entry-content"><p>这一章的习题比较简单，虽然难点是 ACL，但是似乎作者很讨厌 ACL，因此习题里，一个有关 ACL 的问题都没有。</p>
 
-<p>E5.1 什么是umask？创建一个umask，对于属组或者其他人什么权限也不给。</p>
+<p>E5.1 什么是 umask？创建一个 umask，对于属组或者其他人什么权限也不给。</p>
 
-<p>A：umask是一个三位八进制数字表示的变量，用来给shell设定新创建的文件的默认权限。 设置umask为0077即可，如下所示：</p>
+<p>A：umask 是一个三位八进制数字表示的变量，用来给 shell 设定新创建的文件的默认权限。 设置 umask 为 0077 即可，如下所示：</p>
 
 <pre><code>$ umask 0077
 $ touch test
@@ -363,10 +369,9 @@ $ ls -l test
   </header>
 
 
-  <div class="entry-content"><p>E4.1 解释一个文件的UID和一个正在运行的进程的真实UID以及有效UID之间的关系。除了文件的访问控制外，进程的有效UID有什么用途？</p>
+  <div class="entry-content"><p>E4.1 解释一个文件的 UID 和一个正在运行的进程的真实 UID 以及有效 UID 之间的关系。除了文件的访问控制外，进程的有效 UID 有什么用途？</p>
 
-<p>A：
-大部分情况下，文件的UID和运行的真实UID以及有效UID是一致的。但是对于<code>setuid</code>程序而言。进程的真实UID和有效UID就有区别了。比如<code>/usr/bin/passwd</code>程序。它的属主是<code>root（UID=0）</code>，如果一个用户（<code>UID=1000)</code>运行它，那么真实UID为1000，但是有效UID则为0。有效UID除了文件访问控制外，还能提升当前运行程序的“临时特权”。</p>
+<p>A：大部分情况下，文件的 UID 和运行的真实 UID 以及有效 UID 是一致的。但是对于<code>setuid</code>程序而言。进程的真实 UID 和有效 UID 就有区别了。比如<code>/usr/bin/passwd</code>程序。它的属主是<code>root（UID=0）</code>，如果一个用户（<code>UID=1000)</code>运行它，那么真实 UID 为 1000，但是有效 UID 则为 0。有效 UID 除了文件访问控制外，还能提升当前运行程序的“临时特权”。</p>
 
 </div>
   
@@ -410,7 +415,7 @@ $ ls -l test
   </header>
 
 
-  <div class="entry-content"><p>E3.1 使用带有-perm选项的find命令在您的系统上找到5个setuid文件。对于每个文件，试述为什么对于让命令正确发挥其功能来说，setuid机制是必要的。</p>
+  <div class="entry-content"><p>E3.1 使用带有-perm 选项的 find 命令在您的系统上找到 5 个 setuid 文件。对于每个文件，试述为什么对于让命令正确发挥其功能来说，setuid 机制是必要的。</p>
 
 </div>
   
@@ -454,9 +459,9 @@ $ ls -l test
   </header>
 
 
-  <div class="entry-content"><p>E2.1 为什么在安装LILO引导加载程序之前先运行lilo -t很重要？该怎样引导一个名字不是vmlinuz的内核？</p>
+  <div class="entry-content"><p>E2.1 为什么在安装 LILO 引导加载程序之前先运行 lilo -t 很重要？该怎样引导一个名字不是 vmlinuz 的内核？</p>
 
-<p>A： 任何引导程序在加载到MBR之前都应该检查配置文件的正确性，对于没有引导时可编辑特性的LILO更应如此，因此在执行lilo或者<code>lilo -v</code>之前，先执行<code>lilo -t</code> 来测试配置文件的正确性是一个良好的习惯。引导配置<code>/etc/lilo.conf</code>里可以通过image指令来指定内核的名字，和内核具体的命名没有关系。</p>
+<p>A： 任何引导程序在加载到 MBR 之前都应该检查配置文件的正确性，对于没有引导时可编辑特性的 LILO 更应如此，因此在执行 lilo 或者<code>lilo -v</code>之前，先执行<code>lilo -t</code> 来测试配置文件的正确性是一个良好的习惯。引导配置<code>/etc/lilo.conf</code>里可以通过 image 指令来指定内核的名字，和内核具体的命名没有关系。</p>
 
 </div>
   
@@ -500,10 +505,9 @@ $ ls -l test
   </header>
 
 
-  <div class="entry-content"><p>以前看《<a href="http://book.douban.com/subject/3042029/">Linux系统管理手册</a>》（以下简称LAH）电子版的时候，没有太注意每章后面的习题。</p>
+  <div class="entry-content"><p>以前看《<a href="http://book.douban.com/subject/3042029/">Linux 系统管理手册</a>》（以下简称 LAH）电子版的时候，没有太注意每章后面的习题。</p>
 
-<p>现在买来印刷版看后，觉得这些习题有必要做一做，特别那些标有4颗星的，据说能作为整个学期的作业来完成，这不由得让我想起了《<a href="http://book.douban.com/subject/1130500/">计算机程序设计艺术</a>》艺术有关习题的介绍，不过那个太难了，都是偏向理论性的知识。<br/>
-这本LAH的习题偏向实践一些，应该相对来说容易做到吧。</p>
+<p>现在买来印刷版看后，觉得这些习题有必要做一做，特别那些标有 4 颗星的，据说能作为整个学期的作业来完成，这不由得让我想起了《<a href="http://book.douban.com/subject/1130500/">计算机程序设计艺术</a>》艺术有关习题的介绍，不过那个太难了，都是偏向理论性的知识。这本 LAH 的习题偏向实践一些，应该相对来说容易做到吧。</p>
 
 </div>
   
@@ -552,7 +556,7 @@ $ ls -l test
 <p><a href="http://www.flickr.com/photos/mlsx/4027652873/">nf-packet-flow</a>，原由
 <a href="http://www.flickr.com/people/mlsx/">mlsx</a> 上載。</p>
 
-<p>很详细的一张netfilter包流程图，能直观的描述Netfilter/iptables的工作流程。</p>
+<p>很详细的一张 netfilter 包流程图，能直观的描述 Netfilter/iptables 的工作流程。</p>
 </div>
   
   
@@ -599,8 +603,8 @@ $ ls -l test
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/5/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/5/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/5/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/5/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

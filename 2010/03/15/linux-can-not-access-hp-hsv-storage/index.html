@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="上午同事打电话过来，说某项目中，咱们的系统无法识别到HP的存储。HBA卡是Qlogic 2400系列的.驱动是最新的，而且卡已经正常工作了，在dmesg里能看到HP存储的型号，但是就是看不到存储磁盘。不过有一个提示信息，具体的日志是这样： QLogic Fibre Channel HBA &hellip;">
+  <meta name="description" content="上午同事打电话过来，说某项目中，咱们的系统无法识别到 HP 的存储。HBA 卡是 Qlogic 2400 系列的.驱动是最新的，而且卡已经正常工作了，在 dmesg 里能看到 HP 存储的型号，但是就是看不到存储磁盘。不过有一个提示信息，具体的日志是这样： QLogic Fibre Channel &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,7 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>上午同事打电话过来，说某项目中，咱们的系统无法识别到HP的存储。HBA卡是Qlogic 2400系列的.驱动是最新的，而且卡已经正常工作了，在dmesg里能看到HP存储的型号，但是就是看不到存储磁盘。不过有一个提示信息，具体的日志是这样：</p>
+<div class="entry-content"><p>上午同事打电话过来，说某项目中，咱们的系统无法识别到 HP 的存储。HBA 卡是 Qlogic 2400 系列的.驱动是最新的，而且卡已经正常工作了，在 dmesg 里能看到 HP 存储的型号，但是就是看不到存储磁盘。不过有一个提示信息，具体的日志是这样：</p>
 
 <!--more-->
 
@@ -135,24 +140,18 @@ scsi: unknown device type 12
 qla2400 0000:0a:00.0: scsi(5:0:3:0): Enabled tagged queuing, queue depth 16.
 </code></pre>
 
-<p>查看了一下<a href="http://www.t10.org/cgi-bin/ac.pl?t=f&amp;f=spc3r23.pdf">SCSI SP3</a>，<code>device type 12</code>是<code>Automation/Adapter interface</code>设备。那就是说应该只是识别到了存储控制器本身。从纯粹系统的角度来看，可能是存储设备上还没有划分LUN，或者划分了LUN，但是没有做映射(LUN
-map，Lun Mask，Host Channel）。<br/>
-不过HP的工程师一口咬定说都做了，而且还说这个项目的其他实施点都是这么做的,没有问题。</p>
+<p>查看了一下 <a href="http://www.t10.org/cgi-bin/ac.pl?t=f&amp;f=spc3r23.pdf">SCSI SP3</a>，<code>device type 12</code>是<code>Automation/Adapter interface</code>设备。那就是说应该只是识别到了存储控制器本身。从纯粹系统的角度来看，可能是存储设备上还没有划分 LUN，或者划分了 LUN，但是没有做映射(LUN
+map，Lun Mask，Host Channel）。不过 HP 的工程师一口咬定说都做了，而且还说这个项目的其他实施点都是这么做的,没有问题。</p>
 
-<p>既然这么肯定，那就用一个办法来判断是不是我们系统的问题吧，采取最简单的拓扑结构，去掉双控制器，去掉光纤交换机。<br/>
-从单控制器上直接拉一根光纤到HBA卡上，我们看看会怎样。</p>
+<p>既然这么肯定，那就用一个办法来判断是不是我们系统的问题吧，采取最简单的拓扑结构，去掉双控制器，去掉光纤交换机。从单控制器上直接拉一根光纤到 HBA 卡上，我们看看会怎样。</p>
 
-<p>换成这样的拓扑结构后，别说LUN了，连存储都找不到了，就和只安装了HBA卡，没有接光纤线或者说接了光纤线但是没有连接到存储的现象一样。<br/>
-这就明显不对呀，如果是系统的问题，那至少会给出一些核心信息出来呀。而且只是简化了结构，怎么连存储控制器都找不到了，这不能说存储没有问题了吧。</p>
+<p>换成这样的拓扑结构后，别说 LUN 了，连存储都找不到了，就和只安装了 HBA 卡，没有接光纤线或者说接了光纤线但是没有连接到存储的现象一样。这就明显不对呀，如果是系统的问题，那至少会给出一些核心信息出来呀。而且只是简化了结构，怎么连存储控制器都找不到了，这不能说存储没有问题了吧。</p>
 
-<p>同时在HP官方论坛也找到了一个类似的信息，其中就有人很肯定的说到应该设置host entry，也就是磁盘映射之类的配置了。<br/>
-同事把这些信息告知了用户，后来HP同意下午来人看看。</p>
+<p>同时在 HP 官方论坛也找到了一个类似的信息，其中就有人很肯定的说到应该设置 host entry，也就是磁盘映射之类的配置了。同事把这些信息告知了用户，后来 HP 同意下午来人看看。</p>
 
-<p>到了下午3点，同事没有打来电话，到3点半了，同事电话打过来了，说已经好了，我问怎么回事，他说是存储控制器电池没电了，估计作的配置压根就没有生效。 <br/>
-这还是用户告诉他的，HP的人没有给同事打电话。<br/>
-同事很气氛，因为上午的时候，用户发现了电池报警的事情，告诉了HP，HP工程师说没有问题（同事是远程支持），结果折腾了大半天。</p>
+<p>到了下午 3 点，同事没有打来电话，到 3 点半了，同事电话打过来了，说已经好了，我问怎么回事，他说是存储控制器电池没电了，估计作的配置压根就没有生效。这还是用户告诉他的，HP 的人没有给同事打电话。同事很气氛，因为上午的时候，用户发现了电池报警的事情，告诉了 HP，HP 工程师说没有问题（同事是远程支持），结果折腾了大半天。</p>
 
-<p>警告，自然有它的道理，既然有了警告，为什么不愿意花1分钟时间看看是怎么回事呢？</p>
+<p>警告，自然有它的道理，既然有了警告，为什么不愿意花 1 分钟时间看看是怎么回事呢？</p>
 </div>
 
 
@@ -244,8 +243,8 @@ map，Lun Mask，Host Channel）。<br/>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/03/15/linux-can-not-access-hp-hsv-storage/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/03/15/linux-can-not-access-hp-hsv-storage/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/03/15/linux-can-not-access-hp-hsv-storage/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/03/15/linux-can-not-access-hp-hsv-storage/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

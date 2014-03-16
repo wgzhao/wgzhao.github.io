@@ -9,9 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="在Linux里使用qemu，当需要从本地实际硬盘启动和运行OS的时候，只要给出-hda /dev/hda这样的参数就可以了。
-因此Linux要表示某一个硬盘，实在是很简单，虽然很多Linux初学者觉得/dev/hda这样的名字怪怪的。
-而在Windows下，想表示某一个硬盘，可不是那么简单， &hellip;">
+  <meta name="description" content="在 Linux 里使用 qemu，当需要从本地实际硬盘启动和运行 OS 的时候，只要给出-hda /dev/hda这样的参数就可以了。因此 Linux 要表示某一个硬盘，实在是很简单，虽然很多 Linux 初学者觉得/dev/hda 这样的名字怪怪的。而在 Windows 下，想表示某一个硬盘， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,13 +99,8 @@
   </header>
 
 
-<div class="entry-content"><p>在Linux里使用qemu，当需要从本地实际硬盘启动和运行OS的时候，只要给出<code>-hda /dev/hda</code>这样的参数就可以了。<br/>
-因此Linux要表示某一个硬盘，实在是很简单，虽然很多Linux初学者觉得/dev/hda这样的名字怪怪的。<br/>
-而在Windows下，想表示某一个硬盘，可不是那么简单，表示某一个分区也没有那么容易。我最开始在Windows下使用qemu要运行我本地硬盘的linux的时候，我就找了很久的资料来确定如何表示一个硬盘。<br/>
-如果做过windows驱动程序开发的人，估计就不用我这么累的去找了。<br/>
-今天又要用qemu临时启动我的DC5.0，结果又把这个参数忘记了，费了半天劲回忆起来了，于是决定写到这里。也就是我标题写的了。<br/>
-<code>\\.\PhysicalDrive0</code>表示第一个硬盘，以此类推，<code>\\.\PhysicalDrive1</code>是第二个硬盘。  不过不知道windows下是否区分IDE硬盘和SCSI/SATA/SAS硬盘的区别，应该不需要吧。哎，还是对Windows了解太少了。<br/>
-再一次诅咒我的CDMA，害死人呀！</p>
+<div class="entry-content"><p>在 Linux 里使用 qemu，当需要从本地实际硬盘启动和运行 OS 的时候，只要给出<code>-hda /dev/hda</code>这样的参数就可以了。因此 Linux 要表示某一个硬盘，实在是很简单，虽然很多 Linux 初学者觉得/dev/hda 这样的名字怪怪的。而在 Windows 下，想表示某一个硬盘，可不是那么简单，表示某一个分区也没有那么容易。我最开始在 Windows 下使用 qemu 要运行我本地硬盘的 linux 的时候，我就找了很久的资料来确定如何表示一个硬盘。如果做过 windows 驱动程序开发的人，估计就不用我这么累的去找了。今天又要用 qemu 临时启动我的 DC5.0，结果又把这个参数忘记了，费了半天劲回忆起来了，于是决定写到这里。也就是我标题写的了。<br/>
+<code>\\.\PhysicalDrive0</code>表示第一个硬盘，以此类推，<code>\\.\PhysicalDrive1</code>是第二个硬盘。  不过不知道 windows 下是否区分 IDE 硬盘和 SCSI/SATA/SAS 硬盘的区别，应该不需要吧。哎，还是对 Windows 了解太少了。再一次诅咒我的 CDMA，害死人呀！</p>
 </div>
 
 
@@ -194,8 +192,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/11/06/physicaldrive0/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/11/06/physicaldrive0/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/11/06/physicaldrive0/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/11/06/physicaldrive0/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

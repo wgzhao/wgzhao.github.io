@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="原始文档来自biantaishabi,下面是原始文档的连接
-http://feeds.feedburner.com/biantaishabi?m=398 建立折叠： z的意思就是他的形状， 像一个折叠的东西，折叠相关的命令都是z开头的， 新版本的拼写检查命令也有以z开头的。 f的意思是fold。 &hellip;">
+  <meta name="description" content="原始文档来自 biantaishabi,下面是原始文档的连接
+http://feeds.feedburner.com/biantaishabi?m=398 建立折叠： z 的意思就是他的形状， 像一个折叠的东西，折叠相关的命令都是 z 开头的， 新版本的拼写检查命令也有以 z 开头的。 f &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ http://feeds.feedburner.com/biantaishabi?m=398 建立折叠： z的意思就是�
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,35 +100,30 @@ http://feeds.feedburner.com/biantaishabi?m=398 建立折叠： z的意思就是�
   </header>
 
 
-<div class="entry-content"><p>原始文档来自biantaishabi,下面是原始文档的连接
+<div class="entry-content"><p>原始文档来自 biantaishabi,下面是原始文档的连接
 <a href="http://feeds.feedburner.com/biantaishabi?m=398">http://feeds.feedburner.com/biantaishabi?m=398</a></p>
 
 <p><strong>建立折叠：</strong></p>
 
-<p>z的意思就是他的形状， 像一个折叠的东西，折叠相关的命令都是z开头的， 新版本的拼写检查命令也有以z开头的。 f的意思是fold。
-所以zf就是折叠。 你可以在visual模式下选定，再按zf， 可以将选定的全部折叠。 也可以zf9j， 这样可以将下面9行的内容折起来。
-也可以用marker， 还可以用行号：20，50，就可以把20行到五十行折叠起来 。 总之可以用一般的定位的方法来告诉VIM你要折叠那些地方。</p>
+<p>z 的意思就是他的形状， 像一个折叠的东西，折叠相关的命令都是 z 开头的， 新版本的拼写检查命令也有以 z 开头的。 f 的意思是 fold。所以 zf 就是折叠。 你可以在 visual 模式下选定，再按 zf， 可以将选定的全部折叠。 也可以 zf9j， 这样可以将下面 9 行的内容折起来。也可以用 marker， 还可以用行号：20，50，就可以把 20 行到五十行折叠起来 。 总之可以用一般的定位的方法来告诉 VIM 你要折叠那些地方。</p>
 
-<p>我觉得比较有用的是匹配括号的折叠， 移动到一个花括号{上，用zfa}， 就可以将下面的匹配的花括号之间的内容折起来，
-这样可以很方便的折起函数。 其他的折叠方法还有zf/string， 可以折叠到下一个匹配的string， 不过好像不太实用。</p>
+<p>我觉得比较有用的是匹配括号的折叠， 移动到一个花括号{上，用 zfa}， 就可以将下面的匹配的花括号之间的内容折起来，这样可以很方便的折起函数。 其他的折叠方法还有 zf/string， 可以折叠到下一个匹配的 string， 不过好像不太实用。</p>
 
 <p><strong>使用折叠：</strong></p>
 
-<p>移动的时候在前面加一个z就可以在折叠的地方移动， 比如zj，就会跳到下一个折叠， zk就是上一个。 要打开的话可以zo，o是open的意思，
-zO打开所有的折叠。 关上用zc， c是close。 在zO之后用zc会关上所有打开的折叠。 折叠可以嵌套，
-zr可以打开第一层的折叠，zR可以打开所有层的折叠， 与之对应的是zm和zM， 是按层关上折叠。 比如说按zm，
-会从最里层的层叠关起，连续zm就会一直关到最上层的折叠。</p>
+<p>移动的时候在前面加一个 z 就可以在折叠的地方移动， 比如 zj，就会跳到下一个折叠， zk 就是上一个。 要打开的话可以 zo，o 是 open 的意思，
+zO 打开所有的折叠。 关上用 zc， c 是 close。 在 zO 之后用 zc 会关上所有打开的折叠。 折叠可以嵌套，
+zr 可以打开第一层的折叠，zR 可以打开所有层的折叠， 与之对应的是 zm 和 zM， 是按层关上折叠。 比如说按 zm，会从最里层的层叠关起，连续 zm 就会一直关到最上层的折叠。</p>
 
 <p>查找到了折叠里面会将折叠打开， 处理完了之后要自己将折叠关上。</p>
 
 <p><strong>折叠选项：</strong></p>
 
-<p>可以让VIM根据语法， 缩进，标记自动折叠。 用set foldmethod=foldoption 来设定。 可以查看一下foldmethod
+<p>可以让 VIM 根据语法， 缩进，标记自动折叠。 用 set foldmethod=foldoption 来设定。 可以查看一下 foldmethod
 。</p>
 
 <p><strong>保留折叠：</strong>
-要下一次打开的时候还保留折叠可以在离开的时候:mkview，再进来的时候:loadview就可以了。
-当然也可以将这两句加到vimrc里面让其自动完成。</p>
+要下一次打开的时候还保留折叠可以在离开的时候:mkview，再进来的时候:loadview 就可以了。当然也可以将这两句加到 vimrc 里面让其自动完成。</p>
 
 <pre><code>au BufWinLeave * mkview
 au BufWinEnter * silent loadview
@@ -221,8 +221,8 @@ au BufWinEnter * silent loadview
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/05/26/vim-folding-feature-folding/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/26/vim-folding-feature-folding/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/05/26/vim-folding-feature-folding/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/26/vim-folding-feature-folding/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

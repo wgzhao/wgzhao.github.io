@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="★ E16.1 研究您本地的NFS设置。使用了NFS吗？还是有别的不同解决方法？采取了自动安装方式吗？有什么样的权衡考虑？ A：以前在网站备份的时候使用过NFS，但是后来放弃了，主要是因为NFS在大I/O的情况下，容易出现崩溃的情况。
-当然因为挂载点少，所以自动安装方式就没有必要了，越简单，越安全 &hellip;">
+  <meta name="description" content="★ E16.1 研究您本地的 NFS 设置。使用了 NFS 吗？还是有别的不同解决方法？采取了自动安装方式吗？有什么样的权衡考虑？ A：以前在网站备份的时候使用过 NFS，但是后来放弃了，主要是因为 NFS 在大 I/O 的情况下，容易出现崩溃的情况。当然因为挂载点少，所以自动安装方式就没有必要了 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,29 +99,27 @@
   </header>
 
 
-<div class="entry-content"><p>★ E16.1 研究您本地的NFS设置。使用了NFS吗？还是有别的不同解决方法？采取了自动安装方式吗？有什么样的权衡考虑？</p>
+<div class="entry-content"><p>★ E16.1 研究您本地的 NFS 设置。使用了 NFS 吗？还是有别的不同解决方法？采取了自动安装方式吗？有什么样的权衡考虑？</p>
 
-<p>A：以前在网站备份的时候使用过NFS，但是后来放弃了，主要是因为NFS在大I/O的情况下，容易出现崩溃的情况。<br/>
-当然因为挂载点少，所以自动安装方式就没有必要了，越简单，越安全。<br/>
-现在采取了rsync的方式，通过SSH隧道传输数据，相比NFS要稳定和安全。</p>
+<p>A：以前在网站备份的时候使用过 NFS，但是后来放弃了，主要是因为 NFS 在大 I/O 的情况下，容易出现崩溃的情况。当然因为挂载点少，所以自动安装方式就没有必要了，越简单，越安全。现在采取了 rsync 的方式，通过 SSH 隧道传输数据，相比 NFS 要稳定和安全。</p>
 
 <!--more-->
 
 
-<p>★★ E16.2 mountd,nfsd和portmap之间有什么关系？NFS对portmap的依赖在安全上意味着什么？</p>
+<p>★★ E16.2 mountd,nfsd 和 portmap 之间有什么关系？NFS 对 portmap 的依赖在安全上意味着什么？</p>
 
-<p>A：nfsd是NFS的运行守护进程。mountd的合法请求最终会交给nfsd来处理。而portmap负责分配客户端/服务器的通讯端口。portmap意味着SunRPC，而RPC这个东西似乎属于臭名昭著的东西，安全性太差，容易遭受攻击。</p>
+<p>A：nfsd 是 NFS 的运行守护进程。mountd 的合法请求最终会交给 nfsd 来处理。而 portmap 负责分配客户端/服务器的通讯端口。portmap 意味着 SunRPC，而 RPC 这个东西似乎属于臭名昭著的东西，安全性太差，容易遭受攻击。</p>
 
-<p>★★ E16.4 您的上司要您把/usr和/usr/local 通过NFS导出。已知信息和要求如下：</p>
+<p>★★ E16.4 您的上司要您把/usr 和/usr/local 通过 NFS 导出。已知信息和要求如下：</p>
 
 <ul>
 <li>也因为办公室的行政因素，您只想让您的部门(192.168.123.0/24)能够使用这些被导出的文件系统。为了实现这些配置，必须要向什么文件加入什么样的配置行？</li>
-<li>列出让mountd和nfsd认出这些新被共享的文件系统所需要的步骤。在不安装的情况下，您会怎样核实那些目录已经共享出去了？</li>
-<li>概述让您的本地子网使用/mnt/usr和/mnt/usr/local自动安装被导出的文件系统应该采取的策略。</li>
+<li>列出让 mountd 和 nfsd 认出这些新被共享的文件系统所需要的步骤。在不安装的情况下，您会怎样核实那些目录已经共享出去了？</li>
+<li>概述让您的本地子网使用/mnt/usr 和/mnt/usr/local 自动安装被导出的文件系统应该采取的策略。</li>
 </ul>
 
 
-<p>A：要共享上述目录，需要在/etc/exports文件里，加入类似下面两行</p>
+<p>A：要共享上述目录，需要在/etc/exports 文件里，加入类似下面两行</p>
 
 <pre><code>/usr    192.168.123.0/24(ro,rsync,root_squash)
 /usr/local 192.168.123.0/24(ro,rsync,root_squash)
@@ -125,10 +127,9 @@
 
 <p>加入后，执行<code>exportfs -a</code>让改动起作用。在服务器端执行<code>nfsstat -s /nfsstat-c/nfsstat -m</code> 可以分别现实服务端，客户端，挂载情况的显示。</p>
 
-<p>策略和如何使用这些导出目录已经网络传输情况都有关系。<br/>
-不过就我遇到的情况以及自身的经历，对于NFS的可靠性，我表示怀疑。特别是在大I/0或者深层目录复制的情况下，NFS表现的非常脆弱。</p>
+<p>策略和如何使用这些导出目录已经网络传输情况都有关系。不过就我遇到的情况以及自身的经历，对于 NFS 的可靠性，我表示怀疑。特别是在大 I/0 或者深层目录复制的情况下，NFS 表现的非常脆弱。</p>
 
-<p>所以，对于flickr,facebook这样的大型网站，采取NFS的方式架构，我真的很想知道他们是更新了NFS的特性，还是精确采用了哪些参数，而从使得NFS很健壮的运行。</p>
+<p>所以，对于 flickr,facebook 这样的大型网站，采取 NFS 的方式架构，我真的很想知道他们是更新了 NFS 的特性，还是精确采用了哪些参数，而从使得 NFS 很健壮的运行。</p>
 </div>
 
 
@@ -220,8 +221,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/03/02/lah-chapter16-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/03/02/lah-chapter16-questions-key/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/03/02/lah-chapter16-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/03/02/lah-chapter16-questions-key/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

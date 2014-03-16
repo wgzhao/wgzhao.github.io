@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="不记得从哪里起，我的man不能用的，查看任何命令的man手册，基本都是给出下面的错误： [root@mlsx dev]# man man
+  <meta name="description" content="不记得从哪里起，我的 man 不能用的，查看任何命令的 man 手册，基本都是给出下面的错误： [root@mlsx dev]# man man
 Error executing formatting or display command.
-System command (cd /usr/share/man &hellip;">
+System command (cd /usr/share &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@ System command (cd /usr/share/man &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,7 +101,7 @@ System command (cd /usr/share/man &hellip;">
   </header>
 
 
-<div class="entry-content"><p>不记得从哪里起，我的man不能用的，查看任何命令的man手册，基本都是给出下面的错误：</p>
+<div class="entry-content"><p>不记得从哪里起，我的 man 不能用的，查看任何命令的 man 手册，基本都是给出下面的错误：</p>
 
 <pre><code>[root@mlsx dev]# man man
 Error executing formatting or display command.
@@ -104,17 +109,12 @@ System command (cd /usr/share/man &amp;&amp; (echo “.ll 12.7i”; echo “.pl 
 No manual entry for man
 </code></pre>
 
-<p>实际上，运行man man后，man的帮助会一闪而过，然后给出下面的错误，你要是<code>man man &gt;/tmp/log</code>，再看log文件，man手册已经出现了。</p>
+<p>实际上，运行 man man 后，man 的帮助会一闪而过，然后给出下面的错误，你要是<code>man man &gt;/tmp/log</code>，再看 log 文件，man 手册已经出现了。</p>
 
 <!--more-->
 
 
-<p>Google一下，发现也有一些人遇到了这些的问题，也看到有人说通过某些方法解决了这个问题：一种是才cgywin下面运行的，只需要升级bash.exe就好了。  另外一个在真实环境下运行的slackware，后来作者回复说升级内核就解决了。因为他的前提是原来的核心是没有问题的，搞了一个新核心不行了，再升级一次就ok。
-看来这两种方式在我这里都用不上。<br/>
-我是运行在Everest 0.3下面，然后chroot到RedFlag DC5.0 SP2环境下，man的时候出现的上面的问题。<br/>
-今天无意中做了一个<code>ls -l /dev/</code>的操作，结果发现zero这个设备的大小似乎有问题
-在看Everest下面，哈哈，原来我DC5下面的那个zero设备变成了一个普通文件，大小96M。而同时tty和null也是这样。<br/>
-把Everest下面的zero,tty,null设备copy过来，再运行man，一切正常。</p>
+<p>Google 一下，发现也有一些人遇到了这些的问题，也看到有人说通过某些方法解决了这个问题：一种是才 cgywin 下面运行的，只需要升级 bash.exe 就好了。  另外一个在真实环境下运行的 slackware，后来作者回复说升级内核就解决了。因为他的前提是原来的核心是没有问题的，搞了一个新核心不行了，再升级一次就 ok。看来这两种方式在我这里都用不上。我是运行在 Everest 0.3 下面，然后 chroot 到 RedFlag DC5.0 SP2 环境下，man 的时候出现的上面的问题。今天无意中做了一个<code>ls -l /dev/</code>的操作，结果发现 zero 这个设备的大小似乎有问题在看 Everest 下面，哈哈，原来我 DC5 下面的那个 zero 设备变成了一个普通文件，大小 96M。而同时 tty 和 null 也是这样。把 Everest 下面的 zero,tty,null 设备 copy 过来，再运行 man，一切正常。</p>
 </div>
 
 
@@ -206,8 +206,8 @@ No manual entry for man
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/05/31/man-command-not-works/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/05/31/man-command-not-works/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/05/31/man-command-not-works/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/05/31/man-command-not-works/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

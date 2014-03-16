@@ -9,9 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="折腾了两天，基本完成，但是其实现原理，我还是不太了解，因此不敢长篇大论的来说SSL如何，电子证书如何。
-而且我现在也还不知道我现在完成的目标是不是真的就是可以用在实际项目的要求，也不知道采取USB-KEY的方式能否验证通过（经过实验，已经通过）。
-因此，仅记录我的实验步骤。 1)创建root CA &hellip;">
+  <meta name="description" content="折腾了两天，基本完成，但是其实现原理，我还是不太了解，因此不敢长篇大论的来说 SSL 如何，电子证书如何。而且我现在也还不知道我现在完成的目标是不是真的就是可以用在实际项目的要求，也不知道采取 USB-KEY 的方式能否验证通过（经过实验，已经通过）。因此，仅记录我的实验步骤。 1)创建 root &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,22 +99,18 @@
   </header>
 
 
-<div class="entry-content"><p>折腾了两天，基本完成，但是其实现原理，我还是不太了解，因此不敢长篇大论的来说SSL如何，电子证书如何。<br/>
-而且我现在也还不知道我现在完成的目标是不是真的就是可以用在实际项目的要求，<del>也不知道采取USB-KEY的方式能否验证通过</del>（经过实验，已经通过）。<br/>
-因此，仅记录我的实验步骤。</p>
+<div class="entry-content"><p>折腾了两天，基本完成，但是其实现原理，我还是不太了解，因此不敢长篇大论的来说 SSL 如何，电子证书如何。而且我现在也还不知道我现在完成的目标是不是真的就是可以用在实际项目的要求，<del>也不知道采取 USB-KEY 的方式能否验证通过</del>（经过实验，已经通过）。因此，仅记录我的实验步骤。</p>
 
 <!--more-->
 
 
-<p>1)创建root CA</p>
+<p>1)创建 root CA</p>
 
-<p>如果你有自己的CA(Certificate Authority)，或者打算购买商业CA证书，那么这个步骤可以省略了，后面的步骤也会不同，但是不管如何，我们假定现在我们得到的CA私钥名字是rootca.key。</p>
+<p>如果你有自己的 CA(Certificate Authority)，或者打算购买商业 CA 证书，那么这个步骤可以省略了，后面的步骤也会不同，但是不管如何，我们假定现在我们得到的 CA 私钥名字是 rootca.key。</p>
 
-<p>现在我们自己来创建自己的root CA</p>
+<p>现在我们自己来创建自己的 root CA</p>
 
-<h2>第一步，创建root CA的私钥</h2>
-
-<p>为了安全，我们采取2048bit加密方式，设置的密码也应该足够复杂</p>
+<h2>第一步，创建 root CA 的私钥为了安全，我们采取 2048bit 加密方式，设置的密码也应该足够复杂</h2>
 
 <pre><code># openssl genrsa -des3 2048 &gt;rootca.key Generating RSA private key,
 2048 bit long modulus ......................................+++
@@ -119,8 +118,7 @@
 Verifying - Enter pass phrase: &lt;----- 再次输入密码 
 </code></pre>
 
-<p>这样就创建root CA的密钥。<br/>
-接下来我们用这个私钥对CA的证书做自认证(self-certificte)签名</p>
+<p>这样就创建 root CA 的密钥。接下来我们用这个私钥对 CA 的证书做自认证(self-certificte)签名</p>
 
 <pre><code># openssl req -new -x509 -key caroot.key -days 3650 -out caroot.cert
 Enter pass phrase for caroot.key: &lt;----输入私钥的密码
@@ -140,7 +138,7 @@ Common Name (eg, your name or your server's hostname) [wgzhao-demo.rflinux.com]:
 Email Address []:
 </code></pre>
 
-<p>现在我们创建存放CA证书的路径和一些必要文件</p>
+<p>现在我们创建存放 CA 证书的路径和一些必要文件</p>
 
 <pre><code>mkdir -p /etc/pki/CA/{certs,newcerts,private} 
 touch /etc/pki/CA/index.txt echo "01" &gt;/etc/pki/CA/serial 
@@ -185,13 +183,13 @@ A challenge password []:
 An optional company name []:
 </code></pre>
 
-<p>上面需要提供的信息中，最关键的是Common Name字段，这里要填写的是用过是FQDN(Full Quality Domain Name)，也应该和你将来访问的域名一致，否则访问域名的时候，SSL会报错。</p>
+<p>上面需要提供的信息中，最关键的是 Common Name 字段，这里要填写的是用过是 FQDN(Full Quality Domain Name)，也应该和你将来访问的域名一致，否则访问域名的时候，SSL 会报错。</p>
 
-<p>接着使用root CA给申请文件签名产生证书文件</p>
+<p>接着使用 root CA 给申请文件签名产生证书文件</p>
 
 <pre><code># openssl ca -out server.cert -days 3650 -infiles server.csr
 Using configuration from /etc/pki/tls/openssl.cnf
-Enter pass phrase for ../../CA/private/cakey.pem: &lt;---输入root CA的私钥密码
+Enter pass phrase for ../../CA/private/cakey.pem: &lt;---输入 root CA 的私钥密码
 Check that the request matches the signature
 Signature ok
 Certificate Details:
@@ -228,9 +226,7 @@ Data Base Updated
 
 <h2>第三步，从安全角度考虑，我们单独给客户端生成有一个密钥</h2>
 
-<p>步骤和第二步生成服务端证书一样，只是在生成csr文件的时候，对Common Name没有要求。<br/>
-假定你已经生成了<code>client.key</code>,<code>client.csr</code>,<code>client.cert</code>文件。<br/>
-接着我们需要制作一张可便于携带的证书，即<code>PKCS#12</code>格式</p>
+<p>步骤和第二步生成服务端证书一样，只是在生成 csr 文件的时候，对 Common Name 没有要求。假定你已经生成了<code>client.key</code>,<code>client.csr</code>,<code>client.cert</code>文件。接着我们需要制作一张可便于携带的证书，即<code>PKCS#12</code>格式</p>
 
 <pre><code># openssl pkcs12 -export -in client.cert -inkey client.key -out client.pfx
 Enter pass phrase for client.key: &lt;---客户端私钥密码
@@ -240,7 +236,7 @@ Verifying - Enter Export Password:
 
 <p>这样，我们就生成了一张可导入到浏览器的证书。</p>
 
-<h2>第四步 配置Apache</h2>
+<h2>第四步 配置 Apache</h2>
 
 <p>主要是配置<code>/etc/httpd/conf.d/ssl.conf</code>
 要配置的主要是下面几行：</p>
@@ -253,17 +249,15 @@ SSLVerifyClient require
 SSLVerifyDepth 1 
 </code></pre>
 
-<p>上面的配置可以分为三个部分，第一步分最开始两行，配置服务端的证书<br/>
-如果在第二个步骤的时候，你已经把私钥和证书综合到了一起(<code>cat server.key server.cert &gt;server.pem</code>)，那么就只需要第一行就可以了，后面指向综合在一起的文件（这里是<code>server.pem</code>)。否则你可以像第二行那样指定私钥的位置。<br/>
-接下来的两行是配置root CA的，其实，只要配置第一行就可以了。</p>
+<p>上面的配置可以分为三个部分，第一步分最开始两行，配置服务端的证书如果在第二个步骤的时候，你已经把私钥和证书综合到了一起(<code>cat server.key server.cert &gt;server.pem</code>)，那么就只需要第一行就可以了，后面指向综合在一起的文件（这里是<code>server.pem</code>)。否则你可以像第二行那样指定私钥的位置。接下来的两行是配置 root CA 的，其实，只要配置第一行就可以了。</p>
 
-<p>最后两行很重要，<code>SSLVerifyClient</code>表示需要验证客户端，是参数是none，那就不验证客户端了，客户端和服务器端通信仅仅是通过SSL，但是谁也知道要通讯的对方是不是就是你需要的对方。</p>
+<p>最后两行很重要，<code>SSLVerifyClient</code>表示需要验证客户端，是参数是 none，那就不验证客户端了，客户端和服务器端通信仅仅是通过 SSL，但是谁也知道要通讯的对方是不是就是你需要的对方。</p>
 
-<p><code>SSLVerifyDepth</code>是验证深度，默认是10,改成1。这个参数的具体含义，我还是不太了解。</p>
+<p><code>SSLVerifyDepth</code>是验证深度，默认是 10,改成 1。这个参数的具体含义，我还是不太了解。</p>
 
-<p>另外，你还需要把<code>ssl.conf</code>的虚拟主机配置成你填写Common Name时的域名，总而言之如果你Common Name填写的是yourdomin，那么浏览器访问的时候就只能是<a href="https://yourdomain%EF%BC%8C%E5%85%B6%E4%BB%96%E7%9A%84%E5%90%A6%E4%BC%9A%E6%8A%A5%E9%94%99%E3%80%82">https://yourdomain%EF%BC%8C%E5%85%B6%E4%BB%96%E7%9A%84%E5%90%A6%E4%BC%9A%E6%8A%A5%E9%94%99%E3%80%82</a></p>
+<p>另外，你还需要把<code>ssl.conf</code>的虚拟主机配置成你填写 Common Name 时的域名，总而言之如果你 Common Name 填写的是 yourdomin，那么浏览器访问的时候就只能是 <a href="https://yourdomain%EF%BC%8C%E5%85%B6%E4%BB%96%E7%9A%84%E5%90%A6%E4%BC%9A%E6%8A%A5%E9%94%99%E3%80%82">https://yourdomain%EF%BC%8C%E5%85%B6%E4%BB%96%E7%9A%84%E5%90%A6%E4%BC%9A%E6%8A%A5%E9%94%99%E3%80%82</a></p>
 
-<p>配置完成后，重启Apache服务</p>
+<p>配置完成后，重启 Apache 服务</p>
 
 <pre><code># /etc/init.d/httpd start
 Apache/2.2.3 mod_ssl/2.2.3 (Pass Phrase Dialog)
@@ -364,8 +358,8 @@ Enter pass phrase:
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/06/23/Based-on-the-SSL-certificate-configuration/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/23/Based-on-the-SSL-certificate-configuration/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/06/23/Based-on-the-SSL-certificate-configuration/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/23/Based-on-the-SSL-certificate-configuration/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

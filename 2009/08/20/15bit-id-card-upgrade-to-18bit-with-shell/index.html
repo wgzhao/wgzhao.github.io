@@ -11,7 +11,7 @@
   
   <meta name="description" content="写着好玩写的，纯粹是想知道最后那个校验码是怎么算出来的，具体的算法可以参考这里
 更详细的例子，可以参考下面的链接：
-http://www.heybrain.com/notheal/article/1138.html 我这里是用shell实现了，其实用C实现应该是最好的，毕竟算法的东西， &hellip;">
+http://www.heybrain.com/notheal/article/1138.html 我这里是用 shell 实现了，其实用 C 实现应该是最好的，毕竟算法的东西，C &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@ http://www.heybrain.com/notheal/article/1138.html 我这里是用shell实现了�
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -100,7 +105,7 @@ http://www.heybrain.com/notheal/article/1138.html 我这里是用shell实现了�
 更详细的例子，可以参考下面的链接：
 <a href="http://www.heybrain.com/notheal/article/1138.html">http://www.heybrain.com/notheal/article/1138.html</a></p>
 
-<p>我这里是用shell实现了，其实用C实现应该是最好的，毕竟算法的东西，C还是要快很多，我本是打算用C的，结果发现我都忘记得差不多了，连最简单的申明数组并初始化都忘记了，于是只要用效率比较低的shell，不过在做一些匹配和校验的时候，感觉比C要方便一些，不多说了，给代码</p>
+<p>我这里是用 shell 实现了，其实用 C 实现应该是最好的，毕竟算法的东西，C 还是要快很多，我本是打算用 C 的，结果发现我都忘记得差不多了，连最简单的申明数组并初始化都忘记了，于是只要用效率比较低的 shell，不过在做一些匹配和校验的时候，感觉比 C 要方便一些，不多说了，给代码</p>
 
 <!--more-->
 
@@ -269,8 +274,8 @@ Your New 18bit ID Card is : 34052419800101001X
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/20/15bit-id-card-upgrade-to-18bit-with-shell/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

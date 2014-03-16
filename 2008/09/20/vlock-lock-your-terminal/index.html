@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="X方式下有都有屏幕锁定和屏幕保护的功能，但是在终端下，如何保护我们目前的工作不被别人看到呢，可以尝试这个vlock工具，不到30k，可以非常方便的锁定终端。 只要运行vlock程序，屏幕就会清空锁定，要想再次使用，必须输入用户密码： 如果使用-a的参数，那么就可以锁定所有的终端， &hellip;">
+  <meta name="description" content="X 方式下有都有屏幕锁定和屏幕保护的功能，但是在终端下，如何保护我们目前的工作不被别人看到呢，可以尝试这个 vlock 工具，不到 30k，可以非常方便的锁定终端。 只要运行 vlock 程序，屏幕就会清空锁定，要想再次使用，必须输入用户密码： 如果使用-a 的参数，那么就可以锁定所有的终端， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,24 +99,23 @@
   </header>
 
 
-<div class="entry-content"><p>X方式下有都有屏幕锁定和屏幕保护的功能，但是在终端下，如何保护我们目前的工作不被别人看到呢，可以尝试这个<a href="http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html">vlock</a>工具，不到30k，可以非常方便的锁定终端。</p>
+<div class="entry-content"><p>X 方式下有都有屏幕锁定和屏幕保护的功能，但是在终端下，如何保护我们目前的工作不被别人看到呢，可以尝试这个 <a href="http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html">vlock</a> 工具，不到 30k，可以非常方便的锁定终端。</p>
 
-<p>只要运行vlock程序，屏幕就会清空锁定，要想再次使用，必须输入用户密码：</p>
+<p>只要运行 vlock 程序，屏幕就会清空锁定，要想再次使用，必须输入用户密码：</p>
 
 <!--more-->
 
 
 <p><img src="/uploads1221918773_2399287c.png"></p>
 
-<p>如果使用-a的参数，那么就可以锁定所有的终端，这样你想切换到其他终端也没戏。
-当你输入正确的密码后，你会看到你这个终端遭受了多少次密码猜测，不过我这里很奇怪(ubuntu 8.0.4)，我在普通用户运行vlock的后，第一次输入不正确的密码后，第二次提示居然是root的密码，很奇怪。</p>
+<p>如果使用-a 的参数，那么就可以锁定所有的终端，这样你想切换到其他终端也没戏。当你输入正确的密码后，你会看到你这个终端遭受了多少次密码猜测，不过我这里很奇怪(ubuntu 8.0.4)，我在普通用户运行 vlock 的后，第一次输入不正确的密码后，第二次提示居然是 root 的密码，很奇怪。</p>
 
 <p><img src="/uploads1221919328_3241395e.png"></p>
 
 <p>通过设定一系列的 VLOCK_XXXX 环境变量，可以修改 vlock 的提示语、重试延时等参数，详细的设置可以参考 vlock 的
 manpage。</p>
 
-<p>vlock的主页：<a href="http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html">http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html</a></p>
+<p>vlock 的主页：<a href="http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html">http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html</a></p>
 </div>
 
 
@@ -203,8 +207,8 @@ manpage。</p>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/09/20/vlock-lock-your-terminal/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/09/20/vlock-lock-your-terminal/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/09/20/vlock-lock-your-terminal/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/09/20/vlock-lock-your-terminal/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

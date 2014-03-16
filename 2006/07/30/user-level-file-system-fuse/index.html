@@ -9,12 +9,12 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="FUSE是定义在用户空间(userspace)一组实现文件系统功能的程序，他包括的功能有： 简单API实现
+  <meta name="description" content="FUSE 是定义在用户空间(userspace)一组实现文件系统功能的程序，他包括的功能有： 简单 API 实现
 简单安装
 用户空间
 非特权用户可以使用
-kernel 2.4和2.6均可以使用
-目前比较稳定 其实FUSE只是一个框架（framework），我比较喜欢的是基于它的各种文集系统的实现，比如 &hellip;">
+kernel 2.4 和 2.6 均可以使用
+目前比较稳定 其实 FUSE 只是一个框架（framework）， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -34,6 +34,11 @@ kernel 2.4和2.6均可以使用
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -99,19 +104,19 @@ kernel 2.4和2.6均可以使用
   </header>
 
 
-<div class="entry-content"><p><a href="http://fuse.sourceforge.net/">FUSE</a>是定义在用户空间(userspace)一组实现文件系统功能的程序，他包括的功能有：</p>
+<div class="entry-content"><p><a href="http://fuse.sourceforge.net/">FUSE</a> 是定义在用户空间(userspace)一组实现文件系统功能的程序，他包括的功能有：</p>
 
 <ol>
-<li>简单API实现</li>
+<li>简单 API 实现</li>
 <li>简单安装</li>
 <li>用户空间</li>
 <li>非特权用户可以使用</li>
-<li>kernel 2.4和2.6均可以使用</li>
+<li>kernel 2.4 和 2.6 均可以使用</li>
 <li>目前比较稳定</li>
 </ol>
 
 
-<p>其实FUSE只是一个框架（framework），我比较喜欢的是基于它的各种文集系统的实现，比如
+<p>其实 FUSE 只是一个框架（framework），我比较喜欢的是基于它的各种文集系统的实现，比如
 <a href="http://www.mulliner.org/bluetooth/btfs.php">bluetooth filesystem</a><br/>
 <a href="http://www.hep.phy.cam.ac.uk/~lester/gphoto2-fuse-fs/">ghoto2 file system</a><br/>
 <a href="http://fuse.sourceforge.net/sshfs.html">ssh filesystem</a><br/>
@@ -122,7 +127,7 @@ kernel 2.4和2.6均可以使用
 
 <p>我测试了一下<code>ssh filesystem</code>，觉得不错。下面是我的安装和测试手记</p>
 
-<p>1）<a href="http://prdownloads.sourceforge.net/fuse/fuse-2.5.3.tar.gz?download">下载最新的fuse版本</a></p>
+<p>1）<a href="http://prdownloads.sourceforge.net/fuse/fuse-2.5.3.tar.gz?download">下载最新的 fuse 版本</a></p>
 
 <p>2）编译安装</p>
 
@@ -133,7 +138,7 @@ kernel 2.4和2.6均可以使用
  $sudo ldconfig 
 </code></pre>
 
-<p>3）<a href="http://prdownloads.sourceforge.net/fuse/sshfs-fuse-1.6.tar.gz?download">下载最新的sshfs</a></p>
+<p>3）<a href="http://prdownloads.sourceforge.net/fuse/sshfs-fuse-1.6.tar.gz?download">下载最新的 sshfs</a></p>
 
 <p>4）编译安装</p>
 
@@ -144,7 +149,7 @@ kernel 2.4和2.6均可以使用
 
 <p>5）测试</p>
 
-<p>你可以使用通常的挂载分区的方式挂载远程服务器上的某一个目录，而通过的协议是ssh，比如</p>
+<p>你可以使用通常的挂载分区的方式挂载远程服务器上的某一个目录，而通过的协议是 ssh，比如</p>
 
 <pre><code>#sshfs mlsx@172.16.81.196:/home/mlsx /misc
 [root@wgzhao ~]# df -h 
@@ -156,17 +161,11 @@ none 248M 0 248M 0% /dev/shm
 sshfs#mlsx@172.16.81.196:/home/mlsx 7.5T 0 7.5T 0% /misc 
 </code></pre>
 
-<p>不过它对大小的识别就有点问题了。不管是哪个分区，哪个目录挂载上来，它都识别为7.5T（如果是真的，那该多好）。
-这也挂载上来的读写权限是远程机器帐号的uid和gid对应的本地机器的帐号，比如如果远程机器mlsx帐号的uid是500,而我的机器上uid是500的帐号是work，那么/misc的读写权限属于work，其他帐号都没有权限。
-你可以这样来挂载
+<p>不过它对大小的识别就有点问题了。不管是哪个分区，哪个目录挂载上来，它都识别为 7.5T（如果是真的，那该多好）。这也挂载上来的读写权限是远程机器帐号的 uid 和 gid 对应的本地机器的帐号，比如如果远程机器 mlsx 帐号的 uid 是 500,而我的机器上 uid 是 500 的帐号是 work，那么/misc 的读写权限属于 work，其他帐号都没有权限。你可以这样来挂载
  <code>#sshfs mlsx@172.16.81.196:/home/mlsx /misc -o uid=1000,gid=100</code>
-uid，gid是对应你本地机器帐号的id号，这样你就可以指定某个帐号来读写了。
-卸载的时候，使用下面的命令
+uid，gid 是对应你本地机器帐号的 id 号，这样你就可以指定某个帐号来读写了。卸载的时候，使用下面的命令
  <code>#fusermount -u /misc</code>
-是不是觉得比scp，sftp要方便很多呢？
-同样的，你可以使用它提供的gmail filesystem，blog filesystem等。
-而接下来，我要关心的是<a href="http://sourceforge.net/project/showfiles.php?group_id=16036&amp;package_id=191598">基于fuse的ZFS</a>，这是sun公司基于solaris提出的一种文件系统，<a href="http://mlsx.xplore.cn/read.php/403.htm">在我的blog中提到过它</a>，而ZFS-FUSE就是基于FUSE来在linux实现ZFS的特性，不过目前还没有实质性的成果，我也下载了它现在推出的最新版本，也能编译通过，但是目前还不知道如何使用，solaris上有专门的视频来告诉你如何使用ZFS，可惜那些功能目前在ZFS-FUSE还没有实现。
-让我们期待。</p>
+是不是觉得比 scp，sftp 要方便很多呢？同样的，你可以使用它提供的 gmail filesystem，blog filesystem 等。而接下来，我要关心的是<a href="http://sourceforge.net/project/showfiles.php?group_id=16036&amp;package_id=191598">基于 fuse 的 ZFS</a>，这是 sun 公司基于 solaris 提出的一种文件系统，<a href="http://mlsx.xplore.cn/read.php/403.htm">在我的 blog 中提到过它</a>，而 ZFS-FUSE 就是基于 FUSE 来在 linux 实现 ZFS 的特性，不过目前还没有实质性的成果，我也下载了它现在推出的最新版本，也能编译通过，但是目前还不知道如何使用，solaris 上有专门的视频来告诉你如何使用 ZFS，可惜那些功能目前在 ZFS-FUSE 还没有实现。让我们期待。</p>
 </div>
 
 
@@ -258,8 +257,8 @@ uid，gid是对应你本地机器帐号的id号，这样你就可以指定某个
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/07/30/user-level-file-system-fuse/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/07/30/user-level-file-system-fuse/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/07/30/user-level-file-system-fuse/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/07/30/user-level-file-system-fuse/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

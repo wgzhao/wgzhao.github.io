@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="E6.1 怎样决定用户的默认组？怎样改变它？ A：感觉还是用户设置为默认的同名私有组作为默认组是比较恰当的。改变组的指令是chgrp。 E6.2 说明下面这几个umask值的区别：077、027、022和755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？ &hellip;">
+  <meta name="description" content="E6.1 怎样决定用户的默认组？怎样改变它？ A：感觉还是用户设置为默认的同名私有组作为默认组是比较恰当的。改变组的指令是chgrp。 E6.2 说明下面这几个 umask 值的区别：077、027、022 和 755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -98,9 +103,9 @@
 
 <p>A：感觉还是用户设置为默认的同名私有组作为默认组是比较恰当的。改变组的指令是<code>chgrp</code>。</p>
 
-<p>E6.2 说明下面这几个umask值的区别：077、027、022和755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？您可以给用户施加一个标准的umask吗？</p>
+<p>E6.2 说明下面这几个 umask 值的区别：077、027、022 和 755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？您可以给用户施加一个标准的 umask 吗？</p>
 
-<p>A：077，表示创建的缺省文件许可是600，027则是640，022则是644，755则是022。想成为新用户的全局默认值，一个办法是修改系统缺省的umask值，Fedora/RedHat系统是<code>/etc/bashrc</code>文件。Debian/Ubuntu系统是<code>/etc/profile</code>。或者直接修改<code>/etc/skel/.bash_profile</code>文件，增加umask的设定。</p>
+<p>A：077，表示创建的缺省文件许可是 600，027 则是 640，022 则是 644，755 则是 022。想成为新用户的全局默认值，一个办法是修改系统缺省的 umask 值，Fedora/RedHat 系统是<code>/etc/bashrc</code>文件。Debian/Ubuntu 系统是<code>/etc/profile</code>。或者直接修改<code>/etc/skel/.bash_profile</code>文件，增加 umask 的设定。</p>
 
 <!--more-->
 
@@ -109,11 +114,9 @@
 
 <p>A：安全，安全，安全！</p>
 
-<p>♥ E6.4 列出不用useradd程序，给系统增加一个用户所需要的步骤。对于您本地的环境来说，额外还需要什么步骤？</p>
+<p>♥ E6.4 列出不用 useradd 程序，给系统增加一个用户所需要的步骤。对于您本地的环境来说，额外还需要什么步骤？</p>
 
-<p>A:在<code>/etc/passwd</code>增加入口，给<code>/etc/shadow</code>增加入口，给<code>/etc/group</code>创建组（如果有必要）。<br/>
-创建用户主目录，拷贝模板文件。<br/>
-我原来管理的机器，还需要增加邮件存储路径，邮件配额等。</p>
+<p>A:在<code>/etc/passwd</code>增加入口，给<code>/etc/shadow</code>增加入口，给<code>/etc/group</code>创建组（如果有必要）。创建用户主目录，拷贝模板文件。我原来管理的机器，还需要增加邮件存储路径，邮件配额等。</p>
 
 <p>♥ E6.5 确定您的站点上用于新用户的命名约定。采取什么规则？如何保持唯一性？您会想到什么缺点吗？如何删除用户？</p>
 
@@ -123,20 +126,18 @@
 
 <p>A：这也是开放式的问题了。需要在自己的实际管理经验中总结，而且还必须是在管理众多用户的情况下才能理解到这个含义。</p>
 
-<p>那就拿我们公司的邮件帐号命名来说，我们一般采取名字拼音首字母+姓全拼音的方式。比如我的邮件名字就是wgzhao。目前来看，重复的几率不大。这样命名似乎也是一个常用的方式。当然对于采取也写企业级邮件系统，比如Domino的，他们的命名采取类似LDAP数据库的分级方式。我了解到的是在大部分银行内部邮件是这样的，而且似乎采取Domino作为邮件服务器的都是这样，包括IBM本身。</p>
+<p>那就拿我们公司的邮件帐号命名来说，我们一般采取名字拼音首字母+姓全拼音的方式。比如我的邮件名字就是 wgzhao。目前来看，重复的几率不大。这样命名似乎也是一个常用的方式。当然对于采取也写企业级邮件系统，比如 Domino 的，他们的命名采取类似 LDAP 数据库的分级方式。我了解到的是在大部分银行内部邮件是这样的，而且似乎采取 Domino 作为邮件服务器的都是这样，包括 IBM 本身。</p>
 
-<p>♥♥ E6.7 编写一个脚本，帮助监视/etc/passwd文件是否正常（除非您开动脑筋，否则b和e需要超级用户权限）
-a) 找出有UID 0的所有项 <br/>
+<p>♥♥ E6.7 编写一个脚本，帮助监视/etc/passwd 文件是否正常（除非您开动脑筋，否则 b 和 e 需要超级用户权限）
+a) 找出有 UID 0 的所有项 <br/>
 b) 找出没有口令的所有项（需要<code>/etc/shadow</code>文件) <br/>
-c) 找出有重复UID的所有项 <br/>
+c) 找出有重复 UID 的所有项 <br/>
 d) 找出有重复登录名的所有项 <br/>
 e) 找出没有作废日期的所有项(需要<code>/etc/shadow</code>文件)</p>
 
 <p>A：每一个要求，基本上就是一条指令，我就分别写好了。 <br/>
 a) <code>awk -F: '{if ($3 == 0) print $0}' /etc/passwd</code> <br/>
-b) 题目的意思似乎是不想用到超级用户权限，那么使用sudo算不算呢？好吧，加点难度，sudo也不用。判断用户是否没有口令，一般来说如果<code>/etc/passwd</code>秘密一项没有占位符，也就是为空。<br/>
-或者<code>/etc/shadow</code>里密码一项为空。这都表示帐号没有密码。<br/>
-为了统一起来，我们可以把标准帐号挨个尝试，如果不需要密码就能su过去，那就应该是没有密码，否则就是有密码。对于Fedora/RedHat而言，标准帐号从500开始。Debian/Ubuntu则从1000开始。</p>
+b) 题目的意思似乎是不想用到超级用户权限，那么使用 sudo 算不算呢？好吧，加点难度，sudo 也不用。判断用户是否没有口令，一般来说如果<code>/etc/passwd</code>秘密一项没有占位符，也就是为空。或者<code>/etc/shadow</code>里密码一项为空。这都表示帐号没有密码。为了统一起来，我们可以把标准帐号挨个尝试，如果不需要密码就能 su 过去，那就应该是没有密码，否则就是有密码。对于 Fedora/RedHat 而言，标准帐号从 500 开始。Debian/Ubuntu 则从 1000 开始。</p>
 
 <pre><code>#!/bin/bash
 for i in `awk -F: '{ if ($3 &gt; 499) print $1}'`
@@ -162,7 +163,7 @@ awk -F: '{print $1}' /etc/passwd  |sort  |uniq -d
 exit 0
 </code></pre>
 
-<p>e) 这个暂时想不出不用root权限如何获得任意帐号的过期信息。大家有什么办法吗？如果root权限就办好多了，比如下面这样： <code>awk -F:'{if ( $8 \&gt; 0) print $0 }' /etc/shadow</code></p>
+<p>e) 这个暂时想不出不用 root 权限如何获得任意帐号的过期信息。大家有什么办法吗？如果 root 权限就办好多了，比如下面这样： <code>awk -F:'{if ( $8 \&gt; 0) print $0 }' /etc/shadow</code></p>
 </div>
 
 
@@ -254,8 +255,8 @@ exit 0
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/12/03/lah-chapter6-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/12/03/lah-chapter6-questions-key/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

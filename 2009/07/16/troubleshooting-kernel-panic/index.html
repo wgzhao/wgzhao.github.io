@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="Linux kernel panic 是很难定位和排查的重大故障,一旦系统发生了kernel panic，相关的日志信息非常少，而一种常见的排查方法—重现法&mdash;又很难实现，因此遇到kernel panic的问题，一般比较头疼。 没有一个万能和完美的方法来解决所有的kernel &hellip;">
+  <meta name="description" content="Linux kernel panic 是很难定位和排查的重大故障,一旦系统发生了 kernel panic，相关的日志信息非常少，而一种常见的排查方法—重现法&mdash;又很难实现，因此遇到 kernel panic 的问题，一般比较头疼。 没有一个万能和完美的方法来解决所有的 kernel &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,63 +99,59 @@
   </header>
 
 
-<div class="entry-content"><p><strong>Linux kernel panic</strong> 是很难定位和排查的重大故障,一旦系统发生了kernel panic，相关的日志信息非常少，而一种常见的排查方法—重现法&mdash;又很难实现，因此遇到kernel panic的问题，一般比较头疼。</p>
+<div class="entry-content"><p><strong>Linux kernel panic</strong> 是很难定位和排查的重大故障,一旦系统发生了 kernel panic，相关的日志信息非常少，而一种常见的排查方法—重现法&mdash;又很难实现，因此遇到 kernel panic 的问题，一般比较头疼。</p>
 
-<p>没有一个万能和完美的方法来解决所有的kernel panic问题，这篇文章仅仅只是给出一些思路，一来如何解决kernel panic的问题，二来可以尽可能减少发生kernel panic的机会。</p>
+<p>没有一个万能和完美的方法来解决所有的 kernel panic 问题，这篇文章仅仅只是给出一些思路，一来如何解决 kernel panic 的问题，二来可以尽可能减少发生 kernel panic 的机会。</p>
 
 <!--more-->
 
 
-<h2>什么是kernel panic</h2>
+<h2>什么是 kernel panic</h2>
 
-<p>就像名字所暗示的那样，它表示Linux kernel走到了一个不知道该怎么走下一步的状况，一旦到这个情况，kernel就尽可能把它此时能获取的全部信息都打印出来，至于能打印出多少信息，那就看是那种情况导致它panic了。</p>
+<p>就像名字所暗示的那样，它表示 Linux kernel 走到了一个不知道该怎么走下一步的状况，一旦到这个情况，kernel 就尽可能把它此时能获取的全部信息都打印出来，至于能打印出多少信息，那就看是那种情况导致它 panic 了。</p>
 
 <p>有两种主要类型 kernel panic：</p>
 
 <ol>
-<li>hard panic(也就是Aieee信息输出)</li>
-<li>soft panic (也就是Oops信息输出)</li>
+<li>hard panic(也就是 Aieee 信息输出)</li>
+<li>soft panic (也就是 Oops 信息输出)</li>
 </ol>
 
 
-<h2>什么能导致kernel panic</h2>
+<h2>什么能导致 kernel panic</h2>
 
-<p>只有加载到内核空间的驱动模块才能直接导致kernel panic，你可以在系统正常的情况下，使用lsmod查看当前系统加载了哪些模块。 <br/>
-除此之外，内建在内核里的组件（比如memory map等）也能导致panic。 <br/>
-因为hard panic和soft panic本质上不同，因此我们分别讨论。 *</p>
+<p>只有加载到内核空间的驱动模块才能直接导致 kernel panic，你可以在系统正常的情况下，使用 lsmod 查看当前系统加载了哪些模块。除此之外，内建在内核里的组件（比如 memory map 等）也能导致 panic。因为 hard panic 和 soft panic 本质上不同，因此我们分别讨论。 *</p>
 
-<h2>如何排查hard panic</h2>
+<h2>如何排查 hard panic</h2>
 
-<p>一般出现下面的情况，就认为是发生了kernel panic:</p>
+<p>一般出现下面的情况，就认为是发生了 kernel panic:</p>
 
 <ol>
 <li>机器彻底被锁定，不能使用</li>
 <li>数字键(Num Lock)，大写锁定键(Caps Lock)，滚动锁定键(Scroll Lock)不停闪烁。</li>
-<li>如果在终端下，应该可以看到内核dump出来的信息（包括一段”Aieee”信息或者”Oops”信息）</li>
-<li>和Windows蓝屏相似</li>
+<li>如果在终端下，应该可以看到内核 dump 出来的信息（包括一段”Aieee”信息或者”Oops”信息）</li>
+<li>和 Windows 蓝屏相似</li>
 </ol>
 
 
 <h3>原因：</h3>
 
-<p>对于hard panic而言，最大的可能性是驱动模块的中断处理(interrupt handler)导致的，一般是因为驱动模块在中断处理程序中访问一个空指针(null pointre)。一旦发生这种情况，驱动模块就无法处理新的中断请求，最终导致系统崩溃。</p>
+<p>对于 hard panic 而言，最大的可能性是驱动模块的中断处理(interrupt handler)导致的，一般是因为驱动模块在中断处理程序中访问一个空指针(null pointre)。一旦发生这种情况，驱动模块就无法处理新的中断请求，最终导致系统崩溃。</p>
 
-<h3>信息收集</h3>
-
-<p>根据panic的状态不同，内核将记录所有在系统锁定之前的信息。因为kenrel panic是一种很严重的错误，不能确定系统能记录多少信息，下面是一些需要收集的关键信息，他们非常重要，因此尽可能收集全，当然如果系统启动的时候就kernel panic，那就无法只知道能收集到多少有用的信息了。</p>
+<h3>信息收集根据 panic 的状态不同，内核将记录所有在系统锁定之前的信息。因为 kenrel panic 是一种很严重的错误，不能确定系统能记录多少信息，下面是一些需要收集的关键信息，他们非常重要，因此尽可能收集全，当然如果系统启动的时候就 kernel panic，那就无法只知道能收集到多少有用的信息了。</h3>
 
 <ol>
-<li>/var/log/messages: 幸运的时候，整个kernel panic栈跟踪信息都能记录在这里。</li>
-<li>应用程序/库 日志: 可能可以从这些日志信息里能看到发生panic之前发生了什么。</li>
-<li>其他发生panic之前的信息，或者知道如何重现panic那一刻的状态</li>
-<li>终端屏幕dump信息，一般OS被锁定后，复制，粘贴肯定是没戏了，因此这类信息，你可以需要借助数码相机或者原始的纸笔工具了。</li>
+<li>/var/log/messages: 幸运的时候，整个 kernel panic 栈跟踪信息都能记录在这里。</li>
+<li>应用程序/库 日志: 可能可以从这些日志信息里能看到发生 panic 之前发生了什么。</li>
+<li>其他发生 panic 之前的信息，或者知道如何重现 panic 那一刻的状态</li>
+<li>终端屏幕 dump 信息，一般 OS 被锁定后，复制，粘贴肯定是没戏了，因此这类信息，你可以需要借助数码相机或者原始的纸笔工具了。</li>
 </ol>
 
 
-<p>如果kernel dump信息既没有在/var/log/message里，也没有在屏幕上，那么尝试下面的方法来获取（当然是在还没有死机的情况下）：</p>
+<p>如果 kernel dump 信息既没有在/var/log/message 里，也没有在屏幕上，那么尝试下面的方法来获取（当然是在还没有死机的情况下）：</p>
 
 <ol>
-<li>如果在图形界面，切换到终端界面，dump信息是不会出现在图形界面的，甚至都不会在图形模式下的虚拟终端里。</li>
+<li>如果在图形界面，切换到终端界面，dump 信息是不会出现在图形界面的，甚至都不会在图形模式下的虚拟终端里。</li>
 <li><p>确保屏幕不黑屏，可以使用下面的几个方法：</p>
 
 <ul>
@@ -165,7 +166,7 @@
 
 <h3>完整栈跟踪信息的排查方法</h3>
 
-<p>栈跟踪信息(stack trace)是排查kernel panic最重要的信息，该信息如果在<code>/var/log/messages</code>日志里当然最好，因为可以看到全部的信息，如果仅仅只是在屏幕上，那么最上面的信息可能因为滚屏消失了，只剩下栈跟踪信息的一部分。如果你有一个完整栈跟踪信息的话，那么就可能根据这些充分的信息来定位panic的根本原因。要确认是否有一个足够的栈跟踪信息，你只要查找包含”<em>EIP</em>”的一行，它显示了是什么函数和模块调用时导致panic。大概就像下面这个例子一样：</p>
+<p>栈跟踪信息(stack trace)是排查 kernel panic 最重要的信息，该信息如果在<code>/var/log/messages</code>日志里当然最好，因为可以看到全部的信息，如果仅仅只是在屏幕上，那么最上面的信息可能因为滚屏消失了，只剩下栈跟踪信息的一部分。如果你有一个完整栈跟踪信息的话，那么就可能根据这些充分的信息来定位 panic 的根本原因。要确认是否有一个足够的栈跟踪信息，你只要查找包含”<em>EIP</em>”的一行，它显示了是什么函数和模块调用时导致 panic。大概就像下面这个例子一样：</p>
 
 <pre><code>Dec 20 02:40:58 AS-4 kernel: Unable to handle kernel NULL pointer dereference at virtual address 0000000c
 Dec 20 02:40:58 AS-4 kernel: printing eip:
@@ -191,11 +192,9 @@ Dec 20 02:40:58 AS-4 kernel: Code: f0 ff 40 0c c3 8d 76 00 53 8b 54 24 0c f0 ff 
 Dec 20 02:40:58 AS-4 kernel: &lt;0&gt;Kernel panic: Aiee, killing interrupt handler!
 </code></pre>
 
-<h2>完整栈信息无效的排查方法</h2>
+<h2>完整栈信息无效的排查方法如果只有部分跟踪信息，要快速定位问题的根本原因就变得很难，因为没有明显的信息来告诉我们是哪个模块或者函数的调用导致了内核 panic，你可能只能看到 kernel 最后的一些指令。这种情况下，要尽可能多的收集信息，包括程序日志，库的跟踪信息，故障重现的步骤等。</h2>
 
-<p>如果只有部分跟踪信息，要快速定位问题的根本原因就变得很难，因为没有明显的信息来告诉我们是哪个模块或者函数的调用导致了内核panic，你可能只能看到kernel最后的一些指令。这种情况下，要尽可能多的收集信息，包括程序日志，库的跟踪信息，故障重现的步骤等。</p>
-
-<p>Hard panic 部分跟踪信息例子（没有EIP信息）：</p>
+<p>Hard panic 部分跟踪信息例子（没有 EIP 信息）：</p>
 
 <pre><code>[c01e42e7] iprcv 
 [kernel] 0x357 [f8a179d5] sramintr 
@@ -224,42 +223,39 @@ Kernel panic: Aiee, killing interrupt handler! In interrupt handler - not syncin
 <h2>使用内核调试工具(kenrel debugger ,aka KDB)</h2>
 
 <p>如果跟踪信息只有一部分且不足以用来定位问题的根本原因时，kernel debugger(KDB)就需要请出来了。
-KDB编译到内核里，panic发生时，他将内核引导到一个shell环境而不是锁定。<br/>
-这样，我们就可以收集一些与panic相关的信息了，这对我们定位问题的根本原因有很大的帮助。</p>
+KDB 编译到内核里，panic 发生时，他将内核引导到一个 shell 环境而不是锁定。这样，我们就可以收集一些与 panic 相关的信息了，这对我们定位问题的根本原因有很大的帮助。</p>
 
-<p>使用KDB需要注意，内核必须是基本核心版本，比如是2.4.18，而不是2.4.18-5这样子的，因为KDB仅对基本核心有效。</p>
+<p>使用 KDB 需要注意，内核必须是基本核心版本，比如是 2.4.18，而不是 2.4.18-5 这样子的，因为 KDB 仅对基本核心有效。</p>
 
-<h2>如何排查soft panic</h2>
+<h2>如何排查 soft panic</h2>
 
 <p><strong>症状：</strong></p>
 
 <ol>
-<li>没有hard panic严重</li>
+<li>没有 hard panic 严重</li>
 <li>通常导致段错误(segmentation fault)</li>
-<li>可以看到一个oops信息，/var/log/messages里可以搜索到&#8217;Oops&#8217;</li>
+<li>可以看到一个 oops 信息，/var/log/messages 里可以搜索到&#8217;Oops&#8217;</li>
 <li>机器稍微还能用（但是收集信息后，应该重启系统）</li>
 </ol>
 
 
 <p><strong>原因：</strong></p>
 
-<p>凡是非中断处理引发的模块崩溃都将导致soft panic。<br/>
-在这种情况下，驱动本身会崩溃，但是还不至于让系统出现致命性失败，因为它没有锁定中断处理例程。导致hard panic的原因同样对soft panic也有用（比如在运行时访问一个空指针)</p>
+<p>凡是非中断处理引发的模块崩溃都将导致 soft panic。在这种情况下，驱动本身会崩溃，但是还不至于让系统出现致命性失败，因为它没有锁定中断处理例程。导致 hard panic 的原因同样对 soft panic 也有用（比如在运行时访问一个空指针)</p>
 
 <p><strong>信息收集：</strong>
-当soft panic发生时，内核将产生一个包含内核符号(kernel symbols)信息的dump数据，这个将记录在<code>/var/log/messages</code>里。<br/>
-为了开始排查故障，可以使用ksymoops工具来把内核符号信息转成有意义的数据。</p>
+当 soft panic 发生时，内核将产生一个包含内核符号(kernel symbols)信息的 dump 数据，这个将记录在<code>/var/log/messages</code>里。为了开始排查故障，可以使用 ksymoops 工具来把内核符号信息转成有意义的数据。</p>
 
-<p>为了生成ksymoops文件,需要：</p>
+<p>为了生成 ksymoops 文件,需要：</p>
 
 <ul>
-<li>从/var/log/messages里找到的堆栈跟踪文本信息保存为一个新文件。确保删除了时间戳(timestamp)，否则ksymoops会失败。</li>
-<li>运行ksymoops程序（如果没有，请安装）</li>
-<li>详细的ksymoops执行用法，可以参考ksymoops(8)手册。</li>
+<li>从/var/log/messages 里找到的堆栈跟踪文本信息保存为一个新文件。确保删除了时间戳(timestamp)，否则 ksymoops 会失败。</li>
+<li>运行 ksymoops 程序（如果没有，请安装）</li>
+<li>详细的 ksymoops 执行用法，可以参考 ksymoops(8)手册。</li>
 </ul>
 
 
-<p>下面是一个soft panic的oops跟踪例子：</p>
+<p>下面是一个 soft panic 的 oops 跟踪例子：</p>
 
 <pre><code>Code: 8b 70 0c 50 e8 69 f9 f8 ff 83 c4 10 83 f8 08 74 35 66 c7 47 EIP; 
 f89ba71e [streams-dlgnDriver]dlgnsetidlestate+1e/8c Trace; 
@@ -359,8 +355,8 @@ f89b9198 [streams-dlgnDriver]dlgnwput+e8/204 Trace;
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/07/16/troubleshooting-kernel-panic/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/07/16/troubleshooting-kernel-panic/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/07/16/troubleshooting-kernel-panic/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/07/16/troubleshooting-kernel-panic/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

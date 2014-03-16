@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="原来dd的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是UNIX微机和IBM大型机通过磁带机交换数据的工具。 但是它会做一些转换.
+  <meta name="description" content="原来 dd 的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是 UNIX 微机和 IBM 大型机通过磁带机交换数据的工具。 但是它会做一些转换.
 下边是一些可能的转换, 比如 ASCII/EBCDIC, [4] 大写/小写, 在输入和输出之间 的字节对的交换,
-还有对输入文件做一些截头去尾的工作. dd & &hellip;">
+还有对输入文件做一些截头去尾的工作 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,7 +101,7 @@
   </header>
 
 
-<div class="entry-content"><p>原来dd的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是UNIX微机和IBM大型机通过磁带机交换数据的工具。 但是它会做一些转换.
+<div class="entry-content"><p>原来 dd 的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是 UNIX 微机和 IBM 大型机通过磁带机交换数据的工具。 但是它会做一些转换.
 下边是一些可能的转换, 比如 ASCII/EBCDIC, [4] 大写/小写, 在输入和输出之间 的字节对的交换,
 还有对输入文件做一些截头去尾的工作. dd &mdash;help 列出了所有转换, 还有这个强力工具的一些其他选项.
 给出几个例子</p>
@@ -137,9 +142,9 @@ ECHO “DONE”
 EXIT 0
 </code></pre>
 
-<p>如果想输出为小写，将ucase改成lcase好了。</p>
+<p>如果想输出为小写，将 ucase 改成 lcase 好了。</p>
 
-<p>2）从文件call.sh的位置2到位置5的字符读取出来(4=5-2+1)</p>
+<p>2）从文件 call.sh 的位置 2 到位置 5 的字符读取出来(4=5-2+1)</p>
 
 <pre><code>[root@lancy bin]# dd if=call.sh bs=1 skip=2 count=4 2&gt;/dev/null
 /bin
@@ -161,7 +166,7 @@ l
 d
 </code></pre>
 
-<p>(以上部分内容来自ABS一书)</p>
+<p>(以上部分内容来自 ABS 一书)</p>
 </div>
 
 
@@ -253,8 +258,8 @@ d
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/09/17/other-use-about-dd-command/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/09/17/other-use-about-dd-command/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/09/17/other-use-about-dd-command/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/09/17/other-use-about-dd-command/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

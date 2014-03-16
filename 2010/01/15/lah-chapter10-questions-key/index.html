@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="E10.1 保留老日志文件的主要理由是什么？ A：除非你每天查看系统日志并记录有故障的消息，否则你就要保留老的日志文件，否则BOSS问起你来，你来什么来对付呢？ E10.2 lastlog和wtmp之间的区别是什么？每种日志合理的轮换策略是什么？ A： &hellip;">
+  <meta name="description" content="E10.1 保留老日志文件的主要理由是什么？ A：除非你每天查看系统日志并记录有故障的消息，否则你就要保留老的日志文件，否则 BOSS 问起你来，你来什么来对付呢？ E10.2 lastlog 和 wtmp 之间的区别是什么？每种日志合理的轮换策略是什么？ A：lastlog &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,17 +101,16 @@
 
 <div class="entry-content"><p>E10.1 保留老日志文件的主要理由是什么？</p>
 
-<p>A：除非你每天查看系统日志并记录有故障的消息，否则你就要保留老的日志文件，否则BOSS问起你来，你来什么来对付呢？</p>
+<p>A：除非你每天查看系统日志并记录有故障的消息，否则你就要保留老的日志文件，否则 BOSS 问起你来，你来什么来对付呢？</p>
 
-<p>E10.2 lastlog和wtmp之间的区别是什么？每种日志合理的轮换策略是什么？</p>
+<p>E10.2 lastlog 和 wtmp 之间的区别是什么？每种日志合理的轮换策略是什么？</p>
 
-<p>A：lastlog记录的是当前所有系统帐号的登录情况，记录每一个帐号最近的登录日期，登录端口/终端。如果没有登录过，则显示为从未登录。<br/>
-而wtmp则是记录所有登录帐号的信息，包括该帐号登录的时间，登录终端，退出时间等。</p>
+<p>A：lastlog 记录的是当前所有系统帐号的登录情况，记录每一个帐号最近的登录日期，登录端口/终端。如果没有登录过，则显示为从未登录。而 wtmp 则是记录所有登录帐号的信息，包括该帐号登录的时间，登录终端，退出时间等。</p>
 
 <!--more-->
 
 
-<p>E10.3 剖析和理解下面的syslog.conf文件：</p>
+<p>E10.3 剖析和理解下面的 syslog.conf 文件：</p>
 
 <pre><code>*.notice;kern.debug;
 lpr.info;mail.crit;
@@ -115,27 +119,27 @@ news.err /var/log/messages
 
 <p>它看上去合理吗？</p>
 
-<p>A：<code>*.notice</code>已经包括了<code>mail.crit,news.err</code>日志信息了。另外<code>*.notice</code>这个内容也太多了，其次，<code>kern.debug</code>消息会太多，如果是生产系统，不应该把日志定义在debug状态，否则过多的信息否将真正有用的信息掩盖掉。</p>
+<p>A：<code>*.notice</code>已经包括了<code>mail.crit,news.err</code>日志信息了。另外<code>*.notice</code>这个内容也太多了，其次，<code>kern.debug</code>消息会太多，如果是生产系统，不应该把日志定义在 debug 状态，否则过多的信息否将真正有用的信息掩盖掉。</p>
 
-<p>E10.4 看一遍您的日志文件，注意named的日志记录项。有什么机器试图动态更新您的名字域吗？他们取得成功了吗？</p>
+<p>E10.4 看一遍您的日志文件，注意 named 的日志记录项。有什么机器试图动态更新您的名字域吗？他们取得成功了吗？</p>
 
 <p>A： 俺暂时还找不到这样的日志数据来分析。</p>
 
-<p>★ E10.5 你可以从哪些地方找到您机器上的引导日志？影响系统引导时日志记录机制的因素有哪些？klogd是如何解决这些问题的？</p>
+<p>★ E10.5 你可以从哪些地方找到您机器上的引导日志？影响系统引导时日志记录机制的因素有哪些？klogd 是如何解决这些问题的？</p>
 
-<p>A：/var/log/dmesg日志文件记录了最新的系统引导日志。</p>
+<p>A：/var/log/dmesg 日志文件记录了最新的系统引导日志。</p>
 
 <p>★ E10.6 研究您的站点所采取的日志策略，包括日志文件轮换策略。为日志记录投入了多少磁盘空间？日志文件要保留多久？你可以预见站点策略显出不足的情形吗？您建议的解决方案是什么？</p>
 
-<p>A：目前还没有管理过大型站点机群，平常也就是自己的电脑，加上几台托管的服务器，而日志这块，采用默认的策略，基本上就已经很好了。按照托管的机器服务器日志来看，一年增加的磁盘空间也不会超过5G。加上平常登录进去，也删除一些老的日志文件，所以基本上，日志这块没有着重考虑太多。</p>
+<p>A：目前还没有管理过大型站点机群，平常也就是自己的电脑，加上几台托管的服务器，而日志这块，采用默认的策略，基本上就已经很好了。按照托管的机器服务器日志来看，一年增加的磁盘空间也不会超过 5G。加上平常登录进去，也删除一些老的日志文件，所以基本上，日志这块没有着重考虑太多。</p>
 
 <p>★ E10.7 有些日志消息极为重要，系统管理员应该立刻查看他们。您会安装什么系统来尽可能快的做到这点？</p>
 
-<p>A：这个题目没有理解什么意思，不同的系统对于系统管理员看到日志的快慢有关系吗？一般来说，对于这类日志很重要的系统，乎采取日志过滤到特定的服务器上，然后采取“推(push)“的方式通知管理员，或者采取消息通知的方式告知管理员，不过这需要额外设备的支持，不如SMS通知方式。</p>
+<p>A：这个题目没有理解什么意思，不同的系统对于系统管理员看到日志的快慢有关系吗？一般来说，对于这类日志很重要的系统，乎采取日志过滤到特定的服务器上，然后采取“推(push)“的方式通知管理员，或者采取消息通知的方式告知管理员，不过这需要额外设备的支持，不如 SMS 通知方式。</p>
 
-<p>★ E10.8 编写一个C程序或者Perl脚本，用“user“设备把消息提交给syslog。</p>
+<p>★ E10.8 编写一个 C 程序或者 Perl 脚本，用“user“设备把消息提交给 syslog。</p>
 
-<p>A：书上提供了Perl脚本：</p>
+<p>A：书上提供了 Perl 脚本：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -238,8 +242,8 @@ news.err /var/log/messages
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/01/15/lah-chapter10-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/01/15/lah-chapter10-questions-key/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/01/15/lah-chapter10-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/01/15/lah-chapter10-questions-key/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

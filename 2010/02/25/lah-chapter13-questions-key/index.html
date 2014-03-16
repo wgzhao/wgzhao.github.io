@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="E13.1 研究Linux的route命令，简要介绍它的功能。使用route命令，怎样做到： 加一条通过接口 eth1 到 128.138.129.1 的默认路由；
+  <meta name="description" content="E13.1 研究 Linux 的 route 命令，简要介绍它的功能。使用 route 命令，怎样做到： 加一条通过接口 eth1 到 128.138.129.1 的默认路由；
 删除到 128.138.129.1 的默认路由；
-判断一个程序 (routed)或者一个ICMP重定向是否加入了一条路由（注意， &hellip;">
+判断一个程序 (routed)或者一个 ICMP &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,21 +101,21 @@
   </header>
 
 
-<div class="entry-content"><p>E13.1 研究Linux的route命令，简要介绍它的功能。使用route命令，怎样做到：</p>
+<div class="entry-content"><p>E13.1 研究 Linux 的 route 命令，简要介绍它的功能。使用 route 命令，怎样做到：</p>
 
 <ol>
 <li>加一条通过接口 eth1 到 128.138.129.1 的默认路由；</li>
 <li>删除到 128.138.129.1 的默认路由；</li>
-<li>判断一个程序 (routed)或者一个ICMP重定向是否加入了一条路由（注意，这个方法也能用netstat -rn 命令的输出做到）。</li>
+<li>判断一个程序 (routed)或者一个 ICMP 重定向是否加入了一条路由（注意，这个方法也能用 netstat -rn 命令的输出做到）。</li>
 </ol>
 
 
-<p>A：route的主要目的是现实和修改内核IP路由表信息。参数比较多。</p>
+<p>A：route 的主要目的是现实和修改内核 IP 路由表信息。参数比较多。</p>
 
 <ol>
 <li><code>route add default gw 128.138.129.1 eth1</code></li>
 <li><code>route default default gw 128.138.129.1</code></li>
-<li>我的网络环境没有ICMP重定向，所以也看不到是否增加了路由信息。</li>
+<li>我的网络环境没有 ICMP 重定向，所以也看不到是否增加了路由信息。</li>
 </ol>
 
 
@@ -123,7 +128,7 @@
 
 <p>其实，这些都是废话，用动态还是静态，关键还是看投入的成本是否能够产出预期的收益，那种能满足你的收益，哪种就适合你。</p>
 
-<p>E13.3 考虑下面的netstat -rn 输出。介绍各条路由，推断网络的设置。10.0.0.0 还是 10.1.1.0 更靠近 Internet？每条路由是由哪个进程加的？</p>
+<p>E13.3 考虑下面的 netstat -rn 输出。介绍各条路由，推断网络的设置。10.0.0.0 还是 10.1.1.0 更靠近 Internet？每条路由是由哪个进程加的？</p>
 
 <pre><code>Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 10.0.0.0           0.0.0.0         255.255.255.0   U            40          0       eth1
@@ -131,8 +136,7 @@
 0.0.0.0            10.0.0.1         0.0.0.0              UG          40          0       eth1
 </code></pre>
 
-<p>A：这台机器的两个网卡分别接入到了两个网络。其中eth1更靠近Internet的出口。<br/>
-如果Linux配置恰当的话，这些路由信息在网络启动的时候，会自动加入到内核里，只需要分别配置<code>/etc/sysconfig/network-scripts/{ifcfg-eth0,ifcfg-eth1}</code>和<code>/etc/sysconfig/network</code>配置文件（针对R系统）。</p>
+<p>A：这台机器的两个网卡分别接入到了两个网络。其中 eth1 更靠近 Internet 的出口。如果 Linux 配置恰当的话，这些路由信息在网络启动的时候，会自动加入到内核里，只需要分别配置<code>/etc/sysconfig/network-scripts/{ifcfg-eth0,ifcfg-eth1}</code>和<code>/etc/sysconfig/network</code>配置文件（针对 R 系统）。</p>
 </div>
 
 
@@ -224,8 +228,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/02/25/lah-chapter13-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/02/25/lah-chapter13-questions-key/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/02/25/lah-chapter13-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/02/25/lah-chapter13-questions-key/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

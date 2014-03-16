@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="离最近一次的命令学习估计是2年前的事情了，官方理由可以说是杂事多，实际理由还是停了一段时间后，很难捡起来。 2009年的计划中提到了需要把这个命令学习完成，这次从g开头的命令一直到z结尾的命令全部看一遍，主要是把以前没有看到的，或者以前不知道的一些命令参数记录下来，已经知道了的命令就不记录在这里了 &hellip;">
+  <meta name="description" content="离最近一次的命令学习估计是 2 年前的事情了，官方理由可以说是杂事多，实际理由还是停了一段时间后，很难捡起来。 2009 年的计划中提到了需要把这个命令学习完成，这次从 g 开头的命令一直到 z 结尾的命令全部看一遍，主要是把以前没有看到的，或者以前不知道的一些命令参数记录下来， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,17 +99,15 @@
   </header>
 
 
-<div class="entry-content"><p>离最近一次的命令学习估计是2年前的事情了，官方理由可以说是杂事多，实际理由还是停了一段时间后，很难捡起来。</p>
+<div class="entry-content"><p>离最近一次的命令学习估计是 2 年前的事情了，官方理由可以说是杂事多，实际理由还是停了一段时间后，很难捡起来。</p>
 
-<p>2009年的计划中提到了需要把这个命令学习完成，这次从g开头的命令一直到z结尾的命令全部看一遍，主要是把以前没有看到的，或者以前不知道的一些命令参数记录下来，已经知道了的命令就不记录在这里了,如此以来，发现要认真看的命令还真没有几个了，毕竟对系统管理员而言，/bin,/sbin/下的命令的重要性是高于/usr/sbin/的。于是凑合着记录了三个：</p>
+<p>2009 年的计划中提到了需要把这个命令学习完成，这次从 g 开头的命令一直到 z 结尾的命令全部看一遍，主要是把以前没有看到的，或者以前不知道的一些命令参数记录下来，已经知道了的命令就不记录在这里了,如此以来，发现要认真看的命令还真没有几个了，毕竟对系统管理员而言，/bin,/sbin/下的命令的重要性是高于/usr/sbin/的。于是凑合着记录了三个：</p>
 
-<p><a href="http://www.wireshark.org/">wireshark</a>：乍一看，不知道这个命令做什么用的，man了一下手册，到网络上搜寻了一把，才知道原来它是大名鼎鼎的Ethereal的化身呀，ethereal估计很多用过Linux的人都知道，它是世界上最流行的网络分析工具之一，这个强大的工具可以捕捉网络中的数据，并未用户提供网络和上层协议的各种信息，它具有安装简便，简单易用，功能丰富等特征，值得一提的是，它还有一个非常容易操作的图形界面，当然如果你是CLI的死忠分析，也许tshark会成为你的最爱，tshark是wireshark的CLI实现。</p>
+<p><a href="http://www.wireshark.org/">wireshark</a>：乍一看，不知道这个命令做什么用的，man 了一下手册，到网络上搜寻了一把，才知道原来它是大名鼎鼎的 Ethereal 的化身呀，ethereal 估计很多用过 Linux 的人都知道，它是世界上最流行的网络分析工具之一，这个强大的工具可以捕捉网络中的数据，并未用户提供网络和上层协议的各种信息，它具有安装简便，简单易用，功能丰富等特征，值得一提的是，它还有一个非常容易操作的图形界面，当然如果你是 CLI 的死忠分析，也许 tshark 会成为你的最爱，tshark 是 wireshark 的 CLI 实现。</p>
 
-<p><a href="http://www.tripwire.org">tripwire</a>：*nix系统下最著名的文件系统完整性检查工具，这个软件采取的核心技术就是对每个要监控的文件产生一个数字签名并保留下来。当数字签名不一致时，必定文件被修改过。当你要为你的系统安全着想的时候，你应该想起它！</p>
+<p><a href="http://www.tripwire.org">tripwire</a>：*nix 系统下最著名的文件系统完整性检查工具，这个软件采取的核心技术就是对每个要监控的文件产生一个数字签名并保留下来。当数字签名不一致时，必定文件被修改过。当你要为你的系统安全着想的时候，你应该想起它！</p>
 
-<p>vipw：不是多么神奇和高深的命令，不带任何参数，运行后，直接打开<code>/etc/passwd</code>，于是我知道这个命令的意思了<code>vipw = vi /etc/passwd</code>，以为是一个脚本，然后vipw是一个地地道道的ELF文件，实际上他是VIM的tiny版的实现。<br/>
-不晓得作者写这个程序的目的是什么？仅仅是为了方便编辑<code>/etc/passwd</code>？还是说万一系统没有安装编辑器，我还用它当做编辑器用，<br/>
-又或者仅仅只是一个玩笑？不理解。</p>
+<p>vipw：不是多么神奇和高深的命令，不带任何参数，运行后，直接打开<code>/etc/passwd</code>，于是我知道这个命令的意思了<code>vipw = vi /etc/passwd</code>，以为是一个脚本，然后 vipw 是一个地地道道的 ELF 文件，实际上他是 VIM 的 tiny 版的实现。不晓得作者写这个程序的目的是什么？仅仅是为了方便编辑<code>/etc/passwd</code>？还是说万一系统没有安装编辑器，我还用它当做编辑器用，又或者仅仅只是一个玩笑？不理解。</p>
 </div>
 
 
@@ -196,8 +199,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,9 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="IBM开发网的内容还是很丰富的。
-这次听这个讲座的主要目的是想看看他们是怎么讲集群的，对我以后讲述这方面有什么样的帮助作用。
-课程大约1个小时，其中讲IBM自己的集群技术大约占了一半的时间，其他都是说一些概念，似乎对销售人员和售前技术支持比较有用，但是对于售后的培训可能用处不大。 &hellip;">
+  <meta name="description" content="IBM 开发网的内容还是很丰富的。这次听这个讲座的主要目的是想看看他们是怎么讲集群的，对我以后讲述这方面有什么样的帮助作用。课程大约 1 个小时，其中讲 IBM 自己的集群技术大约占了一半的时间，其他都是说一些概念，似乎对销售人员和售前技术支持比较有用，但是对于售后的培训可能用处不大。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,18 +99,14 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://www.ibm.com/developerworks/cn/">IBM开发网</a>的内容还是很丰富的。
-这次听<a href="https://www14.software.ibm.com/webapp/iwm/web/preLogin.do?lang=zh_CN&amp;source=dw-cn-l-l-cluster">这个讲座</a>的主要目的是想看看他们是怎么讲集群的，对我以后讲述这方面有什么样的帮助作用。<br/>
-课程大约1个小时，其中讲IBM自己的集群技术大约占了一半的时间，其他都是说一些概念，似乎对销售人员和售前技术支持比较有用，但是对于售后的培训可能用处不大。
-因为既然已经是到售后这个环节了，比如是用户已经购买了集群软件了，也就是意味着他们或多或少的知道了集群的一些概念，原理等，此时他们要听到的恐怕是现在购买的这款集群软件的配置，使用，管理，故障处理等方面的内容。</p>
+<div class="entry-content"><p><a href="http://www.ibm.com/developerworks/cn/">IBM 开发网</a>的内容还是很丰富的。这次听<a href="https://www14.software.ibm.com/webapp/iwm/web/preLogin.do?lang=zh_CN&amp;source=dw-cn-l-l-cluster">这个讲座</a>的主要目的是想看看他们是怎么讲集群的，对我以后讲述这方面有什么样的帮助作用。课程大约 1 个小时，其中讲 IBM 自己的集群技术大约占了一半的时间，其他都是说一些概念，似乎对销售人员和售前技术支持比较有用，但是对于售后的培训可能用处不大。因为既然已经是到售后这个环节了，比如是用户已经购买了集群软件了，也就是意味着他们或多或少的知道了集群的一些概念，原理等，此时他们要听到的恐怕是现在购买的这款集群软件的配置，使用，管理，故障处理等方面的内容。</p>
 
 <!--more-->
 
 
-<p>还好，售前的活我也接着要干了，应该这个讲座可以帮到我一些。
-下面是我听这个讲座的一些笔记。贴出来和大家共享：</p>
+<p>还好，售前的活我也接着要干了，应该这个讲座可以帮到我一些。下面是我听这个讲座的一些笔记。贴出来和大家共享：</p>
 
-<p>Linux集群（IBM）</p>
+<p>Linux 集群（IBM）</p>
 
 <ul>
 <li><ul>
@@ -122,17 +121,17 @@ o 高性能计算(High Performance Computing)&mdash;提供比单台计算机更�
 </li>
 <li><ul>
 <li><ul>
-<li>什么是Linux集群
+<li>什么是 Linux 集群
 o 由一组通过网络互联的计算机组成
 o 作为一个整体向用户提供一组网络资源
-o 运行于开放的Linux系统</li>
+o 运行于开放的 Linux 系统</li>
 </ul>
 </li>
 </ul>
 </li>
 <li><ul>
 <li><ul>
-<li>Linux集群解决方案概览
+<li>Linux 集群解决方案概览
 o 高可用性集群</li>
 </ul>
 </li>
@@ -154,14 +153,14 @@ o 负载均衡集群</li>
 <li>TurboLinux Cluster Server</li>
 <li>&hellip;&hellip;&hellip;
 o 高性能计算集权</li>
-<li>IBM 1350集群解决方案</li>
+<li>IBM 1350 集群解决方案</li>
 <li>联想深腾、曙光、方正&hellip;.</li>
 <li><ul>
 <li><ul>
-<li>Linux高可用性解决解决方案
-o Linux高可用对应用系统的重要性
+<li>Linux 高可用性解决解决方案
+o Linux 高可用对应用系统的重要性
 +
-o + &ndash; Linux高可用性集群的功能</li>
+o + &ndash; Linux 高可用性集群的功能</li>
 </ul>
 </li>
 </ul>
@@ -172,14 +171,14 @@ o + &ndash; Linux高可用性集群的功能</li>
 <li>用户数据存放于共享存储设备上</li>
 <li>通过集群节点间的间歇通信信号(心跳信号)，在系统之间进行周期性的握手，来监控检测各节点运行状态</li>
 <li>系统出现故障时，由备份节点接替原系统工作，实现容错
-o Linux高可用性集群相关技术</li>
+o Linux 高可用性集群相关技术</li>
 <li><ul>
 <li><ul>
 <li>心跳通信路径
 
 <h1>套接字(socket)</h1>
 
-<h1>RS－232串行口(tty)</h1>
+<h1>RS－232 串行口(tty)</h1>
 
 <h1>网卡</h1>
 
@@ -204,7 +203,7 @@ o Linux高可用性集群相关技术</li>
 
 <h1>存储区域网络(SAN)</h1>
 
-<p>o Linux高可用性集群配置方式</p></li>
+<p>o Linux 高可用性集群配置方式</p></li>
 <li><ul>
 <li><ul>
 <li>双节点
@@ -233,8 +232,8 @@ o Linux高可用性集群相关技术</li>
 </li>
 <li><ul>
 <li><ul>
-<li>Linux负载均衡集群解决方案
-o + &ndash; Linux负载均衡集群功能</li>
+<li>Linux 负载均衡集群解决方案
+o + &ndash; Linux 负载均衡集群功能</li>
 </ul>
 </li>
 </ul>
@@ -246,7 +245,7 @@ o + &ndash; Linux负载均衡集群功能</li>
 <li>提高服务器响应速度</li>
 <li>提高服务器及其其他资源的利用效率</li>
 <li>避免了网络关键部位出现单点失效
-o + &ndash; Linux负载均衡集群节点类型</li>
+o + &ndash; Linux 负载均衡集群节点类型</li>
 <li><ul>
 <li><ul>
 <li>管理节点(Cluster Manager)
@@ -255,7 +254,7 @@ o + &ndash; Linux负载均衡集群节点类型</li>
 
 <h1>根据一定的负载调度策略将用户的请求分发给集群节点</h1>
 
-<h1>可以使用HA容错机制避免单点失效</h1>
+<h1>可以使用 HA 容错机制避免单点失效</h1>
 
 <h1>运行应用代理程序查询每一个节点的服务状态</h1>
 
@@ -277,7 +276,7 @@ o + &ndash; Linux负载均衡集群节点类型</li>
 </li>
 <li>轮循调度(round-robin)
 
-<h1>每一个请求轮流分配给内部中的每台服务器，从1至N然后重新开始</h1>
+<h1>每一个请求轮流分配给内部中的每台服务器，从 1 至 N 然后重新开始</h1>
 
 <h1>适合服务器具有相同的软硬件配置，平均服务请求相对均衡的情况</h1></li>
 <li>加权轮循调度(weighted round-robin)
@@ -291,7 +290,7 @@ o + &ndash; Linux负载均衡集群节点类型</li>
 
 <h1>把新请求分配给连接数最少的服务器</h1>
 
-<h1>适合长时间处理的请求服务，比如FTP</h1></li>
+<h1>适合长时间处理的请求服务，比如 FTP</h1></li>
 </ul>
 </li>
 </ul>
@@ -314,32 +313,32 @@ o + &ndash; Linux负载均衡集群节点类型</li>
 </li>
 </ul>
 </li>
-<li>Linux高性能计算集群解决方案
+<li>Linux 高性能计算集群解决方案
 o + &ndash; 应用领域
 +
 o + &ndash; 架构</li>
 <li><ul>
 <li><ul>
-<li>Beowulf集群架构
+<li>Beowulf 集群架构
 
-<h1>Beowulf是一种系统结构，似的多个计算机组成的系统能够用于并行计算</h1>
+<h1>Beowulf 是一种系统结构，似的多个计算机组成的系统能够用于并行计算</h1>
 
-<h1>Beowulf系统通常有一个管理节点和多个计算节点构成</h1>
+<h1>Beowulf 系统通常有一个管理节点和多个计算节点构成</h1>
 
 <h1>管理节点监控计算节点，通常也是计算节点的网关和控制终端</h1>
 
 <h1>他们通过以太网(或其他网络)连接</h1>
 
-<h1>Beowulf系统通常由最常见的硬件设备组成&mdash;PC,以太网卡，以太网交换机等</h1>
+<h1>Beowulf 系统通常由最常见的硬件设备组成&mdash;PC,以太网卡，以太网交换机等</h1>
 
-<h1>Beowulf系统最初采取那些广为传播的软件&mdash;Linux,消息传递接口(MPI)</h1>
+<h1>Beowulf 系统最初采取那些广为传播的软件&mdash;Linux,消息传递接口(MPI)</h1>
 
 <p>o + &ndash; 概览</p></li>
 </ul>
 </li>
 </ul>
 </li>
-<li>每一个节点有独立的CPU，内存，磁盘和完整的操作系统，根据功能不同分为计算节点，管理节点和存储节点</li>
+<li>每一个节点有独立的 CPU，内存，磁盘和完整的操作系统，根据功能不同分为计算节点，管理节点和存储节点</li>
 <li>各节点之间通过网络方式连接，实现信息的交互和数据的共享</li>
 <li>通过管理软件实现系统的单点控制</li>
 <li>采用作业调度软件协助作业的提交和分发
@@ -468,8 +467,8 @@ o 面临的挑战</li>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/04/01/notes-about-ibm-linux-cluster-solution/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/04/01/notes-about-ibm-linux-cluster-solution/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/04/01/notes-about-ibm-linux-cluster-solution/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/04/01/notes-about-ibm-linux-cluster-solution/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="开始看《Linux Troubleshooting for System Administrators and Power Users》顺便记录一些我新学到的东西。 本书一开始就讲系统引导，启动和关机。这点其实也比较关键的，因为在实际的工作中也遇到过很多次，大部分情况下是GRUB（ &hellip;">
+  <meta name="description" content="开始看《Linux Troubleshooting for System Administrators and Power Users》顺便记录一些我新学到的东西。 本书一开始就讲系统引导，启动和关机。这点其实也比较关键的，因为在实际的工作中也遇到过很多次，大部分情况下是 GRUB（现在 Lilo &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,7 +101,7 @@
 
 <div class="entry-content"><p>开始看《Linux Troubleshooting for System Administrators and Power Users》顺便记录一些我新学到的东西。</p>
 
-<p>本书一开始就讲系统引导，启动和关机。这点其实也比较关键的，因为在实际的工作中也遇到过很多次，大部分情况下是GRUB（现在Lilo相对很少了）被完全破坏或者部分破坏。</p>
+<p>本书一开始就讲系统引导，启动和关机。这点其实也比较关键的，因为在实际的工作中也遇到过很多次，大部分情况下是 GRUB（现在 Lilo 相对很少了）被完全破坏或者部分破坏。</p>
 
 <!--more-->
 
@@ -107,24 +112,22 @@
 #/sbin/grub-install /dev/sda
 </code></pre>
 
-<p>一般来说都能恢复。
-但是对于只是部分损害，比如stage1还在MBR上，stage2引导不了。表现就是，机器开始后，屏幕上出现一个
+<p>一般来说都能恢复。但是对于只是部分损害，比如 stage1 还在 MBR 上，stage2 引导不了。表现就是，机器开始后，屏幕上出现一个
 grub>
-虽然help以后，能看到很多命令，而且我也坚信这种情况下应高通过一定的命令，grub可以自动修复好，因为这是grub强大的地方，但是一直不得要领，直到后来，<a href="http://rachel.xplorecn">rachel</a>告诉了我如何这点后，我才知道在这种情况下，如何修复grub，命令如下：</p>
+虽然 help 以后，能看到很多命令，而且我也坚信这种情况下应高通过一定的命令，grub 可以自动修复好，因为这是 grub 强大的地方，但是一直不得要领，直到后来，<a href="http://rachel.xplorecn">rachel</a> 告诉了我如何这点后，我才知道在这种情况下，如何修复 grub，命令如下：</p>
 
 <pre><code>install (hd0,0)/boot/grub/stage1 (hd0) (hd0,0)/boot/grub/stage2 p
 (hd0,0)/boot/grub/grub.conf
 </code></pre>
 
-<p>这里假设grub要安装的磁盘的第一块hd0，boot在hd0,0上。</p>
+<p>这里假设 grub 要安装的磁盘的第一块 hd0，boot 在 hd0,0 上。</p>
 
-<p>看了这本书的引导器(bootloader)这节后，又新学到了一些东西，虽然觉得他的用处似乎没有上面那些技能更有用。
-下的处理方式是在必须还能进入系统的情况下，或者是为了防范未来而采取的措施。</p>
+<p>看了这本书的引导器(bootloader)这节后，又新学到了一些东西，虽然觉得他的用处似乎没有上面那些技能更有用。下的处理方式是在必须还能进入系统的情况下，或者是为了防范未来而采取的措施。</p>
 
 <ol>
-<li><p>在stage1还在MBR的情况下可以采用下面的命令修复GRUB
+<li><p>在 stage1 还在 MBR 的情况下可以采用下面的命令修复 GRUB
 <code>grub&gt;root(hd0,0) grub&gt;setup(hd0)</code></p></li>
-<li><p>你可以创建启动软盘来修复GRUB，以红旗Linux DC5为例子。</p>
+<li><p>你可以创建启动软盘来修复 GRUB，以红旗 Linux DC5 为例子。</p>
 
 <pre><code>  #cd /usr/share/grub/i386-asianux/ 
   #dd if=stage1 of=/dev/fd0 bs=512 count=1 
@@ -136,7 +139,7 @@ grub>
 <p>ok，这张软盘可以引导系统了，剩下要做的事情可以参考上面的内容了。</p>
 
 <ol>
-<li><p>创建一张可启动CD(大小460k左右)</p>
+<li><p>创建一张可启动 CD(大小 460k 左右)</p>
 
 <pre><code>  #cd /tmp 
   #mkdir -p iso/boot/grub 
@@ -146,7 +149,7 @@ grub>
 </ol>
 
 
-<p>创建好的grub.iso烧录到CD上就可以引导了，但是他仅仅能引导stage1，也就是grub的第一阶段，然后出现一个grub>就完成了，就像下面的这张图片一样：
+<p>创建好的 grub.iso 烧录到 CD 上就可以引导了，但是他仅仅能引导 stage1，也就是 grub 的第一阶段，然后出现一个 grub>就完成了，就像下面的这张图片一样：
 ![image]/uploads/1168875621_0.png)</p>
 
 <p>不过到了这里，剩下的事情也比较好办了，参考上面的如何安装的说明。</p>
@@ -241,8 +244,8 @@ grub>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/01/15/About-GRUB/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/01/15/About-GRUB/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/01/15/About-GRUB/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/01/15/About-GRUB/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

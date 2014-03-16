@@ -9,9 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/sbin/b*命令不多，DC5.0下面仅仅3个 badblocks,blkid和blockdev badblocks:
-对指定的设备找出坏块,他接受的参数不是太多，你可以指定开始块也结束块。还能用-f来指定是否需要对查找的分区进行修复，不过在man中对－f这个参数的描述是，
-永远都不要使用－f， &hellip;">
+  <meta name="description" content="/sbin/b*命令不多，DC5.0 下面仅仅 3 个 badblocks,blkid 和 blockdev badblocks:
+对指定的设备找出坏块,他接受的参数不是太多，你可以指定开始块也结束块。还能用-f 来指定是否需要对查找的分区进行修复，不过在 man 中对－f 这个参数的描述是， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +30,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,46 +100,43 @@
   </header>
 
 
-<div class="entry-content"><p>/sbin/b*命令不多，DC5.0下面仅仅3个</p>
+<div class="entry-content"><p>/sbin/b*命令不多，DC5.0 下面仅仅 3 个</p>
 
-<p>badblocks,blkid和blockdev</p>
+<p>badblocks,blkid 和 blockdev</p>
 
 <p>badblocks:<br/>
-对指定的设备找出坏块,他接受的参数不是太多，你可以指定开始块也结束块。还能用-f来指定是否需要对查找的分区进行修复，不过在man中对－f这个参数的描述是，
-永远都不要使用－f，除非你比这个命令更聪明。</p>
+对指定的设备找出坏块,他接受的参数不是太多，你可以指定开始块也结束块。还能用-f 来指定是否需要对查找的分区进行修复，不过在 man 中对－f 这个参数的描述是，永远都不要使用－f，除非你比这个命令更聪明。</p>
 
 <pre><code>[root@lancy sbin]# badblocks /dev/hda5 
 </code></pre>
 
-<p>man手册中提到一般不要直接执行badblocks命令，而是应该用e2fsck命令的－c参数来自动调用badblocks命令，他会查找坏块并标记起来，以便下次存储数据时，不会存储在这些坏块上。</p>
+<p>man 手册中提到一般不要直接执行 badblocks 命令，而是应该用 e2fsck 命令的－c 参数来自动调用 badblocks 命令，他会查找坏块并标记起来，以便下次存储数据时，不会存储在这些坏块上。</p>
 
 <!--more-->
 
 
-<p>blkid：用来定位或者打印块设备属性的命令行工具，他一般和libuuid(3)程序库一起使用。他可以推测出一个块设备内容的类型（比如是文件系统，是swap）和其他属性。</p>
+<p>blkid：用来定位或者打印块设备属性的命令行工具，他一般和 libuuid(3)程序库一起使用。他可以推测出一个块设备内容的类型（比如是文件系统，是 swap）和其他属性。</p>
 
 <pre><code> [root@lancy ~]# blkid /dev/hda5 
  /dev/hda5: LABEL="/" UUID="74e3bf86-ce24-411d-ac35-c4bc49964f36" SEC_TYPE="ext3" TYPE="ext2"
 [root@lancy ~]# blkid /dev/hda1 /dev/hda1: UUID="6C2B-F039" TYPE="vfat"
 </code></pre>
 
-<p>UUID在RAID和LVM中有比较广泛的使用，在RAID中，寻找某一个设备或者分区不是根据你的设备号（比如hda3），也不是标签（比如/HOME)，因为手工创建的分区默认没有标签，而是根据UUID号，比如你的第一个SCSI设备因为槽位的变化，那么在linux中设备好也发生了变化（比如从sda变成sdb)，但是系统依然能够识别出来。而槽位的改变在服务器上很容易发生，因为大部分都是支持热插拔的。在LVM的配置文件中，你更能非常清楚的看到UUID号。</p>
+<p>UUID 在 RAID 和 LVM 中有比较广泛的使用，在 RAID 中，寻找某一个设备或者分区不是根据你的设备号（比如 hda3），也不是标签（比如/HOME)，因为手工创建的分区默认没有标签，而是根据 UUID 号，比如你的第一个 SCSI 设备因为槽位的变化，那么在 linux 中设备好也发生了变化（比如从 sda 变成 sdb)，但是系统依然能够识别出来。而槽位的改变在服务器上很容易发生，因为大部分都是支持热插拔的。在 LVM 的配置文件中，你更能非常清楚的看到 UUID 号。</p>
 
-<p>blockdev:  在命令行调用设备的ioctl函数。在Linux系统中，似乎对设备的直接操作只有ioctl函数了。他接受的参数不是太多，而且都是一一对应的。</p>
+<p>blockdev:  在命令行调用设备的 ioctl 函数。在 Linux 系统中，似乎对设备的直接操作只有 ioctl 函数了。他接受的参数不是太多，而且都是一一对应的。</p>
 
 <p>&mdash;setro 设置设备为只读<br/>
-&mdash;getro 读取设备是否为只读（成功为1，0则为可读写）<br/>
+&mdash;getro 读取设备是否为只读（成功为 1，0 则为可读写）<br/>
 &mdash;setrw 设置设别为可读写 <br/>
-&mdash;getss 打印设备的扇区大小，通常是512<br/>
-&mdash;getsize 打印设别的容量，按照一个扇区512个字节计算<br/>
+&mdash;getss 打印设备的扇区大小，通常是 512<br/>
+&mdash;getsize 打印设别的容量，按照一个扇区 512 个字节计算<br/>
 &mdash;setra N Set readahead to N 512-byte sectors.<br/>
-&mdash;getra 打印readahead  <br/>
+&mdash;getra 打印 readahead  <br/>
 &mdash;flushbufs 刷新缓冲<br/>
 &mdash;rereadpt 重读分区表。</p>
 
-<p>个人觉得&mdash;setro,&mdash;setrw比较有用，这个mount -o ro(rw)是有区别的，mount是在文件系统这个级别上对某个分区挂载为只读或可读写。<br/>
-而blockdev则是在设别这个级别上设置为只读和可读写。
-看下面的命令输出结果就一目了然了。</p>
+<p>个人觉得&mdash;setro,&mdash;setrw 比较有用，这个 mount -o ro(rw)是有区别的，mount 是在文件系统这个级别上对某个分区挂载为只读或可读写。而 blockdev 则是在设别这个级别上设置为只读和可读写。看下面的命令输出结果就一目了然了。</p>
 
 <pre><code>[root@lancy ~]# blockdev –setro /dev/hda4
 [root@lancy ~]# blockdev –getro /dev/hda4
@@ -154,8 +155,7 @@ mount: block device /dev/hda4 is write-protected, mounting read-only
 rm: 无法删除‘/misc/one’: 只读文件系统
 </code></pre>
 
-<p>只读文件系统
-这个命令在高可用环境比较实用。比如红旗的HA产品就使用了类似的命令来防止，红旗HA停止时，会自动将他监管的设备设置为只读，防止用户的改写，除非你手工设置为可读写（红旗HA使用了clproset命令，其作用应该和这个差不多）</p>
+<p>只读文件系统这个命令在高可用环境比较实用。比如红旗的 HA 产品就使用了类似的命令来防止，红旗 HA 停止时，会自动将他监管的设备设置为只读，防止用户的改写，除非你手工设置为可读写（红旗 HA 使用了 clproset 命令，其作用应该和这个差不多）</p>
 </div>
 
 
@@ -247,8 +247,8 @@ rm: 无法删除‘/misc/one’: 只读文件系统
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/01/25/commands-start-b/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/01/25/commands-start-b/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/01/25/commands-start-b/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/01/25/commands-start-b/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

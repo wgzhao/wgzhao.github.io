@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/sbin下f开头的命令如下 fdisk fixfiles fsck.cramfs fsck.ext3 fsck.ocfs2 fsck.vfat fuser findfs
-fsck fsck.ext2 fsck.msdos fsck.reiserfs fsck.xfs fxload 其中fsck. &hellip;">
+  <meta name="description" content="/sbin 下 f 开头的命令如下 fdisk fixfiles fsck.cramfs fsck.ext3 fsck.ocfs2 fsck.vfat fuser findfs
+fsck fsck.ext2 fsck.msdos fsck.reiserfs fsck.xfs fxload 其中 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ fsck fsck.ext2 fsck.msdos fsck.reiserfs fsck.xfs fxload 其中fsck. &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,13 +100,13 @@ fsck fsck.ext2 fsck.msdos fsck.reiserfs fsck.xfs fxload 其中fsck. &hellip;">
   </header>
 
 
-<div class="entry-content"><p>/sbin下f开头的命令如下</p>
+<div class="entry-content"><p>/sbin 下 f 开头的命令如下</p>
 
 <blockquote><p>fdisk fixfiles fsck.cramfs fsck.ext3 fsck.ocfs2 fsck.vfat fuser findfs<br/>
 fsck fsck.ext2 fsck.msdos fsck.reiserfs fsck.xfs fxload</p></blockquote>
 
-<p>其中fsck.reiserfs是reiserfsck命令的软连接，f开头的命令中fsck命令套件占了绝大部分。
-findfs:根据标签(label)或者UUID号来查询文件系统。他会搜索整个磁盘，看是否有匹配的标签或者UUID没有，如果有，则打印到标注输出上。他也是<a href="http://e2fsprogs.sf.net">e2fsprogs</a>项目的一部分。</p>
+<p>其中 fsck.reiserfs 是 reiserfsck 命令的软连接，f 开头的命令中 fsck 命令套件占了绝大部分。
+findfs:根据标签(label)或者 UUID 号来查询文件系统。他会搜索整个磁盘，看是否有匹配的标签或者 UUID 没有，如果有，则打印到标注输出上。他也是 <a href="http://e2fsprogs.sf.net">e2fsprogs</a> 项目的一部分。</p>
 
 <!--more-->
 
@@ -116,18 +121,14 @@ Usage: findfs LABEL=|UUID=
 findfs: Unable to resolve 'LABEL=/home'
 </code></pre>
 
-<p>我没有搞清楚这个命令到底有什么用或者应该在什么情况下使用？因为知道LABEL或者UUID并不像平常知道某一个文件那样容易记住。所以他和find的使用范围相比，就小了很多了，难道他有意想不到的用途？</p>
+<p>我没有搞清楚这个命令到底有什么用或者应该在什么情况下使用？因为知道 LABEL 或者 UUID 并不像平常知道某一个文件那样容易记住。所以他和 find 的使用范围相比，就小了很多了，难道他有意想不到的用途？</p>
 
-<p>fixfiles:  修复文件安全上下文(security contexts)。这是一个shell脚本，主要是用来校正文件系统上的安全上下文数据库（扩展属性）。仔细看了帮助，也作了一些测试，没有明白他要表达什么，刚开始以为是他会恢复我原来修改过某些配置文件到初始状态，当经过测试，似乎不是这回事。所属于policycoreutils
-RPM包，这是SELinux的一部分。</p>
+<p>fixfiles:  修复文件安全上下文(security contexts)。这是一个 shell 脚本，主要是用来校正文件系统上的安全上下文数据库（扩展属性）。仔细看了帮助，也作了一些测试，没有明白他要表达什么，刚开始以为是他会恢复我原来修改过某些配置文件到初始状态，当经过测试，似乎不是这回事。所属于 policycoreutils
+RPM 包，这是 SELinux 的一部分。</p>
 
-<p>一直以来SElinux都没有怎么用过，据说非常难配置，&lt;sf.net>上记得一个项目就是做SELinux的配置文件前端。<br/>
-看了从国防出来的产品还真的蛮复杂的。<br/>
-唯一的一次使用了SELinux是在一次安装FC4的过程中，问我是否打开SELinux，我想既然是完全，那就用吧。<br/>
-因此打开了。安装后，马上要和其他电脑联网，主要要从别人的机器上copy东西到我的电脑上，首先使用ftp模式，打开默认的vsftp，用普通动帐号登录，看上去一切正常，但是就是没有办法写入，以为是配置问题，于是把配置文件折腾个底朝天，结果还是无法写入。放弃，改用SMB共享，结果一样，无论我如何指定<code>writable=yes</code>，就是无法写入。最后还是要别人共享，copy过来的。当时没有往这个方面想，因为人很着急，回来后，重启Linux，启动过程看到了enable SELinux一项，于是马上想到，肯定是这个该死的东西，也没有去想如何配置了，直接disable了。</p>
+<p>一直以来 SElinux 都没有怎么用过，据说非常难配置，&lt;sf.net>上记得一个项目就是做 SELinux 的配置文件前端。看了从国防出来的产品还真的蛮复杂的。唯一的一次使用了 SELinux 是在一次安装 FC4 的过程中，问我是否打开 SELinux，我想既然是完全，那就用吧。因此打开了。安装后，马上要和其他电脑联网，主要要从别人的机器上 copy 东西到我的电脑上，首先使用 ftp 模式，打开默认的 vsftp，用普通动帐号登录，看上去一切正常，但是就是没有办法写入，以为是配置问题，于是把配置文件折腾个底朝天，结果还是无法写入。放弃，改用 SMB 共享，结果一样，无论我如何指定<code>writable=yes</code>，就是无法写入。最后还是要别人共享，copy 过来的。当时没有往这个方面想，因为人很着急，回来后，重启 Linux，启动过程看到了 enable SELinux 一项，于是马上想到，肯定是这个该死的东西，也没有去想如何配置了，直接 disable 了。</p>
 
-<p>fuser：使用文件或者套节字来表示识别进程。我常用的他的两个功能：查看我需要的进程和我要杀死我查到的进程。
-比如当你想umount光驱的时候，结果系统提示你设备正在使用或者正忙，可是你又找不到到底谁使用了他。这个时候fuser可派上用场了。</p>
+<p>fuser：使用文件或者套节字来表示识别进程。我常用的他的两个功能：查看我需要的进程和我要杀死我查到的进程。比如当你想 umount 光驱的时候，结果系统提示你设备正在使用或者正忙，可是你又找不到到底谁使用了他。这个时候 fuser 可派上用场了。</p>
 
 <pre><code>[root@lancy sbin]# eject
 umount: /media/cdrom: device is busy
@@ -140,25 +141,25 @@ root 4561 4227 0 20:13 pts/1 00:00:00 bash
 root 5382 4561 0 21:42 pts/1 00:00:00 vim Autorun.inf
 </code></pre>
 
-<p>示例中，我想弹出光驱，系统告诉我设备忙着，于是采用fuser命令，参数是你文件或scoket，fuser将查出那些使用了他。
-4561c,5382c表示目前用两个进程在占用着/mnt/cdrom，分别是4561,5382,进程ID后的字母表示占用资源的方式，有下面几种表示：</p>
+<p>示例中，我想弹出光驱，系统告诉我设备忙着，于是采用 fuser 命令，参数是你文件或 scoket，fuser 将查出那些使用了他。
+4561c,5382c 表示目前用两个进程在占用着/mnt/cdrom，分别是 4561,5382,进程 ID 后的字母表示占用资源的方式，有下面几种表示：</p>
 
 <p> c 当前路径(current directory.)我的理解是表示这个资源的占用是以文件目录方式，也就是进进入了需要释放的资源的路径，这是最常用的资源占用方式。 <br/>
 e 正在运行可执行文件（executable being run.），比如运行了光盘上的某个程序 <br/>
-f 打开文件（ open file），缺省模式下f忽略。所以上面的例子中，虽然是开打了光盘上的Autorun.inf文件，但是给出的标识是c，而不是f。 r
-root目录（root directory）.没有明白什么意思，难道是说进入了/root这个特定目录？<br/>
-m mmap文件或者共享库( mmap’ed file or shared library).这应该是说某个进程使用了你要释放的资源的某个共享文件。</p>
+f 打开文件（ open file），缺省模式下 f 忽略。所以上面的例子中，虽然是开打了光盘上的 Autorun.inf 文件，但是给出的标识是 c，而不是 f。 r
+root 目录（root directory）.没有明白什么意思，难道是说进入了/root 这个特定目录？<br/>
+m mmap 文件或者共享库( mmap’ed file or shared library).这应该是说某个进程使用了你要释放的资源的某个共享文件。</p>
 
 <p>在查找的同时，你还可定指定一些参数，比如</p>
 
-<p> -k 杀死这些正在访问这些文件的进程。除非使用-signal修改信号，否则将发送SIGKILL信号。 <br/>
+<p> -k 杀死这些正在访问这些文件的进程。除非使用-signal 修改信号，否则将发送 SIGKILL 信号。 <br/>
  -i 交互模式 <br/>
  -l 列出所有已知的信号名称。 <br/>
- -n 空间，选择不同的名字空间，可是file,udp,tcp。默认是file，也就是文件。 <br/>
- -signal 指定发送的信号，而不是缺省的SIGKILL <br/>
- -4 仅查询IPV4套接字 <br/>
- -6 仅查询IPV6套接字 <br/>
- &ndash; 重置所有的选项，将信息设回SIGKILL</p>
+ -n 空间，选择不同的名字空间，可是 file,udp,tcp。默认是 file，也就是文件。 <br/>
+ -signal 指定发送的信号，而不是缺省的 SIGKILL <br/>
+ -4 仅查询 IPV4 套接字 <br/>
+ -6 仅查询 IPV6 套接字 <br/>
+ &ndash; 重置所有的选项，将信息设回 SIGKILL</p>
 
 <p>再看下面的例子</p>
 
@@ -168,7 +169,7 @@ STKFLT CHLD CONT STOP TSTP TTIN TTOU URG XCPU XFSZ VTALRM PROF WINCH IO PWR SYS
 UNUSED
 </code></pre>
 
-<p>现在我们试试fuser -k的威力：</p>
+<p>现在我们试试 fuser -k 的威力：</p>
 
 <pre><code>root@lancy sbin]# fuser -k /mnt/cdrom
 /mnt/cdrom: 4561c 5382c
@@ -191,8 +192,7 @@ here: 80
 80/tcp: 5685 5688 5689 5690 5691 5692 5693 5694 5695
 </code></pre>
 
-<p>fxload:为EZ-USB设别下载firmware。  <br/>
-剩下的就是有关磁盘检查的fsck命令集了，这么命令的用法和e2fsck类似.</p>
+<p>fxload:为 EZ-USB 设别下载 firmware。剩下的就是有关磁盘检查的 fsck 命令集了，这么命令的用法和 e2fsck 类似.</p>
 </div>
 
 
@@ -284,8 +284,8 @@ here: 80
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/02/05/commands-start-f/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/02/05/commands-start-f/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/02/05/commands-start-f/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/02/05/commands-start-f/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

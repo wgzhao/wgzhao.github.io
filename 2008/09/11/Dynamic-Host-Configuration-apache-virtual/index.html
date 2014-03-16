@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="很惭愧，知道今天才知道Aapche可以基于域名或者IP来动态配置虚拟主机。 这样，你只要在特定的目录建立域名目录，那么你的虚拟主机就配置好了，而必须许该httpd.conf文件，更重要的是，不要重启Apache服务。
-否则的话，在有大量域名的情况下，修改配置的方式管理这些域名是一个噩梦。 &hellip;">
+  <meta name="description" content="很惭愧，知道今天才知道 Aapche 可以基于域名或者 IP 来动态配置虚拟主机。 这样，你只要在特定的目录建立域名目录，那么你的虚拟主机就配置好了，而必须许该 httpd.conf 文件，更重要的是，不要重启 Apache 服务。否则的话，在有大量域名的情况下， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,15 +99,13 @@
   </header>
 
 
-<div class="entry-content"><p>很惭愧，知道今天才知道Aapche可以基于域名或者IP来动态配置虚拟主机。</p>
+<div class="entry-content"><p>很惭愧，知道今天才知道 Aapche 可以基于域名或者 IP 来动态配置虚拟主机。</p>
 
-<p>这样，你只要在特定的目录建立域名目录，那么你的虚拟主机就配置好了，而必须许该httpd.conf文件，更重要的是，不要重启Apache服务。
-否则的话，在有大量域名的情况下，修改配置的方式管理这些域名是一个噩梦。</p>
+<p>这样，你只要在特定的目录建立域名目录，那么你的虚拟主机就配置好了，而必须许该 httpd.conf 文件，更重要的是，不要重启 Apache 服务。否则的话，在有大量域名的情况下，修改配置的方式管理这些域名是一个噩梦。</p>
 
 <p>不知道我的意思说明白了没有，那就举我的配置例子简单说明一下：</p>
 
-<p>首先让apache加载<code>vhost_alias</code>模块<br/>
-编辑<code>/etc/httpd/conf/httpd.conf</code>，确保有下面这样一行：<br/>
+<p>首先让 apache 加载<code>vhost_alias</code>模块编辑<code>/etc/httpd/conf/httpd.conf</code>，确保有下面这样一行：<br/>
 <code>LoadModule vhost_alias_module modules/mod_vhost_alias.so</code></p>
 
 <!--more-->
@@ -120,44 +122,44 @@ VirtualDocumentRoot /web/websites/%0/
 VirtualScriptAlias /web/websites/%0/cgi-bin 
 </code></pre>
 
-<p>假设你有两个站点www.foo.com和www.bar.com，那么你只需要在<code>/web/websites/</code>创建对应的www.foo.com和www.bar.com目录，然后尝试访问这两个域名试试（当然前提是DNS指向其服务器）</p>
+<p>假设你有两个站点 www.foo.com 和 www.bar.com，那么你只需要在<code>/web/websites/</code>创建对应的 www.foo.com 和 www.bar.com 目录，然后尝试访问这两个域名试试（当然前提是 DNS 指向其服务器）</p>
 
 <p>上述的核心应该是依赖日志文件的格式，因此了解日志格式变量的意义对于我们举一反三很有好处，贴出如下：</p>
 
-<p>%a: 远程IP地址<br/>
-%A: 本地IP地址<br/>
-%B: 已发送的字节数，不包含HTTP头<br/>
-%b: CLF格式的已发送字节数量，不包含HTTP头。例如当没有发送数据时，写入‘-’而不是0。<br/>
-%{FOOBAR}e: 环境变量FOOBAR的内容<br/>
+<p>%a: 远程 IP 地址<br/>
+%A: 本地 IP 地址<br/>
+%B: 已发送的字节数，不包含 HTTP 头<br/>
+%b: CLF 格式的已发送字节数量，不包含 HTTP 头。例如当没有发送数据时，写入‘-’而不是 0。<br/>
+%{FOOBAR}e: 环境变量 FOOBAR 的内容<br/>
 %f: 文件名字<br/>
 %h: 远程主机<br/>
 %H: 请求的协议<br/>
-%{Foobar}i: Foobar的内容，发送给服务器的请求的标头行。<br/>
-%l: 远程登录名字（来自identd，如提供的话）<br/>
+%{Foobar}i: Foobar 的内容，发送给服务器的请求的标头行。<br/>
+%l: 远程登录名字（来自 identd，如提供的话）<br/>
 %m: 请求的方法<br/>
 %{Foobar}n: 来自另外一个模块的注解“Foobar”的内容<br/>
-%{Foobar}o: Foobar的内容，应答的标头行<br/>
+%{Foobar}o: Foobar 的内容，应答的标头行<br/>
 %p: 服务器响应请求时使用的端口<br/>
-%P: 响应请求的子进程ID。<br/>
+%P: 响应请求的子进程 ID。<br/>
 %q: 查询字符串（如果存在查询字符串，则包含“?”后面的部分；否则，它是一个空字符串。）
 %r: 请求的第一行<br/>
 %s: 状态。对于进行内部重定向的请求，这是指<em>原来</em>请求的状态。如果用%>s，则是指后来的请求。<br/>
 %t: 以公共日志时间格式表示的时间（或称为标准英文格式）<br/>
-%{format}t: 以指定格式format表示的时间<br/>
+%{format}t: 以指定格式 format 表示的时间<br/>
 %T: 为响应请求而耗费的时间，以秒计<br/>
-%u: 远程用户（来自auth；如果返回状态（%s）是401则可能是伪造的）<br/>
-%U: 用户所请求的URL路径<br/>
-%v: 响应请求的服务器的ServerName<br/>
-%V: 依照UseCanonicalName设置得到的服务器名字</p>
+%u: 远程用户（来自 auth；如果返回状态（%s）是 401 则可能是伪造的）<br/>
+%U: 用户所请求的 URL 路径<br/>
+%v: 响应请求的服务器的 ServerName<br/>
+%V: 依照 UseCanonicalName 设置得到的服务器名字</p>
 
-<p>这个指南已经包含在Apache发布包里，如果手头没有文档，可以看看这个官方的 <a href="http://httpd.apache.org/docs/2.0/vhosts/mass.html">http://httpd.apache.org/docs/2.0/vhosts/mass.html</a>
-里面分别提到了2.0版本和1.3分别如何实现。</p>
+<p>这个指南已经包含在 Apache 发布包里，如果手头没有文档，可以看看这个官方的 <a href="http://httpd.apache.org/docs/2.0/vhosts/mass.html">http://httpd.apache.org/docs/2.0/vhosts/mass.html</a>
+里面分别提到了 2.0 版本和 1.3 分别如何实现。</p>
 
 <p>如果你对洋文不感兴趣，我找到一个中文的，<a href="http://w.yi.org/ftp/FAPM/apache/Apache2/zh/vhosts/mass.html">移步这里看看</a></p>
 
 <p><strong>Update: 2008.9.12</strong></p>
 
-<p>原谅我的肤浅，日志文件格式并不是动态虚拟主机配置的依赖，下面<a href="http://apache.chinahtml.com/mod/mod_vhost_alias.html">这篇文档</a>才是其正解。当然Aapche发布包里也有这篇文档。</p>
+<p>原谅我的肤浅，日志文件格式并不是动态虚拟主机配置的依赖，下面<a href="http://apache.chinahtml.com/mod/mod_vhost_alias.html">这篇文档</a>才是其正解。当然 Aapche 发布包里也有这篇文档。</p>
 </div>
 
 
@@ -249,8 +251,8 @@ VirtualScriptAlias /web/websites/%0/cgi-bin
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/09/11/Dynamic-Host-Configuration-apache-virtual/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/09/11/Dynamic-Host-Configuration-apache-virtual/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/09/11/Dynamic-Host-Configuration-apache-virtual/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/09/11/Dynamic-Host-Configuration-apache-virtual/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

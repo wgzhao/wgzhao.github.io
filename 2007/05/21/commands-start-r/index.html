@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/sbin下的q开头的命令只有两个，quotacheck和quotaon，其中quotaoff是quotaon的软连接。
-这是和磁盘配额有关的命令，详细情况可以参考Linux下的配额配置手册。 r开头的命令稍微多些，有25个，不过有7个是软连接。 restore： &hellip;">
+  <meta name="description" content="/sbin下的 q 开头的命令只有两个，quotacheck 和 quotaon，其中 quotaoff 是 quotaon 的软连接。这是和磁盘配额有关的命令，详细情况可以参考 Linux 下的配额配置手册。 r 开头的命令稍微多些，有 25 个，不过有 7 个是软连接。 restore： 从 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,15 +99,14 @@
   </header>
 
 
-<div class="entry-content"><p><code>/sbin</code>下的q开头的命令只有两个，quotacheck和quotaon，其中quotaoff是quotaon的软连接。
-这是和磁盘配额有关的命令，详细情况可以参考Linux下的配额配置手册。</p>
+<div class="entry-content"><p><code>/sbin</code>下的 q 开头的命令只有两个，quotacheck 和 quotaon，其中 quotaoff 是 quotaon 的软连接。这是和磁盘配额有关的命令，详细情况可以参考 Linux 下的配额配置手册。</p>
 
-<p>r开头的命令稍微多些，有25个，不过有7个是软连接。</p>
+<p>r 开头的命令稍微多些，有 25 个，不过有 7 个是软连接。</p>
 
 <!--more-->
 
 
-<p>restore：  从dump出来的备份恢复到文件系统中，我仅测试了一个例子，看上去一切正常，不过从这个例子。如果不考虑一些特别因素，那么dump/restore的使用方法是很简单的，下面是我测试的例子</p>
+<p>restore：  从 dump 出来的备份恢复到文件系统中，我仅测试了一个例子，看上去一切正常，不过从这个例子。如果不考虑一些特别因素，那么 dump/restore 的使用方法是很简单的，下面是我测试的例子</p>
 
 <pre><code> #mount /dev/mapper/vgdata-lvtest /misc
  #cp -a /boot/* /misc/
@@ -155,14 +158,12 @@ config-2.6.9-42.7AX initrd.img restoresymtable vmlinuz
 grub lost+found System.map-2.6.18.3-52 vmlinuz-2.6.18.3-52
 </code></pre>
 
-<p>从上面的例子来看，似乎dump/restore的使用方式和tar差不多，但是没有tar那么具有亲和力，毕竟tar是更加通俗的备份工具。但是从技术角
-度来说，dump/restore和tar存在质的却别：dump/restore是基于块设备的备份方式，而tar则是同时文件系统。这样的话，理论上
-dump的速度应该比tar的速度要块写。而且因为是从块设备备份，因此也更灵活，提供的参数也特别多。
-当时说到备份恢复，在Unix和
-Linux系统中，有太多的工具了。除了这两者外，还有一些不太常见的，比如cpio，这个文件格式在Oracle官方提供的介质下载中能看到，还有一个
-pax，Portable Archive eXchange的缩写。有关备份的工具，我找到一篇文档，大家可以看看</p>
+<p>从上面的例子来看，似乎 dump/restore 的使用方式和 tar 差不多，但是没有 tar 那么具有亲和力，毕竟 tar 是更加通俗的备份工具。但是从技术角度来说，dump/restore 和 tar 存在质的却别：dump/restore 是基于块设备的备份方式，而 tar 则是同时文件系统。这样的话，理论上
+dump 的速度应该比 tar 的速度要块写。而且因为是从块设备备份，因此也更灵活，提供的参数也特别多。当时说到备份恢复，在 Unix 和
+Linux 系统中，有太多的工具了。除了这两者外，还有一些不太常见的，比如 cpio，这个文件格式在 Oracle 官方提供的介质下载中能看到，还有一个
+pax，Portable Archive eXchange 的缩写。有关备份的工具，我找到一篇文档，大家可以看看</p>
 
-<blockquote><p>Unix系統基本的備份與回復工具—dump及restorerunuser:   用指定的账号或者组来运行一个shell，类似su程序，但是他没有密码提示。上面的解释是man手册中的翻译，后面的哪个密码提示不怎么好理解，为什么呢？我们知道su程序从root账号切换到其他账号是不需要密码的，而普通账号之前的切换或者从普通账号切换到root账号，你需要提供密码的。  因为能从普通账号切换到root账号，因此意味着su命令是具有setuid的，而runuser却没有。所以当在root账号下执行runuser test是没有问题的，立刻切换到账号test环境下，但是这个时候你是无法从test账号切换切换到任何账号的，他会给你权限不够的提示。当然即便提供输入密码，也没戏，因为runuser是一个普通命令，没有setuid位，那就无法从普通账号切换了。所以我不清楚了有su这样的命令后，为什么还需要runuser这样的命令，历史原因？向后兼容？Unix有？r开头的其他命令这里不说了，有好几个是于reiser文件系统相关的命令，自从reiser文件系统的作者背叛谋杀妻子罪成立后，reiser文件系统的命运就不好说了，据说作者准备出售reiser文件系统的版权来打官司。唉，还是等等看吧。另外就是rmmod命令，这是内核驱动卸载命令，我记得很早前的rmmod是insmod命令的一个软连接，现在不是了，看来他们分家了。但是分家的原因未知。rfmond是RedFlag系统特有的，是红旗系统日志收集后台程序，前台是GUI界面的。rpc开头的命令不少，这些命令更多的应该是被其他rpc应用程序来调用，比如smb，比如nfs。runlevel比较熟悉，参数也仅有一个，它是从/var/run/utmp文件中猜着当前运行的级别和之前运行的级别。比如你是在3级别登录的，然后执行startx，然后你运行runlevel，那么他给出的答案是5 3表示现在是5级别，之前是3级别。其实从3级别执行startx来启动图形级别，我更愿意说是在3级别启动了一个应用程序，这是这个应用程序比较特别，是一个X-windows，从命令角度来说，他应该和在3级别执行ls等命令没有什么差别。所以我倒不希望startx后，运行runlevel给出是答案是5 3,我期望是3.这样startx这个命令本身就没有什么特别性了。我这里来说，是比较好向Linux新手解释Linux的X-windows。我理解的从3级别到5级别应该采用最原始，最传统的init 5命令。</p></blockquote>
+<blockquote><p>Unix 系統基本的備份與回復工具—dump 及 restorerunuser:   用指定的账号或者组来运行一个 shell，类似 su 程序，但是他没有密码提示。上面的解释是 man 手册中的翻译，后面的哪个密码提示不怎么好理解，为什么呢？我们知道 su 程序从 root 账号切换到其他账号是不需要密码的，而普通账号之前的切换或者从普通账号切换到 root 账号，你需要提供密码的。  因为能从普通账号切换到 root 账号，因此意味着 su 命令是具有 setuid 的，而 runuser 却没有。所以当在 root 账号下执行 runuser test 是没有问题的，立刻切换到账号 test 环境下，但是这个时候你是无法从 test 账号切换切换到任何账号的，他会给你权限不够的提示。当然即便提供输入密码，也没戏，因为 runuser 是一个普通命令，没有 setuid 位，那就无法从普通账号切换了。所以我不清楚了有 su 这样的命令后，为什么还需要 runuser 这样的命令，历史原因？向后兼容？Unix 有？r 开头的其他命令这里不说了，有好几个是于 reiser 文件系统相关的命令，自从 reiser 文件系统的作者背叛谋杀妻子罪成立后，reiser 文件系统的命运就不好说了，据说作者准备出售 reiser 文件系统的版权来打官司。唉，还是等等看吧。另外就是 rmmod 命令，这是内核驱动卸载命令，我记得很早前的 rmmod 是 insmod 命令的一个软连接，现在不是了，看来他们分家了。但是分家的原因未知。rfmond 是 RedFlag 系统特有的，是红旗系统日志收集后台程序，前台是 GUI 界面的。rpc 开头的命令不少，这些命令更多的应该是被其他 rpc 应用程序来调用，比如 smb，比如 nfs。runlevel 比较熟悉，参数也仅有一个，它是从/var/run/utmp 文件中猜着当前运行的级别和之前运行的级别。比如你是在 3 级别登录的，然后执行 startx，然后你运行 runlevel，那么他给出的答案是 5 3 表示现在是 5 级别，之前是 3 级别。其实从 3 级别执行 startx 来启动图形级别，我更愿意说是在 3 级别启动了一个应用程序，这是这个应用程序比较特别，是一个 X-windows，从命令角度来说，他应该和在 3 级别执行 ls 等命令没有什么差别。所以我倒不希望 startx 后，运行 runlevel 给出是答案是 5 3,我期望是 3.这样 startx 这个命令本身就没有什么特别性了。我这里来说，是比较好向 Linux 新手解释 Linux 的 X-windows。我理解的从 3 级别到 5 级别应该采用最原始，最传统的 init 5 命令。</p></blockquote>
 </div>
 
 
@@ -254,8 +255,8 @@ pax，Portable Archive eXchange的缩写。有关备份的工具，我找到一�
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/05/21/commands-start-r/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/05/21/commands-start-r/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/05/21/commands-start-r/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/05/21/commands-start-r/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,10 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="想将自己的看到的，学到的，积累的一些技术知识，特别是在Linux方面的记录下来。
-暂时我的需求是： 1）具有版本控制，能看不同版本的文档。
+  <meta name="description" content="想将自己的看到的，学到的，积累的一些技术知识，特别是在 Linux 方面的记录下来。暂时我的需求是： 1）具有版本控制，能看不同版本的文档。
 2）最好有编辑器支持。
-3）单源文档管理，多源输出，就是只要维护一个文档源，但是可以输出多种格式，包括常见的html,xml,ps,pdf等。 1） &hellip;">
+3）单源文档管理，多源输出，就是只要维护一个文档源，但是可以输出多种格式，包括常见的 html,xml,ps,pdf 等。 1） &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,6 +31,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -97,33 +101,30 @@
   </header>
 
 
-<div class="entry-content"><p>想将自己的看到的，学到的，积累的一些技术知识，特别是在Linux方面的记录下来。
-暂时我的需求是：</p>
+<div class="entry-content"><p>想将自己的看到的，学到的，积累的一些技术知识，特别是在 Linux 方面的记录下来。暂时我的需求是：</p>
 
 <p>1）具有版本控制，能看不同版本的文档。<br/>
 2）最好有编辑器支持。<br/>
-3）单源文档管理，多源输出，就是只要维护一个文档源，但是可以输出多种格式，包括常见的html,xml,ps,pdf等。</p>
+3）单源文档管理，多源输出，就是只要维护一个文档源，但是可以输出多种格式，包括常见的 html,xml,ps,pdf 等。</p>
 
 <!--more-->
 
 
-<p>1）的要求估计需要第三方软件来支持了，单独某个文档编辑器或者某个文件格式恐怕支持不了（有知道的，请告诉我，谢谢！）。这里暂时用csv或者svn搞定。</p>
+<p>1）的要求估计需要第三方软件来支持了，单独某个文档编辑器或者某个文件格式恐怕支持不了（有知道的，请告诉我，谢谢！）。这里暂时用 csv 或者 svn 搞定。</p>
 
-<p>2）这个。。。这个。。。。估计未来的一段时间都是难题，以前用tex格式写文档用的是<a href="http://kile.sourceforge.net/">kile</a>,KDE的应用程序。也用过<a href="http://www.lyx.org/">lyx</a>和支持中文的<a href="http://cellular.phys.pusan.ac.kr/cjk.html">cjk-lyx</a>，这是我目前见到的唯一支持latex的WYSIWYG编辑器，对英文的支持很好，中文版的还是不够稳定。docbook编辑器用过gnome2自带的编辑器，不支持中文，不只目前如何了？<a href="http://www.gnu.org/software/emacs/">emacs</a>据说都支持，但是一直没入门。所以这，基本上，是一个难题。</p>
+<p>2）这个。。。这个。。。。估计未来的一段时间都是难题，以前用 tex 格式写文档用的是 <a href="http://kile.sourceforge.net/">kile</a>,KDE 的应用程序。也用过 <a href="http://www.lyx.org/">lyx</a> 和支持中文的 <a href="http://cellular.phys.pusan.ac.kr/cjk.html">cjk-lyx</a>，这是我目前见到的唯一支持 latex 的 WYSIWYG 编辑器，对英文的支持很好，中文版的还是不够稳定。docbook 编辑器用过 gnome2 自带的编辑器，不支持中文，不只目前如何了？<a href="http://www.gnu.org/software/emacs/">emacs</a> 据说都支持，但是一直没入门。所以这，基本上，是一个难题。</p>
 
-<p>3）这点还容易，只要支持xml，剩下的格式都能搞定。</p>
+<p>3）这点还容易，只要支持 xml，剩下的格式都能搞定。</p>
 
-<p>如果不考虑桌面编辑器，在web上考虑的话，wiki显然是一个选中，他符合上面的1）和2）。对于3）支持否，我还真不清楚。调查了再说。
-docbook满足2）和3），但是不知道是否有好的编辑器。
-latex呢？写小文档觉得有点大才小用，不划算，如果是写教材的话，那肯定优先考虑latex了，只是觉得他在插图这方面，个人觉得难了点。</p>
+<p>如果不考虑桌面编辑器，在 web 上考虑的话，wiki 显然是一个选中，他符合上面的 1）和 2）。对于 3）支持否，我还真不清楚。调查了再说。
+docbook 满足 2）和 3），但是不知道是否有好的编辑器。
+latex 呢？写小文档觉得有点大才小用，不划算，如果是写教材的话，那肯定优先考虑 latex 了，只是觉得他在插图这方面，个人觉得难了点。</p>
 
-<p>还有更好的选择吗？各类office应该是不符合我的要求了。纯粹的html不符合3）。
-看来需要在这三中格式中选中一个了。</p>
+<p>还有更好的选择吗？各类 office 应该是不符合我的要求了。纯粹的 html 不符合 3）。看来需要在这三中格式中选中一个了。</p>
 
-<p>插入一个小故事，那还是我在学校教书的时候，那时我正在学习latex。院里聘请了一位长江学者，好像是新加坡理工大学的，有点他的电脑出了点故障，院长要我去帮他。
-去他的办公室，他正在写论文，我瞄了一眼，天，latex文档。这真的让我激动不已。这应该是我见到的在学者中第一个使用latex格式文档的老师。于是我和他谈了一会，他告诉我他要发表文章的机构只接收latex格式。而且他也觉得latex还是很方便，也好修订，非常满足他的需求。</p>
+<p>插入一个小故事，那还是我在学校教书的时候，那时我正在学习 latex。院里聘请了一位长江学者，好像是新加坡理工大学的，有点他的电脑出了点故障，院长要我去帮他。去他的办公室，他正在写论文，我瞄了一眼，天，latex 文档。这真的让我激动不已。这应该是我见到的在学者中第一个使用 latex 格式文档的老师。于是我和他谈了一会，他告诉我他要发表文章的机构只接收 latex 格式。而且他也觉得 latex 还是很方便，也好修订，非常满足他的需求。</p>
 
-<p>PS：刚找到的两个docbook介绍，不错 <br/>
+<p>PS：刚找到的两个 docbook 介绍，不错 <br/>
 <a href="http://wwwhomes.uni-bielefeld.de/tliu1/oldpages/wiki/docbook_howto/why-docbook.html">DocBook
 助你完成传世之作</a><br/>
 <a href="http://whodo.worldhello.net/wiki/DocBook">http://whodo.worldhello.net/wiki/DocBook</a></p>
@@ -218,8 +219,8 @@ latex呢？写小文档觉得有点大才小用，不划算，如果是写教材
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/11/17/docbook-latex-or-wiki/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/11/17/docbook-latex-or-wiki/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/11/17/docbook-latex-or-wiki/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/11/17/docbook-latex-or-wiki/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

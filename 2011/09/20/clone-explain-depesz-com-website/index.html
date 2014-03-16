@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="从 IRC #postgresql 频道了解到一个网站: http://explain.depesz.com 其口号是： A tool for finding a real cause for slow queries 方法是粘贴你的 explain
-sql 语句结构。 &hellip;">
+sql 语句结构。他可以根据结果生成 HTML &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ sql 语句结构。 &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -100,10 +105,7 @@ sql 语句结构。 &hellip;">
 <blockquote><p>A tool for finding a real cause for slow queries</p></blockquote>
 
 <p>方法是粘贴你的 <code>explain
-sql</code> 语句结构。
-他可以根据结果生成HTML格式的解释页面，其中用不同颜色来标识子语句所占用的资源情况，其中颜色越深，标识所占用的资源越多。<br/>
-同时它还给出了两张统计列表，一张是按照索引类型来统计占用的时间，及比率；另外一种是根据SQL语句中涉及到的表来统计查询每张表所占用的时间及比率。
-不仅如此，这个网站代码还是开源的，托管在github上。地址为：
+sql</code> 语句结构。他可以根据结果生成 HTML 格式的解释页面，其中用不同颜色来标识子语句所占用的资源情况，其中颜色越深，标识所占用的资源越多。同时它还给出了两张统计列表，一张是按照索引类型来统计占用的时间，及比率；另外一种是根据 SQL 语句中涉及到的表来统计查询每张表所占用的时间及比率。不仅如此，这个网站代码还是开源的，托管在 github 上。地址为：
 <a href="https://github.com/depesz/explain.depesz.com">https://github.com/depesz/explain.depesz.com</a></p>
 
 <p>下面是搭建过程：</p>
@@ -113,20 +115,20 @@ sql</code> 语句结构。
 
 <ol>
 <li>环境：Debian unstable 64bit</li>
-<li>首先安装网站代码以来的perl框架mojolicious，可以从<a href="http://www.mojolicious.org/">http://www.mojolicious.org/</a>
-下载源代码编译安装。不过Debian的源里有这个软件，可以直接通过<code>sudo apt-get install mojolicious</code> 来安装。
+<li>首先安装网站代码以来的 perl 框架 mojolicious，可以从<a href="http://www.mojolicious.org/">http://www.mojolicious.org/</a>
+下载源代码编译安装。不过 Debian 的源里有这个软件，可以直接通过<code>sudo apt-get install mojolicious</code> 来安装。
 2)从<a href="http://backpan.perl.org/authors/id/D/DE/DEPESZ/Pg-Explain-0.61.tar.gz">http://backpan.perl.org/authors/id/D/DE/DEPESZ/Pg-Explain-0.61.tar.gz</a>
-下载分析explain SQL的perl模块，这个模块也是网站作者编写的。下载解压，执行<code>perl Build.pl</code>
+下载分析 explain SQL 的 perl 模块，这个模块也是网站作者编写的。下载解压，执行<code>perl Build.pl</code>
 ，如果提示有模块没有安装，则执行 <code>./Build installdeps</code> 而后执行 <code>./Build install</code> 即可。</li>
-<li><p>下载explain.depesze.com的源代码</p>
+<li><p>下载 explain.depesze.com 的源代码</p>
 
 <pre><code> cd /home/wgzhao/websites/
  git clone https://github.com/depesz/explain.depesz.com.git  explain
 </code></pre></li>
-<li><p>网站默认使用的是postgresql数据库，我们修改
-<code>explain.json</code>文件中关于database区域的相关信息。保证perl能正确连接上数据库。</p></li>
-<li><p>用psql连接postgresql，创建<code>explain.json</code>里设置的数据库名，并导入<code>sql/create.sql</code>文件。</p></li>
-<li><p>执行<code>morbo  --verbose ./explain.pl</code> 根据提示，如果报一些perl模块找不到，先安装这些模块。直到上述指令出现类似下面的结果：<br/>
+<li><p>网站默认使用的是 postgresql 数据库，我们修改
+<code>explain.json</code>文件中关于 database 区域的相关信息。保证 perl 能正确连接上数据库。</p></li>
+<li><p>用 psql 连接 postgresql，创建<code>explain.json</code>里设置的数据库名，并导入<code>sql/create.sql</code>文件。</p></li>
+<li><p>执行<code>morbo  --verbose ./explain.pl</code> 根据提示，如果报一些 perl 模块找不到，先安装这些模块。直到上述指令出现类似下面的结果：<br/>
      [Tue Sep 20 18:17:37 2011]<br/>
      [info] Server listening (<a href="http://*:3000">http://*:3000</a>) Server available at <a href="http://127.0.0.1:3000.">http://127.0.0.1:3000.</a></p></li>
 <li>打开浏览器，访问 <a href="http://127.0.0.1:3000">http://127.0.0.1:3000</a>，看看是不是获得了和<a href="http://explain.depesz.com/">http://explain.depesz.com/</a> 一样的效果？</li>
@@ -223,8 +225,8 @@ sql</code> 语句结构。
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2011/09/20/clone-explain-depesz-com-website/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/09/20/clone-explain-depesz-com-website/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2011/09/20/clone-explain-depesz-com-website/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/09/20/clone-explain-depesz-com-website/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

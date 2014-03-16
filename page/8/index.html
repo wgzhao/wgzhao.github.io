@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="Linux系统是非常灵活的，不过一般都是通过安装介质或者安装内核来引导，然后安装。 我这几天折腾的系统安装采取这种方式，比较另类，当然，说另类是好听，其实是比较变态。
-为什么要这么干，听我徐徐道来： 我有一台远程服务器，系统是RedHat AS4 Update 1,我想换成Ubuntu 8.10 &hellip;">
+  <meta name="description" content="Linux 系统是非常灵活的，不过一般都是通过安装介质或者安装内核来引导，然后安装。 我这几天折腾的系统安装采取这种方式，比较另类，当然，说另类是好听，其实是比较变态。为什么要这么干，听我徐徐道来： 我有一台远程服务器，系统是 RedHat AS4 Update 1,我想换成 Ubuntu 8. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -64,7 +68,10 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -98,12 +105,11 @@
   </header>
 
 
-  <div class="entry-content"><p>Linux系统是非常灵活的，不过一般都是通过安装介质或者安装内核来引导，然后安装。</p>
+  <div class="entry-content"><p>Linux 系统是非常灵活的，不过一般都是通过安装介质或者安装内核来引导，然后安装。</p>
 
-<p>我这几天折腾的系统安装采取这种方式，比较另类，当然，说另类是好听，其实是比较变态。<br/>
-为什么要这么干，听我徐徐道来：</p>
+<p>我这几天折腾的系统安装采取这种方式，比较另类，当然，说另类是好听，其实是比较变态。为什么要这么干，听我徐徐道来：</p>
 
-<p>我有一台远程服务器，系统是RedHat AS4 Update 1,我想换成Ubuntu 8.10 Server版，我无法直接接触到机器，而且在整个安装的过程中间，网络不能断，ssh服务不能断，因为我是通过ssh登录远程服务器的。</p>
+<p>我有一台远程服务器，系统是 RedHat AS4 Update 1,我想换成 Ubuntu 8.10 Server 版，我无法直接接触到机器，而且在整个安装的过程中间，网络不能断，ssh 服务不能断，因为我是通过 ssh 登录远程服务器的。</p>
 
 </div>
   
@@ -147,8 +153,7 @@
   </header>
 
 
-  <div class="entry-content"><p>sudo工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的root访问权限。它是一个setuid程序，只需要输入用户自己的密码，就可以执行sudo后面的命令。<br/>
-使用root帐号，运行/usr/bin/visudo 来编辑那些用户可以调用sudo命令的用户列表，缺省的sudo列表看上去类似下面这样：</p>
+  <div class="entry-content"><p>sudo 工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的 root 访问权限。它是一个 setuid 程序，只需要输入用户自己的密码，就可以执行 sudo 后面的命令。使用 root 帐号，运行/usr/bin/visudo 来编辑那些用户可以调用 sudo 命令的用户列表，缺省的 sudo 列表看上去类似下面这样：</p>
 
 <pre><code> root ALL=(ALL) ALL
 </code></pre>
@@ -197,17 +202,15 @@
   </header>
 
 
-  <div class="entry-content"><p>离最近一次的命令学习估计是2年前的事情了，官方理由可以说是杂事多，实际理由还是停了一段时间后，很难捡起来。</p>
+  <div class="entry-content"><p>离最近一次的命令学习估计是 2 年前的事情了，官方理由可以说是杂事多，实际理由还是停了一段时间后，很难捡起来。</p>
 
-<p>2009年的计划中提到了需要把这个命令学习完成，这次从g开头的命令一直到z结尾的命令全部看一遍，主要是把以前没有看到的，或者以前不知道的一些命令参数记录下来，已经知道了的命令就不记录在这里了,如此以来，发现要认真看的命令还真没有几个了，毕竟对系统管理员而言，/bin,/sbin/下的命令的重要性是高于/usr/sbin/的。于是凑合着记录了三个：</p>
+<p>2009 年的计划中提到了需要把这个命令学习完成，这次从 g 开头的命令一直到 z 结尾的命令全部看一遍，主要是把以前没有看到的，或者以前不知道的一些命令参数记录下来，已经知道了的命令就不记录在这里了,如此以来，发现要认真看的命令还真没有几个了，毕竟对系统管理员而言，/bin,/sbin/下的命令的重要性是高于/usr/sbin/的。于是凑合着记录了三个：</p>
 
-<p><a href="http://www.wireshark.org/">wireshark</a>：乍一看，不知道这个命令做什么用的，man了一下手册，到网络上搜寻了一把，才知道原来它是大名鼎鼎的Ethereal的化身呀，ethereal估计很多用过Linux的人都知道，它是世界上最流行的网络分析工具之一，这个强大的工具可以捕捉网络中的数据，并未用户提供网络和上层协议的各种信息，它具有安装简便，简单易用，功能丰富等特征，值得一提的是，它还有一个非常容易操作的图形界面，当然如果你是CLI的死忠分析，也许tshark会成为你的最爱，tshark是wireshark的CLI实现。</p>
+<p><a href="http://www.wireshark.org/">wireshark</a>：乍一看，不知道这个命令做什么用的，man 了一下手册，到网络上搜寻了一把，才知道原来它是大名鼎鼎的 Ethereal 的化身呀，ethereal 估计很多用过 Linux 的人都知道，它是世界上最流行的网络分析工具之一，这个强大的工具可以捕捉网络中的数据，并未用户提供网络和上层协议的各种信息，它具有安装简便，简单易用，功能丰富等特征，值得一提的是，它还有一个非常容易操作的图形界面，当然如果你是 CLI 的死忠分析，也许 tshark 会成为你的最爱，tshark 是 wireshark 的 CLI 实现。</p>
 
-<p><a href="http://www.tripwire.org">tripwire</a>：*nix系统下最著名的文件系统完整性检查工具，这个软件采取的核心技术就是对每个要监控的文件产生一个数字签名并保留下来。当数字签名不一致时，必定文件被修改过。当你要为你的系统安全着想的时候，你应该想起它！</p>
+<p><a href="http://www.tripwire.org">tripwire</a>：*nix 系统下最著名的文件系统完整性检查工具，这个软件采取的核心技术就是对每个要监控的文件产生一个数字签名并保留下来。当数字签名不一致时，必定文件被修改过。当你要为你的系统安全着想的时候，你应该想起它！</p>
 
-<p>vipw：不是多么神奇和高深的命令，不带任何参数，运行后，直接打开<code>/etc/passwd</code>，于是我知道这个命令的意思了<code>vipw = vi /etc/passwd</code>，以为是一个脚本，然后vipw是一个地地道道的ELF文件，实际上他是VIM的tiny版的实现。<br/>
-不晓得作者写这个程序的目的是什么？仅仅是为了方便编辑<code>/etc/passwd</code>？还是说万一系统没有安装编辑器，我还用它当做编辑器用，<br/>
-又或者仅仅只是一个玩笑？不理解。</p>
+<p>vipw：不是多么神奇和高深的命令，不带任何参数，运行后，直接打开<code>/etc/passwd</code>，于是我知道这个命令的意思了<code>vipw = vi /etc/passwd</code>，以为是一个脚本，然后 vipw 是一个地地道道的 ELF 文件，实际上他是 VIM 的 tiny 版的实现。不晓得作者写这个程序的目的是什么？仅仅是为了方便编辑<code>/etc/passwd</code>？还是说万一系统没有安装编辑器，我还用它当做编辑器用，又或者仅仅只是一个玩笑？不理解。</p>
 </div>
   
   
@@ -307,7 +310,7 @@
   </header>
 
 
-  <div class="entry-content"><p><a href="http://lawstar.xplore.cn">lancy</a>当妈妈的第一个生日，可惜我不能当面给她庆祝了,就在这里祝她生日快乐，每天都快乐，永远都快乐。</p>
+  <div class="entry-content"><p><a href="http://lawstar.xplore.cn">lancy</a> 当妈妈的第一个生日，可惜我不能当面给她庆祝了,就在这里祝她生日快乐，每天都快乐，永远都快乐。</p>
 
 <p>不知道她当妈妈过生日和平常过生日的感想有什么区别，也许现在没有，等到了<a href="http://pp.xplore.cn">皮皮</a>能和她说“生日快乐”的时候就会有很大区别吧。</p>
 </div>
@@ -348,31 +351,31 @@
   </header>
 
 
-  <div class="entry-content"><p>2008年年初的时候，我做了一个<a href="http://blog.wgzhao.com/2008/01/01/planned-2008.html">年度计划</a>，现在是总结和做2009年计划的时候了。</p>
+  <div class="entry-content"><p>2008 年年初的时候，我做了一个<a href="http://blog.wgzhao.com/2008/01/01/planned-2008.html">年度计划</a>，现在是总结和做 2009 年计划的时候了。</p>
 
-<p>2008年的计划现在来看基本都已经完成了，凤凰在4月份的时候去了玩了，至于米米嘛，应该说相比2007年有大幅度的增加，只是因为10月份的金融危机，导致目前还是单一经济收入，增加结构性收入这点没有实现。</p>
+<p>2008 年的计划现在来看基本都已经完成了，凤凰在 4 月份的时候去了玩了，至于米米嘛，应该说相比 2007 年有大幅度的增加，只是因为 10 月份的金融危机，导致目前还是单一经济收入，增加结构性收入这点没有实现。</p>
 
-<p>2008年最重要的造人计划，显然获得了圆满成功，而且是心想事成（我一直想要一个女儿），看看现在的皮皮越来越可爱，就会觉得日子过得越来越有滋味。</p>
+<p>2008 年最重要的造人计划，显然获得了圆满成功，而且是心想事成（我一直想要一个女儿），看看现在的皮皮越来越可爱，就会觉得日子过得越来越有滋味。</p>
 
-<p>至于2009年，目前的计划是：</p>
+<p>至于 2009 年，目前的计划是：</p>
 
 <ol>
-<li>好好抚养皮皮，这当然是我和lancy的责任，无须多说，只盼皮皮快快长大！</li>
+<li>好好抚养皮皮，这当然是我和 lancy 的责任，无须多说，只盼皮皮快快长大！</li>
 <li>米米当然还是很重要的，毕竟添了新人，所以还是要增加结构性收入的，同时也要有创造性收入</li>
-<li>如果金融危机不再加深，考虑在这年买房，暂时的想法是想带装修的，因为装修总是一个头疼的事情，如果是自己设计装修，不知道<a href="http://brisy.xplore.cn">Brisy</a>是否还记得以前的承诺呢？不过我想他肯定没有时间。<a href="http://mwf.my73.com">青韶</a>说如果我买了房子，他就送我一套价值9999的净水设备，其实我逼他送的，哈哈。这显然就是2009年最重要的事情了。</li>
-<li><p>想增加收入，当然得增加本事，所以专业技能方面还是得继续增强，2009年打算在下面三个方面深入下去：</p>
+<li>如果金融危机不再加深，考虑在这年买房，暂时的想法是想带装修的，因为装修总是一个头疼的事情，如果是自己设计装修，不知道 <a href="http://brisy.xplore.cn">Brisy</a> 是否还记得以前的承诺呢？不过我想他肯定没有时间。<a href="http://mwf.my73.com">青韶</a>说如果我买了房子，他就送我一套价值 9999 的净水设备，其实我逼他送的，哈哈。这显然就是 2009 年最重要的事情了。</li>
+<li><p>想增加收入，当然得增加本事，所以专业技能方面还是得继续增强，2009 年打算在下面三个方面深入下去：</p>
 
 <ul>
-<li>数据库技术方面，想重点学习Oracle和MySQL</li>
+<li>数据库技术方面，想重点学习 Oracle 和 MySQL</li>
 <li>集群和虚拟化技术，个人觉得以后这方面会用得越来越多，在工作中碰到的案例也会越来越多，因此要多多强加</li>
-<li>系统管理技术，这是一个不断需要学习方向，2009年打算学习Python语言，尝试用它来帮助我增加系统管理的便利性，自动化程度等。</li>
+<li>系统管理技术，这是一个不断需要学习方向，2009 年打算学习 Python 语言，尝试用它来帮助我增加系统管理的便利性，自动化程度等。</li>
 </ul>
 </li>
-<li><p>增加知识面，就需要增加自己的阅读量、阅读面，因此2009年打算多看一些非专业类的书，文学类，经济类，历史类都应该看看，还是要多买一些书，电子版看上去还是没有阅读这样来得舒适和深刻。</p></li>
+<li><p>增加知识面，就需要增加自己的阅读量、阅读面，因此 2009 年打算多看一些非专业类的书，文学类，经济类，历史类都应该看看，还是要多买一些书，电子版看上去还是没有阅读这样来得舒适和深刻。</p></li>
 </ol>
 
 
-<p>暂时这些把，如果2009年我能完成上面的这些任务，特别是第3条，那可以说2009年就非常具有纪念意义了，加油！</p>
+<p>暂时这些把，如果 2009 年我能完成上面的这些任务，特别是第 3 条，那可以说 2009 年就非常具有纪念意义了，加油！</p>
 </div>
   
   
@@ -411,10 +414,9 @@
   </header>
 
 
-  <div class="entry-content"><p><code>/etc/rc.d/rc.local</code>似乎是很多linux系统管理员的偏爱，因为凡是需要随系统自动启动的服务、程序等，只要系统没有提供SysV风格的启动脚本，就把这些需求都塞到<code>/etc/rc.d/rc.local</code>。</p>
+  <div class="entry-content"><p><code>/etc/rc.d/rc.local</code>似乎是很多 linux 系统管理员的偏爱，因为凡是需要随系统自动启动的服务、程序等，只要系统没有提供 SysV 风格的启动脚本，就把这些需求都塞到<code>/etc/rc.d/rc.local</code>。</p>
 
-<p>当然，绝大部分情况下，你会发现这一切都工作得很正常，看上去也很美好。<br/>
-不过，当你遇到了一些诡异的问题的时候，也许你应该好好的去看看<code>/etc/rc.d/rc.local</code>里都写了什么了？</p>
+<p>当然，绝大部分情况下，你会发现这一切都工作得很正常，看上去也很美好。不过，当你遇到了一些诡异的问题的时候，也许你应该好好的去看看<code>/etc/rc.d/rc.local</code>里都写了什么了？</p>
 
 </div>
   
@@ -458,9 +460,9 @@
   </header>
 
 
-  <div class="entry-content"><p>翻看我的<a href="http://blog.wgzhao.com/2003/12/21/I-am-a-teacher-of-embarrassment/">第一篇博客</a>，刚好是5年前的今天，时间过得真快，当时只是赶时髦的一个做法，没有想到一直坚持了下来。</p>
+  <div class="entry-content"><p>翻看我的<a href="http://blog.wgzhao.com/2003/12/21/I-am-a-teacher-of-embarrassment/">第一篇博客</a>，刚好是 5 年前的今天，时间过得真快，当时只是赶时髦的一个做法，没有想到一直坚持了下来。</p>
 
-<p>其实要说到在网络上记录一些事情这种模式，我在03年之前就已经做了，只是当然不知道又博客这个东西，大概是02年底，03年初的时候刚从大学毕业，于是就模仿国外大学比较流行的做法，创建了<a href="http://cie.xtu.edu.cn/~mlsx">http://cie.xtu.edu.cn/~mlsx</a></p>
+<p>其实要说到在网络上记录一些事情这种模式，我在 03 年之前就已经做了，只是当然不知道又博客这个东西，大概是 02 年底，03 年初的时候刚从大学毕业，于是就模仿国外大学比较流行的做法，创建了 <a href="http://cie.xtu.edu.cn/~mlsx">http://cie.xtu.edu.cn/~mlsx</a></p>
 
 </div>
   
@@ -504,9 +506,9 @@
   </header>
 
 
-  <div class="entry-content"><p>X方式下有都有屏幕锁定和屏幕保护的功能，但是在终端下，如何保护我们目前的工作不被别人看到呢，可以尝试这个<a href="http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html">vlock</a>工具，不到30k，可以非常方便的锁定终端。</p>
+  <div class="entry-content"><p>X 方式下有都有屏幕锁定和屏幕保护的功能，但是在终端下，如何保护我们目前的工作不被别人看到呢，可以尝试这个 <a href="http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html">vlock</a> 工具，不到 30k，可以非常方便的锁定终端。</p>
 
-<p>只要运行vlock程序，屏幕就会清空锁定，要想再次使用，必须输入用户密码：</p>
+<p>只要运行 vlock 程序，屏幕就会清空锁定，要想再次使用，必须输入用户密码：</p>
 
 </div>
   
@@ -550,15 +552,13 @@
   </header>
 
 
-  <div class="entry-content"><p>很惭愧，知道今天才知道Aapche可以基于域名或者IP来动态配置虚拟主机。</p>
+  <div class="entry-content"><p>很惭愧，知道今天才知道 Aapche 可以基于域名或者 IP 来动态配置虚拟主机。</p>
 
-<p>这样，你只要在特定的目录建立域名目录，那么你的虚拟主机就配置好了，而必须许该httpd.conf文件，更重要的是，不要重启Apache服务。
-否则的话，在有大量域名的情况下，修改配置的方式管理这些域名是一个噩梦。</p>
+<p>这样，你只要在特定的目录建立域名目录，那么你的虚拟主机就配置好了，而必须许该 httpd.conf 文件，更重要的是，不要重启 Apache 服务。否则的话，在有大量域名的情况下，修改配置的方式管理这些域名是一个噩梦。</p>
 
 <p>不知道我的意思说明白了没有，那就举我的配置例子简单说明一下：</p>
 
-<p>首先让apache加载<code>vhost_alias</code>模块<br/>
-编辑<code>/etc/httpd/conf/httpd.conf</code>，确保有下面这样一行：<br/>
+<p>首先让 apache 加载<code>vhost_alias</code>模块编辑<code>/etc/httpd/conf/httpd.conf</code>，确保有下面这样一行：<br/>
 <code>LoadModule vhost_alias_module modules/mod_vhost_alias.so</code></p>
 
 </div>
@@ -611,8 +611,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/8/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/8/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/8/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/8/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="时间过的真快，到今天，皮皮整整一岁了。还能想起刚出生时的手忙脚乱。 刚出生时，看上去真的小巧玲珑，因为脸型是削长的，所有看第一眼的人都怀疑皮皮只有5斤左右，而实际上，他有6斤九两，在标准体重范围内。 刚开始时，以为喂牛奶没有经验，不知道一餐要喂多少，结果皮皮无辜的挨了几顿饿， &hellip;">
+  <meta name="description" content="时间过的真快，到今天，皮皮整整一岁了。还能想起刚出生时的手忙脚乱。 刚出生时，看上去真的小巧玲珑，因为脸型是削长的，所有看第一眼的人都怀疑皮皮只有 5 斤左右，而实际上，他有 6 斤九两，在标准体重范围内。 刚开始时，以为喂牛奶没有经验，不知道一餐要喂多少，结果皮皮无辜的挨了几顿饿， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -63,7 +68,10 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -99,7 +107,7 @@
 
   <div class="entry-content"><p>时间过的真快，到今天，皮皮整整一岁了。还能想起刚出生时的手忙脚乱。</p>
 
-<p>刚出生时，看上去真的小巧玲珑，因为脸型是削长的，所有看第一眼的人都怀疑皮皮只有5斤左右，而实际上，他有6斤九两，在标准体重范围内。</p>
+<p>刚出生时，看上去真的小巧玲珑，因为脸型是削长的，所有看第一眼的人都怀疑皮皮只有 5 斤左右，而实际上，他有 6 斤九两，在标准体重范围内。</p>
 
 <p>刚开始时，以为喂牛奶没有经验，不知道一餐要喂多少，结果皮皮无辜的挨了几顿饿，我和还医院的医生和护士吵了几架。</p>
 
@@ -147,7 +155,7 @@
 
   <div class="entry-content"><p>摘译自 <a href="http://tinyurl.com/bol3ou7">mysql performance blog</a></p>
 
-<p>需要MySQL高可用吗？</p>
+<p>需要 MySQL 高可用吗？</p>
 
 <p>问题似乎很明显，但是有时却忽略了。实际上这是一个投入和产出的问题，投入越大，你获得数据安全性就越高，所以这个问题可以归结为”你的服务器宕机成本是多少？“，如果你的宕机成本小于$10/hour，那基本上你不需要高可用方案了，So，不用浪费时间看下文了。</p>
 
@@ -193,9 +201,7 @@
   </header>
 
 
-  <div class="entry-content"><p>不记得是ubuntu升级到哪个核心版本的时候出现了这个问题，系统正常关闭，再启动的时候，就会提示根文件系统的超级块最后写入时间比当前实际时间快8个小时。<br/>
-而BIOS时钟和系统时钟都是正确的。BIOS里没有时区设置（我没有看到），系统设置的CST时区，以前没有遇到过，有人说是双系统的问题。<br/>
-目前的解决办法是，修改<code>/etc/default/rcS</code>文件，添加或者修改类似下面这行：</p>
+  <div class="entry-content"><p>不记得是 ubuntu 升级到哪个核心版本的时候出现了这个问题，系统正常关闭，再启动的时候，就会提示根文件系统的超级块最后写入时间比当前实际时间快 8 个小时。而 BIOS 时钟和系统时钟都是正确的。BIOS 里没有时区设置（我没有看到），系统设置的 CST 时区，以前没有遇到过，有人说是双系统的问题。目前的解决办法是，修改<code>/etc/default/rcS</code>文件，添加或者修改类似下面这行：</p>
 
 <p>UTC=yes</p>
 
@@ -238,10 +244,9 @@
   </header>
 
 
-  <div class="entry-content"><p>可选项（options）设置用来改变shell或者脚本的行为。</p>
+  <div class="entry-content"><p>可选项（options）设置用来改变 shell 或者脚本的行为。</p>
 
-<p><code>set</code>指令可以使得在一个脚本里设置可选项。
-在脚本你需要设置可选项的地方，实用<code>set -o option-name</code>，或者采取缩写模式的<code>set -option-abbrev</code>。这两种形式效果等价。 比如</p>
+<p><code>set</code>指令可以使得在一个脚本里设置可选项。在脚本你需要设置可选项的地方，实用<code>set -o option-name</code>，或者采取缩写模式的<code>set -option-abbrev</code>。这两种形式效果等价。 比如</p>
 
 </div>
   
@@ -285,10 +290,9 @@
   </header>
 
 
-  <div class="entry-content"><p>不得不再一次说，<a href="http://tldp.org/LDP/abs/html">Advanced bash-scripting guide(a.k.a ABS)</a>这本书太强悍了，对于bash里的Here
-Document用法，我说见过的其他关于shell/bash编程的书里，都是简单的介绍这个东西是做什么的，基本用法是什么，然后给出一个例子就完成了。<br/>
-我也一直以为他就是为了便于多行的输入。但是看完<a href="http://tldp.org/LDP/abs/html" title="Advanced bash-scripting guide">ABS</a>对此<a href="http://tldp.org/LDP/abs/html/here-docs.html">一整章的介绍</a>，我才发现，其实here
-document没有那么简单。</p>
+  <div class="entry-content"><p>不得不再一次说，<a href="http://tldp.org/LDP/abs/html">Advanced bash-scripting guide(a.k.a ABS)</a>这本书太强悍了，对于 bash 里的 Here
+Document 用法，我说见过的其他关于 shell/bash 编程的书里，都是简单的介绍这个东西是做什么的，基本用法是什么，然后给出一个例子就完成了。我也一直以为他就是为了便于多行的输入。但是看完 <a href="http://tldp.org/LDP/abs/html" title="Advanced bash-scripting guide">ABS</a> 对此<a href="http://tldp.org/LDP/abs/html/here-docs.html">一整章的介绍</a>，我才发现，其实 here
+document 没有那么简单。</p>
 
 </div>
   
@@ -332,7 +336,7 @@ document没有那么简单。</p>
   </header>
 
 
-  <div class="entry-content"><p>还是来自<a href="p://www.tldp.org/LDP/abs/html/">ABS</a> 最新版的摘录，这次是<a href="http://tldp.org/LDP/abs/html/regexp.html">第十七章</a>，关于正规表达式。以下是摘录和翻译。</p>
+  <div class="entry-content"><p>还是来自 <a href="p://www.tldp.org/LDP/abs/html/">ABS</a> 最新版的摘录，这次是<a href="http://tldp.org/LDP/abs/html/regexp.html">第十七章</a>，关于正规表达式。以下是摘录和翻译。</p>
 
 <p>一个表达式是一串字符 这些字符表达的意思超出了字面意思，我们称之为<em>元字符(metacharacters)</em>.</p>
 
@@ -384,7 +388,7 @@ document没有那么简单。</p>
 更详细的例子，可以参考下面的链接：
 <a href="http://www.heybrain.com/notheal/article/1138.html">http://www.heybrain.com/notheal/article/1138.html</a></p>
 
-<p>我这里是用shell实现了，其实用C实现应该是最好的，毕竟算法的东西，C还是要快很多，我本是打算用C的，结果发现我都忘记得差不多了，连最简单的申明数组并初始化都忘记了，于是只要用效率比较低的shell，不过在做一些匹配和校验的时候，感觉比C要方便一些，不多说了，给代码</p>
+<p>我这里是用 shell 实现了，其实用 C 实现应该是最好的，毕竟算法的东西，C 还是要快很多，我本是打算用 C 的，结果发现我都忘记得差不多了，连最简单的申明数组并初始化都忘记了，于是只要用效率比较低的 shell，不过在做一些匹配和校验的时候，感觉比 C 要方便一些，不多说了，给代码</p>
 
 </div>
   
@@ -428,16 +432,15 @@ document没有那么简单。</p>
   </header>
 
 
-  <div class="entry-content"><p>摘自<a href="http://tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide
+  <div class="entry-content"><p>摘自 <a href="http://tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide
 V6.0.05</a>第部分第三章的<a href="http://tldp.org/LDP/abs/html/special-chars.html">特殊字符</a>中的片断，并做了翻译。</p>
 
 <ul>
 <li><code>Ctl-A</code>  将光标移到行首</li>
-<li><code>Ctl-B</code> 退格键（但是我在ubuntu 9.10 bash 3.2.48上测试却是向前移动光标，        并不删除该字符）</li>
+<li><code>Ctl-B</code> 退格键（但是我在 ubuntu 9.10 bash 3.2.48 上测试却是向前移动光标，        并不删除该字符）</li>
 <li><code>Ctl-C</code> 中断. 中断一个前台任务</li>
-<li><code>Ctl-D</code> 从当前shell退出（类似exit) <code>EOF</code> (end-of-file). 它也能中断在stdin的输入。<br/>
-当在一个终端(console)或者虚拟终端(比如xterm)里敲键盘时，<code>ctl-D</code>
-会删除当前光标下的字符.如果当前没有任何字符了，则 <code>Ctl-D</code> 表示从当前会话退出，如果时xterm之类的窗口，则会关闭当前窗口。</li>
+<li><code>Ctl-D</code> 从当前 shell 退出（类似 exit) <code>EOF</code> (end-of-file). 它也能中断在 stdin 的输入。当在一个终端(console)或者虚拟终端(比如 xterm)里敲键盘时，<code>ctl-D</code>
+会删除当前光标下的字符.如果当前没有任何字符了，则 <code>Ctl-D</code> 表示从当前会话退出，如果时 xterm 之类的窗口，则会关闭当前窗口。</li>
 </ul>
 
 
@@ -485,7 +488,7 @@ V6.0.05</a>第部分第三章的<a href="http://tldp.org/LDP/abs/html/special-ch
 
   <div class="entry-content"><p>我其实讨厌麦当劳，当然也不喜欢肯德基，我说的是他们提供的垃圾食品。</p>
 
-<p>但当离火车开走还有4个小时，又无处可去的时候，我还是希望找到麦当劳或者肯德基的。虽然火车站附近的大小快餐店一家接着一家，但是我想，大概没有人会去呆着那里休息的。很奇怪，在火车站附近没有看到麦当劳，也没有看到肯德基。于是我想到了去银行的营业大厅，那里还算干净，也有免费的空调可以吹。</p>
+<p>但当离火车开走还有 4 个小时，又无处可去的时候，我还是希望找到麦当劳或者肯德基的。虽然火车站附近的大小快餐店一家接着一家，但是我想，大概没有人会去呆着那里休息的。很奇怪，在火车站附近没有看到麦当劳，也没有看到肯德基。于是我想到了去银行的营业大厅，那里还算干净，也有免费的空调可以吹。</p>
 
 <p>我一脚跨进建设银行的大门，一位着正装的女孩子连忙起身，问我“先生，您需要办理什么业务”，我环顾四周，说了句，不办什么，看看。那女孩估计知道了我是来噌位子的，连忙说，自动取款机在外面左侧。这女孩可真聪明，我也知道顺着她的台阶说，谢谢。</p>
 
@@ -531,8 +534,7 @@ V6.0.05</a>第部分第三章的<a href="http://tldp.org/LDP/abs/html/special-ch
   </header>
 
 
-  <div class="entry-content"><p>因为搬家的原因，这篇文档，断断续续，翻译了一个多星期，翻译的过程中，发现自己对SCSI子系统还是不了解，所以有很多地方翻译得很晦涩，还是建议大家看原文档。
-原文档的链接地址是： <br/>
+  <div class="entry-content"><p>因为搬家的原因，这篇文档，断断续续，翻译了一个多星期，翻译的过程中，发现自己对 SCSI 子系统还是不了解，所以有很多地方翻译得很晦涩，还是建议大家看原文档。原文档的链接地址是： <br/>
 <a href="http://sg.danny.cz/sg/sdebug26.html">http://sg.danny.cz/sg/sdebug26.html</a><br/>
 如果你实在是看着英文就头疼，那就对付着看我的翻译吧：</p>
 
@@ -586,8 +588,8 @@ V6.0.05</a>第部分第三章的<a href="http://tldp.org/LDP/abs/html/special-ch
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/6/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/6/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/6/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/6/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

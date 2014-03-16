@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="一直以来，终端模拟器主要是用两个：一个时gnome下的gnome-terminal。另外一个时KDE下的konsole。其实也就是桌面环境自带的。相比而言，我可能更喜欢gnome-terminal了，只是因为RedFlag坚持使用KDE，因此很少使用gnome-terminal了。 但是， &hellip;">
+  <meta name="description" content="一直以来，终端模拟器主要是用两个：一个时 gnome 下的 gnome-terminal。另外一个时 KDE 下的 konsole。其实也就是桌面环境自带的。相比而言，我可能更喜欢 gnome-terminal 了，只是因为 RedFlag 坚持使用 KDE，因此很少使用 gnome- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,22 +99,21 @@
   </header>
 
 
-<div class="entry-content"><p>一直以来，终端模拟器主要是用两个：一个时gnome下的gnome-terminal。另外一个时KDE下的konsole。其实也就是桌面环境自带的。相比而言，我可能更喜欢gnome-terminal了，只是因为RedFlag坚持使用KDE，因此很少使用gnome-terminal了。</p>
+<div class="entry-content"><p>一直以来，终端模拟器主要是用两个：一个时 gnome 下的 gnome-terminal。另外一个时 KDE 下的 konsole。其实也就是桌面环境自带的。相比而言，我可能更喜欢 gnome-terminal 了，只是因为 RedFlag 坚持使用 KDE，因此很少使用 gnome-terminal 了。</p>
 
-<p>但是，<del>不管gnome-terminal，还是konsole，我都遇到了字符集编码的问题</del>(请原谅我的无知)。<br/>
-举一个简单的例子。我的机器时Everest 0.5,默认的字符集是UTF-8.</p>
+<p>但是，<del>不管 gnome-terminal，还是 konsole，我都遇到了字符集编码的问题</del>(请原谅我的无知)。举一个简单的例子。我的机器时 Everest 0.5,默认的字符集是 UTF-8.</p>
 
 <p><!--more->>
-当我登录默认字符集是GB2312/GB18030的系统，比如RedFlag DC 时，无法正常显示后者的字符。即使你重新设置环境变量也不行。</p>
+当我登录默认字符集是 GB2312/GB18030 的系统，比如 RedFlag DC 时，无法正常显示后者的字符。即使你重新设置环境变量也不行。</p>
 
-<p>而Windows下的<a href="http://www.csie.ntu.edu.tw/~piaip/pietty/">pietty</a>却能很好的解决这个问题。</p>
+<p>而 Windows 下的 <a href="http://www.csie.ntu.edu.tw/~piaip/pietty/">pietty</a> 却能很好的解决这个问题。</p>
 
-<p>偶然看到<a href="http://yakuake.kde.org/">Yakuake</a>，尝试使用，发现有这个多编码的功能，就冲这个功能，我肯定使用他了。当然，它还有很多其他功能，比如方便的窗口缩放，焦点固定，F12功能键的显示和隐藏，窗口的分割等等。都是不错的实用功能。</p>
+<p>偶然看到 <a href="http://yakuake.kde.org/">Yakuake</a>，尝试使用，发现有这个多编码的功能，就冲这个功能，我肯定使用他了。当然，它还有很多其他功能，比如方便的窗口缩放，焦点固定，F12 功能键的显示和隐藏，窗口的分割等等。都是不错的实用功能。</p>
 
-<p>Yakuake基于konsole，采用Quake风格。推荐大家使用！</p>
+<p>Yakuake 基于 konsole，采用 Quake 风格。推荐大家使用！</p>
 
 <p><strong>Update:</strong> <br/>
-即便时从A编码的机器上chroot到另外一个B编码的系统上，设置对应的B编码也有效，太棒了！</p>
+即便时从 A 编码的机器上 chroot 到另外一个 B 编码的系统上，设置对应的 B 编码也有效，太棒了！</p>
 </div>
 
 
@@ -201,8 +205,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/01/06/yakuake-just-this/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/01/06/yakuake-just-this/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/01/06/yakuake-just-this/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/01/06/yakuake-just-this/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

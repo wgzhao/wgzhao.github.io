@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="9–1.文件过滤. 显示一个文件的所有行, 忽略以井号( # )开头的行. 这个字符被用做Python , Perl, Tcl, 等大多脚本文件的注释符号. 附加题: 处理不是第一个字符开头的注释. 去掉以#开头的行比较好办，用startswith函数也行，用string[0]获得第一个字符也行 &hellip;">
+  <meta name="description" content="9–1.文件过滤. 显示一个文件的所有行, 忽略以井号( # )开头的行. 这个字符被用做 Python , Perl, Tcl, 等大多脚本文件的注释符号. 附加题: 处理不是第一个字符开头的注释. 去掉以#开头的行比较好办，用 startswith 函数也行，用 string[0] &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,17 +99,16 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>9–1.文件过滤. 显示一个文件的所有行, 忽略以井号( # )开头的行. 这个字符被用做Python , Perl, Tcl, 等大多脚本文件的注释符号. 附加题: 处理不是第一个字符开头的注释.</p></blockquote>
+<div class="entry-content"><blockquote><p>9–1.文件过滤. 显示一个文件的所有行, 忽略以井号( # )开头的行. 这个字符被用做 Python , Perl, Tcl, 等大多脚本文件的注释符号. 附加题: 处理不是第一个字符开头的注释.</p></blockquote>
 
-<p>去掉以#开头的行比较好办，用startswith函数也行，用string[0]获得第一个字符也行。<br/>
-麻烦的是如果要去掉行中间的注释，我这里采取用的是正规表达式（RE）方法，代码如下：</p>
+<p>去掉以#开头的行比较好办，用 startswith 函数也行，用 string[0]获得第一个字符也行。麻烦的是如果要去掉行中间的注释，我这里采取用的是正规表达式（RE）方法，代码如下：</p>
 
 <!--more-->
 
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/filter could not be found</p>
 
-<p>给定的文件内容如下(节选自/etc/ipsec.conf文件）：</p>
+<p>给定的文件内容如下(节选自/etc/ipsec.conf 文件）：</p>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/ipsec.conf could not be found</p>
 
@@ -148,7 +152,7 @@ how many lines do you want print:4
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/file could not be found</p>
 
-<p>我们以/etc/hosts文件为例，程序执行的结果如下：</p>
+<p>我们以/etc/hosts 文件为例，程序执行的结果如下：</p>
 
 <pre><code>$ ./chapter9.py 
 pls enter your file:/etc/hosts
@@ -157,14 +161,14 @@ $ wc -l /etc/hosts
 71 /etc/hosts
 </code></pre>
 
-<p>后面用wc命令来验证我们程序的正确性</p>
+<p>后面用 wc 命令来验证我们程序的正确性</p>
 
 <blockquote><p>9–4.文件访问. 写一个逐页显示文本文件的程序. 提示输入一个文件名, 每次显示文本文件的 25 行,
 暂停并向用户提示&#8221;按任意键继续.&ldquo;, 按键后继续执行.</p></blockquote>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e9-4.py could not be found</p>
 
-<p>我们还是以/etc/hosts文件为测试文件，执行结果如下(为节省页面，输出有省略）：</p>
+<p>我们还是以/etc/hosts 文件为测试文件，执行结果如下(为节省页面，输出有省略）：</p>
 
 <pre><code>$ ./e9-4.py 
 127.0.0.1   wgzhao-laptop   localhost.localdomain   localhost
@@ -194,15 +198,15 @@ Press any key to continue...
 
 <blockquote><p>9–6. 文件比较. 写一个比较两个文本文件的程序. 如果不同, 给出第一个不同处的行号和列</p></blockquote>
 
-<p>这个题目看上去比较简单，但是实现起来总是觉得别扭，找不到一个比较好的算法。我甚至下载了diff程序源代码来看，结果看得一头雾水（唉，我的C语言，是个杯具）</p>
+<p>这个题目看上去比较简单，但是实现起来总是觉得别扭，找不到一个比较好的算法。我甚至下载了 diff 程序源代码来看，结果看得一头雾水（唉，我的 C 语言，是个杯具）</p>
 
-<p>最开始是想每次读取一行，如果这行不同，那就只要比较这行在某个列不同就好了。但是实际编写的时候，发现很难控制判断。最好还是改成了逐自己的比较。这个方法唯一比较麻烦的就似乎你得自己计算是到了哪一行了。判断是如果读取到的是&#8217;\n&#8217;符号，那就应该换行了，此时行号要加1，当然列号就要重置了，因为新起一行比较了。</p>
+<p>最开始是想每次读取一行，如果这行不同，那就只要比较这行在某个列不同就好了。但是实际编写的时候，发现很难控制判断。最好还是改成了逐自己的比较。这个方法唯一比较麻烦的就似乎你得自己计算是到了哪一行了。判断是如果读取到的是&#8217;\n&#8217;符号，那就应该换行了，此时行号要加 1，当然列号就要重置了，因为新起一行比较了。</p>
 
-<p>第一次使用while..else这种其他语言里没有的语句，感觉很好，少了很多判断。 下面是实现的代码</p>
+<p>第一次使用 while..else 这种其他语言里没有的语句，感觉很好，少了很多判断。 下面是实现的代码</p>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/diff could not be found</p>
 
-<p>下面是一些代码实际运行的例子。t1，t2是待比较的两个文件。</p>
+<p>下面是一些代码实际运行的例子。t1，t2 是待比较的两个文件。</p>
 
 <pre><code>$cat t1
 onetwo
@@ -231,7 +235,7 @@ $./chapter9.py
 same file
 </code></pre>
 
-<blockquote><p>9–16.文本处理. 人们输入的文字常常超过屏幕的最大宽度. 编写一个程序, 在一个文本文件中查找长度大于 80 个字符的文本行. 从最接近80 个字符的单词断行, 把剩余文件插入到下一行处.程序执行完毕后, 应该没有超过 80 个字符的文本行了.</p></blockquote>
+<blockquote><p>9–16.文本处理. 人们输入的文字常常超过屏幕的最大宽度. 编写一个程序, 在一个文本文件中查找长度大于 80 个字符的文本行. 从最接近 80 个字符的单词断行, 把剩余文件插入到下一行处.程序执行完毕后, 应该没有超过 80 个字符的文本行了.</p></blockquote>
 
 <p>下面是代码实现</p>
 
@@ -243,9 +247,7 @@ same file
 3) 数据文件的总字节长度.<br/>
 你的工作就是生成这个文件, 把给定的字节随机散布在文件里, 并且要求保证给定字符在文件中只出现指定的次数, 文件应精确地达到要求的长度.</p></blockquote>
 
-<p>假定要插入的字节值是byte，出现的次数是cnt，文件大小是filesize。那么，首先创建一个长度为filesize &ndash; cnt 的随机数列表（slist)。同时将该数转为字符(chr)。如果随机选出的字节值和byte相同，则跳过（也可以不跳过，修改cnt值）接下来就是吧cnt个byte随机插入到列表里。<br/>
-我们采取每次随机获得(0,len(slist))之间的某个值，当作slist插入的位置，然后将byte插入。
-最后将slist写入文件。</p>
+<p>假定要插入的字节值是 byte，出现的次数是 cnt，文件大小是 filesize。那么，首先创建一个长度为 filesize &ndash; cnt 的随机数列表（slist)。同时将该数转为字符(chr)。如果随机选出的字节值和 byte 相同，则跳过（也可以不跳过，修改 cnt 值）接下来就是吧 cnt 个 byte 随机插入到列表里。我们采取每次随机获得(0,len(slist))之间的某个值，当作 slist 插入的位置，然后将 byte 插入。最后将 slist 写入文件。</p>
 
 <p>代码如下：</p>
 
@@ -348,8 +350,8 @@ $ ls -l /tmp/test
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-9-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-9-exercise/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/06/05/core-python-programming-2nd-chapter-9-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-9-exercise/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

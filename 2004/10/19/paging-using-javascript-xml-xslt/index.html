@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的xml编程代码。
-由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。 首先申明：该代码不能保证再所有IE5.5以上的浏览器都能通过，我实在想不通，就IE那么烂的浏览器居然会有那么多人用， &hellip;">
+  <meta name="description" content="经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的 xml 编程代码。由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。 首先申明：该代码不能保证再所有 IE5.5 以上的浏览器都能通过，我实在想不通，就 IE 那么烂的浏览器居然会有那么多人用，光 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,14 +99,11 @@
   </header>
 
 
-<div class="entry-content"><p>经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的xml编程代码。<br/>
-由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。</p>
+<div class="entry-content"><p>经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的 xml 编程代码。由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。</p>
 
-<p>首先申明：该代码不能保证再所有IE5.5以上的浏览器都能通过，我实在想不通，就IE那么烂的浏览器居然会有那么多人用，光javascript报错就是等于没说，而且还能糊弄别人，和mozilla的javascript调试器相比，IE可以钻到地逢里面去了。<br/>
-好不容易下载了MS声称加强了的调试器，依然是小儿科，我真的不知道MS是不是把顾客当宝弄。<br/>
-算了，不说这些了，反正我的Jscript也没怎么学，就当成我无法理解MS的javascript吧。</p>
+<p>首先申明：该代码不能保证再所有 IE5.5 以上的浏览器都能通过，我实在想不通，就 IE 那么烂的浏览器居然会有那么多人用，光 javascript 报错就是等于没说，而且还能糊弄别人，和 mozilla 的 javascript 调试器相比，IE 可以钻到地逢里面去了。好不容易下载了 MS 声称加强了的调试器，依然是小儿科，我真的不知道 MS 是不是把顾客当宝弄。算了，不说这些了，反正我的 Jscript 也没怎么学，就当成我无法理解 MS 的 javascript 吧。</p>
 
-<p>两个文件保存到了<a href="https://github.com">github</a>里，可以点击下面的链接下载：</p>
+<p>两个文件保存到了 <a href="https://github.com">github</a> 里，可以点击下面的链接下载：</p>
 
 <p><a href="https://gist.github.com/4419135">books_grid.xml</a></p>
 
@@ -192,8 +193,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2004/10/19/paging-using-javascript-xml-xslt/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2004/10/19/paging-using-javascript-xml-xslt/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2004/10/19/paging-using-javascript-xml-xslt/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2004/10/19/paging-using-javascript-xml-xslt/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="突然想到了裸设备，linux下的裸设备(raw
+  <meta name="description" content="突然想到了裸设备，linux 下的裸设备(raw
 device)一直都不是理解得很清楚，特别是用户问及到裸设备的时候，我到真不知道如何才是正确的解释，或者说能让用户相信我的说法。 今天做了一些功课，算是又多了解了一些东西吧。 为什么裸设备需要绑定或者说映射到已经存在的块设备上？ &hellip;">
   
 
@@ -30,6 +30,11 @@ device)一直都不是理解得很清楚，特别是用户问及到裸设备的�
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,31 +100,23 @@ device)一直都不是理解得很清楚，特别是用户问及到裸设备的�
   </header>
 
 
-<div class="entry-content"><p>突然想到了裸设备，linux下的裸设备(raw
+<div class="entry-content"><p>突然想到了裸设备，linux 下的裸设备(raw
 device)一直都不是理解得很清楚，特别是用户问及到裸设备的时候，我到真不知道如何才是正确的解释，或者说能让用户相信我的说法。</p>
 
 <p>今天做了一些功课，算是又多了解了一些东西吧。</p>
 
-<p>为什么裸设备需要绑定或者说映射到已经存在的块设备上？
-这恐怕是用户问得最多的问题，我之前的回答都是linux下就是需要绑定。用户一般立刻会回一句，那为什么Unix就不用要呢？
-虽然我觉得这种比较没有太多含义，毕竟我们说Linux和Unix非常相似，但是再相似，也不是相同呀，凭什么Unix不做绑定或者映射，Linux就一定要按照这种设计模式呀？</p>
+<p>为什么裸设备需要绑定或者说映射到已经存在的块设备上？这恐怕是用户问得最多的问题，我之前的回答都是 linux 下就是需要绑定。用户一般立刻会回一句，那为什么 Unix 就不用要呢？虽然我觉得这种比较没有太多含义，毕竟我们说 Linux 和 Unix 非常相似，但是再相似，也不是相同呀，凭什么 Unix 不做绑定或者映射，Linux 就一定要按照这种设计模式呀？</p>
 
 <!--more-->
 
 
 <p>不过我还是真的想知道，但是设计的时候，为什么会这样呢？</p>
 
-<p>找到了<a href="http://www.llnl.gov/linux/ucrl-id-144213.html">2001年的一篇文章</a>，就是说在Linux内核中增加裸设备的。<br/>
-原来Unix中每一个块设备都会有一个对应的字符设备用于非缓存(unbuffered)I/O,这就是他对应的裸设备了。<br/>
-而Linux中rawio的则实现了一套非绑定(unbound)的裸设备/dev/rawN或者/dev/raw/rawN和一个控制设备/dev/rawct用来把他们绑定到块设备上。<br/>
-所以当需要使用一个裸设备的时候，就需要把他和一个真实存在的块设备对应起来，这一个步骤实际上就是完成了Unix里的自动对应一个非缓存字符设备。</p>
+<p>找到了 <a href="http://www.llnl.gov/linux/ucrl-id-144213.html">2001 年的一篇文章</a>，就是说在 Linux 内核中增加裸设备的。原来 Unix 中每一个块设备都会有一个对应的字符设备用于非缓存(unbuffered)I/O,这就是他对应的裸设备了。而 Linux 中 rawio 的则实现了一套非绑定(unbound)的裸设备/dev/rawN 或者/dev/raw/rawN 和一个控制设备/dev/rawct 用来把他们绑定到块设备上。所以当需要使用一个裸设备的时候，就需要把他和一个真实存在的块设备对应起来，这一个步骤实际上就是完成了 Unix 里的自动对应一个非缓存字符设备。</p>
 
-<p>为什么需要裸设备呢？<br/>
-裸设备的需求来自那些高性能的关系数据库系统已经需要对设备更加灵活访问的应用程序。
-对于数据库而言，其自身已经有了缓存机制来提高用户应答，因此块设备自带的缓存策略对数据库而言，没有太多含义，有时反而会影响性能。所以类似Oracle，DB2这样的大型数据库都推荐用裸设备来存储数据，而不是用文件系统。裸设备为什么会快呢，上面的那个2001年的文档解释了这个原因。</p>
+<p>为什么需要裸设备呢？裸设备的需求来自那些高性能的关系数据库系统已经需要对设备更加灵活访问的应用程序。对于数据库而言，其自身已经有了缓存机制来提高用户应答，因此块设备自带的缓存策略对数据库而言，没有太多含义，有时反而会影响性能。所以类似 Oracle，DB2 这样的大型数据库都推荐用裸设备来存储数据，而不是用文件系统。裸设备为什么会快呢，上面的那个 2001 年的文档解释了这个原因。</p>
 
-<p>怎么知道一个裸设备的大小？<br/>
-比较笨的办法是，你看裸设备对应的是那个实际的块设备，然后你用<code>fdisk -l /dev/[h,s]dXN</code>看那个块设备的大小就好了。不过如果用blockdev命令就不要绕圈子了。</p>
+<p>怎么知道一个裸设备的大小？比较笨的办法是，你看裸设备对应的是那个实际的块设备，然后你用<code>fdisk -l /dev/[h,s]dXN</code>看那个块设备的大小就好了。不过如果用 blockdev 命令就不要绕圈子了。</p>
 
 <pre><code>#blockdev --getsize /dev/raw/raw1
 11718750
@@ -127,14 +124,11 @@ device)一直都不是理解得很清楚，特别是用户问及到裸设备的�
 
 <p>这是按块的大小计算的。<code>11718750*512/1024/1024/1024</code>就好了。</p>
 
-<p>怎知道一个裸设备还剩下多少空间？<br/>
-不知道，我没有找到原因，刚从<a href="http://h50163.www5.hp.com/TCForum/WebUI/Messages/ShowTopic.aspx?RID=6eae2506-6b36-4f25-97f4-733bb3e785e1">网上找到一个帖子</a>，有人问怎么知道一个磁带还剩下多少空间，回答的人说因为磁带是raw
-device，所以不知道还剩下多少空间，只能使用source file space来结算还剩下多少。但是我对于它说的source file
-space不是很理解。
-其实这个问题也是用户问得最多的，因为知道还剩下多少，好做好扩容准备。
-那么和它差不多一个概念的问题是</p>
+<p>怎知道一个裸设备还剩下多少空间？不知道，我没有找到原因，刚从<a href="http://h50163.www5.hp.com/TCForum/WebUI/Messages/ShowTopic.aspx?RID=6eae2506-6b36-4f25-97f4-733bb3e785e1">网上找到一个帖子</a>，有人问怎么知道一个磁带还剩下多少空间，回答的人说因为磁带是 raw
+device，所以不知道还剩下多少空间，只能使用 source file space 来结算还剩下多少。但是我对于它说的 source file
+space 不是很理解。其实这个问题也是用户问得最多的，因为知道还剩下多少，好做好扩容准备。那么和它差不多一个概念的问题是</p>
 
-<p>有办法用类似dd的命令把一个裸设备上已经时候的数据备份到一个独立文件吗？</p>
+<p>有办法用类似 dd 的命令把一个裸设备上已经时候的数据备份到一个独立文件吗？</p>
 
 <p>我同样也不知道，有人能告诉我吗？</p>
 </div>
@@ -228,8 +222,8 @@ space不是很理解。
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/07/09/Linux-gab-bare-equipment/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/09/Linux-gab-bare-equipment/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/07/09/Linux-gab-bare-equipment/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/09/Linux-gab-bare-equipment/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

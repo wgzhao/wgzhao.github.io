@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="本文写道最后的时候，我才发现ZRM for MySQL的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库test1,test2，你备份了这两个数据库，某一天，test2数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表， &hellip;">
+  <meta name="description" content="本文写道最后的时候，我才发现 ZRM for MySQL 的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库 test1,test2，你备份了这两个数据库，某一天，test2 数据库里的某一个表坏了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,30 +99,26 @@
   </header>
 
 
-<div class="entry-content"><p><del>本文写道最后的时候，我才发现ZRM for MySQL的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库test1,test2，你备份了这两个数据库，某一天，test2数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复test2，而是直接把test1,test2都恢复。那这绝对是一个噩梦。
-但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.</del></p>
+<div class="entry-content"><p><del>本文写道最后的时候，我才发现 ZRM for MySQL 的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库 test1,test2，你备份了这两个数据库，某一天，test2 数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复 test2，而是直接把 test1,test2 都恢复。那这绝对是一个噩梦。但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.</del></p>
 
 <p><strong>Update：</strong><br/>
-原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">ZRM</a>备份是可以指定恢复特定的数据库的，刚才今天mwf的站点数据库需要恢复，测试了一下，完全没有问题。<br/>
-具体的恢复办法，请看文末。
-<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">Zmanda Recovery Manager(ZRM)</a>提供了备份MySQL数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html">官方的介绍</a>。下面给出一个备份的实例。</p>
+原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">ZRM</a> 备份是可以指定恢复特定的数据库的，刚才今天 mwf 的站点数据库需要恢复，测试了一下，完全没有问题。具体的恢复办法，请看文末。
+<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">Zmanda Recovery Manager(ZRM)</a>提供了备份 MySQL 数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html">官方的介绍</a>。下面给出一个备份的实例。</p>
 
 <!--more-->
 
 
-<p>先介绍备份的环境，如果大家看过之前的那篇<a href="http://blog.wgzhao.com/2009/04/13/practice-amanda-backuping.html">Amanda集中备份实例</a>，那么大概就知道是什么样的一个网络架构了，承接上文，这里备份服务器还是cp1.domain.com，MySQL数据库分别运行在cp2.domain.com和cp3.domain.com上，需要备份其所有的数据库。</p>
+<p>先介绍备份的环境，如果大家看过之前的那篇 <a href="http://blog.wgzhao.com/2009/04/13/practice-amanda-backuping.html">Amanda 集中备份实例</a>，那么大概就知道是什么样的一个网络架构了，承接上文，这里备份服务器还是 cp1.domain.com，MySQL 数据库分别运行在 cp2.domain.com 和 cp3.domain.com 上，需要备份其所有的数据库。</p>
 
 <h2>一、服务端的安装和配置</h2>
 
-<p>首先从官方站点下载对应系统的服务端程序，然后安装。注意：服务端与perl-DBI,MySQL-client程序库有依赖关系，安装之前先安装这个两个包。
-安装完后,<code>/etc/mysql-zrm/</code>是其配置文件的所在地。<code>/etc/mysql-zrm/</code>目录下有一个<code>mysql-zrm.conf</code>文件，这是最重要的配置文件。在<code>/etc/mysql-zrm/</code>目录下，你可以创建一些目录，每一个目录就是一个备份集的名称，我这里为了直观，采取了主机名的方式来创建备份集</p>
+<p>首先从官方站点下载对应系统的服务端程序，然后安装。注意：服务端与 perl-DBI,MySQL-client 程序库有依赖关系，安装之前先安装这个两个包。安装完后,<code>/etc/mysql-zrm/</code>是其配置文件的所在地。<code>/etc/mysql-zrm/</code>目录下有一个<code>mysql-zrm.conf</code>文件，这是最重要的配置文件。在<code>/etc/mysql-zrm/</code>目录下，你可以创建一些目录，每一个目录就是一个备份集的名称，我这里为了直观，采取了主机名的方式来创建备份集</p>
 
 <pre><code>mkdir /etc/mysql-zrm/{cp2.domain.com,cp3.domain.com}
 cp  /etc/mysql-zrm/{mysql-zrm.conf,cp2.domain.com/,cp3.domain.com/}
 </code></pre>
 
-<p><code>/etc/mysql-zrm/mysql-zrm.conf</code> 可以做为全局配置文件，针对每一台需要备份的数据库的不同，可以在备份集目录里的<code>mysql-zrm.conf</code>再定义，这里的定义可以覆盖全局定义。
-首先，我们把一些全局定义信息配置在<code>/etc/mysql-zrm/mysql-zrm.conf</code>文件里</p>
+<p><code>/etc/mysql-zrm/mysql-zrm.conf</code> 可以做为全局配置文件，针对每一台需要备份的数据库的不同，可以在备份集目录里的<code>mysql-zrm.conf</code>再定义，这里的定义可以覆盖全局定义。首先，我们把一些全局定义信息配置在<code>/etc/mysql-zrm/mysql-zrm.conf</code>文件里</p>
 
 <pre><code>#cat /etc/mysql-zrm/mysql-zrm.conf
 backup-level=0
@@ -135,7 +136,7 @@ password="securepassword"
 mailto="your＠domain.com"
 </code></pre>
 
-<p>上面的配置信息应该比较直观。 然后配置每一台MySQL服务器的一些特有参数</p>
+<p>上面的配置信息应该比较直观。 然后配置每一台 MySQL 服务器的一些特有参数</p>
 
 <pre><code>#cat /etc/mysql-zrm/cp2.domain.com/mysql-zrm.conf
 host="cp2.domain.com"
@@ -155,11 +156,11 @@ destination=/yourpath/db
 
 <h2>二、配置客户端</h2>
 
-<p>这里有两台机器，cp2和cp3，因为我们备份的类型一样，所以cp2的配置过程和cp3的配置过程一样，这里只描述cp2的配置过程</p>
+<p>这里有两台机器，cp2 和 cp3，因为我们备份的类型一样，所以 cp2 的配置过程和 cp3 的配置过程一样，这里只描述 cp2 的配置过程</p>
 
 <ol>
-<li><p>登录cp2服务器</p></li>
-<li><p>用MySQL的管理员帐号（一般是root）登录MySQL数据库</p></li>
+<li><p>登录 cp2 服务器</p></li>
+<li><p>用 MySQL 的管理员帐号（一般是 root）登录 MySQL 数据库</p></li>
 <li><p>创建一个用户备份的帐号并授予一定的权限,帐号的定义在备份服务器的<code>/etc/mysql-zrm/mysql-zrm.conf</code>文件里有定义，这里帐号是<code>backup-user</code>，密码是<code>securepassword</code></p></li>
 </ol>
 
@@ -177,7 +178,7 @@ destination=/yourpath/db
 
 <h2>三、测试备份</h2>
 
-<p>配置还是比较简单的，现在我们开始测试。 首先的用root帐号登录cp1机器，然后执行下面的指令：</p>
+<p>配置还是比较简单的，现在我们开始测试。 首先的用 root 帐号登录 cp1 机器，然后执行下面的指令：</p>
 
 <pre><code>root@cp1:/etc/mysql-zrm# mysql-zrm --action backup --backup-level 0 --backup-set cp3.domain.com
 backup:INFO: ZRM for MySQL Community Edition - version 2.1
@@ -229,11 +230,11 @@ cp3.domain.com:backup:INFO: PHASE END: Cleanup
 cp3.domain.com:backup:INFO: END OF BACKUP
 </code></pre>
 
-<p>以上是备份cp3.domain.com的数据库，用同样的指令可以备份cp2.domain.com数据库。</p>
+<p>以上是备份 cp3.domain.com 的数据库，用同样的指令可以备份 cp2.domain.com 数据库。</p>
 
 <h2>四、检验</h2>
 
-<p>如果上述备份过程没有报错，那么接下来就要看看备份的数据是不是有效了。在cp1机器上执行下面的指令</p>
+<p>如果上述备份过程没有报错，那么接下来就要看看备份的数据是不是有效了。在 cp1 机器上执行下面的指令</p>
 
 <pre><code>root@cp1:~# mysql-zrm --action  verify-backup --backup-set cp3.domain.com
 verify-backup:INFO: ZRM for MySQL Community Edition - version 2.1
@@ -289,11 +290,11 @@ Index File
 
 <h2>五、恢复</h2>
 
-<p>假定cp2服务器上的数据库<code>ehcpbackup20090403170240</code>丢失了（这里是我人工删除了这个库），我们看看如何从备份里恢复。</p>
+<p>假定 cp2 服务器上的数据库<code>ehcpbackup20090403170240</code>丢失了（这里是我人工删除了这个库），我们看看如何从备份里恢复。</p>
 
 <ol>
-<li><p>登录cp1机器</p></li>
-<li><p>执行下面的命令，看看cp2机器上的数据库现在备份在哪里(为了显示直观，输出结果有处理）</p>
+<li><p>登录 cp1 机器</p></li>
+<li><p>执行下面的命令，看看 cp2 机器上的数据库现在备份在哪里(为了显示直观，输出结果有处理）</p>
 
 <pre><code> root@cp1:~# mysql-zrm-reporter --show restore-info --where backup-set=cp2.domain.com
 
@@ -312,7 +313,7 @@ Index File
  INFO: Restore done in 169 seconds.
  MySQL server has been shutdown. Please restart after verification.
 </code></pre></li>
-<li><p>重启cp2机器上的MySQL服务。</p></li>
+<li><p>重启 cp2 机器上的 MySQL 服务。</p></li>
 </ol>
 
 
@@ -455,8 +456,8 @@ cp2.3yidc.cn:restore:INFO: Restore done in 30 seconds
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/04/15/backup-remote-mysql-with-zrm/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/04/15/backup-remote-mysql-with-zrm/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/04/15/backup-remote-mysql-with-zrm/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/04/15/backup-remote-mysql-with-zrm/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

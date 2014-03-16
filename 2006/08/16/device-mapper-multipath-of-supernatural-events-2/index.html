@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚， &hellip;">
+  <meta name="description" content="来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,47 +100,38 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   </header>
 
 
-<div class="entry-content"><p>来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其二</p>
+<div class="entry-content"><p>来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其二</p>
 
-<p>今天上午EMC的人过来了，只是看了一下CX300的状态，说从状态来看，没有问题。
-然后就走了。</p>
+<p>今天上午 EMC 的人过来了，只是看了一下 CX300 的状态，说从状态来看，没有问题。然后就走了。</p>
 
 <!--more-->
 
 
-<p>雁联的工程师继续安装powerpath for AIX。我和hyphwang继续研究CX300与linux相关的配置。</p>
+<p>雁联的工程师继续安装 powerpath for AIX。我和 hyphwang 继续研究 CX300 与 linux 相关的配置。</p>
 
-<p>后来在AIX上配置成了powerpath，发现SPA，SPB均是有效状态。
-但是由于现在的LUN上已经有数据，于是没有进一步去做卷管理方面的操作。</p>
+<p>后来在 AIX 上配置成了 powerpath，发现 SPA，SPB 均是有效状态。但是由于现在的 LUN 上已经有数据，于是没有进一步去做卷管理方面的操作。</p>
 
-<p>我们设置了CX300上一个ArrayCommPath开关，由原来的enable设置为disable。
-同时将failover改为2。
-在linux系统上，能成功认出4个设备，且大小一样。这样就解决了昨天不能发现四
-个大小一致的设备的问题。
-接着做multipath，会给出下面的错误：</p>
+<p>我们设置了 CX300 上一个 ArrayCommPath 开关，由原来的 enable 设置为 disable。同时将 failover 改为 2。在 linux 系统上，能成功认出 4 个设备，且大小一样。这样就解决了昨天不能发现四个大小一致的设备的问题。接着做 multipath，会给出下面的错误：</p>
 
 <pre><code>path not correctly configured for failoverpath not correctly configured for failover
 </code></pre>
 
-<p>经和研发无数电话沟通后，认为可能是multibus和failover功能选择问题。研发给
-了一个新的<code>multipath.conf</code>配置文件。</p>
+<p>经和研发无数电话沟通后，认为可能是 multibus 和 failover 功能选择问题。研发给了一个新的<code>multipath.conf</code>配置文件。</p>
 
-<p>但是还是有一些问题。但是上面的VG信息都是正确的，也能挂载LV。看上去一切正
-常。也能copy数据，但是在作rm -rf 命令时，<code>dm-emc</code>模块立刻给出trespass命令。
-系统无法正常关机。</p>
+<p>但是还是有一些问题。但是上面的 VG 信息都是正确的，也能挂载 LV。看上去一切正常。也能 copy 数据，但是在作 rm -rf 命令时，<code>dm-emc</code>模块立刻给出 trespass 命令。系统无法正常关机。</p>
 
 <p>经过若干调试，结果依然。</p>
 
-<p>晚上9点，决定重做VG，实际上现在的VG也是读不出来。一读就和执行rm同样的现象。</p>
+<p>晚上 9 点，决定重做 VG，实际上现在的 VG 也是读不出来。一读就和执行 rm 同样的现象。</p>
 
-<p>既然重做VG，于是考虑在AIX测试copy命令。结果一切正常。</p>
+<p>既然重做 VG，于是考虑在 AIX 测试 copy 命令。结果一切正常。</p>
 
-<p>接着在Linux系统上测试，先分别对sdc,sdd,sde,sdf做
+<p>接着在 Linux 系统上测试，先分别对 sdc,sdd,sde,sdf 做
 <code>dd if=/dev/zero of=/dev/sdx bs=1M count=2048</code>
-的操作，同时使用iostat查看IO，一切正常。</p>
+的操作，同时使用 iostat 查看 IO，一切正常。</p>
 
-<p>启动multipath，对<code>/dev/dm-2</code>也执行dd命令，一切正常。</p>
+<p>启动 multipath，对<code>/dev/dm-2</code>也执行 dd 命令，一切正常。</p>
 
 <p>pvcreate,vgcreate,lvcreate，一些正常。
 mkfs,mount,一切正常。</p>
@@ -143,21 +139,19 @@ mkfs,mount,一切正常。</p>
 <p>copy，一些正常。
 rm -rf ,出现上面同样的错误。</p>
 
-<p>电话和研发沟通，他认为系统可能不稳定，考虑重装。<br/>
-同时查看了device-mapper的版本和架构，发现是32bit的。
-而device-mapper-multipath是64bit的，显然device-mapper-multipath需要依赖
-device-mapper库的。</p>
+<p>电话和研发沟通，他认为系统可能不稳定，考虑重装。同时查看了 device-mapper 的版本和架构，发现是 32bit 的。而 device-mapper-multipath 是 64bit 的，显然 device-mapper-multipath 需要依赖
+device-mapper 库的。</p>
 
-<p>查看DC5.0 for pSeries第一张安装光盘，device-mapper有两个包。</p>
+<p>查看 DC5.0 for pSeries 第一张安装光盘，device-mapper 有两个包。</p>
 
 <pre><code>device-mapper-1.01.01-1.RHEL4.ppc64.rpm
 device-mapper-1.01.01-1.RHEL4.ppc.rpm
 </code></pre>
 
-<p>系统默认的是ppc.rpm
-查看系统其他一些软件，发现都是32bit的，但是使用
-uname -a看系统内核，发现是 ppc64的 再看光盘的RPM包，很多软件同时具有ppc.rpm和ppc64.rpm，但是系统默认是安装
-ppc.rpm，也就是32bit的，不解？</p>
+<p>系统默认的是 ppc.rpm
+查看系统其他一些软件，发现都是 32bit 的，但是使用
+uname -a 看系统内核，发现是 ppc64 的 再看光盘的 RPM 包，很多软件同时具有 ppc.rpm 和 ppc64.rpm，但是系统默认是安装
+ppc.rpm，也就是 32bit 的，不解？</p>
 
 <p>去查看另外一台没有怎么动，算是比较干净的系统，发现绝大部分软件都是
 32bit，不知何解？</p>
@@ -166,8 +160,8 @@ ppc.rpm，也就是32bit的，不解？</p>
 
 <ol>
 <li>这两天折腾的机器，重装系统。</li>
-<li>使用同结构（32bit，64bit）的device-mapper,device-mapper-multipath再测试。</li>
-<li>同时再去看看CX300是不是还有可以调试的地方，他很多参数的设置对Linux有影响，更具体的说是对Emulex光纤卡的驱动有影响。</li>
+<li>使用同结构（32bit，64bit）的 device-mapper,device-mapper-multipath 再测试。</li>
+<li>同时再去看看 CX300 是不是还有可以调试的地方，他很多参数的设置对 Linux 有影响，更具体的说是对 Emulex 光纤卡的驱动有影响。</li>
 </ol>
 
 </div>
@@ -261,8 +255,8 @@ ppc.rpm，也就是32bit的，不解？</p>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/08/16/device-mapper-multipath-of-supernatural-events-2/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/08/16/device-mapper-multipath-of-supernatural-events-2/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/08/16/device-mapper-multipath-of-supernatural-events-2/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/08/16/device-mapper-multipath-of-supernatural-events-2/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

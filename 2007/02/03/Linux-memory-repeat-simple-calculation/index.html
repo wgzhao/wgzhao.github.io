@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="以前有两篇关于linux内存的文章 再来一篇简单易懂的，适合技术支持人员解释给对Linux内存管理有疑问的用户： Linux的基本原则是没有资源应该被浪费。因此核心会使用尽可能多的RAM，来缓存来自本地和远程的文件系统的信息。系统做读写操作的时候，会将与当前运行的进程相关的数据尽量存储在RAM里。 &hellip;">
+  <meta name="description" content="以前有两篇关于 linux 内存的文章 再来一篇简单易懂的，适合技术支持人员解释给对 Linux 内存管理有疑问的用户： Linux 的基本原则是没有资源应该被浪费。因此核心会使用尽可能多的 RAM，来缓存来自本地和远程的文件系统的信息。系统做读写操作的时候， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,18 +99,18 @@
   </header>
 
 
-<div class="entry-content"><p>以前有两篇关于linux内存的文章</p>
+<div class="entry-content"><p>以前有两篇关于 linux 内存的文章</p>
 
-<p>再来一篇简单易懂的，适合技术支持人员解释给对Linux内存管理有疑问的用户：</p>
+<p>再来一篇简单易懂的，适合技术支持人员解释给对 Linux 内存管理有疑问的用户：</p>
 
-<p>Linux的基本原则是没有资源应该被浪费。因此核心会使用尽可能多的RAM，来缓存来自本地和远程的文件系统的信息。系统做读写操作的时候，会将与当前运行的进程相关的数据尽量存储在RAM里。系统报告的缓存是缓冲和页缓存两者之和。缓存并不是在进程结束的时候被回收（你可能很快会启动另外一个进程，需要同样的数据），而是随需回收&mdash;比如，当你启动一个需要大量内存的进程时，Linux核心会从内存中回收缓存，将得到的内存分配给新的进程。</p>
+<p>Linux 的基本原则是没有资源应该被浪费。因此核心会使用尽可能多的 RAM，来缓存来自本地和远程的文件系统的信息。系统做读写操作的时候，会将与当前运行的进程相关的数据尽量存储在 RAM 里。系统报告的缓存是缓冲和页缓存两者之和。缓存并不是在进程结束的时候被回收（你可能很快会启动另外一个进程，需要同样的数据），而是随需回收&mdash;比如，当你启动一个需要大量内存的进程时，Linux 核心会从内存中回收缓存，将得到的内存分配给新的进程。</p>
 
 <!--more-->
 
 
 <p>有些区域，比如匿名内存映射(mmps)和共享内存区域，它们被报告为缓存，但不是被核心直接释放。一般的缓存不映射到进程的地址空间，仅仅是简单的核心映射，而这些特别的缓存映射到所有挂接到它们上面的进程。</p>
 
-<p>下面是一个例子（单位是MB):</p>
+<p>下面是一个例子（单位是 MB):</p>
 
 <pre><code># free -m 
 total used free shared buffers cached 
@@ -113,14 +118,11 @@ Mem: 1000 900 100 0 350
 350 -/+ buffers/cache: 200 800
 </code></pre>
 
-<p>在这里例子中，应用程序只使用了200MB内存，还有800MB空闲内存可以使用。</p>
+<p>在这里例子中，应用程序只使用了 200MB 内存，还有 800MB 空闲内存可以使用。</p>
 
 <p>一些简单的计算方法：</p>
 
-<p>物理已用内存 = 实际已用内存 + 缓冲 + 缓存<br/>
-物理空闲内存 = 总物理内存 &ndash; 实际已用内存 &ndash; 缓冲 &ndash; 缓存<br/>
-应用程序可用空闲内存 = 总物理内存 &ndash; 实际已用内存<br/>
-应用程序已用内存 = 实际已用内存 &ndash; 缓冲 &ndash; 缓存</p>
+<p>物理已用内存 = 实际已用内存 + 缓冲 + 缓存物理空闲内存 = 总物理内存 &ndash; 实际已用内存 &ndash; 缓冲 &ndash; 缓存应用程序可用空闲内存 = 总物理内存 &ndash; 实际已用内存应用程序已用内存 = 实际已用内存 &ndash; 缓冲 &ndash; 缓存</p>
 </div>
 
 
@@ -212,8 +214,8 @@ Mem: 1000 900 100 0 350
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/02/03/Linux-memory-repeat-simple-calculation/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/02/03/Linux-memory-repeat-simple-calculation/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/02/03/Linux-memory-repeat-simple-calculation/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/02/03/Linux-memory-repeat-simple-calculation/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

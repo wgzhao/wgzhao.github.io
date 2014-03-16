@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="1.前言
-双网卡负载均衡其实很早就在linux内核里面实现了，我见到的最早的版本是2.2.10的内核。不过那个时候还没要作为缺省功能编译到内核里面去，如果你需要这个功能你需要编译内核，然后选中bonding相关选项。我最早使用了bonding是在我最毕业设计时， &hellip;">
+  <meta name="description" content="1.前言双网卡负载均衡其实很早就在 linux 内核里面实现了，我见到的最早的版本是 2.2.10 的内核。不过那个时候还没要作为缺省功能编译到内核里面去，如果你需要这个功能你需要编译内核，然后选中 bonding 相关选项。我最早使用了 bonding 是在我最毕业设计时，在 iSCSI &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,21 +99,18 @@
   </header>
 
 
-<div class="entry-content"><p>1.前言
-双网卡负载均衡其实很早就在linux内核里面实现了，我见到的最早的版本是2.2.10的内核。不过那个时候还没要作为缺省功能编译到内核里面去，如果你需要这个功能你需要编译内核，然后选中bonding相关选项。我最早使用了bonding是在我最毕业设计时，在iSCSI技术里面加入了bonding技术。</p>
+<div class="entry-content"><p>1.前言双网卡负载均衡其实很早就在 linux 内核里面实现了，我见到的最早的版本是 2.2.10 的内核。不过那个时候还没要作为缺省功能编译到内核里面去，如果你需要这个功能你需要编译内核，然后选中 bonding 相关选项。我最早使用了 bonding 是在我最毕业设计时，在 iSCSI 技术里面加入了 bonding 技术。</p>
 
-<p>通过测试发现对于小数据包的传送，单网卡比双网卡要快，这当然也是正常的，只有在大数据传送的情况下，它才能显示优势，比如流媒体文件的传输。2.4.x以后的内核就把bonding技术作为缺省功能编译进去了，而且还加入了路径切换的功能，那就更加完美了。</p>
+<p>通过测试发现对于小数据包的传送，单网卡比双网卡要快，这当然也是正常的，只有在大数据传送的情况下，它才能显示优势，比如流媒体文件的传输。2.4.x 以后的内核就把 bonding 技术作为缺省功能编译进去了，而且还加入了路径切换的功能，那就更加完美了。</p>
 
 <!--more-->
 
 
-<p>2.测试环境  <br/>
-硬件：CPU Celeron 766MHz MEM 92M (100MHz)<br/>
+<p>2.测试环境硬件：CPU Celeron 766MHz MEM 92M (100MHz)<br/>
 网卡：D-LINK，Realtalk<br/>
 软件：OS Fedora Core 2 (2.6.5-1.358)</p>
 
-<p>3.配置过程<br/>
-其实在linux里面配置双网卡负载均衡和路径切换很简单，只需要修改或增加一些配置文件就可以了。
+<p>3.配置过程其实在 linux 里面配置双网卡负载均衡和路径切换很简单，只需要修改或增加一些配置文件就可以了。
 a)首先配置<code>/etc/modules.conf</code>文件，添加下面的信息</p>
 
 <pre><code>alias bond0 bonding
@@ -117,14 +118,11 @@ options bond0 miimon=100 mode=1
 </code></pre>
 
 <p>第一行的意思我想大家都很明白，就是增加一个设备驱动的别名，真正的驱动名字是<code>bonding.ko</code>
-第二上是驱动加载时的参数，这里解释一下<br/>
-“miimon=100”，表示链路检测的时间间隔，单位是毫秒。
-“mode=1”，这里表示双网卡bond的模式，目前官方发布的模式有0,1,2,3,4,5,6共7种，我们一般常用的是0,1两种。<br/>
-这里分别介绍<br/>
-0表示round-robin模式，它从第一块有效的网卡传输资料，知道最后一块。它提供了负载均衡和容灾的功能
-1表示active-backup模式，表示每次只有一个网卡是激活和有数据传输的，其它网卡处于backup状态，一旦激活的网卡链路出现问题，backup状态的网卡就会激活成为active状态这种模式提供了容灾的功能，但是没有负载均衡的功能。</p>
+第二上是驱动加载时的参数，这里解释一下“miimon=100”，表示链路检测的时间间隔，单位是毫秒。“mode=1”，这里表示双网卡 bond 的模式，目前官方发布的模式有 0,1,2,3,4,5,6 共 7 种，我们一般常用的是 0,1 两种。这里分别介绍<br/>
+0 表示 round-robin 模式，它从第一块有效的网卡传输资料，知道最后一块。它提供了负载均衡和容灾的功能
+1 表示 active-backup 模式，表示每次只有一个网卡是激活和有数据传输的，其它网卡处于 backup 状态，一旦激活的网卡链路出现问题，backup 状态的网卡就会激活成为 active 状态这种模式提供了容灾的功能，但是没有负载均衡的功能。</p>
 
-<p>b)配置bond0的配置文件</p>
+<p>b)配置 bond0 的配置文件</p>
 
 <pre><code>#cat /etc/sysconfig/network-scripts/ifcfg-bond0
 DEVICE=bond0
@@ -155,7 +153,7 @@ BOOTPROTO=none
 </code></pre>
 
 <p>c)起动并测试
-ok，你现在可以起动你的配置文件了，不过在起动之前，先看看有没有加载bonding内核模块(使用lsmod命令)，如果没有，那就加载它，使用下面的命令</p>
+ok，你现在可以起动你的配置文件了，不过在起动之前，先看看有没有加载 bonding 内核模块(使用 lsmod 命令)，如果没有，那就加载它，使用下面的命令</p>
 
 <pre><code>modprobe bonding
 </code></pre>
@@ -165,7 +163,7 @@ ok，你现在可以起动你的配置文件了，不过在起动之前，先看
 <pre><code>/etc/init.d/networkd restart
 </code></pre>
 
-<p>在使用ifconfig命令看看结果，如果你能看到下面类似的输出，那就配置没有问题了</p>
+<p>在使用 ifconfig 命令看看结果，如果你能看到下面类似的输出，那就配置没有问题了</p>
 
 <pre><code>#ifconfig 
 bond0 Link encap:Ethernet HWaddr 00:1A:34:56:91:BE
@@ -205,7 +203,7 @@ lo Link encap:Local Loopback
  RX bytes:5700 (5.5 Kb) TX bytes:5700 (5.5 Kb)
 </code></pre>
 
-<p>你还可以通过下面的命令来查看bond0的基本信息</p>
+<p>你还可以通过下面的命令来查看 bond0 的基本信息</p>
 
 <pre><code>#more /proc/net/bonding/bond0
 
@@ -226,11 +224,9 @@ Link Failure Count: 0
 Permanent HW addr: 00:0a:eb:82:da:ab
 </code></pre>
 
-<p>下面我们测试一下路径切换，准备一台机器，采用ping的方式看链路情况。
-然后在测试的机器上随便拔掉一根网线，看看情况，我的机器的情况是大约8秒的样子链路切换了，如果全部拔掉，然后随便插入一根网线，大约需要10秒的时间恢复链路。</p>
+<p>下面我们测试一下路径切换，准备一台机器，采用 ping 的方式看链路情况。然后在测试的机器上随便拔掉一根网线，看看情况，我的机器的情况是大约 8 秒的样子链路切换了，如果全部拔掉，然后随便插入一根网线，大约需要 10 秒的时间恢复链路。</p>
 
-<p>4.后记
-这个测试我在04年的12月份做过测试，不过是在我的笔记本上测试的，一块网卡是8139的，另外一块是讯驰的无线网卡，记过发现起动bond0时会死机。我不知道是不是无线网卡和有线网卡不能做这样的操作，不过我可以肯定的是如果即使这样bond0能起来，把链路切换到无线网卡上时，肯定会失败，因为无线网卡加入时需要验证。不过我想做这些配置应该是在服务器上，还没有谁在服务器上配置两个无线网卡吧！</p>
+<p>4.后记这个测试我在 04 年的 12 月份做过测试，不过是在我的笔记本上测试的，一块网卡是 8139 的，另外一块是讯驰的无线网卡，记过发现起动 bond0 时会死机。我不知道是不是无线网卡和有线网卡不能做这样的操作，不过我可以肯定的是如果即使这样 bond0 能起来，把链路切换到无线网卡上时，肯定会失败，因为无线网卡加入时需要验证。不过我想做这些配置应该是在服务器上，还没有谁在服务器上配置两个无线网卡吧！</p>
 </div>
 
 
@@ -322,8 +318,8 @@ Permanent HW addr: 00:0a:eb:82:da:ab
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

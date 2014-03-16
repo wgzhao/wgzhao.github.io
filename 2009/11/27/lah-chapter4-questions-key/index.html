@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="E4.1 解释一个文件的UID和一个正在运行的进程的真实UID以及有效UID之间的关系。除了文件的访问控制外，进程的有效UID有什么用途？ A：
-大部分情况下，文件的UID和运行的真实UID以及有效UID是一致的。但是对于setuid程序而言。进程的真实UID和有效UID就有区别了。比如/usr/ &hellip;">
+  <meta name="description" content="E4.1 解释一个文件的 UID 和一个正在运行的进程的真实 UID 以及有效 UID 之间的关系。除了文件的访问控制外，进程的有效 UID 有什么用途？ A：大部分情况下，文件的 UID 和运行的真实 UID 以及有效 UID 是一致的。但是对于setuid程序而言。进程的真实 UID 和有效 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,10 +99,9 @@
   </header>
 
 
-<div class="entry-content"><p>E4.1 解释一个文件的UID和一个正在运行的进程的真实UID以及有效UID之间的关系。除了文件的访问控制外，进程的有效UID有什么用途？</p>
+<div class="entry-content"><p>E4.1 解释一个文件的 UID 和一个正在运行的进程的真实 UID 以及有效 UID 之间的关系。除了文件的访问控制外，进程的有效 UID 有什么用途？</p>
 
-<p>A：
-大部分情况下，文件的UID和运行的真实UID以及有效UID是一致的。但是对于<code>setuid</code>程序而言。进程的真实UID和有效UID就有区别了。比如<code>/usr/bin/passwd</code>程序。它的属主是<code>root（UID=0）</code>，如果一个用户（<code>UID=1000)</code>运行它，那么真实UID为1000，但是有效UID则为0。有效UID除了文件访问控制外，还能提升当前运行程序的“临时特权”。</p>
+<p>A：大部分情况下，文件的 UID 和运行的真实 UID 以及有效 UID 是一致的。但是对于<code>setuid</code>程序而言。进程的真实 UID 和有效 UID 就有区别了。比如<code>/usr/bin/passwd</code>程序。它的属主是<code>root（UID=0）</code>，如果一个用户（<code>UID=1000)</code>运行它，那么真实 UID 为 1000，但是有效 UID 则为 0。有效 UID 除了文件访问控制外，还能提升当前运行程序的“临时特权”。</p>
 
 <!--more-->
 
@@ -113,21 +116,18 @@
 </ol>
 
 
-<p>A： 查看uptime，发现复杂高于平常，然后查看top结果，能找到异常的进程。</p>
+<p>A： 查看 uptime，发现复杂高于平常，然后查看 top 结果，能找到异常的进程。</p>
 
-<p>对于不能马上杀死的异常进程，我们可以采取暂定的方式来临时冻结进程，利用 kill -STOP pid 指令来冻结进程。<br/>
-调查清楚后，如果想继续运行该进程，则使用 <code>kill -CONT pid</code> 来恢复运行。 <br/>
-如果想杀死，可以先尝试 <code>kill -TERM pid</code> 的方式来温柔的杀死，<br/>
-如果不凑效，则利用野蛮杀死法 <code>kill -9 pid</code><br/>
-然后通过ps指令查看该进程是否还在。如果不在，则表示已经杀死了。</p>
+<p>对于不能马上杀死的异常进程，我们可以采取暂定的方式来临时冻结进程，利用 kill -STOP pid 指令来冻结进程。调查清楚后，如果想继续运行该进程，则使用 <code>kill -CONT pid</code> 来恢复运行。如果想杀死，可以先尝试 <code>kill -TERM pid</code> 的方式来温柔的杀死，如果不凑效，则利用野蛮杀死法 <code>kill -9 pid</code><br/>
+然后通过 ps 指令查看该进程是否还在。如果不在，则表示已经杀死了。</p>
 
-<p>E4.3 找出一个能导致内存泄漏的进程（如果手头没有，就自己写一个）。用ps或者top来监视程序程序运行时内存的使用情况。</p>
+<p>E4.3 找出一个能导致内存泄漏的进程（如果手头没有，就自己写一个）。用 ps 或者 top 来监视程序程序运行时内存的使用情况。</p>
 
-<p>A：这一类的问题，在实际的工作中遇到过一些，绝大部分都是java程序，因为内存没有回收，导致内存的使用不断的增加，用完内存的一定比列后（由<code>swappiness</code>值决定），继续使用swap值，最后导致系统出现OOM（Out-Of-Memory)。</p>
+<p>A：这一类的问题，在实际的工作中遇到过一些，绝大部分都是 java 程序，因为内存没有回收，导致内存的使用不断的增加，用完内存的一定比列后（由<code>swappiness</code>值决定），继续使用 swap 值，最后导致系统出现 OOM（Out-Of-Memory)。</p>
 
-<p>♥ E4.4 编写一个处理ps输出的Perl脚本，确定在系统上正在运行的进程总的VSZ和RSS值。这些数字和系统物理内存和交换空间的实际量有什么关系？</p>
+<p>♥ E4.4 编写一个处理 ps 输出的 Perl 脚本，确定在系统上正在运行的进程总的 VSZ 和 RSS 值。这些数字和系统物理内存和交换空间的实际量有什么关系？</p>
 
-<p>A：仅仅是获得VSZ和RSS值的总和，没有必要用到perl这种方式吧（其实是我对perl一窍不通），直接awk也能处理。下面是一行指令： <br/>
+<p>A：仅仅是获得 VSZ 和 RSS 值的总和，没有必要用到 perl 这种方式吧（其实是我对 perl 一窍不通），直接 awk 也能处理。下面是一行指令： <br/>
 <code>ps aux |awk 'BEGIN{vsz = 0;rss = 0;print "vsz \\t rss"} {vsz+=$5;rss+=$6}
 END{print vsz,rss}'</code></p>
 
@@ -138,7 +138,7 @@ vsz rss
 3310800 830324 
 </code></pre>
 
-<p>要注意一下单位。vsz是进程的虚拟大小，KiB单位。而rss则是驻留大小，KiB单位。因此，我们转换一下。</p>
+<p>要注意一下单位。vsz 是进程的虚拟大小，KiB 单位。而 rss 则是驻留大小，KiB 单位。因此，我们转换一下。</p>
 
 <pre><code>$ps aux |awk 'BEGIN{vsz = 0;rss = 0;print "vsz(GiB) \\t rss(MiB)"} \\
 {vsz+=$5;rss+=$6} END{print vsz / 1024 / 1024 ,rss / 1024 }' 
@@ -155,10 +155,7 @@ Mem:          2768       1593       1175          0        168        662
 Swap:         3169          0       3169
 </code></pre>
 
-<p>VSZ 是进程使用的虚拟内存大小. （包括内存和SWAP空间上） RSS 指的是驻留在内存中的大小。<br/>
-大部分程序都使用共享库，注意VSZ和RSS会包含共享库的部分。<br/>
-如果多个进程都使用相同的共享库，共享部分的内存会分别计入不同的进程内存。所以所有进程RSS部分累加可能会超出物理内存总数。<br/>
-所以，我认为RSS和VSZ于物理内存以及交换空间没有什么关系，因为其中共享库的内存大小重复计算了。在一些资源紧张的机器上，这两个值可能都超过了内存的总和，比如：</p>
+<p>VSZ 是进程使用的虚拟内存大小. （包括内存和 SWAP 空间上） RSS 指的是驻留在内存中的大小。大部分程序都使用共享库，注意 VSZ 和 RSS 会包含共享库的部分。如果多个进程都使用相同的共享库，共享部分的内存会分别计入不同的进程内存。所以所有进程 RSS 部分累加可能会超出物理内存总数。所以，我认为 RSS 和 VSZ 于物理内存以及交换空间没有什么关系，因为其中共享库的内存大小重复计算了。在一些资源紧张的机器上，这两个值可能都超过了内存的总和，比如：</p>
 
 <pre><code>$ps aux |awk 'BEGIN{vsz = 0;rss = 0;print "vsz(GiB) \t rss(MiB)"}  \
   {vsz+=$5;rss+=$6} END{print vsz / 1024 / 1024 ,rss  / 1024  }'; free -m
@@ -171,9 +168,9 @@ Mem:          2027       1967         59          0         20       1750
 Swap:         4094        121       3972
 </code></pre>
 
-<p>这里，vsz的总和达到了62GiB，远超过6G的内存总和。而rss的总和也达到了1.8G。</p>
+<p>这里，vsz 的总和达到了 62GiB，远超过 6G 的内存总和。而 rss 的总和也达到了 1.8G。</p>
 
-<p>不过从我观察到的数据来说，大部分情况下，rss的总和等于buffers + cached值，但是否正确，还需要实际的数据和理论双层检验。</p>
+<p>不过从我观察到的数据来说，大部分情况下，rss 的总和等于 buffers + cached 值，但是否正确，还需要实际的数据和理论双层检验。</p>
 </div>
 
 
@@ -265,8 +262,8 @@ Swap:         4094        121       3972
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/11/27/lah-chapter4-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/11/27/lah-chapter4-questions-key/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/11/27/lah-chapter4-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/11/27/lah-chapter4-questions-key/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

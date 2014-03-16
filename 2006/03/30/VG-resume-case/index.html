@@ -9,10 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="昨日去我们的一个用户那里解决VG突然丢失问题。
-用户电话中声称：刚开始还是好好的，用HA的命令停止服务后，两个正在使用的VG
-不见了。
-用pvscan命令，得到的结果是能找到四个VG，但是另外两个报的是类似下面的信息： /dev/sde belongs to unknown volumn &hellip;">
+  <meta name="description" content="昨日去我们的一个用户那里解决 VG 突然丢失问题。用户电话中声称：刚开始还是好好的，用 HA 的命令停止服务后，两个正在使用的 VG
+不见了。用 pvscan 命令，得到的结果是能找到四个 VG，但是另外两个报的是类似下面的信息： /dev/sde belongs to unknown &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,6 +30,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -97,46 +100,37 @@
   </header>
 
 
-<div class="entry-content"><p>昨日去我们的一个用户那里解决VG突然丢失问题。<br/>
-用户电话中声称：刚开始还是好好的，用HA的命令停止服务后，两个正在使用的VG<br/>
-不见了。<br/>
-用pvscan命令，得到的结果是能找到四个VG，但是另外两个报的是类似下面的信息：</p>
+<div class="entry-content"><p>昨日去我们的一个用户那里解决 VG 突然丢失问题。用户电话中声称：刚开始还是好好的，用 HA 的命令停止服务后，两个正在使用的 VG<br/>
+不见了。用 pvscan 命令，得到的结果是能找到四个 VG，但是另外两个报的是类似下面的信息：</p>
 
 <pre><code>/dev/sde belongs to unknown volumn group "vgoradata"  
 </code></pre>
 
-<p>最开始做LV的机器重新安装了，因此找不到创建时的备份文件。<br/>
-从硬件层次也考虑，依然无效。</p>
+<p>最开始做 LV 的机器重新安装了，因此找不到创建时的备份文件。从硬件层次也考虑，依然无效。</p>
 
-<p>而这两个VG是做过vgexport工作的。因而能在<code>/etc/lvmconf/</code>文件下面看到以这两<br/>
-个VG名字命名的后缀为conf的文件。<br/>
-后经高人指点，得知可以考虑使用v<code>gcfgrestore</code>命令。  <br/>
-man了一把，先采用<br/>
+<p>而这两个 VG 是做过 vgexport 工作的。因而能在<code>/etc/lvmconf/</code>文件下面看到以这两个 VG 名字命名的后缀为 conf 的文件。后经高人指点，得知可以考虑使用 v<code>gcfgrestore</code>命令。  <br/>
+man 了一把，先采用<br/>
 <code>vgcfgrestore -f ./vgoradata.conf -n vgoradata -t /dev/sdb</code><br/>
-的命令测试了一下，发现还能读出相关信息，觉得有戏。<br/>
-因此开始考虑做实际的恢复（得知用户有数据备份，如果不成功，数据不会有影响）<br/>
-遂执行下面的命令</p>
+的命令测试了一下，发现还能读出相关信息，觉得有戏。因此开始考虑做实际的恢复（得知用户有数据备份，如果不成功，数据不会有影响）遂执行下面的命令</p>
 
 <pre><code>vgcfgrestore -f ./vgoradata.conf -n vgoradata -v /dev/sdb 
 vgcfgrestore -f ./vgoradata.conf -n vgoradata -v /dev/sdc 
 vgcfgrestore -f ./vgoradata.conf -n vgoradata -v /dev/sdd  
 </code></pre>
 
-<p>都报成功。<br/>
-然后在用<code>pvscan</code>，正常，vgscan，正常，<code>vgchange -ay vgoradata</code>，mount一切ok！</p>
+<p>都报成功。然后在用<code>pvscan</code>，正常，vgscan，正常，<code>vgchange -ay vgoradata</code>，mount 一切 ok！</p>
 
-<p>于是采用同样的方法恢复另外一个，也ok。</p>
+<p>于是采用同样的方法恢复另外一个，也 ok。</p>
 
-<p>这是在有备份文件的情况下能这样做。而这两个文件应该是做vgexport生产的，但<br/>
-是VG出故障之前，也就只做了<br/>
-vgexport,vgimport命令，这是这两个命令带来了好处，还是坏处呢？</p>
+<p>这是在有备份文件的情况下能这样做。而这两个文件应该是做 vgexport 生产的，但是 VG 出故障之前，也就只做了<br/>
+vgexport,vgimport 命令，这是这两个命令带来了好处，还是坏处呢？</p>
 
 <p>为了以防万一，接下来给他们做了备份，命令如下：</p>
 
 <p><code>vgcfgbackup vgoradata -v</code><br/>
-这样把四个VG的信息都做了备份。</p>
+这样把四个 VG 的信息都做了备份。</p>
 
-<p><a href="http://www.chinalinuxpub.com/read.php?wid=834">Linux逻辑盘卷管理LVM详解</a></p>
+<p><a href="http://www.chinalinuxpub.com/read.php?wid=834">Linux 逻辑盘卷管理 LVM 详解</a></p>
 </div>
 
 
@@ -228,8 +222,8 @@ vgexport,vgimport命令，这是这两个命令带来了好处，还是坏处呢
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/03/30/VG-resume-case/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/03/30/VG-resume-case/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/03/30/VG-resume-case/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/03/30/VG-resume-case/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

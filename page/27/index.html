@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚， &hellip;">
+  <meta name="description" content="来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -64,7 +69,10 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -98,17 +106,15 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   </header>
 
 
-  <div class="entry-content"><p>来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其三</p>
+  <div class="entry-content"><p>来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其三</p>
 
-<p>将前两天配置的机器重新安装，重新调试multipath，数据读写都没有任何问题，估计昨天出错的原因是原来的VG是在一个控制器使用下的情况配置的，导致现在双控制器下读写不正常。但是multipath却出现了路径不能&#8221;愈合&#8221;的现象，既拔掉一根光纤线后，一个路径失效(假设sde),然后重新介入，发现该路径依然无效。同时使用multipath -v3时还是会给出下面的错误：</p>
+<p>将前两天配置的机器重新安装，重新调试 multipath，数据读写都没有任何问题，估计昨天出错的原因是原来的 VG 是在一个控制器使用下的情况配置的，导致现在双控制器下读写不正常。但是 multipath 却出现了路径不能&#8221;愈合&#8221;的现象，既拔掉一根光纤线后，一个路径失效(假设 sde),然后重新介入，发现该路径依然无效。同时使用 multipath -v3 时还是会给出下面的错误：</p>
 
 <pre><code>path not correctly configured for failover
 </code></pre>
 
-<p>该信息很难在网络上找到对应的资源。
-而multipathd服务也会在路径失效的情况下异常退出。而该daemon程序就是用来检查路径状态和恢复链路的服务程序。
-重启multipathd服务后，会给出下面的错误：</p>
+<p>该信息很难在网络上找到对应的资源。而 multipathd 服务也会在路径失效的情况下异常退出。而该 daemon 程序就是用来检查路径状态和恢复链路的服务程序。重启 multipathd 服务后，会给出下面的错误：</p>
 
 <pre><code>device-mapper: dm-multipath: Failing path 8:48.
 device-mapper: dm-multipath: Failing path 8:80.
@@ -116,7 +122,7 @@ device-mapper: dm-multipath: Failing path 8:32.
 device-mapper: dm-multipath: Failing path 8:64.
 </code></pre>
 
-<p>从这个错误信息来看，multipathd并不认为路径状态是好的，虽然你可以正常读写每一条路径。因此使用multipath -ll看到下面的信息</p>
+<p>从这个错误信息来看，multipathd 并不认为路径状态是好的，虽然你可以正常读写每一条路径。因此使用 multipath -ll 看到下面的信息</p>
 
 <pre><code>[root@SZFIMSDB ~]# multipath -ll
 3600601609f70140076916a71f81edb11
@@ -129,11 +135,9 @@ device-mapper: dm-multipath: Failing path 8:64.
 \_ 10:0:1:0 sdf 8:80 [faulty][active]
 </code></pre>
 
-<p>后面的<code>[faulty]</code>是表示路径的状态，faulty表示当前无法处理I／0请求。这应该是不能路径不能愈合的原因。
-无数电话和研发沟通后，研发认为是工具在误报，可以考虑换一个multipath版本测试或者重新编译新的multipath。</p>
+<p>后面的<code>[faulty]</code>是表示路径的状态，faulty 表示当前无法处理 I／0 请求。这应该是不能路径不能愈合的原因。无数电话和研发沟通后，研发认为是工具在误报，可以考虑换一个 multipath 版本测试或者重新编译新的 multipath。</p>
 
-<p>测试了DC5.0 sp1自带的0.4.5-12的版本和研发先前给我的0.4.5-6的版本，还是有这个错误。<br/>
-修改过无数种multipath的配置，仍然无效。</p>
+<p>测试了 DC5.0 sp1 自带的 0.4.5-12 的版本和研发先前给我的 0.4.5-6 的版本，还是有这个错误。修改过无数种 multipath 的配置，仍然无效。</p>
 </div>
   
   
@@ -172,11 +176,10 @@ device-mapper: dm-multipath: Failing path 8:64.
   </header>
 
 
-  <div class="entry-content"><p>来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其二</p>
+  <div class="entry-content"><p>来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其二</p>
 
-<p>今天上午EMC的人过来了，只是看了一下CX300的状态，说从状态来看，没有问题。
-然后就走了。</p>
+<p>今天上午 EMC 的人过来了，只是看了一下 CX300 的状态，说从状态来看，没有问题。然后就走了。</p>
 
 </div>
   
@@ -220,11 +223,10 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   </header>
 
 
-  <div class="entry-content"><p>来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，但是同样的环境，在深圳却找不到存储设备，很是怪异。<br/>
-而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其一</p>
+  <div class="entry-content"><p>来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其一</p>
 
-<p>我于8.15晚上8点抵达用户现场（飞机晚点3小时）。当时雁联和IBM的人正在使用AIX系统来验证是否CX300存储有问题。</p>
+<p>我于 8.15 晚上 8 点抵达用户现场（飞机晚点 3 小时）。当时雁联和 IBM 的人正在使用 AIX 系统来验证是否 CX300 存储有问题。</p>
 
 </div>
   
@@ -268,8 +270,7 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   </header>
 
 
-  <div class="entry-content"><p>知道今天要飞深圳，所以睡了个懒觉，9：30起床。啃了一个饼，到上网看了深圳的天气情况，然后和深圳的朋友打了招呼，说要猛砍他们。
-简单收拾行李，快11点出门，到机场还不到11：30，不过这个比较理想了，因为12：55起飞，这样我用一个小时来换登机牌，check
+  <div class="entry-content"><p>知道今天要飞深圳，所以睡了个懒觉，9：30 起床。啃了一个饼，到上网看了深圳的天气情况，然后和深圳的朋友打了招呼，说要猛砍他们。简单收拾行李，快 11 点出门，到机场还不到 11：30，不过这个比较理想了，因为 12：55 起飞，这样我用一个小时来换登机牌，check
 in。比较的休闲。</p>
 
 </div>
@@ -314,14 +315,13 @@ in。比较的休闲。</p>
   </header>
 
 
-  <div class="entry-content"><p><a href="http://blog.sina.com.cn/u/1245710794">wirlfy</a>送<a href="http://mwishes1014.spaces.live.com/">mswishes</a>上火车后，直接来了这里。</p>
+  <div class="entry-content"><p><a href="http://blog.sina.com.cn/u/1245710794">wirlfy</a> 送 <a href="http://mwishes1014.spaces.live.com/">mswishes</a> 上火车后，直接来了这里。</p>
 
-<p>一顿豪华版晚餐后，开始了我几天指定的主题－－讨论网络存储的相关内容。<br/>
-我想这周五能和同事做交流。无赖对于存储的关注已经丢失了很久，需要wirlfly的帮助，他给我将了CAS的一些相关理论，于是我们有CAS讨论了EMC的centera，讨论到了CASTOR，讨论了NASD,讨论了OBS，讨论了SAN存储虚拟化。</p>
+<p>一顿豪华版晚餐后，开始了我几天指定的主题－－讨论网络存储的相关内容。我想这周五能和同事做交流。无赖对于存储的关注已经丢失了很久，需要 wirlfly 的帮助，他给我将了 CAS 的一些相关理论，于是我们有 CAS 讨论了 EMC 的 centera，讨论到了 CASTOR，讨论了 NASD,讨论了 OBS，讨论了 SAN 存储虚拟化。</p>
 
-<p>这些都是我需要再深入了解的内容。我们一起看论文，一起讨论相关内容。那种感觉像回到了大学，回到了熟悉的N508。</p>
+<p>这些都是我需要再深入了解的内容。我们一起看论文，一起讨论相关内容。那种感觉像回到了大学，回到了熟悉的 N508。</p>
 
-<p>似乎两个人都热衷于这样的讨论，不知不觉已到一点，大家还是没有睡意。不过考虑明天要上班，只能作罢。这种激烈的讨论的结果是一晚没有睡好，一直在做梦，而做梦的内容居然全部是什么NAS，SAN，iSCSI,IP SAN等网络存储的东西，果然是日有所思，夜有所梦呀。</p>
+<p>似乎两个人都热衷于这样的讨论，不知不觉已到一点，大家还是没有睡意。不过考虑明天要上班，只能作罢。这种激烈的讨论的结果是一晚没有睡好，一直在做梦，而做梦的内容居然全部是什么 NAS，SAN，iSCSI,IP SAN 等网络存储的东西，果然是日有所思，夜有所梦呀。</p>
 
 <p>很喜欢这种讨论的感觉，今晚是不是又回去讨论呢？</p>
 </div>
@@ -362,7 +362,7 @@ in。比较的休闲。</p>
   </header>
 
 
-  <div class="entry-content"><p>今晚给<a href="http://lawstar.xplore.cn">lancy</a>发的最后一条短信，写着“让我拥抱你入梦”。</p>
+  <div class="entry-content"><p>今晚给 <a href="http://lawstar.xplore.cn">lancy</a> 发的最后一条短信，写着“让我拥抱你入梦”。</p>
 
 <p>思绪突然把我带回了大学时代，带回那个每晚要听广播的时代。而“让我拥抱你入梦”以及”天长地久“是那个时候的主题曲。</p>
 
@@ -410,12 +410,10 @@ in。比较的休闲。</p>
   </header>
 
 
-  <div class="entry-content"><p>一直在找如何在grub丢失，只剩下grub>的情况下，直接安装grub菜单，而不是输入root,kernel,initrd一堆命令后进入系统，再使用grub-install来安装grub。
-今天<a href="http://rachel.xpore.cn">Rachel</a>从她的笔记本上找到了这条命令，果然管用，记录如下：
+  <div class="entry-content"><p>一直在找如何在 grub 丢失，只剩下 grub>的情况下，直接安装 grub 菜单，而不是输入 root,kernel,initrd 一堆命令后进入系统，再使用 grub-install 来安装 grub。今天 <a href="http://rachel.xpore.cn">Rachel</a> 从她的笔记本上找到了这条命令，果然管用，记录如下：
  grub>install (hd0,4)/boot/grub/stage1 (hd0) (hd0,4)/boot/grub/stage2 p
 (hd0,4)/boot/grub/grub.conf
-注意：
-这里表示根文件系统是hda5，同时boot没有单独分出来。如果你的boot是单独分出来的，那么“(hd0,4)/boot”两处就要修改成你的boot分区了。</p>
+注意：这里表示根文件系统是 hda5，同时 boot 没有单独分出来。如果你的 boot 是单独分出来的，那么“(hd0,4)/boot”两处就要修改成你的 boot 分区了。</p>
 </div>
   
   
@@ -454,7 +452,7 @@ in。比较的休闲。</p>
   </header>
 
 
-  <div class="entry-content"><p>偶然听到自己的录音，简直不敢相信那是我的声音：相当不标准的普通话，时高时低而决不是抑扬顿挫的语调。让我感到有一种恶心。我简直不敢相信2年来，我就是靠这样憋足的声音在课堂上自我感觉良好的上课，于是想来那些来听我上课的学生是鼓起了多大的勇气，要忍受多大的折磨才能熬过这90分钟。</p>
+  <div class="entry-content"><p>偶然听到自己的录音，简直不敢相信那是我的声音：相当不标准的普通话，时高时低而决不是抑扬顿挫的语调。让我感到有一种恶心。我简直不敢相信 2 年来，我就是靠这样憋足的声音在课堂上自我感觉良好的上课，于是想来那些来听我上课的学生是鼓起了多大的勇气，要忍受多大的折磨才能熬过这 90 分钟。</p>
 
 <p>而此后，我还在公司或外地代表公司的形象给用户培训，想到这里，我已经没有勇气面对后天的培训了。</p>
 </div>
@@ -495,19 +493,19 @@ in。比较的休闲。</p>
   </header>
 
 
-  <div class="entry-content"><p><a href="http://fuse.sourceforge.net/">FUSE</a>是定义在用户空间(userspace)一组实现文件系统功能的程序，他包括的功能有：</p>
+  <div class="entry-content"><p><a href="http://fuse.sourceforge.net/">FUSE</a> 是定义在用户空间(userspace)一组实现文件系统功能的程序，他包括的功能有：</p>
 
 <ol>
-<li>简单API实现</li>
+<li>简单 API 实现</li>
 <li>简单安装</li>
 <li>用户空间</li>
 <li>非特权用户可以使用</li>
-<li>kernel 2.4和2.6均可以使用</li>
+<li>kernel 2.4 和 2.6 均可以使用</li>
 <li>目前比较稳定</li>
 </ol>
 
 
-<p>其实FUSE只是一个框架（framework），我比较喜欢的是基于它的各种文集系统的实现，比如
+<p>其实 FUSE 只是一个框架（framework），我比较喜欢的是基于它的各种文集系统的实现，比如
 <a href="http://www.mulliner.org/bluetooth/btfs.php">bluetooth filesystem</a><br/>
 <a href="http://www.hep.phy.cam.ac.uk/~lester/gphoto2-fuse-fs/">ghoto2 file system</a><br/>
 <a href="http://fuse.sourceforge.net/sshfs.html">ssh filesystem</a><br/>
@@ -518,7 +516,7 @@ in。比较的休闲。</p>
 
 <p>我测试了一下<code>ssh filesystem</code>，觉得不错。下面是我的安装和测试手记</p>
 
-<p>1）<a href="http://prdownloads.sourceforge.net/fuse/fuse-2.5.3.tar.gz?download">下载最新的fuse版本</a></p>
+<p>1）<a href="http://prdownloads.sourceforge.net/fuse/fuse-2.5.3.tar.gz?download">下载最新的 fuse 版本</a></p>
 
 <p>2）编译安装</p>
 
@@ -529,7 +527,7 @@ in。比较的休闲。</p>
  $sudo ldconfig 
 </code></pre>
 
-<p>3）<a href="http://prdownloads.sourceforge.net/fuse/sshfs-fuse-1.6.tar.gz?download">下载最新的sshfs</a></p>
+<p>3）<a href="http://prdownloads.sourceforge.net/fuse/sshfs-fuse-1.6.tar.gz?download">下载最新的 sshfs</a></p>
 
 <p>4）编译安装</p>
 
@@ -540,7 +538,7 @@ in。比较的休闲。</p>
 
 <p>5）测试</p>
 
-<p>你可以使用通常的挂载分区的方式挂载远程服务器上的某一个目录，而通过的协议是ssh，比如</p>
+<p>你可以使用通常的挂载分区的方式挂载远程服务器上的某一个目录，而通过的协议是 ssh，比如</p>
 
 <pre><code>#sshfs mlsx@172.16.81.196:/home/mlsx /misc
 [root@wgzhao ~]# df -h 
@@ -552,17 +550,11 @@ none 248M 0 248M 0% /dev/shm
 sshfs#mlsx@172.16.81.196:/home/mlsx 7.5T 0 7.5T 0% /misc 
 </code></pre>
 
-<p>不过它对大小的识别就有点问题了。不管是哪个分区，哪个目录挂载上来，它都识别为7.5T（如果是真的，那该多好）。
-这也挂载上来的读写权限是远程机器帐号的uid和gid对应的本地机器的帐号，比如如果远程机器mlsx帐号的uid是500,而我的机器上uid是500的帐号是work，那么/misc的读写权限属于work，其他帐号都没有权限。
-你可以这样来挂载
+<p>不过它对大小的识别就有点问题了。不管是哪个分区，哪个目录挂载上来，它都识别为 7.5T（如果是真的，那该多好）。这也挂载上来的读写权限是远程机器帐号的 uid 和 gid 对应的本地机器的帐号，比如如果远程机器 mlsx 帐号的 uid 是 500,而我的机器上 uid 是 500 的帐号是 work，那么/misc 的读写权限属于 work，其他帐号都没有权限。你可以这样来挂载
  <code>#sshfs mlsx@172.16.81.196:/home/mlsx /misc -o uid=1000,gid=100</code>
-uid，gid是对应你本地机器帐号的id号，这样你就可以指定某个帐号来读写了。
-卸载的时候，使用下面的命令
+uid，gid 是对应你本地机器帐号的 id 号，这样你就可以指定某个帐号来读写了。卸载的时候，使用下面的命令
  <code>#fusermount -u /misc</code>
-是不是觉得比scp，sftp要方便很多呢？
-同样的，你可以使用它提供的gmail filesystem，blog filesystem等。
-而接下来，我要关心的是<a href="http://sourceforge.net/project/showfiles.php?group_id=16036&amp;package_id=191598">基于fuse的ZFS</a>，这是sun公司基于solaris提出的一种文件系统，<a href="http://mlsx.xplore.cn/read.php/403.htm">在我的blog中提到过它</a>，而ZFS-FUSE就是基于FUSE来在linux实现ZFS的特性，不过目前还没有实质性的成果，我也下载了它现在推出的最新版本，也能编译通过，但是目前还不知道如何使用，solaris上有专门的视频来告诉你如何使用ZFS，可惜那些功能目前在ZFS-FUSE还没有实现。
-让我们期待。</p>
+是不是觉得比 scp，sftp 要方便很多呢？同样的，你可以使用它提供的 gmail filesystem，blog filesystem 等。而接下来，我要关心的是<a href="http://sourceforge.net/project/showfiles.php?group_id=16036&amp;package_id=191598">基于 fuse 的 ZFS</a>，这是 sun 公司基于 solaris 提出的一种文件系统，<a href="http://mlsx.xplore.cn/read.php/403.htm">在我的 blog 中提到过它</a>，而 ZFS-FUSE 就是基于 FUSE 来在 linux 实现 ZFS 的特性，不过目前还没有实质性的成果，我也下载了它现在推出的最新版本，也能编译通过，但是目前还不知道如何使用，solaris 上有专门的视频来告诉你如何使用 ZFS，可惜那些功能目前在 ZFS-FUSE 还没有实现。让我们期待。</p>
 </div>
   
   
@@ -601,32 +593,16 @@ uid，gid是对应你本地机器帐号的id号，这样你就可以指定某个
   </header>
 
 
-  <div class="entry-content"><p>前两天同事下载了Novell SuSe Enterprise Desktop 10.0
-,简称SLED10。总算是看到了xgl带来的3D绚丽桌面效果。就像下面的截图一样</p>
+  <div class="entry-content"><p>前两天同事下载了 Novell SuSe Enterprise Desktop 10.0
+,简称 SLED10。总算是看到了 xgl 带来的 3D 绚丽桌面效果。就像下面的截图一样</p>
 
 <p><img src="http://news.newhua.com/Newhua_Files/Net_pic/2006-7/21/526545801731592919.jpg" alt="image" /></p>
 
-<p>如果是以前，我肯定毫不犹豫的安装了。但是3年前疲于各种系统安装尝鲜的我已经没有了当年的激情。尝鲜已经不是我首要的任务，我需要的是稳定的桌面，可用的办公系统等。
-不过基于我有喜爱的gnome，和它自带的搜索引擎。经过一天的考虑，我还是决定安装。</p>
+<p>如果是以前，我肯定毫不犹豫的安装了。但是 3 年前疲于各种系统安装尝鲜的我已经没有了当年的激情。尝鲜已经不是我首要的任务，我需要的是稳定的桌面，可用的办公系统等。不过基于我有喜爱的 gnome，和它自带的搜索引擎。经过一天的考虑，我还是决定安装。</p>
 
-<p>我的机器是HP compaq nx6120，迅驰1.7GHz/512M/intel915。应该还算可以吧。安装大约是40分钟。安装下来4G。
-默认启动gnome，3D桌面默认没有打开，你需要在控制面版的桌面效果中启动3D桌面效果。
-于是我看到了旋转的3D桌面，多达36个桌面形成的多面柱体。也看到了窗口颤抖效果，水波纹效果。跑起来还算流畅。
-自带的软件果然是很多，全新的菜单方式也有耳目一新的感觉，不过因为安装的软件过多，加载菜单时感觉很慢。
-显然3D效果并不能为我带来多大生产力，我需要的是可用的办公桌面。
-首先看看office如何，自带的是novell经过修改的openoffice2.0，当然，我不知道修改了什么，可能是兼容性问题吧。不过和ms的office兼容还是存在问题。不得不安装永中office
-2007，安装一切正常。但是打开文档会崩溃，在终端留下遗言，是java的问题。修改配置，使用suse自带的java，也不行。安装jre1.5，也不行，依然是崩溃。
-这个先放到一边，实在不行还可以使用redoffice,openoffice。
-再看看IM，启动gaim，默认是1.5版本。登录msn特别慢。慢也就算了，能登录就行，问题是它时不时崩溃，这就让人很难接受了。也许是版本的问题，到<a href="http://gaim.sf.net">官方站点</a>下载了2.0的beta版。问题依然。
-换一个软件，使用kopete，登录比gaim快一点，使用了不上时间，直接报KDE崩溃。重新打开，问题依然。
-不过没有尝试过在KDE环境下会如何。
-打开firefox，默认版本是1.5.0.4，最新的稳定版本了。访问网站很慢，主要在解析这块，<a href="http://mlsx.xplore.cn/read.php/281.htm">禁止了ipv6</a>。还是觉得慢。没有想到其他办法了。
-运行一段时间后，发现系统明显比使用红旗
-5慢很多。top一下，发现负载是2.7，比较恐怖，查看进程，X经常占用97%，beagle也是消耗大户，查看改进程的来源，原来是novell的索引引擎。类似google桌面，但是这样的速度实在是太慢了点。
-关闭3D桌面，关闭索引引擎，重启桌面，速度快了不少，或者恢复到我能接受的程度。
-如此以来，我最需要的功能－office，IM没有办法使用。那这个系统再怎么豪华，对我来说也是白搭，毕竟我不能拿绚丽的桌面工作和赚钱。
-所以用了不到一天，又重新回到了红旗桌面，虽然红旗桌面有很多我不喜欢的地方，但是他至少能满足我的基本需求。
-改天再测试它的kde桌面吧。如果两个X－windows都没有满足我的基本需求，那么我就只能废了他了。</p>
+<p>我的机器是 HP compaq nx6120，迅驰 1.7GHz/512M/intel915。应该还算可以吧。安装大约是 40 分钟。安装下来 4G。默认启动 gnome，3D 桌面默认没有打开，你需要在控制面版的桌面效果中启动 3D 桌面效果。于是我看到了旋转的 3D 桌面，多达 36 个桌面形成的多面柱体。也看到了窗口颤抖效果，水波纹效果。跑起来还算流畅。自带的软件果然是很多，全新的菜单方式也有耳目一新的感觉，不过因为安装的软件过多，加载菜单时感觉很慢。显然 3D 效果并不能为我带来多大生产力，我需要的是可用的办公桌面。首先看看 office 如何，自带的是 novell 经过修改的 openoffice2.0，当然，我不知道修改了什么，可能是兼容性问题吧。不过和 ms 的 office 兼容还是存在问题。不得不安装永中 office
+2007，安装一切正常。但是打开文档会崩溃，在终端留下遗言，是 java 的问题。修改配置，使用 suse 自带的 java，也不行。安装 jre1.5，也不行，依然是崩溃。这个先放到一边，实在不行还可以使用 redoffice,openoffice。再看看 IM，启动 gaim，默认是 1.5 版本。登录 msn 特别慢。慢也就算了，能登录就行，问题是它时不时崩溃，这就让人很难接受了。也许是版本的问题，到<a href="http://gaim.sf.net">官方站点</a>下载了 2.0 的 beta 版。问题依然。换一个软件，使用 kopete，登录比 gaim 快一点，使用了不上时间，直接报 KDE 崩溃。重新打开，问题依然。不过没有尝试过在 KDE 环境下会如何。打开 firefox，默认版本是 1.5.0.4，最新的稳定版本了。访问网站很慢，主要在解析这块，<a href="http://mlsx.xplore.cn/read.php/281.htm">禁止了 ipv6</a>。还是觉得慢。没有想到其他办法了。运行一段时间后，发现系统明显比使用红旗
+5 慢很多。top 一下，发现负载是 2.7，比较恐怖，查看进程，X 经常占用 97%，beagle 也是消耗大户，查看改进程的来源，原来是 novell 的索引引擎。类似 google 桌面，但是这样的速度实在是太慢了点。关闭 3D 桌面，关闭索引引擎，重启桌面，速度快了不少，或者恢复到我能接受的程度。如此以来，我最需要的功能－office，IM 没有办法使用。那这个系统再怎么豪华，对我来说也是白搭，毕竟我不能拿绚丽的桌面工作和赚钱。所以用了不到一天，又重新回到了红旗桌面，虽然红旗桌面有很多我不喜欢的地方，但是他至少能满足我的基本需求。改天再测试它的 kde 桌面吧。如果两个 X－windows 都没有满足我的基本需求，那么我就只能废了他了。</p>
 </div>
   
   
@@ -673,8 +649,8 @@ uid，gid是对应你本地机器帐号的id号，这样你就可以指定某个
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/27/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/27/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/27/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/27/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

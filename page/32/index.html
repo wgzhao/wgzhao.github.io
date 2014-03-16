@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的xml编程代码。
-由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。 首先申明：该代码不能保证再所有IE5.5以上的浏览器都能通过，我实在想不通，就IE那么烂的浏览器居然会有那么多人用， &hellip;">
+  <meta name="description" content="经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的 xml 编程代码。由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。 首先申明：该代码不能保证再所有 IE5.5 以上的浏览器都能通过，我实在想不通，就 IE 那么烂的浏览器居然会有那么多人用，光 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -64,7 +68,10 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -98,14 +105,11 @@
   </header>
 
 
-  <div class="entry-content"><p>经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的xml编程代码。<br/>
-由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。</p>
+  <div class="entry-content"><p>经过两天的测试，终于搞定了再两种浏览器上都可以实现的动态分页的 xml 编程代码。由于这些代码都是在客户端执行，这无疑给哪些负载较大的服务器带来了好处。</p>
 
-<p>首先申明：该代码不能保证再所有IE5.5以上的浏览器都能通过，我实在想不通，就IE那么烂的浏览器居然会有那么多人用，光javascript报错就是等于没说，而且还能糊弄别人，和mozilla的javascript调试器相比，IE可以钻到地逢里面去了。<br/>
-好不容易下载了MS声称加强了的调试器，依然是小儿科，我真的不知道MS是不是把顾客当宝弄。<br/>
-算了，不说这些了，反正我的Jscript也没怎么学，就当成我无法理解MS的javascript吧。</p>
+<p>首先申明：该代码不能保证再所有 IE5.5 以上的浏览器都能通过，我实在想不通，就 IE 那么烂的浏览器居然会有那么多人用，光 javascript 报错就是等于没说，而且还能糊弄别人，和 mozilla 的 javascript 调试器相比，IE 可以钻到地逢里面去了。好不容易下载了 MS 声称加强了的调试器，依然是小儿科，我真的不知道 MS 是不是把顾客当宝弄。算了，不说这些了，反正我的 Jscript 也没怎么学，就当成我无法理解 MS 的 javascript 吧。</p>
 
-<p>两个文件保存到了<a href="https://github.com">github</a>里，可以点击下面的链接下载：</p>
+<p>两个文件保存到了 <a href="https://github.com">github</a> 里，可以点击下面的链接下载：</p>
 
 <p><a href="https://gist.github.com/4419135">books_grid.xml</a></p>
 
@@ -150,32 +154,32 @@
 
   <div class="entry-content"><ol>
 <li><p>xsl:apply-imports
-允许引入的模板规则反转正常的引入次序,通常偏袒引入文档中的模板.这个表示,加入有2个同名模板,一个再用户的主要样式表中,另外一个在引入样式表中.那么将调用引入样式表中的那个模板.</p></li>
+允许引入的模板规则反转正常的引入次序,通常偏袒引入文档中的模板.这个表示,加入有 2 个同名模板,一个再用户的主要样式表中,另外一个在引入样式表中.那么将调用引入样式表中的那个模板.</p></li>
 <li><p>xsl:apply-templates 识别待处理的节点集,如何确定处理他们的模板规则.假如没有找到模板规则,则使用内置的模板规则.</p></li>
 <li><p>xsl:attribute 可以用来为结果元素添加属性.此元素向当前节点输出一个属性名称合数值.</p></li>
 <li><p>xsl:call-template 调用一个指定的模板</p></li>
 <li><p>xsl:choose
-在若干可选方案中定义一个选择.必须至少有一个xsl:when子体提供此条件及相关的输出模板.可以包括一个xsl:otherwise元素,并在所有测试(满足所要求的条件)失败时选择它.</p></li>
+在若干可选方案中定义一个选择.必须至少有一个 xsl:when 子体提供此条件及相关的输出模板.可以包括一个 xsl:otherwise 元素,并在所有测试(满足所要求的条件)失败时选择它.</p></li>
 <li><p>xsl:comment 用于为结果树创建注释.</p></li>
 <li><p>xsl:copy 提供节点&#8221;浅复制&#8221;.它在将元素节点复制给结果树时,不复制其子节点</p></li>
 <li><p>xsl:copy-of
-此节点提供节点&#8221;深复制&#8221;.它在将元素节点复制给结果树时,复制其子节点.这在将一个XML树转换为另外一个XML树时,非常有用</p></li>
-<li><p>xsl:element 可以在XSLT模板中用来计算结果树中的新元素.此节点在需要计算结果节点中待创建元素的名称或名字空间时,特别有用.</p></li>
-<li><p> xsl:fallback 用来确保正向兼容性.在XSLT的未来版本中,假如开发者使用了一个XSLT处理机不支持的XSLT指令,那么他们可以在定义一个<code>xsl:fallback</code>元素,为应该进行的处理提供其他选择</p></li>
-<li><p>xsl:for-each 利用XPath表达式选择节点集,并对节点集的每一个节点执行相同处理</p></li>
-<li><p>xsl:if 封闭仅在满足特定条件时实例化的模板主题.假如此表达式经测试为false,那么其中的内容将不传给结果树</p></li>
+此节点提供节点&#8221;深复制&#8221;.它在将元素节点复制给结果树时,复制其子节点.这在将一个 XML 树转换为另外一个 XML 树时,非常有用</p></li>
+<li><p>xsl:element 可以在 XSLT 模板中用来计算结果树中的新元素.此节点在需要计算结果节点中待创建元素的名称或名字空间时,特别有用.</p></li>
+<li><p> xsl:fallback 用来确保正向兼容性.在 XSLT 的未来版本中,假如开发者使用了一个 XSLT 处理机不支持的 XSLT 指令,那么他们可以在定义一个<code>xsl:fallback</code>元素,为应该进行的处理提供其他选择</p></li>
+<li><p>xsl:for-each 利用 XPath 表达式选择节点集,并对节点集的每一个节点执行相同处理</p></li>
+<li><p>xsl:if 封闭仅在满足特定条件时实例化的模板主题.假如此表达式经测试为 false,那么其中的内容将不传给结果树</p></li>
 <li><p>xsl:message 可用来输出一个消息.还可以用来终止样式表操作的执行</p></li>
 <li><p>xsl:number 用来在当前节点中插入一个格式化整数,和/或为输出格式化一个数字</p></li>
 <li><p>xsl:porcessing-instruction 用于在结果树创建一个处理指令</p></li>
-<li><p>xsl:text 可用来计算XSLT结果树中的文本节点</p></li>
-<li><p>xsl:value-of 将单个源节点的字符串复制给输出树.select属性定义需要求值的源节点.此指令始终为空</p></li>
+<li><p>xsl:text 可用来计算 XSLT 结果树中的文本节点</p></li>
+<li><p>xsl:value-of 将单个源节点的字符串复制给输出树.select 属性定义需要求值的源节点.此指令始终为空</p></li>
 <li><p>xsl:variable 可用做最高级元素或模板中的指令.一旦使用,此元素在样式表中定义一个局部或全局变量.
 说明:只有上述表中的元素才允许出现在模板中.在一些特殊环境下,也允许下列元素以模板元素的子节点形式出现:</p></li>
-<li><p>xsl:param     元素可以用做最高级元素,或者是xsl:template元素的直接子体.用做最高级元素时,它定义全局参数.在xsl:template元素中使用时,它定义局部参数.</p></li>
-<li><p>xsl:with-param 此元素在<code>xsl:apply-templates</code>    或<code>xsl:call-template</code>元素使用.它给参数赋值,可以再调用模板时使用这些数值.由于没有用做<code>xsl:template</code>的子体,因此<code>xsl:with-param</code>元素并不是正式的XSLT指令.确切地说,它是XSLT指令的一个子体.</p></li>
-<li><p>xsl:sort 此元素再xsl:apply-templates或xsl:for-each元素中使用,他提供一个分类键,定义节点选择的顺序.</p></li>
-<li><p>xsl:when 元素在<code>xsl:choose</code>(一个指令)中使用.它提供一个待测试的条件,以及求值为true时采取的行动.</p></li>
-<li><p>xsl:otherwise 此元素在<code>xsl:choose</code>元素(一个指令)中使用,提供一个动作,再其他<code>xsl:choose</code>,<code>xsl:when</code>子体求值均为false时采用.</p></li>
+<li><p>xsl:param     元素可以用做最高级元素,或者是 xsl:template 元素的直接子体.用做最高级元素时,它定义全局参数.在 xsl:template 元素中使用时,它定义局部参数.</p></li>
+<li><p>xsl:with-param 此元素在<code>xsl:apply-templates</code>    或<code>xsl:call-template</code>元素使用.它给参数赋值,可以再调用模板时使用这些数值.由于没有用做<code>xsl:template</code>的子体,因此<code>xsl:with-param</code>元素并不是正式的 XSLT 指令.确切地说,它是 XSLT 指令的一个子体.</p></li>
+<li><p>xsl:sort 此元素再 xsl:apply-templates 或 xsl:for-each 元素中使用,他提供一个分类键,定义节点选择的顺序.</p></li>
+<li><p>xsl:when 元素在<code>xsl:choose</code>(一个指令)中使用.它提供一个待测试的条件,以及求值为 true 时采取的行动.</p></li>
+<li><p>xsl:otherwise 此元素在<code>xsl:choose</code>元素(一个指令)中使用,提供一个动作,再其他<code>xsl:choose</code>,<code>xsl:when</code>子体求值均为 false 时采用.</p></li>
 <li><p>xsl:document 这是<code>xslt1.1</code>中的元素,它允许产生多个结果树.</p></li>
 </ol>
 
@@ -218,7 +222,7 @@
 
 
   <div class="entry-content"><p>问题：
-wget和curl是我非常喜爱的下载程序，可是却有这样的问题，比如当我要下载20个文件，这些文件至少名字不同，但是非常有规律，比如</p>
+wget 和 curl 是我非常喜爱的下载程序，可是却有这样的问题，比如当我要下载 20 个文件，这些文件至少名字不同，但是非常有规律，比如</p>
 
 <pre><code>http://www.example.com/01.html
 http://www.example.com/02.html
@@ -226,9 +230,9 @@ http://www.example.com/02.html
 http://www.example.com/99.html
 </code></pre>
 
-<p>如果<a href="http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81robots%E7%9A%84%E8%AF%9D%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8">http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81robots%E7%9A%84%E8%AF%9D%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8</a>
+<p>如果 <a href="http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81">http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81</a> robots 的话，那么可以使用
 <code>wget -r http://www.example.com/</code>
-来批量下载，但是这种情况很少，特别是http协议的(ftp的话都可以)
+来批量下载，但是这种情况很少，特别是 http 协议的(ftp 的话都可以)
 于是我就想扩展这个功能。</p>
 
 </div>
@@ -279,8 +283,8 @@ http://www.example.com/99.html
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/32/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/32/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/32/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/32/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="18-4. 线程和文件。把练习 9-19 的答案做一些改进。我们要得到一个字节值,一个文件名然后显示在文件中那个字节出现了多少次。假设这个文件非常的大。文件是可以有多个读者的,那我们就可以创建多个线程,每个线程负责文件的一部分。最后,把所有的线程的结果相加。使用timeit() &hellip;">
+  <meta name="description" content="18-4. 线程和文件。把练习 9-19 的答案做一些改进。我们要得到一个字节值,一个文件名然后显示在文件中那个字节出现了多少次。假设这个文件非常的大。文件是可以有多个读者的,那我们就可以创建多个线程,每个线程负责文件的一部分。最后,把所有的线程的结果相加。使用 timeit() &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,7 +99,7 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>18-4. 线程和文件。把练习 9-19 的答案做一些改进。我们要得到一个字节值,一个文件名然后显示在文件中那个字节出现了多少次。假设这个文件非常的大。文件是可以有多个读者的,那我们就可以创建多个线程,每个线程负责文件的一部分。最后,把所有的线程的结果相加。使用timeit()对单线程和多线程分别进行计时,对性能的改进进行讨论。<br/>
+<div class="entry-content"><blockquote><p>18-4. 线程和文件。把练习 9-19 的答案做一些改进。我们要得到一个字节值,一个文件名然后显示在文件中那个字节出现了多少次。假设这个文件非常的大。文件是可以有多个读者的,那我们就可以创建多个线程,每个线程负责文件的一部分。最后,把所有的线程的结果相加。使用 timeit()对单线程和多线程分别进行计时,对性能的改进进行讨论。<br/>
 18-5. 线程,文件和正则表达式。你有一个非常大的 mailbox 文件——如果没有的话,你可以把你所有的 e-mail 的原始信息放到一个文本文件中。你现在要做的是,使用你在 15 章写的识别 e-mail 地址和网页 URL 的正则表达式,分析出这个大文件里的所有的 e-mail 地址和 URL,把这些链接写到一个.html(或.htm)文件中。在这个文件生成时,会自动显示一个浏览器,打开这个文件,显示所有的链接。使用多线程来分隔处理大文件和把结果写到一个新的.html 文件的操作。在浏览器中测试一下你的结果,确保那些链接都能正常工作。<br/>
 18-8. 线程池。修改例 18.9 的代码,不再是一个生产者和一个消费者,而是可以有任意个消费者线程(一个线程池),每个线程可以在任意时刻处理或消耗任意多个产品。   <br/>
 18-9. 文件, 创建一些线程来计算一些(可能很大量的)文件中一共有多少行。你可以选择要使用多少个线程。比较单线程与多线程的性能差异。提示:回顾一下第 9 章(文件和输入 输出)的练习。</p></blockquote>
@@ -196,8 +201,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-18-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-18-exercise/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/06/05/core-python-programming-2nd-chapter-18-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/06/05/core-python-programming-2nd-chapter-18-exercise/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

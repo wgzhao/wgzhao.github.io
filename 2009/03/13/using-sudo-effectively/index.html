@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="sudo工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的root访问权限。它是一个setuid程序，只需要输入用户自己的密码，就可以执行sudo后面的命令。
-使用root帐号，运行/usr/bin/visudo 来编辑那些用户可以调用sudo命令的用户列表， &hellip;">
+  <meta name="description" content="sudo 工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的 root 访问权限。它是一个 setuid 程序，只需要输入用户自己的密码，就可以执行 sudo 后面的命令。使用 root 帐号，运行/usr/bin/visudo 来编辑那些用户可以调用 sudo 命令的用户列表， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,8 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>sudo工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的root访问权限。它是一个setuid程序，只需要输入用户自己的密码，就可以执行sudo后面的命令。<br/>
-使用root帐号，运行/usr/bin/visudo 来编辑那些用户可以调用sudo命令的用户列表，缺省的sudo列表看上去类似下面这样：</p>
+<div class="entry-content"><p>sudo 工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的 root 访问权限。它是一个 setuid 程序，只需要输入用户自己的密码，就可以执行 sudo 后面的命令。使用 root 帐号，运行/usr/bin/visudo 来编辑那些用户可以调用 sudo 命令的用户列表，缺省的 sudo 列表看上去类似下面这样：</p>
 
 <pre><code> root ALL=(ALL) ALL
 </code></pre>
@@ -111,29 +114,27 @@ work ALL=(ALL) ALL
 test ALL=(ALL) ALL
 </code></pre>
 
-<p>上面这种模式使得work和test帐号具有完全的root权限，还不需要root帐号的密码。如果你授权的这些帐号如果是完全可信赖的，那这是一个不错的方法，可惜，信赖并不是那么说的清楚。<br/>
-因此我们需要按照最小原则来给特定的帐号授权，我们先看看sudo列表文件的语法，在sudo列表里，每一行应该是下面这个样子：</p>
+<p>上面这种模式使得 work 和 test 帐号具有完全的 root 权限，还不需要 root 帐号的密码。如果你授权的这些帐号如果是完全可信赖的，那这是一个不错的方法，可惜，信赖并不是那么说的清楚。因此我们需要按照最小原则来给特定的帐号授权，我们先看看 sudo 列表文件的语法，在 sudo 列表里，每一行应该是下面这个样子：</p>
 
 <pre><code> user machine=(effective user) command
 </code></pre>
 
-<p>第一列(user)指定要授权的帐号。第二列(machine)定义在那些机器上，这条执行生效，其好处是在多台机器上使用同一份配置文件。<br/>
-举个例子，假设有一个开发人员需要在开发服务器上获得root访问权限，在其他服务器上就不行，那么我们这样做</p>
+<p>第一列(user)指定要授权的帐号。第二列(machine)定义在那些机器上，这条执行生效，其好处是在多台机器上使用同一份配置文件。举个例子，假设有一个开发人员需要在开发服务器上获得 root 访问权限，在其他服务器上就不行，那么我们这样做</p>
 
 <pre><code> steven beta.xplore.cn=(ALL) ALL
 </code></pre>
 
-<p>第三列（就是括号里的effective user)指定实际执行该命令的帐号，这就方便一个帐号允许用另外一个帐号来执行特定的命令，而不非得是root帐号:</p>
+<p>第三列（就是括号里的 effective user)指定实际执行该命令的帐号，这就方便一个帐号允许用另外一个帐号来执行特定的命令，而不非得是 root 帐号:</p>
 
 <pre><code> steven mail.xplore.cn=(mailman) ALL
 </code></pre>
 
-<p>最后一列（command）指定所以这个帐号看可以在sudo环境下执行的指令：</p>
+<p>最后一列（command）指定所以这个帐号看可以在 sudo 环境下执行的指令：</p>
 
 <pre><code> kevin ns.xplore.cn =(bind) /usr/sbin/rndc,/usr/sbin/named
 </code></pre>
 
-<p>如果你觉得在指定用户或者机器或者命令时列表太长（比如很多帐号授权相同，一个帐号需要指定的命令和机器列表过长），我们可以使用sudo列表里Alias语法，Alias的语法和shell环境变量中alias类似，你可以看成是一个变量：</p>
+<p>如果你觉得在指定用户或者机器或者命令时列表太长（比如很多帐号授权相同，一个帐号需要指定的命令和机器列表过长），我们可以使用 sudo 列表里 Alias 语法，Alias 的语法和 shell 环境变量中 alias 类似，你可以看成是一个变量：</p>
 
 <pre><code> User_Alias ADMINS=wgzhao,kevin,steven 
  User_Alias     WEBMASTERS=xplore,glemir,xinhe 
@@ -149,13 +150,12 @@ test ALL=(ALL) ALL
 <pre><code> %mail WEBSERVERS=(mail) sendmail
 </code></pre>
 
-<p>现在，属于mail组的帐号都可以在WEBSERVERS定义的服务器上用mail帐号来执行sendmail指令。<br/>
-除此之外，还有一个有用的标志，那就是NOPASSWD: 。如果设置了这个标志，表示当前授权的帐号执行后面的帐号不需要输入当前帐号的密码：</p>
+<p>现在，属于 mail 组的帐号都可以在 WEBSERVERS 定义的服务器上用 mail 帐号来执行 sendmail 指令。除此之外，还有一个有用的标志，那就是 NOPASSWD: 。如果设置了这个标志，表示当前授权的帐号执行后面的帐号不需要输入当前帐号的密码：</p>
 
 <pre><code> xplore ALL=(ALL) NOPASSWD: PROCS
 </code></pre>
 
-<p>这允许帐号xplore可以用任何帐号执行kill,killall,skill和top指令，还不用输入密码。</p>
+<p>这允许帐号 xplore 可以用任何帐号执行 kill,killall,skill 和 top 指令，还不用输入密码。</p>
 
 <p><a href="http://technorati.com/tag/sudo">sudo</a></p>
 </div>
@@ -249,8 +249,8 @@ test ALL=(ALL) ALL
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/03/13/using-sudo-effectively/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/03/13/using-sudo-effectively/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/03/13/using-sudo-effectively/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/03/13/using-sudo-effectively/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="Apache自身并不支持中文目录，但是目前日本的webdev提供了mod_encoding插件来支持多字节目录。
-在AS5和Everest0.5pre2版本上测试通过，记录如下： 1）首先确定安装了httpd-devel包。如果没有安装之 2）从官方分别下载基本包和补丁包 #wget http &hellip;">
+  <meta name="description" content="Apache 自身并不支持中文目录，但是目前日本的 webdev 提供了mod_encoding插件来支持多字节目录。在 AS5 和 Everest0.5pre2 版本上测试通过，记录如下： 1）首先确定安装了 httpd-devel 包。如果没有安装之 2）从官方分别下载基本包和补丁包 # &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,10 +99,9 @@
   </header>
 
 
-<div class="entry-content"><p>Apache自身并不支持中文目录，但是目前日本的<a href="http://webdav.todo.gr.jp">webdev</a>提供了<code>mod_encoding</code>插件来支持多字节目录。
-在AS5和Everest0.5pre2版本上测试通过，记录如下：</p>
+<div class="entry-content"><p>Apache 自身并不支持中文目录，但是目前日本的 <a href="http://webdav.todo.gr.jp">webdev</a> 提供了<code>mod_encoding</code>插件来支持多字节目录。在 AS5 和 Everest0.5pre2 版本上测试通过，记录如下：</p>
 
-<p>1）首先确定安装了httpd-devel包。如果没有安装之</p>
+<p>1）首先确定安装了 httpd-devel 包。如果没有安装之</p>
 
 <!--more-->
 
@@ -131,23 +134,22 @@
  #./configure --with-apxs=/usr/sbin/apxs --with-iconv-hook=/usr/local/include #make &amp; make install 
 </code></pre>
 
-<p>注：如果5）步骤出现下面的报错
+<p>注：如果 5）步骤出现下面的报错
 <code>mod_encoding.c:235: error: 'regex_t' undeclared (first use in this
 function)</code>
 请在<code>mod_encoding.c</code>文件中加上<code>regex.h</code>,然后再编译。</p>
 
-<p>6）安装动态库
-如果前面步骤都没有错误，则应该在当前目录能看到<code>mod_encoding.o</code>文件，接下来该目标文件做成共享的动态库</p>
+<p>6）安装动态库如果前面步骤都没有错误，则应该在当前目录能看到<code>mod_encoding.o</code>文件，接下来该目标文件做成共享的动态库</p>
 
 <pre><code># gcc -shared -o mod_encoding.so mod_encoding.o -Wc,-Wall   -L/usr/local/lib -Llib -liconv_hook
 </code></pre>
 
-<p>将生成的<code>mod_encoding.so</code>文件拷贝到Apache的动态模块库目录中去</p>
+<p>将生成的<code>mod_encoding.so</code>文件拷贝到 Apache 的动态模块库目录中去</p>
 
 <pre><code>#cp mod_encoding.so /usr/lib/httpd/modules/  
 </code></pre>
 
-<p>我们采用创建新的conf文件来加载该so文件</p>
+<p>我们采用创建新的 conf 文件来加载该 so 文件</p>
 
 <pre><code> #cat &gt;/etc/httpd/conf.d/cndir.conf 
  LoadModule encoding_module modules/mod_encoding.so 
@@ -162,10 +164,10 @@ function)</code>
  AddClientEncoding "Microsoft-WebDAV*" UTF-8 GBK GB2312   
 </code></pre>
 
-<p>当然<code>SetServerEncoding UTF-8</code>这样可以设置成你希望的默认编码，比如GBK，比如GB2312.
-重启Apache。现在测试中文目录，看看效果。</p>
+<p>当然<code>SetServerEncoding UTF-8</code>这样可以设置成你希望的默认编码，比如 GBK，比如 GB2312.
+重启 Apache。现在测试中文目录，看看效果。</p>
 
-<p>在没有加载mod_encoding.so模块前的测试如下：</p>
+<p>在没有加载 mod_encoding.so 模块前的测试如下：</p>
 
 <p><img src="/uploads/1196739402_0.png" alt="image" /></p>
 
@@ -173,7 +175,7 @@ function)</code>
 
 <p><img src="/uploads/1196739402_1.png" alt="image" /></p>
 
-<p><a href="/uploads/mod_encoding-20021209_mlsx.tar.gz">mod_encoding下载</a></p>
+<p><a href="/uploads/mod_encoding-20021209_mlsx.tar.gz">mod_encoding 下载</a></p>
 </div>
 
 
@@ -265,8 +267,8 @@ function)</code>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/12/04/Apache-support-chinese-dir-access/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/12/04/Apache-support-chinese-dir-access/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/12/04/Apache-support-chinese-dir-access/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/12/04/Apache-support-chinese-dir-access/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="虽然可以打开ppt文档，然后从里面一个个拷贝出图片，但是还是觉得太累，这种典型的重复劳动工作就应该交给程序去干。
-所以写了下面这个脚本，python语言的。程序核心那块（图片获取）不是我写的，网络上有相关说明，其实我只是熟悉一下python而已。 下面是代码 (getpics.py) &hellip;">
+  <meta name="description" content="虽然可以打开 ppt 文档，然后从里面一个个拷贝出图片，但是还是觉得太累，这种典型的重复劳动工作就应该交给程序去干。所以写了下面这个脚本，python 语言的。程序核心那块（图片获取）不是我写的，网络上有相关说明，其实我只是熟悉一下 python 而已。 下面是代码 (getpics.py) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,8 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>虽然可以打开ppt文档，然后从里面一个个拷贝出图片，但是还是觉得太累，这种典型的重复劳动工作就应该交给程序去干。
-所以写了下面这个脚本，python语言的。程序核心那块（图片获取）不是我写的，网络上有相关说明，其实我只是熟悉一下python而已。</p>
+<div class="entry-content"><p>虽然可以打开 ppt 文档，然后从里面一个个拷贝出图片，但是还是觉得太累，这种典型的重复劳动工作就应该交给程序去干。所以写了下面这个脚本，python 语言的。程序核心那块（图片获取）不是我写的，网络上有相关说明，其实我只是熟悉一下 python 而已。</p>
 
 <p>下面是代码</p>
 
@@ -277,13 +280,12 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>使用方法很简单，假定文件名是getpic.py，那么可以这样：</p>
+<p>使用方法很简单，假定文件名是 getpic.py，那么可以这样：</p>
 
 <pre><code>./getpic.py /tmp/ha.ppt /tmp/dc5.ppt\
 </code></pre>
 
-<p>然后他会在当前目录下保存一文件名（去掉后缀）为前缀的图片。没有涉及如何指定保存目录的参数了。<br/>
-我测试了几个文档，保存出来的图片能够正常使用的比例大概是90%，我觉得不错，呵呵。</p>
+<p>然后他会在当前目录下保存一文件名（去掉后缀）为前缀的图片。没有涉及如何指定保存目录的参数了。我测试了几个文档，保存出来的图片能够正常使用的比例大概是 90%，我觉得不错，呵呵。</p>
 </div>
 
 
@@ -375,8 +377,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/06/05/get-pictures-from-ppt-files/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/05/get-pictures-from-ppt-files/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/06/05/get-pictures-from-ppt-files/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/05/get-pictures-from-ppt-files/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="从tar包中创建一个二进制发布包（RPM，Debian,SlackWare,etc)并不太方便。虽然如果源代码包里还有spec文件后，可以直接利用rpmbuild来创建rpm包，遗憾的是，只有少部分tar包包含了spec文件。另外，创建deb包呢？创建SlackWare的.tar.gz包呢？ &hellip;">
+  <meta name="description" content="从 tar 包中创建一个二进制发布包（RPM，Debian,SlackWare,etc)并不太方便。虽然如果源代码包里还有 spec 文件后，可以直接利用rpmbuild来创建 rpm 包，遗憾的是，只有少部分 tar 包包含了 spec 文件。另外，创建 deb 包呢？创建 SlackWare &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,25 +99,24 @@
   </header>
 
 
-<div class="entry-content"><p>从tar包中创建一个二进制发布包（RPM，Debian,SlackWare,etc)并不太方便。虽然如果源代码包里还有spec文件后，可以直接利用<code>rpmbuild</code>来创建rpm包，遗憾的是，只有少部分tar包包含了spec文件。另外，创建deb包呢？创建SlackWare的.tar.gz包呢？</p>
+<div class="entry-content"><p>从 tar 包中创建一个二进制发布包（RPM，Debian,SlackWare,etc)并不太方便。虽然如果源代码包里还有 spec 文件后，可以直接利用<code>rpmbuild</code>来创建 rpm 包，遗憾的是，只有少部分 tar 包包含了 spec 文件。另外，创建 deb 包呢？创建 SlackWare 的.tar.gz 包呢？</p>
 
 <!--more-->
 
 
-<p><a href="http://asic-linux.com.mx/~izto/checkinstall">checkinstall</a>是一个不错的脚本，用来自动创建上述三种二进制发行包。<br/>
-详细的例子可以看网站的Readme，我这里给出一个例子，和大家分享：</p>
+<p><a href="http://asic-linux.com.mx/~izto/checkinstall">checkinstall</a> 是一个不错的脚本，用来自动创建上述三种二进制发行包。详细的例子可以看网站的 Readme，我这里给出一个例子，和大家分享：</p>
 
-<p>假定我们需要创建最新的openssh包，编译环境为AXS3.0 for X86:</p>
+<p>假定我们需要创建最新的 openssh 包，编译环境为 AXS3.0 for X86:</p>
 
 <ol>
-<li><p>下载最新的checkinstall包，rpm，tar.gz均可</p>
+<li><p>下载最新的 checkinstall 包，rpm，tar.gz 均可</p>
 
 <p> <a href="http://asic-linux.com.mx/~izto/checkinstall/files/source/checkinstall-1.6.1.tgz">http://asic-linux.com.mx/~izto/checkinstall/files/source/checkinstall-1.6.1.tgz</a></p>
 
 <p> <a href="http://asic-linux.com.mx/~izto/checkinstall/files/rpm/checkinstall-1.6.1-1.i386.rpm">http://asic-linux.com.mx/~izto/checkinstall/files/rpm/checkinstall-1.6.1-1.i386.rpm</a></p>
 
-<p> 通用方式安装，实际上是shell脚本，因此rpm包很容易安装通过。</p></li>
-<li><p>下载最新的openssh源代码包</p>
+<p> 通用方式安装，实际上是 shell 脚本，因此 rpm 包很容易安装通过。</p></li>
+<li><p>下载最新的 openssh 源代码包</p>
 
 <p> <a href="http://openssh.linux-mirror.org/portable/openssh-5.0p1.tar.gz">http://openssh.linux-mirror.org/portable/openssh-5.0p1.tar.gz</a></p></li>
 <li><p>通常方式解压，编译(不安装)</p>
@@ -146,7 +150,7 @@
 OpenSSH_5.0p1, OpenSSL 0.9.8b 04 May 2006 
 </code></pre>
 
-<p>另外，很重要的一点：openssh5.0p1版本（不知道是不是从5.0开始）已经可以自动更新修改的公钥了，这意味着我之前写的脚本白费了，唉。</p>
+<p>另外，很重要的一点：openssh5.0p1 版本（不知道是不是从 5.0 开始）已经可以自动更新修改的公钥了，这意味着我之前写的脚本白费了，唉。</p>
 </div>
 
 
@@ -238,8 +242,8 @@ OpenSSH_5.0p1, OpenSSL 0.9.8b 04 May 2006
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/05/30/creation-of-a-binary-package-with-checkinstall/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/05/30/creation-of-a-binary-package-with-checkinstall/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/05/30/creation-of-a-binary-package-with-checkinstall/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/05/30/creation-of-a-binary-package-with-checkinstall/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

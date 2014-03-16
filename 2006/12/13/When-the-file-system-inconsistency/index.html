@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="今天大半天都没有电，正好可以翻翻上次wirlfly带过来的《UNIX操作系统设计》。
-书中第五章最后一节 文件系统维护中详细描述了什么情况下会出现文件系统不一致。讲得非常清楚。 以前有不少用户问及到这个文件，我们一般都会比较笼统的回答，比如说突然掉电啦，系统突然崩溃啦。 &hellip;">
+  <meta name="description" content="今天大半天都没有电，正好可以翻翻上次 wirlfly 带过来的《UNIX 操作系统设计》。书中第五章最后一节 文件系统维护中详细描述了什么情况下会出现文件系统不一致。讲得非常清楚。 以前有不少用户问及到这个文件，我们一般都会比较笼统的回答，比如说突然掉电啦，系统突然崩溃啦。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,8 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>今天大半天都没有电，正好可以翻翻上次<a href="http://wf.xplore.cn">wirlfly</a>带过来的《<a href="http://book.shop.eol.cn/1173896/">UNIX操作系统设计》</a>。
-书中第五章最后一节 文件系统维护中详细描述了什么情况下会出现文件系统不一致。讲得非常清楚。</p>
+<div class="entry-content"><p>今天大半天都没有电，正好可以翻翻上次 <a href="http://wf.xplore.cn">wirlfly</a> 带过来的《<a href="http://book.shop.eol.cn/1173896/">UNIX 操作系统设计》</a>。书中第五章最后一节 文件系统维护中详细描述了什么情况下会出现文件系统不一致。讲得非常清楚。</p>
 
 <p>以前有不少用户问及到这个文件，我们一般都会比较笼统的回答，比如说突然掉电啦，系统突然崩溃啦。但是还不是非常深入的了解其详细原因和过程。书中这节解释了这点，因此我扫描出来和大家分享。</p>
 
@@ -105,12 +108,9 @@
 
 <p>5.18 文件系统维护</p>
 
-<p>在正常的操作中，内核能保持文件系统的一致性。但是，由于像电源故障之类的异常情况可能引起系统的垮台，使文件系统处于不一致状态——文件系统中的大部分数据是可用的，但有些可能是不一致的。命令fsck检查这种不一致性，并在必要时加以修正它通过磁盘块或原始接口存取文件系统(见第10章)，并绕过正规的文件存取方法。本节将介绍几种由fsck检查的不一致性。</p>
+<p>在正常的操作中，内核能保持文件系统的一致性。但是，由于像电源故障之类的异常情况可能引起系统的垮台，使文件系统处于不一致状态——文件系统中的大部分数据是可用的，但有些可能是不一致的。命令 fsck 检查这种不一致性，并在必要时加以修正它通过磁盘块或原始接口存取文件系统(见第 10 章)，并绕过正规的文件存取方法。本节将介绍几种由 fsck 检查的不一致性。</p>
 
-<p>一个磁盘块可能属于一个以上的索引节点，或属于自由块链表和一个索引节点。当一个文件系统最初建立时，所有的磁盘块都在自由链表上。当某个磁盘快被分配使用时，内核将它从自由链表中取出并分给一个索引节点。因此，内核不可以将没有归还到自由链表中的磁盘快重
-新分配给另一个索引节点。因此，正常情况下，一个磁盘块或者在自自链表上，或者被分配给一个索引节点。但是，存在这样一种可能性：内核释放了一个文件中的磁盘块，将该块的
-块号返回给超级块的内存拷贝，又将该磁盘块分配给另一个新文件。如果内核已将新文件的索引节点和磁盘块写到了磁盘上，但在修改老文件在磁盘上的索引节点拷贝之前，系统垮台了，那么就会有两个索引节点对相同的磁盘块号寻址。类似地，如果内核已将超级块和她的
-自由链表写回磁盘上，但在将老的索引节点写出之前，系统垮台，那么该磁盘块既在自自链表上，又属于老的索引节点。</p>
+<p>一个磁盘块可能属于一个以上的索引节点，或属于自由块链表和一个索引节点。当一个文件系统最初建立时，所有的磁盘块都在自由链表上。当某个磁盘快被分配使用时，内核将它从自由链表中取出并分给一个索引节点。因此，内核不可以将没有归还到自由链表中的磁盘快重新分配给另一个索引节点。因此，正常情况下，一个磁盘块或者在自自链表上，或者被分配给一个索引节点。但是，存在这样一种可能性：内核释放了一个文件中的磁盘块，将该块的块号返回给超级块的内存拷贝，又将该磁盘块分配给另一个新文件。如果内核已将新文件的索引节点和磁盘块写到了磁盘上，但在修改老文件在磁盘上的索引节点拷贝之前，系统垮台了，那么就会有两个索引节点对相同的磁盘块号寻址。类似地，如果内核已将超级块和她的自由链表写回磁盘上，但在将老的索引节点写出之前，系统垮台，那么该磁盘块既在自自链表上，又属于老的索引节点。</p>
 
 <p> 如果一个块号既不在块的自由链表上，又不在任何文件中，文件系统则是不一致的，因为如上所述，所有的磁盘块必须出现在某个地方。</p>
 
@@ -118,7 +118,7 @@
 
 <p>一个索引节点可能有非零联结数，但它的索引节点号却不在文件系统中的任何目录中。除(无名)管道以外的所有文件都必须在文件系统树中。如果在创建了一个管道或创建了一个文件之后，在创建它的目录之前，系统发生故障，那么其索引节点的联结数字段已被设置，即使该索引节点并未出现在文件系统中。如果在确保一个目录中的所有文件都被拆除之前，就拆除该目录，也会发生这种情况。</p>
 
-<p>如果一个索引节点的格式不正确，比如，文件类型字段的值是无定义的值，那么也意味着发生了什么不对劲儿的事。如果一个系统管理员安装了一个没有正确格式化的文件系统，就会发生这种情况。内核存取它认为是装有索弓I节点的磁盘块，但实际上，该磁盘快是数据库。</p>
+<p>如果一个索引节点的格式不正确，比如，文件类型字段的值是无定义的值，那么也意味着发生了什么不对劲儿的事。如果一个系统管理员安装了一个没有正确格式化的文件系统，就会发生这种情况。内核存取它认为是装有索弓 I 节点的磁盘块，但实际上，该磁盘快是数据库。</p>
 
 <p>如果一个索引节点号出现在目录表项中，但同时它又是自由可用的，那么文件系统也是不一致的，因为出现在一个目录表项中的索引节点号应该是一个已分配的索引节点。这种情况发生在内核正在创建一个新文件时：它已将目录表项写回磁盘，但因系统垮台，没来得及将该索引节点写到磁盘上。这种情形还可能发生在一个进程拆除了一个文件，并将自由的索引节点写到了磁盘上，但因系统垮台，没来得及将目录表项写到磁盘上时。以适当的次序进行操作写，可以避免这些情况。</p>
 
@@ -214,8 +214,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/12/13/When-the-file-system-inconsistency/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/12/13/When-the-file-system-inconsistency/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/12/13/When-the-file-system-inconsistency/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/12/13/When-the-file-system-inconsistency/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

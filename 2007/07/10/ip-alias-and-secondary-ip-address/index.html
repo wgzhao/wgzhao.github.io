@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="孤陋寡闻了，以前一直以为ip别名（ip aliase）和辅助ip地址（secondary ip
-address）是一码事情。或者说是不知道还有secondary ip address一说。 今天偶然翻阅linux enterprise
-cluster时，提到了这样一句话： As of this &hellip;">
+  <meta name="description" content="孤陋寡闻了，以前一直以为 ip 别名（ip aliase）和辅助 ip 地址（secondary ip
+address）是一码事情。或者说是不知道还有 secondary ip address 一说。 今天偶然翻阅 linux enterprise
+cluster时，提到了这样一句话： As of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@ cluster时，提到了这样一句话： As of this &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,10 +101,10 @@ cluster时，提到了这样一句话： As of this &hellip;">
   </header>
 
 
-<div class="entry-content"><p>孤陋寡闻了，以前一直以为ip别名（ip aliase）和辅助ip地址（secondary ip
-address）是一码事情。或者说是不知道还有secondary ip address一说。</p>
+<div class="entry-content"><p>孤陋寡闻了，以前一直以为 ip 别名（ip aliase）和辅助 ip 地址（secondary ip
+address）是一码事情。或者说是不知道还有 secondary ip address 一说。</p>
 
-<p>今天偶然翻阅<a href="http://mlsx.xplore.cn/read.php/715.htm">linux enterprise
+<p>今天偶然翻阅 <a href="http://mlsx.xplore.cn/read.php/715.htm">linux enterprise
 cluster</a>时，提到了这样一句话：</p>
 
 <blockquote><p>As of this writing, the Linux kernel supports both IP aliases and
@@ -109,13 +114,12 @@ secondary IP addresses.</p></blockquote>
 <!--more-->
 
 
-<p>那也就意味着secondary ip address和ip aliase是不同的概念，首先问Google，Google没有给我好的答案。<br/>
-只好自己摸索了，于是目前只能得到下面的一些概念：</p>
+<p>那也就意味着 secondary ip address 和 ip aliase 是不同的概念，首先问 Google，Google 没有给我好的答案。只好自己摸索了，于是目前只能得到下面的一些概念：</p>
 
-<p><code>ip alias</code>和<code>secondary ip address</code>是两种不同的实现方式，用来在Linux系统中给同一个物理网卡增加多个ip地址。</p>
+<p><code>ip alias</code>和<code>secondary ip address</code>是两种不同的实现方式，用来在 Linux 系统中给同一个物理网卡增加多个 ip 地址。</p>
 
-<p><code>ip alias</code>是由ifconfig程序来创建和维护的，而<code>secondary ip address</code>则是由ip程序来创建和维护的。<code>ip addr
-add</code> 创建的<code>scondary ip address</code>不能在<code>ifconfig -a</code>中看到，反过来，ifconfig创建的<code>ethX:Y</code>却能在<code>ip
+<p><code>ip alias</code>是由 ifconfig 程序来创建和维护的，而<code>secondary ip address</code>则是由 ip 程序来创建和维护的。<code>ip addr
+add</code> 创建的<code>scondary ip address</code>不能在<code>ifconfig -a</code>中看到，反过来，ifconfig 创建的<code>ethX:Y</code>却能在<code>ip
 addr show</code>中看到。</p>
 
 <p><code>ip alias</code>大家比较熟悉，因此说说<code>secondary ip address</code>如何创建</p>
@@ -138,7 +142,7 @@ collisions:0 txqueuelen:0
 RX bytes:119798 (116.9 KiB) TX bytes:119798 (116.9 KiB)
 </code></pre>
 
-<p>eth0被我用ifconfig eth0 down了。</p>
+<p>eth0 被我用 ifconfig eth0 down 了。</p>
 
 <pre><code>[root@mlsx autostart]# ip addr sh
 2: lo: mtu 16436 qdisc noqueue
@@ -152,7 +156,7 @@ link/ether 00:13:77:00:7c:c6 brd ff:ff:ff:ff:ff:ff
 inet 192.168.0.100/24 brd 192.168.0.255 scope global eth1
 </code></pre>
 
-<p>down下去的eth0在这里还是能体现出来的。</p>
+<p>down 下去的 eth0 在这里还是能体现出来的。</p>
 
 <pre><code>[root@mlsx autostart]# ip addr add 192.168.0.102/24 dev eth1
 [root@mlsx autostart]# ip addr sh eth1
@@ -166,7 +170,7 @@ PING 192.168.0.102 (192.168.0.102) 56(84) bytes of data.
 64 bytes from 192.168.0.102: icmp_seq=2 ttl=64 time=0.043 ms
 </code></pre>
 
-<p>通过ip程序增加了一个secondar ip address，通过ip addr show也能看到，而且能ping通，但是ifconfig中却看不到。</p>
+<p>通过 ip 程序增加了一个 secondar ip address，通过 ip addr show 也能看到，而且能 ping 通，但是 ifconfig 中却看不到。</p>
 
 <pre><code>[root@mlsx autostart]# ifconfig -a
 eth1 Link encap:Ethernet HWaddr 00:13:77:00:7C:C6
@@ -186,9 +190,7 @@ collisions:0 txqueuelen:0
 RX bytes:120134 (117.3 KiB) TX bytes:120134 (117.3 KiB)
 </code></pre>
 
-<p>但是ip alias和secondary ip address在实际的使用过程中，会有什么差别呢？
-大部分HA软件，包括开源的heartbeat都采用了ip alias的方式，为什么他们不采用secondary ip address方式呢？
-或者说ip alias和secondary ip address比较起来，谁更优秀呢？</p>
+<p>但是 ip alias 和 secondary ip address 在实际的使用过程中，会有什么差别呢？大部分 HA 软件，包括开源的 heartbeat 都采用了 ip alias 的方式，为什么他们不采用 secondary ip address 方式呢？或者说 ip alias 和 secondary ip address 比较起来，谁更优秀呢？</p>
 
 <p>有人能告诉我吗？</p>
 </div>
@@ -282,8 +284,8 @@ RX bytes:120134 (117.3 KiB) TX bytes:120134 (117.3 KiB)
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/07/10/ip-alias-and-secondary-ip-address/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/10/ip-alias-and-secondary-ip-address/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/07/10/ip-alias-and-secondary-ip-address/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/10/ip-alias-and-secondary-ip-address/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

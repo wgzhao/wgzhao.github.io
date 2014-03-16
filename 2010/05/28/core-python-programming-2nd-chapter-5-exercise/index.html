@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="思考再三，还是决定在blog记录下练习《Python核心编程第二版》习题的过程。
-英文原版书后是有有些习题答案的，但是基本上都是一些简单问题的答案，而且较少。练习是最好的学习，所以我打算尽可能把能练手的习题做一遍。 我手头只有第一版的印刷版，第二版是电子版，目前无法得知电子版是否和印刷版本一致。 &hellip;">
+  <meta name="description" content="思考再三，还是决定在 blog 记录下练习《Python 核心编程第二版》习题的过程。英文原版书后是有有些习题答案的，但是基本上都是一些简单问题的答案，而且较少。练习是最好的学习，所以我打算尽可能把能练手的习题做一遍。 我手头只有第一版的印刷版，第二版是电子版，目前无法得知电子版是否和印刷版本一致 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,8 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>思考再三，还是决定在blog记录下练习《<a href="http://book.douban.com/subject/3112503/">Python核心编程第二版</a>》习题的过程。<br/>
-英文原版书后是有有些习题答案的，但是基本上都是一些简单问题的答案，而且较少。练习是最好的学习，所以我打算尽可能把能练手的习题做一遍。</p>
+<div class="entry-content"><p>思考再三，还是决定在 blog 记录下练习《<a href="http://book.douban.com/subject/3112503/">Python 核心编程第二版</a>》习题的过程。英文原版书后是有有些习题答案的，但是基本上都是一些简单问题的答案，而且较少。练习是最好的学习，所以我打算尽可能把能练手的习题做一遍。</p>
 
 <p>我手头只有第一版的印刷版，第二版是电子版，目前无法得知电子版是否和印刷版本一致。</p>
 
@@ -105,14 +108,13 @@
 
 <p>不过每章的习题我打算和第一版都比较一下，如果第一章有一些好的习题在第二章去掉了，我也会贴出来。</p>
 
-<p>希望Pythoner能帮我指出代码中非Pythonic的地方。</p>
+<p>希望 Pythoner 能帮我指出代码中非 Pythonic 的地方。</p>
 
-<p>我练习的环境是Ubuntu 10.04 X86，python的版本是2.6.5。安装了一堆的modules。 所以代码中我可能不会判断module引入是否失败。</p>
+<p>我练习的环境是 Ubuntu 10.04 X86，python 的版本是 2.6.5。安装了一堆的 modules。 所以代码中我可能不会判断 module 引入是否失败。</p>
 
-<p>另外，我利用了Python 2.6.5 标准库的<code>doctest</code>模块来做测试，测试用例写在函数说明性文档里，如果运行脚本没有报错，且退出代码是0，表示测试通过，否则会给出大量的报错，更详细的信息请参考<a href="http://docs.python.org/library/doctest.html">官方文档</a>。</p>
+<p>另外，我利用了 Python 2.6.5 标准库的<code>doctest</code>模块来做测试，测试用例写在函数说明性文档里，如果运行脚本没有报错，且退出代码是 0，表示测试通过，否则会给出大量的报错，更详细的信息请参考<a href="http://docs.python.org/library/doctest.html">官方文档</a>。</p>
 
-<p>前四章都是一些概念性的说明，习题也是一些理论性的说明，就跳过了。<br/>
-从第五章开始。</p>
+<p>前四章都是一些概念性的说明，习题也是一些理论性的说明，就跳过了。从第五章开始。</p>
 
 <blockquote><p>5-3 标准类型运算符. 写一段脚本,输入一个测验成绩,根据下面的标准,输出他的评分 成绩(A-F) <br/>
 A: 90–100 B: 80–89 C: 70–79 D:60–69 F: &lt;60</p></blockquote>
@@ -120,17 +122,12 @@ A: 90–100 B: 80–89 C: 70–79 D:60–69 F: &lt;60</p></blockquote>
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-3.py could not be found</p>
 
 <blockquote><p>5-4 取余。判断给定年份是否是闰年。使用下面的公式: <br/>
-一个闰年就是指它可以被 4 整除,但不能被 100 整除, 或者它既可以被 4 又可以被100 整除。<br/>
-比如 1992,1996 和 2000 年是闰年,但 1967 和 1900 则不是闰年。
-下一个是闰年的整世纪是2400 年。</p></blockquote>
+一个闰年就是指它可以被 4 整除,但不能被 100 整除, 或者它既可以被 4 又可以被 100 整除。比如 1992,1996 和 2000 年是闰年,但 1967 和 1900 则不是闰年。下一个是闰年的整世纪是 2400 年。</p></blockquote>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-4.py could not be found</p>
 
-<blockquote><p>5-5 取余。取一个任意小于1美元的金额,然后计算可以换成最少多少枚硬币。<br/>
-硬币有 1美分,5 美分,10 美分,25 美分四种。<br/>
-1 美元等于100 美分。<br/>
-举例来说,0.76 美元换算结果应该是 3 枚 25 美分,1 枚 1 美分。<br/>
-类似 76 枚 1 美分,2 枚 25 美分+2 枚 10 美分+1 枚 5 美分+1 枚 1 美分这样的结果都是不符合要求的。</p></blockquote>
+<blockquote><p>5-5 取余。取一个任意小于 1 美元的金额,然后计算可以换成最少多少枚硬币。硬币有 1 美分,5 美分,10 美分,25 美分四种。<br/>
+1 美元等于 100 美分。举例来说,0.76 美元换算结果应该是 3 枚 25 美分,1 枚 1 美分。类似 76 枚 1 美分,2 枚 25 美分+2 枚 10 美分+1 枚 5 美分+1 枚 1 美分这样的结果都是不符合要求的。</p></blockquote>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-5.py could not be found</p>
 
@@ -138,9 +135,7 @@ A: 90–100 B: 80–89 C: 70–79 D:60–69 F: &lt;60</p></blockquote>
 两个操作数加一个运算符: <br/>
 N1 运算符 N2. 其中 N1 和 N2 为整数或浮点数,<br/>
 运算符可以是+, &ndash;, *, /, %, ** <br/>
-分别表示加法,减法, 乘法, 整数除,取余和幂运算。<br/>
-计算这个表达式的结果,然后显示出来。<br/>
-提示:可以使用字符串方法 split(),但不可以使用内建函数 eval().</p></blockquote>
+分别表示加法,减法, 乘法, 整数除,取余和幂运算。计算这个表达式的结果,然后显示出来。提示:可以使用字符串方法 split(),但不可以使用内建函数 eval().</p></blockquote>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-6.py could not be found</p>
 
@@ -150,8 +145,7 @@ N1 运算符 N2. 其中 N1 和 N2 为整数或浮点数,<br/>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-8.py could not be found</p>
 
-<blockquote><p>5-10 转换。写一对函数来进行华氏度到摄氏度的转换。<br/>
-转换公式为 C = (F &ndash; 32) * (5 / 9) <br/>
+<blockquote><p>5-10 转换。写一对函数来进行华氏度到摄氏度的转换。转换公式为 C = (F &ndash; 32) * (5 / 9) <br/>
 应该在这个练习中使用真正的除法, 否则你会得到不正确的结果。</p></blockquote>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-10.py could not be found</p>
@@ -161,8 +155,7 @@ N1 运算符 N2. 其中 N1 和 N2 为整数或浮点数,<br/>
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-15.py could not be found</p>
 
 <blockquote><p>5-17 随机数。熟读随机数模块然后解下面的题: <br/>
-生成一个有 N 个元素的由随机数 n 组成的列表, 其中 N 和 n 的取值范围分别为: (1&lt; N &lt;= 100), (0 &lt;= n &lt;= 231 -1)。<br/>
-然后再随机从这个列表中取 N (1 &lt;= N &lt;= 100)个随机数出来,对它们排序,然后显示这个子集。</p></blockquote>
+生成一个有 N 个元素的由随机数 n 组成的列表, 其中 N 和 n 的取值范围分别为: (1&lt; N &lt;= 100), (0 &lt;= n &lt;= 231 -1)。然后再随机从这个列表中取 N (1 &lt;= N &lt;= 100)个随机数出来,对它们排序,然后显示这个子集。</p></blockquote>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e5-17.py could not be found</p>
 
@@ -258,8 +251,8 @@ N1 运算符 N2. 其中 N1 和 N2 为整数或浮点数,<br/>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/05/28/core-python-programming-2nd-chapter-5-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/05/28/core-python-programming-2nd-chapter-5-exercise/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

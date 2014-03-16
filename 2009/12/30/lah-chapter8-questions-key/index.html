@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的crontab特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前crontab文件，并确保他不能增加新的crontab文件所需的步骤。 A：假定用户test就是我们需要惩罚的用户，目前你的帐号是root。 &hellip;">
+  <meta name="description" content="E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的 crontab 特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前 crontab 文件，并确保他不能增加新的 crontab 文件所需的步骤。 A：假定用户 test 就是我们需要惩罚的用户， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,9 +99,9 @@
   </header>
 
 
-<div class="entry-content"><p>E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的crontab特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前crontab文件，并确保他不能增加新的crontab文件所需的步骤。</p>
+<div class="entry-content"><p>E8.1 在您的系统上,一个本地用户以有规律的时间间隔运行开销很大的任务，滥用他的 crontab 特权。在几次要求他停止后，您被迫收回他的特权。列出删除他的当前 crontab 文件，并确保他不能增加新的 crontab 文件所需的步骤。</p>
 
-<p>A：假定用户test就是我们需要惩罚的用户，目前你的帐号是root。列出帐号test的crontab文件指令是：</p>
+<p>A：假定用户 test 就是我们需要惩罚的用户，目前你的帐号是 root。列出帐号 test 的 crontab 文件指令是：</p>
 
 <pre><code>root@wgzhao-nb:~# crontab -u test -l
 # m h  dom mon dow   command
@@ -114,21 +119,20 @@
 <!--more-->
 
 
-<p>要禁止该用户添加新的crontab文件，需要编辑（创建）<code>/etc/cron.deny</code>文件，将对应的帐号加入其中 <code>echo "test" &gt;&gt;/etc/cron.deny</code> 其结果如下演示：</p>
+<p>要禁止该用户添加新的 crontab 文件，需要编辑（创建）<code>/etc/cron.deny</code>文件，将对应的帐号加入其中 <code>echo "test" &gt;&gt;/etc/cron.deny</code> 其结果如下演示：</p>
 
 <pre><code>root@wgzhao-nb:~# crontab  -u test -e
 You (test) are not allowed to use this program (crontab)
 See crontab(1) for more information
 </code></pre>
 
-<p>E8.2 想出3项需要定期运行的任务，写出每项任务的crontab配置项，指出配置文件应该送入那个crontab文件。</p>
+<p>E8.2 想出 3 项需要定期运行的任务，写出每项任务的 crontab 配置项，指出配置文件应该送入那个 crontab 文件。</p>
 
-<p>A：实际上，系统默认的情况下，已经有大量的定时任务了，以我的ubuntu 9.10 桌面系统来看，默认的<code>/etc/cron.\*/\*</code>下的配置项来获得对crontab的进一步认识。</p>
+<p>A：实际上，系统默认的情况下，已经有大量的定时任务了，以我的 ubuntu 9.10 桌面系统来看，默认的<code>/etc/cron.\*/\*</code>下的配置项来获得对 crontab 的进一步认识。</p>
 
-<p>E8.3 找到您运行的Linux系统上的crontab文件，选出3个。解读每一个文件，并说明他何时运行，做什么。以及您认为为什么需要这个配置项。</p>
+<p>E8.3 找到您运行的 Linux 系统上的 crontab 文件，选出 3 个。解读每一个文件，并说明他何时运行，做什么。以及您认为为什么需要这个配置项。</p>
 
-<p>A：我们就分别从<code>/etc/cron.{daily,weekly,d}</code>里找一个出来分析把。
-先分析<code>/etc/cron.daily/sysstat</code>,内容如下:</p>
+<p>A：我们就分别从<code>/etc/cron.{daily,weekly,d}</code>里找一个出来分析把。先分析<code>/etc/cron.daily/sysstat</code>,内容如下:</p>
 
 <pre><code>#!/bin/sh
 # Generate a daily summary of process accounting.  Since this will probably
@@ -150,8 +154,7 @@ SA2_OPTIONS=""
 exec /usr/lib/sysstat/sa2 -A $SA2_OPTIONS
 </code></pre>
 
-<p>这段脚本的目的是生成sar文件，方便以后分析当前的状态，包括系统日志，性能等。对于服务器而言，这个服务是比要的，而且应该每天执行。这样万一某天服务器出现故障，至少从这些SAR文件可以获得一些信息，看看是什么问题导致系统出现了故障，看是软件故障，还是性能的问题。
-我们再看<code>/etc/cron.weekly/clean-log</code> 脚本内容如下：</p>
+<p>这段脚本的目的是生成 sar 文件，方便以后分析当前的状态，包括系统日志，性能等。对于服务器而言，这个服务是比要的，而且应该每天执行。这样万一某天服务器出现故障，至少从这些 SAR 文件可以获得一些信息，看看是什么问题导致系统出现了故障，看是软件故障，还是性能的问题。我们再看<code>/etc/cron.weekly/clean-log</code> 脚本内容如下：</p>
 
 <pre><code>#!/bin/bash
 #delete all archived log file (which has .gz suffix)
@@ -173,11 +176,11 @@ exit 0
 09,39 *     * * *     root   [ -x /usr/lib/php5/maxlifetime ] &amp;&amp; [ -d /var/lib/php5 ] &amp;&amp; find /var/lib/php5/ -type f -cmin +$(/usr/lib/php5/maxlifetime) -print0 | xargs -n 200 -r -0 rm
 </code></pre>
 
-<p>代码前面的注释说的非常明白了。这段代码每30分钟执行一次，主要是删除过期的会话文件。如果是一个高负载的web站点，使用了大量的会话，这个定时任务很有必要。</p>
+<p>代码前面的注释说的非常明白了。这段代码每 30 分钟执行一次，主要是删除过期的会话文件。如果是一个高负载的 web 站点，使用了大量的会话，这个定时任务很有必要。</p>
 
-<p>♥E8.4 编写一个脚本，保持您有帐号的所有机器上的启动文件(\~/.[a-z]*}同步。从cron定期运行这个脚本。</p>
+<p>♥E8.4 编写一个脚本，保持您有帐号的所有机器上的启动文件(\~/.[a-z]*}同步。从 cron 定期运行这个脚本。</p>
 
-<p>A：如果文件拷贝走scp方式，而且需要采取密码认证方法，恐怕这个脚本就不会那么容易写了，因为scp不接受从配置文件获取密码，必须是从标准输入接受（至少我目前是这样理解的），因此同步的前提，是首先确保这些有帐号的机器做了公钥认证模式。剩下的就是同步启动文件了，不过在同步之前，考虑到一些特别情况，最好是先备份机器上的配置文件。示例脚本如下：</p>
+<p>A：如果文件拷贝走 scp 方式，而且需要采取密码认证方法，恐怕这个脚本就不会那么容易写了，因为 scp 不接受从配置文件获取密码，必须是从标准输入接受（至少我目前是这样理解的），因此同步的前提，是首先确保这些有帐号的机器做了公钥认证模式。剩下的就是同步启动文件了，不过在同步之前，考虑到一些特别情况，最好是先备份机器上的配置文件。示例脚本如下：</p>
 
 <pre><code>#!/bin/bash
 # all machines list include account  ,each line format account@hostname
@@ -192,13 +195,12 @@ done
 
 <p>然后把这个脚本丢到<code>/etc/cron.{hourly,daily,weekly,monthly,d}</code>的任何一个目录都可以。</p>
 
-<p>♥E8.5 以du,sort和head命令的手册页作为参考，编写一个脚本，确定系统上最大的10个主(home)目录。在每周一的夜里12：00执行这个脚本，并且让它把输出结果发给您。</p>
+<p>♥E8.5 以 du,sort 和 head 命令的手册页作为参考，编写一个脚本，确定系统上最大的 10 个主(home)目录。在每周一的夜里 12：00 执行这个脚本，并且让它把输出结果发给您。</p>
 
-<p>A：暂时找不到拥有大量帐号的机器，我就用<code>/usr/share</code>作为目标替代吧。 <br/>
-首先测试脚本，一般来说，这种要求，应该当行脚本可以搞定： <code>du -s \* |sort -rn |head -n 10</code> 接下就是把这个结果发送出去，那么采取mail指令好了，先把上述结果保存到一个临时文件，然后把这个临时文件的内容当作邮件正文发出去。采用管道方式，连临时文件都省略了。</p>
+<p>A：暂时找不到拥有大量帐号的机器，我就用<code>/usr/share</code>作为目标替代吧。首先测试脚本，一般来说，这种要求，应该当行脚本可以搞定： <code>du -s \* |sort -rn |head -n 10</code> 接下就是把这个结果发送出去，那么采取 mail 指令好了，先把上述结果保存到一个临时文件，然后把这个临时文件的内容当作邮件正文发出去。采用管道方式，连临时文件都省略了。</p>
 
 <p><code>du -s \* |sort -rn |head -n 10 |mail -s "statistic report"</code>
-<a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x72;&#111;&#111;&#x74;&#x40;&#x6c;&#x6f;&#99;&#x61;&#108;&#104;&#111;&#115;&#116;&#x2e;&#108;&#x6f;&#99;&#97;&#108;&#x64;&#x6f;&#109;&#97;&#105;&#x6e;">&#x72;&#x6f;&#111;&#116;&#64;&#x6c;&#111;&#99;&#x61;&#108;&#x68;&#111;&#115;&#116;&#46;&#108;&#x6f;&#99;&#97;&#108;&#x64;&#x6f;&#109;&#x61;&#105;&#x6e;</a> 收信如下：</p>
+<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#58;&#x72;&#111;&#111;&#x74;&#x40;&#108;&#111;&#x63;&#x61;&#x6c;&#x68;&#111;&#x73;&#x74;&#46;&#x6c;&#111;&#x63;&#97;&#x6c;&#x64;&#111;&#109;&#x61;&#105;&#110;">&#x72;&#111;&#x6f;&#116;&#64;&#108;&#x6f;&#x63;&#x61;&#108;&#x68;&#111;&#x73;&#116;&#x2e;&#108;&#111;&#99;&#97;&#108;&#x64;&#111;&#109;&#97;&#x69;&#x6e;</a> 收信如下：</p>
 
 <pre><code>[root@localhost locale]# mail
 Mail version 8.1 6/6/93.  Type ? for help.
@@ -314,8 +316,8 @@ Subject: statistic report
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/12/30/lah-chapter8-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/12/30/lah-chapter8-questions-key/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/12/30/lah-chapter8-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/12/30/lah-chapter8-questions-key/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

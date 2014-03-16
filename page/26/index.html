@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="原来dd的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是UNIX微机和IBM大型机通过磁带机交换数据的工具。 但是它会做一些转换.
+  <meta name="description" content="原来 dd 的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是 UNIX 微机和 IBM 大型机通过磁带机交换数据的工具。 但是它会做一些转换.
 下边是一些可能的转换, 比如 ASCII/EBCDIC, [4] 大写/小写, 在输入和输出之间 的字节对的交换,
-还有对输入文件做一些截头去尾的工作. dd & &hellip;">
+还有对输入文件做一些截头去尾的工作 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -65,7 +70,10 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -99,7 +107,7 @@
   </header>
 
 
-  <div class="entry-content"><p>原来dd的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是UNIX微机和IBM大型机通过磁带机交换数据的工具。 但是它会做一些转换.
+  <div class="entry-content"><p>原来 dd 的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是 UNIX 微机和 IBM 大型机通过磁带机交换数据的工具。 但是它会做一些转换.
 下边是一些可能的转换, 比如 ASCII/EBCDIC, [4] 大写/小写, 在输入和输出之间 的字节对的交换,
 还有对输入文件做一些截头去尾的工作. dd &mdash;help 列出了所有转换, 还有这个强力工具的一些其他选项.
 给出几个例子</p>
@@ -140,9 +148,9 @@ ECHO “DONE”
 EXIT 0
 </code></pre>
 
-<p>如果想输出为小写，将ucase改成lcase好了。</p>
+<p>如果想输出为小写，将 ucase 改成 lcase 好了。</p>
 
-<p>2）从文件call.sh的位置2到位置5的字符读取出来(4=5-2+1)</p>
+<p>2）从文件 call.sh 的位置 2 到位置 5 的字符读取出来(4=5-2+1)</p>
 
 <pre><code>[root@lancy bin]# dd if=call.sh bs=1 skip=2 count=4 2&gt;/dev/null
 /bin
@@ -164,7 +172,7 @@ l
 d
 </code></pre>
 
-<p>(以上部分内容来自ABS一书)</p>
+<p>(以上部分内容来自 ABS 一书)</p>
 </div>
   
   
@@ -203,7 +211,7 @@ d
   </header>
 
 
-  <div class="entry-content"><p>seq产生整数数列</p>
+  <div class="entry-content"><p>seq 产生整数数列</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -282,8 +290,8 @@ d
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>这里-w的参数非常有用，你可以自己设定填充的字符。这在做批量下载的时候非常有用的，之前我写的那个下载程序就是填充没有做好，用这个命令就很好解决了。
-(以上部分内容来自ABS一书)</p>
+<p>这里-w 的参数非常有用，你可以自己设定填充的字符。这在做批量下载的时候非常有用的，之前我写的那个下载程序就是填充没有做好，用这个命令就很好解决了。
+(以上部分内容来自 ABS 一书)</p>
 </div>
   
   
@@ -322,10 +330,9 @@ d
   </header>
 
 
-  <div class="entry-content"><p>以前一直以为bc做了不了浮点运算，虽然他能结算类似<code>13.4*45.6</code>的乘法，但是在计算除法的时候，无论你输入<code>5/3</code>还是<code>5/3.0</code>得到的结果都是<code>1</code></p>
+  <div class="entry-content"><p>以前一直以为 bc 做了不了浮点运算，虽然他能结算类似<code>13.4*45.6</code>的乘法，但是在计算除法的时候，无论你输入<code>5/3</code>还是<code>5/3.0</code>得到的结果都是<code>1</code></p>
 
-<p>我也没有去看man手册，今天无意中发现了<code>ibas</code>e这个变量，是bc使用的一个变量，表示输入的数字的进制，比如<code>ibase=8</code>，表示你输入的数是8进制的。
-这让我很好奇，于是去看了man手册，原来他是可以做浮点除法的，只是默认不输出小数点后面的值，它同样采用了一个变量来控制<code>--scale</code>，其值表示输出多少位小数。另外一个和ibase对应的变量是obase，表示结果输出采用什么进制，默认是10进制。</p>
+<p>我也没有去看 man 手册，今天无意中发现了<code>ibas</code>e 这个变量，是 bc 使用的一个变量，表示输入的数字的进制，比如<code>ibase=8</code>，表示你输入的数是 8 进制的。这让我很好奇，于是去看了 man 手册，原来他是可以做浮点除法的，只是默认不输出小数点后面的值，它同样采用了一个变量来控制<code>--scale</code>，其值表示输出多少位小数。另外一个和 ibase 对应的变量是 obase，表示结果输出采用什么进制，默认是 10 进制。</p>
 
 </div>
   
@@ -370,7 +377,7 @@ d
 
 
   <div class="entry-content"><p><a href="http://www.tldp.org/LDP/abs/abs-guide.pdf">《Advanced Bash-Scripting
-Guide》（简称ABS）</a>是我正在看的一本bash编程书籍，个人觉得很不错，590页的文档充满了示例代码，并且都非常有用，比如下面的这个在制定范围内获得随机数就是一个不错的例子，它没有使用bash内嵌的RANDMON,而是使用了一定的算法(我增加了后面的一段代码)。代码是最好的注释，大家看代码吧。</p>
+Guide》（简称 ABS）</a>是我正在看的一本 bash 编程书籍，个人觉得很不错，590 页的文档充满了示例代码，并且都非常有用，比如下面的这个在制定范围内获得随机数就是一个不错的例子，它没有使用 bash 内嵌的 RANDMON,而是使用了一定的算法(我增加了后面的一段代码)。代码是最好的注释，大家看代码吧。</p>
 
 <figure class='code'><figcaption><span> (random.sh)</span> <a href='/downloads/code/random.sh'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -729,16 +736,9 @@ Guide》（简称ABS）</a>是我正在看的一本bash编程书籍，个人觉�
   </header>
 
 
-  <div class="entry-content"><p>1号回来，4号去电信办ADSL，服务态度还行，不到一会，手续办完，只是这次modem没有了，需要麻烦我再来一趟，自己拿。要装ADSL的人带过来还不行，说他们没有这个权利，一副顾客是上帝的样子。他们号称是7个工作日办好，催他们快，说没有用，这是程序流程。</p>
+  <div class="entry-content"><p>1 号回来，4 号去电信办 ADSL，服务态度还行，不到一会，手续办完，只是这次 modem 没有了，需要麻烦我再来一趟，自己拿。要装 ADSL 的人带过来还不行，说他们没有这个权利，一副顾客是上帝的样子。他们号称是 7 个工作日办好，催他们快，说没有用，这是程序流程。</p>
 
-<p>第三天，打电话给10000，居然说我住的地方接口不够，需要扩展才行，需要多长时间，未知。
-第五天，打电话给10000，说我们已经打报告给领导了，什么时间能办，未知。
-第八天，打电话给10000，说正在处理，什么时间搞定，未知。
-第九天，去营业厅，取消ADSL业务。
-打电话给铁通的同学，询问了基本情况，说他们可以办，价格还便宜。于是他帮我找人联系我，开始办理。先考察，然后制定方案。
-说这周三安装好电话，周四便能开通ADSL。
-今天下午，果然他们打电话来了，MODEM也带来了，电话线也带来了。还是铁通速度快呀。
-安装工程师看了一眼，说恐怕不行，装不了，打电话给业务代表，两人开始扯皮。</p>
+<p>第三天，打电话给 10000，居然说我住的地方接口不够，需要扩展才行，需要多长时间，未知。第五天，打电话给 10000，说我们已经打报告给领导了，什么时间能办，未知。第八天，打电话给 10000，说正在处理，什么时间搞定，未知。第九天，去营业厅，取消 ADSL 业务。打电话给铁通的同学，询问了基本情况，说他们可以办，价格还便宜。于是他帮我找人联系我，开始办理。先考察，然后制定方案。说这周三安装好电话，周四便能开通 ADSL。今天下午，果然他们打电话来了，MODEM 也带来了，电话线也带来了。还是铁通速度快呀。安装工程师看了一眼，说恐怕不行，装不了，打电话给业务代表，两人开始扯皮。</p>
 
 <p>业务代表过来了，看了看环境，又出去和安装工程师交谈了一阵，杀回来告诉我，不好意思，装不了，拜拜！</p>
 
@@ -781,11 +781,11 @@ Guide》（简称ABS）</a>是我正在看的一本bash编程书籍，个人觉�
   </header>
 
 
-  <div class="entry-content"><p>15:00，南下的T1缓缓离开北京西客站。我在心理默默的念叨：“北京，再见了；红旗，我在北京真正意义上的第一个上班的公司，再见了”。</p>
+  <div class="entry-content"><p>15:00，南下的 T1 缓缓离开北京西客站。我在心理默默的念叨：“北京，再见了；红旗，我在北京真正意义上的第一个上班的公司，再见了”。</p>
 
-<p>2年前的今天，<a href="http://lawstar.xplore.cn">lancy</a>，<a href="http://wf.xplore.cn">wirlfly</a>，<a href="http://mwishes.xplore.cn">mwishes</a>和我四人搭乘T2，离开熟悉的湘潭，来到了北京。lancy去天津继续她喜欢的专业学习，wirlfly则到了以美女出名的北京广播学院，而mwishes一年后也同样来到了这所大学继续深造。只有我，开始了北漂的生活。</p>
+<p>2 年前的今天，<a href="http://lawstar.xplore.cn">lancy</a>，<a href="http://wf.xplore.cn">wirlfly</a>，<a href="http://mwishes.xplore.cn">mwishes</a> 和我四人搭乘 T2，离开熟悉的湘潭，来到了北京。lancy 去天津继续她喜欢的专业学习，wirlfly 则到了以美女出名的北京广播学院，而 mwishes 一年后也同样来到了这所大学继续深造。只有我，开始了北漂的生活。</p>
 
-<p>刚来北京，喜欢它的地铁，也只会坐地铁，快捷方便准时，只是价格高，但是经过731路公交2个半小时的颠簸后，价格的劣势便一扫而光。于是刚到北京的近3个月，每天重复着八通线――1号地铁――2号地铁――运通106――11路车的往返运动，虽沉闷，但也还能在这个沉闷的时间让我看书，于是《余秋雨文集》便被打发到了这个运动轨迹上。</p>
+<p>刚来北京，喜欢它的地铁，也只会坐地铁，快捷方便准时，只是价格高，但是经过 731 路公交 2 个半小时的颠簸后，价格的劣势便一扫而光。于是刚到北京的近 3 个月，每天重复着八通线――1 号地铁――2 号地铁――运通 106――11 路车的往返运动，虽沉闷，但也还能在这个沉闷的时间让我看书，于是《余秋雨文集》便被打发到了这个运动轨迹上。</p>
 
 </div>
   
@@ -829,13 +829,11 @@ Guide》（简称ABS）</a>是我正在看的一本bash编程书籍，个人觉�
   </header>
 
 
-  <div class="entry-content"><p>这几天一直都没有更新blog，忙着部门存储学习交流的文档，这几天都是瞎忙到凌晨2点，还好每天可以和<a href="http://blog.sina.com.cn/u/1245710794">wirlfly</a>
-讨论相关的技术，这使得我能在昨天开始培训前30分钟完成ppt文档，不过还是很粗糙，原本想加入的一些内容因为时间原因还是去掉了。</p>
+  <div class="entry-content"><p>这几天一直都没有更新 blog，忙着部门存储学习交流的文档，这几天都是瞎忙到凌晨 2 点，还好每天可以和 <a href="http://blog.sina.com.cn/u/1245710794">wirlfly</a>
+讨论相关的技术，这使得我能在昨天开始培训前 30 分钟完成 ppt 文档，不过还是很粗糙，原本想加入的一些内容因为时间原因还是去掉了。</p>
 
-<p>昨天下午2点开始做技术交流，居然有研发的牛人去听，吓得我不敢怎么大声说话，总觉得有点班门弄斧的感觉。<br/>
-感觉昨天的交流还是讲的不够详细，很多概念我都没有去介绍，就直接带出来了，内容的组织上也存在问题，甚至有时我都不知道为什么会有这一页存在。和wirlfly讨论的时候，感觉说得很流利，而真正和大家讲的时候就不是这样了。<br/>
-3个小时讲完，发现对象存储，CAS，IP存储将得不是很好，可能还是和自己水平有关，应该再去仔细了解这方面的技术。<br/>
-附近是我这次交流的ppt，喜欢的可以拿去。</p>
+<p>昨天下午 2 点开始做技术交流，居然有研发的牛人去听，吓得我不敢怎么大声说话，总觉得有点班门弄斧的感觉。感觉昨天的交流还是讲的不够详细，很多概念我都没有去介绍，就直接带出来了，内容的组织上也存在问题，甚至有时我都不知道为什么会有这一页存在。和 wirlfly 讨论的时候，感觉说得很流利，而真正和大家讲的时候就不是这样了。<br/>
+3 个小时讲完，发现对象存储，CAS，IP 存储将得不是很好，可能还是和自己水平有关，应该再去仔细了解这方面的技术。附近是我这次交流的 ppt，喜欢的可以拿去。</p>
 
 <p><a href="/uploads/storage.rar">storage tutorial</a></p>
 </div>
@@ -876,14 +874,11 @@ Guide》（简称ABS）</a>是我正在看的一本bash编程书籍，个人觉�
   </header>
 
 
-  <div class="entry-content"><p>很长时间没有和freecloudz联系了，今日在MSN上见到他，居然告诉我他和女友分手了。又给我看了他在<a href="http://www.tianya.cn/New/PublicForum/Content.asp?flag=1&amp;idWriter=0&amp;Key=0&amp;idArticle=643085&amp;strItem=feeling">天涯写的《真的很痛》</a>，看了很长时间，唏嘘不已。</p>
+  <div class="entry-content"><p>很长时间没有和 freecloudz 联系了，今日在 MSN 上见到他，居然告诉我他和女友分手了。又给我看了他在<a href="http://www.tianya.cn/New/PublicForum/Content.asp?flag=1&amp;idWriter=0&amp;Key=0&amp;idArticle=643085&amp;strItem=feeling">天涯写的《真的很痛》</a>，看了很长时间，唏嘘不已。</p>
 
-<p>他女友我是认识的，比我们低一届。严格说来，他们认识还是我介绍的，当时只是说我介绍一下，剩下的就靠你了。<br/>
-从那以后，freecloudz锲而不舍，依然记得圣诞节的时候，freecloudz冒着被逮住的危险，翻阅围墙送玫瑰的情形，依然记得他总会变着法子来过他们的认识一周纪念，认识一月纪念等。多年来，他对他的付出，不仅仅让她感动，也让她的朋友感动和我们感动。也许正式这种锲而不舍，他们终于走到了一起，真的成了男女朋友。毕业后，他留下了陪他靠GMAT，之后又离开长沙，去深圳，也是为了她。    <br/>
-之间种种努力，也时常使得她泪流满面，觉得她今生再也早不到比他跟爱她的人了。
-可惜感动依然只是感动，物质的诱惑总是那样的让人难以抗拒，3个月的物质诱惑居然冲垮了6年来建立的爱情，再爱情和面包，或者面包和海鲜面前，后者总是会以胜利的姿态出现。</p>
+<p>他女友我是认识的，比我们低一届。严格说来，他们认识还是我介绍的，当时只是说我介绍一下，剩下的就靠你了。从那以后，freecloudz 锲而不舍，依然记得圣诞节的时候，freecloudz 冒着被逮住的危险，翻阅围墙送玫瑰的情形，依然记得他总会变着法子来过他们的认识一周纪念，认识一月纪念等。多年来，他对他的付出，不仅仅让她感动，也让她的朋友感动和我们感动。也许正式这种锲而不舍，他们终于走到了一起，真的成了男女朋友。毕业后，他留下了陪他靠 GMAT，之后又离开长沙，去深圳，也是为了她。之间种种努力，也时常使得她泪流满面，觉得她今生再也早不到比他跟爱她的人了。可惜感动依然只是感动，物质的诱惑总是那样的让人难以抗拒，3 个月的物质诱惑居然冲垮了 6 年来建立的爱情，再爱情和面包，或者面包和海鲜面前，后者总是会以胜利的姿态出现。</p>
 
-<p>又或许感动并不是爱情，她也许一直生活在感动中，误以为感动便是爱情，而这种感动总是一方真心的付出，一方只需要享受，爱情应该生活平等的，她不是一方的付出，而是两人的相互付出和回报。如果真的爱过，6年的感情不是说消失就消失的，也许有时分手才能真的看出双方是否真的深爱着对方，那么对分手后又复合的，那是因为走过之后，才发现原来的她（他）才是之间的真爱。</p>
+<p>又或许感动并不是爱情，她也许一直生活在感动中，误以为感动便是爱情，而这种感动总是一方真心的付出，一方只需要享受，爱情应该生活平等的，她不是一方的付出，而是两人的相互付出和回报。如果真的爱过，6 年的感情不是说消失就消失的，也许有时分手才能真的看出双方是否真的深爱着对方，那么对分手后又复合的，那是因为走过之后，才发现原来的她（他）才是之间的真爱。</p>
 
 <p>freecloudz，守候你的爱情吧。保重。</p>
 </div>
@@ -924,14 +919,9 @@ Guide》（简称ABS）</a>是我正在看的一本bash编程书籍，个人觉�
   </header>
 
 
-  <div class="entry-content"><p>不知是这几天头晕，还是严重缺失睡眠，昨晚做了一个异常怪异的梦。
-梦中，我打一群人在看热闹，但是也不知道看什么，只是知道一群人围观在那里，不到一伙，人群散了，我也离开，突然有人抓我的腿，还有人抓我的手，似乎要把我抬起来，他们口里还说“抓回去，抓回去”
-我慌忙问，“你们抓我做什么，我又不认识你们？”</p>
+  <div class="entry-content"><p>不知是这几天头晕，还是严重缺失睡眠，昨晚做了一个异常怪异的梦。梦中，我打一群人在看热闹，但是也不知道看什么，只是知道一群人围观在那里，不到一伙，人群散了，我也离开，突然有人抓我的腿，还有人抓我的手，似乎要把我抬起来，他们口里还说“抓回去，抓回去”我慌忙问，“你们抓我做什么，我又不认识你们？”</p>
 
-<p>那群人却说：“你是回族人，要抓你回去，这里是汉族住的地方”
-我就拼命解释我不是回族人，我是汉族人。我不会你们回去，他们就追我，我就拼命跑，一直跑到大家都累了，都跑不动了，我也突然醒来了，一摸额头，湿的，身上也出汗了。
-早晨一直在想怎么会这样呢？为什么会梦到这样奇怪的事情呢？常说，“日有所思，也有所梦”，可我压根就没有想到什么回族之类的呀。<a href="http://rachel.xplore.cn">Rachel</a>说我是看了《狼图腾》的原因，这也是很早就看完了，而这段时间我一直在看《废都》，昨晚睡觉前也看了一段，但是《废都》里面压根就没有说道回族呀，又不是看《穆斯林的葬礼》。
-难道是《废都》后面会说道回族，看情节也不太可能呀，于是趁中午休息的时间，看完了最后4章，依然没有说道回族，这就怪异了。</p>
+<p>那群人却说：“你是回族人，要抓你回去，这里是汉族住的地方”我就拼命解释我不是回族人，我是汉族人。我不会你们回去，他们就追我，我就拼命跑，一直跑到大家都累了，都跑不动了，我也突然醒来了，一摸额头，湿的，身上也出汗了。早晨一直在想怎么会这样呢？为什么会梦到这样奇怪的事情呢？常说，“日有所思，也有所梦”，可我压根就没有想到什么回族之类的呀。<a href="http://rachel.xplore.cn">Rachel</a> 说我是看了《狼图腾》的原因，这也是很早就看完了，而这段时间我一直在看《废都》，昨晚睡觉前也看了一段，但是《废都》里面压根就没有说道回族呀，又不是看《穆斯林的葬礼》。难道是《废都》后面会说道回族，看情节也不太可能呀，于是趁中午休息的时间，看完了最后 4 章，依然没有说道回族，这就怪异了。</p>
 
 <p>而唯一与这有点点关联的是有很多人第一次见到我，都要问我哪里人，然后就说不想，说我应该是新疆的啦，或者是什么哈萨克斯坦人啦，反正应该是西域一代的，如果不是，要不就是你们家祖上有西域的，吓，这我还真不知道了，活血有机会去了解一下。</p>
 </div>
@@ -972,11 +962,10 @@ Guide》（简称ABS）</a>是我正在看的一本bash编程书籍，个人觉�
   </header>
 
 
-  <div class="entry-content"><p>来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是最后</p>
+  <div class="entry-content"><p>来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是最后</p>
 
-<p>在CX300上删除两台Linux系统的注册信息，重新注册和设置权限，再调试multipath，仍然不能做到路径“愈合”。
-重新编译multipath，还是有这个错误。</p>
+<p>在 CX300 上删除两台 Linux 系统的注册信息，重新注册和设置权限，再调试 multipath，仍然不能做到路径“愈合”。重新编译 multipath，还是有这个错误。</p>
 
 </div>
   
@@ -1028,8 +1017,8 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/26/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/26/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/26/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/26/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

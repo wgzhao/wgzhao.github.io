@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="是的，我知道ext3文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。
-而且从ext3文件系统的FAQ中提到的一条也能印证这点： Q: How can I recover (undelete) deleted files from my ext3 partition? &hellip;">
+  <meta name="description" content="是的，我知道 ext3 文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。而且从 ext3 文件系统的 FAQ 中提到的一条也能印证这点： Q: How can I recover (undelete) deleted files from my ext3 partition? &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,8 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>是的，我知道ext3文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。<br/>
-而且从ext3文件系统的<a href="http://batleth.sapienti-sat.org/projects/FAQs/ext3-faq.html">FAQ</a>中提到的一条也能印证这点：</p>
+<div class="entry-content"><p>是的，我知道 ext3 文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。而且从 ext3 文件系统的 <a href="http://batleth.sapienti-sat.org/projects/FAQs/ext3-faq.html">FAQ</a> 中提到的一条也能印证这点：</p>
 
 <blockquote><p>Q: How can I recover (undelete) deleted files from my ext3 partition?<br/>
 Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, said about it:</p>
@@ -114,11 +117,11 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
 
 
 <p>
-<a href="http://www.xs4all.nl/~carlo17">Carlo Wood</a>在2008年2月7日不小心使用了<code>rm -rf</code> 删除了/home目录，损失数据超过3GB，而唯一的备份还是2007年6月份的，他不甘心他的数据就这么丢失，于是就还是研究ext3文件系统，牛人就是牛人，他花了3个星期，写了将近5000行代码，他恢复了所有的文件。</p>
+<a href="http://www.xs4all.nl/~carlo17">Carlo Wood</a> 在 2008 年 2 月 7 日不小心使用了<code>rm -rf</code> 删除了/home 目录，损失数据超过 3GB，而唯一的备份还是 2007 年 6 月份的，他不甘心他的数据就这么丢失，于是就还是研究 ext3 文件系统，牛人就是牛人，他花了 3 个星期，写了将近 5000 行代码，他恢复了所有的文件。</p>
 
-<p>光说不练是假把式，我们就祭出他的工具&mdash;ext3grep。如果你是debian/ubuntu用户，那你走运了，直接<code>sudo apt-get install ext3grep</code>就可以了，其他系统我没有尝试过，源代码可以在<a href="http://code.google.com/p/ext3grep/">google code</a>下载。</p>
+<p>光说不练是假把式，我们就祭出他的工具&mdash;ext3grep。如果你是 debian/ubuntu 用户，那你走运了，直接<code>sudo apt-get install ext3grep</code>就可以了，其他系统我没有尝试过，源代码可以在 <a href="http://code.google.com/p/ext3grep/">google code</a> 下载。</p>
 
-<p>我们可以一步一步的从文件系统原理来告诉你如何恢复一个文件，但是我怕你还没有看完，就走人了，所以我就先给一个快速演示给大家看看：我们先删除/boot目录(/dev/sda2分区)下的某一个文件（如果你不相信他能恢复，请先行备份），然后利用这个工具来恢复这个文件。</p>
+<p>我们可以一步一步的从文件系统原理来告诉你如何恢复一个文件，但是我怕你还没有看完，就走人了，所以我就先给一个快速演示给大家看看：我们先删除/boot 目录(/dev/sda2 分区)下的某一个文件（如果你不相信他能恢复，请先行备份），然后利用这个工具来恢复这个文件。</p>
 
 <ol>
 <li><p>备份并删除文件</p>
@@ -128,7 +131,7 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
  root@wgzhao-nb:/boot# rm -rf initrd.img-2.6.28-13-generic
  root@wgzhao-nb:/boot# sync
 </code></pre></li>
-<li><p>如果你为了保险起见，可以立刻将boot分区(/dev/sda2)挂载为只读  <code>mount -o remount,ro /dev/sda2 /boot</code></p></li>
+<li><p>如果你为了保险起见，可以立刻将 boot 分区(/dev/sda2)挂载为只读  <code>mount -o remount,ro /dev/sda2 /boot</code></p></li>
 <li><p>假定你不记得你要恢复的文件的名字了（大部分情况是不会记得的），我们要列出包含删除文件目录下所有包含的文件，包括被删除的文件。</p>
 
 <pre><code> root@wgzhao-nb:/boot# ext3grep /dev/sda2 --dump-names
@@ -212,7 +215,7 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
 </ol>
 
 
-<p>以上你看到的D标志的，就是被删除的文件，这你总知道了吧，还是不知道，那就再往后看，最后有一个必必杀计。</p>
+<p>以上你看到的 D 标志的，就是被删除的文件，这你总知道了吧，还是不知道，那就再往后看，最后有一个必必杀计。</p>
 
 <ol>
 <li><p>接着我们恢复文件，这是关键：</p>
@@ -230,20 +233,18 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
 </ol>
 
 
-<p>由此我们知道恢复出来的文件是完整的。这里要注意的是<code>--restore-file</code> 的文件参数，文件参数应该包括文件相对路径，相对路径指的是相对你指定的设备，比如/dev/sda2就是/boot的根目录，而<code>initrd.img-2.6.28-13-generic</code>在/boot目录下，因此这里直接给出文件名就好了，如果是需要恢复<code>/boot/grub/grub.conf</code>文件的话，那么指定的参数就应该像下面这样：</p>
+<p>由此我们知道恢复出来的文件是完整的。这里要注意的是<code>--restore-file</code> 的文件参数，文件参数应该包括文件相对路径，相对路径指的是相对你指定的设备，比如/dev/sda2 就是/boot 的根目录，而<code>initrd.img-2.6.28-13-generic</code>在/boot 目录下，因此这里直接给出文件名就好了，如果是需要恢复<code>/boot/grub/grub.conf</code>文件的话，那么指定的参数就应该像下面这样：</p>
 
 <p><code>root@wgzhao-nb:#ext3grep /dev/sda2 --restore-file grub/grub.conf</code></p>
 
-<p>细心的你，你可能知道了，他指定文件的方式就和grub一样，比如<code>(hd0,1)/grub/grub.conf</code>这样。</p>
+<p>细心的你，你可能知道了，他指定文件的方式就和 grub 一样，比如<code>(hd0,1)/grub/grub.conf</code>这样。</p>
 
-<p>以上是恢复一个文件的简单步骤，如果你想从ext3文件系统原理着手来看如何逐步恢复一个文件的话，请看ext3grep的作者自己写的<a href="http://www.xs4all.nl/~carlo17/howto/undelete_ext3.html">howto</a>，那里给出了一个非常详细的步骤，使得你对ext3文件系统一定有更深入的了解。</p>
+<p>以上是恢复一个文件的简单步骤，如果你想从 ext3 文件系统原理着手来看如何逐步恢复一个文件的话，请看 ext3grep 的作者自己写的 <a href="http://www.xs4all.nl/~carlo17/howto/undelete_ext3.html">howto</a>，那里给出了一个非常详细的步骤，使得你对 ext3 文件系统一定有更深入的了解。</p>
 
-<p>如果你有N个文件需要恢复（N >100)，那么用上面的方法看就比较恼火了，所以作者给ext3grep增加了一个<code>--restore-all</code>的参数。<br/>
-它能把指定设备的所有看你能恢复的文件都恢复出来，写入一个<code>RESTORED_FILES</code>目录里。<br/>
-作者建议使用<code>--restore-all</code>的参数时，同时指定<code>--after</code>参数，表示指定恢复什么时间之后被删除的文件，这是为了防止用恢复过多的旧文件，算是一种过滤方式。参数为时间戳格式，比如：<br/>
-<code>ext3grep --restore-all --after 1245676061</code> 表示恢复自2009-06-22 21:07以后删除的文件。</p>
+<p>如果你有 N 个文件需要恢复（N >100)，那么用上面的方法看就比较恼火了，所以作者给 ext3grep 增加了一个<code>--restore-all</code>的参数。它能把指定设备的所有看你能恢复的文件都恢复出来，写入一个<code>RESTORED_FILES</code>目录里。作者建议使用<code>--restore-all</code>的参数时，同时指定<code>--after</code>参数，表示指定恢复什么时间之后被删除的文件，这是为了防止用恢复过多的旧文件，算是一种过滤方式。参数为时间戳格式，比如：<br/>
+<code>ext3grep --restore-all --after 1245676061</code> 表示恢复自 2009-06-22 21:07 以后删除的文件。</p>
 
-<p>OK，更详细更强大的功能，自己去看作者的<a href="http://www.xs4all.nl/~carlo17/howto/undelete_ext3.html">howto</a>吧。</p>
+<p>OK，更详细更强大的功能，自己去看作者的 <a href="http://www.xs4all.nl/~carlo17/howto/undelete_ext3.html">howto</a> 吧。</p>
 </div>
 
 
@@ -335,8 +336,8 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/07/22/recover-deleted-files-on-ext3-filesystem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/07/22/recover-deleted-files-on-ext3-filesystem/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

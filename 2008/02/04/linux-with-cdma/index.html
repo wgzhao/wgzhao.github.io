@@ -9,9 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="总算在Linux下搞定了DGC的CDMA无限上网卡。
-应该感谢kernel的不断升级，否则这个问题会依然是个问题，解决办法就是安装网上的一堆说法。 这里简略记录：
-插入你的PCMCIA无限上网卡，执行dmesg命令，是不是可以看到下面的一些信息： [ 277.216000] pccard: &hellip;">
+  <meta name="description" content="总算在 Linux 下搞定了 DGC 的 CDMA 无限上网卡。应该感谢 kernel 的不断升级，否则这个问题会依然是个问题，解决办法就是安装网上的一堆说法。这里简略记录：插入你的 PCMCIA 无限上网卡，执行 dmesg 命令，是不是可以看到下面的一些信息： [ 277.216000] &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,10 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>总算在Linux下搞定了DGC的CDMA无限上网卡。<br/>
-应该感谢kernel的不断升级，否则这个问题会依然是个问题，解决办法就是安装网上的一堆说法。 <br/>
-这里简略记录：
-插入你的PCMCIA无限上网卡，执行dmesg命令，是不是可以看到下面的一些信息：</p>
+<div class="entry-content"><p>总算在 Linux 下搞定了 DGC 的 CDMA 无限上网卡。应该感谢 kernel 的不断升级，否则这个问题会依然是个问题，解决办法就是安装网上的一堆说法。这里简略记录：插入你的 PCMCIA 无限上网卡，执行 dmesg 命令，是不是可以看到下面的一些信息：</p>
 
 <pre><code>[  277.216000] pccard: card ejected from slot 0
 [  285.652000] pccard: PCMCIA card inserted into slot 0
@@ -109,7 +109,7 @@
 </code></pre>
 
 <p>一般如果出现类似上面的信息，表示驱动没有问题了。 接着执行 <code>setserial /dev/ttyS0 baud_base 230400</code>
-如果没有<code>setserial</code>命令，你可以安装对应的<code>setseria</code>l包。 然后编辑<code>/etc/wvdial.conf</code>文件，类似下面这个样子：</p>
+如果没有<code>setserial</code>命令，你可以安装对应的<code>setseria</code>l 包。 然后编辑<code>/etc/wvdial.conf</code>文件，类似下面这个样子：</p>
 
 <!--more-->
 
@@ -156,8 +156,7 @@ Pid of pppd: 7562
 --&gt; secondary DNS address 220.192.0.130
 </code></pre>
 
-<p>如果看到下面的信息，就表示已经连接上了，然后看看你的缺省网关是不是ppp0,如果不是，改成ppp0. 此时，你应该可以上网了。
-这应该是我08年值得庆贺的事情，总算可以跑开使用Windows当路由器了。</p>
+<p>如果看到下面的信息，就表示已经连接上了，然后看看你的缺省网关是不是 ppp0,如果不是，改成 ppp0. 此时，你应该可以上网了。这应该是我 08 年值得庆贺的事情，总算可以跑开使用 Windows 当路由器了。</p>
 </div>
 
 
@@ -249,8 +248,8 @@ Pid of pppd: 7562
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/02/04/linux-with-cdma/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/02/04/linux-with-cdma/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/02/04/linux-with-cdma/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/02/04/linux-with-cdma/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

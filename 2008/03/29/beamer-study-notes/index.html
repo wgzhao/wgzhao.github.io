@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="这次的演讲全部用Beamer重做，除主文件，样式文件外，根据演讲的主题的不同，分成了好几个文件，编译成PDF后，一共128页，没有什么炫的技术，但是相比以前花了N多心思做的PPT，看上去要专业很多。
-现在基本上能用[Beamer[做出我需要的简报了，也有一些学习的记录，贴出来和大家共享。 &hellip;">
+  <meta name="description" content="这次的演讲全部用 Beamer重做，除主文件，样式文件外，根据演讲的主题的不同，分成了好几个文件，编译成 PDF 后，一共 128 页，没有什么炫的技术，但是相比以前花了 N 多心思做的 PPT，看上去要专业很多。现在基本上能用 [Beamer [做出我需要的简报了，也有一些学习的记录， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,32 +99,30 @@
   </header>
 
 
-<div class="entry-content"><p>这次的演讲全部用<a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>重做，除主文件，样式文件外，根据演讲的主题的不同，分成了好几个文件，编译成PDF后，一共128页，没有什么炫的技术，但是相比以前花了N多心思做的PPT，看上去要专业很多。<br/>
-现在基本上能用[Beamer[做出我需要的简报了，也有一些学习的记录，贴出来和大家共享。</p>
+<div class="entry-content"><p>这次的演讲全部用 <a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>重做，除主文件，样式文件外，根据演讲的主题的不同，分成了好几个文件，编译成 PDF 后，一共 128 页，没有什么炫的技术，但是相比以前花了 N 多心思做的 PPT，看上去要专业很多。现在基本上能用 [Beamer [做出我需要的简报了，也有一些学习的记录，贴出来和大家共享。</p>
 
 <!--more-->
 
 
-<p>使用<a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>，首先需要申明文档类型为beamer，最简单的当然是 <code>documentclass{beamer}</code>
-不过这样子的话，基本你编译不出PDF，即便能编译出来，那查看PDF时，也会报错。</p>
+<p>使用 <a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>，首先需要申明文档类型为 beamer，最简单的当然是 <code>documentclass{beamer}</code>
+不过这样子的话，基本你编译不出 PDF，即便能编译出来，那查看 PDF 时，也会报错。</p>
 
-<p>它带来大量的可选参数，有些其实是必须的，特别是在中文环境下，我这里不再使用LaTeX-CJK宏，而是直接采取<a href="http://ww.xetex.org" title="XeTeX">XeTeX</a>方式编译，因此下面所讲，均是针对XeTeX-LaTeX环境编译的。
-我目前学到的参数有下面这些</p>
+<p>它带来大量的可选参数，有些其实是必须的，特别是在中文环境下，我这里不再使用 LaTeX-CJK 宏，而是直接采取 <a href="http://ww.xetex.org" title="XeTeX">XeTeX</a>方式编译，因此下面所讲，均是针对 XeTeX-LaTeX 环境编译的。我目前学到的参数有下面这些</p>
 
 <pre><code>documentclass[dvipdfm,dvipsnames,xcolor=pdflatex,\
 table,handout,draft,red,compress]{beamer}
 </code></pre>
 
 <ul>
-<li>%dvipdfm  是关键，否则要么编译通不过，要不生成的pdf无法打开</li>
-<li>%xcolor=pdflatex  选项使得xcolor宏包可以使用，表示xcolor的颜色驱动选择</li>
-<li>%dvipsnames  表示可以使用预定义的颜色名字，比如RoyaBlue</li>
-<li>%table  是告诉xcolor宏包colortbl宏包需要加载</li>
+<li>%dvipdfm  是关键，否则要么编译通不过，要不生成的 pdf 无法打开</li>
+<li>%xcolor=pdflatex  选项使得 xcolor 宏包可以使用，表示 xcolor 的颜色驱动选择</li>
+<li>%dvipsnames  表示可以使用预定义的颜色名字，比如 RoyaBlue</li>
+<li>%table  是告诉 xcolor 宏包 colortbl 宏包需要加载</li>
 <li>%xcolor 会自动加载，不需要手工显式调用</li>
-<li>%handout 处理传单形式，加上这个参数后，overlay，也就是动画效果会去掉，        比如你逐项显式的内容，会在一个PDF页面上显示。</li>
-<li>%draft 草稿模式，在撰写的过程中，可以加入这个参数，主要加快编译速度，不过在我使用的过程，也发现了一些问题。因为draft模式会省去头，尾和侧边栏，所以填写的地方显得大一些，当你按照这个宽度和高度撰写内容后，再去掉draft编译，就会发现很多内容看不到了，因为显示内容的面积变小了。</li>
+<li>%handout 处理传单形式，加上这个参数后，overlay，也就是动画效果会去掉，        比如你逐项显式的内容，会在一个 PDF 页面上显示。</li>
+<li>%draft 草稿模式，在撰写的过程中，可以加入这个参数，主要加快编译速度，不过在我使用的过程，也发现了一些问题。因为 draft 模式会省去头，尾和侧边栏，所以填写的地方显得大一些，当你按照这个宽度和高度撰写内容后，再去掉 draft 编译，就会发现很多内容看不到了，因为显示内容的面积变小了。</li>
 <li>%red 显示指定页面头，尾或侧边栏的颜色</li>
-<li>%compress尽量压缩侧边栏</li>
+<li>%compress 尽量压缩侧边栏</li>
 </ul>
 
 
@@ -131,13 +133,12 @@ table,handout,draft,red,compress]{beamer}
 \usecolortheme{dolphin}
 </code></pre>
 
-<p>这些主题和颜色，你可以从<code>$TEXMF/tex/latex/beamer/</code>下找到，自带的主题还是比较多，不过我没有一一查看到底每一个主题是什么样子。
-接着调用fontspec包，这是XeTeX所必须的，用来设定你需要的字体</p>
+<p>这些主题和颜色，你可以从<code>$TEXMF/tex/latex/beamer/</code>下找到，自带的主题还是比较多，不过我没有一一查看到底每一个主题是什么样子。接着调用 fontspec 包，这是 XeTeX 所必须的，用来设定你需要的字体</p>
 
 <pre><code>\usepackage{fontspec}
 </code></pre>
 
-<p>下载你可以设置字体了，Beamer默认使用Sans family字体，因此你至少需要设定Sans family字体，我一般使用下面的命令：</p>
+<p>下载你可以设置字体了，Beamer 默认使用 Sans family 字体，因此你至少需要设定 Sans family 字体，我一般使用下面的命令：</p>
 
 <pre><code>\setsansfont{SimSun}
 </code></pre>
@@ -164,19 +165,18 @@ table,handout,draft,red,compress]{beamer}
 \XeTeXlinebreakskip = 0pt plus 1pt % 多一点调整的空间
 </code></pre>
 
-<p>如果没有这两行，编译出来的PDF会很丑，当然这其实和<a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>无关，是<a href="http://ww.xetex.org" title="XeTeX">XeTeX</a>的问题，只要使用<a href="http://ww.xetex.org" title="XeTeX">XeTeX</a>，不管是用哪种文档样式，只要涉及到中文，均需要使用上面两行命令。
-现在可以开始撰写简报，首先使用我们熟悉的 title,author,date定义必要的信息。然后针对每一个幻灯片，Beamer使用</p>
+<p>如果没有这两行，编译出来的 PDF 会很丑，当然这其实和 <a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>无关，是 <a href="http://ww.xetex.org" title="XeTeX">XeTeX</a>的问题，只要使用 <a href="http://ww.xetex.org" title="XeTeX">XeTeX</a>，不管是用哪种文档样式，只要涉及到中文，均需要使用上面两行命令。现在可以开始撰写简报，首先使用我们熟悉的 title,author,date 定义必要的信息。然后针对每一个幻灯片，Beamer 使用</p>
 
 <pre><code>\begin{frame}
 \end{frame}
 </code></pre>
 
-<p>来定义，几种绝大部分LaTeX的命令都可以使用。 当然&#8221;\begin{frame}&ldquo;也可以带一些参数，我仅列出我使用到的</p>
+<p>来定义，几种绝大部分 LaTeX 的命令都可以使用。 当然&#8221;\begin{frame}&ldquo;也可以带一些参数，我仅列出我使用到的</p>
 
 <pre><code>\begin{frame}[shrink=5]
 </code></pre>
 
-<p>当frame的内容不能在单个frame下存放时，就会把文字大小缩至少指定数的百分比，不建议使用这个参数。</p>
+<p>当 frame 的内容不能在单个 frame 下存放时，就会把文字大小缩至少指定数的百分比，不建议使用这个参数。</p>
 
 <pre><code>\begin{frame}[&lt; +- &gt;]
 </code></pre>
@@ -188,21 +188,19 @@ table,handout,draft,red,compress]{beamer}
 \end{frame}
 </code></pre>
 
-<p>在<a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>文档样式下,verbatim环境不能直接使用，需要用到上面两个参数之间的一个，为了找到这个参数，花了不少时间。
-上面的情况，虽然可以使用verbatim环境了，但是如果在verbatim里使用中文还是看不到，需要使用到下面的命令：</p>
+<p>在 <a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>文档样式下,verbatim 环境不能直接使用，需要用到上面两个参数之间的一个，为了找到这个参数，花了不少时间。上面的情况，虽然可以使用 verbatim 环境了，但是如果在 verbatim 里使用中文还是看不到，需要使用到下面的命令：</p>
 
 <pre><code>\makeatletter
-\defverbatim@font{sffamily} %如果使用roman字体族，将sffamily改成rmfamily
+\defverbatim@font{sffamily} %如果使用 roman 字体族，将 sffamily 改成 rmfamily
 \makeatother
 </code></pre>
 
-<p>当一个frame过长时，会自动打破为成为多个frame，这个参数绝对有用，这个参数也花了我不少时间找到它。</p>
+<p>当一个 frame 过长时，会自动打破为成为多个 frame，这个参数绝对有用，这个参数也花了我不少时间找到它。</p>
 
 <pre><code>\begin{frame}[allowframebreaks,allowdisplaybreaks]
 </code></pre>
 
-<p>上面这些是不太容易从<a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>的手册中找到，所以列了出来，其他的一些功能，比如怎么设置动态效果呀，怎么插入图片呀，都从手册上能找到，而且也和LaTeX基本相同。
-另外，我在使用Beamer的过程中，还简单学会了用<a href="http://sourceforge.net/projects/pgf/">TiKZ</a>画图，比如我要解释Linux文件系统布局图，类似下面这样：</p>
+<p>上面这些是不太容易从 <a href="http://latex-beamer.sf.net" title="Beamer">Beamer</a>的手册中找到，所以列了出来，其他的一些功能，比如怎么设置动态效果呀，怎么插入图片呀，都从手册上能找到，而且也和 LaTeX 基本相同。另外，我在使用 Beamer 的过程中，还简单学会了用 <a href="http://sourceforge.net/projects/pgf/">TiKZ</a> 画图，比如我要解释 Linux 文件系统布局图，类似下面这样：</p>
 
 <p><img src="/uploads/1206793358_4738f742.png" title="&#34;HFS layout&#34;" alt="&#34;HFS layout&#34;"></p>
 
@@ -291,9 +289,9 @@ table,handout,draft,red,compress]{beamer}
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>看上去很复杂，其实仔细看，逻辑比较清楚，基本上是用自然语言来告诉TikZ如何绘图，典型的UNIX哲学。</p>
+<p>看上去很复杂，其实仔细看，逻辑比较清楚，基本上是用自然语言来告诉 TikZ 如何绘图，典型的 UNIX 哲学。</p>
 
-<p>OK，上面差不多是我这段时间找到的比较有用的一些信息，我把这些单独保存在一个tex文件里，防止自己忘记某些指令后，又需要花费大量时间去寻找，最后，我提供这个tex，和大家分享。</p>
+<p>OK，上面差不多是我这段时间找到的比较有用的一些信息，我把这些单独保存在一个 tex 文件里，防止自己忘记某些指令后，又需要花费大量时间去寻找，最后，我提供这个 tex，和大家分享。</p>
 
 <p><a href="/uploads/1206793796_853337c5.gz">example.tex.gz</a></p>
 </div>
@@ -387,8 +385,8 @@ table,handout,draft,red,compress]{beamer}
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/03/29/beamer-study-notes/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/03/29/beamer-study-notes/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/03/29/beamer-study-notes/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/03/29/beamer-study-notes/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

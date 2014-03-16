@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="chroot：指定根文件系统（/），当我第一次使用这个命令的时候，我才发现Linux原来如此强大，仅仅只需要这样一个简单的命令，就可以同时使用已经存在的多个系统。比如我平常使用的系统是Everest，他适合桌面办公，但是我在出去培训和自己联系一些有关企业应用的时候，我需要DC5的环境， &hellip;">
+  <meta name="description" content="chroot：指定根文件系统（/），当我第一次使用这个命令的时候，我才发现 Linux 原来如此强大，仅仅只需要这样一个简单的命令，就可以同时使用已经存在的多个系统。比如我平常使用的系统是 Everest，他适合桌面办公，但是我在出去培训和自己联系一些有关企业应用的时候，我需要 DC5 的环境， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,12 +99,12 @@
   </header>
 
 
-<div class="entry-content"><p><strong>chroot</strong>：指定根文件系统（/），当我第一次使用这个命令的时候，我才发现Linux原来如此强大，仅仅只需要这样一个简单的命令，就可以同时使用已经存在的多个系统。比如我平常使用的系统是Everest，他适合桌面办公，但是我在出去培训和自己联系一些有关企业应用的时候，我需要DC5的环境，这个时候chroot就帮上我的大忙了，仅仅只需要把DC5的根文件系统挂载上来，然后chroot到这个挂载点，DC5的环境就有了，大部分情况下，和直接使用DC5没有差别，只是这个系统系统使用还是Everest的核心，因此当需要执行与核心有关的命令的时候，此时chroot就有点无能为力了，不过好在这样的情况不太多。Chroot，很伟大的创造！</p>
+<div class="entry-content"><p><strong>chroot</strong>：指定根文件系统（/），当我第一次使用这个命令的时候，我才发现 Linux 原来如此强大，仅仅只需要这样一个简单的命令，就可以同时使用已经存在的多个系统。比如我平常使用的系统是 Everest，他适合桌面办公，但是我在出去培训和自己联系一些有关企业应用的时候，我需要 DC5 的环境，这个时候 chroot 就帮上我的大忙了，仅仅只需要把 DC5 的根文件系统挂载上来，然后 chroot 到这个挂载点，DC5 的环境就有了，大部分情况下，和直接使用 DC5 没有差别，只是这个系统系统使用还是 Everest 的核心，因此当需要执行与核心有关的命令的时候，此时 chroot 就有点无能为力了，不过好在这样的情况不太多。Chroot，很伟大的创造！</p>
 
 <!--more-->
 
 
-<p><strong>chpasswd</strong>：批量修改密码，这对维护拥有大量用户账号的管理员而言，无疑有帮助，虽然作为一个系统管理员，可以很简单的写一个程序来达到批量修改账号密码的目的，但是既然系统提供了这样的功能，那我们为什么不直接使用呢？他从标注输入读取每行用户信息，每行由username:password组成。对于password的格式，chpasswd程序给出贴心的一面，可以使用明文的方式，这样就免除了我们自己去生成密文的烦扰，同时日后也知道用户的初始密码是多少。另外一个方面，如果你从完全考虑，希望这个文件里不要出现明文的密码，那么你可以使用加密的密码填充password这个字段，只是使用这个chpasswd命令的时候，需要使用-e的参数。</p>
+<p><strong>chpasswd</strong>：批量修改密码，这对维护拥有大量用户账号的管理员而言，无疑有帮助，虽然作为一个系统管理员，可以很简单的写一个程序来达到批量修改账号密码的目的，但是既然系统提供了这样的功能，那我们为什么不直接使用呢？他从标注输入读取每行用户信息，每行由 username:password 组成。对于 password 的格式，chpasswd 程序给出贴心的一面，可以使用明文的方式，这样就免除了我们自己去生成密文的烦扰，同时日后也知道用户的初始密码是多少。另外一个方面，如果你从完全考虑，希望这个文件里不要出现明文的密码，那么你可以使用加密的密码填充 password 这个字段，只是使用这个 chpasswd 命令的时候，需要使用-e 的参数。</p>
 
 <pre><code>[root@mlsx sbin]# cat /tmp/chpwd.txt 
 work:test oracle:test 
@@ -108,20 +113,20 @@ work:test oracle:test
 
 <p>应该说是非常方便的。</p>
 
-<p><strong>dhcrelay</strong>：DHCP服务器中转器。当你的网络有两个VLAN，但是只在VLAN A里放置了一个DHCP服务器，那么如何让VLAN
-B的机器也能自动获得IP地址呢，这个时候，你需要dhcrelay了。这方面的文档，网络上比较多，给出两篇：<br/>
+<p><strong>dhcrelay</strong>：DHCP 服务器中转器。当你的网络有两个 VLAN，但是只在 VLAN A 里放置了一个 DHCP 服务器，那么如何让 VLAN
+B 的机器也能自动获得 IP 地址呢，这个时候，你需要 dhcrelay 了。这方面的文档，网络上比较多，给出两篇：<br/>
 <a href="http://www.homeweb.idv.tw/index.php?pl=249">DHCP relay agent</a><br/>
 <a href="http://linux.chinaunix.net/bbs/viewthread.php?action=printable&amp;tid=904010">dhcp server 可不可以跨网段来工作</a>。</p>
 
-<p><strong>dovecot</strong>：一个简单但是安全的IMAP服务器，也包括了POP3服务，支持mbox和maildir两种邮件存储格式。  以前我还不知道系统自带了这么好的东西，谢谢脱，是他一次上课说到这个命令的时候，被我偷听到了，于是记住了。非常好用，也还简单。</p>
+<p><strong>dovecot</strong>：一个简单但是安全的 IMAP 服务器，也包括了 POP3 服务，支持 mbox 和 maildir 两种邮件存储格式。  以前我还不知道系统自带了这么好的东西，谢谢脱，是他一次上课说到这个命令的时候，被我偷听到了，于是记住了。非常好用，也还简单。</p>
 
-<p><strong>dump-acct</strong>：导出进程记账文件，默认是<code>/var/account/pacct</code>，他和accton命令是配合起来用的。</p>
+<p><strong>dump-acct</strong>：导出进程记账文件，默认是<code>/var/account/pacct</code>，他和 accton 命令是配合起来用的。</p>
 
-<p><strong>dump-utmp</strong>：导出登录记账文件，默认是<code>/var/log/wtmp</code>，其功能和last命令相似。</p>
+<p><strong>dump-utmp</strong>：导出登录记账文件，默认是<code>/var/log/wtmp</code>，其功能和 last 命令相似。</p>
 
-<p><strong>dumpcap</strong>：dump网络包，他抓获网络数据包并写入文件，文件格式可以是libcap的，也可以是ethereal的，当然也能是tcpdump的。但是我不知道他和tcpdump有什么不同,Google了一下，也没有发现什么，我觉得这不重要，Linux下不是经常对某一个功能，有一打的命令可以实现吗？man手册给出了一个例子：
+<p><strong>dumpcap</strong>：dump 网络包，他抓获网络数据包并写入文件，文件格式可以是 libcap 的，也可以是 ethereal 的，当然也能是 tcpdump 的。但是我不知道他和 tcpdump 有什么不同,Google 了一下，也没有发现什么，我觉得这不重要，Linux 下不是经常对某一个功能，有一打的命令可以实现吗？man 手册给出了一个例子：
 <code>#dumpcap -i eth1 -a duration:60 -w output.pcap</code>
-表示抓取通过eth1,60秒内的数据包，并到文件<code>output.cap</code>。抓出的包内容大致如下：</p>
+表示抓取通过 eth1,60 秒内的数据包，并到文件<code>output.cap</code>。抓出的包内容大致如下：</p>
 
 <pre><code>cat output.pcap |more
 Accept: */*
@@ -231,8 +236,8 @@ other
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/07/23/commands-study-start-c-d/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/23/commands-study-start-c-d/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/07/23/commands-study-start-c-d/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/23/commands-study-start-c-d/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

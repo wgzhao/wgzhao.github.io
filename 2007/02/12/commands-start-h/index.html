@@ -9,10 +9,10 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/sbin下h开头的命令不多，仅有4个
+  <meta name="description" content="/sbin 下 h 开头的命令不多，仅有 4 个
 halt hdparm hotplug hwclock
-halt:停止系统，他和reboot，poweroff等命令属于同一个功能集。
-halt命令不不接参数，仅仅有几个选项来决定如何停止系统 -n: 停止系统前不做同步(sync)， &hellip;">
+halt:停止系统，他和 reboot，poweroff 等命令属于同一个功能集。
+halt 命令不不接参数，仅仅有几个选项来决定如何停止系统 -n: 停止系统前不做同步(sync)， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,6 +32,11 @@ halt命令不不接参数，仅仅有几个选项来决定如何停止系统 -n:
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -97,27 +102,23 @@ halt命令不不接参数，仅仅有几个选项来决定如何停止系统 -n:
   </header>
 
 
-<div class="entry-content"><p>/sbin下h开头的命令不多，仅有4个<br/>
+<div class="entry-content"><p>/sbin 下 h 开头的命令不多，仅有 4 个<br/>
 halt hdparm hotplug hwclock<br/>
-halt:停止系统，他和reboot，poweroff等命令属于同一个功能集。
-halt命令不不接参数，仅仅有几个选项来决定如何停止系统</p>
+halt:停止系统，他和 reboot，poweroff 等命令属于同一个功能集。
+halt 命令不不接参数，仅仅有几个选项来决定如何停止系统</p>
 
 <p>-n: 停止系统前不做同步(sync)，适合快速关机和那些仅仅只有只读访问的系统。<br/>
--w: 仅在wtmp文件中写一条reboot记录，然后退出，他的用处是什么？<br/>
--d: 不写reboot记录到wtmp文件中<br/>
--f: 强制停机/重启，但不调用shutdown.shutdown是一种安全的关闭系统的方式。<br/>
+-w: 仅在 wtmp 文件中写一条 reboot 记录，然后退出，他的用处是什么？<br/>
+-d: 不写 reboot 记录到 wtmp 文件中<br/>
+-f: 强制停机/重启，但不调用 shutdown.shutdown 是一种安全的关闭系统的方式。<br/>
 -p: 如果支持，系统关闭后掉电。否则只是停止系统.</p>
 
 <!--more-->
 
 
-<p>hdparm： 获取和设置硬盘参数，当我一次看到hdparm命令和其说明时，我以为我发现了一个秘笈，因为说明中提到，他可以设置一些关键的参数，让你的硬盘提速。同时在网上也找到了不少有关这个命令的介绍，大多数都说可以显著提高硬盘响应速度，还有很多人的标题干脆是“瞬间提高你的Linux的速度”。其实大部分介绍中，主要是修改两个参数，一个是设置DMA为enable，另外一个是设置I/0为32位。<br/>
-我测试过这两个参数，对硬盘的响应速度确实有很大的影响，特别是DMA的设置，有相差好几倍的效果。<br/>
-然后实际上，后来的Linux分发版本，对于硬盘的优化早在系统启动中就已经做好了。<br/>
-而我知道的是，仅仅只有2.2的内核默认是不打开DMA模式的，因此在2.2的内核，利用<code>hdparm -c 1 /dev/hdx</code>的方式来提高硬盘响应速度是有效果的，但是2.2的内核毕竟是古董了。<br/>
-另外hdparm的man提到hdparm仅仅只是设置ATA/IDE硬盘参数，而对SCSI硬盘是没有用的，当然也对后来出现的SATA,SAS硬盘无效了。  我没有测试过SCSI硬盘，也没有测试过SATA,SAS硬盘，所以现在还不能给出一个确切的答案。</p>
+<p>hdparm： 获取和设置硬盘参数，当我一次看到 hdparm 命令和其说明时，我以为我发现了一个秘笈，因为说明中提到，他可以设置一些关键的参数，让你的硬盘提速。同时在网上也找到了不少有关这个命令的介绍，大多数都说可以显著提高硬盘响应速度，还有很多人的标题干脆是“瞬间提高你的 Linux 的速度”。其实大部分介绍中，主要是修改两个参数，一个是设置 DMA 为 enable，另外一个是设置 I/0 为 32 位。我测试过这两个参数，对硬盘的响应速度确实有很大的影响，特别是 DMA 的设置，有相差好几倍的效果。然后实际上，后来的 Linux 分发版本，对于硬盘的优化早在系统启动中就已经做好了。而我知道的是，仅仅只有 2.2 的内核默认是不打开 DMA 模式的，因此在 2.2 的内核，利用<code>hdparm -c 1 /dev/hdx</code>的方式来提高硬盘响应速度是有效果的，但是 2.2 的内核毕竟是古董了。另外 hdparm 的 man 提到 hdparm 仅仅只是设置 ATA/IDE 硬盘参数，而对 SCSI 硬盘是没有用的，当然也对后来出现的 SATA,SAS 硬盘无效了。  我没有测试过 SCSI 硬盘，也没有测试过 SATA,SAS 硬盘，所以现在还不能给出一个确切的答案。</p>
 
-<p>我们看看后来的linux版本是如何在启动是针对不同硬盘做的优化的，下面的脚本片段来自<code>/etc/rc.d/rc.sysinit</code>文件</p>
+<p>我们看看后来的 linux 版本是如何在启动是针对不同硬盘做的优化的，下面的脚本片段来自<code>/etc/rc.d/rc.sysinit</code>文件</p>
 
 <pre><code># Turn on harddisk optimization
 # There is only one file /etc/sysconfig/harddisks for all disks
@@ -171,8 +172,7 @@ done
 fi
 </code></pre>
 
-<p>这段脚本是所有的IDE硬盘，根据<code>/etc/sysconfig/harddisks</code>文件的策略而设置硬盘的参数.  从这里我们似乎可以看出，sdx设备并不再设置之内，由此是不是可以肯定hdparm对SCSI设备不支持呢？
-我们再看看harddisks文件</p>
+<p>这段脚本是所有的 IDE 硬盘，根据<code>/etc/sysconfig/harddisks</code>文件的策略而设置硬盘的参数.  从这里我们似乎可以看出，sdx 设备并不再设置之内，由此是不是可以肯定 hdparm 对 SCSI 设备不支持呢？我们再看看 harddisks 文件</p>
 
 <pre><code>#
 # WARNING !!!
@@ -222,12 +222,10 @@ fi
 EXTRA_PARAMS=
 </code></pre>
 
-<p>从这个文件的注释我们能够看出，它将影响硬盘效果最明显的参数单独列了出来，而将其他参数放到了EXTRA_PARAMS里。<br/>
-因此对于hdparm命令的众多参数而言，我们需要去了解的不太多。<br/>
-hotplug:Linux下热插拔支持脚本。<br/>
-hwclock:查询和设置硬件时钟(RTC).系统启动时，需要从硬件时钟中读出时间来设置系统系统，这个过程在<code>/etc/rc.d/rc.sysini</code>t脚本中采用<code>hwclock $CLOCKFLAGS</code>的方式来实现。
-这里的参数$CLOCKFLAGS分为两部分，一部分是&mdash;hctosys,表示同步的方式是硬件时钟到系统时钟。另外一部分参数是时间设置的标准，是标准时间（utc），还是本地时间(localtim).<br/>
-而关闭系统时，则相反，似乎用-systohc的参数来将系统时钟同步到硬件时钟。</p>
+<p>从这个文件的注释我们能够看出，它将影响硬盘效果最明显的参数单独列了出来，而将其他参数放到了 EXTRA_PARAMS 里。因此对于 hdparm 命令的众多参数而言，我们需要去了解的不太多。<br/>
+hotplug:Linux 下热插拔支持脚本。<br/>
+hwclock:查询和设置硬件时钟(RTC).系统启动时，需要从硬件时钟中读出时间来设置系统系统，这个过程在<code>/etc/rc.d/rc.sysini</code>t 脚本中采用<code>hwclock $CLOCKFLAGS</code>的方式来实现。这里的参数$CLOCKFLAGS 分为两部分，一部分是&mdash;hctosys,表示同步的方式是硬件时钟到系统时钟。另外一部分参数是时间设置的标准，是标准时间（utc），还是本地时间(localtim).<br/>
+而关闭系统时，则相反，似乎用-systohc 的参数来将系统时钟同步到硬件时钟。</p>
 </div>
 
 
@@ -319,8 +317,8 @@ hwclock:查询和设置硬件时钟(RTC).系统启动时，需要从硬件时钟
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/02/12/commands-start-h/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/02/12/commands-start-h/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/02/12/commands-start-h/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/02/12/commands-start-h/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

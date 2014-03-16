@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="filefrag： Linux下的文件系统相比Windows的文件系统要优越，其中一点就是不用做磁盘碎片整理，但是这并不意味着Linux下的磁盘读写就不会产生碎片。filefrag这个命令就是用来报告一个文件是否有碎片的程序。看几个例子 [root@mlsx ~]# filefrag /etc/ &hellip;">
+  <meta name="description" content="filefrag： Linux 下的文件系统相比 Windows 的文件系统要优越，其中一点就是不用做磁盘碎片整理，但是这并不意味着 Linux 下的磁盘读写就不会产生碎片。filefrag 这个命令就是用来报告一个文件是否有碎片的程序。看几个例子 [root@mlsx ~]# filefrag &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,7 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p><strong>filefrag</strong>：  Linux下的文件系统相比Windows的文件系统要优越，其中一点就是不用做磁盘碎片整理，但是这并不意味着Linux下的磁盘读写就不会产生碎片。filefrag这个命令就是用来报告一个文件是否有碎片的程序。看几个例子</p>
+<div class="entry-content"><p><strong>filefrag</strong>：  Linux 下的文件系统相比 Windows 的文件系统要优越，其中一点就是不用做磁盘碎片整理，但是这并不意味着 Linux 下的磁盘读写就不会产生碎片。filefrag 这个命令就是用来报告一个文件是否有碎片的程序。看几个例子</p>
 
 <pre><code>[root@mlsx ~]# filefrag /etc/passwd -v
 Checking /etc/passwd
@@ -126,9 +131,7 @@ Discontinuity: Block 2662 is at 3854610 (was 3854553)
 /data/tools/db2_v9.iso: 73 extents found, perfection would be 3 extents
 </code></pre>
 
-<p>第一个文件<code>/etc/passwd</code>没有产生碎片，但是第二个文件就不同了，一共有73个不连贯的地方（输出省略了一些）。<br/>
-既然有显示磁盘碎片的程序，那我就想是否有整理磁盘碎片的程序呢，到网上搜索了一下，有人说系统上有defrag命令，但是我的系统显然没有。还有人说，Linux根本用不着做磁盘碎片整理。是啊，记得第一次解除Linux的时候，就看到有这样的话&mdash;Linux不需要磁盘整理&mdash;不过如果你真的想解决这个其实不是问题的问题，那你可以尝试fsck，网上说这样可以减少文件带来的磁盘碎片，但是我现在没有做这个测试。等有机会应该试试。
-这个命令的最后输出“perfection would be 3 extents”没有太明白他的意思，是不是说如果我采用某个方式，就可以把这些磁盘碎片的个数由73个降低到3个呢？用什么样的方法呢？没有找到。</p>
+<p>第一个文件<code>/etc/passwd</code>没有产生碎片，但是第二个文件就不同了，一共有 73 个不连贯的地方（输出省略了一些）。既然有显示磁盘碎片的程序，那我就想是否有整理磁盘碎片的程序呢，到网上搜索了一下，有人说系统上有 defrag 命令，但是我的系统显然没有。还有人说，Linux 根本用不着做磁盘碎片整理。是啊，记得第一次解除 Linux 的时候，就看到有这样的话&mdash;Linux 不需要磁盘整理&mdash;不过如果你真的想解决这个其实不是问题的问题，那你可以尝试 fsck，网上说这样可以减少文件带来的磁盘碎片，但是我现在没有做这个测试。等有机会应该试试。这个命令的最后输出“perfection would be 3 extents”没有太明白他的意思，是不是说如果我采用某个方式，就可以把这些磁盘碎片的个数由 73 个降低到 3 个呢？用什么样的方法呢？没有找到。</p>
 </div>
 
 
@@ -220,8 +223,8 @@ Discontinuity: Block 2662 is at 3854610 (was 3854553)
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/07/25/commands-study-start-f/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/25/commands-study-start-f/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/07/25/commands-study-start-f/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/25/commands-study-start-f/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

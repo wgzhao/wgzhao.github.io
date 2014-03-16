@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="案情： 最开始用的是两个控制器，每一个控制器一个主机端口。每个端口分别连接一台服务器，准备构成HA环境，但是却发现，链接A控制器的服务器并不能看到属于B控制器管理的LUN。那这就是一个大麻烦，询问IBM 800，已经确认这种情况下是做不到一个LUN被两台服务器同时看到的。
-因此决定去掉一个控制器， &hellip;">
+  <meta name="description" content="案情：最开始用的是两个控制器，每一个控制器一个主机端口。每个端口分别连接一台服务器，准备构成 HA 环境，但是却发现，链接 A 控制器的服务器并不能看到属于 B 控制器管理的 LUN。那这就是一个大麻烦，询问 IBM 800，已经确认这种情况下是做不到一个 LUN 被两台服务器同时看到的。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,38 +99,31 @@
   </header>
 
 
-<div class="entry-content"><h3>案情：</h3>
-
-<p>最开始用的是两个控制器，每一个控制器一个主机端口。每个端口分别连接一台服务器，准备构成HA环境，但是却发现，链接A控制器的服务器并不能看到属于B控制器管理的LUN。那这就是一个大麻烦，询问IBM 800，已经确认这种情况下是做不到一个LUN被两台服务器同时看到的。
-因此决定去掉一个控制器，然后在剩下的控制器上，增加一个SAS 2-port Daughter Card 39R6509的子卡,以达到有3个主机端口的目的，从而做到HA环境。</p>
+<div class="entry-content"><h3>案情：最开始用的是两个控制器，每一个控制器一个主机端口。每个端口分别连接一台服务器，准备构成 HA 环境，但是却发现，链接 A 控制器的服务器并不能看到属于 B 控制器管理的 LUN。那这就是一个大麻烦，询问 IBM 800，已经确认这种情况下是做不到一个 LUN 被两台服务器同时看到的。因此决定去掉一个控制器，然后在剩下的控制器上，增加一个 SAS 2-port Daughter Card 39R6509 的子卡,以达到有 3 个主机端口的目的，从而做到 HA 环境。</h3>
 
 <!--more-->
 
 
-<h3>出现的状态：</h3>
+<h3>出现的状态：去掉一个控制器，安装好子卡后，给存储加电，通过管理工具查看，会给出一个控制器丢失的警告，同时无论你怎么设置主机映射通道，在服务器端，仍然只能看到链接到控制器管理的那个 LUN，当然已经有一台服务器什么都看不到了。</h3>
 
-<p>去掉一个控制器，安装好子卡后，给存储加电，通过管理工具查看，会给出一个控制器丢失的警告，同时无论你怎么设置主机映射通道，在服务器端，仍然只能看到链接到控制器管理的那个LUN，当然已经有一台服务器什么都看不到了。</p>
-
-<h3>解决方案：</h3>
-
-<p>出现这个情况，需要将双控制器，改成单控制器。但是不确定是应该先把不需要的控制器取下再设置，还是说保留原来的状态设置，当时我们的情况是取下了不需要的控制器，同时把子卡也加上的。操作步骤如下：</p>
+<h3>解决方案：出现这个情况，需要将双控制器，改成单控制器。但是不确定是应该先把不需要的控制器取下再设置，还是说保留原来的状态设置，当时我们的情况是取下了不需要的控制器，同时把子卡也加上的。操作步骤如下：</h3>
 
 <ol>
-<li><p>恢复出厂设置：进入Storage Manager管理界面，右键单击DS3200阵列的图标，然后选择“Execute Script”；进入命令模式，输入：<code>clear storagesubsystem configuration</code>
+<li><p>恢复出厂设置：进入 Storage Manager 管理界面，右键单击 DS3200 阵列的图标，然后选择“Execute Script”；进入命令模式，输入：<code>clear storagesubsystem configuration</code>
 执行这条脚本。</p></li>
-<li><p>升级firmware和nvsram：在管理界面的support菜单中，选择downloadfirmware，选择&#8221;download
-controller firmware&#8221;,再弹出的对话框中，分别添加你已经下载的firmware和nvsram，可以从下面的地址下载到：<br/>
+<li><p>升级 firmware 和 nvsram：在管理界面的 support 菜单中，选择 downloadfirmware，选择&#8221;download
+controller firmware&#8221;,再弹出的对话框中，分别添加你已经下载的 firmware 和 nvsram，可以从下面的地址下载到：<br/>
 <a href="http://tinyurl.com/767nszv">DS3000 firmware</a></p>
 
-<p>  <strong>注意:选择的firmware和nvsram应该是单控制器的，而不是双控制器的。</strong></p></li>
+<p>  <strong>注意:选择的 firmware 和 nvsram 应该是单控制器的，而不是双控制器的。</strong></p></li>
 <li><p>重启阵列，然后在命令行再执行下面的命令:
 <code>set storagesubsystem redundancymode=simplex</code></p></li>
 <li><p>重新设置主机映射</p></li>
-<li><p>重启两台服务器，两台服务器应该都可以看到所有的LUN了。</p></li>
+<li><p>重启两台服务器，两台服务器应该都可以看到所有的 LUN 了。</p></li>
 </ol>
 
 
-<p><strong>提示：该方法仅适合IBM DS3200和DS3400，但是不适合IBM DS3300.</strong></p>
+<p><strong>提示：该方法仅适合 IBM DS3200 和 DS3400，但是不适合 IBM DS3300.</strong></p>
 </div>
 
 
@@ -218,8 +215,8 @@ controller firmware&#8221;,再弹出的对话框中，分别添加你已经下�
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/10/29/DS3200-convert-two-ctl-single-ctl/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/10/29/DS3200-convert-two-ctl-single-ctl/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/10/29/DS3200-convert-two-ctl-single-ctl/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/10/29/DS3200-convert-two-ctl-single-ctl/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

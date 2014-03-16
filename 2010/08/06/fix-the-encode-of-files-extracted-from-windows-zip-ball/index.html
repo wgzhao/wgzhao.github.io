@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="我的系统是ubuntu 10.04 ，编码是zh_CN.UTF-8。
-我从网络上下载的绝大部分zip包，解压后，连带目录和文件都是乱码。在终端尝试更换LANG，LANGUAGE等环境变量，还是不能直接解决问题。 而且用unzip解压后，无论你怎么设置convmv命令的编码参数，均不能解决问题。 &hellip;">
+  <meta name="description" content="我的系统是 ubuntu 10.04 ，编码是zh_CN.UTF-8。我从网络上下载的绝大部分 zip 包，解压后，连带目录和文件都是乱码。在终端尝试更换 LANG，LANGUAGE 等环境变量，还是不能直接解决问题。 而且用 unzip 解压后，无论你怎么设置 convmv 命令的编码参数， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,12 +99,9 @@
   </header>
 
 
-<div class="entry-content"><p>我的系统是ubuntu 10.04 ，编码是<code>zh_CN.UTF-8</code>。
-我从网络上下载的绝大部分zip包，解压后，连带目录和文件都是乱码。在终端尝试更换LANG，LANGUAGE等环境变量，还是不能直接解决问题。</p>
+<div class="entry-content"><p>我的系统是 ubuntu 10.04 ，编码是<code>zh_CN.UTF-8</code>。我从网络上下载的绝大部分 zip 包，解压后，连带目录和文件都是乱码。在终端尝试更换 LANG，LANGUAGE 等环境变量，还是不能直接解决问题。</p>
 
-<p>而且用unzip解压后，无论你怎么设置convmv命令的编码参数，均不能解决问题。后通过7z工具算是暂时解决了这个问题。
-首先用apt安装7z工具包。 <br/>
-然后用下面的两条指令： <br/>
+<p>而且用 unzip 解压后，无论你怎么设置 convmv 命令的编码参数，均不能解决问题。后通过 7z 工具算是暂时解决了这个问题。首先用 apt 安装 7z 工具包。然后用下面的两条指令： <br/>
 1) <code>LANG=C 7z x xxx.zip</code> <br/>
 2) <code>convmv -f cp936 -t utf8 -r --notest *</code></p>
 </div>
@@ -194,8 +195,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

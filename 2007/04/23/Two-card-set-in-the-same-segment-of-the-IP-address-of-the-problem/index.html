@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="问题：
-我在两个网卡上面设置同样网段的两个IP（比如10.1.0.1和10.1.0.2），这时是可以正常工作的，但是如果我把第一快网卡（eth0）上的网线拔掉之后，网络就不通了，按照我的设想，当eth0不通时系统应该可以从eth1走，所以网络应该还是通的，因为我设的是同一个网段的IP。而且， &hellip;">
+  <meta name="description" content="问题：我在两个网卡上面设置同样网段的两个 IP（比如 10.1.0.1 和 10.1.0.2），这时是可以正常工作的，但是如果我把第一快网卡（eth0）上的网线拔掉之后，网络就不通了，按照我的设想，当 eth0 不通时系统应该可以从 eth1 走，所以网络应该还是通的，因为我设的是同一个网段的 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,17 +99,13 @@
   </header>
 
 
-<div class="entry-content"><p>问题：<br/>
-我在两个网卡上面设置同样网段的两个IP（比如10.1.0.1和10.1.0.2），这时是可以正常工作的，但是如果我把第一快网卡（eth0）上的网线拔掉之后，网络就不通了，按照我的设想，当eth0不通时系统应该可以从eth1走，所以网络应该还是通的，因为我设的是同一个网段的IP。而且，如果我运行命令ifdown
-eth0之后，网就通了，也就是可以从eth1走了。</p>
+<div class="entry-content"><p>问题：我在两个网卡上面设置同样网段的两个 IP（比如 10.1.0.1 和 10.1.0.2），这时是可以正常工作的，但是如果我把第一快网卡（eth0）上的网线拔掉之后，网络就不通了，按照我的设想，当 eth0 不通时系统应该可以从 eth1 走，所以网络应该还是通的，因为我设的是同一个网段的 IP。而且，如果我运行命令 ifdown
+eth0 之后，网就通了，也就是可以从 eth1 走了。</p>
 
 <!--more-->
 
 
-<p>解答：<br/>
-这样配置是有问题的，当eth0的网线被拔掉时，系统并不能按您设想的改从eth1走，因为系统里面有一个路由表，当您设置IP的时候就会同时设置路由表，当需要访问外面的时候，系统会去路由表里面查询，当查询到第一个匹配的项目时就应用这个项目，也就是从这条路径走了，当你拔掉eth0的网线的时候，路由表并没有同时改变，所以系统仍然会试图从eth0走，并不会自动改成从eth1走。<br/>
-但是，如果你运行命令ifdown eth0之后，系统就会把eth0这条路由删除掉，之后就可以从eth1走了，网也就通了。<br/>
-您可以使用命令route来查看系统路由表：</p>
+<p>解答：这样配置是有问题的，当 eth0 的网线被拔掉时，系统并不能按您设想的改从 eth1 走，因为系统里面有一个路由表，当您设置 IP 的时候就会同时设置路由表，当需要访问外面的时候，系统会去路由表里面查询，当查询到第一个匹配的项目时就应用这个项目，也就是从这条路径走了，当你拔掉 eth0 的网线的时候，路由表并没有同时改变，所以系统仍然会试图从 eth0 走，并不会自动改成从 eth1 走。但是，如果你运行命令 ifdown eth0 之后，系统就会把 eth0 这条路由删除掉，之后就可以从 eth1 走了，网也就通了。您可以使用命令 route 来查看系统路由表：</p>
 
 <pre><code>[root@localhost ~]# route
 Kernel IP routing table
@@ -125,7 +125,7 @@ Use Iface
 #ifenslave bond0 eth1
 </code></pre>
 
-<p>这样设置之后，eth0和eth1就被绑定成了一个新的设备：bond0，这个设备可以工作在热备（mode=
+<p>这样设置之后，eth0 和 eth1 就被绑定成了一个新的设备：bond0，这个设备可以工作在热备（mode=
 1）和负载均衡（mode=0）两种方式下，任何一种工作方式下都可以实现您的设想，也就是任意拔掉一根网线，网络仍然可以正常工作，只是负载均衡方式需要两个网卡同时工作，要求交换机上的对应网口也要做绑定，这个就需要查看交换机的使用说面了，如果您不清楚可以使用热备的方式，它是一块网卡工作，另外一块网卡做备份，如果工作的网卡出现问题，比如网络段了，那么会马上切换到另外一块网卡上，保证网络通畅，这种方式不要求交换机做特殊设置。</p>
 </div>
 
@@ -218,8 +218,8 @@ Use Iface
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/04/23/Two-card-set-in-the-same-segment-of-the-IP-address-of-the-problem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/04/23/Two-card-set-in-the-same-segment-of-the-IP-address-of-the-problem/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/04/23/Two-card-set-in-the-same-segment-of-the-IP-address-of-the-problem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/04/23/Two-card-set-in-the-same-segment-of-the-IP-address-of-the-problem/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

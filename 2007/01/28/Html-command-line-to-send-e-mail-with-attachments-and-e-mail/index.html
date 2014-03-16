@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="在命令行发送带附件的邮件倒是很早就知道了，我的方法是采取最懒的，用mutt来把帮忙。命令很简单
+  <meta name="description" content="在命令行发送带附件的邮件倒是很早就知道了，我的方法是采取最懒的，用 mutt 来把帮忙。命令很简单
 echo "your email body" | mutt -s "here you subject" -a /path/to/mutt.tar.gz your@email.com &hellip;">
   
 
@@ -30,6 +30,11 @@ echo "your email body" | mutt -s "here you subject" -a /path/to/mutt.tar.gz your
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,20 +100,19 @@ echo "your email body" | mutt -s "here you subject" -a /path/to/mutt.tar.gz your
   </header>
 
 
-<div class="entry-content"><p>在命令行发送带附件的邮件倒是很早就知道了，我的方法是采取最懒的，用<a href="http://www.mutt.org/">mutt</a>来把帮忙。命令很简单
+<div class="entry-content"><p>在命令行发送带附件的邮件倒是很早就知道了，我的方法是采取最懒的，用 <a href="http://www.mutt.org/">mutt</a> 来把帮忙。命令很简单
 <code>echo "your email body" | mutt -s "here you subject" -a /path/to/mutt.tar.gz  your@email.com</code>
 当然如果你的邮件正文很长，那就可以采用重定向的方式了。</p>
 
 <p><code>mutt -s "here you subject" -a /path/to/mutt.tar.gz your@email.com</code>
-但是这种方式发送html格式正文的邮件却不成功，因为邮件头默认是text/plain格式的，不是text/html格式。
-网上有人说可以配置<code>~/.muttrc</code>来解决这个问题，但是我看了muttrc的man手册，也尝试了一下，但是没有结果。</p>
+但是这种方式发送 html 格式正文的邮件却不成功，因为邮件头默认是 text/plain 格式的，不是 text/html 格式。网上有人说可以配置<code>~/.muttrc</code>来解决这个问题，但是我看了 muttrc 的 man 手册，也尝试了一下，但是没有结果。</p>
 
 <!--more-->
 
 
-<p>今天尝试用sendmail命令，而不是以前用的mail命令来发html格式邮件，经过测试，已经成功了。其实很简单，就是在邮件头上指定邮件格式。这种方式也可以发送附件，不过显然不如<code>mutt -a</code>来得简单方便还准确。</p>
+<p>今天尝试用 sendmail 命令，而不是以前用的 mail 命令来发 html 格式邮件，经过测试，已经成功了。其实很简单，就是在邮件头上指定邮件格式。这种方式也可以发送附件，不过显然不如<code>mutt -a</code>来得简单方便还准确。</p>
 
-<p>下面是发送html邮件的代码</p>
+<p>下面是发送 html 邮件的代码</p>
 
 <pre><code>#!/bin/bash
 #send a html-email using sendmail command
@@ -136,9 +140,9 @@ cat msg.tmp |sendmail -t
 rm -f msg.tmp
 </code></pre>
 
-<p>这里把邮件正文内容保存到了test.html文件里。下次发送邮件时之需要修改test.html就好了。</p>
+<p>这里把邮件正文内容保存到了 test.html 文件里。下次发送邮件时之需要修改 test.html 就好了。</p>
 
-<p>当然这个脚本还可以做很多修改，比如发送地址从命令行或者文件读取等，这里就不再扩展了。因为我要说的发送html邮件已经成功了。</p>
+<p>当然这个脚本还可以做很多修改，比如发送地址从命令行或者文件读取等，这里就不再扩展了。因为我要说的发送 html 邮件已经成功了。</p>
 </div>
 
 
@@ -230,8 +234,8 @@ rm -f msg.tmp
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="总结一些有关PostgreSQL查询计划，查询优化的相关内容，比较基础。 SQL是一种申明性(declared)语言，也就是说，它并不是一种程序。它没有其他编程语言里的流控制语言，比如while，也无法控制操作顺序，比如有名的&#8221;goto&#8221;。 SQL只是描述一个结果，并非过程 &hellip;">
+  <meta name="description" content="总结一些有关 PostgreSQL查询计划，查询优化的相关内容，比较基础。 SQL 是一种申明性(declared)语言，也就是说，它并不是一种程序。它没有其他编程语言里的流控制语言，比如 while，也无法控制操作顺序，比如有名的&#8221;goto&#8221;。 SQL 只是描述一个结果， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,15 +99,15 @@
   </header>
 
 
-<div class="entry-content"><p>总结一些有关<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>查询计划，查询优化的相关内容，比较基础。</p>
+<div class="entry-content"><p>总结一些有关 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>查询计划，查询优化的相关内容，比较基础。</p>
 
-<p>SQL是一种申明性(declared)语言，也就是说，它并不是一种程序。它没有其他编程语言里的流控制语言，比如while，也无法控制操作顺序，比如有名的&#8221;goto&#8221;。</p>
+<p>SQL 是一种申明性(declared)语言，也就是说，它并不是一种程序。它没有其他编程语言里的流控制语言，比如 while，也无法控制操作顺序，比如有名的&#8221;goto&#8221;。</p>
 
-<p>SQL只是描述一个结果，并非过程。</p>
+<p>SQL 只是描述一个结果，并非过程。</p>
 
-<p>结果一致，但如果过程不同，所带来的系统消耗可谓天差地远。所以所有的RDBMS里都需要有查询优化器来获得一条执行代价最小的方式来获取期望的结果。</p>
+<p>结果一致，但如果过程不同，所带来的系统消耗可谓天差地远。所以所有的 RDBMS 里都需要有查询优化器来获得一条执行代价最小的方式来获取期望的结果。</p>
 
-<p>在<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，和查询优化器紧密相连的便是查询计划。</p>
+<p>在 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，和查询优化器紧密相连的便是查询计划。</p>
 
 <!--more-->
 
@@ -113,9 +118,9 @@
 <li>使得查询运行的足够快
 
 <ul>
-<li>最小化磁盘I/O</li>
-<li>偏向使用顺序I/O而非随机I/O</li>
-<li>最小化CPU处理</li>
+<li>最小化磁盘 I/O</li>
+<li>偏向使用顺序 I/O 而非随机 I/O</li>
+<li>最小化 CPU 处理</li>
 </ul>
 </li>
 <li>处理过程不要消耗太多内存</li>
@@ -151,7 +156,7 @@
 
 <h3>查询成本参数</h3>
 
-<p>在<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，查询计划是按照成本计算的，也就是基于成本的查询计划(cost-based plan)，其中影响成本计算的参数包括(后面括号的值为其缺省值)：</p>
+<p>在 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，查询计划是按照成本计算的，也就是基于成本的查询计划(cost-based plan)，其中影响成本计算的参数包括(后面括号的值为其缺省值)：</p>
 
 <ul>
 <li> cpu_index_tuple_cost (0.005)</li>
@@ -187,8 +192,8 @@
 
 <h3>成本计算方法</h3>
 
-<p>一个查询的总代价包括读取数据的I/O代价和其他各种操作的代价之和。
-I/O代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和随机读取数据页（<code>random_scan_cost</code>）的代价，操作代价包括处理表元组（<code>cpu_tuple_cost</code>）、处理比较操作（<code>cpu_operator_cost</code>）和处理索引元组（<code>cpu_index_tuple_cost</code>）。</p>
+<p>一个查询的总代价包括读取数据的 I/O 代价和其他各种操作的代价之和。
+I/O 代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和随机读取数据页（<code>random_scan_cost</code>）的代价，操作代价包括处理表元组（<code>cpu_tuple_cost</code>）、处理比较操作（<code>cpu_operator_cost</code>）和处理索引元组（<code>cpu_index_tuple_cost</code>）。</p>
 
 <p>比如，如果在一个表上做全表顺序扫描，那么其代价公式为:</p>
 
@@ -200,14 +205,13 @@ I/O代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和
 
 <p>对于预算要返回的行数量，其计算公式为:</p>
 
-<p><code>rows = reltuples*估算频率</code></p>
+<p><code>rows = reltuples *估算频率</code></p>
 
 <p>这里，估算频率通过<code>sys_stats</code>视图中统计的列值和出现频率计算得出</p>
 
 <h3>顺序扫描</h3>
 
-<p>顾名思义，顺序扫描就是从头到尾将扫描表的每一条记录，此时表的所有页面都要读取一遍。其代价为页面读取（<code>relpages*seq_page_cost</code>）+元组处理(<code>reltuples*cpu_tuple_cost</code>) ,顺序扫描在任何情况下都能使用，它不需要读取索引，因此对于表，不需要预先创建索引。<br/>
-顺序扫描的基本原理如下图:<br/>
+<p>顾名思义，顺序扫描就是从头到尾将扫描表的每一条记录，此时表的所有页面都要读取一遍。其代价为页面读取（<code>relpages*seq_page_cost</code>）+元组处理(<code>reltuples*cpu_tuple_cost</code>) ,顺序扫描在任何情况下都能使用，它不需要读取索引，因此对于表，不需要预先创建索引。顺序扫描的基本原理如下图:<br/>
 <img src="/images/sql_seqscan.png" title="Sequential Scan" alt="Sequential Scan" /></p>
 
 <p>以下几种情况是顺序扫描的最佳(或不得不)使用场景:</p>
@@ -222,15 +226,14 @@ I/O代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和
 
 <h3>索引扫描</h3>
 
-<p>索引扫描，使用索引定位到元组所在的页面，读取元组，此时只读取符合索引过滤条件的元组所在的页面和少量的索引页面。<br/>
-索引扫描的基本原理如下图:<br/>
+<p>索引扫描，使用索引定位到元组所在的页面，读取元组，此时只读取符合索引过滤条件的元组所在的页面和少量的索引页面。索引扫描的基本原理如下图:<br/>
 <img src="/images/sql_indexscan.png" title="Index Scan" alt="Index Scan" /></p>
 
-<p>索引扫描的代价为索引页面读取+数据页面读取+元组处理。索引扫描在一个巨量表里获取较少行时能获得相当高的性能，但是不要忘记了索引扫描基本上都是随机I/O。同时索引扫描是交替读取索引和表。</p>
+<p>索引扫描的代价为索引页面读取+数据页面读取+元组处理。索引扫描在一个巨量表里获取较少行时能获得相当高的性能，但是不要忘记了索引扫描基本上都是随机 I/O。同时索引扫描是交替读取索引和表。</p>
 
 <h3>仅索引扫描(in 9.2+)</h3>
 
-<p>这是<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a> 9.2以上版本才有的功能，它和索引扫描有类似的功能和有点，另外，它有时可以避免读取行记录。如果一个表修改的很多，仅索引扫描可能表现不好。而且它要求所有查询的列都在索引里。</p>
+<p>这是 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a> 9.2 以上版本才有的功能，它和索引扫描有类似的功能和有点，另外，它有时可以避免读取行记录。如果一个表修改的很多，仅索引扫描可能表现不好。而且它要求所有查询的列都在索引里。</p>
 
 <h3>位图索引扫描</h3>
 
@@ -239,11 +242,11 @@ I/O代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和
 <p><img src="/images/sql_bitmapscan.png" title="Bitmap Index Scan" alt="Bitmap Index Scan" /></p>
 
 <ul>
-<li>在检查表之前先所秒所有的索引，构成一个元组ID(Tuples-ID,TID)的位图</li>
+<li>在检查表之前先所秒所有的索引，构成一个元组 ID(Tuples-ID,TID)的位图</li>
 <li>顺序读表，可以跳跃</li>
 <li>结果以物理排序返回</li>
-<li>对于有多个条件的组合（AND、OR），可以分别对每个条件做Bitmap Index Scan，然后再对结果进行AND或OR操作</li>
-<li>处理limit很弱</li>
+<li>对于有多个条件的组合（AND、OR），可以分别对每个条件做 Bitmap Index Scan，然后再对结果进行 AND 或 OR 操作</li>
+<li>处理 limit 很弱</li>
 </ul>
 
 
@@ -261,7 +264,7 @@ I/O代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和
 
 <h3>连接方法</h3>
 
-<p>当连接2个表时，可以计划用于执行表连接，每一种连接方法使用一个外表(outer)和一个内表(inner)来产生一个结果表(result).</p>
+<p>当连接 2 个表时，可以计划用于执行表连接，每一种连接方法使用一个外表(outer)和一个内表(inner)来产生一个结果表(result).</p>
 
 <ul>
 <li>嵌套循环连接(Nested loop join)
@@ -320,13 +323,11 @@ I/O代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>这里的内表或外表可以是基本表，也可以是其他连接生成的结果。
-该连接的代价大致和两个表大小的乘积相当，如果两个都很大的话，代价很大。
-所以要求整个查询返回的结果集不能太大，要把返回子集较小表的作为外表,而且在内表的连接字段上一定要有索引。</p>
+<p>这里的内表或外表可以是基本表，也可以是其他连接生成的结果。该连接的代价大致和两个表大小的乘积相当，如果两个都很大的话，代价很大。所以要求整个查询返回的结果集不能太大，要把返回子集较小表的作为外表,而且在内表的连接字段上一定要有索引。</p>
 
 <h4>Merge Join</h4>
 
-<p>合并连接的要点是首先将连接的两个表进行排序(使用sort/index扫描)，然后并行扫描两个表，找出相等的值返回。其基本原理见下图：<br/>
+<p>合并连接的要点是首先将连接的两个表进行排序(使用 sort/index 扫描)，然后并行扫描两个表，找出相等的值返回。其基本原理见下图：<br/>
 <img src="/images/sql_merge_join.png" title="Merge join" alt="Merge join" /></p>
 
 <p>其实现伪代码如下：</p>
@@ -368,13 +369,11 @@ I/O代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>合并连接只能处理相等条件连接，比如<code>a.x = b.x</code>这样的。
-根据上述原理图我们可以看出，通常情况下，一个元组只需要访问一次，但是如果外表有重复值的话，内表就需要多次扫描。比如外表是{1 2 2 3},内表是{2 2 3 4}的情况</p>
+<p>合并连接只能处理相等条件连接，比如<code>a.x = b.x</code>这样的。根据上述原理图我们可以看出，通常情况下，一个元组只需要访问一次，但是如果外表有重复值的话，内表就需要多次扫描。比如外表是{1 2 2 3},内表是{2 2 3 4}的情况</p>
 
 <h4>Hash Join</h4>
 
-<p>和Merge join类似，Hash join也只能处理相等条件连接。
-首先在把内表的每一行通过hash函数进行hash，从而在内存内创建一个hash表。而后针对外表的每一行进行hash，来和内存的中的hash表进行匹配。其原理图如下：</p>
+<p>和 Merge join 类似，Hash join 也只能处理相等条件连接。首先在把内表的每一行通过 hash 函数进行 hash，从而在内存内创建一个 hash 表。而后针对外表的每一行进行 hash，来和内存的中的 hash 表进行匹配。其原理图如下：</p>
 
 <p><img src="/images/sql_hash_join.png" title="Hash Join" alt="Hash Join" /></p>
 
@@ -406,7 +405,7 @@ I/O代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和
 <h3>什么下会导致查询计划出错</h3>
 
 <ul>
-<li>如果查询计划低估了结果集的数量，它可能会选择索引扫描(Index Scan)而不是期望的顺序扫描(Sequential Scan)，或是嵌套连接(Nested Loop)而不是Hash或者合并连接</li>
+<li>如果查询计划低估了结果集的数量，它可能会选择索引扫描(Index Scan)而不是期望的顺序扫描(Sequential Scan)，或是嵌套连接(Nested Loop)而不是 Hash 或者合并连接</li>
 <li>如果查询计划高估了结果集的数量，则结果和上条相反</li>
 </ul>
 
@@ -501,8 +500,8 @@ I/O代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2012/08/21/explaining-the-postgresql-query-optimizer/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/21/explaining-the-postgresql-query-optimizer/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2012/08/21/explaining-the-postgresql-query-optimizer/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/21/explaining-the-postgresql-query-optimizer/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

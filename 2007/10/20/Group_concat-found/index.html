@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="开发的过程遇到了一个问题：
-我希望在MySQL数据中对数据表中的某一个字符型字段的内容累加起来，也就是多行数据的字符串链接问题。举个例子。 1
+  <meta name="description" content="开发的过程遇到了一个问题：我希望在 MySQL 数据中对数据表中的某一个字符型字段的内容累加起来，也就是多行数据的字符串链接问题。举个例子。 1
 2
 3
 4
@@ -42,6 +41,11 @@ mysql&gt; select * from test;
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -107,8 +111,7 @@ mysql&gt; select * from test;
   </header>
 
 
-<div class="entry-content"><p>开发的过程遇到了一个问题：
-我希望在MySQL数据中对数据表中的某一个字符型字段的内容累加起来，也就是多行数据的字符串链接问题。举个例子。</p>
+<div class="entry-content"><p>开发的过程遇到了一个问题：我希望在 MySQL 数据中对数据表中的某一个字符型字段的内容累加起来，也就是多行数据的字符串链接问题。举个例子。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -133,7 +136,7 @@ mysql&gt; select * from test;
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>那么我希望通过SQL语句,得到下面这样的结果</p>
+<p>那么我希望通过 SQL 语句,得到下面这样的结果</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -150,10 +153,10 @@ mysql&gt; select * from test;
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>当然之间用什么分隔符,这到无关紧要,重要是的如何得到，我所知道的是，如果这个字段是数值型的，那么使用sum函数配合group
-by能做到。但是字符型就不能怎么干了，尝试了concat函数和group by配合，还是不行。</p>
+<p>当然之间用什么分隔符,这到无关紧要,重要是的如何得到，我所知道的是，如果这个字段是数值型的，那么使用 sum 函数配合 group
+by 能做到。但是字符型就不能怎么干了，尝试了 concat 函数和 group by 配合，还是不行。</p>
 
-<p>后来去MySQL的文章中心去找函数，看看是否有可以做到这点的，果然你能想到的，也必定是别人想到的呀，在MySQL文章中心找到了<a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">group_concat()</a>函数，是的，它就是我所需要的。该函数的具体介绍，看官方文档好了，对于我的问题，仅仅只需要下面这样的SQL语句就搞定。</p>
+<p>后来去 MySQL 的文章中心去找函数，看看是否有可以做到这点的，果然你能想到的，也必定是别人想到的呀，在 MySQL 文章中心找到了 <a href="http://dev.mysql.com/doc/refman/5.0/en/group-by-functions.html#function_group-concat">group_concat()</a>函数，是的，它就是我所需要的。该函数的具体介绍，看官方文档好了，对于我的问题，仅仅只需要下面这样的 SQL 语句就搞定。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -264,8 +267,8 @@ by能做到。但是字符型就不能怎么干了，尝试了concat函数和gro
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/10/20/Group_concat-found/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/10/20/Group_concat-found/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/10/20/Group_concat-found/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/10/20/Group_concat-found/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

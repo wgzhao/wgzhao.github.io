@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="不知道前因后果（大部分情况下，用户都这么描述），重启机器后，发现逻辑卷有问题，执行pvscan的结果是这样的： # pvscan
+  <meta name="description" content="不知道前因后果（大部分情况下，用户都这么描述），重启机器后，发现逻辑卷有问题，执行 pvscan 的结果是这样的： # pvscan
 pvscan -- reading all physical volumes (this may take a while...)
-pvscan -- inactive &hellip;">
+pvscan -- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@ pvscan -- inactive &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,7 +101,7 @@ pvscan -- inactive &hellip;">
   </header>
 
 
-<div class="entry-content"><p>不知道前因后果（大部分情况下，用户都这么描述），重启机器后，发现逻辑卷有问题，执行pvscan的结果是这样的：</p>
+<div class="entry-content"><p>不知道前因后果（大部分情况下，用户都这么描述），重启机器后，发现逻辑卷有问题，执行 pvscan 的结果是这样的：</p>
 
 <pre><code># pvscan
 pvscan -- reading all physical volumes (this may take a while...)
@@ -117,7 +122,7 @@ pvscan -- total: 6 [580 GB] / in use: 6 [580 GB] / in no VG: 0 [0]
 <!--more-->
 
 
-<p>上面已经说名为ora_yz2_02的VG出现问题了，继续vgscan，给出的结果如下：</p>
+<p>上面已经说名为 ora_yz2_02 的 VG 出现问题了，继续 vgscan，给出的结果如下：</p>
 
 <pre><code># vgscan
 vgscan -- reading all physical volumes (this may take a while...)
@@ -133,19 +138,19 @@ vgscan -- WARNING: This program does not do a VGDA backup of your volume
 groups
 </code></pre>
 
-<p>上面的描述信息似乎是说ora_yz2_02这个VG重复使用了一个逻辑卷号(logical volume number)，不太理解这个逻辑卷号是什么意思，google一下，也没有找到有价值的消息。</p>
+<p>上面的描述信息似乎是说 ora_yz2_02 这个 VG 重复使用了一个逻辑卷号(logical volume number)，不太理解这个逻辑卷号是什么意思，google 一下，也没有找到有价值的消息。</p>
 
-<p>当然解决办法很简单，按照屏幕的提示执行vgscan -f 就好了。</p>
+<p>当然解决办法很简单，按照屏幕的提示执行 vgscan -f 就好了。</p>
 
-<p>不过我我查询了vgscan的联机手册，并没有发现这个-f的参数，不知道这个-f，是不是&mdash;force的意思，从源代码着手吧，结果源代码里vgscan命令中也没有这个参数。</p>
+<p>不过我我查询了 vgscan 的联机手册，并没有发现这个-f 的参数，不知道这个-f，是不是&mdash;force 的意思，从源代码着手吧，结果源代码里 vgscan 命令中也没有这个参数。</p>
 
-<p>于是打电话给去解决这个问题的同事，询问是不是使用的<code>vgscan -f</code> 解决的，得到肯定的答复后，我突然想起一件事情，马上询问，操作系统是什么版本，结果是redflag dc4.1，原来是LVM，而不是LVM2，想当然的把它当作了LVM2，浪费了不少时间，LVM1中vgscan确实有-f这个参数，是<code>--forcenumbers</code>的意思。其man手册这么描述的(vgscan(8))</p>
+<p>于是打电话给去解决这个问题的同事，询问是不是使用的<code>vgscan -f</code> 解决的，得到肯定的答复后，我突然想起一件事情，马上询问，操作系统是什么版本，结果是 redflag dc4.1，原来是 LVM，而不是 LVM2，想当然的把它当作了 LVM2，浪费了不少时间，LVM1 中 vgscan 确实有-f 这个参数，是<code>--forcenumbers</code>的意思。其 man 手册这么描述的(vgscan(8))</p>
 
 <blockquote><p>If used volume group and/or logical volume minor numbers are found
 during scan, replace them. This will potentially cause problems for NFS
 exported filesystems on logical volumes with changed numbers.</p></blockquote>
 
-<p>不是能很好的理解这句话的意思，主要是不知道为什么会出现这种情况，不过<a href="http://blog.chinaunix.net/u/92/showart_40645.html">这里有篇文章</a>提到了如何找到这个谁使用了LV或者VG的minor number的方法。不过是针对HP-UX，不知道是不是适应Linux，下次如果再遇到这类问题，应该好好折腾一下。这次算是没有机会了。</p>
+<p>不是能很好的理解这句话的意思，主要是不知道为什么会出现这种情况，不过<a href="http://blog.chinaunix.net/u/92/showart_40645.html">这里有篇文章</a>提到了如何找到这个谁使用了 LV 或者 VG 的 minor number 的方法。不过是针对 HP-UX，不知道是不是适应 Linux，下次如果再遇到这类问题，应该好好折腾一下。这次算是没有机会了。</p>
 </div>
 
 
@@ -237,8 +242,8 @@ exported filesystems on logical volumes with changed numbers.</p></blockquote>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/08/30/reuses-an-existing-logical-volume-number/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/08/30/reuses-an-existing-logical-volume-number/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/08/30/reuses-an-existing-logical-volume-number/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/08/30/reuses-an-existing-logical-volume-number/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

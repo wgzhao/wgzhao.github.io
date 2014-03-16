@@ -9,9 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="可选项（options）设置用来改变shell或者脚本的行为。 set指令可以使得在一个脚本里设置可选项。
-在脚本你需要设置可选项的地方，实用set -o option-name，或者采取缩写模式的set -option-abbrev。这两种形式效果等价。 比如 #!/bin/bash
-set - &hellip;">
+  <meta name="description" content="可选项（options）设置用来改变 shell 或者脚本的行为。 set指令可以使得在一个脚本里设置可选项。在脚本你需要设置可选项的地方，实用set -o option-name，或者采取缩写模式的set -option-abbrev。这两种形式效果等价。 比如 #!/bin/bash
+set &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +30,11 @@ set - &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,10 +100,9 @@ set - &hellip;">
   </header>
 
 
-<div class="entry-content"><p>可选项（options）设置用来改变shell或者脚本的行为。</p>
+<div class="entry-content"><p>可选项（options）设置用来改变 shell 或者脚本的行为。</p>
 
-<p><code>set</code>指令可以使得在一个脚本里设置可选项。
-在脚本你需要设置可选项的地方，实用<code>set -o option-name</code>，或者采取缩写模式的<code>set -option-abbrev</code>。这两种形式效果等价。 比如</p>
+<p><code>set</code>指令可以使得在一个脚本里设置可选项。在脚本你需要设置可选项的地方，实用<code>set -o option-name</code>，或者采取缩写模式的<code>set -option-abbrev</code>。这两种形式效果等价。 比如</p>
 
 <!--more-->
 
@@ -137,7 +140,7 @@ command
 exit 0
 </code></pre>
 
-<p>还有一种方法就是在指定shell解释器的同时设置可选项，就像下面这样：</p>
+<p>还有一种方法就是在指定 shell 解释器的同时设置可选项，就像下面这样：</p>
 
 <pre><code>#!/bin/bash -x
 #
@@ -150,32 +153,32 @@ exit 0
 $ bash -o verbose script-name
 </code></pre>
 
-<p>上面两条指令效果相同。 有关bash的可选参数及解释见下表</p>
+<p>上面两条指令效果相同。 有关 bash 的可选参数及解释见下表</p>
 
 <pre>
   缩写               名字                效果
   ---------------- ----------------- --------------------------------------------------------------------
-  -B               brace expansion   可以括号展开(缺省为on)
+  -B               brace expansion   可以括号展开(缺省为 on)
   +B               brace expansion   不可以括号展开
-  -C               noclobber         防止通过重定向覆盖文件(\>1可以覆盖此规则)
+  -C               noclobber         防止通过重定向覆盖文件(\>1 可以覆盖此规则)
   -D               (none)            列出$开头的双引号引起来的字符串，但是不执行脚本里的命令
   -a               allexport         导出所有已定义的变量
   -b               notify            后台任务终止时给出提示（不大用在脚本里）
   -c ...           (none)            从...读取命令
-  -e               errexit           当一个命令是非0状态退出时，脚本在第一个错误处中止(abort)（除until/while循环，if-tests,列表结构（命令链）
+  -e               errexit           当一个命令是非 0 状态退出时，脚本在第一个错误处中止(abort)（除 until/while 循环，if-tests,列表结构（命令链）
   -f               noglob            文件名展开（通配符）禁止
   -i               interactive       交互模式运行脚本
   -n               noexec            读脚本的指令，但是不执行（做语法检测）
-  -o option-name   (none)            调用*option-name*参数
-  -o posix         POSIX             改变bash或者调用的脚本行为，使其符合POSIX标准
+  -o option-name   (none)            调用* option-name *参数
+  -o posix         POSIX             改变 bash 或者调用的脚本行为，使其符合 POSIX 标准
   -o pipefail      pipe failure      管道里出现非零返回值时，使用用管道返回管道最后一个命令的推出状态
-  -p               privileged        脚本带suid位执行（注意！）
+  -p               privileged        脚本带 suid 位执行（注意！）
   -r               restricted        脚本运行在限制模式
-  -s               stdin             从stdin读命令
+  -s               stdin             从 stdin 读命令
   -t               (none)            第一个命令后退出
   -u               nounset           使用未定义的变量时，输出错误消息，并强制退出
   -v               verbose           执行指令前，将其打印到标准输出
-  -x               xtrace            和-v类似，但是展开命令
+  -x               xtrace            和-v 类似，但是展开命令
   -                (none)            可选参数结束符。所有其他参数当做位置参数
   --               (none)            取消位置参数设置，如果给出的参数( -- arg1 arg2)，位置参数设置为参数
 
@@ -272,8 +275,8 @@ $ bash -o verbose script-name
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/08/26/options-of-bash/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/26/options-of-bash/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/08/26/options-of-bash/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/26/options-of-bash/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

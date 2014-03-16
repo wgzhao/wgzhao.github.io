@@ -10,9 +10,8 @@
 
   
   <meta name="description" content="问题：
-wget和curl是我非常喜爱的下载程序，可是却有这样的问题，比如当我要下载20个文件，这些文件至少名字不同，但是非常有规律，比如 http://www.example.com/01.html
-http://www.example.com/02.html
-.............. &hellip;">
+wget 和 curl 是我非常喜爱的下载程序，可是却有这样的问题，比如当我要下载 20 个文件，这些文件至少名字不同，但是非常有规律，比如 http://www.example.com/01.html
+http://www.example.com/02.html &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,6 +31,11 @@ http://www.example.com/02.html
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -98,7 +102,7 @@ http://www.example.com/02.html
 
 
 <div class="entry-content"><p>问题：
-wget和curl是我非常喜爱的下载程序，可是却有这样的问题，比如当我要下载20个文件，这些文件至少名字不同，但是非常有规律，比如</p>
+wget 和 curl 是我非常喜爱的下载程序，可是却有这样的问题，比如当我要下载 20 个文件，这些文件至少名字不同，但是非常有规律，比如</p>
 
 <pre><code>http://www.example.com/01.html
 http://www.example.com/02.html
@@ -106,9 +110,9 @@ http://www.example.com/02.html
 http://www.example.com/99.html
 </code></pre>
 
-<p>如果<a href="http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81robots%E7%9A%84%E8%AF%9D%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8">http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81robots%E7%9A%84%E8%AF%9D%EF%BC%8C%E9%82%A3%E4%B9%88%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8</a>
+<p>如果 <a href="http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81">http://www.example.com/%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%94%AF%E6%8C%81</a> robots 的话，那么可以使用
 <code>wget -r http://www.example.com/</code>
-来批量下载，但是这种情况很少，特别是http协议的(ftp的话都可以)
+来批量下载，但是这种情况很少，特别是 http 协议的(ftp 的话都可以)
 于是我就想扩展这个功能。</p>
 
 <!--more-->
@@ -116,7 +120,7 @@ http://www.example.com/99.html
 
 <p>解决：</p>
 
-<p>代码如下，取名为<code>download.pl</code>，是用perl实现的，大家可以根据这个方法来改写成很多种语言。</p>
+<p>代码如下，取名为<code>download.pl</code>，是用 perl 实现的，大家可以根据这个方法来改写成很多种语言。</p>
 
 <figure class='code'><figcaption><span> (download.pl)</span> <a href='/downloads/code/download.pl'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -186,28 +190,25 @@ http://www.example.com/99.html
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>使用方法：<br/>
-该程序带两个参数，第一个是下载的url，第二个是要替换的值的宽度。<br/>
-比如，对于上面那些页面要下载的话，可以这样使用：
+<p>使用方法：该程序带两个参数，第一个是下载的 url，第二个是要替换的值的宽度。比如，对于上面那些页面要下载的话，可以这样使用：
 <code>./download.pl http://www.example.com/[01-99].html 2</code>
-这样就可以下载了。
-如果文件明不是纯数字的话，那么就可以这样
+这样就可以下载了。如果文件明不是纯数字的话，那么就可以这样
 <code>./download.pl http://www.example.com/a[1-99].html 2</code>
-这样就可以下载a01.html,a02.html&hellip;&hellip;a99.html的页面了。</p>
+这样就可以下载 a01.html,a02.html&hellip;&hellip;a99.html 的页面了。</p>
 
-<p>如果要使用curl的话，将wget换成curl，同时使用重定向来输出到文件。</p>
+<p>如果要使用 curl 的话，将 wget 换成 curl，同时使用重定向来输出到文件。</p>
 
 <p>bugs：</p>
 
 <ol>
-<li>目前不支持类似[a-z]的情况。</li>
-<li>不支持类似[01,03,22]这种离散的情况。</li>
+<li>目前不支持类似 [a-z]的情况。</li>
+<li>不支持类似 [01,03,22]这种离散的情况。</li>
 </ol>
 
 
 <p>准备下次修改程序来完善。</p>
 
-<p>ps：perl我不会，这个程序是我一边查perl的指南一边写的，30多行的程序我写了2个小时，惭愧！ :(</p>
+<p>ps：perl 我不会，这个程序是我一边查 perl 的指南一边写的，30 多行的程序我写了 2 个小时，惭愧！ :(</p>
 </div>
 
 
@@ -297,8 +298,8 @@ http://www.example.com/99.html
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2004/10/19/To-expand-the-functions-of-wget/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2004/10/19/To-expand-the-functions-of-wget/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2004/10/19/To-expand-the-functions-of-wget/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2004/10/19/To-expand-the-functions-of-wget/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

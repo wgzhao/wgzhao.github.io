@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="这一章的习题比较简单，虽然难点是ACL，但是似乎作者很讨厌ACL，因此习题里，一个有关ACL的问题都没有。 E5.1 什么是umask？创建一个umask，对于属组或者其他人什么权限也不给。 A：umask是一个三位八进制数字表示的变量，用来给shell设定新创建的文件的默认权限。 &hellip;">
+  <meta name="description" content="这一章的习题比较简单，虽然难点是 ACL，但是似乎作者很讨厌 ACL，因此习题里，一个有关 ACL 的问题都没有。 E5.1 什么是 umask？创建一个 umask，对于属组或者其他人什么权限也不给。 A：umask 是一个三位八进制数字表示的变量，用来给 shell 设定新创建的文件的默认权限 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,11 +99,11 @@
   </header>
 
 
-<div class="entry-content"><p>这一章的习题比较简单，虽然难点是ACL，但是似乎作者很讨厌ACL，因此习题里，一个有关ACL的问题都没有。</p>
+<div class="entry-content"><p>这一章的习题比较简单，虽然难点是 ACL，但是似乎作者很讨厌 ACL，因此习题里，一个有关 ACL 的问题都没有。</p>
 
-<p>E5.1 什么是umask？创建一个umask，对于属组或者其他人什么权限也不给。</p>
+<p>E5.1 什么是 umask？创建一个 umask，对于属组或者其他人什么权限也不给。</p>
 
-<p>A：umask是一个三位八进制数字表示的变量，用来给shell设定新创建的文件的默认权限。 设置umask为0077即可，如下所示：</p>
+<p>A：umask 是一个三位八进制数字表示的变量，用来给 shell 设定新创建的文件的默认权限。 设置 umask 为 0077 即可，如下所示：</p>
 
 <pre><code>$ umask 0077
 $ touch test
@@ -113,18 +118,17 @@ $ ls -l test
 
 <p>A：区别在于：硬链接是直接引用，而符号链接是通过名称来进行引用，符号链接跟他们指向的文件是不同的。</p>
 
-<p>看你要做什么用，如果你仅仅只是为了达到一种“快捷访问”，或者创建多路劲访问文件的便利，那么使用符号链接无疑是最佳的。但是如果你想获得一个文件的完整拷贝，并能同步更新，而且还能在原始文件被删除后不影响链接文件，那么硬链接就是你需要的。
-大部分情况下，你可以需要的仅仅是符号链接。</p>
+<p>看你要做什么用，如果你仅仅只是为了达到一种“快捷访问”，或者创建多路劲访问文件的便利，那么使用符号链接无疑是最佳的。但是如果你想获得一个文件的完整拷贝，并能同步更新，而且还能在原始文件被删除后不影响链接文件，那么硬链接就是你需要的。大部分情况下，你可以需要的仅仅是符号链接。</p>
 
-<p>♥ E5.3 阅读/etc/fstab文件的手册页。编写一行配置，在启动时自动安装一个Windows
-NTFS分区 /dev/hda1.使用/mnt/win_c作为安装点。</p>
+<p>♥ E5.3 阅读/etc/fstab 文件的手册页。编写一行配置，在启动时自动安装一个 Windows
+NTFS 分区 /dev/hda1.使用/mnt/win_c 作为安装点。</p>
 
-<p>A：编写<code>/etc/fstab</code>不是难题，关键是看你的Linux是如何实现对NTFS访问的，有的可能是<code>ntfs-3g</code>,有的可能是内核直接支持，在fstab文件上反映出来的区别在域文件系统类型这一项，大致如下：</p>
+<p>A：编写<code>/etc/fstab</code>不是难题，关键是看你的 Linux 是如何实现对 NTFS 访问的，有的可能是<code>ntfs-3g</code>,有的可能是内核直接支持，在 fstab 文件上反映出来的区别在域文件系统类型这一项，大致如下：</p>
 
 <pre><code>/dev/hda1 /mnt/win\_c ntfs-3g defaults 0 0 
 </code></pre>
 
-<p>♥ E5.4 在安装Linux系统的时候，“Foobar Linux” 发行版使用下面的默认配置：</p>
+<p>♥ E5.4 在安装 Linux 系统的时候，“Foobar Linux” 发行版使用下面的默认配置：</p>
 
 <pre><code>/ 100MB 
 /var 50MB 
@@ -135,34 +139,24 @@ NTFS分区 /dev/hda1.使用/mnt/win_c作为安装点。</p>
 
 <p>在一个繁忙的服务器上采取这样的安排会有什么样的潜在问题？</p>
 
-<p>A：看到这些数字，我以为我回到了硬盘只有2G的年代。但是不管在什么年代，分区对系统而言要考虑当前足够可用，以后发展还能适用的原则。</p>
+<p>A：看到这些数字，我以为我回到了硬盘只有 2G 的年代。但是不管在什么年代，分区对系统而言要考虑当前足够可用，以后发展还能适用的原则。</p>
 
-<p>上面的分区，首先swap分区不太大。当然我估计这机器内存也就是64M的样子。<code>/var</code>分的过小。繁忙的服务器，得要看它是忙什么了，如果是mail之类的，那<code>/var</code>肯定立刻就被塞满了，因为默认情况下，邮件队列在<code>/var/spool</code>目录下。</p>
+<p>上面的分区，首先 swap 分区不太大。当然我估计这机器内存也就是 64M 的样子。<code>/var</code>分的过小。繁忙的服务器，得要看它是忙什么了，如果是 mail 之类的，那<code>/var</code>肯定立刻就被塞满了，因为默认情况下，邮件队列在<code>/var/spool</code>目录下。</p>
 
-<p>♥ E5.5 为什么说有些分区（比如/var/,/home和交换分区）防盗一个和其他数据文件和应用程序不同的单独驱动器上是一个好主意？ /tmp呢？对于列出的每一种文件系统给出针对性的理由。</p>
+<p>♥ E5.5 为什么说有些分区（比如/var/,/home 和交换分区）防盗一个和其他数据文件和应用程序不同的单独驱动器上是一个好主意？ /tmp 呢？对于列出的每一种文件系统给出针对性的理由。</p>
 
-<p>A：一直以来，分区我坚持三分开原则，也就是<strong>系统，应用，数据</strong>三者分开。<br/>
-这样不会任何以防的损坏导致另外一方出现灾难性故障。<br/>
-比如系统分区坏了，重建系统就好了，应用和数据不需要变动。<br/>
-同样的，应用坏了，重建应用，数据和系统不用变化。
-想想Windows下痛苦的注册表，你就会理解三者分开的好处了。 <br/>
-对于系统本身而言，处于其他方面的考虑，还可以细分，比如把/usr
+<p>A：一直以来，分区我坚持三分开原则，也就是<strong>系统，应用，数据</strong>三者分开。这样不会任何以防的损坏导致另外一方出现灾难性故障。比如系统分区坏了，重建系统就好了，应用和数据不需要变动。同样的，应用坏了，重建应用，数据和系统不用变化。想想 Windows 下痛苦的注册表，你就会理解三者分开的好处了。对于系统本身而言，处于其他方面的考虑，还可以细分，比如把/usr
 单分，可以提高性能和安全级别，如何做到？</p>
 
-<p>首先单分后，挂载/usr分区，我们可以增加<code>noatime</code>的参数。因为/usr下是系统绝大部分库和程序，属于静态数据，atime属性对此没有意义。<br/>
-我们设置还可以把/usr作成别的文件系统，比如tmpfs来增加速度。另外，可以把/usr挂载为只读，以提高效率。</p>
+<p>首先单分后，挂载/usr 分区，我们可以增加<code>noatime</code>的参数。因为/usr 下是系统绝大部分库和程序，属于静态数据，atime 属性对此没有意义。我们设置还可以把/usr 作成别的文件系统，比如 tmpfs 来增加速度。另外，可以把/usr 挂载为只读，以提高效率。</p>
 
-<p>/home单独分区的意义当然就很多了，安全，配额都是重要的因素。</p>
+<p>/home 单独分区的意义当然就很多了，安全，配额都是重要的因素。</p>
 
-<p>至于/tmp，在我个人的经验中，很少单独分区，除非用户有特别说明和要求。我看到的往往是单独分区后，因为过小，而导致/tmp空间不足的负面效果。<br/>
-所以/tmp是否单独分区，还真的需要和实际的应用结合起来考虑，不能单一从操作系统上考虑。</p>
+<p>至于/tmp，在我个人的经验中，很少单独分区，除非用户有特别说明和要求。我看到的往往是单独分区后，因为过小，而导致/tmp 空间不足的负面效果。所以/tmp 是否单独分区，还真的需要和实际的应用结合起来考虑，不能单一从操作系统上考虑。</p>
 
 <p>♥ E5.6 写一个脚本，找到一个文件系统上所有的硬链接。</p>
 
-<p>A： 需要利用的一个技巧是<code>ls -l</code>命令能给出文件的链接数（就是第二列数值），如果大于1，则表示有硬链接文件。然后利用find查找出是这个inode的所有文件。<br/>
-因为硬链接文件的inode一致。
-所以脚本分两个两个部分，第一个部分是找出所有链接数大于2的inode，形成列表。<br/>
-第二步找出等于这些inode的文件。但是我们可以用一行脚本来完成这个操作，类似如下：</p>
+<p>A： 需要利用的一个技巧是<code>ls -l</code>命令能给出文件的链接数（就是第二列数值），如果大于 1，则表示有硬链接文件。然后利用 find 查找出是这个 inode 的所有文件。因为硬链接文件的 inode 一致。所以脚本分两个两个部分，第一个部分是找出所有链接数大于 2 的 inode，形成列表。第二步找出等于这些 inode 的文件。但是我们可以用一行脚本来完成这个操作，类似如下：</p>
 
 <pre><code>$ find /bin -type f -ls |awk '{if ($4 &gt;1) print $1,$11}'
 1628730 /bin/bzip2
@@ -172,16 +166,16 @@ NTFS分区 /dev/hda1.使用/mnt/win_c作为安装点。</p>
 1622053 /bin/gunzip
 </code></pre>
 
-<p>首先利用<code>find -type f</code> 的参数，保证只寻找正规文件。然后利用find的<code>-ls</code>参数，等价于<code>ls
--ldis</code>，这样就把inode和链接数打印出来了，接着将结果交给awk处理，awk判断第四列（链接数）是否大于1，如果大于，则把inode和文件名打印出来。当然可以打印更多的东西。你只需要把<code>/bin</code>目录换成你需要的目录就可以了。</p>
+<p>首先利用<code>find -type f</code> 的参数，保证只寻找正规文件。然后利用 find 的<code>-ls</code>参数，等价于<code>ls
+-ldis</code>，这样就把 inode 和链接数打印出来了，接着将结果交给 awk 处理，awk 判断第四列（链接数）是否大于 1，如果大于，则把 inode 和文件名打印出来。当然可以打印更多的东西。你只需要把<code>/bin</code>目录换成你需要的目录就可以了。</p>
 
 <p>♥ E5.7 给出完成下面任务的命令：</p>
 
 <ol>
-<li>把README的权限设置为对属主有读写权，而其他每个人有读权</li>
-<li>在不需要改变（或者知道）目前权限的情况下，打开一个文件的setuid位；</li>
+<li>把 README 的权限设置为对属主有读写权，而其他每个人有读权</li>
+<li>在不需要改变（或者知道）目前权限的情况下，打开一个文件的 setuid 位；</li>
 <li>里出当前目录的内容，按照修改时间排序，把最近修改的文件放在最后；</li>
-<li>将一个叫做shared的文件的属组从“user”改成“friends”。</li>
+<li>将一个叫做 shared 的文件的属组从“user”改成“friends”。</li>
 </ol>
 
 
@@ -208,7 +202,7 @@ drwx------ 2 wgzhao wgzhao 4096 2009-11-27 19:26 plugtmp
 drwx------ 2 wgzhao wgzhao 4096 2009-11-27 19:35 orbit-wgzhao
 drwxr-xr-x 2 wgzhao wgzhao 4096 2009-11-27 19:43 hsperfdata_wgzhao
 -rwsr--r-- 1 wgzhao wgzhao    0 2009-11-27 21:12 README
-/*第四问，因为系统上没有friends组，用www-data代替*/
+/*第四问，因为系统上没有 friends 组，用 www-data 代替*/
 $sudo chgrp www-data  README
 $ls -l README 
 -rwxr--r-- 1 wgzhao www-data 0 2009-11-27 21:12 README
@@ -304,8 +298,8 @@ $ls -l README
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/11/27/lah-chapter5-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/11/27/lah-chapter5-questions-key/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/11/27/lah-chapter5-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/11/27/lah-chapter5-questions-key/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

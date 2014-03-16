@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/dev/sdb1挂载在/data/u01上 却不小心执行了tar -vczf /dev/sdb1 /data/u01,怎么办？ 我当时一直考虑的都是如何恢复这个sdb1的文件系统，于是我在本地做了一个测试。发现执行tar之后，mount是肯定不行了，提示需要指定文件系统类型。 &hellip;">
+  <meta name="description" content="/dev/sdb1 挂载在/data/u01 上 却不小心执行了tar -vczf /dev/sdb1 /data/u01,怎么办？ 我当时一直考虑的都是如何恢复这个 sdb1 的文件系统，于是我在本地做了一个测试。发现执行 tar 之后，mount 是肯定不行了，提示需要指定文件系统类型。执行 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -63,7 +68,10 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -97,11 +105,10 @@
   </header>
 
 
-  <div class="entry-content"><p>/dev/sdb1挂载在/data/u01上 却不小心执行了<code>tar -vczf /dev/sdb1 /data/u01</code>,怎么办？</p>
+  <div class="entry-content"><p>/dev/sdb1 挂载在/data/u01 上 却不小心执行了<code>tar -vczf /dev/sdb1 /data/u01</code>,怎么办？</p>
 
-<p>我当时一直考虑的都是如何恢复这个sdb1的文件系统，于是我在本地做了一个测试。发现执行tar之后，mount是肯定不行了，提示需要指定文件系统类型。执行mke2fs的时候，居然还能看到备份的超级块。不过前面的几个备份超级块都没有用了，\
-于是从选择最后一个备份的超级块，使用<code>e2fsck -b</code> 的方式恢复。给出了一个无效的ext3节点信息，然后就出现大量的需要你fixed的选项。<br/>
-一路下去后，确实能mount上了，但是什么数据都没有了。连lost+found里都是干干净净的。和重新mkfs没有差别。</p>
+<p>我当时一直考虑的都是如何恢复这个 sdb1 的文件系统，于是我在本地做了一个测试。发现执行 tar 之后，mount 是肯定不行了，提示需要指定文件系统类型。执行 mke2fs 的时候，居然还能看到备份的超级块。不过前面的几个备份超级块都没有用了，\
+于是从选择最后一个备份的超级块，使用<code>e2fsck -b</code> 的方式恢复。给出了一个无效的 ext3 节点信息，然后就出现大量的需要你 fixed 的选项。一路下去后，确实能 mount 上了，但是什么数据都没有了。连 lost+found 里都是干干净净的。和重新 mkfs 没有差别。</p>
 
 </div>
   
@@ -145,10 +152,10 @@
   </header>
 
 
-  <div class="entry-content"><p>nice(1)很多人都知道,它主要是影响CPU调度的.而ionice则主要是影响磁盘调度的.<br/>
-使用ionice基本上在下面两种情况: <br/>
-1)虽然不需要太多磁盘IO,但是希望反应快速.<br/>
-2)有大量的磁盘IO需求,但是对时间没有太多要求,也就是不着急完成.</p>
+  <div class="entry-content"><p>nice(1)很多人都知道,它主要是影响 CPU 调度的.而 ionice 则主要是影响磁盘调度的.<br/>
+使用 ionice 基本上在下面两种情况: <br/>
+1)虽然不需要太多磁盘 IO,但是希望反应快速.<br/>
+2)有大量的磁盘 IO 需求,但是对时间没有太多要求,也就是不着急完成.</p>
 
 </div>
   
@@ -192,11 +199,9 @@
   </header>
 
 
-  <div class="entry-content"><p>虽然同样的机器下，使用Linux比windows xp或vista 更快，但是我希望Linux更快。
-刚做了三个方面的系统优化,系统整体性能提高40%,使用的方法和大家共享:</p>
+  <div class="entry-content"><p>虽然同样的机器下，使用 Linux 比 windows xp 或 vista 更快，但是我希望 Linux 更快。刚做了三个方面的系统优化,系统整体性能提高 40%,使用的方法和大家共享:</p>
 
-<p>1) 磁盘优化
-这个以前也做过,不过每次都是单独做而已,没有和接下来的两条接合起来.方法就是使用hdparm命令了.
+<p>1) 磁盘优化这个以前也做过,不过每次都是单独做而已,没有和接下来的两条接合起来.方法就是使用 hdparm 命令了.
 优化后参数是:</p>
 
 <pre><code>[root@mlsx ~]# hdparm -v /dev/hda
@@ -220,17 +225,15 @@ geometry = 16383/255/63, sectors = 117210240, start = 0
 #hdparm -k 1 /dev/hda
 </code></pre>
 
-<p>通过优化磁盘参数,我的磁盘读写速度由原来的15.69M/S提升到了现在的23.57M/S,提高达50%.</p>
+<p>通过优化磁盘参数,我的磁盘读写速度由原来的 15.69M/S 提升到了现在的 23.57M/S,提高达 50%.</p>
 
-<p>2)优化挂载参数
-因为是自己用,因此有些挂载参数可以加上,比如noatime,对于/boot而言(假设/boot是独立的分区),它仅仅是在启动的时候使用,因此给他加上一个noatime的参数是可以的.另外,我个人的数据和系统是分开的,因此系统坏了,系统被人攻击了(有可能吗?)我无所谓,因此给/也加上noatime参数.实际上,我把除了我存储个人数据的分区使用的defaults参数外,其他的都加上了noatime参数.
-就是在/etc/fstab文件里,对应行的defaults后面加上&#8221;,notime&#8221;就可以了.如果不想重启系统,那么执行类型下面的命令就好了
+<p>2)优化挂载参数因为是自己用,因此有些挂载参数可以加上,比如 noatime,对于/boot 而言(假设/boot 是独立的分区),它仅仅是在启动的时候使用,因此给他加上一个 noatime 的参数是可以的.另外,我个人的数据和系统是分开的,因此系统坏了,系统被人攻击了(有可能吗?)我无所谓,因此给/也加上 noatime 参数.实际上,我把除了我存储个人数据的分区使用的 defaults 参数外,其他的都加上了 noatime 参数.
+就是在/etc/fstab 文件里,对应行的 defaults 后面加上&#8221;,notime&#8221;就可以了.如果不想重启系统,那么执行类型下面的命令就好了
 <code>#mount -o remount,defaults,notime /</code></p>
 
-<p>3)空间换时间<br/>
-现在空间已经不是问题,因此空间换时间是划得来的.这个优化主要是为了提高应用程序的载入速度.<br/>
-有两个办法,如果是自己编译的程序,那么可以考虑采用静态(static)编译的方式,很多configure都给出静态编译的选项,这样就不用再动态载入库文件,快了很多.<br/>
-对于已经存在的程序呢,比如konsole.我们可以使用prelink命令来预先把需要载入的库链接好.</p>
+<p>3)空间换时间现在空间已经不是问题,因此空间换时间是划得来的.这个优化主要是为了提高应用程序的载入速度.<br/>
+有两个办法,如果是自己编译的程序,那么可以考虑采用静态(static)编译的方式,很多 configure 都给出静态编译的选项,这样就不用再动态载入库文件,快了很多.<br/>
+对于已经存在的程序呢,比如 konsole.我们可以使用 prelink 命令来预先把需要载入的库链接好.</p>
 
 <pre><code>[root@mlsx ~]# ls -l /usr/bin/konsole 
 -rwxr-xr-x 1 root root 3704 04-10 17:04 /usr/bin/konsole 
@@ -240,12 +243,11 @@ geometry = 16383/255/63, sectors = 117210240, start = 0
 </code></pre>
 
 <p>体积是膨胀了一个数量级.但是载入速度也提高了一倍.
-我把<code>/usr/bin/</code>下的dcop开头的和kde开头的程序全部做了prelink。经过测试，系统整体性能提高了40%左右，比较爽。
-如果你的程序使用的库不在标注路径里，或者系统找不到，那么使用-l的参数。</p>
+我把<code>/usr/bin/</code>下的 dcop 开头的和 kde 开头的程序全部做了 prelink。经过测试，系统整体性能提高了 40%左右，比较爽。如果你的程序使用的库不在标注路径里，或者系统找不到，那么使用-l 的参数。</p>
 
 <p>我的测试环境如下：</p>
 
-<p>三星X05笔记本标准配置，Everest 0.3版本，自己增加了N多程序。</p>
+<p>三星 X05 笔记本标准配置，Everest 0.3 版本，自己增加了 N 多程序。</p>
 </div>
   
   
@@ -284,12 +286,12 @@ geometry = 16383/255/63, sectors = 117210240, start = 0
   </header>
 
 
-  <div class="entry-content"><p>bgpd：<a href="http://www.qugga.net">Quagga</a>软件包的一个程序，用来实现BGPv4等路由协议的程序。Quagga是一个路由程序套件，它提供了OSPFv2, OSPFv3, RIP v1 and v2, RIPng and BGP-4等协议的实现。用它，就可以把一个Linux系统改造成一个功能强大的路由器，和那些动则上十万百万的硬件路由器功能相当，对于SMB(Small
+  <div class="entry-content"><p>bgpd：<a href="http://www.qugga.net">Quagga</a> 软件包的一个程序，用来实现 BGPv4 等路由协议的程序。Quagga 是一个路由程序套件，它提供了 OSPFv2, OSPFv3, RIP v1 and v2, RIPng and BGP-4 等协议的实现。用它，就可以把一个 Linux 系统改造成一个功能强大的路由器，和那些动则上十万百万的硬件路由器功能相当，对于 SMB(Small
 Middle Business)而言,应该是非常不错的选择。</p>
 
-<p>Quagga还包括下面一些命令：
+<p>Quagga 还包括下面一些命令：
 <code>bgpd ospf6d ospfclient ospfd ripd ripngd watchquagga zebra</code>
-quagga的使用方式和使用cisco等网络设备厂商的设备差不多，可惜我对这些产品一窍不通，因此quagga这么好用的软件，对我来说，也就用处不大了，于是略过。</p>
+quagga 的使用方式和使用 cisco 等网络设备厂商的设备差不多，可惜我对这些产品一窍不通，因此 quagga 这么好用的软件，对我来说，也就用处不大了，于是略过。</p>
 
 </div>
   
@@ -333,8 +335,7 @@ quagga的使用方式和使用cisco等网络设备厂商的设备差不多，可
   </header>
 
 
-  <div class="entry-content"><p><code>/usr/sbin</code>下的命令明显比/sbin下的命令多了很多，因此<code>/usr/sbin</code>应该是一个比较长的学习过程。
-上次rachel问到我一个mke2fs的命令，我说我怎么没有看到过呀，结果她从我的/sbin学习中找出了这个命令，羞愧呀，学习的又很快忘记了，能记住的还是以前记得和经常使用的命令，真是需要学而时习之呀！</p>
+  <div class="entry-content"><p><code>/usr/sbin</code>下的命令明显比/sbin 下的命令多了很多，因此<code>/usr/sbin</code>应该是一个比较长的学习过程。上次 rachel 问到我一个 mke2fs 的命令，我说我怎么没有看到过呀，结果她从我的/sbin 学习中找出了这个命令，羞愧呀，学习的又很快忘记了，能记住的还是以前记得和经常使用的命令，真是需要学而时习之呀！</p>
 
 </div>
   
@@ -378,11 +379,9 @@ quagga的使用方式和使用cisco等网络设备厂商的设备差不多，可
   </header>
 
 
-  <div class="entry-content"><p>因事周末回了一趟学校。
-坐上去学校的6路车后，我对lancy说，有好几年没有坐过6路车了吧。
-是呀，那个时候，学校联通外面的唯一公交车就是6路。如果没有记错了话，本市第一辆无人售票的公交车就是从6路开始的。坐了6年的6路车，当然很有感情了。</p>
+  <div class="entry-content"><p>因事周末回了一趟学校。坐上去学校的 6 路车后，我对 lancy 说，有好几年没有坐过 6 路车了吧。是呀，那个时候，学校联通外面的唯一公交车就是 6 路。如果没有记错了话，本市第一辆无人售票的公交车就是从 6 路开始的。坐了 6 年的 6 路车，当然很有感情了。</p>
 
-<p>我对lancy说，现在应该6路车不会再经过原来的老路了，都走新路了，我刚说完这话，6路车就用实际行动否定的我的猜测，在科技园的转口处并没有右拐，而是继续往前冲，看来又要免费体验一次蹦极的活动了。</p>
+<p>我对 lancy 说，现在应该 6 路车不会再经过原来的老路了，都走新路了，我刚说完这话，6 路车就用实际行动否定的我的猜测，在科技园的转口处并没有右拐，而是继续往前冲，看来又要免费体验一次蹦极的活动了。</p>
 
 </div>
   
@@ -426,10 +425,9 @@ quagga的使用方式和使用cisco等网络设备厂商的设备差不多，可
   </header>
 
 
-  <div class="entry-content"><p>这是看《linux enterprise cluster》引发的，看完后，我才发现其实我真的不了解heartbeat和lvs。
-虽然我知道配置heartbeat+lvs有现成的文档，而且还是图文并茂的中文版本。但是另外一个方面我了解的是lvs和heartbeat毕竟不是一码事，只是heartbeat中集成了lvs罢了。</p>
+  <div class="entry-content"><p>这是看《linux enterprise cluster》引发的，看完后，我才发现其实我真的不了解 heartbeat 和 lvs。虽然我知道配置 heartbeat+lvs 有现成的文档，而且还是图文并茂的中文版本。但是另外一个方面我了解的是 lvs 和 heartbeat 毕竟不是一码事，只是 heartbeat 中集成了 lvs 罢了。</p>
 
-<p>于是首先去看看heartbeat，很早前我电脑里就下载了来自SuSe实验室的《Linux-HA Heartbeat System
+<p>于是首先去看看 heartbeat，很早前我电脑里就下载了来自 SuSe 实验室的《Linux-HA Heartbeat System
 Design》这篇论文，可惜一直都没有仔细看完，无奈英语太差呀。</p>
 
 </div>
@@ -474,10 +472,10 @@ Design》这篇论文，可惜一直都没有仔细看完，无奈英语太差�
   </header>
 
 
-  <div class="entry-content"><p>孤陋寡闻了，以前一直以为ip别名（ip aliase）和辅助ip地址（secondary ip
-address）是一码事情。或者说是不知道还有secondary ip address一说。</p>
+  <div class="entry-content"><p>孤陋寡闻了，以前一直以为 ip 别名（ip aliase）和辅助 ip 地址（secondary ip
+address）是一码事情。或者说是不知道还有 secondary ip address 一说。</p>
 
-<p>今天偶然翻阅<a href="http://mlsx.xplore.cn/read.php/715.htm">linux enterprise
+<p>今天偶然翻阅 <a href="http://mlsx.xplore.cn/read.php/715.htm">linux enterprise
 cluster</a>时，提到了这样一句话：</p>
 
 <blockquote><p>As of this writing, the Linux kernel supports both IP aliases and
@@ -526,14 +524,12 @@ secondary IP addresses.</p></blockquote>
   </header>
 
 
-  <div class="entry-content"><p>突然想到了裸设备，linux下的裸设备(raw
+  <div class="entry-content"><p>突然想到了裸设备，linux 下的裸设备(raw
 device)一直都不是理解得很清楚，特别是用户问及到裸设备的时候，我到真不知道如何才是正确的解释，或者说能让用户相信我的说法。</p>
 
 <p>今天做了一些功课，算是又多了解了一些东西吧。</p>
 
-<p>为什么裸设备需要绑定或者说映射到已经存在的块设备上？
-这恐怕是用户问得最多的问题，我之前的回答都是linux下就是需要绑定。用户一般立刻会回一句，那为什么Unix就不用要呢？
-虽然我觉得这种比较没有太多含义，毕竟我们说Linux和Unix非常相似，但是再相似，也不是相同呀，凭什么Unix不做绑定或者映射，Linux就一定要按照这种设计模式呀？</p>
+<p>为什么裸设备需要绑定或者说映射到已经存在的块设备上？这恐怕是用户问得最多的问题，我之前的回答都是 linux 下就是需要绑定。用户一般立刻会回一句，那为什么 Unix 就不用要呢？虽然我觉得这种比较没有太多含义，毕竟我们说 Linux 和 Unix 非常相似，但是再相似，也不是相同呀，凭什么 Unix 不做绑定或者映射，Linux 就一定要按照这种设计模式呀？</p>
 
 </div>
   
@@ -579,13 +575,12 @@ device)一直都不是理解得很清楚，特别是用户问及到裸设备的�
 
   <div class="entry-content"><p>这段时间一直在投诉联通，间隔也投诉了一下移动。我不能偏心，至少对两个移动运营商都投诉了。</p>
 
-<p>投诉联通是因为我的掌中宽带让我及其郁闷，简直就是浪费我的生命。每天高峰期，我至少需要花2个小时才能上网，当然2个小时后，高峰期也过去了。
-之前给他们打电话，他们总是给出下面几个解决方案：</p>
+<p>投诉联通是因为我的掌中宽带让我及其郁闷，简直就是浪费我的生命。每天高峰期，我至少需要花 2 个小时才能上网，当然 2 个小时后，高峰期也过去了。之前给他们打电话，他们总是给出下面几个解决方案：</p>
 
 <p>1）把卡拔出来，重新插一下<br/>
 2）重启系统<br/>
 3）重新安装系统<br/>
-4）检查联通UIM卡<br/>
+4）检查联通 UIM 卡<br/>
 5）检查无线上网卡</p>
 
 </div>
@@ -638,8 +633,8 @@ device)一直都不是理解得很清楚，特别是用户问及到裸设备的�
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/17/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/17/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/17/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/17/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

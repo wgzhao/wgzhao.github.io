@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="E3.1 使用带有-perm选项的find命令在您的系统上找到5个setuid文件。对于每个文件，试述为什么对于让命令正确发挥其功能来说，setuid机制是必要的。 A：有关find的-perm选项的说明，可以看我之前的帖子，里面描述了如何正确设置perm参数来查找setuid/setgid文件 &hellip;">
+  <meta name="description" content="E3.1 使用带有-perm 选项的 find 命令在您的系统上找到 5 个 setuid 文件。对于每个文件，试述为什么对于让命令正确发挥其功能来说，setuid 机制是必要的。 A：有关 find 的-perm选项的说明，可以看我之前的帖子，里面描述了如何正确设置 perm 参数来查找 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,12 +99,12 @@
   </header>
 
 
-<div class="entry-content"><p>E3.1 使用带有-perm选项的find命令在您的系统上找到5个setuid文件。对于每个文件，试述为什么对于让命令正确发挥其功能来说，setuid机制是必要的。</p>
+<div class="entry-content"><p>E3.1 使用带有-perm 选项的 find 命令在您的系统上找到 5 个 setuid 文件。对于每个文件，试述为什么对于让命令正确发挥其功能来说，setuid 机制是必要的。</p>
 
 <!--more-->
 
 
-<p>A：有关find的<code>-perm</code>选项的说明，可以看我<a href="http://blog.wgzhao.com/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember.html">之前的帖子</a>，里面描述了如何正确设置perm参数来查找setuid/setgid文件。</p>
+<p>A：有关 find 的<code>-perm</code>选项的说明，可以看我<a href="http://blog.wgzhao.com/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember.html">之前的帖子</a>，里面描述了如何正确设置 perm 参数来查找 setuid/setgid 文件。</p>
 
 <pre><code>$ find /usr/bin /bin -type f -perm +6000
 /usr/bin/screen
@@ -117,11 +122,7 @@
 /bin/su
 </code></pre>
 
-<p>使用<code>setuid/setgid</code>位无非就是因为那些程序运行普通用户运行，但是又需要root权限来对系统文件做一定的更改。<br/>
-比如<code>/usr/bin/passwd</code>文件，它是用来修改用户的口令。<br/>
-而我们知道缺省情况下，口令密文保存在<code>/etc/shadow</code>文件里。 <br/>
-而这个文件仅仅对root可读。所以为了使得普通用户修改口令时，能修改<code>/etc/shadow</code>文件，不得不让<code>/usr/bin/passwd</code>有setuid权限。<br/>
-在比如<code>/usr/bin/crontab</code>文件。如果没有setgid位，执行行，会给出下面的错误：</p>
+<p>使用<code>setuid/setgid</code>位无非就是因为那些程序运行普通用户运行，但是又需要 root 权限来对系统文件做一定的更改。比如<code>/usr/bin/passwd</code>文件，它是用来修改用户的口令。而我们知道缺省情况下，口令密文保存在<code>/etc/shadow</code>文件里。而这个文件仅仅对 root 可读。所以为了使得普通用户修改口令时，能修改<code>/etc/shadow</code>文件，不得不让<code>/usr/bin/passwd</code>有 setuid 权限。在比如<code>/usr/bin/crontab</code>文件。如果没有 setgid 位，执行行，会给出下面的错误：</p>
 
 <pre><code>$ crontab  -e
 /var/spool/cron/crontabs/wgzhao: Permission denied
@@ -130,39 +131,28 @@
 drwx-wx--T 2 root crontab 4096 2009-09-16 16:16 /var/spool/cron/crontabs/
 </code></pre>
 
-<p>这是因为crontab自定义配置文件保存在<code>/var/spool/cron/crontabs</code>目录下，以用户名为文件名。而crontabs目录的许可如上面ls的结果所示，对于非root用户和crontab组成员，是无法进入该目录的。因此我们至少需要crontab许可。
-所以，<code>/usr/bin/crontab</code> 文件的许可就是下面这个样子：</p>
+<p>这是因为 crontab 自定义配置文件保存在<code>/var/spool/cron/crontabs</code>目录下，以用户名为文件名。而 crontabs 目录的许可如上面 ls 的结果所示，对于非 root 用户和 crontab 组成员，是无法进入该目录的。因此我们至少需要 crontab 许可。所以，<code>/usr/bin/crontab</code> 文件的许可就是下面这个样子：</p>
 
 <pre><code>ls -l /usr/bin/crontab
 -rwxr-sr-x 1 root crontab 31712 2009-09-15 21:12 /usr/bin/crontab
 </code></pre>
 
-<p>在组crontab许可位上设置了setgid位。保证运行crontab指令时，能获得crontab组身份，从而能保存文件到<code>/var/spool/cron/crontabs/</code>目录下。<br/>
-其他的文件，理由类似，就不再一一描述。</p>
+<p>在组 crontab 许可位上设置了 setgid 位。保证运行 crontab 指令时，能获得 crontab 组身份，从而能保存文件到<code>/var/spool/cron/crontabs/</code>目录下。其他的文件，理由类似，就不再一一描述。</p>
 
-<p>E3.2 创建三个“出人意料的废话”式口令词，但是要保密。通过运行md5sum程序处理这三个口令词，报告结果。为什么公开MD5结果是安全的。</p>
+<p>E3.2 创建三个“出人意料的废话”式口令词，但是要保密。通过运行 md5sum 程序处理这三个口令词，报告结果。为什么公开 MD5 结果是安全的。</p>
 
-<p>A：创建一个安全的密码不是一件容易的事情。<br/>
-太困难会记不住，一旦忘记，等于这个密码没有意义。<br/>
-太简单就容易猜解或者暴力破解。所以目前有一些工具专门用来生成一些固定长处的密码，比如pwgen,apg,gpw等工具都能做这些事情。<br/>
-该书提到了一个方法就是用一些平常不敢说的，或者没有任何意义的一句话的单词首字母拼接起来。<br/>
-比如你很痛恨某一个人，但是当面又不敢说，这样你就可以把诅咒他/她的话变成密码短语。<br/>
-英语不是我们的母语。不过我们可以使用拼音字母组合，这实际上比单词拼接更难猜解。<br/>
-因为当前大部分密码字典都是基于英语单词的。比如我们可以创建这样的密码：
-<em>wjsbg-s-nwdmm * 如果我不解释，恐怕要猜测上面的意思很难，其实去掉两个-符号，上面的字母是“我就是不告诉你我的密码”的拼音首字母拼接。<br/>
-当然，还可以更复杂的，比如： </em>7y23hgl1tmm* 这是“7月23号改了一台密码”的拼音首字母拼接。<br/>
-上面两个密码的MD5结果如下：</p>
+<p>A：创建一个安全的密码不是一件容易的事情。太困难会记不住，一旦忘记，等于这个密码没有意义。太简单就容易猜解或者暴力破解。所以目前有一些工具专门用来生成一些固定长处的密码，比如 pwgen,apg,gpw 等工具都能做这些事情。该书提到了一个方法就是用一些平常不敢说的，或者没有任何意义的一句话的单词首字母拼接起来。比如你很痛恨某一个人，但是当面又不敢说，这样你就可以把诅咒他/她的话变成密码短语。英语不是我们的母语。不过我们可以使用拼音字母组合，这实际上比单词拼接更难猜解。因为当前大部分密码字典都是基于英语单词的。比如我们可以创建这样的密码：
+<em>wjsbg-s-nwdmm * 如果我不解释，恐怕要猜测上面的意思很难，其实去掉两个-符号，上面的字母是“我就是不告诉你我的密码”的拼音首字母拼接。当然，还可以更复杂的，比如： </em>7y23hgl1tmm* 这是“7 月 23 号改了一台密码”的拼音首字母拼接。上面两个密码的 MD5 结果如下：</p>
 
 <pre><code>wjsbg-s-nwdmm 08a71fd8b1e7dfeebb6c6990e2e9f1e0 
 7y23hgl1tmm aadf738b3f80d5da52a71a4ef23969ba
 </code></pre>
 
-<p>实际上md5后的结果比密码明文更难猜解。而且md5属于哈希方式，不存在逆向破解。只能是由明文生成密文后去匹配。破解难度很大。</p>
+<p>实际上 md5 后的结果比密码明文更难猜解。而且 md5 属于哈希方式，不存在逆向破解。只能是由明文生成密文后去匹配。破解难度很大。</p>
 
-<p>E3.3 列举一系列修改某个用户口令的命令，展示如何掩盖修改的痕迹。假定您只有sudo的权利（允许使用除shell或者su之外的所有命令）</p>
+<p>E3.3 列举一系列修改某个用户口令的命令，展示如何掩盖修改的痕迹。假定您只有 sudo 的权利（允许使用除 shell 或者 su 之外的所有命令）</p>
 
-<p>A：修改密码无非就是修改<code>/etc/shadow</code>中的密文字符串，可以通过指令，也可以通过手工编辑。但是需要解决的一个问题是如何掩盖修改痕迹。<br/>
-如果直接使用<code>sudo /usr/bin/passwd foo</code> 这样的方式来修改foo的密码，那么系统日志会有类似下面的记录：</p>
+<p>A：修改密码无非就是修改<code>/etc/shadow</code>中的密文字符串，可以通过指令，也可以通过手工编辑。但是需要解决的一个问题是如何掩盖修改痕迹。如果直接使用<code>sudo /usr/bin/passwd foo</code> 这样的方式来修改 foo 的密码，那么系统日志会有类似下面的记录：</p>
 
 <pre><code>Dec 7 10:10:24 work sudo : root: TTY=pts/3; PWD=/root; USER=root; COMMAND=/usr/bin/passwd foo   
 </code></pre>
@@ -170,21 +160,19 @@ drwx-wx--T 2 root crontab 4096 2009-09-16 16:16 /var/spool/cron/crontabs/
 <p>那这样的话，管理员就会知道你恶意修改了密码。<br/>
 So，可以有两个办法，第一个是在执行修改密码之前，利用已有的许可，停止系统日志服务。 <br/>
 <code>sudo /etc/init.d/syslogd stop</code>
-然后使用<code>sudo /usr/bin/passwd foo</code> 修改密码。 <br/>
-最后恢复删除现有日志，然后恢复日志服务 <br/>
+然后使用<code>sudo /usr/bin/passwd foo</code> 修改密码。最后恢复删除现有日志，然后恢复日志服务 <br/>
 <code>sudo /etc/init.d/syslogd start</code><br/>
-另外一个办法就是书上提到的。<br/>
-虽然限制了shell的使用，但是它是通过指定shell的位置来设定的。我们可以通过拷贝一个shell到某一个“奇怪”的目录，然后sudo到这个shell，变成root，然后在  <code>passwd foo</code>来修改密码。而后清空root帐号的history信息。</p>
+另外一个办法就是书上提到的。虽然限制了 shell 的使用，但是它是通过指定 shell 的位置来设定的。我们可以通过拷贝一个 shell 到某一个“奇怪”的目录，然后 sudo 到这个 shell，变成 root，然后在  <code>passwd foo</code>来修改密码。而后清空 root 帐号的 history 信息。</p>
 
-<p>E3.4 为sudoers配置文件创建两项：</p>
+<p>E3.4 为 sudoers 配置文件创建两项：</p>
 
 <ol>
-<li>一项让用户matt,adam和drew负责在printserver这台机器上为打印机服务，消除夹纸，如何重新启动打印机的守护进程；</li>
-<li>一项让drew、smithgr和jimlane终止学生机房的任务并重启机器。</li>
+<li>一项让用户 matt,adam 和 drew 负责在 printserver 这台机器上为打印机服务，消除夹纸，如何重新启动打印机的守护进程；</li>
+<li>一项让 drew、smithgr 和 jimlane 终止学生机房的任务并重启机器。</li>
 </ol>
 
 
-<p>A：老实说，对于打印机的服务我不是太了解。因此我只能写出其sudoers的语法，但不能保证真的可以在实际环境中这么用：</p>
+<p>A：老实说，对于打印机的服务我不是太了解。因此我只能写出其 sudoers 的语法，但不能保证真的可以在实际环境中这么用：</p>
 
 <pre><code>Cmnd_Alias PRINTING=/usr/sbin/lpc,/usr/bin/lprm,/etc/init.d/cups restart
 
@@ -197,22 +185,22 @@ matt,adam,drew printserver = PRINTING
 drew,smithgr,jimlane  ALL=STU
 </code></pre>
 
-<p>E3.5  安装sudo，配置成让它把有关误用的邮件发给您。以本地用户和机器名来测试上一个问题中的sudo配置项；验证sudo是否能正确地把日志写到syslog。检查测试在syslog中生成的日志项（需要root权限，很可能还要调整一下/etc/syslog.conf）</p>
+<p>E3.5  安装 sudo，配置成让它把有关误用的邮件发给您。以本地用户和机器名来测试上一个问题中的 sudo 配置项；验证 sudo 是否能正确地把日志写到 syslog。检查测试在 syslog 中生成的日志项（需要 root 权限，很可能还要调整一下/etc/syslog.conf）</p>
 
-<p>A：在sudo里，和mail相关的，主要是下面几个参数：</p>
+<p>A：在 sudo 里，和 mail 相关的，主要是下面几个参数：</p>
 
 <p><strong>mail_always</strong>
-  ~ 每次有sudo的使用，就发送邮件给指定用户，缺省是关闭的。<br/>
+  ~ 每次有 sudo 的使用，就发送邮件给指定用户，缺省是关闭的。<br/>
 <strong>mail_badpass</strong>
-  ~ 如果使用sudo的用户没有输入正确的密码，则发送邮件给指定用户，默认关闭。<br/>
+  ~ 如果使用 sudo 的用户没有输入正确的密码，则发送邮件给指定用户，默认关闭。<br/>
 <strong>mail_no_host</strong>
-  ~ 如果设置了的话，邮件发给指定用户，当sudo使用者使用了不允许的命名。缺省关闭。<br/>
+  ~ 如果设置了的话，邮件发给指定用户，当 sudo 使用者使用了不允许的命名。缺省关闭。<br/>
 <strong>mail_no_perms</strong>
-  ~ 如果设置了的话，当然sudo使用者使用了不在sudoer里列出或者显式被拒绝的命令时，发送邮件给指定用户。缺省关闭。<br/>
+  ~ 如果设置了的话，当然 sudo 使用者使用了不在 sudoer 里列出或者显式被拒绝的命令时，发送邮件给指定用户。缺省关闭。<br/>
 <strong>mail_no_user</strong>
-  ~ 如果sudo使用者不在sudoer列表里，则发送邮件给指定用户。缺省设置了该参数。</p>
+  ~ 如果 sudo 使用者不在 sudoer 列表里，则发送邮件给指定用户。缺省设置了该参数。</p>
 
-<p>我们可以通过设置mailto 参数来指定邮件接收者，默认是root。另外可以通过设置mailsub来设定邮件的主题。</p>
+<p>我们可以通过设置 mailto 参数来指定邮件接收者，默认是 root。另外可以通过设置 mailsub 来设定邮件的主题。</p>
 </div>
 
 
@@ -304,8 +292,8 @@ drew,smithgr,jimlane  ALL=STU
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/11/26/lah-chapter3-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

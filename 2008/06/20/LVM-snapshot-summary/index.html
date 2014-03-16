@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="这两天看了有关LVM快照(snapshot)的一些资料，加上pczou的一些指导，对snapshot有一些理解，记录如下，和大家共享： Logical Volume Manager (LVM))提供了对任意一个Logical Volume(LV)做“快照”(snapshot)的功能， &hellip;">
+  <meta name="description" content="这两天看了有关 LVM 快照(snapshot)的一些资料，加上 pczou 的一些指导，对 snapshot 有一些理解，记录如下，和大家共享： Logical Volume Manager (LVM))提供了对任意一个 Logical Volume(LV)做“快照”(snapshot)的功能， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,37 +99,36 @@
   </header>
 
 
-<div class="entry-content"><p>这两天看了有关LVM快照(snapshot)的一些资料，加上pczou的一些指导，对snapshot有一些理解，记录如下，和大家共享：</p>
+<div class="entry-content"><p>这两天看了有关 LVM 快照(snapshot)的一些资料，加上 pczou 的一些指导，对 snapshot 有一些理解，记录如下，和大家共享：</p>
 
-<p><a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux">Logical Volume Manager (LVM)</a>)提供了对任意一个Logical Volume(LV)做“快照”(snapshot)的功能，以此来获得一个分区的状态一致性备份。
-在某一个状态下做备份的时候，可能有应用正在访问某一个文件或者数据库，这就是使得备份的时候文件处于一个状态，而备份完后，文件却处于另外一个状态，从而造成备份的非一致性，这种状态恢复数据库数据几乎不会成功。</p>
+<p><a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux">Logical Volume Manager (LVM)</a>)提供了对任意一个 Logical Volume(LV)做“快照”(snapshot)的功能，以此来获得一个分区的状态一致性备份。在某一个状态下做备份的时候，可能有应用正在访问某一个文件或者数据库，这就是使得备份的时候文件处于一个状态，而备份完后，文件却处于另外一个状态，从而造成备份的非一致性，这种状态恢复数据库数据几乎不会成功。</p>
 
 <!--more-->
 
 
-<p>状态的解决办法是将其分区挂载为只读，然后通过数据库的表级别锁定(table-level write locks)甚至停止数据库来备份数据。所有这些方法无意严重影响了服务的可用性。使用LVM snapshot既可以获得一致性备份，又不会影响服务器的可用性。</p>
+<p>状态的解决办法是将其分区挂载为只读，然后通过数据库的表级别锁定(table-level write locks)甚至停止数据库来备份数据。所有这些方法无意严重影响了服务的可用性。使用 LVM snapshot 既可以获得一致性备份，又不会影响服务器的可用性。</p>
 
-<p>要提醒一点是，snapshot这种方法仅对LVM有效，对于非LVM文件系统无效。</p>
+<p>要提醒一点是，snapshot 这种方法仅对 LVM 有效，对于非 LVM 文件系统无效。</p>
 
-<p>snapshot的实现有多种方式(参考文章最后的连接)，这里说说LVM中snapshot的“写时复制”(copy on write) 的实现方法。</p>
+<p>snapshot 的实现有多种方式(参考文章最后的连接)，这里说说 LVM 中 snapshot 的“写时复制”(copy on write) 的实现方法。</p>
 
-<p>当一个snapshot创建的时候，仅拷贝原始卷里数据的元数据(meta-data)。创建的时候，并不会有数据的物理拷贝，因此snapshot的创建几乎是实时的，当原始卷上有写操作执行时，snapshot跟踪原始卷块的改变，这个时候原始卷上将要改变的数据在改变之前被拷贝到snapshot预留的空间里，因此这个原理的实现叫做写时复制(copy-on-write)。</p>
+<p>当一个 snapshot 创建的时候，仅拷贝原始卷里数据的元数据(meta-data)。创建的时候，并不会有数据的物理拷贝，因此 snapshot 的创建几乎是实时的，当原始卷上有写操作执行时，snapshot 跟踪原始卷块的改变，这个时候原始卷上将要改变的数据在改变之前被拷贝到 snapshot 预留的空间里，因此这个原理的实现叫做写时复制(copy-on-write)。</p>
 
-<p>在写操作写入块之前，CoW讲原始数据移动到 snapshot空间里，这样就保证了所有的数据在snapshot创建时保持一致。而对于snapshot的读操作，如果是读取数据块是没有修改过的，那么会将读操作直接重定向到原始卷上，如果是要读取已经修改过的块，那么就读取拷贝到snapshot中的块。</p>
+<p>在写操作写入块之前，CoW 讲原始数据移动到 snapshot 空间里，这样就保证了所有的数据在 snapshot 创建时保持一致。而对于 snapshot 的读操作，如果是读取数据块是没有修改过的，那么会将读操作直接重定向到原始卷上，如果是要读取已经修改过的块，那么就读取拷贝到 snapshot 中的块。</p>
 
-<p>这样，通常的文件I/0流程有一个改变，那就是在文件系统和设备驱动之间增加了一个cow层，变成了下面这个样子：</p>
+<p>这样，通常的文件 I/0 流程有一个改变，那就是在文件系统和设备驱动之间增加了一个 cow 层，变成了下面这个样子：</p>
 
 <pre><code>file I/0 ---&gt; filesystem -- &gt;CoW --&gt; block I /O
 </code></pre>
 
-<p>下面的图也许可以比较容易了解CoW的原理：</p>
+<p>下面的图也许可以比较容易了解 CoW 的原理：</p>
 
 <p><img src="/images/cow.gif" title="Copy on Write" alt="image" /></p>
 
-<p>采取CoW实现方式时，snapshot的大小并不需要和原始卷一样大，其大小仅仅只需要考虑两个方面：从shapshot创建到释放这段时间内，估计块的改变量有多大;数据更新的频率。一旦
-snapshot的空间记录满了原始卷块变换的信息，那么这个snapshot立刻被释放，从而无法使用，从而导致这个snapshot无效。所以，非常重要的一点，一定要在snapshot的生命周期里，做完你需要做得事情。当然，如果你的snapshot大小和原始卷一样大，甚至还要大，那它的寿命就是“与天齐寿”了。</p>
+<p>采取 CoW 实现方式时，snapshot 的大小并不需要和原始卷一样大，其大小仅仅只需要考虑两个方面：从 shapshot 创建到释放这段时间内，估计块的改变量有多大;数据更新的频率。一旦
+snapshot 的空间记录满了原始卷块变换的信息，那么这个 snapshot 立刻被释放，从而无法使用，从而导致这个 snapshot 无效。所以，非常重要的一点，一定要在 snapshot 的生命周期里，做完你需要做得事情。当然，如果你的 snapshot 大小和原始卷一样大，甚至还要大，那它的寿命就是“与天齐寿”了。</p>
 
-<p>snapshot其实除了备份以外，还有很多其他用途</p>
+<p>snapshot 其实除了备份以外，还有很多其他用途</p>
 
 <h4>虚拟化</h4>
 
@@ -150,13 +154,13 @@ snapshot的空间记录满了原始卷块变换的信息，那么这个snapshot�
 
 <h4>数据回溯</h4>
 
-<p>在一个生产系统上要执行一些操作，需要慎之又慎，即便在模拟环境中做过很多次测试都没有问题，但是并不能保证在生产环境就一定成功，于是这个时候，我们把系统做一个snapshot，这样一旦新操作出现问题，立刻回溯到创建snapshot的时间点，当然你也可以认为这是一个备份的扩展使用。</p>
+<p>在一个生产系统上要执行一些操作，需要慎之又慎，即便在模拟环境中做过很多次测试都没有问题，但是并不能保证在生产环境就一定成功，于是这个时候，我们把系统做一个 snapshot，这样一旦新操作出现问题，立刻回溯到创建 snapshot 的时间点，当然你也可以认为这是一个备份的扩展使用。</p>
 
-<p>最后，我们举一些例子，加深对snapshot的理解。</p>
+<p>最后，我们举一些例子，加深对 snapshot 的理解。</p>
 
-<p>a) 创建一个120M的snapshot，执行一些操作看看CoW的动作。</p>
+<p>a) 创建一个 120M 的 snapshot，执行一些操作看看 CoW 的动作。</p>
 
-<p>我们举一个例子来说明如何创建和使用snapshot。我们假定创建一个120M的snapshot，这就意味着在snapshot生命周期里，你仅能有120M的数据量改变。</p>
+<p>我们举一个例子来说明如何创建和使用 snapshot。我们假定创建一个 120M 的 snapshot，这就意味着在 snapshot 生命周期里，你仅能有 120M 的数据量改变。</p>
 
 <p>下面的命令，为<code>/dev/vg/lvdata</code>创建<code>/dev/vg/lvdata-sp</code></p>
 
@@ -164,7 +168,7 @@ snapshot的空间记录满了原始卷块变换的信息，那么这个snapshot�
 
 Logical volume “lvdata-sp” created
 
-其中lvdata大小为120MB。
+其中 lvdata 大小为 120MB。
 
 # lvdisplay /dev/vg/lvdata-sp
 
@@ -207,7 +211,7 @@ Block device 253:0
 
 <p>上面的 <code>Allocated to snapshot 0.27%</code>是我们关心的，表示目前还有<code>99.73%</code>的空间没有使用。</p>
 
-<p>我们尝试在lvdata创建一个10M的文件，再看看这个参数值。</p>
+<p>我们尝试在 lvdata 创建一个 10M 的文件，再看看这个参数值。</p>
 
 <pre><code># mount /dev/vg/lvdata /media/lvdata/
 # dd if=/dev/hda of=/media/lvdata/10M bs=1M count=10
@@ -257,7 +261,7 @@ Read ahead sectors 0
 Block device 253:0
 </code></pre>
 
-<p><code>Allocated to snapshot51.02%</code>,符合我们的预期。此时snapshot还剩下大概10M不到的空间了，如果我么再在lvdata上创建一个12M的文件，会发生什么呢？</p>
+<p><code>Allocated to snapshot51.02%</code>,符合我们的预期。此时 snapshot 还剩下大概 10M 不到的空间了，如果我么再在 lvdata 上创建一个 12M 的文件，会发生什么呢？</p>
 
 <pre><code>#dd if=/dev/hda of=/media/lvdata/12M bs=1M count=12
 
@@ -270,7 +274,7 @@ Block device 253:0
 device-mapper: snapshots: Invalidating snapshot: Unable to allocate exception.
 </code></pre>
 
-<p>创建文件的过程中，一个报错出现了，snapshot已经无效。我们看看snapshot卷的详细信息。</p>
+<p>创建文件的过程中，一个报错出现了，snapshot 已经无效。我们看看 snapshot 卷的详细信息。</p>
 
 <pre><code># lvdisplay /dev/vg/lvdata-sp
 
@@ -309,7 +313,7 @@ Allocation inherit
 Read ahead sectors 0
 </code></pre>
 
-<p>整个snapshot卷已经出现I/0错误了，而且snapshot的状态也是“INACTIVE”。</p>
+<p>整个 snapshot 卷已经出现 I/0 错误了，而且 snapshot 的状态也是“INACTIVE”。</p>
 
 <p>是否能挂载上来呢？</p>
 
@@ -342,15 +346,15 @@ Buffer I/O error on device dm-0, logical block 9
 hfs: unable to find HFS+ superblock
 </code></pre>
 
-<p>从dmesg的错误信息来看，超级块的信息也丢失了</p>
+<p>从 dmesg 的错误信息来看，超级块的信息也丢失了</p>
 
-<p>尝试激活一下lvdata-sp</p>
+<p>尝试激活一下 lvdata-sp</p>
 
 <pre><code> # lvchange -ay /dev/vg/lvdata-sp 
  /dev/vg/lvdata-sp: read failed after 0 of 4096 at 0: 输入/输出错误 
 </code></pre>
 
-<p>恩，这个snapshot已经被释放了，所以剩下要做得事情就是删除它。</p>
+<p>恩，这个 snapshot 已经被释放了，所以剩下要做得事情就是删除它。</p>
 
 <pre><code># lvremove /dev/vg/lvdata-sp 
 /dev/vg/lvdata-sp: read failed after 0 of 4096 at 0: 输入/输出错误 
@@ -358,9 +362,9 @@ Do you really want to remove active logical volume "lvdata-sp"? [y/n]: y
 Logical volume "lvdata-sp" successfully removed 
 </code></pre>
 
-<p>b）利用snapshot在线备份MySQL数据库（或者其他数据库）</p>
+<p>b）利用 snapshot 在线备份 MySQL 数据库（或者其他数据库）</p>
 
-<p>流程是先做一个flush操作，并锁定表，任何创建snapshot，任何解锁，然后备份数据，最后释放snapshot。这样，MySQL几乎不会中断其运行。</p>
+<p>流程是先做一个 flush 操作，并锁定表，任何创建 snapshot，任何解锁，然后备份数据，最后释放 snapshot。这样，MySQL 几乎不会中断其运行。</p>
 
 <pre><code> FLUSH TABLES WITH READ LOCK; 
 \! lvcreate --size 100m --snapshot --name snap /dev/VolGroup01/LogVol00 
@@ -382,7 +386,7 @@ lvremove /dev/VolGroup01/snap
 rmdir /snap
 </code></pre>
 
-<p>最后，感谢pczou抽出时间和我交流和指导！</p>
+<p>最后，感谢 pczou 抽出时间和我交流和指导！</p>
 
 <p>进一步阅读：</p>
 
@@ -484,8 +488,8 @@ rmdir /snap
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/06/20/LVM-snapshot-summary/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/20/LVM-snapshot-summary/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/06/20/LVM-snapshot-summary/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/20/LVM-snapshot-summary/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

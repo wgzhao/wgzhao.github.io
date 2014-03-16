@@ -9,10 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="针对一个服务器需要同时开几个ssh连接，也许是同一个帐号链接，也许是不同的帐号，你是不死和厌烦了每次的都要输入密码？其实ssh链接可以做到共享会话的。
-一个办法是用一些ssh链接客户端，比如Windows下的Secure
-CRT，Linux下的hotssh。
-另外一个办法， &hellip;">
+  <meta name="description" content="针对一个服务器需要同时开几个 ssh 连接，也许是同一个帐号链接，也许是不同的帐号，你是不死和厌烦了每次的都要输入密码？其实 ssh 链接可以做到共享会话的。一个办法是用一些 ssh 链接客户端，比如 Windows 下的 Secure
+CRT，Linux 下的 hotssh。另外一个办法， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,6 +30,11 @@ CRT，Linux下的hotssh。
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -97,10 +100,8 @@ CRT，Linux下的hotssh。
   </header>
 
 
-<div class="entry-content"><p>针对一个服务器需要同时开几个ssh连接，也许是同一个帐号链接，也许是不同的帐号，你是不死和厌烦了每次的都要输入密码？其实ssh链接可以做到共享会话的。
-一个办法是用一些ssh链接客户端，比如Windows下的<a href="http://www.vandyke.com/products/securecrt/">Secure
-CRT</a>，Linux下的<a href="http://projects.gnome.org/hotssh/">hotssh</a>。
-另外一个办法，就是自己修改ssh客户端配置文件，创建<code>~/.ssh/ssh_config</code>文件，加入下面的内容：</p>
+<div class="entry-content"><p>针对一个服务器需要同时开几个 ssh 连接，也许是同一个帐号链接，也许是不同的帐号，你是不死和厌烦了每次的都要输入密码？其实 ssh 链接可以做到共享会话的。一个办法是用一些 ssh 链接客户端，比如 Windows 下的 <a href="http://www.vandyke.com/products/securecrt/">Secure
+CRT</a>，Linux 下的 <a href="http://projects.gnome.org/hotssh/">hotssh</a>。另外一个办法，就是自己修改 ssh 客户端配置文件，创建<code>~/.ssh/ssh_config</code>文件，加入下面的内容：</p>
 
 <pre><code>Host *
 ControlMaster auto ControlPath ~/.ssh/master-%r@%h:%p
@@ -198,8 +199,8 @@ ControlMaster auto ControlPath ~/.ssh/master-%r@%h:%p
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/07/02/multiple-ssh-connects-with-the-same-session/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/07/02/multiple-ssh-connects-with-the-same-session/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/07/02/multiple-ssh-connects-with-the-same-session/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/07/02/multiple-ssh-connects-with-the-same-session/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

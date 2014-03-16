@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="PCserver上，一直跑着的系统和应用，突然之间执行大部分文件操作都出现I/O错误，屏幕不停的出现类似： EXT3-fs error (devcie sd(1:0)) in start_transaction: Journal has aborted 执行dmesg信息，有类似下面的错误 &hellip;">
+  <meta name="description" content="PCserver 上，一直跑着的系统和应用，突然之间执行大部分文件操作都出现 I/O 错误，屏幕不停的出现类似： EXT3-fs error (devcie sd(1:0)) in start_transaction: Journal has aborted 执行 dmesg 信息， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,37 +99,32 @@
   </header>
 
 
-<div class="entry-content"><p>PCserver上，一直跑着的系统和应用，突然之间执行大部分文件操作都出现I/O错误，屏幕不停的出现类似：</p>
+<div class="entry-content"><p>PCserver 上，一直跑着的系统和应用，突然之间执行大部分文件操作都出现 I/O 错误，屏幕不停的出现类似：</p>
 
 <pre><code> EXT3-fs error (devcie sd(1:0)) in start_transaction: Journal has aborted 
 </code></pre>
 
-<p>执行dmesg信息，有类似下面的错误</p>
+<p>执行 dmesg 信息，有类似下面的错误</p>
 
 <pre><code> scsi1 (0:0) rejecting I/O to offline device 
 </code></pre>
 
-<p>scsi1是本地磁盘，看看机器本地磁盘的四个磁盘LED灯，一个都不亮，果然是典型的offline的状态。<br/>
-我开始估计是磁盘出问题了，导致offline的，而且不止一个磁盘出问题，因为做了RAID5,一个有问题，还不至于。</p>
+<p>scsi1 是本地磁盘，看看机器本地磁盘的四个磁盘 LED 灯，一个都不亮，果然是典型的 offline 的状态。我开始估计是磁盘出问题了，导致 offline 的，而且不止一个磁盘出问题，因为做了 RAID5,一个有问题，还不至于。</p>
 
 <!--more-->
 
 
-<p>结果系统重启后，一切正常，就相当于开始之前什么都没有发生。<br/>
-当然那些打印在屏幕上的信息都不可能写入到系统日志中去了。<br/>
-只能从最后的日志时间和刚才写的系统启动日志时间来大致判断，这个故障什么时候开始的。</p>
+<p>结果系统重启后，一切正常，就相当于开始之前什么都没有发生。当然那些打印在屏幕上的信息都不可能写入到系统日志中去了。只能从最后的日志时间和刚才写的系统启动日志时间来大致判断，这个故障什么时候开始的。</p>
 
-<p>到网上搜索了offline的报错，看来很多人遇到了这个问题，目前从网络上的信息来看，偏向“因为负载过重而导致offline”的理由居多，当然也有一部分说是RAID卡的问题。<br/>
-其中有几个地方提到了专门为此做benchmark，居然可以重现。</p>
+<p>到网上搜索了 offline 的报错，看来很多人遇到了这个问题，目前从网络上的信息来看，偏向“因为负载过重而导致 offline”的理由居多，当然也有一部分说是 RAID 卡的问题。其中有几个地方提到了专门为此做 benchmark，居然可以重现。</p>
 
-<p>只是我这里没有办法像他那样，先做两周的benchmark看看有没有问题。</p>
+<p>只是我这里没有办法像他那样，先做两周的 benchmark 看看有没有问题。</p>
 
 <p>看看硬件厂商有没有好的办法来获取当时的一些硬件信息吧。</p>
 
 <p>这种偶发的，有几乎不能重现的问题是最麻烦的，一来什么都没有留下，而来你要想重现，还真不容易。</p>
 
-<p>就像上次遇到的一个内存的问题，仅仅在有一次系统自检的时候检测内存没有过去，其他时间重启都自检通过了，但是系统会偶然出现宕机现象。硬件厂商也怀疑是一组内存问题，但是他们也无法确认到底是哪组，只能等下次再出现这类故障时，打开上面挡板才有可能知道，这已经过去一个月了，那个现象还是没有重现。<br/>
-遇上这类问题，有什么好的办法解决吗？或者退一步讲，能大致确认是硬件的问题还是软件的问题呢？</p>
+<p>就像上次遇到的一个内存的问题，仅仅在有一次系统自检的时候检测内存没有过去，其他时间重启都自检通过了，但是系统会偶然出现宕机现象。硬件厂商也怀疑是一组内存问题，但是他们也无法确认到底是哪组，只能等下次再出现这类故障时，打开上面挡板才有可能知道，这已经过去一个月了，那个现象还是没有重现。遇上这类问题，有什么好的办法解决吗？或者退一步讲，能大致确认是硬件的问题还是软件的问题呢？</p>
 </div>
 
 
@@ -216,8 +216,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/07/03/Hardware-or-software-problem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/07/03/Hardware-or-software-problem/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/07/03/Hardware-or-software-problem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/07/03/Hardware-or-software-problem/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

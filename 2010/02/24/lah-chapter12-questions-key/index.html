@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="E12.1 听从（也就是服从）ICMP重定向包的指挥，如何会让一个未经授权的用户威胁网络的安全？ A：主要是会获得一个窃听网络数据的可能，更详细的内容，可以参考这篇文档，说的比较详细。 E12.2 网络链路的MTU是什么？如果给定的MTU设得太高，会发生什么问题？太低呢？ A：MTU（ &hellip;">
+  <meta name="description" content="E12.1 听从（也就是服从）ICMP 重定向包的指挥，如何会让一个未经授权的用户威胁网络的安全？ A：主要是会获得一个窃听网络数据的可能，更详细的内容，可以参考这篇文档，说的比较详细。 E12.2 网络链路的 MTU 是什么？如果给定的 MTU 设得太高，会发生什么问题？太低呢？ A：MTU（ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,32 +99,32 @@
   </header>
 
 
-<div class="entry-content"><p>E12.1 听从（也就是服从）ICMP重定向包的指挥，如何会让一个未经授权的用户威胁网络的安全？</p>
+<div class="entry-content"><p>E12.1 听从（也就是服从）ICMP 重定向包的指挥，如何会让一个未经授权的用户威胁网络的安全？</p>
 
 <p>A：主要是会获得一个窃听网络数据的可能，更详细的内容，可以参考<a href="http://82880.blog.51cto.com/72880/68795">这篇文档</a>，说的比较详细。</p>
 
-<p>E12.2 网络链路的MTU是什么？如果给定的MTU设得太高，会发生什么问题？太低呢？</p>
+<p>E12.2 网络链路的 MTU 是什么？如果给定的 MTU 设得太高，会发生什么问题？太低呢？</p>
 
-<p>A：MTU（Maximum Transfer Unit)，最大传输单元，用来定义网络上传输包的最大值。以太网一般是1500bytes。太高会导致丢包，太低则导致分片，都会产生网络传输问题。</p>
+<p>A：MTU（Maximum Transfer Unit)，最大传输单元，用来定义网络上传输包的最大值。以太网一般是 1500bytes。太高会导致丢包，太低则导致分片，都会产生网络传输问题。</p>
 
 <!--more-->
 
 
-<p>★ E12.3 说明划分子网的概念，解释它有用的原因。什么是网络掩码？网络掩码和IP地址的网络部分和主机部分的划分有什么关系？</p>
+<p>★ E12.3 说明划分子网的概念，解释它有用的原因。什么是网络掩码？网络掩码和 IP 地址的网络部分和主机部分的划分有什么关系？</p>
 
 <p>A：这些都是属于计算机网络的基本概念，我这里都不抄书了，看看<a href="http://zh.wikipedia.org/zh-cn/IPv4">维基百科的解释</a>吧。</p>
 
-<p>★ E12.4 网络134.122.0.0/16已经细分成了几个/19网络。</p>
+<p>★ E12.4 网络 134.122.0.0/16 已经细分成了几个/19 网络。</p>
 
 <ol>
-<li>有多少个/19的网络？列出他们。他们的网络掩码是多少？</li>
+<li>有多少个/19 的网络？列出他们。他们的网络掩码是多少？</li>
 <li>每一个子网上有多少台主机？</li>
-<li>IP地址134.122.67.124属于哪个子网？</li>
+<li>IP 地址 134.122.67.124 属于哪个子网？</li>
 <li>每个网络的广播地址是什么？</li>
 </ol>
 
 
-<p>A：网络数=2^(19-16)=8个。分别是
+<p>A：网络数=2^(19-16)=8 个。分别是
 134.122.0.0/19 <br/>
 134.122.32.0/19<br/>
 134.122.64.0/19
@@ -128,8 +133,7 @@
 134.122.160.0/19 <br/>
 134.122.192.0/19
 134.122.224.0/19 <br/>
-网络掩码就是把/19转成是十进制点分表示，也就是255.255.224.0。<br/>
-主机比特位=32-19=13位。那么每一个子网的主机台数=2^13 &ndash; 2 = 8190台。 134.122.67.124属于 134.122.64.0/19子网。 每个网络的广播地址分别是
+网络掩码就是把/19 转成是十进制点分表示，也就是 255.255.224.0。主机比特位=32-19=13 位。那么每一个子网的主机台数=2^13 &ndash; 2 = 8190 台。 134.122.67.124 属于 134.122.64.0/19 子网。 每个网络的广播地址分别是
 134.122.31.255，<br/>
 134.122.63.255，<br/>
 134.122.95.255，<br/>
@@ -137,8 +141,7 @@
 134.122.159.255，<br/>
 134.122.191.255，<br/>
 134.122.223.255，<br/>
-134.122.255.255。<br/>
-实际上就是每一个子网的广播地址是该子网最大主机地址+1.</p>
+134.122.255.255。实际上就是每一个子网的广播地址是该子网最大主机地址+1.</p>
 
 <p>★ E12.5 网络 128.138.2.0/24 上的主机 128.138.2.4 向网络 128.138.129.0/24 上的主机
 128.138.129.12 发送一个包。假定：</p>
@@ -147,37 +150,30 @@
 <li>主机 128.138.2.4 有一条通过 128.138.2.1 的默认路由;</li>
 <li>主机 128.138.2.4 刚启动，还没有发送或者接受任何包;</li>
 <li>网络上其他所有机器已经运行很长一段时间了;</li>
-<li><p>路由器 128.138.2.1 直接有一条到 128.138.129.1 的路由，后者是 128.138.129.0/24的网关。</p></li>
-<li><p>列出发出这个包所需要的所有步骤。给出所有传输包的源目的以太网和IP地址。</p></li>
+<li><p>路由器 128.138.2.1 直接有一条到 128.138.129.1 的路由，后者是 128.138.129.0/24 的网关。</p></li>
+<li><p>列出发出这个包所需要的所有步骤。给出所有传输包的源目的以太网和 IP 地址。</p></li>
 <li>如果网络是 128.138.0.0/16，您的答案会变吗？怎么变？</li>
-<li>如果网络 128.138.2.0 是一个/26网络，而不是/24网络，您的答案会变吗？怎么变？</li>
+<li>如果网络 128.138.2.0 是一个/26 网络，而不是/24 网络，您的答案会变吗？怎么变？</li>
 </ul>
 
 
 <p>A：网络知识贫瘠，这个问题我只是知道一个大概，但是却描述不出来。</p>
 
-<p>★★ E12.6 在安装了一个新的Linux系统后，您会如何解决本章里提到的若干安全问题？查查看，在您实验室的Linux系统上是否有什么要解决的安全问题？</p>
+<p>★★ E12.6 在安装了一个新的 Linux 系统后，您会如何解决本章里提到的若干安全问题？查查看，在您实验室的 Linux 系统上是否有什么要解决的安全问题？</p>
 
-<p>A：在12.11节里，提到了IP转发，ICMP重定向，源路由，广播ping，IP欺骗等安全问题。以我家里的网络环境来一一检查这些问题。</p>
+<p>A：在 12.11 节里，提到了 IP 转发，ICMP 重定向，源路由，广播 ping，IP 欺骗等安全问题。以我家里的网络环境来一一检查这些问题。</p>
 
-<p>首先介绍我家里的网络环境，可能和一般的家里通过一个ADSL MODEM +ROUTE的方式有点不同，因为房间距离的问题，我采取了两极路由的方式。带路由功能的ADSL MODEM 连接一个HUB，HUB上连接了几根网线给台式机。ADSL MODEM上启用了DHCP，网络是<code>192.168.1.0/24</code>，网关是<code>192.168.1.1</code>。<br/>
-然后从HUB上连接一个网线到另外一个无线路由上WLAN口，然后再从无线路由LAN口接出几根网线给PC和台式机。<br/>
-无线AP给手机和无线设备。其中无线路由启用DHCP服务，网络是<code>192.168.0.1/24</code>，网关是<code>192.168.0.1</code>。WLAN口从ADSL MODEM处获得一个固定的<code>192.168.1.200</code>的IP地址。<br/>
-所以我家里的PC，有些属于192.168.1.0/24网络，有的属于192.168.0.0/24网络。<br/>
-手机等具有wifi连接功能的设备获得是192.168.0.0/24的IP地址。<br/>
-一起大约有3台PC，2台notebook，几个手机wifi。<br/>
-对于IP转发，因为不涉及到路由的功能，所以默认电脑上都关闭了此功能，因为没有IP转发的风险。<br/>
-<code>echo 0 &gt;/proc/sys/net/ipv4/ip_forward</code> 忽略ICMP重定向功能<br/>
+<p>首先介绍我家里的网络环境，可能和一般的家里通过一个 ADSL MODEM +ROUTE 的方式有点不同，因为房间距离的问题，我采取了两极路由的方式。带路由功能的 ADSL MODEM 连接一个 HUB，HUB 上连接了几根网线给台式机。ADSL MODEM 上启用了 DHCP，网络是<code>192.168.1.0/24</code>，网关是<code>192.168.1.1</code>。然后从 HUB 上连接一个网线到另外一个无线路由上 WLAN 口，然后再从无线路由 LAN 口接出几根网线给 PC 和台式机。无线 AP 给手机和无线设备。其中无线路由启用 DHCP 服务，网络是<code>192.168.0.1/24</code>，网关是<code>192.168.0.1</code>。WLAN 口从 ADSL MODEM 处获得一个固定的<code>192.168.1.200</code>的 IP 地址。所以我家里的 PC，有些属于 192.168.1.0/24 网络，有的属于 192.168.0.0/24 网络。手机等具有 wifi 连接功能的设备获得是 192.168.0.0/24 的 IP 地址。一起大约有 3 台 PC，2 台 notebook，几个手机 wifi。对于 IP 转发，因为不涉及到路由的功能，所以默认电脑上都关闭了此功能，因为没有 IP 转发的风险。<br/>
+<code>echo 0 &gt;/proc/sys/net/ipv4/ip_forward</code> 忽略 ICMP 重定向功能<br/>
  <code>echo 0 &gt;﻿﻿/proc/sys/net/ipv4/conf/all/accept_redirects</code> 既不接受源路由包，也不接受发送源路由包<br/>
 <code>echo 0 &gt;/proc/sys/net/ipv4/conf/all/accept_source_route</code><br/>
-在路由器上关闭ping广播，我已经在ADSL MODEM 和 无线路由上均关闭了此项。<br/>
-因为我每一个特定的机器，一般情况下，只有一条到internet的连接，因此我把<code>/proc/sys/net/ipv4/conf/all/rp_filter</code> 设置为1.</p>
+在路由器上关闭 ping 广播，我已经在 ADSL MODEM 和 无线路由上均关闭了此项。因为我每一个特定的机器，一般情况下，只有一条到 internet 的连接，因此我把<code>/proc/sys/net/ipv4/conf/all/rp_filter</code> 设置为 1.</p>
 
-<p>★★ E12.7 在您实验室环境里，加入一台新机器需要什么步骤？回答的时候，要用适合您的网络和本地情况的参数。假定新机器已经在运行Linux了。</p>
+<p>★★ E12.7 在您实验室环境里，加入一台新机器需要什么步骤？回答的时候，要用适合您的网络和本地情况的参数。假定新机器已经在运行 Linux 了。</p>
 
-<p>A：因为启用了DHCP服务，因此加入新机器，我只要设定好了主机名，基本上接入网线即可。DNS也会自动设置好。如果是无线接入，则需要设定SSID和对应的密码。</p>
+<p>A：因为启用了 DHCP 服务，因此加入新机器，我只要设定好了主机名，基本上接入网线即可。DNS 也会自动设置好。如果是无线接入，则需要设定 SSID 和对应的密码。</p>
 
-<p>★★ E12.8 给出设置一台可以分配 128.138.192.[1-55]范围内IP地址的DHCP服务器所需要的配置文件。用到的租期为2个小时，要确保以太网地址为 00:10:5A:C7:4B:89 的主机始终会分配到 128.138.192.55.</p>
+<p>★★ E12.8 给出设置一台可以分配 128.138.192.[1-55]范围内 IP 地址的 DHCP 服务器所需要的配置文件。用到的租期为 2 个小时，要确保以太网地址为 00:10:5A:C7:4B:89 的主机始终会分配到 128.138.192.55.</p>
 
 <p>A：示例配置文件如下：</p>
 
@@ -291,8 +287,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/02/24/lah-chapter12-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/02/24/lah-chapter12-questions-key/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/02/24/lah-chapter12-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/02/24/lah-chapter12-questions-key/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

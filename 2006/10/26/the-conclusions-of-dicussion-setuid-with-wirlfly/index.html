@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="今天大半天和wirlfly在讨论setuid的问题，结论就看他的blog吧，我就偷懒剽窃他的帖子一次（也许会有很多下次的，呵呵） 一下是他的帖子的内容 在unix环境中setuid是一个很有创意的东西.善用者可以实现很多极其巧妙的东西,乱用者弄得系统千疮百孔.著名的缓冲区溢出攻击大多与其相关, &hellip;">
+  <meta name="description" content="今天大半天和 wirlfly 在讨论 setuid 的问题，结论就看他的 blog 吧，我就偷懒剽窃他的帖子一次（也许会有很多下次的，呵呵） 一下是他的帖子的内容 在 unix 环境中 setuid 是一个很有创意的东西.善用者可以实现很多极其巧妙的东西,乱用者弄得系统千疮百孔. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,19 +99,19 @@
   </header>
 
 
-<div class="entry-content"><p>今天大半天和<a href="http://blog.sina.com.cn/u/1245710794">wirlfly</a>在讨论setuid的问题，结论就看他的blog吧，我就偷懒剽窃他的帖子一次（也许会有很多下次的，呵呵）</p>
+<div class="entry-content"><p>今天大半天和 <a href="http://blog.sina.com.cn/u/1245710794">wirlfly</a> 在讨论 setuid 的问题，结论就看他的 blog 吧，我就偷懒剽窃他的帖子一次（也许会有很多下次的，呵呵）</p>
 
 <p>一下是他的帖子的内容</p>
 
 <!--more-->
 
 
-<p>在unix环境中setuid是一个很有创意的东西.善用者可以实现很多极其巧妙的东西,乱用者弄得系统千疮百孔.著名的缓冲区溢出攻击大多与其相关,因为setuid是基于提升权限的策略.</p>
+<p>在 unix 环境中 setuid 是一个很有创意的东西.善用者可以实现很多极其巧妙的东西,乱用者弄得系统千疮百孔.著名的缓冲区溢出攻击大多与其相关,因为 setuid 是基于提升权限的策略.</p>
 
-<p>服务器管理员并没有给我配备root的密码.而<code>/etc/sudoers</code>里面虽然我在root组,但是次次在sudo的时候要输入长长的密码,很是麻烦,
-或者干脆<code>sudo vi /etc/sudoers</code>,让组长看见了不好.呵呵.同时,对于shell内部命令,如cd之类的,<code>sudo cd</code>是不会成功的.虽然有其他的办法做到同样的功能,但是略显麻烦,因此想做一个setuid的shell,需要用内部命令的时候就用这个shell了.<br/>
+<p>服务器管理员并没有给我配备 root 的密码.而<code>/etc/sudoers</code>里面虽然我在 root 组,但是次次在 sudo 的时候要输入长长的密码,很是麻烦,
+或者干脆<code>sudo vi /etc/sudoers</code>,让组长看见了不好.呵呵.同时,对于 shell 内部命令,如 cd 之类的,<code>sudo cd</code>是不会成功的.虽然有其他的办法做到同样的功能,但是略显麻烦,因此想做一个 setuid 的 shell,需要用内部命令的时候就用这个 shell 了.<br/>
 藏好一点,或许组长不会知道.也不做什么坏事就是了.因此,测试开始了.
- 首先,代码a.c</p>
+ 首先,代码 a.c</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -125,18 +130,18 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>然后用非root帐号<code>./a</code>
-然后出现<code>$shell-version$</code> 敲<code>whoami</code> 居然得到的不是root.  立即<code>man whoami</code>,看看该命令是不是查看euid,结果whoami是查看euid.</p>
+<p>然后用非 root 帐号<code>./a</code>
+然后出现<code>$shell-version$</code> 敲<code>whoami</code> 居然得到的不是 root.  立即<code>man whoami</code>,看看该命令是不是查看 euid,结果 whoami 是查看 euid.</p>
 
-<p>后来想想莫非shell中执行进程时,进程只复制父进程的uid,而不是euid?忘记了,因此将execl中的命令写成了<code>/bin/vi</code>,结果还是不能打开诸如<code>/etc/shadow</code>,<code>geteuid()</code>一把之后,发现居然是540,而不是0.那么证明该策略行不通.</p>
+<p>后来想想莫非 shell 中执行进程时,进程只复制父进程的 uid,而不是 euid?忘记了,因此将 execl 中的命令写成了<code>/bin/vi</code>,结果还是不能打开诸如<code>/etc/shadow</code>,<code>geteuid()</code>一把之后,发现居然是 540,而不是 0.那么证明该策略行不通.</p>
 
-<p>翻开apue,讲到的也只是为什么要用<code>setuid()</code>函数来改变setuid的程序的保存-设置-用户-id的重要性.这点理解起来不难,但是并没有解决我的问题.突然记起,好像哪本书上讲过,bash是一个安全shell,它对限制setuid程序有些特殊的操作.莫非是bash的原因?
-因此,浏览了<code>/bin</code>目录,在/bin下面的sh是一个链接到<code>/bin/bash</code>的符号链接,而对于bash来说,是限制其自己的setuid执行的.所以直接使用另一个shell,/bin/ash,或者创建一个到ash的链接也可.</p>
+<p>翻开 apue,讲到的也只是为什么要用<code>setuid()</code>函数来改变 setuid 的程序的保存-设置-用户-id 的重要性.这点理解起来不难,但是并没有解决我的问题.突然记起,好像哪本书上讲过,bash 是一个安全 shell,它对限制 setuid 程序有些特殊的操作.莫非是 bash 的原因?
+因此,浏览了<code>/bin</code>目录,在/bin 下面的 sh 是一个链接到<code>/bin/bash</code>的符号链接,而对于 bash 来说,是限制其自己的 setuid 执行的.所以直接使用另一个 shell,/bin/ash,或者创建一个到 ash 的链接也可.</p>
 
 <p>在程序中,改成<code>execl("/bin/ash","/bin/ash",(char*)0),</code>编译之后,设置属主权限,ok.<br/>
-终于在whoami上是root了,同时<code>cd /root</code>是没有问题的.</p>
+终于在 whoami 上是 root 了,同时<code>cd /root</code>是没有问题的.</p>
 
-<p>说到此处,就不能不提臭名昭著的缓冲区溢出了,google缓冲区溢出,文章一大把,这里不再赘述.他的做法是将上面那段代码转成机器码之后放在堆栈桢上,当函数返回调用中断的地址时就执行了这段代码.因此大家窃取了root的euid了.</p>
+<p>说到此处,就不能不提臭名昭著的缓冲区溢出了,google 缓冲区溢出,文章一大把,这里不再赘述.他的做法是将上面那段代码转成机器码之后放在堆栈桢上,当函数返回调用中断的地址时就执行了这段代码.因此大家窃取了 root 的 euid 了.</p>
 </div>
 
 
@@ -228,8 +233,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/10/26/the-conclusions-of-dicussion-setuid-with-wirlfly/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/10/26/the-conclusions-of-dicussion-setuid-with-wirlfly/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/10/26/the-conclusions-of-dicussion-setuid-with-wirlfly/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/10/26/the-conclusions-of-dicussion-setuid-with-wirlfly/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="上午继续我的it732网站开发。没有太多进展，自顶向下设计方案和自底向上设计方案同时在用，因此有时两个方案没有走在同一条路上，设计和开发一个人还真累。 下午去面试了一家培训机构，也许是我的简历做的不够吧，没有太多“精通”的东西，导致别人怀疑我对Linux不熟悉。希望我能多用命令行工作。 &hellip;">
+  <meta name="description" content="上午继续我的 it732 网站开发。没有太多进展，自顶向下设计方案和自底向上设计方案同时在用，因此有时两个方案没有走在同一条路上，设计和开发一个人还真累。 下午去面试了一家培训机构，也许是我的简历做的不够吧，没有太多“精通”的东西，导致别人怀疑我对 Linux 不熟悉。希望我能多用命令行工作。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,28 +99,28 @@
   </header>
 
 
-<div class="entry-content"><p>上午继续我的<a href="http://www.it732.com">it732</a>网站开发。没有太多进展，自顶向下设计方案和自底向上设计方案同时在用，因此有时两个方案没有走在同一条路上，设计和开发一个人还真累。</p>
+<div class="entry-content"><p>上午继续我的 <a href="http://www.it732.com">it732</a> 网站开发。没有太多进展，自顶向下设计方案和自底向上设计方案同时在用，因此有时两个方案没有走在同一条路上，设计和开发一个人还真累。</p>
 
-<p>下午去面试了一家培训机构，也许是我的简历做的不够吧，没有太多“精通”的东西，导致别人怀疑我对Linux不熟悉。希望我能多用命令行工作。而且他们的要求也很高，大部分的东西都要精通，他们定义的精通是了解所有，了解每一个细节，比如你需要了解所有cisco产品，并精通它。或许真能找到这样的人吧，至少在他们培训机构的现有人员应该是达到了这个水平（否则怎么招聘你来？）
+<p>下午去面试了一家培训机构，也许是我的简历做的不够吧，没有太多“精通”的东西，导致别人怀疑我对 Linux 不熟悉。希望我能多用命令行工作。而且他们的要求也很高，大部分的东西都要精通，他们定义的精通是了解所有，了解每一个细节，比如你需要了解所有 cisco 产品，并精通它。或许真能找到这样的人吧，至少在他们培训机构的现有人员应该是达到了这个水平（否则怎么招聘你来？）
 &lt;!-more&mdash;>
-接着带我参观了他们的培训教室和机房，网络机房里刚好有两个学生在练习，面试的人对我说，你看看这些系统你用过吗？这句话很有诱惑力，虽然在门外我已经知道他们在用什么系统，但是我还是进去了，一个人在用着windows
-2000，另外一个人也在用着windows 2000，只是用虚拟机跑了一个<a href="http://www.redhat.com">RedHat</a>
-9.0，庆幸我能说出这两个系统的名字，更应该庆祝我能说出linux系统的内核版本。不过人家纠正我说，那不是真正的linux，那是用虚拟机运行的，我做恍然大悟状，哦，那<a href="http://fabrice.bellard.free.fr/qemu/">qemu</a>似乎也能做这个吧。</p>
+接着带我参观了他们的培训教室和机房，网络机房里刚好有两个学生在练习，面试的人对我说，你看看这些系统你用过吗？这句话很有诱惑力，虽然在门外我已经知道他们在用什么系统，但是我还是进去了，一个人在用着 windows
+2000，另外一个人也在用着 windows 2000，只是用虚拟机跑了一个 <a href="http://www.redhat.com">RedHat</a>
+9.0，庆幸我能说出这两个系统的名字，更应该庆祝我能说出 linux 系统的内核版本。不过人家纠正我说，那不是真正的 linux，那是用虚拟机运行的，我做恍然大悟状，哦，那 <a href="http://fabrice.bellard.free.fr/qemu/">qemu</a> 似乎也能做这个吧。</p>
 
-<p>回头看我的简历，只写了&#8221;精通Linux操作系统及其各种服务配置&#8221;，写的时候诚惶诚恐，精通，在我的眼里，那是渴望不可及的一个境界，我知道我对Linux的认识才开始。没有在Linux下做过太多的开发，没有认真阅读过Linux内核代码，顶多算是Linux的爱好者和折腾者，精通者，远在天边。</p>
+<p>回头看我的简历，只写了&#8221;精通 Linux 操作系统及其各种服务配置&#8221;，写的时候诚惶诚恐，精通，在我的眼里，那是渴望不可及的一个境界，我知道我对 Linux 的认识才开始。没有在 Linux 下做过太多的开发，没有认真阅读过 Linux 内核代码，顶多算是 Linux 的爱好者和折腾者，精通者，远在天边。</p>
 
 <p>或许长沙对人才的要求太高，还是北京对人才的要求太低，我不理解。</p>
 
-<p>正式面试前我有十几分钟等待时间，旁听了几分钟在机房的课程，应该是讲网络应用吧（似乎BENT没有这个课），听到了精通~络的讲师这么一段，大意是这样：</p>
+<p>正式面试前我有十几分钟等待时间，旁听了几分钟在机房的课程，应该是讲网络应用吧（似乎 BENT 没有这个课），听到了精通~络的讲师这么一段，大意是这样：</p>
 
-<blockquote><p>“网页有静态和动态&hellip;&hellip;.其实动态的网页基本上从网页文件名后缀可以看出来，比如asp结尾的，比如php，比如jsp，当然还有，比如cgi结尾的，
-<strong>比如xhtml，比如shtml，比如XML</strong>&hellip;..&#8221;</p></blockquote>
+<blockquote><p>“网页有静态和动态&hellip;&hellip;.其实动态的网页基本上从网页文件名后缀可以看出来，比如 asp 结尾的，比如 php，比如 jsp，当然还有，比如 cgi 结尾的，
+<strong>比如 xhtml，比如 shtml，比如 XML</strong>&hellip;..&#8221;</p></blockquote>
 
-<p>看来果然是精通网络人士了，XML要是有交互功能，那世界将会变成怎样？</p>
+<p>看来果然是精通网络人士了，XML 要是有交互功能，那世界将会变成怎样？</p>
 
 <p>走出这个培训机构我在想，我是为自己的能力不足汗颜，还是应该考虑别的。</p>
 
-<p>晚上和网讯的另外一个股东交换了意见，给他看了一些优秀的web2.0的网站和他们的现有以及潜在价值，当然包括连今天《新闻联播》都报道的Google收购youtube。我的目的是要让相信，并不总是满屏显示的首页超过看上去简陋的首页，都会说google的首页简单~但没有人敢说他的功能简单（也许百度的CTO会这样说吧）。</p>
+<p>晚上和网讯的另外一个股东交换了意见，给他看了一些优秀的 web2.0 的网站和他们的现有以及潜在价值，当然包括连今天《新闻联播》都报道的 Google 收购 youtube。我的目的是要让相信，并不总是满屏显示的首页超过看上去简陋的首页，都会说 google 的首页简单~但没有人敢说他的功能简单（也许百度的 CTO 会这样说吧）。</p>
 
 <p>定义的标准应该是用户的体验。说服了他们，我的首页就容易得多了。</p>
 
@@ -211,8 +216,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/10/10/mastering-what-it-means/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/10/10/mastering-what-it-means/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/10/10/mastering-what-it-means/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/10/10/mastering-what-it-means/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

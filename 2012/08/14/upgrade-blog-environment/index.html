@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="系统升级到Mountain Lion后，发现我的blog编译环境不能正常使用了，我的blog放弃wordpress，采取了octopress，这玩意儿的好处是全静态，搬家的时候很容易，甚至可以随时搬迁到github，dropbox这类的空间上都没以问题。
-麻烦的就是那套环境，ruby本来也不熟悉， &hellip;">
+  <meta name="description" content="系统升级到 Mountain Lion 后，发现我的 blog 编译环境不能正常使用了，我的 blog 放弃 wordpress，采取了 octopress，这玩意儿的好处是全静态，搬家的时候很容易，甚至可以随时搬迁到 github，dropbox这类的空间上都没以问题。麻烦的就是那套环境， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,12 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>系统升级到Mountain Lion后，发现我的blog编译环境不能正常使用了，我的blog放弃<a href="http://www.wordpress.org" title="wordpress">wordpress</a>，采取了<a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>，这玩意儿的好处是全静态，搬家的时候很容易，甚至可以随时搬迁到<a href="http://github.com" title="github">github</a>，<a href="http://www.dropbox.com" title="dropbox">dropbox</a>这类的空间上都没以问题。<br/>
-麻烦的就是那套环境，<a href="http://www.ruby.org" title="ruby">ruby</a>本来也不熟悉，所以搞起来比较痛苦。
-昨晚花了3个多小时才搞定，不停的清理环境，重新安装。<br/>
-其中有两个问题记录如下 <br/>
-一个是gcc的问题，<a href="http://www.ruby.org" title="ruby">ruby</a>一些组件的编译并不支持Mac自带的llvm-gcc特性。因此需要自行编译一个gcc，当然自己编译太痛苦了，幸运的是<a href="http://hpc.sourceforge.net/" title="High Performance Computer for Mac OS X">HPC for Mac OS X</a>网站已经编译好了针对Mac的，可以从其网站直接下载，省去的编译的痛苦
-另外出现的一个问题是在执行<code>bundle install</code>的时候，会给出下面的报错</p>
+<div class="entry-content"><p>系统升级到 Mountain Lion 后，发现我的 blog 编译环境不能正常使用了，我的 blog 放弃 <a href="http://www.wordpress.org" title="wordpress">wordpress</a>，采取了 <a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>，这玩意儿的好处是全静态，搬家的时候很容易，甚至可以随时搬迁到 <a href="http://github.com" title="github">github</a>，<a href="http://www.dropbox.com" title="dropbox">dropbox</a>这类的空间上都没以问题。麻烦的就是那套环境，<a href="http://www.ruby.org" title="ruby">ruby</a>本来也不熟悉，所以搞起来比较痛苦。昨晚花了 3 个多小时才搞定，不停的清理环境，重新安装。其中有两个问题记录如下一个是 gcc 的问题，<a href="http://www.ruby.org" title="ruby">ruby</a>一些组件的编译并不支持 Mac 自带的 llvm-gcc 特性。因此需要自行编译一个 gcc，当然自己编译太痛苦了，幸运的是 <a href="http://hpc.sourceforge.net/" title="High Performance Computer for Mac OS X">HPC for Mac OS X</a>网站已经编译好了针对 Mac 的，可以从其网站直接下载，省去的编译的痛苦另外出现的一个问题是在执行<code>bundle install</code>的时候，会给出下面的报错</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -110,12 +109,12 @@
 </span><span class='line'>greater than 8 (Mac OS X 10.5+) are supported (RuntimeError)</span></code></pre></td></tr></table></div></figure>
 
 
-<p>这个报错的原因是<a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>需要的<a href="https://github.com/thibaudgg/rb-fsevent/" title="rb-fsevent">rb-fsevent</a>的版本是<code>0.4.3.1</code>，这个版本还不支持Mountain Lion。简单的处理办法是修改<code>ext/extconf.rb</code>文件，找到19行，如下:
+<p>这个报错的原因是 <a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>需要的 <a href="https://github.com/thibaudgg/rb-fsevent/" title="rb-fsevent">rb-fsevent</a>的版本是<code>0.4.3.1</code>，这个版本还不支持 Mountain Lion。简单的处理办法是修改<code>ext/extconf.rb</code>文件，找到 19 行，如下:
 <code>sdk_version    = { 9 =&gt; '10.5', 10 =&gt; '10.6', 11 =&gt; '10.7' }[darwin_version]</code><br/>
 修改为
 <code>sdk_version    = { 9 =&gt; '10.5', 10 =&gt; '10.6', 11 =&gt; '10.7',12=&gt;'10.8' }[darwin_version]</code></p>
 
-<p>删除第24行内容，如下</p>
+<p>删除第 24 行内容，如下</p>
 
 <p><code>-isysroot #{xcode_path}/SDKs/MacOSX#{sdk_version}.sdk</code></p>
 
@@ -211,8 +210,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2012/08/14/upgrade-blog-environment/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/14/upgrade-blog-environment/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2012/08/14/upgrade-blog-environment/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/14/upgrade-blog-environment/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

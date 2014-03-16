@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="如果你想只处理文件的一部分，譬如头几行或后几行，你可以使用 head（它将头 10 行发送至标准输出）或 tail（它将后 10 行发送至标准输出）。
-您可以通过使用-n选项改变这些命令发送至其标准输出的行数（当然，输出结果将随 XF86Config 文件的内容而不同）： 请看下面的例子： $ &hellip;">
+  <meta name="description" content="如果你想只处理文件的一部分，譬如头几行或后几行，你可以使用 head（它将头 10 行发送至标准输出）或 tail（它将后 10 行发送至标准输出）。您可以通过使用-n选项改变这些命令发送至其标准输出的行数（当然，输出结果将随 XF86Config 文件的内容而不同）： 请看下面的例子： $ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,8 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>如果你想只处理文件的一部分，譬如头几行或后几行，你可以使用 head（它将头 10 行发送至标准输出）或 tail（它将后 10 行发送至标准输出）。
-您可以通过使用<code>-n</code>选项改变这些命令发送至其标准输出的行数（当然，输出结果将随 XF86Config 文件的内容而不同）：</p>
+<div class="entry-content"><p>如果你想只处理文件的一部分，譬如头几行或后几行，你可以使用 head（它将头 10 行发送至标准输出）或 tail（它将后 10 行发送至标准输出）。您可以通过使用<code>-n</code>选项改变这些命令发送至其标准输出的行数（当然，输出结果将随 XF86Config 文件的内容而不同）：</p>
 
 <!--more-->
 
@@ -136,8 +139,7 @@ EndSection
 
 <p>通过组合使用 head 和 tail，可以从文件的中间部分读取给定长度的一块数据！下面说明如何做到：假定您想从文件开头算起第 1000 字节处开始读取一块 789 字节的数据。可以使用 <code>cat file | head -c 1788 | tail -c 789</code> 来解决这一问题。</p>
 
-<p>使用 tac 命令逆序排序文件
-如果您想对文件中的各行进行逆序排序，该怎么做呢？这就要用到 tac 命令。（请注意，tac 由 cat 逆序拼写而成。）该命令对所列出的文件中的各行或各段进行逆序排序。</p>
+<p>使用 tac 命令逆序排序文件如果您想对文件中的各行进行逆序排序，该怎么做呢？这就要用到 tac 命令。（请注意，tac 由 cat 逆序拼写而成。）该命令对所列出的文件中的各行或各段进行逆序排序。</p>
 
 <p>该命令不能逆序排序各文件的顺序 — 这个任务您得自己做，以逆向顺序在 tac 命令后列出各文件即可。作为说明 tac 的工作原理的示例，请在您的主目录中对一些文件使用 <code>ls -l | tail</code> 和 <code>ls -l | tail | tac</code>，比较其结果。</p>
 </div>
@@ -231,8 +233,8 @@ EndSection
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

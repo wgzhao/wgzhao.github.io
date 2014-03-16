@@ -9,9 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="*nix实行埋头苦干的哲学，因此很多命令都是执行完成后，什么也不说，很多以为是没有执行或者说报错了，其他他们都是默默无闻的英雄，不喜欢作秀。
-dd命令虽然最后给出了读了多少，写了多少块，但是看不到实际的进程，会让人有些不安。因此搞一个简单的办法，满足这些人的要求：
-开两个终端， &hellip;">
+  <meta name="description" content="*nix 实行埋头苦干的哲学，因此很多命令都是执行完成后，什么也不说，很多以为是没有执行或者说报错了，其他他们都是默默无闻的英雄，不喜欢作秀。
+dd 命令虽然最后给出了读了多少，写了多少块，但是看不到实际的进程，会让人有些不安。因此搞一个简单的办法，满足这些人的要求：开两个终端， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +30,11 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,28 +100,27 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-<div class="entry-content"><p>*nix实行埋头苦干的哲学，因此很多命令都是执行完成后，什么也不说，很多以为是没有执行或者说报错了，其他他们都是默默无闻的英雄，不喜欢作秀。<br/>
-dd命令虽然最后给出了读了多少，写了多少块，但是看不到实际的进程，会让人有些不安。因此搞一个简单的办法，满足这些人的要求：<br/>
-开两个终端，第一个终端里输入下面的命令：<code>watch -n3 pkill -USR1 ^dd$</code></p>
+<div class="entry-content"><p>*nix 实行埋头苦干的哲学，因此很多命令都是执行完成后，什么也不说，很多以为是没有执行或者说报错了，其他他们都是默默无闻的英雄，不喜欢作秀。<br/>
+dd 命令虽然最后给出了读了多少，写了多少块，但是看不到实际的进程，会让人有些不安。因此搞一个简单的办法，满足这些人的要求：开两个终端，第一个终端里输入下面的命令：<code>watch -n3 pkill -USR1 ^dd$</code></p>
 
 <!--more-->
 
 
-<p>第二个终端，正常输入你的dd命令，然后你就能每隔3秒种看到dd程序的进度状态了，就像我的输出这样：</p>
+<p>第二个终端，正常输入你的 dd 命令，然后你就能每隔 3 秒种看到 dd 程序的进度状态了，就像我的输出这样：</p>
 
 <pre><code>dd if=/dev/zero of=/tmp/demo bs=1M count=1204
 记录了 77+0 的读入
 记录了 77+0 的写出
-80740352字节(81 MB)已复制，2.56254 秒，31.5 MB/秒
+80740352 字节(81 MB)已复制，2.56254 秒，31.5 MB/秒
 记录了 113+0 的读入
 记录了 113+0 的写出
-118489088字节(118 MB)已复制，4.47009 秒，26.5 MB/秒
+118489088 字节(118 MB)已复制，4.47009 秒，26.5 MB/秒
 记录了 125+0 的读入
 记录了 125+0 的写出
-131072000字节(131 MB)已复制，6.03646 秒，21.7 MB/秒
+131072000 字节(131 MB)已复制，6.03646 秒，21.7 MB/秒
 </code></pre>
 
-<p>当然其显示的频率决定于你的watch命令后面-n的参数了。</p>
+<p>当然其显示的频率决定于你的 watch 命令后面-n 的参数了。</p>
 </div>
 
 
@@ -209,8 +212,8 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/06/17/Dd-give-a-progress-report/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/17/Dd-give-a-progress-report/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/06/17/Dd-give-a-progress-report/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/17/Dd-give-a-progress-report/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

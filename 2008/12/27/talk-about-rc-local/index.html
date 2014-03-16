@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/etc/rc.d/rc.local似乎是很多linux系统管理员的偏爱，因为凡是需要随系统自动启动的服务、程序等，只要系统没有提供SysV风格的启动脚本，就把这些需求都塞到/etc/rc.d/rc.local。 当然，绝大部分情况下，你会发现这一切都工作得很正常，看上去也很美好。
-不过， &hellip;">
+  <meta name="description" content="/etc/rc.d/rc.local似乎是很多 linux 系统管理员的偏爱，因为凡是需要随系统自动启动的服务、程序等，只要系统没有提供 SysV 风格的启动脚本，就把这些需求都塞到/etc/rc.d/rc.local。 当然，绝大部分情况下，你会发现这一切都工作得很正常，看上去也很美好。不过， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,10 +99,9 @@
   </header>
 
 
-<div class="entry-content"><p><code>/etc/rc.d/rc.local</code>似乎是很多linux系统管理员的偏爱，因为凡是需要随系统自动启动的服务、程序等，只要系统没有提供SysV风格的启动脚本，就把这些需求都塞到<code>/etc/rc.d/rc.local</code>。</p>
+<div class="entry-content"><p><code>/etc/rc.d/rc.local</code>似乎是很多 linux 系统管理员的偏爱，因为凡是需要随系统自动启动的服务、程序等，只要系统没有提供 SysV 风格的启动脚本，就把这些需求都塞到<code>/etc/rc.d/rc.local</code>。</p>
 
-<p>当然，绝大部分情况下，你会发现这一切都工作得很正常，看上去也很美好。<br/>
-不过，当你遇到了一些诡异的问题的时候，也许你应该好好的去看看<code>/etc/rc.d/rc.local</code>里都写了什么了？</p>
+<p>当然，绝大部分情况下，你会发现这一切都工作得很正常，看上去也很美好。不过，当你遇到了一些诡异的问题的时候，也许你应该好好的去看看<code>/etc/rc.d/rc.local</code>里都写了什么了？</p>
 
 <!--more-->
 
@@ -106,20 +109,20 @@
 <p>虽然<code>/etc/rc.d/rc.local</code> 的描述是你可以把你需要的自动启动的程序放到这里，不过那仅仅只是限于没有别的地方可以放置了，或者说系统也没有提供其他办法了，我们才这么干，然而实际上，我碰到的很多<code>/etc/rc.d/rc.local</code>里放置的内容，其实系统提供了更好的处理方式：</p>
 
 <ol>
-<li><p>oracle等服务器的启动：如果你需要你的oracle可以随着系统一起启动，你可以去看看<code>/etc/oratab</code>这个文件，然后去了解它，你就会发现这里才是它正确的位置所在</p></li>
+<li><p>oracle 等服务器的启动：如果你需要你的 oracle 可以随着系统一起启动，你可以去看看<code>/etc/oratab</code>这个文件，然后去了解它，你就会发现这里才是它正确的位置所在</p></li>
 <li><p>静态路由： 对于需要增加大量的不是本网段的路由时，很多人喜欢在<code>/etc/rc.d/rc.local</code>里添加类似</p>
 
 <pre><code> route add -net 192.168.1.0 netmask 255.255.255.0 gw 10.224.0.251 
  route add -host 192.168.100.1 gw 10.224.0.251
 </code></pre>
 
-<p> 这样的语句，实际上，系统也提供了它正确放置的位置，只不过这个文件默认不会存在，你之需要看看<code>/etc/init.d/network</code>这个脚本就知道了，它除了会把网卡带起来以外，还会去检查是否存在<code>/etc/sysconfig/static-routes</code>文件，如果有，则添加这些文件里记录的静态路由，其格式很简单，比如上面的两条语句换成static-routes要求的格式就是：</p>
+<p> 这样的语句，实际上，系统也提供了它正确放置的位置，只不过这个文件默认不会存在，你之需要看看<code>/etc/init.d/network</code>这个脚本就知道了，它除了会把网卡带起来以外，还会去检查是否存在<code>/etc/sysconfig/static-routes</code>文件，如果有，则添加这些文件里记录的静态路由，其格式很简单，比如上面的两条语句换成 static-routes 要求的格式就是：</p>
 
 <pre><code> any -net 192.168.1.0 netmask 255.255.255.0 gw 10.224.0.254 
  any -host 192.168.100.1 gw 10.244.0.254
 </code></pre></li>
-<li><p>修改设备权限信息：对于有udev功能的核心来说，修改设备的属性，权限等，应该去找对应rules文件，在那些文件里去做对应的修改。</p></li>
-<li><p>其他需要运行的程序：还是自己写一个简单的符合LSB标准的启动脚本吧，这样系统能够帮你正确的启动并且正确的停止改服务，特别是正确的停止服务，而不是由系统简单发出<code>kill -9</code>的方式。</p></li>
+<li><p>修改设备权限信息：对于有 udev 功能的核心来说，修改设备的属性，权限等，应该去找对应 rules 文件，在那些文件里去做对应的修改。</p></li>
+<li><p>其他需要运行的程序：还是自己写一个简单的符合 LSB 标准的启动脚本吧，这样系统能够帮你正确的启动并且正确的停止改服务，特别是正确的停止服务，而不是由系统简单发出<code>kill -9</code>的方式。</p></li>
 </ol>
 
 
@@ -217,8 +220,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/12/27/talk-about-rc-local/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/12/27/talk-about-rc-local/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/12/27/talk-about-rc-local/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/12/27/talk-about-rc-local/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

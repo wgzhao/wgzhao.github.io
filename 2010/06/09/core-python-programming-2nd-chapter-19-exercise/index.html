@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="因为这一章是图形化编程，第一版和第二版都只是简单的描述了一下Tkinter如何使用。其他模块，比如PyGtk,WxPython更加是一笔带过了，所以要完成后面的习题，还得自己找一些资料看。 关于Tkinter的资料，国内不过，基本上还是官方文档为主， &hellip;">
+  <meta name="description" content="因为这一章是图形化编程，第一版和第二版都只是简单的描述了一下 Tkinter 如何使用。其他模块，比如 PyGtk,WxPython 更加是一笔带过了，所以要完成后面的习题，还得自己找一些资料看。 关于 Tkinter 的资料，国内不过，基本上还是官方文档为主，Python 官方站点给出了一个关于 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,19 +99,17 @@
   </header>
 
 
-<div class="entry-content"><p>因为这一章是图形化编程，第一版和第二版都只是简单的描述了一下Tkinter如何使用。其他模块，比如PyGtk,WxPython更加是一笔带过了，所以要完成后面的习题，还得自己找一些资料看。</p>
+<div class="entry-content"><p>因为这一章是图形化编程，第一版和第二版都只是简单的描述了一下 Tkinter 如何使用。其他模块，比如 PyGtk,WxPython 更加是一笔带过了，所以要完成后面的习题，还得自己找一些资料看。</p>
 
-<p>关于Tkinter的资料，国内不过，基本上还是官方文档为主，Python官方站点给出了一个关于Tkinter的专题，<a href="http://wiki.python.org/moin/TkInter">集中了一些资料</a>，感兴趣的可以看看。</p>
+<p>关于 Tkinter 的资料，国内不过，基本上还是官方文档为主，Python 官方站点给出了一个关于 Tkinter 的专题，<a href="http://wiki.python.org/moin/TkInter">集中了一些资料</a>，感兴趣的可以看看。</p>
 
-<blockquote><p>19–8.简单的文本编辑器。在您上一题答案的基础上创建一个简单的文本编辑器。可以用剪贴板或读文件的方式
-在一个文本域里显示一些文字供用户编辑。当用户退出程序时(通过 QUIT 按钮或 Quit/Exit 菜单项)
-会询问用户是否保存所作的修改。附加题:给您的脚本添加一个拼写检查接口,增加一个按钮或菜单项来对文件
-进行拼写检查。拼写错误的词句应在文本域组件中用不同的背景或前景色高亮显示出来。</p></blockquote>
+<blockquote><p>19–8.简单的文本编辑器。在您上一题答案的基础上创建一个简单的文本编辑器。可以用剪贴板或读文件的方式在一个文本域里显示一些文字供用户编辑。当用户退出程序时(通过 QUIT 按钮或 Quit/Exit 菜单项)
+会询问用户是否保存所作的修改。附加题:给您的脚本添加一个拼写检查接口,增加一个按钮或菜单项来对文件进行拼写检查。拼写错误的词句应在文本域组件中用不同的背景或前景色高亮显示出来。</p></blockquote>
 
 <!--more-->
 
 
-<p>这个习题基本上包括了这张习题的全部内容，因此重点完成这个。目前写的代码还是完成了题目的要求。其中单词拼写检查利用了系统的spell程序，所以要先安装这个程序，拼写检查才能有效。下面是代码</p>
+<p>这个习题基本上包括了这张习题的全部内容，因此重点完成这个。目前写的代码还是完成了题目的要求。其中单词拼写检查利用了系统的 spell 程序，所以要先安装这个程序，拼写检查才能有效。下面是代码</p>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e19.py could not be found</p>
 
@@ -204,8 +207,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/06/09/core-python-programming-2nd-chapter-19-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/06/09/core-python-programming-2nd-chapter-19-exercise/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/06/09/core-python-programming-2nd-chapter-19-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/06/09/core-python-programming-2nd-chapter-19-exercise/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="这一章主要是网络客户端编程，讨论了包括SMTP，POP3，FTP，URL在内的一些编程技术。Python针对网络编程有一个非常强大的模块，那就是Twisted，这个工具太强大，以至于有专门的书籍来讲述如何使用。 后面的习题大部分都是写一些代码片段，比如获取一个页面，连接一个FTP服务器， &hellip;">
+  <meta name="description" content="这一章主要是网络客户端编程，讨论了包括 SMTP，POP3，FTP，URL 在内的一些编程技术。Python 针对网络编程有一个非常强大的模块，那就是 Twisted，这个工具太强大，以至于有专门的书籍来讲述如何使用。 后面的习题大部分都是写一些代码片段，比如获取一个页面，连接一个 FTP 服务器 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,9 +99,9 @@
   </header>
 
 
-<div class="entry-content"><p>这一章主要是网络客户端编程，讨论了包括SMTP，POP3，FTP，URL在内的一些编程技术。Python针对网络编程有一个非常强大的模块，那就是<a href="http://twistedmatrix.com">Twisted</a>，这个工具太强大，以至于<a href="http://www.amazon.com/gp/product/0596100329?ie=UTF8&amp;tag=jpcalsjou-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0596100329">有专门的书籍</a>来讲述如何使用。</p>
+<div class="entry-content"><p>这一章主要是网络客户端编程，讨论了包括 SMTP，POP3，FTP，URL 在内的一些编程技术。Python 针对网络编程有一个非常强大的模块，那就是 <a href="http://twistedmatrix.com">Twisted</a>，这个工具太强大，以至于<a href="http://www.amazon.com/gp/product/0596100329?ie=UTF8&amp;tag=jpcalsjou-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0596100329">有专门的书籍</a>来讲述如何使用。</p>
 
-<p>后面的习题大部分都是写一些代码片段，比如获取一个页面，连接一个FTP服务器，连接你的邮箱。</p>
+<p>后面的习题大部分都是写一些代码片段，比如获取一个页面，连接一个 FTP 服务器，连接你的邮箱。</p>
 
 <!--more-->
 
@@ -104,14 +109,12 @@
 <p>我选取了修改这张描述的网页抓取代码修改作为练习。主要是做了两个工作：</p>
 
 <ul>
-<li>用新的一些模块替换即将过期的模块，比如HTMLParser</li>
+<li>用新的一些模块替换即将过期的模块，比如 HTMLParser</li>
 <li>加入了多线程功能，使得当网站很大的时候，下载速度加快了很多。</li>
 </ul>
 
 
-<p>不过加入这个多线程后，暂时有一个问题我不能解决。就是如何保证线程是在所有的页面都下载完后才全退出。
-目前的做法是一个无线循环，除非你杀死，否则不会退出。
-另外，对于图片等资源目前还无法处理，我打算专门写一个脚本来镜像某一个网站的图片资源，嘿嘿，用处嘛，你懂的。 下面是简陋的代码</p>
+<p>不过加入这个多线程后，暂时有一个问题我不能解决。就是如何保证线程是在所有的页面都下载完后才全退出。目前的做法是一个无线循环，除非你杀死，否则不会退出。另外，对于图片等资源目前还无法处理，我打算专门写一个脚本来镜像某一个网站的图片资源，嘿嘿，用处嘛，你懂的。 下面是简陋的代码</p>
 
 <p>File /Users/wgzhao/Codes/wgzhao.github.io/source/downloads/code/cpp2nd/e20.py could not be found</p>
 </div>
@@ -205,8 +208,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/06/10/core-python-programming-2nd-chapter-20-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/06/10/core-python-programming-2nd-chapter-20-exercise/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/06/10/core-python-programming-2nd-chapter-20-exercise/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/06/10/core-python-programming-2nd-chapter-20-exercise/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

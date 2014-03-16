@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="这两天一直在测试IBM OpenPower上运行RedFlag
-DC5.0 for pSeries是不是能够正常连接EMCCLARiiON
-CX系列存储。同时也测试了基于device-mapper的device-mapper-multipath工具。 具体的技术细节，大家可以看相关的连接。 &hellip;">
+  <meta name="description" content="这两天一直在测试 IBM OpenPower 上运行 RedFlag
+DC5.0 for pSeries 是不是能够正常连接 EMCCLARiiON
+CX 系列存储。同时也测试了基于 device-mapper 的 device-mapper-multipath 工具。 具体的技术细节， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@ CX系列存储。同时也测试了基于device-mapper的device-mapper-multipath
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,27 +101,25 @@ CX系列存储。同时也测试了基于device-mapper的device-mapper-multipath
   </header>
 
 
-<div class="entry-content"><p>这两天一直在测试<a href="http://www.ibm.com">IBM</a> <a href="http://www-900.ibm.com/cn/servers/eserver/openpower/">OpenPower</a>上运行RedFlag
-DC5.0 for pSeries是不是能够正常连接<a href="http://www.emc.com">EMC</a><a href="http://china.emc.com/products/systems//products/systems/clariion.jsp#cx">CLARiiON
-CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/dm/">device-mapper</a>的<a href="http://christophe.varoqui.free.fr/wiki/wakka.php?wiki=Home">device-mapper-multipath</a>工具。</p>
+<div class="entry-content"><p>这两天一直在测试 <a href="http://www.ibm.com">IBM</a> <a href="http://www-900.ibm.com/cn/servers/eserver/openpower/">OpenPower</a> 上运行 RedFlag
+DC5.0 for pSeries 是不是能够正常连接 <a href="http://www.emc.com">EMC</a><a href="http://china.emc.com/products/systems//products/systems/clariion.jsp#cx">CLARiiON
+CX 系列存储</a>。同时也测试了基于 <a href="http://sources.redhat.com/dm/">device-mapper</a> 的 <a href="http://christophe.varoqui.free.fr/wiki/wakka.php?wiki=Home">device-mapper-multipath</a> 工具。</p>
 
-<p>具体的技术细节，大家可以看相关的连接。
-下面是我的测试手记，大家look一下：</p>
+<p>具体的技术细节，大家可以看相关的连接。下面是我的测试手记，大家 look 一下：</p>
 
 <!--more-->
 
 
 <h2>测试目的：</h2>
 
-<p>测试在 OpenPower环境下，通过红旗DC5.0连接上EMC CX存储，并使用系统自带<code>device-mapper-multipat</code>h软件来测试多路径的冗余和负载均衡功能，以保证用户数据的高可用性和高可靠性。
-测试方法：</p>
+<p>测试在 OpenPower 环境下，通过红旗 DC5.0 连接上 EMC CX 存储，并使用系统自带<code>device-mapper-multipat</code>h 软件来测试多路径的冗余和负载均衡功能，以保证用户数据的高可用性和高可靠性。测试方法：</p>
 
 <p>为了保证用户数据的可用性和可靠性，测试方法如下：</p>
 
 <ol>
-<li>可用性测试：OpenPower通过光纤交换机与EMC存储正确连接，并能在OpenPower上的红旗Linux正确识别，正确读写数据。</li>
-<li>可靠性测试：通过MPIO（MultiPath IO,即多路径IO)，对EMC
-存储进行数据读写，以获取相关IO传输状态的数据。并且，在数据读写过程中，分别拔掉光纤线和连接EMC
+<li>可用性测试：OpenPower 通过光纤交换机与 EMC 存储正确连接，并能在 OpenPower 上的红旗 Linux 正确识别，正确读写数据。</li>
+<li>可靠性测试：通过 MPIO（MultiPath IO,即多路径 IO)，对 EMC
+存储进行数据读写，以获取相关 IO 传输状态的数据。并且，在数据读写过程中，分别拔掉光纤线和连接 EMC
 存储的当前活动控制器的光纤线，造成路径失败，以考察路径切换性能，随后再重新接入光纤线，以考察路径“愈合”性能。</li>
 </ol>
 
@@ -125,61 +128,57 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
 
 <p>通过一天紧张的测试，达到本次测试预期目标，测试成功。</p>
 
-<p>在OpenPower机型上，使用红旗Linux系统，能够做到：<br/>
-1. 正确访问EMC CX存储。
-2. 通过使用系统自带的device-mapper-multipath软件，能够以负载均衡的方案访问EMC CX存储。
-3. 当一条光纤或者EMC CX存储的单个控制器失效时，系统自动切换路径，并能持续读写存储设备，保证数据的可靠性。</p>
+<p>在 OpenPower 机型上，使用红旗 Linux 系统，能够做到：<br/>
+1. 正确访问 EMC CX 存储。
+2. 通过使用系统自带的 device-mapper-multipath 软件，能够以负载均衡的方案访问 EMC CX 存储。
+3. 当一条光纤或者 EMC CX 存储的单个控制器失效时，系统自动切换路径，并能持续读写存储设备，保证数据的可靠性。</p>
 
 <h2>测试环境：</h2>
 
 <p>服务器：OpenPower 710 (1CPU/1G Mem/73.4G)<br/>
-光纤卡： Emulex lp10000 HBA卡两块<br/>
-交换机：Brocade 2400 一台,McData 140M一台<br/>
-存储： EMC CX500 Realease 19 (双控制器)<br/>
+光纤卡： Emulex lp10000 HBA 卡两块交换机：Brocade 2400 一台,McData 140M 一台存储： EMC CX500 Realease 19 (双控制器)<br/>
 操作系统：RedFlag DC 5.0 for IBM pSeries</p>
 
 <h2>测试步骤</h2>
 
 <ol>
-<li><p>部署测试环境，主机上两块Emulex光线卡连接到光纤交换机，通过光纤交换机再连接到EMC CX存储，形成SAN拓扑结构。并划分1个100G的LUN分配给主机。</p></li>
-<li><p>主机安装操作系统（测试前准备），安装最新版的device-mapper-multipath软件包。
-通过device-mapper-multipath用户工具来验证多路径的负载均衡及路径失效切换功能：
-使用fdisk命令能看到系统识别出来的4个磁盘设备,这是多条路径得到的设备名，实际上指向存储上的同一个LUN，这说明红旗操作系统已经正确识别到了EMC CX存储划分出来的LUN，并为下一步多路径管理作准备。命令及输出如下：</p>
+<li><p>部署测试环境，主机上两块 Emulex 光线卡连接到光纤交换机，通过光纤交换机再连接到 EMC CX 存储，形成 SAN 拓扑结构。并划分 1 个 100G 的 LUN 分配给主机。</p></li>
+<li><p>主机安装操作系统（测试前准备），安装最新版的 device-mapper-multipath 软件包。通过 device-mapper-multipath 用户工具来验证多路径的负载均衡及路径失效切换功能：使用 fdisk 命令能看到系统识别出来的 4 个磁盘设备,这是多条路径得到的设备名，实际上指向存储上的同一个 LUN，这说明红旗操作系统已经正确识别到了 EMC CX 存储划分出来的 LUN，并为下一步多路径管理作准备。命令及输出如下：</p>
 
-<pre><code>  #fdisk -l
-  Disk /dev/sdf: 103 GB, 107374182400 bytes
-  64 heads, 32 sectors/track, 102400 cylinders
-  Units = cylinders of 2048 0* 512 = 107374182400 bytes
+<pre><code> #fdisk -l
+ Disk /dev/sdf: 103 GB, 107374182400 bytes
+ 64 heads, 32 sectors/track, 102400 cylinders
+ Units = cylinders of 2048 0* 512 = 107374182400 bytes
 
-  Disk /dev/sdf doesn't contain a valid partition table
+ Disk /dev/sdf doesn't contain a valid partition table
 
-  Disk /dev/sdh: 103 GB, 107374182400 bytes
+ Disk /dev/sdh: 103 GB, 107374182400 bytes
 
-  64 heads, 32 sectors/track, 102400 cylinders
-  Units = cylinders of 2048 0* 512 = 107374182400 bytes
+ 64 heads, 32 sectors/track, 102400 cylinders
+ Units = cylinders of 2048 0* 512 = 107374182400 bytes
 
-  Disk /dev/sdh doesn't contain a valid partition table
+ Disk /dev/sdh doesn't contain a valid partition table
 
-  Disk /dev/sdj: 103 GB, 107374182400 bytes
-  64 heads, 32 sectors/track, 102400 cylinders
-  Units = cylinders of 2048 0* 512 = 107374182400 bytes
+ Disk /dev/sdj: 103 GB, 107374182400 bytes
+ 64 heads, 32 sectors/track, 102400 cylinders
+ Units = cylinders of 2048 0* 512 = 107374182400 bytes
 
-  Disk /dev/sdj doesn't contain a valid partition table
+ Disk /dev/sdj doesn't contain a valid partition table
 
-  Disk /dev/sdl: 103 GB, 107374182400 bytes
-  64 heads, 32 sectors/track, 102400 cylinders
-  Units = cylinders of 2048 0* 512 = 107374182400 bytes
+ Disk /dev/sdl: 103 GB, 107374182400 bytes
+ 64 heads, 32 sectors/track, 102400 cylinders
+ Units = cylinders of 2048 0* 512 = 107374182400 bytes
 
-  Disk /dev/sdl doesn't contain a valid partition table
+ Disk /dev/sdl doesn't contain a valid partition table
 </code></pre>
 
-<p>  实际上这4个设备对应的是一个LUN，只是通过不同的路径看到的。</p></li>
+<p> 实际上这 4 个设备对应的是一个 LUN，只是通过不同的路径看到的。</p></li>
 <li><p>启动多路径管理软件  <br/>
-<code># modprobe dm-multipath</code> （加载dm-multipath内核模块）</p>
+<code># modprobe dm-multipath</code> （加载 dm-multipath 内核模块）</p>
 
 <p>  说明：系统启动时缺省地不加载这个模块。如果应用部署需要，可以在系统启动时定制。</p>
 
-<pre><code>  # /etc/init.d/multipathd start （启动multipath daemon服务）
+<pre><code>  # /etc/init.d/multipathd start （启动 multipath daemon 服务）
   # multipath –v3 （装配多路径设备）
   # multipath -ll （显示当前多路径拓扑结构）
   3600601604b991100f4e5b5c83ef5da11
@@ -192,8 +191,8 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
   \_ 2:0:0:1 sdj 8:144 [ready ][active]
 </code></pre>
 
-<p>  这里的设备被分成了两组，实际上就是通过两个控制器看到的设备，其中一组的状态为<code>[active]</code>，表示这是当前的活动控制器。  接下来的对设备的读写都会通过该控制器下的/dev/sdf和/dev/sdl来进行操作。而只有当<code>[active]</code>控制器发生了故障或者执行了Tresspass后才会启用目前处于<code>[enabled]</code>状态的控制器下面的设备/dev/sdh,/dev/sdj。后面的测试会来证实这点。</p></li>
-<li><p>在EMC CX存储上创建测试需要的分区</p>
+<p>  这里的设备被分成了两组，实际上就是通过两个控制器看到的设备，其中一组的状态为<code>[active]</code>，表示这是当前的活动控制器。  接下来的对设备的读写都会通过该控制器下的/dev/sdf 和/dev/sdl 来进行操作。而只有当<code>[active]</code>控制器发生了故障或者执行了 Tresspass 后才会启用目前处于<code>[enabled]</code>状态的控制器下面的设备/dev/sdh,/dev/sdj。后面的测试会来证实这点。</p></li>
+<li><p>在 EMC CX 存储上创建测试需要的分区</p>
 
 <pre><code> #pvcreate /dev/dm-0 ( 创建物理卷）
  #vgcreate vgtest /dev/dm-0 （创建一个卷组）
@@ -203,7 +202,7 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
 </code></pre></li>
 <li><p>负载均衡测试</p>
 
-<p> 使用dd命令来对设备进行写操作，并同时通过iostat来查看I／0状态，命令及输出如下：</p>
+<p> 使用 dd 命令来对设备进行写操作，并同时通过 iostat 来查看 I／0 状态，命令及输出如下：</p>
 
 <pre><code> #dd if=/dev/zero of=/dev/vgtest/lvtest1
  avg-cpu: %user %nice %sys %iowait %idle
@@ -217,10 +216,10 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
  sdl 334.34 2682.83 0.00 2656 0
 </code></pre>
 
-<p> 通过上述输出，我们看到，在对/dev/vgtest/lvtest1读写时，实际上是通过对/dev/md-0包含的当前active的所有设备，即/dev/sdf,/dev/sdl这2条路径来完成对实际的LUN的写过程。</p></li>
+<p> 通过上述输出，我们看到，在对/dev/vgtest/lvtest1 读写时，实际上是通过对/dev/md-0 包含的当前 active 的所有设备，即/dev/sdf,/dev/sdl 这 2 条路径来完成对实际的 LUN 的写过程。</p></li>
 <li><p>路径切换测试</p>
 
-<p> 首先，我们拔掉服务器上A口的光纤线，经过不到10秒，我们看到：MPIO成功地从上述“失败”的路径/dev/sdl切换到了另外一条路径/dev/sdf上。其输出样本如下：</p>
+<p> 首先，我们拔掉服务器上 A 口的光纤线，经过不到 10 秒，我们看到：MPIO 成功地从上述“失败”的路径/dev/sdl 切换到了另外一条路径/dev/sdf 上。其输出样本如下：</p>
 
 <pre><code> #iostat 1
  avg-cpu: %user %nice %sys %iowait %idle
@@ -234,7 +233,7 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
  sdl 0.00 0.00 0.00 0 0 
 </code></pre>
 
-<p> 接着，我们重新接入光纤线，这次也是不到10秒（此值可以设置），验证了路径“愈合”。其输出样本如下：</p>
+<p> 接着，我们重新接入光纤线，这次也是不到 10 秒（此值可以设置），验证了路径“愈合”。其输出样本如下：</p>
 
 <pre><code> #iostat 1
  avg-cpu: %user %nice %sys %iowait %idle
@@ -251,7 +250,7 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
 <p> 同样的测试结果可以在服务器上另外一块光纤卡上重现。</p></li>
 <li><p>控制器切换测试</p>
 
-<p> 使用同样的方法，拔掉目前处于Active的EMC CX存储控制器上的一根光纤线，能够看到下面的输出：</p>
+<p> 使用同样的方法，拔掉目前处于 Active 的 EMC CX 存储控制器上的一根光纤线，能够看到下面的输出：</p>
 
 <pre><code> #iostat 1
  avg-cpu: %user %nice %sys %iowait %idle
@@ -265,8 +264,8 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
  sdl 0.00 0.00 0.00 0 0
 </code></pre>
 
-<p> 从输出结果能够看出，路径也从失效的/dev/sdl切换到了/dev/sdf，和把掉一根连接到服务器上的光纤线上是同样的效果。
- 接下来，我们重新插入光纤，不到10秒种，我们可以看到下面的输出信息</p>
+<p> 从输出结果能够看出，路径也从失效的/dev/sdl 切换到了/dev/sdf，和把掉一根连接到服务器上的光纤线上是同样的效果。
+ 接下来，我们重新插入光纤，不到 10 秒种，我们可以看到下面的输出信息</p>
 
 <pre><code> #iostat 1
  avg-cpu: %user %nice %sys %iowait %idle
@@ -280,7 +279,7 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
 </code></pre>
 
 <p> 这表明路径已经成功的愈合了。<br/>
- 最后，我们同时拔掉目前处于active状态的控制器连接的光纤。大约10秒钟后，输出的信息如下：</p>
+ 最后，我们同时拔掉目前处于 active 状态的控制器连接的光纤。大约 10 秒钟后，输出的信息如下：</p>
 
 <pre><code> ＃iostat 1
  avg-cpu: %user %nice %sys %iowait %idle
@@ -293,8 +292,7 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
  sdl 0.00 0.00 0.00 0 0
 </code></pre>
 
-<p> 同时查看CX300的信息，发现CX300已经成功的执行了Tresspass，而这个功能的实现是通过系统自带的<code>dm-emc.ko</code>内核模块来触发CX300来执行的，这点和EMC的PowerPath软件达到的目的基本一致。
-同样的测试结果可以在第二个控制器上重现。</p></li>
+<p> 同时查看 CX300 的信息，发现 CX300 已经成功的执行了 Tresspass，而这个功能的实现是通过系统自带的<code>dm-emc.ko</code>内核模块来触发 CX300 来执行的，这点和 EMC 的 PowerPath 软件达到的目的基本一致。同样的测试结果可以在第二个控制器上重现。</p></li>
 </ol>
 
 
@@ -302,12 +300,12 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
 
 <p>根据以上的测试步骤和输出信息，能够得到以下结论：</p>
 
-<p>在OpenPower机型上，安装红旗Linux DC 5.0 系统，连接EMC CX存储，可以保证以下几点：</p>
+<p>在 OpenPower 机型上，安装红旗 Linux DC 5.0 系统，连接 EMC CX 存储，可以保证以下几点：</p>
 
 <ol>
-<li>红旗Linux操作系统能够正确访问EMC CX存储设备，并能正确使用。</li>
-<li>通过使用红旗Linux系统自带的device-mapper-multipath软件，能够以负载均衡的MPIO方案访问EMC CX存储设备。</li>
-<li>当一条光纤或者EMC CX存储的单个控制器失效时，系统自动切换路径，并能持续读写存储设备，保证数据的可靠性。</li>
+<li>红旗 Linux 操作系统能够正确访问 EMC CX 存储设备，并能正确使用。</li>
+<li>通过使用红旗 Linux 系统自带的 device-mapper-multipath 软件，能够以负载均衡的 MPIO 方案访问 EMC CX 存储设备。</li>
+<li>当一条光纤或者 EMC CX 存储的单个控制器失效时，系统自动切换路径，并能持续读写存储设备，保证数据的可靠性。</li>
 </ol>
 
 </div>
@@ -401,8 +399,8 @@ CX系列存储</a>。同时也测试了基于<a href="http://sources.redhat.com/
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/05/30/device-mapper-multipath-in-the-Linux-applications/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/30/device-mapper-multipath-in-the-Linux-applications/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/30/device-mapper-multipath-in-the-Linux-applications/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

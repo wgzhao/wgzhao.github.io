@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="总算是/sbin学习的最后一篇笔记了，从t到z开头的命令不太多，而且很多也是常用的，也只有那些基本用法，因此我就不记录到这里。 tune2fs，这无疑是文件系统中强劲的命令了，虽然我我最常用的是修改需要做fsck之前的最大最大挂载次数。刚看了man手册，其实他的参数多着呢， &hellip;">
+  <meta name="description" content="总算是/sbin学习的最后一篇笔记了，从 t 到 z 开头的命令不太多，而且很多也是常用的，也只有那些基本用法，因此我就不记录到这里。 tune2fs，这无疑是文件系统中强劲的命令了，虽然我我最常用的是修改需要做 fsck 之前的最大最大挂载次数。刚看了 man 手册，其实他的参数多着呢， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,24 +99,24 @@
   </header>
 
 
-<div class="entry-content"><p>总算是<code>/sbin</code>学习的最后一篇笔记了，从t到z开头的命令不太多，而且很多也是常用的，也只有那些基本用法，因此我就不记录到这里。</p>
+<div class="entry-content"><p>总算是<code>/sbin</code>学习的最后一篇笔记了，从 t 到 z 开头的命令不太多，而且很多也是常用的，也只有那些基本用法，因此我就不记录到这里。</p>
 
-<p>tune2fs，这无疑是文件系统中强劲的命令了，虽然我我最常用的是修改需要做fsck之前的最大最大挂载次数。刚看了man手册，其实他的参数多着呢，很多文件系统元数据都可以修改，比如保留块大小，日志大小，挂载选项等。</p>
+<p>tune2fs，这无疑是文件系统中强劲的命令了，虽然我我最常用的是修改需要做 fsck 之前的最大最大挂载次数。刚看了 man 手册，其实他的参数多着呢，很多文件系统元数据都可以修改，比如保留块大小，日志大小，挂载选项等。</p>
 
 <!--more-->
 
 
-<p>还发现一个<code>-L</code>的参数是给文件系统设置卷表，以前我都是用e2lable来干这个活的，没有想到tune2fs也能做。看来下次可以不用需要e2label了。</p>
+<p>还发现一个<code>-L</code>的参数是给文件系统设置卷表，以前我都是用 e2lable 来干这个活的，没有想到 tune2fs 也能做。看来下次可以不用需要 e2label 了。</p>
 
-<p>u*开头的基本上都是和udev相关的，这方面，我贴过一个理解udev的文章，这里就不再贴了。</p>
+<p>u*开头的基本上都是和 udev 相关的，这方面，我贴过一个理解 udev 的文章，这里就不再贴了。</p>
 
-<p>v*开头有两个命令，vboxd，vchange，是和ISDN有关的，这应该算是一段历史吧。</p>
+<p>v*开头有两个命令，vboxd，vchange，是和 ISDN 有关的，这应该算是一段历史吧。</p>
 
-<p>w*开头只有一个命令,wait_for_sysfs，是udev的rpm包里的，用在udev规则里。</p>
+<p>w*开头只有一个命令,wait_for_sysfs，是 udev 的 rpm 包里的，用在 udev 规则里。</p>
 
-<p>x*开头的与xfs文件系统有关的，可惜目前我发现在DC上xfs支持得并不是太好。</p>
+<p>x*开头的与 xfs 文件系统有关的，可惜目前我发现在 DC 上 xfs 支持得并不是太好。</p>
 
-<p>y*开头只有一个命令：ypbind，是NIS的相关命令，这个从Solaris上迁移过来的东西，不知道有没有在Linux运行的案例。</p>
+<p>y*开头只有一个命令：ypbind，是 NIS 的相关命令，这个从 Solaris 上迁移过来的东西，不知道有没有在 Linux 运行的案例。</p>
 
 <p>z*开头的就没有了。</p>
 
@@ -207,8 +212,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/05/31/last-commands/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/05/31/last-commands/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/05/31/last-commands/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/05/31/last-commands/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

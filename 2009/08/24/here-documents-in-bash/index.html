@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="不得不再一次说，Advanced bash-scripting guide(a.k.a ABS)这本书太强悍了，对于bash里的Here
-Document用法，我说见过的其他关于shell/bash编程的书里，都是简单的介绍这个东西是做什么的，基本用法是什么，然后给出一个例子就完成了。 &hellip;">
+  <meta name="description" content="不得不再一次说，Advanced bash-scripting guide(a.k.a ABS)这本书太强悍了，对于 bash 里的 Here
+Document 用法，我说见过的其他关于 shell/bash 编程的书里，都是简单的介绍这个东西是做什么的，基本用法是什么，然后给出一个例子就完成了。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ Document用法，我说见过的其他关于shell/bash编程的书里，都是�
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,10 +100,9 @@ Document用法，我说见过的其他关于shell/bash编程的书里，都是�
   </header>
 
 
-<div class="entry-content"><p>不得不再一次说，<a href="http://tldp.org/LDP/abs/html">Advanced bash-scripting guide(a.k.a ABS)</a>这本书太强悍了，对于bash里的Here
-Document用法，我说见过的其他关于shell/bash编程的书里，都是简单的介绍这个东西是做什么的，基本用法是什么，然后给出一个例子就完成了。<br/>
-我也一直以为他就是为了便于多行的输入。但是看完<a href="http://tldp.org/LDP/abs/html" title="Advanced bash-scripting guide">ABS</a>对此<a href="http://tldp.org/LDP/abs/html/here-docs.html">一整章的介绍</a>，我才发现，其实here
-document没有那么简单。</p>
+<div class="entry-content"><p>不得不再一次说，<a href="http://tldp.org/LDP/abs/html">Advanced bash-scripting guide(a.k.a ABS)</a>这本书太强悍了，对于 bash 里的 Here
+Document 用法，我说见过的其他关于 shell/bash 编程的书里，都是简单的介绍这个东西是做什么的，基本用法是什么，然后给出一个例子就完成了。我也一直以为他就是为了便于多行的输入。但是看完 <a href="http://tldp.org/LDP/abs/html" title="Advanced bash-scripting guide">ABS</a> 对此<a href="http://tldp.org/LDP/abs/html/here-docs.html">一整章的介绍</a>，我才发现，其实 here
+document 没有那么简单。</p>
 
 <!--more-->
 
@@ -145,9 +149,9 @@ exit
 </code></pre></noscript></div>
 
 
-<h2>禁止前导tab输出</h2>
+<h2>禁止前导 tab 输出</h2>
 
-<p>这是从曾经遇到的一个问题，在Heredocument里，我为了代码格式好看，采取了tab缩进的方式，但是带来的坏处就是这些tab键也会成为输出，而这并不是我所需要的。因此我需要一个即解决代码格式美观，又不影响输出的办法，原来here   document能做到这点，那就是在给出的limit string之前加上一个-符号，比如：</p>
+<p>这是从曾经遇到的一个问题，在 Heredocument 里，我为了代码格式好看，采取了 tab 缩进的方式，但是带来的坏处就是这些 tab 键也会成为输出，而这并不是我所需要的。因此我需要一个即解决代码格式美观，又不影响输出的办法，原来 here   document 能做到这点，那就是在给出的 limit string 之前加上一个-符号，比如：</p>
 
 <div><script src='https://gist.github.com/1534358.js?file=heredoc-tab.sh'></script>
 <noscript><pre><code>#!/bin/bash
@@ -163,12 +167,11 @@ includeing a leading tab
    includeing some spaces
 </code></pre>
 
-<p>注：它仅仅只是制止前导tab键，对于空格则不受影响。另外要注意的是，如果你的编辑器设置了tab转空格的话，那你会发现以上代码似乎并不是生效。<br/>
-因为所有的tab都转成4个或者8个或者你设置的数量个空格符号了。</p>
+<p>注：它仅仅只是制止前导 tab 键，对于空格则不受影响。另外要注意的是，如果你的编辑器设置了 tab 转空格的话，那你会发现以上代码似乎并不是生效。因为所有的 tab 都转成 4 个或者 8 个或者你设置的数量个空格符号了。</p>
 
 <h2>参数替代</h2>
 
-<p>here document支持参数和命令替代，可以传递不同的参数给here   document文本，从而获得不同的输出，比如：</p>
+<p>here document 支持参数和命令替代，可以传递不同的参数给 here   document 文本，从而获得不同的输出，比如：</p>
 
 <div><script src='https://gist.github.com/1534358.js?file=heredoc-argsub.sh'></script>
 <noscript><pre><code>#!/bin/bash
@@ -198,7 +201,7 @@ cat &lt;
 
 <h2>关闭参数替代</h2>
 
-<p>给limit string加上转移或者引号，就可以进制here    document的文本参数或者命令替代，这对于生成脚本甚至程序代码提供了帮助。</p>
+<p>给 limit string 加上转移或者引号，就可以进制 here    document 的文本参数或者命令替代，这对于生成脚本甚至程序代码提供了帮助。</p>
 
 <div><script src='https://gist.github.com/1534358.js?file=heredoc-argoff.sh'></script>
 <noscript><pre><code>#!/bin/bash
@@ -280,14 +283,14 @@ exit 0
 </code></pre></noscript></div>
 
 
-<p>我们也可以利用here document的输出来设置变量，这其实算是命令替代的一种迂回方式了。</p>
+<p>我们也可以利用 here document 的输出来设置变量，这其实算是命令替代的一种迂回方式了。</p>
 
 <pre><code>variable=$(cat &lt; 
 </code></pre>
 
 <h2>充当函数输入功能</h2>
 
-<p>here document也能提供在同一个脚本里一个函数的输入能力。</p>
+<p>here document 也能提供在同一个脚本里一个函数的输入能力。</p>
 
 <div><script src='https://gist.github.com/1534358.js?file=heredoc-func.sh'></script>
 <noscript><pre><code>#!/bin/bash
@@ -518,8 +521,8 @@ exit 0</code></pre></noscript></div>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/08/24/here-documents-in-bash/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/24/here-documents-in-bash/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/08/24/here-documents-in-bash/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/24/here-documents-in-bash/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,11 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="事情还得从5天前说起，话说我对系统/目录下的一个乱码目录很是看不习惯。该目录属于root，而我一般用普通帐号登录。
-那个目录名字是没法匹配的，于是我就尝试了下面的这个命令
+  <meta name="description" content="事情还得从 5 天前说起，话说我对系统/目录下的一个乱码目录很是看不习惯。该目录属于 root，而我一般用普通帐号登录。那个目录名字是没法匹配的，于是我就尝试了下面的这个命令
 sudo rm -rf ?*
-因为那个目录看上去是用 ? 开头的。 当我敲下这个命令并回车后，我发觉不好，忘记转义了。
-可是， &hellip;">
+因为那个目录看上去是用 ? 开头的。 当我敲下这个命令并回车后，我发觉不好，忘记转义了。可是 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -33,6 +31,11 @@ sudo rm -rf ?*
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -98,46 +101,39 @@ sudo rm -rf ?*
   </header>
 
 
-<div class="entry-content"><p>事情还得从5天前说起，话说我对系统/目录下的一个乱码目录很是看不习惯。该目录属于root，而我一般用普通帐号登录。<br/>
-那个目录名字是没法匹配的，于是我就尝试了下面的这个命令<br/>
+<div class="entry-content"><p>事情还得从 5 天前说起，话说我对系统/目录下的一个乱码目录很是看不习惯。该目录属于 root，而我一般用普通帐号登录。那个目录名字是没法匹配的，于是我就尝试了下面的这个命令<br/>
 <code>sudo rm -rf ?*</code>
 因为那个目录看上去是用 ? 开头的。</p>
 
-<p>当我敲下这个命令并回车后，我发觉不好，忘记转义了。
-可是，等我反应过来并不停的CTRL+C并停下来的时候，系统很多重要的文件还是被无情的删除了，比如<code>/bin</code>目录被清空，比如<code>/sbi</code>n被清空，比如<code>/etc</code>目录被删除大量文件。还好还好，对我的<code>/home</code>目录还没有来得及下手。数据总算还在。</p>
+<p>当我敲下这个命令并回车后，我发觉不好，忘记转义了。可是，等我反应过来并不停的 CTRL+C 并停下来的时候，系统很多重要的文件还是被无情的删除了，比如<code>/bin</code>目录被清空，比如<code>/sbi</code>n 被清空，比如<code>/etc</code>目录被删除大量文件。还好还好，对我的<code>/home</code>目录还没有来得及下手。数据总算还在。</p>
 
 <!--more-->
 
 
-<p>于是花了一天多的时间修复了系统，能跑起来，大部分程序也运行没有问题。可是就是有些很怪异的事情就会发生。<br/>
-比如浏览器会看我本地开发的程序页面时，有的时候是正常的，刷新后边空白，不管是<code>firefox</code>还是<code>chrome</code>，甚至是<code>wine+IE</code>。<br/>
-而这些页面之前浏览是肯定没有问题的，再说了后台也没有任何报错呀。<br/>
-另外就是dpkg数据库被破坏了，查什么包都说没有安装，总是提醒要我全部升级。</p>
+<p>于是花了一天多的时间修复了系统，能跑起来，大部分程序也运行没有问题。可是就是有些很怪异的事情就会发生。比如浏览器会看我本地开发的程序页面时，有的时候是正常的，刷新后边空白，不管是<code>firefox</code>还是<code>chrome</code>，甚至是<code>wine+IE</code>。而这些页面之前浏览是肯定没有问题的，再说了后台也没有任何报错呀。另外就是 dpkg 数据库被破坏了，查什么包都说没有安装，总是提醒要我全部升级。</p>
 
-<p>无法忍受这些痛苦后，重新下载了ubuntu 9.10的ISO。费了很大的劲把系统重新安装了一次。<br/>
+<p>无法忍受这些痛苦后，重新下载了 ubuntu 9.10 的 ISO。费了很大的劲把系统重新安装了一次。<br/>
 hoho，浏览器正常了，只是更新又花了我一天。</p>
 
-<p>更新的时候，顺便看看 <a href="http://www.google.com/reader">Google Reader</a>，看到IT人士都生活在水生火热中，大多.CN域名被阻挡，被审查，被提交身份证信息。</p>
+<p>更新的时候，顺便看看 <a href="http://www.google.com/reader">Google Reader</a>，看到 IT 人士都生活在水生火热中，大多.CN 域名被阻挡，被审查，被提交身份证信息。</p>
 
-<p>不行，我的.CN得撤了，于是在<a href="http://www.name.com">name.com</a>上买了个.com的域名（可不敢在国内的ISP买）。</p>
+<p>不行，我的.CN 得撤了，于是在 <a href="http://www.name.com">name.com</a> 上买了个.com 的域名（可不敢在国内的 ISP 买）。</p>
 
-<p>马上把blog迁移过来。</p>
+<p>马上把 blog 迁移过来。</p>
 
-<p>我一直都有两个gmail帐号，一个现在用的，另外一个雪藏着。</p>
+<p>我一直都有两个 gmail 帐号，一个现在用的，另外一个雪藏着。</p>
 
-<p>另外一个更短，更好记。现在这个名字太长了，虽然我自己打着打着也就习惯了。<br/>
-但每次别人问我要邮箱的时候，我痛苦，他们更痛苦，太长了，太难记了。<br/>
-另外一点郁闷的就是有些email检查程序说我的邮箱帐号无效，看来是中间的那个<code>.</code>折腾了。</p>
+<p>另外一个更短，更好记。现在这个名字太长了，虽然我自己打着打着也就习惯了。但每次别人问我要邮箱的时候，我痛苦，他们更痛苦，太长了，太难记了。另外一点郁闷的就是有些 email 检查程序说我的邮箱帐号无效，看来是中间的那个<code>.</code>折腾了。</p>
 
 <p>好吧，我承认，这个帐号名的确太长，我要启动我的那个另外一个了。</p>
 
-<p>说起来容易，做起来事情就多了。 比如首先我的HTC MAGIC G2手机就得重置，其次是所有的电子银行帐号关联的email，IM帐号，另外就是N多论坛，资讯订阅都需要迁移。</p>
+<p>说起来容易，做起来事情就多了。 比如首先我的 HTC MAGIC G2 手机就得重置，其次是所有的电子银行帐号关联的 email，IM 帐号，另外就是 N 多论坛，资讯订阅都需要迁移。</p>
 
-<p>当然有一个很简单的办法，就是邮件转发或者POP。可这不是我想要的结果，我要完整的，彻底的迁移过来。 目前HTC MAGIC G2切换了。</p>
+<p>当然有一个很简单的办法，就是邮件转发或者 POP。可这不是我想要的结果，我要完整的，彻底的迁移过来。 目前 HTC MAGIC G2 切换了。</p>
 
-<p>邮件正在POP。 电子银行切换了几个。 GTALK更换了，重新邀请了朋友。</p>
+<p>邮件正在 POP。 电子银行切换了几个。 GTALK 更换了，重新邀请了朋友。</p>
 
-<p>MSN还没有更换，过节后再说把。</p>
+<p>MSN 还没有更换，过节后再说把。</p>
 
 <p>恩，加上这个月底我要搬新家，哈哈，真的是全新的开始呀！！！！</p>
 </div>
@@ -231,8 +227,8 @@ hoho，浏览器正常了，只是更新又花了我一天。</p>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2010/04/03/new-begin/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/04/03/new-begin/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2010/04/03/new-begin/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2010/04/03/new-begin/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

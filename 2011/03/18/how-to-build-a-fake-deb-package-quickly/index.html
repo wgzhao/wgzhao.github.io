@@ -30,6 +30,11 @@ autoscan.log configure.scan dummy.c 将生成的configure.scan文件保存为con
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -108,9 +113,9 @@ autoscan.log  configure.scan  dummy.c
 
 
 <pre><code>AC_PREREQ([2.67])
-#定义包的名字，版本以及bug发布地址
+#定义包的名字，版本以及 bug 发布地址
 AC_INIT(dummy, 2009-10, fake@example.com)
-#传递给automake的参数
+#传递给 automake 的参数
 AM_INIT_AUTOMAKE(dummy,2009-10)
 AC_CONFIG_SRCDIR([dummy.c])
 AC_CONFIG_HEADERS([config.h])
@@ -134,15 +139,15 @@ autom4te.cache  autoscan.log  configure  configure.in  dummy.c
 </code></pre>
 
 <p>新建<code>Makefile.am</code>文件，再由<code>automake</code>工具根据所写的<code>Makefile.am</code>文件来自动生成<code>Makefile.in</code>文件。
-<code>Makefile.am</code>文件一般定义自己的软件最后生成的可执行程序名字、需要连接的库等，这里只有一个c文件，因此<code>Makefile.am</code>就相当简单了</p>
+<code>Makefile.am</code>文件一般定义自己的软件最后生成的可执行程序名字、需要连接的库等，这里只有一个 c 文件，因此<code>Makefile.am</code>就相当简单了</p>
 
 <pre><code>$ cat Makefile.am 
 bin_PROGRAMS=dummy
 dummy_SOURCES=dummy.c
 </code></pre>
 
-<p>注意上面的最后一行，dummy是依赖第一行的设置，如果第一行最后设置为foo,那么第二行就应该是<code>foo_SOURCES</code>
-好了，现在有了Makefile.am了，我们可以创建<code>Makefile.in</code>文件了,不过创建<code>Makefile.in</code>之前，我们还需要创建<code>automake</code>必须要的一些文件，然后再执行她</p>
+<p>注意上面的最后一行，dummy 是依赖第一行的设置，如果第一行最后设置为 foo,那么第二行就应该是<code>foo_SOURCES</code>
+好了，现在有了 Makefile.am 了，我们可以创建<code>Makefile.in</code>文件了,不过创建<code>Makefile.in</code>之前，我们还需要创建<code>automake</code>必须要的一些文件，然后再执行她</p>
 
 <pre><code>$ touch NEWS README AUTHORS ChangeLog
 $ automake --add-missing
@@ -153,8 +158,7 @@ autom4te.cache  config.status  depcomp       Makefile.am  README
 autoscan.log    configure      dummy.c       Makefile.in
 </code></pre>
 
-<p>以上会给出一些警告，因为我们缺少一个软件源代码一般都需要的INSTALL,README等文件。当然你可以touch这些，或者对这些直接飘过，反正我们这个包只是用来欺骗apt的。
-接下来的步骤我们就很熟悉了，就是<code>./configure &amp;&amp; make</code> 这个套路了，我们来执行它吧：</p>
+<p>以上会给出一些警告，因为我们缺少一个软件源代码一般都需要的 INSTALL,README 等文件。当然你可以 touch 这些，或者对这些直接飘过，反正我们这个包只是用来欺骗 apt 的。接下来的步骤我们就很熟悉了，就是<code>./configure &amp;&amp; make</code> 这个套路了，我们来执行它吧：</p>
 
 <pre><code>$ automake
 $ ./configure 
@@ -189,11 +193,11 @@ autom4te.cache  config.status  depcomp       INSTALL     Makefile.in
 autoscan.log    configure      dummy         install-sh  missing
 </code></pre>
 
-<p>好了，make成功了，如果仅仅是安装，我们执行<code>make install</code>
-就好了，但是我们的目的是创建一个deb包，虽然我们可以按照Debian的New Maintainer
-Guide一步一步制作deb包，详细的过程请参照：
+<p>好了，make 成功了，如果仅仅是安装，我们执行<code>make install</code>
+就好了，但是我们的目的是创建一个 deb 包，虽然我们可以按照 Debian 的 New Maintainer
+Guide 一步一步制作 deb 包，详细的过程请参照：
 <a href="http://www.debian.org/doc/maint-guide/">http://www.debian.org/doc/maint-guide/</a>
-但是我们为了快速创建deb包，还是利用checkinstall这个工具好了。</p>
+但是我们为了快速创建 deb 包，还是利用 checkinstall 这个工具好了。</p>
 
 <pre><code>$ checkinstall -D -y --install=no --pkgname=texlive-base --pkgversion=2009-10
 
@@ -217,7 +221,7 @@ checkinstall 1.6.2, Copyright 2009 Felipe Eduardo Sanchez Diaz Duran
 <pre><code>$sudo apt-get install texworks
 </code></pre>
 
-<p>从列出的依赖关系中，你就发现少了texlive-base包了。 如果你依赖的包很多，那么我们可以将上述过程自动化，非常方便。</p>
+<p>从列出的依赖关系中，你就发现少了 texlive-base 包了。 如果你依赖的包很多，那么我们可以将上述过程自动化，非常方便。</p>
 </div>
 
 
@@ -309,8 +313,8 @@ checkinstall 1.6.2, Copyright 2009 Felipe Eduardo Sanchez Diaz Duran
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2011/03/18/how-to-build-a-fake-deb-package-quickly/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/03/18/how-to-build-a-fake-deb-package-quickly/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/03/18/how-to-build-a-fake-deb-package-quickly/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

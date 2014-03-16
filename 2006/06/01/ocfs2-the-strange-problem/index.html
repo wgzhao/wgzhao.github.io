@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="昨天和几个同事去一个用户现场解决不能对存储设备格式化成ocfs2的文件系统。 IBM的服务器，IBM的光纤交换机，IBM的存储。硬件方面应该不存在兼容性问题。系统是红旗的DC5.0。 刚到现场的时候，发现存储配置得有点问题，两台服务器看到的LUN并不一致，初步怀疑是配置问题，后来和用户协调， &hellip;">
+  <meta name="description" content="昨天和几个同事去一个用户现场解决不能对存储设备格式化成 ocfs2 的文件系统。 IBM 的服务器，IBM 的光纤交换机，IBM 的存储。硬件方面应该不存在兼容性问题。系统是红旗的 DC5.0。 刚到现场的时候，发现存储配置得有点问题，两台服务器看到的 LUN 并不一致，初步怀疑是配置问题， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,11 +99,11 @@
   </header>
 
 
-<div class="entry-content"><p>昨天和几个同事去一个用户现场解决不能对存储设备格式化成ocfs2的文件系统。</p>
+<div class="entry-content"><p>昨天和几个同事去一个用户现场解决不能对存储设备格式化成 ocfs2 的文件系统。</p>
 
-<p>IBM的服务器，IBM的光纤交换机，IBM的存储。硬件方面应该不存在兼容性问题。系统是红旗的DC5.0。</p>
+<p>IBM 的服务器，IBM 的光纤交换机，IBM 的存储。硬件方面应该不存在兼容性问题。系统是红旗的 DC5.0。</p>
 
-<p>刚到现场的时候，发现存储配置得有点问题，两台服务器看到的LUN并不一致，初步怀疑是配置问题，后来和用户协调，解决了这个问题。LUN的映射也达到了我们的要求，但是仍然是无法格式化ocfs2文件系统，只要格式化，并给出下面的报错信息</p>
+<p>刚到现场的时候，发现存储配置得有点问题，两台服务器看到的 LUN 并不一致，初步怀疑是配置问题，后来和用户协调，解决了这个问题。LUN 的映射也达到了我们的要求，但是仍然是无法格式化 ocfs2 文件系统，只要格式化，并给出下面的报错信息</p>
 
 <!--more-->
 
@@ -117,8 +122,7 @@ Initializing superblock: done
 Writing system files: mkfs.ocfs2: Could not write: Input/output error
 </code></pre>
 
-<p>不过映射出来的LUN，却能格式化成ext3文件系统，使用dd命令也没有问题。
-那么会不会是mkfs.ocfs2本身有问题了，我们开始测试本地设备和loop设备</p>
+<p>不过映射出来的 LUN，却能格式化成 ext3 文件系统，使用 dd 命令也没有问题。那么会不会是 mkfs.ocfs2 本身有问题了，我们开始测试本地设备和 loop 设备</p>
 
 <pre><code>#dd if=/dev/zero of=./a bs=1M count=500
 [root@SGA-DC5 ~]# losetup /dev/loop1 ./a
@@ -140,10 +144,7 @@ Writing lost+found: done
 mkfs.ocfs2 successful
 </code></pre>
 
-<p>这能说明<code>mkfs.ocfs2</code>本身没有问题吗？如果没有问题，难道于ocfs2的cluster配置有关？
-那先测试一把吧，于是使用<code>ocfs2console</code>来重新配置cluster，再做测试。问题依然。
-那这是什么原因呢？我们也从外围情况考虑了，比如主机名啦，LUN的重新映射啦，分区大小啦。都不能解决这个问题。
-最后，我们抓取了<code>mkfs.ocfs2</code>的strace信息，如下：</p>
+<p>这能说明<code>mkfs.ocfs2</code>本身没有问题吗？如果没有问题，难道于 ocfs2 的 cluster 配置有关？那先测试一把吧，于是使用<code>ocfs2console</code>来重新配置 cluster，再做测试。问题依然。那这是什么原因呢？我们也从外围情况考虑了，比如主机名啦，LUN 的重新映射啦，分区大小啦。都不能解决这个问题。最后，我们抓取了<code>mkfs.ocfs2</code>的 strace 信息，如下：</p>
 
 <figure class='code'><figcaption><span> (mkfs_ocfs_trace)</span> <a href='/downloads/code/mkfs_ocfs_trace'>download</a></figcaption>
 <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -497,14 +498,13 @@ mkfs.ocfs2 successful
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>googling了一把，能找到较少的一些连接</p>
+<p>googling 了一把，能找到较少的一些连接</p>
 
 <p><a href="http://forums.oracle.com/forums/thread.jspa?messageID=1271074">Discussion Forums : RHEL 4, 10g and OCFS2 Installation</a></p>
 
 <p><a href="http://forums.oracle.com/forums/thread.jspa?messageID=1203460">Discussion Forums : Formatting partition with ocfs2 </a></p>
 
-<p>不过都没有人提出解决方案。<br/>
-谁有好的办法吗？</p>
+<p>不过都没有人提出解决方案。谁有好的办法吗？</p>
 </div>
 
 
@@ -596,8 +596,8 @@ mkfs.ocfs2 successful
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/06/01/ocfs2-the-strange-problem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/06/01/ocfs2-the-strange-problem/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/06/01/ocfs2-the-strange-problem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/06/01/ocfs2-the-strange-problem/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

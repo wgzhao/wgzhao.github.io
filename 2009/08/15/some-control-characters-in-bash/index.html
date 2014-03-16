@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="摘自Advanced Bash-Scripting Guide
+  <meta name="description" content="摘自 Advanced Bash-Scripting Guide
 V6.0.05第部分第三章的特殊字符中的片断，并做了翻译。 Ctl-A 将光标移到行首
-Ctl-B 退格键（但是我在ubuntu 9.10 bash 3.2.48上测试却是向前移动光标， 并不删除该字符）
+Ctl-B 退格键（但是我在 ubuntu 9.10 bash 3.2.48 上测试却是向前移动光标， 并不删除该字符）
 Ctl-C 中断. &hellip;">
   
 
@@ -32,6 +32,11 @@ Ctl-C 中断. &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -97,16 +102,15 @@ Ctl-C 中断. &hellip;">
   </header>
 
 
-<div class="entry-content"><p>摘自<a href="http://tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide
+<div class="entry-content"><p>摘自 <a href="http://tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide
 V6.0.05</a>第部分第三章的<a href="http://tldp.org/LDP/abs/html/special-chars.html">特殊字符</a>中的片断，并做了翻译。</p>
 
 <ul>
 <li><code>Ctl-A</code>  将光标移到行首</li>
-<li><code>Ctl-B</code> 退格键（但是我在ubuntu 9.10 bash 3.2.48上测试却是向前移动光标，        并不删除该字符）</li>
+<li><code>Ctl-B</code> 退格键（但是我在 ubuntu 9.10 bash 3.2.48 上测试却是向前移动光标，        并不删除该字符）</li>
 <li><code>Ctl-C</code> 中断. 中断一个前台任务</li>
-<li><code>Ctl-D</code> 从当前shell退出（类似exit) <code>EOF</code> (end-of-file). 它也能中断在stdin的输入。<br/>
-当在一个终端(console)或者虚拟终端(比如xterm)里敲键盘时，<code>ctl-D</code>
-会删除当前光标下的字符.如果当前没有任何字符了，则 <code>Ctl-D</code> 表示从当前会话退出，如果时xterm之类的窗口，则会关闭当前窗口。</li>
+<li><code>Ctl-D</code> 从当前 shell 退出（类似 exit) <code>EOF</code> (end-of-file). 它也能中断在 stdin 的输入。当在一个终端(console)或者虚拟终端(比如 xterm)里敲键盘时，<code>ctl-D</code>
+会删除当前光标下的字符.如果当前没有任何字符了，则 <code>Ctl-D</code> 表示从当前会话退出，如果时 xterm 之类的窗口，则会关闭当前窗口。</li>
 </ul>
 
 
@@ -116,7 +120,7 @@ V6.0.05</a>第部分第三章的<a href="http://tldp.org/LDP/abs/html/special-ch
 <ul>
 <li><code>Ctl-E</code> 移动光标到行末</li>
 <li><code>Ctl-F</code> 光标朝前移动一个字符位置</li>
-<li><code>Ctl-G</code> 响铃(BEL).在一些老式的电传(teletype)终端里，它可能真的会导致电话铃响起，而在xterm之类的终端里，只是发出一个声响。</li>
+<li><code>Ctl-G</code> 响铃(BEL).在一些老式的电传(teletype)终端里，它可能真的会导致电话铃响起，而在 xterm 之类的终端里，只是发出一个声响。</li>
 <li><p><code>Ctl-H</code> 相当于退格键</p>
 
 <p><div><script src='https://gist.github.com/1537548.js?file=ctrl-h.sh'></script>
@@ -158,12 +162,12 @@ echo -n &quot;abcdef$a&quot;        # abcdef</p>
 <h1>But, this does not change the results.</code></pre></noscript></div></h1>
 
 <ul>
-<li><code>Ctl-I</code>  水平tab键.</li>
+<li><code>Ctl-I</code>  水平 tab 键.</li>
 <li><code>Ctl-J</code> 新行 (换行符).脚本里，也可能当八进制&#8217;\012&#8217;或十六进制符号&#8217;\x0a&#8217;解释。</li>
-<li><code>Ctl-K</code> 垂直tab当在console或者xterm窗口里键入文本时, <code>Ctl-K</code>
+<li><code>Ctl-K</code> 垂直 tab 当在 console 或者 xterm 窗口里键入文本时, <code>Ctl-K</code>
 表示删除从当前光标到行末的字符。在脚本里, <code>Ctl-K</code> 的行为表现就不同的，具体的可以看下面 <code>Ctl-M</code> 演示代码里<code>Lee Lee  Maschmeyer</code>的例子。</li>
 <li><code>Ctl-L ``换页</code>
-(终端清屏)。在终端里，其效果和<a href="http://tldp.org/LDP/abs/html/terminalccmds.html#CLEARREF">clear</a>命令类似(区别在于当前光标所在的行并不会清除)
+(终端清屏)。在终端里，其效果和 <a href="http://tldp.org/LDP/abs/html/terminalccmds.html#CLEARREF">clear</a> 命令类似(区别在于当前光标所在的行并不会清除)
 。发送到打印机的话，<code>Ctl-L</code> 导致提前结束纸张。</li>
 <li><p><code>Ctl-M ``回车</code>.</p>
 
@@ -236,10 +240,10 @@ echo &quot;$var&quot;</p>
 <ul>
 <li><code>Ctl-N</code> 从 <em>history</em> 指令缓冲里删除一行可重新调用的文本</li>
 <li><code>Ctl-O</code> 发出一个新行</li>
-<li><code>Ctl-P</code>重新调用<em>history</em>指令缓冲区调用最后一条指令</li>
+<li><code>Ctl-P</code>重新调用<em> history </em>指令缓冲区调用最后一条指令</li>
 <li><code>Ctl-Q</code> 恢复(<strong>XON</strong>)恢复终端的标准输入(stdin)</li>
-<li><code>Ctl-R</code>向后搜索<em>history</em>指令缓冲文本</li>
-<li><code>Ctl-S</code> 暂停 (<code>XOFF</code>).冻结终端的标准输入(用ctl-Q来恢复)</li>
+<li><code>Ctl-R</code>向后搜索<em> history </em>指令缓冲文本</li>
+<li><code>Ctl-S</code> 暂停 (<code>XOFF</code>).冻结终端的标准输入(用 ctl-Q 来恢复)</li>
 <li><code>Ctl-T</code>将当前光标位置的字符和光标前的字符进行位置交换</li>
 <li><code>Ctl-U</code> 删除从行首到当前光标位置的字符(不包括当前光标位置的字符).在默写设置下, <code>Ctl-U</code> 删除整行，而不管光标位置</li>
 <li><p><code>Ctl-V</code> 输入文本的时候， <code>Ctl-V</code> 允许插入控制字符，下面例子的两条指令效果是相同的</p>
@@ -248,7 +252,7 @@ echo &quot;$var&quot;</p>
 echo
 </code></pre></li>
 <li><p><code>Ctl-V</code> 主要在文本编辑器里起作用</p></li>
-<li><p><code>Ctl-W</code> 在终端(console)或者类似xterm窗口里输入文本时， <code>Ctl-W</code>
+<li><p><code>Ctl-W</code> 在终端(console)或者类似 xterm 窗口里输入文本时， <code>Ctl-W</code>
 删除从当前光标位置到之前的第一个空格之间的字符。在某些设置下， <code>Ctl-W</code> 向后删除到第一个非字母数字字符</p></li>
 <li><p><code>Ctl-Z</code> 暂停前台任务</p></li>
 </ul>
@@ -344,8 +348,8 @@ echo
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/08/15/some-control-characters-in-bash/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/15/some-control-characters-in-bash/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/08/15/some-control-characters-in-bash/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/08/15/some-control-characters-in-bash/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="是的，我知道ext3文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。
-而且从ext3文件系统的FAQ中提到的一条也能印证这点： Q: How can I recover (undelete) deleted files from my ext3 partition? &hellip;">
+  <meta name="description" content="是的，我知道 ext3 文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。而且从 ext3 文件系统的 FAQ 中提到的一条也能印证这点： Q: How can I recover (undelete) deleted files from my ext3 partition? &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -64,7 +68,10 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -98,8 +105,7 @@
   </header>
 
 
-  <div class="entry-content"><p>是的，我知道ext3文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。<br/>
-而且从ext3文件系统的<a href="http://batleth.sapienti-sat.org/projects/FAQs/ext3-faq.html">FAQ</a>中提到的一条也能印证这点：</p>
+  <div class="entry-content"><p>是的，我知道 ext3 文件系统上，一旦文件被删除(rm -rf )，就几乎没有恢复的可能。而且从 ext3 文件系统的 <a href="http://batleth.sapienti-sat.org/projects/FAQs/ext3-faq.html">FAQ</a> 中提到的一条也能印证这点：</p>
 
 <blockquote><p>Q: How can I recover (undelete) deleted files from my ext3 partition?<br/>
 Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, said about it:</p>
@@ -155,9 +161,9 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   </header>
 
 
-  <div class="entry-content"><p><strong>Linux kernel panic</strong> 是很难定位和排查的重大故障,一旦系统发生了kernel panic，相关的日志信息非常少，而一种常见的排查方法—重现法&mdash;又很难实现，因此遇到kernel panic的问题，一般比较头疼。</p>
+  <div class="entry-content"><p><strong>Linux kernel panic</strong> 是很难定位和排查的重大故障,一旦系统发生了 kernel panic，相关的日志信息非常少，而一种常见的排查方法—重现法&mdash;又很难实现，因此遇到 kernel panic 的问题，一般比较头疼。</p>
 
-<p>没有一个万能和完美的方法来解决所有的kernel panic问题，这篇文章仅仅只是给出一些思路，一来如何解决kernel panic的问题，二来可以尽可能减少发生kernel panic的机会。</p>
+<p>没有一个万能和完美的方法来解决所有的 kernel panic 问题，这篇文章仅仅只是给出一些思路，一来如何解决 kernel panic 的问题，二来可以尽可能减少发生 kernel panic 的机会。</p>
 
 </div>
   
@@ -201,11 +207,11 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   </header>
 
 
-  <div class="entry-content"><p>对于像 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a> 和 <a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a>这种网络文件系统而言，因为受网络的影响，使得对数据访问和存储的实时性就有了一定的挑战，特别是在早期100Mb/s的网络环境下（当然10Mb/s的网络环境就是一个噩耗了）。为了解决响应实效的问题，一种被称为<a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a>的本地缓存方案被开发出来，用来提供分布式文件系统的本地缓存。</p>
+  <div class="entry-content"><p>对于像 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a> 和 <a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a> 这种网络文件系统而言，因为受网络的影响，使得对数据访问和存储的实时性就有了一定的挑战，特别是在早期 100Mb/s 的网络环境下（当然 10Mb/s 的网络环境就是一个噩耗了）。为了解决响应实效的问题，一种被称为 <a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 的本地缓存方案被开发出来，用来提供分布式文件系统的本地缓存。</p>
 
-<p>作为内核2.6.30的一部分， 一种<a href="http://kernelnewbies.org/Linux_2_6_30#head-29350000cec3a460e9f2af6360324670faf14b2">CacheFS 实现机制</a></p>
+<p>作为内核 2.6.30 的一部分， 一种 <a href="http://kernelnewbies.org/Linux_2_6_30#head-29350000cec3a460e9f2af6360324670faf14b2">CacheFS 实现机制</a></p>
 
-<p>已经加入进来，当前它支持<a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a>和<a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a>，但是其他文件系统也能从中获得好处（文章后面会提到）</p>
+<p>已经加入进来，当前它支持 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a> 和 <a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a>，但是其他文件系统也能从中获得好处（文章后面会提到）</p>
 
 </div>
   
@@ -265,7 +271,7 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
 </ol>
 
 
-<p> 总结起来，就是一家具有持续赢利能力的牛B公司</p></li>
+<p> 总结起来，就是一家具有持续赢利能力的牛 B 公司</p></li>
 </ol>
 
 
@@ -311,9 +317,9 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   </header>
 
 
-  <div class="entry-content"><p><a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a>是我非常喜爱的虚拟化软件，其简单方便，单不是强大的配置让我很喜欢，特别是在网络的配置上，更是灵活多变。</p>
+  <div class="entry-content"><p><a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a> 是我非常喜爱的虚拟化软件，其简单方便，单不是强大的配置让我很喜欢，特别是在网络的配置上，更是灵活多变。</p>
 
-<p>不过最近要测试<a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a>，想把之前的<a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a>跑的vm迁移到<a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a>上来，重要的是迁移镜像文件了，配置文件目前似乎没有什么好的办法。</p>
+<p>不过最近要测试 <a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a>，想把之前的 <a href="http://www.virtualbox.org" title="VirtualBox">VirtualBox</a> 跑的 vm 迁移到 <a href="http://www.linux-kvm.org/page/Main_Page" title="KVM">KVM</a> 上来，重要的是迁移镜像文件了，配置文件目前似乎没有什么好的办法。</p>
 
 <p>基本上是照着<a href="http://blog.bodhizazen.net/linux/convert-virtualbox-vdi-to-kvm-qcow/">这篇文章</a>来做的，只是我按照它的方法，在第一步出了状况，修改了一下，下面是详细步骤：</p>
 
@@ -359,11 +365,9 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   </header>
 
 
-  <div class="entry-content"><p>Linux原生的ext4文件系统目前已经在一些最新的Linux发布版本中包含了，我也使用了一段时间，和ext3相比，有所改善但是不是那种非常显著的干劲，更详细的情况可以参考这篇文章(<a href="http://www.linux-mag.com/id/7271">ext4文件系统：介绍及性能测试</a>)。<br/>
-不过我一直向往<a href="http://www.oracle.com/cn/products/servers-storage/solaris/index.html">Solaris</a>上的<a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS">ZFS</a>，觉得那才是真正的企业级文件系统，COW,CDP等功能让人着迷，虽然目前linux上已经有基于<a href="http://fuse.sourceforge.net/">fuse</a>的<a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS">ZFS</a>实现，但是性能上就大打折扣了，直到<a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a>文件系统的出现，让我看到了未来：</p>
+  <div class="entry-content"><p>Linux 原生的 ext4 文件系统目前已经在一些最新的 Linux 发布版本中包含了，我也使用了一段时间，和 ext3 相比，有所改善但是不是那种非常显著的干劲，更详细的情况可以参考这篇文章(<a href="http://www.linux-mag.com/id/7271">ext4 文件系统：介绍及性能测试</a>)。不过我一直向往 <a href="http://www.oracle.com/cn/products/servers-storage/solaris/index.html">Solaris</a> 上的 <a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS">ZFS</a>，觉得那才是真正的企业级文件系统，COW,CDP 等功能让人着迷，虽然目前 linux 上已经有基于 <a href="http://fuse.sourceforge.net/">fuse</a> 的 <a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS">ZFS</a>实现，但是性能上就大打折扣了，直到 <a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a>文件系统的出现，让我看到了未来：</p>
 
-<p><a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a> 承若将赋予这个文件系统许多类似ZFS的企业级特征，甚至在性能和亮点上要超过<a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS">ZFS</a>。事实上，很多Linux专家认为<a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a>应该是Linux未来的 一个关键点。<br/>
-不过目前<a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a>目前还没有完全发布，不过相信很快大家就能用到了，在正式使用之前，我们不妨对它做一些了解，甚至可以对其进行一些性能上的测试。</p>
+<p><a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a> 承若将赋予这个文件系统许多类似 ZFS 的企业级特征，甚至在性能和亮点上要超过 <a href="http://docs.oracle.com/cd/E19253-01/819-7065/" title="ZFS">ZFS</a>。事实上，很多 Linux 专家认为 <a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a>应该是 Linux 未来的 一个关键点。不过目前 <a href="https://btrfs.wiki.kernel.org/" title="Btrfs">Btrfs</a>目前还没有完全发布，不过相信很快大家就能用到了，在正式使用之前，我们不妨对它做一些了解，甚至可以对其进行一些性能上的测试。</p>
 
 </div>
   
@@ -407,7 +411,7 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   </header>
 
 
-  <div class="entry-content"><p>人生的第一笔大买卖比我想像的来得快很多，就在落笔的那一刹那，我和lancy的未来20年就这样轻松的典当了出去，既然典当已经成为事实，那就不如快乐的享受这这种压力。</p>
+  <div class="entry-content"><p>人生的第一笔大买卖比我想像的来得快很多，就在落笔的那一刹那，我和 lancy 的未来 20 年就这样轻松的典当了出去，既然典当已经成为事实，那就不如快乐的享受这这种压力。</p>
 
 <p>于是，开始有了期待，有了梦想，有了更多的对房子设计的讨论，于是就会想着接下来的几个月赶紧的过去，能够让我们随心设计属于自己的空间，期待着，期待，从今天起，就做一个快乐的房奴吧！</p>
 </div>
@@ -448,7 +452,7 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   </header>
 
 
-  <div class="entry-content"><p>这几天看了几个处房子，也许是因为买房的要求迫在眉睫，所以没有考虑太多了，lancy他们单位刚好搞团购，价格呢，也还在我们的承受范围之内，因此就定了下来。今天去交了定金，一周时间内，准备米米，正式签订购房合同。</p>
+  <div class="entry-content"><p>这几天看了几个处房子，也许是因为买房的要求迫在眉睫，所以没有考虑太多了，lancy 他们单位刚好搞团购，价格呢，也还在我们的承受范围之内，因此就定了下来。今天去交了定金，一周时间内，准备米米，正式签订购房合同。</p>
 
 <p>恩，很快就要做房奴和负翁了。</p>
 </div>
@@ -489,13 +493,11 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   </header>
 
 
-  <div class="entry-content"><p><del>本文写道最后的时候，我才发现ZRM for MySQL的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库test1,test2，你备份了这两个数据库，某一天，test2数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复test2，而是直接把test1,test2都恢复。那这绝对是一个噩梦。
-但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.</del></p>
+  <div class="entry-content"><p><del>本文写道最后的时候，我才发现 ZRM for MySQL 的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库 test1,test2，你备份了这两个数据库，某一天，test2 数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复 test2，而是直接把 test1,test2 都恢复。那这绝对是一个噩梦。但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.</del></p>
 
 <p><strong>Update：</strong><br/>
-原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">ZRM</a>备份是可以指定恢复特定的数据库的，刚才今天mwf的站点数据库需要恢复，测试了一下，完全没有问题。<br/>
-具体的恢复办法，请看文末。
-<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">Zmanda Recovery Manager(ZRM)</a>提供了备份MySQL数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html">官方的介绍</a>。下面给出一个备份的实例。</p>
+原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">ZRM</a> 备份是可以指定恢复特定的数据库的，刚才今天 mwf 的站点数据库需要恢复，测试了一下，完全没有问题。具体的恢复办法，请看文末。
+<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">Zmanda Recovery Manager(ZRM)</a>提供了备份 MySQL 数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html">官方的介绍</a>。下面给出一个备份的实例。</p>
 
 </div>
   
@@ -540,9 +542,9 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
 
 
   <div class="entry-content"><p><img class="left" src="http://www.zmanda.com/images/header/logo-zmanda.gif" title="&#34;Amanda Network Backup&#34;" alt="&#34;Amanda Network Backup&#34;"> <br/>
-<a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver">Amanda</a> 高级马里兰自动网络磁盘归档 (Advanced Maryland Automatic Network Disk Archiver网络备份软件是我第一次接触Linux就听到过，只是从来都没有使用过，有需要备份得时候，就是自己写写简单的脚本，使用cron来做定时任务，也能基本满足需求。虽然曾经起心想用Amanda，但限于没有适合的环境，只能作罢。</p>
+<a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver">Amanda</a> 高级马里兰自动网络磁盘归档 (Advanced Maryland Automatic Network Disk Archiver 网络备份软件是我第一次接触 Linux 就听到过，只是从来都没有使用过，有需要备份得时候，就是自己写写简单的脚本，使用 cron 来做定时任务，也能基本满足需求。虽然曾经起心想用 Amanda，但限于没有适合的环境，只能作罢。</p>
 
-<p>现在的情况有所不同了，有4,5台服务器需要备份，涉及到不同的平台，其备份特性应该达到或者至少朝企业级标准靠拢，因此，这几天看了看Amanda的文档，做了一些测试，目前在我的环境下配置成功，特记录下来和大家分享。</p>
+<p>现在的情况有所不同了，有 4,5 台服务器需要备份，涉及到不同的平台，其备份特性应该达到或者至少朝企业级标准靠拢，因此，这几天看了看 Amanda 的文档，做了一些测试，目前在我的环境下配置成功，特记录下来和大家分享。</p>
 
 </div>
   
@@ -594,8 +596,8 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/7/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/7/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/7/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/7/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

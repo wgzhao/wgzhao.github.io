@@ -10,8 +10,7 @@
 
   
   <meta name="description" content="有时候遇到这样的问题，df
-显示文件系统满了，于是ducks一把，看是否有些不正常的文件或目录，奇怪的是，du的结果显示文件系统中还有不少空间。
-那么，du和df哪个结果是正确的呢？ both. 造成这个现象的原因是有进程仍然打开着已经被删除的文件。因为该文件已经不存在于文件目录树上， &hellip;">
+显示文件系统满了，于是 ducks 一把，看是否有些不正常的文件或目录，奇怪的是，du 的结果显示文件系统中还有不少空间。那么，du 和 df 哪个结果是正确的呢？ both. 造成这个现象的原因是有进程仍然打开着已经被删除的文件。因为该文件已经不存在于文件目录树上， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +30,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -97,8 +101,7 @@
 
 
 <div class="entry-content"><p>有时候遇到这样的问题，df
-显示文件系统满了，于是ducks一把，看是否有些不正常的文件或目录，奇怪的是，du的结果显示文件系统中还有不少空间。<br/>
-那么，du和df哪个结果是正确的呢？</p>
+显示文件系统满了，于是 ducks 一把，看是否有些不正常的文件或目录，奇怪的是，du 的结果显示文件系统中还有不少空间。那么，du 和 df 哪个结果是正确的呢？</p>
 
 <p>both.</p>
 
@@ -106,19 +109,19 @@
 
 
 <p>
-造成这个现象的原因是有进程仍然打开着已经被删除的文件。因为该文件已经不存在于文件目录树上，所以du遍历整个文件系统中不会统计其所占用的空间，可是，这个文件又还不能被从磁盘上删除，所以确实还占用了一部分磁盘空间。</p>
+造成这个现象的原因是有进程仍然打开着已经被删除的文件。因为该文件已经不存在于文件目录树上，所以 du 遍历整个文件系统中不会统计其所占用的空间，可是，这个文件又还不能被从磁盘上删除，所以确实还占用了一部分磁盘空间。</p>
 
-<p>可以用lsof来确定究竟是哪个进程搞的鬼，比如：</p>
+<p>可以用 lsof 来确定究竟是哪个进程搞的鬼，比如：</p>
 
 <pre><code># lsof | grep (deleted)  
 tail 6505 root 3r REG 7,0 921600 12 /media/foo/foo (deleted)  
 </code></pre>
 
-<p>上面这个例子显示tail(pid为6505)进程打开了一个已经被删除的文件(/media/foo/foo)，这个文件大小为921600。此时，如果终止tail这个进程，那么这900多K字节就会正常释放，df的输出也就和du一致了。</p>
+<p>上面这个例子显示 tail(pid 为 6505)进程打开了一个已经被删除的文件(/media/foo/foo)，这个文件大小为 921600。此时，如果终止 tail 这个进程，那么这 900 多 K 字节就会正常释放，df 的输出也就和 du 一致了。</p>
 
-<p>曾经接到过此类问题的报告，似乎杀了sendmail就好了。当时不知原由，现在想来，可能是系统长时间运行后sendmail的日志经过了rotate，而sendmail仍然打开着旧的日志文件。</p>
+<p>曾经接到过此类问题的报告，似乎杀了 sendmail 就好了。当时不知原由，现在想来，可能是系统长时间运行后 sendmail 的日志经过了 rotate，而 sendmail 仍然打开着旧的日志文件。</p>
 
-<p>这个问题 Theodore Ts&#8217;o 03年便回答过，而且当时就根据他的建议添加到了ext3 FAQ中。  今天才仔细读过，豁然开朗。读书不精，不求甚解，惭愧惭愧。</p>
+<p>这个问题 Theodore Ts&#8217;o 03 年便回答过，而且当时就根据他的建议添加到了 ext3 FAQ 中。  今天才仔细读过，豁然开朗。读书不精，不求甚解，惭愧惭愧。</p>
 
 <p>参考资料</p>
 
@@ -218,8 +221,8 @@ tail 6505 root 3r REG 7,0 921600 12 /media/foo/foo (deleted)
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/01/03/confilt-df-and-du/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/01/03/confilt-df-and-du/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/01/03/confilt-df-and-du/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/01/03/confilt-df-and-du/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

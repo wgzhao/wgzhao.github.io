@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="这应该算是一篇凑数的帖子，就是记录一下怎么记住find里命令-perm参数后面带的数字以及数字前面的+号和-号是什么意思。我这里主要是想说setuid和setgid的问题。 我们首先创建下面的一个例子 #ls -l ./testdir
-——S— 1 root root 0 2008-05-06 &hellip;">
+  <meta name="description" content="这应该算是一篇凑数的帖子，就是记录一下怎么记住 find 里命令-perm 参数后面带的数字以及数字前面的+号和-号是什么意思。我这里主要是想说 setuid 和 setgid 的问题。 我们首先创建下面的一个例子 #ls -l ./testdir
+——S— 1 root root 0 2008- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,7 +100,7 @@
   </header>
 
 
-<div class="entry-content"><p>这应该算是一篇凑数的帖子，就是记录一下怎么记住find里命令-perm参数后面带的数字以及数字前面的+号和-号是什么意思。我这里主要是想说setuid和setgid的问题。</p>
+<div class="entry-content"><p>这应该算是一篇凑数的帖子，就是记录一下怎么记住 find 里命令-perm 参数后面带的数字以及数字前面的+号和-号是什么意思。我这里主要是想说 setuid 和 setgid 的问题。</p>
 
 <!--more-->
 
@@ -109,8 +114,7 @@
 -rwS–S— 1 root root 0 2008-05-06 10:39 6600
 </code></pre>
 
-<p>我创建了4个文件，都具有suid/sgid位。
-假定我执行</p>
+<p>我创建了 4 个文件，都具有 suid/sgid 位。假定我执行</p>
 
 <pre><code> find . -type f -perm 6000  
 </code></pre>
@@ -123,9 +127,8 @@
 ./6600 
 </code></pre>
 
-<p>这里的-号表示有1的位置一定要正确匹配，其他无所谓。<br/>
-这里要转成二进制来说，首先6000转成三位的二进制是下面这个样子<code>110 000 000 000</code>
-这表示前面两个1一定要匹配，其他无所谓。那能匹配的就是6000,6600两个文件，其权限二进制转换过来分别是<code>110 000 000 000 110 110 000 000</code></p>
+<p>这里的-号表示有 1 的位置一定要正确匹配，其他无所谓。这里要转成二进制来说，首先 6000 转成三位的二进制是下面这个样子<code>110 000 000 000</code>
+这表示前面两个 1 一定要匹配，其他无所谓。那能匹配的就是 6000,6600 两个文件，其权限二进制转换过来分别是<code>110 000 000 000 110 110 000 000</code></p>
 
 <p>而如果是执行<code>find . -type f -perm +6000</code>呢，结果会怎样？</p>
 
@@ -137,10 +140,10 @@
 ./6600
 </code></pre>
 
-<p>+号的意思是，只要有一个1匹配就行了，也就是说前2位中，只要有一个1就行，所以上面的都符合要求，因为翻译成二进制变成<br/>
+<p>+号的意思是，只要有一个 1 匹配就行了，也就是说前 2 位中，只要有一个 1 就行，所以上面的都符合要求，因为翻译成二进制变成<br/>
 <code>110 000 000 000 010 000 000 000 100 000 000 000 110 110 000 000</code></p>
 
-<p>所以,从上面的结果可以看出，命令<code>find . -type f -perm +6000</code>就是指定目录下所有具有suid/sgid的程序。</p>
+<p>所以,从上面的结果可以看出，命令<code>find . -type f -perm +6000</code>就是指定目录下所有具有 suid/sgid 的程序。</p>
 
 <p>这是在做安全维护的时候，应该常使用的一个指令。</p>
 </div>
@@ -234,8 +237,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="ssh的功能无比强悍，对于一个Unix/Linux而言，只要开放一个ssh服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下： 端口转发 端口转发，也就是-L参数的设置。以我的实际例子来说明吧，我在家里上网， &hellip;">
+  <meta name="description" content="ssh 的功能无比强悍，对于一个 Unix/Linux 而言，只要开放一个 ssh 服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下： 端口转发 端口转发，也就是-L 参数的设置。以我的实际例子来说明吧， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,39 +99,33 @@
   </header>
 
 
-<div class="entry-content"><p>ssh的功能无比强悍，对于一个<strong>Unix/Linux</strong>而言，只要开放一个ssh服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下：</p>
+<div class="entry-content"><p>ssh 的功能无比强悍，对于一个<strong> Unix/Linux </strong>而言，只要开放一个 ssh 服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下：</p>
 
 <h2>端口转发</h2>
 
-<p>端口转发，也就是-L参数的设置。以我的实际例子来说明吧，我在家里上网，设置的是局域网，IP地址是<code>192.168.100.101</code>。公司总部呢，也是用的是局域网地址，<code>172.16.0.0</code>网段。我需要访问公司内部的一台应用服务器，比如<code>172.16.81.111</code>。我该怎么办呢？恰好，公司有一台网关服务器，有两块网卡，一块是设置的公网IP地址，比如<code>219.99.12.23</code>。另外一块网卡，则是公司的内网的IP地址，比如<code>172.16.81.220</code>。这台服务器开启了SSH服务。那么我要做的便是执行下面的指令:</p>
+<p>端口转发，也就是-L 参数的设置。以我的实际例子来说明吧，我在家里上网，设置的是局域网，IP 地址是<code>192.168.100.101</code>。公司总部呢，也是用的是局域网地址，<code>172.16.0.0</code>网段。我需要访问公司内部的一台应用服务器，比如<code>172.16.81.111</code>。我该怎么办呢？恰好，公司有一台网关服务器，有两块网卡，一块是设置的公网 IP 地址，比如<code>219.99.12.23</code>。另外一块网卡，则是公司的内网的 IP 地址，比如<code>172.16.81.220</code>。这台服务器开启了 SSH 服务。那么我要做的便是执行下面的指令:</p>
 
 <!--more-->
 
 
 <p><code>ssh -f -N   -L 8080:172.16.81.111:80 wgzhao@219.99.12.23</code></p>
 
-<p>一旦登陆成功后，在自己的电脑上，打开浏览器，在地址栏，输入<a href="http://localhost:8080">http://localhost:8080</a>，你能看到什么呢？它等价于访问了<a href="http://172.16.81.111/">http://172.16.81.111/</a>。对就是访问了公司总部指定的服务器的WEB服务（假定80端口对应的是WEB服务）。
-当然，这里也要注意，如果自己的电脑已经使用了8080端口，则上述指令不会成功，换一个不常用的高端端口吧。
-这条指令，基本上可以让你无障碍的访问公司任何服务器的任何服务，甚至是SSH服务（前提是已授权访问）。嗯，想想看，如果上面的指令改成下面这样：</p>
+<p>一旦登陆成功后，在自己的电脑上，打开浏览器，在地址栏，输入<a href="http://localhost:8080">http://localhost:8080</a>，你能看到什么呢？它等价于访问了<a href="http://172.16.81.111/">http://172.16.81.111/</a>。对就是访问了公司总部指定的服务器的 WEB 服务（假定 80 端口对应的是 WEB 服务）。当然，这里也要注意，如果自己的电脑已经使用了 8080 端口，则上述指令不会成功，换一个不常用的高端端口吧。这条指令，基本上可以让你无障碍的访问公司任何服务器的任何服务，甚至是 SSH 服务（前提是已授权访问）。嗯，想想看，如果上面的指令改成下面这样：</p>
 
 <p><code>ssh -f -N -L 8022:172.16.81.111:22 wgzhao@219.99.12.23</code> 然后你再执行</p>
 
 <p><code>ssh -p 8022  localhost</code>
-会是什么样的结果呢？ 此时，你已经通过ssh进入到了公司服务器。我们再进一步，把上述指令改成</p>
+会是什么样的结果呢？ 此时，你已经通过 ssh 进入到了公司服务器。我们再进一步，把上述指令改成</p>
 
 <p><code>ssh -X -p 8022 localhost</code></p>
 
-<p>然后执行startx或者gnome-session或者其他的，结果又会是怎样呢？哈哈，其功能仅受限于您的想象力（感谢周立波提供此语句）。</p>
+<p>然后执行 startx 或者 gnome-session 或者其他的，结果又会是怎样呢？哈哈，其功能仅受限于您的想象力（感谢周立波提供此语句）。</p>
 
-<h2>端口绑定</h2>
-
-<p>端口绑定，也即ssh的-R参数配置。依然举个例子，不在一起的一个朋友，一台机器有些故障需要解决，我需要登陆到他的机器，第一个办法用不上，因为没有一台具有公网IP地址的网关机器。其他办法呢？显然Windows下的那套QQ远程，MSN远程都派不上用场了。怎么办？Linux只有Linux的解决办法。那就是利用可以通过ssh访问的一台有公网IP地址的机器。它可以是VPS，可以是独立主机，总之，只要能够让双方通过ssh访问得到就可以。
-首先，让我的朋友执行下面的指令：</p>
+<h2>端口绑定端口绑定，也即 ssh 的-R 参数配置。依然举个例子，不在一起的一个朋友，一台机器有些故障需要解决，我需要登陆到他的机器，第一个办法用不上，因为没有一台具有公网 IP 地址的网关机器。其他办法呢？显然 Windows 下的那套 QQ 远程，MSN 远程都派不上用场了。怎么办？Linux 只有 Linux 的解决办法。那就是利用可以通过 ssh 访问的一台有公网 IP 地址的机器。它可以是 VPS，可以是独立主机，总之，只要能够让双方通过 ssh 访问得到就可以。首先，让我的朋友执行下面的指令：</h2>
 
 <p><code>ssh -qTfN -R 9922:localhost:22  account@222.222.233.212</code></p>
 
-<p>执行成功后。
-我在执行下面的指令： <code>ssh account@222.222.233.212</code> 登陆成功后，可以执行</p>
+<p>执行成功后。我在执行下面的指令： <code>ssh account@222.222.233.212</code> 登陆成功后，可以执行</p>
 
 <p><code>netstat -lpnt |grep 9922</code></p>
 
@@ -140,22 +139,17 @@ LISTEN       tcp        0      0 ::
 LISTEN
 </code></pre>
 
-<p>这里的<code>9922</code>端口，实际上就是我朋友电脑上的ssh服务。立马在这台服务器上继续执行下面的指令吧：</p>
+<p>这里的<code>9922</code>端口，实际上就是我朋友电脑上的 ssh 服务。立马在这台服务器上继续执行下面的指令吧：</p>
 
 <p><code>ssh -p 9922 puser@localhost</code></p>
 
-<p>puser是我朋友电脑上的账号。登陆成功后，我就进入了我朋友的电脑。OK，想干什么都可以做了。
-完成后，我朋友只需要把那条包含<code>9922</code>的进程<code>kill</code>就可以了。</p>
+<p>puser 是我朋友电脑上的账号。登陆成功后，我就进入了我朋友的电脑。OK，想干什么都可以做了。完成后，我朋友只需要把那条包含<code>9922</code>的进程<code>kill</code>就可以了。</p>
 
-<h2>动态端口转发</h2>
-
-<p>动态端口转发，也即-R参数的配置，它的目的是把本地指定的一个端口通过socket模式转发到指定的远程服务器上的特定端口。比如说，我在美国有一个VPS，有用SSH访问功能，如果我在本地执行下面的指令：</p>
+<h2>动态端口转发动态端口转发，也即-R 参数的配置，它的目的是把本地指定的一个端口通过 socket 模式转发到指定的远程服务器上的特定端口。比如说，我在美国有一个 VPS，有用 SSH 访问功能，如果我在本地执行下面的指令：</h2>
 
 <p><code>ssh -D8580 -qnTfN account@myserver.example.com</code></p>
 
-<p>然后呢，比如，打开你的浏览器，设置代理ip地址为<code>127.0.0.1</code>，端口是<code>8580</code>，代理类型是<code>SOCKET5</code>，注意是5，SOCKET4不行（至少我没有测试成功）。设置完成后，虽然访问一些网站，比如<a href="http://blog.wgzhao.com">http://blog.wgzhao.com</a>，看能不能打开。如果能，就表示设置成功了。
-然后呢？然后你访问<a href="http://twitter.com">twitter</a>，<a href="http://www.facebook.com">facebook</a>，<a href="http://www.youtube.com">youtube</a>这些根本在实际上就不存在的网站呢？
-再然后呢？ 没有了。</p>
+<p>然后呢，比如，打开你的浏览器，设置代理 ip 地址为<code>127.0.0.1</code>，端口是<code>8580</code>，代理类型是<code>SOCKET5</code>，注意是 5，SOCKET4 不行（至少我没有测试成功）。设置完成后，虽然访问一些网站，比如<a href="http://blog.wgzhao.com">http://blog.wgzhao.com</a>，看能不能打开。如果能，就表示设置成功了。然后呢？然后你访问 <a href="http://twitter.com">twitter</a>，<a href="http://www.facebook.com">facebook</a>，<a href="http://www.youtube.com">youtube</a> 这些根本在实际上就不存在的网站呢？再然后呢？ 没有了。</p>
 </div>
 
 
@@ -247,8 +241,8 @@ LISTEN
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2011/03/11/ssh-three-kill-features/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/03/11/ssh-three-kill-features/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2011/03/11/ssh-three-kill-features/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/03/11/ssh-three-kill-features/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/sbin/下l开头的命令不多，列举如下： ldconfig lilo logsave loopctrl losetup lsmod lspci lsusb lvm lvm.static 其中lvm是lvm.static的软连接。 ldconfig：配置动态连接库， &hellip;">
+  <meta name="description" content="/sbin/下 l 开头的命令不多，列举如下： ldconfig lilo logsave loopctrl losetup lsmod lspci lsusb lvm lvm.static 其中 lvm 是 lvm.static 的软连接。 ldconfig：配置动态连接库， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,39 +99,38 @@
   </header>
 
 
-<div class="entry-content"><p>/sbin/下l开头的命令不多，列举如下：</p>
+<div class="entry-content"><p>/sbin/下 l 开头的命令不多，列举如下：</p>
 
 <blockquote><p>ldconfig lilo logsave loopctrl losetup lsmod lspci lsusb lvm lvm.static</p></blockquote>
 
-<p>其中lvm是lvm.static的软连接。</p>
+<p>其中 lvm 是 lvm.static 的软连接。</p>
 
-<p>ldconfig：配置动态连接库，以便程序在编译和运行中动态连接这些程序库。与此相关的配置文件便是/etc/ld.so.conf，后来的ldconfig的配置文件采取了现在流行的读取目录下的配置文件。所以/etc/ld.so.conf.d目录便是后来增加的。
-我仅仅使用ldconfig的一个参数-f，就是指定配置文件，这样的好处是，当我需要增加某一个目录的动态库时，我不要全部重建动态库缓存，命令程序运行时间短了很多。</p>
+<p>ldconfig：配置动态连接库，以便程序在编译和运行中动态连接这些程序库。与此相关的配置文件便是/etc/ld.so.conf，后来的 ldconfig 的配置文件采取了现在流行的读取目录下的配置文件。所以/etc/ld.so.conf.d 目录便是后来增加的。我仅仅使用 ldconfig 的一个参数-f，就是指定配置文件，这样的好处是，当我需要增加某一个目录的动态库时，我不要全部重建动态库缓存，命令程序运行时间短了很多。</p>
 
 <!--more-->
 
 
-<p>lilo：grub之前的引导程序，不知道现在还有多少发行版本使用他,留着他的一个好处是，当我丢失引导程序，而grub又安装不上时，lilo这个时候就可以出马了，而lilo每次都没有让我失望，所以我对他的印象不错。</p>
+<p>lilo：grub 之前的引导程序，不知道现在还有多少发行版本使用他,留着他的一个好处是，当我丢失引导程序，而 grub 又安装不上时，lilo 这个时候就可以出马了，而 lilo 每次都没有让我失望，所以我对他的印象不错。</p>
 
 <p>logsave：日志记录程序，参数方式如下：
  <code>logsave [ -asv ] logfile cmd_prog [ ... ]</code><br/>
--a是采用附加的模式写入日志文件logfile<br/>
--s写日志到用户终端<br/>
--v就是冗余输出</p>
+-a 是采用附加的模式写入日志文件 logfile<br/>
+-s 写日志到用户终端<br/>
+-v 就是冗余输出</p>
 
 <p>给我的感觉他的作用类似重定向，比如
 <code>cmd_prog &gt;logfile 2&gt;&amp;1</code></p>
 
-<p>loopctrl：配置isdnloop ISDN驱动，这应该算是一个用户遗留产品。</p>
+<p>loopctrl：配置 isdnloop ISDN 驱动，这应该算是一个用户遗留产品。</p>
 
 <p>lsmod：显示目前加载的内核模块状态</p>
 
-<p>lspci：列出所有的PCI设备，这个命令我用得比较少，我知道的是Rachel用得比较多，而且也比较熟悉，我决定去找她来帮写写lspci的基本用途
+<p>lspci：列出所有的 PCI 设备，这个命令我用得比较少，我知道的是 Rachel 用得比较多，而且也比较熟悉，我决定去找她来帮写写 lspci 的基本用途
 :)</p>
 
-<p>lsusb：列出所有的usb驱动</p>
+<p>lsusb：列出所有的 usb 驱动</p>
 
-<p>lvm,lvm.static：逻辑卷管理程序程序,他其实包括了一系列的子命令，比如pvscan,pvcreate,pvdisplay,vgscan,vgcreate,vgchange,vgdisplay, lvscan,lvcreate,lvdisplay等，这些子命令也可以单独使用，从一个初始的硬盘开始到创建一个可以使用的文件系统并挂载的简单步骤是:(我这里用/dev/ram0来替代硬盘)</p>
+<p>lvm,lvm.static：逻辑卷管理程序程序,他其实包括了一系列的子命令，比如 pvscan,pvcreate,pvdisplay,vgscan,vgcreate,vgchange,vgdisplay, lvscan,lvcreate,lvdisplay 等，这些子命令也可以单独使用，从一个初始的硬盘开始到创建一个可以使用的文件系统并挂载的简单步骤是:(我这里用/dev/ram0 来替代硬盘)</p>
 
 <pre><code>[root@mlsx tmp]# pvcreate /dev/ram0
 Physical volume “/dev/ram0″ successfully created
@@ -261,8 +265,8 @@ This filesystem will be automatically checked every 39 mounts or
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/03/19/commands-start-l/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/03/19/commands-start-l/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/03/19/commands-start-l/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/03/19/commands-start-l/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

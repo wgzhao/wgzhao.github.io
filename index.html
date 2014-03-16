@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="这两天把荒废了一年多的blog又整理了一下，做了几件事情： 把blog从自有的VPS上迁移到了github，也定制了域名
-把blog的引擎有octopress迁移到hexo,octopress什么都好，就是当帖子数多了后，生成静态文件的时间太太太长了。吐槽的人很多，比如这里,这里和这里。 &hellip;">
+  <meta name="description" content="这两天把荒废了一年多的 blog 又整理了一下，做了几件事情： 把 blog 从自有的 VPS 上迁移到了 github，也定制了域名
+把 blog 的引擎有 octopress 迁移到 hexo,octopress 什么都好，就是当帖子数多了后，生成静态文件的时间太太太长了。吐槽的人很多， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -64,7 +69,10 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -98,12 +106,12 @@
   </header>
 
 
-  <div class="entry-content"><p>这两天把荒废了一年多的blog又整理了一下，做了几件事情：</p>
+  <div class="entry-content"><p>这两天把荒废了一年多的 blog 又整理了一下，做了几件事情：</p>
 
 <ol>
-<li>把blog从自有的VPS上迁移到了<a href="https://github.com">github</a>，也<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">定制了域名</a></li>
-<li>把blog的引擎有<a href="http://www.octopress.org">octopress</a>迁移到<a href="https://github.com/tommy351/hexo/">hexo</a>,octopress什么都好，就是当帖子数多了后，生成静态文件的时间太太太长了。吐槽的人很多，比如<a href="http://www.techelex.org/why-switch-blog-from-octopress-to-hexo/">这里</a>,<a href="https://github.com/jekyll/jekyll/issues/1855">这里</a>和<a href="http://lucifr.com/2013/01/02/from-octopress-to-hexo/">这里</a>。</li>
-<li>砍掉了很多过时的帖子，似乎没有次整理blog，都会删除部分帖子。记得从boblog到<a href="http://www.wordpress.com">wordpress</a>就砍掉了将近1/3的帖子，后来从wordpress迁移到<a href="http://www.octopress.org">octopress</a>又砍掉了不少帖子。这次迁移到hexo，又砍掉了将近1/3的帖子。</li>
+<li>把 blog 从自有的 VPS 上迁移到了 <a href="https://github.com">github</a>，也<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">定制了域名</a></li>
+<li>把 blog 的引擎有 <a href="http://www.octopress.org">octopress</a> 迁移到 <a href="https://github.com/tommy351/hexo/">hexo</a>,octopress 什么都好，就是当帖子数多了后，生成静态文件的时间太太太长了。吐槽的人很多，比如<a href="http://www.techelex.org/why-switch-blog-from-octopress-to-hexo/">这里</a>,<a href="https://github.com/jekyll/jekyll/issues/1855">这里</a>和<a href="http://lucifr.com/2013/01/02/from-octopress-to-hexo/">这里</a>。</li>
+<li>砍掉了很多过时的帖子，似乎没有次整理 blog，都会删除部分帖子。记得从 boblog 到 <a href="http://www.wordpress.com">wordpress</a> 就砍掉了将近 1/3 的帖子，后来从 wordpress 迁移到 <a href="http://www.octopress.org">octopress</a> 又砍掉了不少帖子。这次迁移到 hexo，又砍掉了将近 1/3 的帖子。</li>
 </ol>
 
 </div>
@@ -144,23 +152,21 @@
   </header>
 
 
-  <div class="entry-content"><p>下面的这些Mac上使用的小技巧都来自<a href="http://pragprog.com/book/ktmack2/mac-kung-fu">《Mac Kung Fu(2nd edition)》</a> 这本书，改书讲述了超过400个使用Mac的技巧，但是个人感觉很多技巧并不是那么实用，因此这里只摘录了个人觉得用得上的一些技巧。更详细和完善的技巧，大家可以点击<a href="http://pragprog.com/book/ktmack2/mac-kung-fu">这里</a>.</p>
+  <div class="entry-content"><p>下面的这些 Mac 上使用的小技巧都来自<a href="http://pragprog.com/book/ktmack2/mac-kung-fu">《Mac Kung Fu(2nd edition)》</a> 这本书，改书讲述了超过 400 个使用 Mac 的技巧，但是个人感觉很多技巧并不是那么实用，因此这里只摘录了个人觉得用得上的一些技巧。更详细和完善的技巧，大家可以点击<a href="http://pragprog.com/book/ktmack2/mac-kung-fu">这里</a>.</p>
 
-<h3>FaceTime呼叫自动应答</h3>
-
-<p>如果有人通过FaceTime呼叫你，默认情况下，你是需要点击接受才能建立起呼叫的，怎么才能做到自动应答呢，我们可以通过下面的方法</p>
+<h3>FaceTime 呼叫自动应答如果有人通过 FaceTime 呼叫你，默认情况下，你是需要点击接受才能建立起呼叫的，怎么才能做到自动应答呢，我们可以通过下面的方法</h3>
 
 <ol>
 <li><p>打开你喜欢的终端，输入下面的指令</p>
 
 <p> <code>defaults write com.apple.FaceTime AutoAcceptInvites -bool TRUE</code></p></li>
-<li><p>接下来，架设你希望FaceTime ID(一般就是Apple ID)为wgzhao@gmail.com的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
+<li><p>接下来，架设你希望 FaceTime ID(一般就是 Apple ID)为 <a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#58;&#x77;&#x67;&#x7a;&#x68;&#97;&#111;&#x40;&#x67;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#x77;&#103;&#122;&#x68;&#97;&#111;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;</a> 的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
 
 <p> <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add wgzhao@gmail.com</code></p>
 
 <p> 如果你希望能够自动应答的联系人是通过手机号码呼入进来的，那就把上面的邮件地址换成手机号码，不过要注意的是，手机号码前需要加上国码标志，比如中国是+86,那么指令类似如下：<br/>
  <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add +8618612341234</code></p></li>
-<li><p>重启FaceTime，然后试试，应该就可以了。</p></li>
+<li><p>重启 FaceTime，然后试试，应该就可以了。</p></li>
 </ol>
 
 
@@ -213,11 +219,9 @@
   </header>
 
 
-  <div class="entry-content"><p><a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>下的几条SQL语句小技巧。</p>
+  <div class="entry-content"><p><a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>下的几条 SQL 语句小技巧。</p>
 
-<h2>生成随机字符串</h2>
-
-<p>这个是从<a href="http://momjian.us/main/blogs/pgblog/2012.html">别人的blog</a>上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里</p>
+<h2>生成随机字符串这个是从<a href="http://momjian.us/main/blogs/pgblog/2012.html">别人的 blog</a> 上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里</h2>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -298,11 +302,11 @@
   </header>
 
 
-  <div class="entry-content"><p>作为一个Linux系统管理员，统计各类IO是一项必不可少的工作。其统计工具中iostat显然又是最重要的一个统计手段。但是这里iostat不是本文的重点，因为这个工具的使用在网络上已经有大量的教程，可以供大家参考。这里主要是想介绍一些其他统计工具以来满足不同的需求。</p>
+  <div class="entry-content"><p>作为一个 Linux 系统管理员，统计各类 IO 是一项必不可少的工作。其统计工具中 iostat 显然又是最重要的一个统计手段。但是这里 iostat 不是本文的重点，因为这个工具的使用在网络上已经有大量的教程，可以供大家参考。这里主要是想介绍一些其他统计工具以来满足不同的需求。</p>
 
 <h3>iostat</h3>
 
-<p>iostat的功能异常强大，输出项也特别多，比如下面这个例子：</p>
+<p>iostat 的功能异常强大，输出项也特别多，比如下面这个例子：</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -356,15 +360,15 @@
   </header>
 
 
-  <div class="entry-content"><p>总结一些有关<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>查询计划，查询优化的相关内容，比较基础。</p>
+  <div class="entry-content"><p>总结一些有关 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>查询计划，查询优化的相关内容，比较基础。</p>
 
-<p>SQL是一种申明性(declared)语言，也就是说，它并不是一种程序。它没有其他编程语言里的流控制语言，比如while，也无法控制操作顺序，比如有名的&#8221;goto&#8221;。</p>
+<p>SQL 是一种申明性(declared)语言，也就是说，它并不是一种程序。它没有其他编程语言里的流控制语言，比如 while，也无法控制操作顺序，比如有名的&#8221;goto&#8221;。</p>
 
-<p>SQL只是描述一个结果，并非过程。</p>
+<p>SQL 只是描述一个结果，并非过程。</p>
 
-<p>结果一致，但如果过程不同，所带来的系统消耗可谓天差地远。所以所有的RDBMS里都需要有查询优化器来获得一条执行代价最小的方式来获取期望的结果。</p>
+<p>结果一致，但如果过程不同，所带来的系统消耗可谓天差地远。所以所有的 RDBMS 里都需要有查询优化器来获得一条执行代价最小的方式来获取期望的结果。</p>
 
-<p>在<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，和查询优化器紧密相连的便是查询计划。</p>
+<p>在 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，和查询优化器紧密相连的便是查询计划。</p>
 
 </div>
   
@@ -408,32 +412,32 @@
   </header>
 
 
-  <div class="entry-content"><p><a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>根据不同的数据模型，大致可以分为4类，分别是键值对存储(Key-Value Stores)，列族存储(Column Families)，文档数据库(Document Databases)以及图形数据库(Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反。</p>
+  <div class="entry-content"><p><a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>根据不同的数据模型，大致可以分为 4 类，分别是键值对存储(Key-Value Stores)，列族存储(Column Families)，文档数据库(Document Databases)以及图形数据库(Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反。</p>
 
-<p>下面我根据最近看的一些资料，列出了目前常见的<a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>数据库系统的一些主要特性，不一定都正确。另外，后面列了一些参考资料，偏向于<a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>，个人觉得还不错。</p>
+<p>下面我根据最近看的一些资料，列出了目前常见的 <a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>数据库系统的一些主要特性，不一定都正确。另外，后面列了一些参考资料，偏向于 <a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>，个人觉得还不错。</p>
 
 <ul>
 <li><p> Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a></p>
 
 <ul>
-<li>由Google开发</li>
+<li>由 Google 开发</li>
 <li>闭源产品</li>
-<li>通过SSTable实现持久化</li>
-<li>通过<a href="http://research.google.com/archive/chubby.html" title="chubby lock service">Chubby</a>实现一致性</li>
-<li>key-value存储</li>
+<li>通过 SSTable 实现持久化</li>
+<li>通过 <a href="http://research.google.com/archive/chubby.html" title="chubby lock service">Chubby</a>实现一致性</li>
+<li>key-value 存储</li>
 </ul>
 </li>
 <li><p> <a href="http://hbase.apache.org" title="Hbase home">HBase</a></p>
 
 <ul>
-<li>Apache基金项目，开发语言为Java</li>
+<li>Apache 基金项目，开发语言为 Java</li>
 <li>Apache License 2.0 许可</li>
 <li>Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的开源版本</li>
-<li>为<a href="http://hadoop.apache.org" title="open source software framework">Hadoop</a>的后端数据库</li>
-<li>通过HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
-<li>着重于CP</li>
-<li>通过memtable/SStable实现持久化</li>
-<li>通过<a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现一致性</li>
+<li>为 <a href="http://hadoop.apache.org" title="open source software framework">Hadoop</a>的后端数据库</li>
+<li>通过 HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用 <a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
+<li>着重于 CP</li>
+<li>通过 memtable/SStable 实现持久化</li>
+<li>通过 <a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现一致性</li>
 <li>支持多主节点(multi-master)</li>
 </ul>
 </li>
@@ -482,7 +486,7 @@
   </header>
 
 
-  <div class="entry-content"><p>在<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里如何查看或者一个表的大小呢?方法很多，我们可以从简单到复杂看这件事情：</p>
+  <div class="entry-content"><p>在 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里如何查看或者一个表的大小呢?方法很多，我们可以从简单到复杂看这件事情：</p>
 
 <p>首先创建一个简单表：</p>
 
@@ -585,7 +589,7 @@
   </header>
 
 
-  <div class="entry-content"><p>在当前<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，目前还没有一个能够以指定单位返回两个时间差的函数（如果有，请告诉我），比如返回两个时间相差的月份。</p>
+  <div class="entry-content"><p>在当前 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，目前还没有一个能够以指定单位返回两个时间差的函数（如果有，请告诉我），比如返回两个时间相差的月份。</p>
 
 <p>我简单的写了一个函数，只是作为一个实现的思路，没有做过多的严禁判断。代码如下：</p>
 
@@ -721,12 +725,7 @@ $$ language plpgsql;</code></pre></noscript></div>
   </header>
 
 
-  <div class="entry-content"><p>系统升级到Mountain Lion后，发现我的blog编译环境不能正常使用了，我的blog放弃<a href="http://www.wordpress.org" title="wordpress">wordpress</a>，采取了<a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>，这玩意儿的好处是全静态，搬家的时候很容易，甚至可以随时搬迁到<a href="http://github.com" title="github">github</a>，<a href="http://www.dropbox.com" title="dropbox">dropbox</a>这类的空间上都没以问题。<br/>
-麻烦的就是那套环境，<a href="http://www.ruby.org" title="ruby">ruby</a>本来也不熟悉，所以搞起来比较痛苦。
-昨晚花了3个多小时才搞定，不停的清理环境，重新安装。<br/>
-其中有两个问题记录如下 <br/>
-一个是gcc的问题，<a href="http://www.ruby.org" title="ruby">ruby</a>一些组件的编译并不支持Mac自带的llvm-gcc特性。因此需要自行编译一个gcc，当然自己编译太痛苦了，幸运的是<a href="http://hpc.sourceforge.net/" title="High Performance Computer for Mac OS X">HPC for Mac OS X</a>网站已经编译好了针对Mac的，可以从其网站直接下载，省去的编译的痛苦
-另外出现的一个问题是在执行<code>bundle install</code>的时候，会给出下面的报错</p>
+  <div class="entry-content"><p>系统升级到 Mountain Lion 后，发现我的 blog 编译环境不能正常使用了，我的 blog 放弃 <a href="http://www.wordpress.org" title="wordpress">wordpress</a>，采取了 <a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>，这玩意儿的好处是全静态，搬家的时候很容易，甚至可以随时搬迁到 <a href="http://github.com" title="github">github</a>，<a href="http://www.dropbox.com" title="dropbox">dropbox</a>这类的空间上都没以问题。麻烦的就是那套环境，<a href="http://www.ruby.org" title="ruby">ruby</a>本来也不熟悉，所以搞起来比较痛苦。昨晚花了 3 个多小时才搞定，不停的清理环境，重新安装。其中有两个问题记录如下一个是 gcc 的问题，<a href="http://www.ruby.org" title="ruby">ruby</a>一些组件的编译并不支持 Mac 自带的 llvm-gcc 特性。因此需要自行编译一个 gcc，当然自己编译太痛苦了，幸运的是 <a href="http://hpc.sourceforge.net/" title="High Performance Computer for Mac OS X">HPC for Mac OS X</a>网站已经编译好了针对 Mac 的，可以从其网站直接下载，省去的编译的痛苦另外出现的一个问题是在执行<code>bundle install</code>的时候，会给出下面的报错</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -736,12 +735,12 @@ $$ language plpgsql;</code></pre></noscript></div>
 </span><span class='line'>greater than 8 (Mac OS X 10.5+) are supported (RuntimeError)</span></code></pre></td></tr></table></div></figure>
 
 
-<p>这个报错的原因是<a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>需要的<a href="https://github.com/thibaudgg/rb-fsevent/" title="rb-fsevent">rb-fsevent</a>的版本是<code>0.4.3.1</code>，这个版本还不支持Mountain Lion。简单的处理办法是修改<code>ext/extconf.rb</code>文件，找到19行，如下:
+<p>这个报错的原因是 <a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>需要的 <a href="https://github.com/thibaudgg/rb-fsevent/" title="rb-fsevent">rb-fsevent</a>的版本是<code>0.4.3.1</code>，这个版本还不支持 Mountain Lion。简单的处理办法是修改<code>ext/extconf.rb</code>文件，找到 19 行，如下:
 <code>sdk_version    = { 9 =&gt; '10.5', 10 =&gt; '10.6', 11 =&gt; '10.7' }[darwin_version]</code><br/>
 修改为
 <code>sdk_version    = { 9 =&gt; '10.5', 10 =&gt; '10.6', 11 =&gt; '10.7',12=&gt;'10.8' }[darwin_version]</code></p>
 
-<p>删除第24行内容，如下</p>
+<p>删除第 24 行内容，如下</p>
 
 <p><code>-isysroot #{xcode_path}/SDKs/MacOSX#{sdk_version}.sdk</code></p>
 
@@ -787,11 +786,11 @@ $$ language plpgsql;</code></pre></noscript></div>
   <div class="entry-content"><hr />
 
 <p>layout: post
-title: 用vsftpd和mysql创建一个虚拟用户ftp服务器
+title: 用 vsftpd 和 mysql 创建一个虚拟用户 ftp 服务器
 date: 2012-04-07 16:51
 comments: true
 categories:
-&ndash; Linux技术
+&ndash; Linux 技术
 tags:
 &ndash; vsftp
 &ndash; mysql
@@ -799,8 +798,7 @@ tags:
 
 <hr />
 
-<p>当前有这样的一个需求，我需要批量创建一个网站，比如我要创建一个<code>foo.com</code>的网站，我就会在<code>/web/</code>目录下创建一个<code>foo.com</code>的目录，WEB服务器（我这里用的是<a href="http://nginx.org" title="nginx">nginx</a>）已经自动设置好解析。<br/>
-同时，我需要有一个对应的ftp账号来管理这个网站，但是我不希望使用系统账号，一来网站多了，系统账号必然多，而来我不希望管理网站的账号能通过ssh登陆，虽然ssh也可以配置哪些账号不允许登陆。但是不创建系统账号显然是最安全的做法。</p>
+<p>当前有这样的一个需求，我需要批量创建一个网站，比如我要创建一个<code>foo.com</code>的网站，我就会在<code>/web/</code>目录下创建一个<code>foo.com</code>的目录，WEB 服务器（我这里用的是 <a href="http://nginx.org" title="nginx">nginx</a>）已经自动设置好解析。同时，我需要有一个对应的 ftp 账号来管理这个网站，但是我不希望使用系统账号，一来网站多了，系统账号必然多，而来我不希望管理网站的账号能通过 ssh 登陆，虽然 ssh 也可以配置哪些账号不允许登陆。但是不创建系统账号显然是最安全的做法。</p>
 
 </div>
   
@@ -850,8 +848,8 @@ tags:
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

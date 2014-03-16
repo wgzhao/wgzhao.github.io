@@ -9,9 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="sfdisk有四个主要的功能：列出一个分区的大小（块为单位），一个设备的所有分区，检查一个设备的分区表，重新分区一个设备。
-其实我在平时用的最多的是第二个&mdash;列出一个设备的分区表。有了fdisk命令，为什么还要有sfdisk命令呢？我第一次具体使用sfdisk命令，还是在HP
-DL &hellip;">
+  <meta name="description" content="sfdisk 有四个主要的功能：列出一个分区的大小（块为单位），一个设备的所有分区，检查一个设备的分区表，重新分区一个设备。其实我在平时用的最多的是第二个&mdash;列出一个设备的分区表。有了 fdisk 命令，为什么还要有 sfdisk 命令呢？我第一次具体使用 sfdisk 命令，还是在 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +29,11 @@ DL &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,16 +99,14 @@ DL &hellip;">
   </header>
 
 
-<div class="entry-content"><p>sfdisk有四个主要的功能：列出一个分区的大小（块为单位），一个设备的所有分区，检查一个设备的分区表，重新分区一个设备。
-其实我在平时用的最多的是第二个&mdash;列出一个设备的分区表。有了fdisk命令，为什么还要有sfdisk命令呢？我第一次具体使用sfdisk命令，还是在HP
-DL 系列机器上。HP机器使用了Smart
-Array阵列卡，其链接的SCSI在linux中识别出来的不是平常我们常认为的sdx设备，而是cciss/c0d0px这样的样子。
-而这样的分区信息，使用fdisk -l是没有办法打印出来的，这个时候就要使用<code>sfdisk -l</code>命令了。这就使用到了sfdisk的第二个功能了。</p>
+<div class="entry-content"><p>sfdisk 有四个主要的功能：列出一个分区的大小（块为单位），一个设备的所有分区，检查一个设备的分区表，重新分区一个设备。其实我在平时用的最多的是第二个&mdash;列出一个设备的分区表。有了 fdisk 命令，为什么还要有 sfdisk 命令呢？我第一次具体使用 sfdisk 命令，还是在 HP
+DL 系列机器上。HP 机器使用了 Smart
+Array 阵列卡，其链接的 SCSI 在 linux 中识别出来的不是平常我们常认为的 sdx 设备，而是 cciss/c0d0px 这样的样子。而这样的分区信息，使用 fdisk -l 是没有办法打印出来的，这个时候就要使用<code>sfdisk -l</code>命令了。这就使用到了 sfdisk 的第二个功能了。</p>
 
 <!--more-->
 
 
-<p>他的第三个功能和第四个没有使用过，不过刚才看man手册，发现其备份和恢复分区表的方式倒是很简单。</p>
+<p>他的第三个功能和第四个没有使用过，不过刚才看 man 手册，发现其备份和恢复分区表的方式倒是很简单。</p>
 
 <p>备份分区表：</p>
 
@@ -164,8 +165,7 @@ Device Boot Start End Blocks Id System
 boot.b
 </code></pre>
 
-<p>从上面的例子可以看出，sfdisk确实可以做到分区的备份和恢复，而且分区已有数据并不会丢失。<br/>
-这其实和拿着一片原始钥匙去配钥匙的地方复制一片出来，某天原始的丢了，用这片复制的打开房门，房子的摆设当然什么都没有改变。</p>
+<p>从上面的例子可以看出，sfdisk 确实可以做到分区的备份和恢复，而且分区已有数据并不会丢失。这其实和拿着一片原始钥匙去配钥匙的地方复制一片出来，某天原始的丢了，用这片复制的打开房门，房子的摆设当然什么都没有改变。</p>
 </div>
 
 
@@ -257,8 +257,8 @@ boot.b
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/05/28/commands-start-s/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/05/28/commands-start-s/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/05/28/commands-start-s/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/05/28/commands-start-s/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

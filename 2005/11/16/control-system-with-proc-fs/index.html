@@ -31,6 +31,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -105,8 +110,7 @@
 <h3>/proc/scsi/scsi</h3>
 
 <p>作为系统管理员，需要了解的最有用内容是，在有热交换驱动器情况下，如何不重启系统就可以添加更多磁盘空间。假使不使用
-/proc，您可以插入驱动器，但为了使系统识别新磁盘，必须随即重新引导系统。<br/>
-这里，可以用以下命令来使系统识别新的驱动器：</p>
+/proc，您可以插入驱动器，但为了使系统识别新磁盘，必须随即重新引导系统。这里，可以用以下命令来使系统识别新的驱动器：</p>
 
 <pre><code>echo "scsi add-single-device w x y z" &gt; /proc/scsi/scsi
 </code></pre>
@@ -139,11 +143,7 @@ z 是 LUN 号，第一个 LUN 为零（0）</p>
 
 <h3>/proc/sys/fs/file-nr</h3>
 
-<p>该文件与 file-max 相关，它有三个值：<br/>
-已分配文件句柄的数目<br/>
-已使用文件句柄的数目<br/>
-文件句柄的最大数目<br/>
-该文件是只读的，仅用于显示信息。</p>
+<p>该文件与 file-max 相关，它有三个值：已分配文件句柄的数目已使用文件句柄的数目文件句柄的最大数目该文件是只读的，仅用于显示信息。</p>
 
 <h3>/proc/sys/fs/inode-*</h3>
 
@@ -170,11 +170,7 @@ z 是 LUN 号，第一个 LUN 为零（0）</p>
 
 <h3>/proc/sys/kernel/acct</h3>
 
-<p>该文件有三个可配置值，根据包含日志的文件系统上可用空间的数量（以百分比表示），这些值控制何时开始进行进程记帐：<br/>
-如果可用空间低于这个百分比值，则停止进程记帐<br/>
-如果可用空间高于这个百分比值，则开始进程记帐<br/>
-检查上面两个值的频率（以秒为单位）<br/>
-要更改这个文件的某个值，应该回送用空格分隔开的一串数字。</p>
+<p>该文件有三个可配置值，根据包含日志的文件系统上可用空间的数量（以百分比表示），这些值控制何时开始进行进程记帐：如果可用空间低于这个百分比值，则停止进程记帐如果可用空间高于这个百分比值，则开始进程记帐检查上面两个值的频率（以秒为单位）要更改这个文件的某个值，应该回送用空格分隔开的一串数字。</p>
 
 <p>缺省设置：2 4 30</p>
 
@@ -183,10 +179,7 @@ z 是 LUN 号，第一个 LUN 为零（0）</p>
 
 <h3>/proc/sys/kernel/ctrl-alt-del</h3>
 
-<p>该文件有一个二进制值，该值控制系统在接收到 <code>ctrl+alt+delete</code> 按键组合时如何反应。这两个值表示：<br/>
-零（0）值表示捕获 <code>ctrl+alt+delete</code>，并将其送至 <code>ini</code>t 程序。<br/>
-这将允许系统可以完美地关闭和重启，就好象您输入 <code>shutdown</code> 命令一样。
-壹（1）值表示不捕获 <code>ctrl+alt+delete</code>，将执行非干净的关闭，就好象直接关闭电源一样。</p>
+<p>该文件有一个二进制值，该值控制系统在接收到 <code>ctrl+alt+delete</code> 按键组合时如何反应。这两个值表示：零（0）值表示捕获 <code>ctrl+alt+delete</code>，并将其送至 <code>ini</code>t 程序。这将允许系统可以完美地关闭和重启，就好象您输入 <code>shutdown</code> 命令一样。壹（1）值表示不捕获 <code>ctrl+alt+delete</code>，将执行非干净的关闭，就好象直接关闭电源一样。</p>
 
 <p>缺省设置：0</p>
 
@@ -226,11 +219,7 @@ panic）”，则内核在重新引导之前等待的时间（以秒为单位）
 <h3>/proc/sys/kernel/printk</h3>
 
 <p>该文件有四个数字值，它们根据日志记录消息的重要性，定义将其发送到何处。关于不同日志级别的更多信息，请阅读 syslog(2)
-联机帮助页。该文件的四个值为：<br/>
-控制台日志级别：优先级高于该值的消息将被打印至控制台<br/>
-缺省的消息日志级别：将用该优先级来打印没有优先级的消息<br/>
-最低的控制台日志级别：控制台日志级别可被设置的最小值（最高优先级）<br/>
-缺省的控制台日志级别：控制台日志级别的缺省值</p>
+联机帮助页。该文件的四个值为：控制台日志级别：优先级高于该值的消息将被打印至控制台缺省的消息日志级别：将用该优先级来打印没有优先级的消息最低的控制台日志级别：控制台日志级别可被设置的最小值（最高优先级）缺省的控制台日志级别：控制台日志级别的缺省值</p>
 
 <p>缺省设置：6 4 1 7</p>
 
@@ -318,28 +307,19 @@ Service）攻击。</p>
 
 <h3>/proc/sys/vm/buffermem</h3>
 
-<p>该文件控制用于缓冲区内存的整个系统内存的数量（以百分比表示）。它有三个值，通过把用空格相隔的一串数字写入该文件来设置这三个值。
-用于缓冲区的内存的最低百分比
-如果发生所剩系统内存不多，而且系统内存正在减少这种情况，系统将试图维护缓冲区内存的数量。
-用于缓冲区的内存的最高百分比</p>
+<p>该文件控制用于缓冲区内存的整个系统内存的数量（以百分比表示）。它有三个值，通过把用空格相隔的一串数字写入该文件来设置这三个值。用于缓冲区的内存的最低百分比如果发生所剩系统内存不多，而且系统内存正在减少这种情况，系统将试图维护缓冲区内存的数量。用于缓冲区的内存的最高百分比</p>
 
 <p>缺省设置：2 10 60</p>
 
 <h3>/proc/sys/vm/freepages</h3>
 
-<p>该文件控制系统如何应对各种级别的可用内存。它有三个值，通过把用空格相隔的一串数字写入该文件来设置这三个值。
-如果系统中可用页面的数目达到了最低限制，则只允许内核分配一些内存。
-如果系统中可用页面的数目低于这一限制，则内核将以较积极的方式启动交换，以释放内存，从而维持系统性能。
-内核将试图保持这个数量的系统内存可用。低于这个值将启动内核交换。</p>
+<p>该文件控制系统如何应对各种级别的可用内存。它有三个值，通过把用空格相隔的一串数字写入该文件来设置这三个值。如果系统中可用页面的数目达到了最低限制，则只允许内核分配一些内存。如果系统中可用页面的数目低于这一限制，则内核将以较积极的方式启动交换，以释放内存，从而维持系统性能。内核将试图保持这个数量的系统内存可用。低于这个值将启动内核交换。</p>
 
 <p>缺省设置：512 768 1024</p>
 
 <h3>/proc/sys/vm/kswapd</h3>
 
-<p>该文件控制允许内核如何交换内存。它有三个值，通过把用空格相隔的一串数字写入该文件来设置这三个值：
-内核试图一次释放的最大页面数目。如果想增加内存交换过程中的带宽，则需要增加该值。
-内核在每次交换中试图释放页面的最少次数。
-内核在一次交换中所写页面的数目。这对系统性能影响最大。这个值越大，交换的数据越多，花在磁盘寻道上的时间越少。然而，这个值太大会因“淹没”请求队列而反过来影响系统性能。</p>
+<p>该文件控制允许内核如何交换内存。它有三个值，通过把用空格相隔的一串数字写入该文件来设置这三个值：内核试图一次释放的最大页面数目。如果想增加内存交换过程中的带宽，则需要增加该值。内核在每次交换中试图释放页面的最少次数。内核在一次交换中所写页面的数目。这对系统性能影响最大。这个值越大，交换的数据越多，花在磁盘寻道上的时间越少。然而，这个值太大会因“淹没”请求队列而反过来影响系统性能。</p>
 
 <p>缺省设置：512 32 8</p>
 
@@ -361,9 +341,7 @@ Service）攻击。</p>
 目录下的变量，并且人们始终认为变量是在这个目录下，因此省略了变量名的那一部分（/proc/sys）。另一个要说明的更改是，将目录分隔符（正斜杠
 /）换成了英文中的句号（点 .）。</p>
 
-<p>将 <code>/proc/sys</code> 中的文件转换成 sysctl 中的变量有两个简单的规则：<br/>
-去掉前面部分 <code>/proc/sys</code>。<br/>
-将文件名中的正斜杠变为点。</p>
+<p>将 <code>/proc/sys</code> 中的文件转换成 sysctl 中的变量有两个简单的规则：去掉前面部分 <code>/proc/sys</code>。将文件名中的正斜杠变为点。</p>
 
 <p>这两条规则使您能将 <code>/proc/sys</code> 中的任一文件名转换成 sysctl 中的任一变量名。一般文件到变量的转换为：</p>
 
@@ -397,16 +375,11 @@ dir1.dir2.file --&gt; /proc/sys/dir1/dir2/file
 <p>在系统运行的同时更改其它非内核系统参数，而且在不重新引导系统的情况下使这些设置生效，这种做法是可能的。在 /etc/init.d
 目录中列出了包含这些参数的文件，它们主要按服务、守护程序和服务器来分类。由于越来越多各方面的脚本可以罗列在这个目录下，所以这里不可能讨论所有各种配置。不过，下面列举了一些示例，这些示例讨论了如何在不同的
 Linux 分发版上操作 <code>/etc/init.d</code>
-下的脚本。这里的示例可能很有用，其中讨论了更改守护程序，然后在不重新引导系统的情形下重新装入配置：
-更改 Web 服务器配置，然后重新装入 Apache
-除去不需要的 inetd 登录服务
-操作网络设置
-通过 NFS 导出新的文件系统
-启动／停止防火墙</p>
+下的脚本。这里的示例可能很有用，其中讨论了更改守护程序，然后在不重新引导系统的情形下重新装入配置：更改 Web 服务器配置，然后重新装入 Apache
+除去不需要的 inetd 登录服务操作网络设置通过 NFS 导出新的文件系统启动／停止防火墙</p>
 
 <p>首先，常见的方法是，直接通过 /etc/init.d
-中的脚本来操作系统服务。这些脚本用参数来操作它们所控制的服务；<br/>
-可以通过输入脚本名但不带任何参数这种方法来查看有哪些有效的选项。常见的参数有：<br/>
+中的脚本来操作系统服务。这些脚本用参数来操作它们所控制的服务；可以通过输入脚本名但不带任何参数这种方法来查看有哪些有效的选项。常见的参数有：<br/>
 start：启动已停止的服务<br/>
 stop：停止正在运行的服务<br/>
 restart：停止正在运行的服务，然后再重启该服务；它将启动已停止的服务<br/>
@@ -532,8 +505,8 @@ status：报告服务处于运行状态，还是停止状态</p>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2005/11/16/control-system-with-proc-fs/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/11/16/control-system-with-proc-fs/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2005/11/16/control-system-with-proc-fs/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/11/16/control-system-with-proc-fs/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

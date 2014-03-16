@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="用户观察到了一个很有意思的现象，某一个目录下10个小文件，每一个大概都只有几十个字节。都是纯文本。分别对这10个文件用compress指令压缩，结果发现其中一个压缩不成功，也没有给出任何报错信息。 将该文件传送到AIX 5上，使用compress压缩，则给出&#8221;file not &hellip;">
+  <meta name="description" content="用户观察到了一个很有意思的现象，某一个目录下 10 个小文件，每一个大概都只有几十个字节。都是纯文本。分别对这 10 个文件用 compress 指令压缩，结果发现其中一个压缩不成功，也没有给出任何报错信息。 将该文件传送到 AIX 5 上，使用 compress 压缩，则给出&#8221; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,15 +99,15 @@
   </header>
 
 
-<div class="entry-content"><p>用户观察到了一个很有意思的现象，某一个目录下10个小文件，每一个大概都只有几十个字节。都是纯文本。分别对这10个文件用compress指令压缩，结果发现其中一个压缩不成功，也没有给出任何报错信息。</p>
+<div class="entry-content"><p>用户观察到了一个很有意思的现象，某一个目录下 10 个小文件，每一个大概都只有几十个字节。都是纯文本。分别对这 10 个文件用 compress 指令压缩，结果发现其中一个压缩不成功，也没有给出任何报错信息。</p>
 
-<p>将该文件传送到AIX 5上，使用compress压缩，则给出&#8221;file not change&#8221;的提示，依然没有压缩。</p>
+<p>将该文件传送到 AIX 5 上，使用 compress 压缩，则给出&#8221;file not change&#8221;的提示，依然没有压缩。</p>
 
 <p>给文件重命名，也不行。另外创建一个文件，然后把文件内容复制过去，也不行。</p>
 
-<p>我尝试用strace跟踪了compress压缩该文件的过程。发现压缩的确做了，但是最后却执行了unlink的操作，也就是把已经压缩好的文件删除了。</p>
+<p>我尝试用 strace 跟踪了 compress 压缩该文件的过程。发现压缩的确做了，但是最后却执行了 unlink 的操作，也就是把已经压缩好的文件删除了。</p>
 
-<p>为什么要删除呢？先看看compress的帮助吧，发现有这样一个参数的说明：</p>
+<p>为什么要删除呢？先看看 compress 的帮助吧，发现有这样一个参数的说明：</p>
 
 <blockquote><p>-f Forces output file to be generated, even if one already. exists,
 and even if no space is saved by compressing. If -f is not used, the
@@ -110,15 +115,13 @@ user will be prompted if stdin is. a tty, otherwise, the output file
 will not be overwritten.</p></blockquote>
 
 <p>其中提到了压缩空间的问题。我猜测可能是压缩效率的问题。 于是用<code>compress -f</code>
-的方式，果然压缩成功了。<br/>
-比较压缩前和压缩后的大小，结果发现压缩后的文件还比压缩前的文件要大。难怪，所以-f提高了即使没有压缩空间。<br/>
-这倒是挺有意思，一来压缩一个文件，大小不减反增，比较少见。二来compress指令还去做比较？ 于是下载了compress 4.2 的源代码，大致看了一下，果然有这么一个判断：</p>
+的方式，果然压缩成功了。比较压缩前和压缩后的大小，结果发现压缩后的文件还比压缩前的文件要大。难怪，所以-f 提高了即使没有压缩空间。这倒是挺有意思，一来压缩一个文件，大小不减反增，比较少见。二来 compress 指令还去做比较？ 于是下载了 compress 4.2 的源代码，大致看了一下，果然有这么一个判断：</p>
 
 <pre><code>if (bytes_out &gt;= bytes_in &amp;&amp; !(force))
                 exit_code = 2;
 </code></pre>
 
-<p><code>bytes_out</code>是压缩后的字节，<code>bytes_in</code>是读入的字节，也就是原始文件的大小。force对应的是-f的参数。</p>
+<p><code>bytes_out</code>是压缩后的字节，<code>bytes_in</code>是读入的字节，也就是原始文件的大小。force 对应的是-f 的参数。</p>
 
 <p>没有想到，这开发人员还这么考虑呀。</p>
 </div>
@@ -212,8 +215,8 @@ will not be overwritten.</p></blockquote>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/12/17/compress-utility-can-not-always-compress-files/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/12/17/compress-utility-can-not-always-compress-files/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/12/17/compress-utility-can-not-always-compress-files/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/12/17/compress-utility-can-not-always-compress-files/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

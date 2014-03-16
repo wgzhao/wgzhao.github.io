@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="好早以前写过一篇关于MySQL升级到4.1出现乱码如何解决的帖子，他只是讲述了当你导入的数据都正常了，该怎么使用到MySQL4.1以后版本的多语言特征。但是如果在导入的过程中就遇到了字符集的问题，该怎么办呢？就是无论你怎么导入，怎么折腾字符集，都是乱码，但是你新插入的任何一条数据都没有问题， &hellip;">
+  <meta name="description" content="好早以前写过一篇关于 MySQL 升级到 4.1 出现乱码如何解决的帖子，他只是讲述了当你导入的数据都正常了，该怎么使用到 MySQL4.1 以后版本的多语言特征。但是如果在导入的过程中就遇到了字符集的问题，该怎么办呢？就是无论你怎么导入，怎么折腾字符集，都是乱码， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,26 +99,26 @@
   </header>
 
 
-<div class="entry-content"><p>好早以前写过一篇关于MySQL升级到4.1出现乱码如何解决的帖子，他只是讲述了当你导入的数据都正常了，该怎么使用到MySQL4.1以后版本的多语言特征。但是如果在导入的过程中就遇到了字符集的问题，该怎么办呢？就是无论你怎么导入，怎么折腾字符集，都是乱码，但是你新插入的任何一条数据都没有问题，这就不是升级后调整字符集的问题了，而是在导出导入的工程中就需要考虑。</p>
+<div class="entry-content"><p>好早以前写过一篇关于 MySQL 升级到 4.1 出现乱码如何解决的帖子，他只是讲述了当你导入的数据都正常了，该怎么使用到 MySQL4.1 以后版本的多语言特征。但是如果在导入的过程中就遇到了字符集的问题，该怎么办呢？就是无论你怎么导入，怎么折腾字符集，都是乱码，但是你新插入的任何一条数据都没有问题，这就不是升级后调整字符集的问题了，而是在导出导入的工程中就需要考虑。</p>
 
 <!--more-->
 
 
-<p><a href="http://blog.sina.com.cn/m/goto">UP</a>这两天估计被这个问题折腾的够呛，虽然事后找到的原因不是在于数据库，但是这里还是把升级的过程记录下来。今天up问我上次<a href="http://bbs.xplore.cn">论坛</a>如何升级和转换的，我就记得不太清楚了。</p>
+<p><a href="http://blog.sina.com.cn/m/goto">UP</a> 这两天估计被这个问题折腾的够呛，虽然事后找到的原因不是在于数据库，但是这里还是把升级的过程记录下来。今天 up 问我上次<a href="http://bbs.xplore.cn">论坛</a>如何升级和转换的，我就记得不太清楚了。</p>
 
 <p>我自己试验成功的有两种方式</p>
 
-<p>1）只需要把你原来版本的数据库文件考到到新的数据库目录下，什么都不用修改，这个时候输出应该是正常的，默认采用了latin1字符集。这大概只最简单的方式了，不过这种方式不太好的地方在于一旦将来要转换字符集，很是麻烦。</p>
+<p>1）只需要把你原来版本的数据库文件考到到新的数据库目录下，什么都不用修改，这个时候输出应该是正常的，默认采用了 latin1 字符集。这大概只最简单的方式了，不过这种方式不太好的地方在于一旦将来要转换字符集，很是麻烦。</p>
 
-<p>2）假设你要从MySQL4.0以下版本升级到MySQL4.1以上版本，并明确指定需要的字符集是gb2312，那么我的步骤是
+<p>2）假设你要从 MySQL4.0 以下版本升级到 MySQL4.1 以上版本，并明确指定需要的字符集是 gb2312，那么我的步骤是
 a）在原来的数据库上导出你要的数据库，可以使用下面的命令：
 <code>$mysqldump -u username -p password databasename &gt;xxx.sql</code></p>
 
-<p>b）修改导出的sql文件，首先将导出的数据表加上默认字符集gb2312，可以在vi中只用下面的替换命令
+<p>b）修改导出的 sql 文件，首先将导出的数据表加上默认字符集 gb2312，可以在 vi 中只用下面的替换命令
 <code>% s/engine=MyISAM;/engine=MyISAM DEFAULT CHARSET=GB2312;/g</code>
-当然你可以使用你喜欢的编辑器来替换；其次是将这个sql文件转化成gb2312编码格式的文件。你可以先file看看该文件的字符集，如果是ISO8859的，那还不错，如果是Non-ISO格式，那就必须转换，可以使用下面的命令
+当然你可以使用你喜欢的编辑器来替换；其次是将这个 sql 文件转化成 gb2312 编码格式的文件。你可以先 file 看看该文件的字符集，如果是 ISO8859 的，那还不错，如果是 Non-ISO 格式，那就必须转换，可以使用下面的命令
 <code>iconv -c -t gb2312 -o outout.sql xxx.sql</code>
-UP导出的数据就是Non－ISO格式。</p>
+UP 导出的数据就是 Non－ISO 格式。</p>
 
 <p>c）连接新的数据库服务器，创建需要的数据库
 <code>mysqladmin -uroot -p create databasename</code></p>
@@ -143,7 +148,7 @@ UP导出的数据就是Non－ISO格式。</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>默认的字符集都是latinn1的，这个时候，你需要将latin1转换成gb2312，方法如下</p>
+<p>默认的字符集都是 latinn1 的，这个时候，你需要将 latin1 转换成 gb2312，方法如下</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -181,10 +186,9 @@ UP导出的数据就是Non－ISO格式。</p>
 
 <p>然后在你的网页中，在连接数据后，加上下面的一条指令
  <code>mysql_query(”set NAMES 'utf8'");</code>
-应该就可以了，当然你的网页编码本身应该也要式gb2312的。</p>
+应该就可以了，当然你的网页编码本身应该也要式 gb2312 的。</p>
 
-<p>那么UP为什么会要折腾两天呢？不是他的步骤和方法有问题，而是操作系统的问题！操作系统？ubuntu！
-问题就出现在iconv转换的过程中，只要转换成GB2312，那些中文就成了空白，而同样的文件，在其他Linux操作系统上就不会出现这个问题，难道式ubuntu并不支持GB2312？还是别的原因，个人没有使用过ubuntu，不太清楚他的字符集和字体支持是如何的，不过想来我用过的redhat，fedora，suse确实都在字符集和中文字体方面有些欠缺。这个方面，红旗Linux显然要优秀一些。</p>
+<p>那么 UP 为什么会要折腾两天呢？不是他的步骤和方法有问题，而是操作系统的问题！操作系统？ubuntu！问题就出现在 iconv 转换的过程中，只要转换成 GB2312，那些中文就成了空白，而同样的文件，在其他 Linux 操作系统上就不会出现这个问题，难道式 ubuntu 并不支持 GB2312？还是别的原因，个人没有使用过 ubuntu，不太清楚他的字符集和字体支持是如何的，不过想来我用过的 redhat，fedora，suse 确实都在字符集和中文字体方面有些欠缺。这个方面，红旗 Linux 显然要优秀一些。</p>
 </div>
 
 
@@ -276,8 +280,8 @@ UP导出的数据就是Non－ISO格式。</p>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/10/25/MySQL-upgrade-garbled-talk-about-the-issues/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/10/25/MySQL-upgrade-garbled-talk-about-the-issues/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/10/25/MySQL-upgrade-garbled-talk-about-the-issues/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/10/25/MySQL-upgrade-garbled-talk-about-the-issues/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

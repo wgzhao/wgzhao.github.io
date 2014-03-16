@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="没有想到会找到很多老同学，都是初中的同学。 首先是双百通过中国同学录找到我的联系方式，我们聊得很开心，于是她便告诉我其他人的联系方式，并且要我加入52、54班联盟（QQ号码25226184）。在QQ群上找到了更多的同学，也大约知道了大家目前的状态。聊起初中的趣事，感觉仿佛发生在昨天。 &hellip;">
+  <meta name="description" content="没有想到会找到很多老同学，都是初中的同学。首先是双百通过中国同学录找到我的联系方式，我们聊得很开心，于是她便告诉我其他人的联系方式，并且要我加入 52、54 班联盟（QQ 号码 25226184）。在 QQ 群上找到了更多的同学，也大约知道了大家目前的状态。聊起初中的趣事，感觉仿佛发生在昨天。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -63,7 +68,10 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -97,11 +105,9 @@
   </header>
 
 
-  <div class="entry-content"><p>没有想到会找到很多老同学，都是初中的同学。  <br/>
-首先是双百通过中国同学录找到我的联系方式，我们聊得很开心，于是她便告诉我其他人的联系方式，并且要我加入52、54班联盟（QQ号码25226184）。在QQ群上找到了更多的同学，也大约知道了大家目前的状态。聊起初中的趣事，感觉仿佛发生在昨天。</p>
+  <div class="entry-content"><p>没有想到会找到很多老同学，都是初中的同学。首先是双百通过中国同学录找到我的联系方式，我们聊得很开心，于是她便告诉我其他人的联系方式，并且要我加入 52、54 班联盟（QQ 号码 25226184）。在 QQ 群上找到了更多的同学，也大约知道了大家目前的状态。聊起初中的趣事，感觉仿佛发生在昨天。</p>
 
-<p>其实我很少QQ的，特别是群就使用的更少了。主要是很少使用Windows，而Linux上面的QQ软件，无论是Lumaqq，openq-gaim，还是我现在用的eva，丢失信息成了最大的问题。和我的朋友聊着聊着，便没有了下文。给朋友造成了很大的误会。  <br/>
-今天使用了QQ的群还有他的一些与群相关的功能，确实觉得方便。在朋友的聊天中，我们也会说，我喜欢MSN，我喜欢QQ。喜欢可能真的没有太多理由，先入为主很重要。很多人喜欢百事可乐，很多人却喜欢可口可乐，但是又有多少人能尝出他们的不同呢？所以同时使用MSN和QQ或许是一个好的办法。</p>
+<p>其实我很少 QQ 的，特别是群就使用的更少了。主要是很少使用 Windows，而 Linux 上面的 QQ 软件，无论是 Lumaqq，openq-gaim，还是我现在用的 eva，丢失信息成了最大的问题。和我的朋友聊着聊着，便没有了下文。给朋友造成了很大的误会。今天使用了 QQ 的群还有他的一些与群相关的功能，确实觉得方便。在朋友的聊天中，我们也会说，我喜欢 MSN，我喜欢 QQ。喜欢可能真的没有太多理由，先入为主很重要。很多人喜欢百事可乐，很多人却喜欢可口可乐，但是又有多少人能尝出他们的不同呢？所以同时使用 MSN 和 QQ 或许是一个好的办法。</p>
 </div>
   
   
@@ -140,11 +146,10 @@
   </header>
 
 
-  <div class="entry-content"><p>Linux一般采用syslog这样的守护进程来执行日志记录功能，他的配置文件是/etc/syslog.conf，其基本格式为: <br/>
-<code>sector action</code> 中间一定是tab键而不是空格键selector用下面的格式指明正在发送日志消息的程序（即“设施”）和消息的严重性级别 <code>facility.level</code>设施的名称和严重性级别必须从已定义的一个简短列表中选择；程序不能使用自己定义的值。</p>
+  <div class="entry-content"><p>Linux 一般采用 syslog 这样的守护进程来执行日志记录功能，他的配置文件是/etc/syslog.conf，其基本格式为: <br/>
+<code>sector action</code> 中间一定是 tab 键而不是空格键 selector 用下面的格式指明正在发送日志消息的程序（即“设施”）和消息的严重性级别 <code>facility.level</code>设施的名称和严重性级别必须从已定义的一个简短列表中选择；程序不能使用自己定义的值。</p>
 
-<p>设施分别为内核，为常用应用程序组，以及为本地编写的程序进行定义。<br/>
-任何其他程序则归为普通设施“用户”类。selector可以包含关键字<code>＊</code>和<code>none</code>，其含义分别为“所有的”或“什么都没有”。</p>
+<p>设施分别为内核，为常用应用程序组，以及为本地编写的程序进行定义。任何其他程序则归为普通设施“用户”类。selector 可以包含关键字<code>＊</code>和<code>none</code>，其含义分别为“所有的”或“什么都没有”。</p>
 
 </div>
   
@@ -188,10 +193,7 @@
   </header>
 
 
-  <div class="entry-content"><p>这次出差似乎很不利。<br/>
-机器是OpenPower 720 (具体型号是9124-720-SN064429C)。<br/>
-中午开箱验收机器，花了不少时间。到第一台机器上架，已经是到了午饭时间。<br/>
-吃过午饭，一边验收另外一台机器，一边开始为系统RAID，使用IBM自带的Standalone Diagnostics 光盘自动配置。</p>
+  <div class="entry-content"><p>这次出差似乎很不利。机器是 OpenPower 720 (具体型号是 9124-720-SN064429C)。中午开箱验收机器，花了不少时间。到第一台机器上架，已经是到了午饭时间。吃过午饭，一边验收另外一台机器，一边开始为系统 RAID，使用 IBM 自带的 Standalone Diagnostics 光盘自动配置。</p>
 
 </div>
   
@@ -235,15 +237,12 @@
   </header>
 
 
-  <div class="entry-content"><p>在<a href="http://blog.wgzhao.com/read.php/239.htm">ACPI和APIC有什么关系？</a>
-中我谈到了acpi和apic的差别，以及内核如何接受这些参数的方法。</p>
+  <div class="entry-content"><p>在 <a href="http://blog.wgzhao.com/read.php/239.htm">ACPI 和 APIC 有什么关系？</a>
+中我谈到了 acpi 和 apic 的差别，以及内核如何接受这些参数的方法。</p>
 
-<p>昨天去公安部解决qlogic 2312光纤卡加载后kernel panic的问题，现在很怪异，单核心加载没有问题，能正确识别到盘阵（IBM
-Total Storage DS4500)，但是SMP核心会给出SCSI 命令超时的错误，30分钟后就会kernel panic。尝试加了<code>apic=off</code>的核心参数，依然不管用。<br/>
-只要想其他办法，比如更新驱动。但是无论怎么做，都是没有用。<br/>
-后来查看了<code>/proc/interrupt</code>s文件，发现qla2300驱动，单核心使用中断是XT-PIC,SMP核心也采用XT－PIC，而不是期望的IO-APIC-level，觉得可能是驱动没有正确处理SMP核心。但是这样的卡不是第一次使用，其他地方都可以，难道是机器(IBM
-x346)和卡配合的问题?查看了一下内核参数文档，发现apic的禁用方式写的是noapic，反正是测试，于是重启机器使用noapic核心参数测试，结果发现成功了。<br/>
-原来前面使用的<code>apic=off</code>是不正确的，但是显然禁止电源管理是采用<code>acpi=off</code>的参数形式。  为什么参数接受方式要弄得不一样呢？这其中有什么不知道的秘密吗？不解.</p>
+<p>昨天去公安部解决 qlogic 2312 光纤卡加载后 kernel panic 的问题，现在很怪异，单核心加载没有问题，能正确识别到盘阵（IBM
+Total Storage DS4500)，但是 SMP 核心会给出 SCSI 命令超时的错误，30 分钟后就会 kernel panic。尝试加了<code>apic=off</code>的核心参数，依然不管用。只要想其他办法，比如更新驱动。但是无论怎么做，都是没有用。后来查看了<code>/proc/interrupt</code>s 文件，发现 qla2300 驱动，单核心使用中断是 XT-PIC,SMP 核心也采用 XT－PIC，而不是期望的 IO-APIC-level，觉得可能是驱动没有正确处理 SMP 核心。但是这样的卡不是第一次使用，其他地方都可以，难道是机器(IBM
+x346)和卡配合的问题?查看了一下内核参数文档，发现 apic 的禁用方式写的是 noapic，反正是测试，于是重启机器使用 noapic 核心参数测试，结果发现成功了。原来前面使用的<code>apic=off</code>是不正确的，但是显然禁止电源管理是采用<code>acpi=off</code>的参数形式。  为什么参数接受方式要弄得不一样呢？这其中有什么不知道的秘密吗？不解.</p>
 </div>
   
   
@@ -282,9 +281,7 @@ x346)和卡配合的问题?查看了一下内核参数文档，发现apic的禁�
   </header>
 
 
-  <div class="entry-content"><p>上午去测试一个加密卡设备权限会发生变化的问题，其实这个问题和我的声卡情况相似。我一般都采用不同用户登录我的系统。<br/>
-系统启动时默认会把我的声卡设备权限设置为0666,但是使用的过程中权限会发生变化，变成缺省的0600，导致普通用户不能使用声卡。<br/>
-查了一些资料，得知这些设备的权限设置与文件<code>/etc/security/console.perms</code>文件有关，因此这里贴出我找到的有关该文件的一些说明：</p>
+  <div class="entry-content"><p>上午去测试一个加密卡设备权限会发生变化的问题，其实这个问题和我的声卡情况相似。我一般都采用不同用户登录我的系统。系统启动时默认会把我的声卡设备权限设置为 0666,但是使用的过程中权限会发生变化，变成缺省的 0600，导致普通用户不能使用声卡。查了一些资料，得知这些设备的权限设置与文件<code>/etc/security/console.perms</code>文件有关，因此这里贴出我找到的有关该文件的一些说明：</p>
 
 </div>
   
@@ -394,46 +391,37 @@ x346)和卡配合的问题?查看了一下内核参数文档，发现apic的禁�
   </header>
 
 
-  <div class="entry-content"><p>昨日去我们的一个用户那里解决VG突然丢失问题。<br/>
-用户电话中声称：刚开始还是好好的，用HA的命令停止服务后，两个正在使用的VG<br/>
-不见了。<br/>
-用pvscan命令，得到的结果是能找到四个VG，但是另外两个报的是类似下面的信息：</p>
+  <div class="entry-content"><p>昨日去我们的一个用户那里解决 VG 突然丢失问题。用户电话中声称：刚开始还是好好的，用 HA 的命令停止服务后，两个正在使用的 VG<br/>
+不见了。用 pvscan 命令，得到的结果是能找到四个 VG，但是另外两个报的是类似下面的信息：</p>
 
 <pre><code>/dev/sde belongs to unknown volumn group "vgoradata"  
 </code></pre>
 
-<p>最开始做LV的机器重新安装了，因此找不到创建时的备份文件。<br/>
-从硬件层次也考虑，依然无效。</p>
+<p>最开始做 LV 的机器重新安装了，因此找不到创建时的备份文件。从硬件层次也考虑，依然无效。</p>
 
-<p>而这两个VG是做过vgexport工作的。因而能在<code>/etc/lvmconf/</code>文件下面看到以这两<br/>
-个VG名字命名的后缀为conf的文件。<br/>
-后经高人指点，得知可以考虑使用v<code>gcfgrestore</code>命令。  <br/>
-man了一把，先采用<br/>
+<p>而这两个 VG 是做过 vgexport 工作的。因而能在<code>/etc/lvmconf/</code>文件下面看到以这两个 VG 名字命名的后缀为 conf 的文件。后经高人指点，得知可以考虑使用 v<code>gcfgrestore</code>命令。  <br/>
+man 了一把，先采用<br/>
 <code>vgcfgrestore -f ./vgoradata.conf -n vgoradata -t /dev/sdb</code><br/>
-的命令测试了一下，发现还能读出相关信息，觉得有戏。<br/>
-因此开始考虑做实际的恢复（得知用户有数据备份，如果不成功，数据不会有影响）<br/>
-遂执行下面的命令</p>
+的命令测试了一下，发现还能读出相关信息，觉得有戏。因此开始考虑做实际的恢复（得知用户有数据备份，如果不成功，数据不会有影响）遂执行下面的命令</p>
 
 <pre><code>vgcfgrestore -f ./vgoradata.conf -n vgoradata -v /dev/sdb 
 vgcfgrestore -f ./vgoradata.conf -n vgoradata -v /dev/sdc 
 vgcfgrestore -f ./vgoradata.conf -n vgoradata -v /dev/sdd  
 </code></pre>
 
-<p>都报成功。<br/>
-然后在用<code>pvscan</code>，正常，vgscan，正常，<code>vgchange -ay vgoradata</code>，mount一切ok！</p>
+<p>都报成功。然后在用<code>pvscan</code>，正常，vgscan，正常，<code>vgchange -ay vgoradata</code>，mount 一切 ok！</p>
 
-<p>于是采用同样的方法恢复另外一个，也ok。</p>
+<p>于是采用同样的方法恢复另外一个，也 ok。</p>
 
-<p>这是在有备份文件的情况下能这样做。而这两个文件应该是做vgexport生产的，但<br/>
-是VG出故障之前，也就只做了<br/>
-vgexport,vgimport命令，这是这两个命令带来了好处，还是坏处呢？</p>
+<p>这是在有备份文件的情况下能这样做。而这两个文件应该是做 vgexport 生产的，但是 VG 出故障之前，也就只做了<br/>
+vgexport,vgimport 命令，这是这两个命令带来了好处，还是坏处呢？</p>
 
 <p>为了以防万一，接下来给他们做了备份，命令如下：</p>
 
 <p><code>vgcfgbackup vgoradata -v</code><br/>
-这样把四个VG的信息都做了备份。</p>
+这样把四个 VG 的信息都做了备份。</p>
 
-<p><a href="http://www.chinalinuxpub.com/read.php?wid=834">Linux逻辑盘卷管理LVM详解</a></p>
+<p><a href="http://www.chinalinuxpub.com/read.php?wid=834">Linux 逻辑盘卷管理 LVM 详解</a></p>
 </div>
   
   
@@ -474,16 +462,9 @@ vgexport,vgimport命令，这是这两个命令带来了好处，还是坏处呢
 
   <div class="entry-content"><p>小的时候，很讨厌农村：脏，累，什么都不好玩，什么也买不到。当然也不理解有些人在城市生活的好好的，老了为什么非来农村渡过剩下的日子。</p>
 
-<p>可真正离开了农村，习惯了城市的生活时，却发现自己是那么怀念农村，怀念那种纯朴，那种纯生态，没有被污染的感觉。<br/>
-这次回农村，突然想拍一些农村的照片，农村也时刻在发生改变，或者很多景观，指不定什么时候就没有了。<br/>
-最先想到的乡间小路，其实在农村，这不算小路了，是农村通往外界的主要道路，也是唯一的通道，一条条用卵石铺陈的简易道路延伸在村庄的后门或者就是大门前，道路的两旁总会有高大的杉树挺立在那里。一到夏天，枝繁叶茂，成了人们纳凉的好地方。<br/>
-道路上，随去可见三，五人慢慢的走着，没有什么目的，只是走着，如同散步。或许道路上人们行路的速度能大致反映一个地区经济的发展和节奏的快慢吧。<br/>
-在繁华的城市，我没有办法看到在道路上悠闲的人群，只有低着头，冲冲赶路的过客。<br/>
-农村的那种闲庭散步也许真的只能在农村得以淋漓尽致的发挥。城市公园里老头老太太的散步大多是因为走不快，而并非有这样的闲散的心情。</p>
+<p>可真正离开了农村，习惯了城市的生活时，却发现自己是那么怀念农村，怀念那种纯朴，那种纯生态，没有被污染的感觉。这次回农村，突然想拍一些农村的照片，农村也时刻在发生改变，或者很多景观，指不定什么时候就没有了。最先想到的乡间小路，其实在农村，这不算小路了，是农村通往外界的主要道路，也是唯一的通道，一条条用卵石铺陈的简易道路延伸在村庄的后门或者就是大门前，道路的两旁总会有高大的杉树挺立在那里。一到夏天，枝繁叶茂，成了人们纳凉的好地方。道路上，随去可见三，五人慢慢的走着，没有什么目的，只是走着，如同散步。或许道路上人们行路的速度能大致反映一个地区经济的发展和节奏的快慢吧。在繁华的城市，我没有办法看到在道路上悠闲的人群，只有低着头，冲冲赶路的过客。农村的那种闲庭散步也许真的只能在农村得以淋漓尽致的发挥。城市公园里老头老太太的散步大多是因为走不快，而并非有这样的闲散的心情。</p>
 
-<p>在农村，你现在能看到的住房到处是砖瓦房，有的可能还能和城市的别墅有得一拼。但是回退到20年前，或许你看到的就不是这样，大部分，绝大部分都是用茅竹札的墙，好一些的是用土砖砌的墙。这些建筑会很快的变成古董。<br/>
-因此抓住这个时机，找到了这个村可能是唯一一个老实的建筑，用我的相机给它定格。希望某一天它能成为历史的记忆和珍贵的照片。<br/>
-可惜这些照片都没有带上来，落在家里了，当然是不希望我带走这里的一丝一厘吗？</p>
+<p>在农村，你现在能看到的住房到处是砖瓦房，有的可能还能和城市的别墅有得一拼。但是回退到 20 年前，或许你看到的就不是这样，大部分，绝大部分都是用茅竹札的墙，好一些的是用土砖砌的墙。这些建筑会很快的变成古董。因此抓住这个时机，找到了这个村可能是唯一一个老实的建筑，用我的相机给它定格。希望某一天它能成为历史的记忆和珍贵的照片。可惜这些照片都没有带上来，落在家里了，当然是不希望我带走这里的一丝一厘吗？</p>
 </div>
   
   
@@ -522,10 +503,9 @@ vgexport,vgimport命令，这是这两个命令带来了好处，还是坏处呢
   </header>
 
 
-  <div class="entry-content"><p>终究没有成为20亿人流的春运中的一员，而是选择了在春暖花开的时候回到了家乡。</p>
+  <div class="entry-content"><p>终究没有成为 20 亿人流的春运中的一员，而是选择了在春暖花开的时候回到了家乡。</p>
 
-<p>虽是三月，依然觉得冬天还在，特别是刚从有暖气的北方来到南方，更加觉得冰冷。在家小憩了2天，就赶到女友家，参加她妹妹的婚礼。<br/>
-相比城市的婚礼，其实我更喜欢农村的婚礼，虽然没有城市婚礼的那些排场，没有那些现代化的工具的装点，但是几前年流传下来的婚礼习俗在农村的婚礼上仍然得以体现。虽然农村的婚礼也还是学习城市简单化的风格，但是基本的礼节和习俗还是少不了的。</p>
+<p>虽是三月，依然觉得冬天还在，特别是刚从有暖气的北方来到南方，更加觉得冰冷。在家小憩了 2 天，就赶到女友家，参加她妹妹的婚礼。相比城市的婚礼，其实我更喜欢农村的婚礼，虽然没有城市婚礼的那些排场，没有那些现代化的工具的装点，但是几前年流传下来的婚礼习俗在农村的婚礼上仍然得以体现。虽然农村的婚礼也还是学习城市简单化的风格，但是基本的礼节和习俗还是少不了的。</p>
 
 <p>大媒宴：答谢媒人，这是男方在取亲之前准备的酒席，意为感谢媒人撮合这等人间好事。</p>
 
@@ -535,8 +515,7 @@ vgexport,vgimport命令，这是这两个命令带来了好处，还是坏处呢
 
 <p>还有很多的细节都是很有意思的活动，大部分都是取自吉利和中个好彩头的基本想法。</p>
 
-<p>什么是礼仪？礼处于俗，俗化为礼。礼仪都来之一种习俗，其本质还是尊敬的意思。<br/>
-小时候只是觉得那些习俗好玩，现在想来，之所以流传下来，自然有她存在的深刻道理所在。</p>
+<p>什么是礼仪？礼处于俗，俗化为礼。礼仪都来之一种习俗，其本质还是尊敬的意思。小时候只是觉得那些习俗好玩，现在想来，之所以流传下来，自然有她存在的深刻道理所在。</p>
 </div>
   
   
@@ -575,11 +554,10 @@ vgexport,vgimport命令，这是这两个命令带来了好处，还是坏处呢
   </header>
 
 
-  <div class="entry-content"><p>下去，陪LP去宝岛眼镜店配眼镜，其实很早就应该去配了，只是一直以忙做为借口。结果验光下来，LP的视力又下降了，度数也提升了100度，看来这样的事情还是不能拖延，否则吃亏的还是自己。</p>
+  <div class="entry-content"><p>下去，陪 LP 去宝岛眼镜店配眼镜，其实很早就应该去配了，只是一直以忙做为借口。结果验光下来，LP 的视力又下降了，度数也提升了 100 度，看来这样的事情还是不能拖延，否则吃亏的还是自己。</p>
 
-<p>顺便也给自己配眼镜，本来我是不打算验光的，直接说你给我配一副300度的算了。但是店长不同意，说这样配眼镜对你眼睛不好。<br/>
-LP也强烈要求我去验光，说你要相信科学（呵，帽子戴得很高），最高指示都出来了，那只好乖乖就范了。<br/>
-经过近30分钟的折腾，总算是验光结束，刚开始也不好意思问多少度数的，只是估计这度数估计不低。后来憋不住了，看验光的人员也没有打算告诉你多少度，于是弱弱的问：“我这个多少度？”</p>
+<p>顺便也给自己配眼镜，本来我是不打算验光的，直接说你给我配一副 300 度的算了。但是店长不同意，说这样配眼镜对你眼睛不好。<br/>
+LP 也强烈要求我去验光，说你要相信科学（呵，帽子戴得很高），最高指示都出来了，那只好乖乖就范了。经过近 30 分钟的折腾，总算是验光结束，刚开始也不好意思问多少度数的，只是估计这度数估计不低。后来憋不住了，看验光的人员也没有打算告诉你多少度，于是弱弱的问：“我这个多少度？”</p>
 
 </div>
   
@@ -631,8 +609,8 @@ LP也强烈要求我去验光，说你要相信科学（呵，帽子戴得很高
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/29/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/29/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/29/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/29/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

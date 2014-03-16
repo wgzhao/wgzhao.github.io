@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="在PostgreSQL里如何查看或者一个表的大小呢?方法很多，我们可以从简单到复杂看这件事情： 首先创建一个简单表： 1
+  <meta name="description" content="在 PostgreSQL里如何查看或者一个表的大小呢?方法很多，我们可以从简单到复杂看这件事情： 首先创建一个简单表： 1
 2
 3
 4
@@ -35,7 +35,7 @@
 24
 25
 26
-wgzhao=# create table &hellip;">
+wgzhao=# create &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -55,6 +55,11 @@ wgzhao=# create table &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -120,7 +125,7 @@ wgzhao=# create table &hellip;">
   </header>
 
 
-<div class="entry-content"><p>在<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里如何查看或者一个表的大小呢?方法很多，我们可以从简单到复杂看这件事情：</p>
+<div class="entry-content"><p>在 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里如何查看或者一个表的大小呢?方法很多，我们可以从简单到复杂看这件事情：</p>
 
 <p>首先创建一个简单表：</p>
 
@@ -184,7 +189,7 @@ wgzhao=# create table &hellip;">
 <!--more-->
 
 
-<p>最简单的查看大小就是isql给出<code>\dt</code>指令</p>
+<p>最简单的查看大小就是 isql 给出<code>\dt</code>指令</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -257,7 +262,7 @@ wgzhao=# create table &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>这个<code>relpages</code>只是表示包含的记录数，并没有包括索引。从这里也可以看出，一个<code>relpages</code>大概可以包含78个<code>reltupls</code>，也就是78条记录。</p>
+<p>这个<code>relpages</code>只是表示包含的记录数，并没有包括索引。从这里也可以看出，一个<code>relpages</code>大概可以包含 78 个<code>reltupls</code>，也就是 78 条记录。</p>
 
 <p>如果表上有索引，则可以用下面的指令来计算出包括索引在内的<code>relpages</code>一起是多少：</p>
 
@@ -472,11 +477,11 @@ wgzhao=# create table &hellip;">
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>在没有<code>vacuum</code>之前，不管是删除的还是更新的，都需要占用磁盘空间，从一开始我们知道一个<code>relpages</code>大概包含78条<code>reltuples</code>。</p>
+<p>在没有<code>vacuum</code>之前，不管是删除的还是更新的，都需要占用磁盘空间，从一开始我们知道一个<code>relpages</code>大概包含 78 条<code>reltuples</code>。</p>
 
 <p>因此</p>
 
-<p><code>(19999 + 10000) /78 = 384</code>，因此计算表大小的时候还需要加上384个<code>reltuples</code>的大小</p>
+<p><code>(19999 + 10000) /78 = 384</code>，因此计算表大小的时候还需要加上 384 个<code>reltuples</code>的大小</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -591,8 +596,8 @@ wgzhao=# create table &hellip;">
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2012/08/19/calculate-a-table-size-in-postgresql/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/19/calculate-a-table-size-in-postgresql/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2012/08/19/calculate-a-table-size-in-postgresql/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/19/calculate-a-table-size-in-postgresql/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

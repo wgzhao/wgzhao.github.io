@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="Mac 系统自带的VPN连接配置倒是方便，但是有一个毛病（或者说我还没有不知道使用）,那就是对于通过VPN获取的路有信息，要不就是全部忽略，要不就是所有的IP流出都通过vpn的路由，相当于由VPN的路由指定了缺省路由。用户没有办法手工增加特定路由。这点就不如Linux下的网络管理工具， &hellip;">
+  <meta name="description" content="Mac 系统自带的 VPN 连接配置倒是方便，但是有一个毛病（或者说我还没有不知道使用）,那就是对于通过 VPN 获取的路有信息，要不就是全部忽略，要不就是所有的 IP 流出都通过 vpn 的路由，相当于由 VPN 的路由指定了缺省路由。用户没有办法手工增加特定路由。这点就不如 Linux &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,18 +99,16 @@
   </header>
 
 
-<div class="entry-content"><p>Mac 系统自带的VPN连接配置倒是方便，但是有一个毛病（或者说我还没有不知道使用）,那就是对于通过VPN获取的路有信息，要不就是全部忽略，要不就是所有的IP流出都通过vpn的路由，相当于由VPN的路由指定了缺省路由。用户没有办法手工增加特定路由。这点就不如Linux下的网络管理工具，比如Gnome的nm-applet使用起来就很方便。</p>
+<div class="entry-content"><p>Mac 系统自带的 VPN 连接配置倒是方便，但是有一个毛病（或者说我还没有不知道使用）,那就是对于通过 VPN 获取的路有信息，要不就是全部忽略，要不就是所有的 IP 流出都通过 vpn 的路由，相当于由 VPN 的路由指定了缺省路由。用户没有办法手工增加特定路由。这点就不如 Linux 下的网络管理工具，比如 Gnome 的 nm-applet 使用起来就很方便。</p>
 
 <p>当然，在图形界面配置上没有，不代码在命令行或者特殊的配置文件没有，下面我们就通过配置文件来解决这个问题。</p>
 
 <!--more-->
 
 
-<p>首先在/etc/ppp/目录下创建(或者修改）ip-up文件。这个文件实际上时pppd后台进程读取的，VPN也得通过它来拨号。</p>
+<p>首先在/etc/ppp/目录下创建(或者修改）ip-up 文件。这个文件实际上时 pppd 后台进程读取的，VPN 也得通过它来拨号。</p>
 
-<p>VPN拨号后，会传递一系列的参数给ip-up文件，比如拨号的设备（ppp0),拨号两端的ip地址，以及缺省路由。我们感兴趣的是$5这个参数。<br/>
-该参数描述的是ppp链路服务端的ip地址，也就是我们需要的路由网关。我们可以通过这个参数来判断，从而加入不同的路由。比如你有多个VPN连接，那肯定需要通过判断不同的ppp0端IP地址而加入不同的路由。<br/>
-脚本可以这样写：</p>
+<p>VPN 拨号后，会传递一系列的参数给 ip-up 文件，比如拨号的设备（ppp0),拨号两端的 ip 地址，以及缺省路由。我们感兴趣的是$5 这个参数。该参数描述的是 ppp 链路服务端的 ip 地址，也就是我们需要的路由网关。我们可以通过这个参数来判断，从而加入不同的路由。比如你有多个 VPN 连接，那肯定需要通过判断不同的 ppp0 端 IP 地址而加入不同的路由。脚本可以这样写：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -116,7 +119,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>保存后，并设置该文件的权限为755 <code>chmod 755 ip-up</code> 你再连接VPN看看，是不是加上了脚本里的路由信息。：）</p>
+<p>保存后，并设置该文件的权限为 755 <code>chmod 755 ip-up</code> 你再连接 VPN 看看，是不是加上了脚本里的路由信息。：）</p>
 
 <p>测试环境： Dell E6410，Mac OS X 10.7.2</p>
 </div>
@@ -210,8 +213,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

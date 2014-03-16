@@ -9,10 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="这次出差似乎很不利。
-机器是OpenPower 720 (具体型号是9124-720-SN064429C)。
-中午开箱验收机器，花了不少时间。到第一台机器上架，已经是到了午饭时间。
-吃过午饭，一边验收另外一台机器，一边开始为系统RAID，使用IBM自带的Standalone Diagnostics &hellip;">
+  <meta name="description" content="这次出差似乎很不利。机器是 OpenPower 720 (具体型号是 9124-720-SN064429C)。中午开箱验收机器，花了不少时间。到第一台机器上架，已经是到了午饭时间。吃过午饭，一边验收另外一台机器，一边开始为系统 RAID，使用 IBM 自带的 Standalone &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -97,33 +99,19 @@
   </header>
 
 
-<div class="entry-content"><p>这次出差似乎很不利。<br/>
-机器是OpenPower 720 (具体型号是9124-720-SN064429C)。<br/>
-中午开箱验收机器，花了不少时间。到第一台机器上架，已经是到了午饭时间。<br/>
-吃过午饭，一边验收另外一台机器，一边开始为系统RAID，使用IBM自带的Standalone Diagnostics 光盘自动配置。</p>
+<div class="entry-content"><p>这次出差似乎很不利。机器是 OpenPower 720 (具体型号是 9124-720-SN064429C)。中午开箱验收机器，花了不少时间。到第一台机器上架，已经是到了午饭时间。吃过午饭，一边验收另外一台机器，一边开始为系统 RAID，使用 IBM 自带的 Standalone Diagnostics 光盘自动配置。</p>
 
 <!--more-->
 
 
-<p>按照手册的指导，却无论如何也发现不了系统自带的硬盘。开始怀疑是不是硬件的问题。于是开始折腾另外一台机器。发现也不行，那么这个时候发现硬件出问题的可能性不大了。仔细对比操作手册和屏幕上的提示，发现有一个地方不一样，那就是自带光盘软件的版本是5.3.0.10，而手册上的截图显示为
-5.3.0.30。难道和这个有关。不过想起每次IBM机器遇到很多莫名其妙的问题，不得不这样去考虑。到晚上去搜索了一下，找到了5.3.0.40版本。<br/>
-下载,刻录。从光盘启动。哈哈，果然如此。<br/>
-解决这个问题已经到了吃晚饭的时间了。人是钢，饭是铁。<br/>
-吃饭后，走路来现场，继续干活，满心希望接下来就只需要安装系统了，结果发现，插入系统安装光盘，等待数十分钟后，屏幕上只发现左上角一个企鹅的图像，其他一片空白。<br/>
-但是通过终端，却能看到系统安装的进程。<br/>
-大家弄了半天，还是不太清楚原因。以为是这款机器不支持图形安装方式。<br/>
-后打电话给相关人员，才得以解决，其实很简单，就是修改默认的console输出端。具体方法如下：<br/>
-关闭电源。使用RS232线连接机器，终端连接参数是19200-8-N-1。开启电源，启动系统。等待出现SMS菜单。按数字1（接下来也许需要你修改密码）。<br/>
-然后在出现的菜单上选择4，接下来屏幕上会出现下面一行字：<br/>
+<p>按照手册的指导，却无论如何也发现不了系统自带的硬盘。开始怀疑是不是硬件的问题。于是开始折腾另外一台机器。发现也不行，那么这个时候发现硬件出问题的可能性不大了。仔细对比操作手册和屏幕上的提示，发现有一个地方不一样，那就是自带光盘软件的版本是 5.3.0.10，而手册上的截图显示为
+5.3.0.30。难道和这个有关。不过想起每次 IBM 机器遇到很多莫名其妙的问题，不得不这样去考虑。到晚上去搜索了一下，找到了 5.3.0.40 版本。下载,刻录。从光盘启动。哈哈，果然如此。解决这个问题已经到了吃晚饭的时间了。人是钢，饭是铁。吃饭后，走路来现场，继续干活，满心希望接下来就只需要安装系统了，结果发现，插入系统安装光盘，等待数十分钟后，屏幕上只发现左上角一个企鹅的图像，其他一片空白。但是通过终端，却能看到系统安装的进程。大家弄了半天，还是不太清楚原因。以为是这款机器不支持图形安装方式。后打电话给相关人员，才得以解决，其实很简单，就是修改默认的 console 输出端。具体方法如下：关闭电源。使用 RS232 线连接机器，终端连接参数是 19200-8-N-1。开启电源，启动系统。等待出现 SMS 菜单。按数字 1（接下来也许需要你修改密码）。然后在出现的菜单上选择 4，接下来屏幕上会出现下面一行字：<br/>
 <code>To select this console as the active console press 0</code><br/>
-然后去查看连接的显示器<br/>
-应该可以看到类似下面的一行<br/>
+然后去查看连接的显示器应该可以看到类似下面的一行<br/>
 <code>To select this console as the active console press 2</code>
-然后在键盘上键入你看到的数字（这里是2）。这样就可以将默认输出修改成现在的显示器了。</p>
+然后在键盘上键入你看到的数字（这里是 2）。这样就可以将默认输出修改成现在的显示器了。</p>
 
-<p>总算从现在开始可以安装系统了。<br/>
-等系统安装完成，已经是零点。还好，没有开始估计的需要到2，3点的样子。<br/>
-不行了，回宿舍睡觉吧。</p>
+<p>总算从现在开始可以安装系统了。等系统安装完成，已经是零点。还好，没有开始估计的需要到 2，3 点的样子。不行了，回宿舍睡觉吧。</p>
 </div>
 
 
@@ -215,8 +203,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/05/18/OpenPower720-how-you/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/18/OpenPower720-how-you/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/05/18/OpenPower720-how-you/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/18/OpenPower720-how-you/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

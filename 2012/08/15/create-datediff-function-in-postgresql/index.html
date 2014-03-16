@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="在当前PostgreSQL里，目前还没有一个能够以指定单位返回两个时间差的函数（如果有，请告诉我），比如返回两个时间相差的月份。 我简单的写了一个函数，只是作为一个实现的思路，没有做过多的严禁判断。代码如下： --
+  <meta name="description" content="在当前 PostgreSQL里，目前还没有一个能够以指定单位返回两个时间差的函数（如果有，请告诉我），比如返回两个时间相差的月份。 我简单的写了一个函数，只是作为一个实现的思路，没有做过多的严禁判断。代码如下： --
 create or replace function datediff(m &hellip;">
   
 
@@ -30,6 +30,11 @@ create or replace function datediff(m &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,7 +100,7 @@ create or replace function datediff(m &hellip;">
   </header>
 
 
-<div class="entry-content"><p>在当前<a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，目前还没有一个能够以指定单位返回两个时间差的函数（如果有，请告诉我），比如返回两个时间相差的月份。</p>
+<div class="entry-content"><p>在当前 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，目前还没有一个能够以指定单位返回两个时间差的函数（如果有，请告诉我），比如返回两个时间相差的月份。</p>
 
 <p>我简单的写了一个函数，只是作为一个实现的思路，没有做过多的严禁判断。代码如下：</p>
 
@@ -284,8 +289,8 @@ $$ language plpgsql;</code></pre></noscript></div>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2012/08/15/create-datediff-function-in-postgresql/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/15/create-datediff-function-in-postgresql/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2012/08/15/create-datediff-function-in-postgresql/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2012/08/15/create-datediff-function-in-postgresql/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

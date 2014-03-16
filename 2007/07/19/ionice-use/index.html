@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="nice(1)很多人都知道,它主要是影响CPU调度的.而ionice则主要是影响磁盘调度的.
-使用ionice基本上在下面两种情况: 1)虽然不需要太多磁盘IO,但是希望反应快速.
-2)有大量的磁盘IO需求,但是对时间没有太多要求,也就是不着急完成. 我们举一些例子来看:
+  <meta name="description" content="nice(1)很多人都知道,它主要是影响 CPU 调度的.而 ionice 则主要是影响磁盘调度的.
+使用 ionice 基本上在下面两种情况: 1)虽然不需要太多磁盘 IO,但是希望反应快速.
+2)有大量的磁盘 IO 需求,但是对时间没有太多要求,也就是不着急完成. 我们举一些例子来看:
 1) &hellip;">
   
 
@@ -32,6 +32,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -97,10 +102,10 @@
   </header>
 
 
-<div class="entry-content"><p>nice(1)很多人都知道,它主要是影响CPU调度的.而ionice则主要是影响磁盘调度的.<br/>
-使用ionice基本上在下面两种情况: <br/>
-1)虽然不需要太多磁盘IO,但是希望反应快速.<br/>
-2)有大量的磁盘IO需求,但是对时间没有太多要求,也就是不着急完成.</p>
+<div class="entry-content"><p>nice(1)很多人都知道,它主要是影响 CPU 调度的.而 ionice 则主要是影响磁盘调度的.<br/>
+使用 ionice 基本上在下面两种情况: <br/>
+1)虽然不需要太多磁盘 IO,但是希望反应快速.<br/>
+2)有大量的磁盘 IO 需求,但是对时间没有太多要求,也就是不着急完成.</p>
 
 <!--more-->
 
@@ -111,26 +116,26 @@
 3)执行系统备份<br/>
 4)系统更新</p>
 
-<p><a href="http://linux.die.net/man/1/ionice">ionice(1)man手册</a>
-说的比较详细,他把磁盘IO调度分为了三类:</p>
+<p><a href="http://linux.die.net/man/1/ionice">ionice(1)man 手册</a>
+说的比较详细,他把磁盘 IO 调度分为了三类:</p>
 
-<p>idle:  空闲磁盘调度,这类调度策略是当系统没有其他进程需要做磁盘IO时,它就开始做,因此他对系统其他进程的影响基本上是0,他另外设有0-7
+<p>idle:  空闲磁盘调度,这类调度策略是当系统没有其他进程需要做磁盘 IO 时,它就开始做,因此他对系统其他进程的影响基本上是 0,他另外设有 0-7
 八个优先级别,数字越小,优先级越高.</p>
 
-<p>best effort: 这是缺省的磁盘IO调度策略,默认继承系统的IO磁盘调度.</p>
+<p>best effort: 这是缺省的磁盘 IO 调度策略,默认继承系统的 IO 磁盘调度.</p>
 
-<p>real-time: 实时的磁盘IO调度,从名字看就知道,设置这个级别,表示这个进程立刻开始访问磁盘,不管系统中其他进程是不是有磁盘IO,它很有可能让其他有磁盘IO需求的进程处于等待状态.</p>
+<p>real-time: 实时的磁盘 IO 调度,从名字看就知道,设置这个级别,表示这个进程立刻开始访问磁盘,不管系统中其他进程是不是有磁盘 IO,它很有可能让其他有磁盘 IO 需求的进程处于等待状态.</p>
 
-<p>这三个类型分别用数字3,2,1表示.也符合数字越小,优先级越高的原则.</p>
+<p>这三个类型分别用数字 3,2,1 表示.也符合数字越小,优先级越高的原则.</p>
 
-<p>比如,我现在安装了google桌面,这是一个典型的大量磁盘IO需求的进程,于是我采用下面的方式
-<code>#ionice -c3 -n7 -p2684</code> 这里的2684是进程号.</p>
+<p>比如,我现在安装了 google 桌面,这是一个典型的大量磁盘 IO 需求的进程,于是我采用下面的方式
+<code>#ionice -c3 -n7 -p2684</code> 这里的 2684 是进程号.</p>
 
-<p>当然你可以<code>#ionice -c3 -p$$</code>来将当前的进程(就是shell)磁盘IO调度设置为idle类型.</p>
+<p>当然你可以<code>#ionice -c3 -p$$</code>来将当前的进程(就是 shell)磁盘 IO 调度设置为 idle 类型.</p>
 
 <p>不过这个程序有一些&#8221;怪癖&#8221;的要求:</p>
 
-<p>1)它仅仅工作在2.6.13及以上内核版本上,并且采用了CFQ的IO调度方式.感觉CFQ是刚刚推出的,而这个程序2005年就出来了,那也就是说CFQ调度策略2005年之前就有了?
+<p>1)它仅仅工作在 2.6.13 及以上内核版本上,并且采用了 CFQ 的 IO 调度方式.感觉 CFQ 是刚刚推出的,而这个程序 2005 年就出来了,那也就是说 CFQ 调度策略 2005 年之前就有了?
 通过下面的命令可以得知你的系统采用了什么样的调度算法:
 <code>#cat /sys/block/[sh]d[a-z]*/queue/scheduler</code><br/>
 比如我的系统输出如下:</p>
@@ -139,11 +144,11 @@
 noop anticipatory deadline [cfq]  
 </code></pre>
 
-<p>你可以在启动时,给内核参数加上<code>elevator=cfq</code>来设置缺省的IO调度方式是CFQ.</p>
+<p>你可以在启动时,给内核参数加上<code>elevator=cfq</code>来设置缺省的 IO 调度方式是 CFQ.</p>
 
-<p>2)idle优先级会让块设备处于idle状态,如果你的后台任务正在使用磁盘,那么你会发现后台进程明显变得缓慢起来.所以设置这个参数的时候还是小心一点.</p>
+<p>2)idle 优先级会让块设备处于 idle 状态,如果你的后台任务正在使用磁盘,那么你会发现后台进程明显变得缓慢起来.所以设置这个参数的时候还是小心一点.</p>
 
-<p>3)有些文件系统,特别是reiserfs和XFS,他们似乎不太遵循这个标准,因此不建议使用.</p>
+<p>3)有些文件系统,特别是 reiserfs 和 XFS,他们似乎不太遵循这个标准,因此不建议使用.</p>
 </div>
 
 
@@ -235,8 +240,8 @@ noop anticipatory deadline [cfq]
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/07/19/ionice-use/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/19/ionice-use/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/07/19/ionice-use/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/07/19/ionice-use/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="目前，大部分Unix和Linux服务器都会运行SSH服务，这样可以允许管理员安全的连接到远程服务器并完成相关操作。也正是因为如此，SSH遭受的攻击也越来越多，虽然我们可以采用改变缺省端口，禁止某些ip或者用户，但是仍然无法制止暴力攻击。
-不过，现在我们尝试基于PAM(Pluggable &hellip;">
+  <meta name="description" content="目前，大部分 Unix 和 Linux 服务器都会运行 SSH 服务，这样可以允许管理员安全的连接到远程服务器并完成相关操作。也正是因为如此，SSH 遭受的攻击也越来越多，虽然我们可以采用改变缺省端口，禁止某些 ip 或者用户，但是仍然无法制止暴力攻击。不过，现在我们尝试基于 PAM( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,8 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>目前，大部分Unix和Linux服务器都会运行SSH服务，这样可以允许管理员安全的连接到远程服务器并完成相关操作。也正是因为如此，SSH遭受的攻击也越来越多，虽然我们可以采用改变缺省端口，禁止某些ip或者用户，但是仍然无法制止暴力攻击。<br/>
-不过，现在我们尝试基于PAM(Pluggable  Authenticatiion Modules)开发的<a href="http://www.hexten.net/pam_abl/">pam_abl</a></p>
+<div class="entry-content"><p>目前，大部分 Unix 和 Linux 服务器都会运行 SSH 服务，这样可以允许管理员安全的连接到远程服务器并完成相关操作。也正是因为如此，SSH 遭受的攻击也越来越多，虽然我们可以采用改变缺省端口，禁止某些 ip 或者用户，但是仍然无法制止暴力攻击。不过，现在我们尝试基于 PAM(Pluggable  Authenticatiion Modules)开发的 <a href="http://www.hexten.net/pam_abl/">pam_abl</a></p>
 
 <!--more-->
 
@@ -133,7 +136,7 @@ session required pam_limits.so
 session required pam_unix.so
 </code></pre>
 
-<p>接下来就是配置pam_abl了，我们创建配置文件<code>/etc/security/pam_abl.conf</code>，内容如下</p>
+<p>接下来就是配置 pam_abl 了，我们创建配置文件<code>/etc/security/pam_abl.conf</code>，内容如下</p>
 
 <pre><code>host_db=/var/lib/abl/hosts.db
 host_purge=2d
@@ -145,24 +148,21 @@ user_rule=!root:3/1h,30/1d
 
 <p>简单解释一下上面这个配置文件：</p>
 
-<p>第2行和第5行定义了被禁止的用户和主机名列表保存到哪里。第3行和第6行分别定义了禁止的主机和用户的释放时间，也就是多长时间后解禁。这里定义的是2天后，主机和用户都会解禁。第4行和第7行主机和用户规则，我们看看他的语法规则。
-他的规则如下：</p>
+<p>第 2 行和第 5 行定义了被禁止的用户和主机名列表保存到哪里。第 3 行和第 6 行分别定义了禁止的主机和用户的释放时间，也就是多长时间后解禁。这里定义的是 2 天后，主机和用户都会解禁。第 4 行和第 7 行主机和用户规则，我们看看他的语法规则。他的规则如下：</p>
 
 <pre><code>host/user_rule=:/,/
 </code></pre>
 
-<p>因此上面的配置文件第4行主机规则的意思是禁止所有的主机(*表示)，当一个小时内错误的连接次数达到或者超过3次，或者最后一天超过30次。
-第7行用户规则意思是所有的用户，除了root(用!root表示)在最近的一个小时内连接错误达到三次就禁止，或者最近的一天超过30次。</p>
+<p>因此上面的配置文件第 4 行主机规则的意思是禁止所有的主机(*表示)，当一个小时内错误的连接次数达到或者超过 3 次，或者最后一天超过 30 次。第 7 行用户规则意思是所有的用户，除了 root(用!root 表示)在最近的一个小时内连接错误达到三次就禁止，或者最近的一天超过 30 次。</p>
 
 <p>当然，你也可以定义你选择的那些用户，比如</p>
 
 <pre><code>work|test|mlsx|steven:20/1h
 </code></pre>
 
-<p>这意味着上面的四个用户work,test,mlsx,steven将被禁止，如果在最近的一个小时内连接错误次数达到20次。</p>
+<p>这意味着上面的四个用户 work,test,mlsx,steven 将被禁止，如果在最近的一个小时内连接错误次数达到 20 次。</p>
 
-<p>注：这里说的连接次数，是指你建立连接，然后输入密码，当缺省输入三次密码都不正确时，就退出了，这就算一次。
-更详细的说明，请参考<a href="http://www.hexten.net/assets/pam_abl_doc/index.html">pam_abl手册</a></p>
+<p>注：这里说的连接次数，是指你建立连接，然后输入密码，当缺省输入三次密码都不正确时，就退出了，这就算一次。更详细的说明，请参考 <a href="http://www.hexten.net/assets/pam_abl_doc/index.html">pam_abl 手册</a></p>
 
 <p><strong>测试</strong></p>
 
@@ -171,7 +171,7 @@ user_rule=!root:3/1h,30/1d
 <pre><code>#pam_abl Failed users: work (6) Blocking users [!root] Failed hosts: mlsx (6) Blocking users [*] 
 </code></pre>
 
-<p>这就表示用户work和主机mlsx被禁止了，你可以尝试再次连接机器，并输入正确的密码，也打印&#8221;权限禁止&#8221;的提示。</p>
+<p>这就表示用户 work 和主机 mlsx 被禁止了，你可以尝试再次连接机器，并输入正确的密码，也打印&#8221;权限禁止&#8221;的提示。</p>
 </div>
 
 
@@ -263,8 +263,8 @@ user_rule=!root:3/1h,30/1d
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/03/27/use-pam-abl-plugin-prevent-attacking-ssh/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/03/27/use-pam-abl-plugin-prevent-attacking-ssh/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/03/27/use-pam-abl-plugin-prevent-attacking-ssh/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/03/27/use-pam-abl-plugin-prevent-attacking-ssh/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

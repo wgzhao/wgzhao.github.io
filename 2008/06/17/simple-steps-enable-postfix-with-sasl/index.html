@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="SASL(Simple Authentication Security Layer)是流行的认证库，Sendmail和Postfix都可以利用SASL来做到SMTP认证。简明步骤如下： 1) 确认cyrus-sasl已经安装 2) 修改/etc/postfix/main.cf，在文件里修改/ &hellip;">
+  <meta name="description" content="SASL(Simple Authentication Security Layer)是流行的认证库，Sendmail 和 Postfix 都可以利用 SASL 来做到 SMTP 认证。简明步骤如下： 1) 确认 cyrus-sasl 已经安装 2) 修改/etc/postfix/main.cf， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,9 +99,9 @@
   </header>
 
 
-<div class="entry-content"><p>SASL(Simple Authentication Security Layer)是流行的认证库，Sendmail和Postfix都可以利用SASL来做到SMTP认证。简明步骤如下：</p>
+<div class="entry-content"><p>SASL(Simple Authentication Security Layer)是流行的认证库，Sendmail 和 Postfix 都可以利用 SASL 来做到 SMTP 认证。简明步骤如下：</p>
 
-<p>1) 确认<a href="http://asg.web.cmu.edu/sasl/">cyrus-sasl</a>已经安装</p>
+<p>1) 确认 <a href="http://asg.web.cmu.edu/sasl/">cyrus-sasl</a> 已经安装</p>
 
 <p>2) 修改<code>/etc/postfix/main.cf</code>，在文件里修改/增加两行</p>
 
@@ -120,7 +125,7 @@ mech_list: PLAIN LOGIN
 
 <p>5) 测试</p>
 
-<p>连接25号端口，看看有没有类似下面的这样的输出</p>
+<p>连接 25 号端口，看看有没有类似下面的这样的输出</p>
 
 <pre><code>$ telnet localhost 25
 . . .
@@ -143,14 +148,14 @@ AUTH PLAIN AHdnemhhb0B3Z3poYW8AYWJjMTIz
 235 2.7.0 Authentication successful
 </code></pre>
 
-<p>注意：这里的 AHdnemhhb0B3Z3poYW8AYWJjMTIz 表示base64编码，是以&#8221;<code>0username@domain0password"</code>的方式组成的，注意这里的domain，也许你的认证不需要domain，如何确定呢，执行下面的命令</p>
+<p>注意：这里的 AHdnemhhb0B3Z3poYW8AYWJjMTIz 表示 base64 编码，是以&#8221;<code>0username@domain0password"</code>的方式组成的，注意这里的 domain，也许你的认证不需要 domain，如何确定呢，执行下面的命令</p>
 
 <pre><code># sasldblistusers2 wgzhao@wgzhao: userPassword 
 </code></pre>
 
-<p>如果输出的用户含有domain的话，那就需要。</p>
+<p>如果输出的用户含有 domain 的话，那就需要。</p>
 
-<p>如果得到这个base64编码呢？可以使用mmencode，可以使用perl的<code>MIME::base64</code>模块，我偏向使用php</p>
+<p>如果得到这个 base64 编码呢？可以使用 mmencode，可以使用 perl 的<code>MIME::base64</code>模块，我偏向使用 php</p>
 
 <pre><code> $php -a 
  php &gt; echo base64_encode("0wgzhao@wgzhao0abc123");
@@ -247,8 +252,8 @@ AUTH PLAIN AHdnemhhb0B3Z3poYW8AYWJjMTIz
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/06/17/simple-steps-enable-postfix-with-sasl/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/17/simple-steps-enable-postfix-with-sasl/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/06/17/simple-steps-enable-postfix-with-sasl/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/06/17/simple-steps-enable-postfix-with-sasl/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

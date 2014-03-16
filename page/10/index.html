@@ -9,9 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="*nix实行埋头苦干的哲学，因此很多命令都是执行完成后，什么也不说，很多以为是没有执行或者说报错了，其他他们都是默默无闻的英雄，不喜欢作秀。
-dd命令虽然最后给出了读了多少，写了多少块，但是看不到实际的进程，会让人有些不安。因此搞一个简单的办法，满足这些人的要求：
-开两个终端， &hellip;">
+  <meta name="description" content="*nix 实行埋头苦干的哲学，因此很多命令都是执行完成后，什么也不说，很多以为是没有执行或者说报错了，其他他们都是默默无闻的英雄，不喜欢作秀。
+dd 命令虽然最后给出了读了多少，写了多少块，但是看不到实际的进程，会让人有些不安。因此搞一个简单的办法，满足这些人的要求：开两个终端， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +30,11 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -65,7 +69,10 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
   
   
   
@@ -99,9 +106,8 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-  <div class="entry-content"><p>*nix实行埋头苦干的哲学，因此很多命令都是执行完成后，什么也不说，很多以为是没有执行或者说报错了，其他他们都是默默无闻的英雄，不喜欢作秀。<br/>
-dd命令虽然最后给出了读了多少，写了多少块，但是看不到实际的进程，会让人有些不安。因此搞一个简单的办法，满足这些人的要求：<br/>
-开两个终端，第一个终端里输入下面的命令：<code>watch -n3 pkill -USR1 ^dd$</code></p>
+  <div class="entry-content"><p>*nix 实行埋头苦干的哲学，因此很多命令都是执行完成后，什么也不说，很多以为是没有执行或者说报错了，其他他们都是默默无闻的英雄，不喜欢作秀。<br/>
+dd 命令虽然最后给出了读了多少，写了多少块，但是看不到实际的进程，会让人有些不安。因此搞一个简单的办法，满足这些人的要求：开两个终端，第一个终端里输入下面的命令：<code>watch -n3 pkill -USR1 ^dd$</code></p>
 
 </div>
   
@@ -145,8 +151,7 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-  <div class="entry-content"><p>虽然可以打开ppt文档，然后从里面一个个拷贝出图片，但是还是觉得太累，这种典型的重复劳动工作就应该交给程序去干。
-所以写了下面这个脚本，python语言的。程序核心那块（图片获取）不是我写的，网络上有相关说明，其实我只是熟悉一下python而已。</p>
+  <div class="entry-content"><p>虽然可以打开 ppt 文档，然后从里面一个个拷贝出图片，但是还是觉得太累，这种典型的重复劳动工作就应该交给程序去干。所以写了下面这个脚本，python 语言的。程序核心那块（图片获取）不是我写的，网络上有相关说明，其实我只是熟悉一下 python 而已。</p>
 
 <p>下面是代码</p>
 
@@ -192,7 +197,7 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-  <div class="entry-content"><p>从tar包中创建一个二进制发布包（RPM，Debian,SlackWare,etc)并不太方便。虽然如果源代码包里还有spec文件后，可以直接利用<code>rpmbuild</code>来创建rpm包，遗憾的是，只有少部分tar包包含了spec文件。另外，创建deb包呢？创建SlackWare的.tar.gz包呢？</p>
+  <div class="entry-content"><p>从 tar 包中创建一个二进制发布包（RPM，Debian,SlackWare,etc)并不太方便。虽然如果源代码包里还有 spec 文件后，可以直接利用<code>rpmbuild</code>来创建 rpm 包，遗憾的是，只有少部分 tar 包包含了 spec 文件。另外，创建 deb 包呢？创建 SlackWare 的.tar.gz 包呢？</p>
 
 </div>
   
@@ -236,7 +241,7 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-  <div class="entry-content"><p>随着6.1国家规定的限制免费使用塑料袋时间的临近，很多超市开始做一些宣传了，免得到时突然塑料袋要收钱，容易和顾客发生冲突。</p>
+  <div class="entry-content"><p>随着 6.1 国家规定的限制免费使用塑料袋时间的临近，很多超市开始做一些宣传了，免得到时突然塑料袋要收钱，容易和顾客发生冲突。</p>
 
 <p>前几天去超市，发现超市的海报也好，货架也好，都会在一些醒目的位置上贴上有关环保的一些小提示，小资料，当然重点是不要使用塑料袋。</p>
 
@@ -282,9 +287,9 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-  <div class="entry-content"><p>晚饭毕，陪lancy去超市买回他很久没有喝了的酸奶，回家的主要任务是寻找我感兴趣的blog，添加他们的feed。</p>
+  <div class="entry-content"><p>晚饭毕，陪 lancy 去超市买回他很久没有喝了的酸奶，回家的主要任务是寻找我感兴趣的 blog，添加他们的 feed。</p>
 
-<p>之前我的feed订阅数大概是50个左右，平均一天的阅读量在90篇左右，我没有固定的时间来看，什么时候想看了就看，或者看着那个未阅读的数字涨的很快了，就马上看。</p>
+<p>之前我的 feed 订阅数大概是 50 个左右，平均一天的阅读量在 90 篇左右，我没有固定的时间来看，什么时候想看了就看，或者看着那个未阅读的数字涨的很快了，就马上看。</p>
 
 </div>
   
@@ -328,9 +333,9 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-  <div class="entry-content"><p>问题来自我的blog上的littlemouse的留言：</p>
+  <div class="entry-content"><p>问题来自我的 blog 上的 littlemouse 的留言：</p>
 
-<blockquote><p>你好,我是个xslt新手,我能问你个问题吗?如何处理重复计数问题?比如我要计算不同人的个数,但是有的人名字重复了很多次,但是是同一个人,这样的问题如何解决呢?
+<blockquote><p>你好,我是个 xslt 新手,我能问你个问题吗?如何处理重复计数问题?比如我要计算不同人的个数,但是有的人名字重复了很多次,但是是同一个人,这样的问题如何解决呢?
 非常感谢!</p></blockquote>
 
 <p>我们举个例子来说明：</p>
@@ -377,7 +382,7 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-  <div class="entry-content"><p>这应该算是一篇凑数的帖子，就是记录一下怎么记住find里命令-perm参数后面带的数字以及数字前面的+号和-号是什么意思。我这里主要是想说setuid和setgid的问题。</p>
+  <div class="entry-content"><p>这应该算是一篇凑数的帖子，就是记录一下怎么记住 find 里命令-perm 参数后面带的数字以及数字前面的+号和-号是什么意思。我这里主要是想说 setuid 和 setgid 的问题。</p>
 
 </div>
   
@@ -467,7 +472,7 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-  <div class="entry-content"><p>今天去lancy公司的计生科交相关材料，办理准生证这种中国特色的东西。相关材料很早就找齐了，特别是公司的相关证明，虽然当时计生专干要求是公司计生科或者计生相关部门的公章，我想出了政府部门，事业单位，普通的公司哪有什么计生科呀，我可没有听说过，所以就加盖了公司的公章，觉得应该问题不大。</p>
+  <div class="entry-content"><p>今天去 lancy 公司的计生科交相关材料，办理准生证这种中国特色的东西。相关材料很早就找齐了，特别是公司的相关证明，虽然当时计生专干要求是公司计生科或者计生相关部门的公章，我想出了政府部门，事业单位，普通的公司哪有什么计生科呀，我可没有听说过，所以就加盖了公司的公章，觉得应该问题不大。</p>
 
 </div>
   
@@ -511,9 +516,9 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </header>
 
 
-  <div class="entry-content"><p>使用useradd和passwd两个命令批量创建账号时，密码的输入不太好解决。后来我要wirlfly专门写了一个可以从命令行读取密码并创建的命令。只是不太通用。</p>
+  <div class="entry-content"><p>使用 useradd 和 passwd 两个命令批量创建账号时，密码的输入不太好解决。后来我要 wirlfly 专门写了一个可以从命令行读取密码并创建的命令。只是不太通用。</p>
 
-<p>今天发现<code>shadow-utils</code>软件包里，包含了一个newusers的命令，他采取读取文件的方式创建用户，包括密码。文件采取一行指定一个账号的相关信息方式，其格式和<code>/etc/passwd</code>一致。</p>
+<p>今天发现<code>shadow-utils</code>软件包里，包含了一个 newusers 的命令，他采取读取文件的方式创建用户，包括密码。文件采取一行指定一个账号的相关信息方式，其格式和<code>/etc/passwd</code>一致。</p>
 
 </div>
   
@@ -565,8 +570,8 @@ dd命令虽然最后给出了读了多少，写了多少块，但是看不到实
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/page/10/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/10/index.html" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/page/10/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/page/10/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

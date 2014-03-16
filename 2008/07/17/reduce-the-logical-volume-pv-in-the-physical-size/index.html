@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="我把硬盘上超过80％的空间都给了LVM，之后我需要从LVM中划出一个空间出来用作基本文件系统，上面的数据非常多，而且我也没有地方可以挪，之前的思路一直都是把重要数据挪走，然后重新分区，然后把数据拷贝回来。 今天早晨，突然想起PV是不是也有修改分区大小的功能呢，果然如此， &hellip;">
+  <meta name="description" content="我把硬盘上超过 80％的空间都给了 LVM，之后我需要从 LVM 中划出一个空间出来用作基本文件系统，上面的数据非常多，而且我也没有地方可以挪，之前的思路一直都是把重要数据挪走，然后重新分区，然后把数据拷贝回来。 今天早晨，突然想起 PV 是不是也有修改分区大小的功能呢，果然如此，pvresize &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,24 +99,24 @@
   </header>
 
 
-<div class="entry-content"><p>我把硬盘上超过80％的空间都给了LVM，之后我需要从LVM中划出一个空间出来用作基本文件系统，上面的数据非常多，而且我也没有地方可以挪，之前的思路一直都是把重要数据挪走，然后重新分区，然后把数据拷贝回来。</p>
+<div class="entry-content"><p>我把硬盘上超过 80％的空间都给了 LVM，之后我需要从 LVM 中划出一个空间出来用作基本文件系统，上面的数据非常多，而且我也没有地方可以挪，之前的思路一直都是把重要数据挪走，然后重新分区，然后把数据拷贝回来。</p>
 
-<p>今天早晨，突然想起PV是不是也有修改分区大小的功能呢，果然如此，pvresize即使我需要的命令。为了安全起见，我备份了与分区和LVM相关的一些信息，比如MBR，比如sfdisk的的信息，比如PV，VG，LV的信息。</p>
+<p>今天早晨，突然想起 PV 是不是也有修改分区大小的功能呢，果然如此，pvresize 即使我需要的命令。为了安全起见，我备份了与分区和 LVM 相关的一些信息，比如 MBR，比如 sfdisk 的的信息，比如 PV，VG，LV 的信息。</p>
 
-<p>卸载所有lv的分区，开始冒险之旅。</p>
+<p>卸载所有 lv 的分区，开始冒险之旅。</p>
 
 <!--more-->
 
 
-<p>之前我的pv是50多GB</p>
+<p>之前我的 pv 是 50 多 GB</p>
 
 <pre><code>PV /dev/sda6 VG vgdata lvm2 [52.75.00 GB / 23.00 GB free] Total: 1
 [52.75.00 GB] / in use: 1 [52.75.00 GB] / in no VG: 0 [0 ] 
 </code></pre>
 
-<p>我大概用了32GB的样子，<code>/dev/sda6</code>是50多GB，我打算从这里划出7，8GB的空间出来。</p>
+<p>我大概用了 32GB 的样子，<code>/dev/sda6</code>是 50 多 GB，我打算从这里划出 7，8GB 的空间出来。</p>
 
-<p>首先使用－t参数测试了一下pvresize</p>
+<p>首先使用－t 参数测试了一下 pvresize</p>
 
 <pre><code># pvresize -t –setphysicalvolumesize 45G -v /dev/sda6
 Test mode: Metadata will NOT be updated.
@@ -130,7 +135,7 @@ Wiping internal VG cache
 
 <p>从输出结果来看，一切正常（本来把输出结果贴到文本编辑器了，结果重启的时候，忘记保存了，因此这里不能输出当时真实的信息了。）</p>
 
-<p>于是拿掉－t参数，执行上的命令</p>
+<p>于是拿掉－t 参数，执行上的命令</p>
 
 <pre><code># pvresize -t –setphysicalvolumesize 35G /dev/sda6
 Test mode: Metadata will NOT be updated.
@@ -141,20 +146,19 @@ PV /dev/sda6 VG vgdata lvm2 [45.00 GB / 13.00 GB free]
 Total: 1 [45.00 GB] / in use: 1 [45.00 GB] / in no VG: 0 [0 ]
 </code></pre>
 
-<p>接着查看vg的信息，lv的信息，一切都正常，挂在了所有的LV也都正常。</p>
+<p>接着查看 vg 的信息，lv 的信息，一切都正常，挂在了所有的 LV 也都正常。</p>
 
-<p>到目前位置PV的修改是正常的。</p>
+<p>到目前位置 PV 的修改是正常的。</p>
 
 <p>接下来就是修改分区了。</p>
 
-<p>使用fdisk命令，首先删除了<code>/dev/sda6</code>，然后再重建sda6，询问大小的时候，我填写的是+45G，以保证不会小于PV的大小。
-做完这个操作后，我还打算要重建PV和VG的，没有想到，执行pvscan后，PV的信息并没有丢失，VG，LV的信息也都存在，而且所有的LV挂载都正常。</p>
+<p>使用 fdisk 命令，首先删除了<code>/dev/sda6</code>，然后再重建 sda6，询问大小的时候，我填写的是+45G，以保证不会小于 PV 的大小。做完这个操作后，我还打算要重建 PV 和 VG 的，没有想到，执行 pvscan 后，PV 的信息并没有丢失，VG，LV 的信息也都存在，而且所有的 LV 挂载都正常。</p>
 
 <p>恩，比我想象中的要顺利很多。</p>
 
 <p>为了确认一些都是正常的，我重启了机器，看起来一切顺利。</p>
 
-<p>比修改ext3／ext3分区的大小看来要来的容易一些。</p>
+<p>比修改 ext3／ext3 分区的大小看来要来的容易一些。</p>
 </div>
 
 
@@ -246,8 +250,8 @@ Total: 1 [45.00 GB] / in use: 1 [45.00 GB] / in no VG: 0 [0 ]
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/07/17/reduce-the-logical-volume-pv-in-the-physical-size/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/07/17/reduce-the-logical-volume-pv-in-the-physical-size/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/07/17/reduce-the-logical-volume-pv-in-the-physical-size/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/07/17/reduce-the-logical-volume-pv-in-the-physical-size/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

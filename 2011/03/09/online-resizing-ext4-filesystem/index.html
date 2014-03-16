@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="原来一个分区分得太小了（只有5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对ext3干过这样的事情，看了ext3上的wiki介绍，得知做法和原来的ext2/ext3一样（看来兼容性还是不错）。下面是我的扩容过程 首先下载你要扩容的分区，这样当然是最保险的，如果你就是不想卸载， &hellip;">
+  <meta name="description" content="原来一个分区分得太小了（只有 5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对 ext3 干过这样的事情，看了 ext3 上的 wiki 介绍，得知做法和原来的 ext2/ext3 一样（看来兼容性还是不错）。下面是我的扩容过程 首先下载你要扩容的分区，这样当然是最保险的， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,14 +99,14 @@
   </header>
 
 
-<div class="entry-content"><p>原来一个分区分得太小了（只有5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对ext3干过这样的事情，看了ext3上的<a href="https://ext4.wiki.kernel.org/index.php/Frequently_Asked_Questions#How_to_online_resize_the_Ext4_filesystem.3F">wiki介绍</a>，得知做法和原来的ext2/ext3一样（看来兼容性还是不错）。下面是我的扩容过程</p>
+<div class="entry-content"><p>原来一个分区分得太小了（只有 5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对 ext3 干过这样的事情，看了 ext3 上的 <a href="https://ext4.wiki.kernel.org/index.php/Frequently_Asked_Questions#How_to_online_resize_the_Ext4_filesystem.3F">wiki 介绍</a>，得知做法和原来的 ext2/ext3 一样（看来兼容性还是不错）。下面是我的扩容过程</p>
 
 <p>首先下载你要扩容的分区，这样当然是最保险的，如果你就是不想卸载，只要你别对其做写操作，也没有问题。</p>
 
 <!--more-->
 
 
-<p>接下来就是用fdisk删除该分区，然后用你期望的大小重建该分区。这里要注意的是，分区的开始扇区一定要和删除前保持一致，否则文件系统就会遭到破坏。下面是我的实际操作过程</p>
+<p>接下来就是用 fdisk 删除该分区，然后用你期望的大小重建该分区。这里要注意的是，分区的开始扇区一定要和删除前保持一致，否则文件系统就会遭到破坏。下面是我的实际操作过程</p>
 
 <pre><code># fdisk /dev/sda
 
@@ -271,8 +276,8 @@ tmpfs                 1.4G  296K  1.4G   1% /dev/shm
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2011/03/09/online-resizing-ext4-filesystem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/03/09/online-resizing-ext4-filesystem/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2011/03/09/online-resizing-ext4-filesystem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2011/03/09/online-resizing-ext4-filesystem/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="也适合其他分发产品
-引导时的命令参数 askmethod
+  <meta name="description" content="也适合其他分发产品引导时的命令参数 askmethod
 该命令请你选择从红帽企业 Linux 光盘中引导时你想使用的安装方法。
 apic 这个 x86 引导命令绕过在 Intel 440GX 芯片集 BIOS 中可能会普遍遇到的错误，它只应该使用安装程序内核来执行。
 apm=allow_ints &hellip;">
@@ -33,6 +32,11 @@ apm=allow_ints &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -98,8 +102,7 @@ apm=allow_ints &hellip;">
   </header>
 
 
-<div class="entry-content"><p>也适合其他分发产品<br/>
-引导时的命令参数</p>
+<div class="entry-content"><p>也适合其他分发产品引导时的命令参数</p>
 
 <p>askmethod<br/>
 该命令请你选择从红帽企业 Linux 光盘中引导时你想使用的安装方法。<br/>
@@ -124,8 +127,7 @@ dd <br/>
 dd=url <br/>
 这个参数会导致安装程序提示你使用来自指定 HTTP、FTP、或 NFS 网络地址的驱动程序映像。<br/>
 display=IP:0 <br/>
-该命令允许远程显示转发。其中，IP 应该用你想充当显示系统的 IP 地址替换。<br/>
-在你想用来显示的系统上，你必须执行 xhost +remotehostname 命令，这里的 remotehostname<br/>
+该命令允许远程显示转发。其中，IP 应该用你想充当显示系统的 IP 地址替换。在你想用来显示的系统上，你必须执行 xhost +remotehostname 命令，这里的 remotehostname<br/>
 是你运行显示命令的主机名称。使用 xhost +remotehostname<br/>
 命令限制了对远程显示终端的访问，而且不允许来自没有被确切授予远程访问权的人员和系统的访问。<br/>
 driverdisk <br/>
@@ -286,8 +288,8 @@ vncpassword= <br/>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2005/11/16/Red-Hat-Enterprise-Linux-4-boot-options/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

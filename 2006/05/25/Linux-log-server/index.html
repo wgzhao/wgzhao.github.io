@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="Linux一般采用syslog这样的守护进程来执行日志记录功能，他的配置文件是/etc/syslog.conf，其基本格式为: sector action 中间一定是tab键而不是空格键selector用下面的格式指明正在发送日志消息的程序（即“设施”）和消息的严重性级别 facility. &hellip;">
+  <meta name="description" content="Linux 一般采用 syslog 这样的守护进程来执行日志记录功能，他的配置文件是/etc/syslog.conf，其基本格式为: sector action 中间一定是 tab 键而不是空格键 selector 用下面的格式指明正在发送日志消息的程序（即“设施”）和消息的严重性级别 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,18 +99,17 @@
   </header>
 
 
-<div class="entry-content"><p>Linux一般采用syslog这样的守护进程来执行日志记录功能，他的配置文件是/etc/syslog.conf，其基本格式为: <br/>
-<code>sector action</code> 中间一定是tab键而不是空格键selector用下面的格式指明正在发送日志消息的程序（即“设施”）和消息的严重性级别 <code>facility.level</code>设施的名称和严重性级别必须从已定义的一个简短列表中选择；程序不能使用自己定义的值。</p>
+<div class="entry-content"><p>Linux 一般采用 syslog 这样的守护进程来执行日志记录功能，他的配置文件是/etc/syslog.conf，其基本格式为: <br/>
+<code>sector action</code> 中间一定是 tab 键而不是空格键 selector 用下面的格式指明正在发送日志消息的程序（即“设施”）和消息的严重性级别 <code>facility.level</code>设施的名称和严重性级别必须从已定义的一个简短列表中选择；程序不能使用自己定义的值。</p>
 
-<p>设施分别为内核，为常用应用程序组，以及为本地编写的程序进行定义。<br/>
-任何其他程序则归为普通设施“用户”类。selector可以包含关键字<code>＊</code>和<code>none</code>，其含义分别为“所有的”或“什么都没有”。</p>
+<p>设施分别为内核，为常用应用程序组，以及为本地编写的程序进行定义。任何其他程序则归为普通设施“用户”类。selector 可以包含关键字<code>＊</code>和<code>none</code>，其含义分别为“所有的”或“什么都没有”。</p>
 
 <!--more-->
 
 
-<p>selector可以包括多个逗号分开的工具。多个selector可以用分号组合起来。通常情况下，selector相互之间为“活（or）“的关系；</p>
+<p>selector 可以包括多个逗号分开的工具。多个 selector 可以用分号组合起来。通常情况下，selector 相互之间为“活（or）“的关系；</p>
 
-<p>和某个selecotr匹配的消息将由同一行的action处理。但是，不管同一行中其他的selector是如何定义的，带有none级别的selector则会排除在外。下面给出几个格式化和组合selector的示例：</p>
+<p>和某个 selecotr 匹配的消息将由同一行的 action 处理。但是，不管同一行中其他的 selector 是如何定义的，带有 none 级别的 selector 则会排除在外。下面给出几个格式化和组合 selector 的示例：</p>
 
 <pre><code>facility.level action
 facility,facility2.level action
@@ -120,18 +124,18 @@ facility1.level,facility.level2 action
 工具               使用该工具的程序
 kern                内核
 user            用户进程（默认值）
-mail            sendmail以及其他相关软件
+mail            sendmail 以及其他相关软件
 daemon          系统守护进程
 auth            与安全和授权相关的命令
-news            usenet新闻系统
-uucp            为uucp保留，并不使用
-cron            cron守护进程
+news            usenet 新闻系统
+uucp            为 uucp 保留，并不使用
+cron            cron 守护进程
 mark            定期产生的时间戳
-local0-7        8种本地消息(除了“mark“以为的所有设施)
+local0-7        8 种本地消息(除了“mark“以为的所有设施)
 </pre>
 
 
-<p>syslog的严重级别按照重要性递减的顺序如下：</p>
+<p>syslog 的严重级别按照重要性递减的顺序如下：</p>
 
 <pre>
 级别              含义
@@ -146,37 +150,37 @@ debug           只用户调试
 </pre>
 
 
-<p>action字段说明了应该如何处理一条消息，如下表</p>
+<p>action 字段说明了应该如何处理一条消息，如下表</p>
 
 <pre>
 动作              含义                  
 filename        将消息写入到本地机器的一个文件中   
-@hostname       将消息转发到hostname上的syslogd
-@ipaddress      将消息转发到ip为ipaddress的主机
+@hostname       将消息转发到 hostname 上的 syslogd
+@ipaddress      将消息转发到 ip 为 ipaddress 的主机
 user1,user2,... 如果用户已经登录，将消息写到用户屏幕上
 </pre>
 
 
-<p>在Linux中的syslogd中，对syslog.conf文件，可以在优先级之前加上字符<code>=</code>和<code>!</code>作前缀，分别表示“只允许在该优先级”和&#8221;除了本优先级和更多的优先级“，如下表表示：</p>
+<p>在 Linux 中的 syslogd 中，对 syslog.conf 文件，可以在优先级之前加上字符<code>=</code>和<code>!</code>作前缀，分别表示“只允许在该优先级”和&#8221;除了本优先级和更多的优先级“，如下表表示：</p>
 
 <pre>
 选择符                           含义
-mail.info               选择>= info的邮件指定的消息
-mail.=info              只选择info的消息
-mail.info;mail.!err     只选择info.notice和warning的消息
-mail.debug;mail.!=warning   选择除了warning以外的所有消息
+mail.info               选择>= info 的邮件指定的消息
+mail.=info              只选择 info 的消息
+mail.info;mail.!err     只选择 info.notice 和 warning 的消息
+mail.debug;mail.!=warning   选择除了 warning 以外的所有消息
 </pre>
 
 
-<p>后记：如果采用远程日志写的方式(@hostname,@ipaddress)，需要远程机器的日志系统加上-r的启动方式。</p>
+<p>后记：如果采用远程日志写的方式(@hostname,@ipaddress)，需要远程机器的日志系统加上-r 的启动方式。</p>
 
 <p>具体方式是
-1）查看/etc/services文件，看是否有下面一行<br/>
+1）查看/etc/services 文件，看是否有下面一行<br/>
 <code>syslog 514/udp</code><br/>
 如果没有，加上<br/>
 2）修改<code>/etc/sysconfig/syslog</code>文件，修改或者增加下面折行<br/>
 <code>SYSLOGD_OPTIONS="-m 0 -r"</code><br/>
-3）重启syslogd  <code>/etc/init.d/syslod restart</code></p>
+3）重启 syslogd  <code>/etc/init.d/syslod restart</code></p>
 </div>
 
 
@@ -268,8 +272,8 @@ mail.debug;mail.!=warning   选择除了warning以外的所有消息
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/05/25/Linux-log-server/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/25/Linux-log-server/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/05/25/Linux-log-server/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/25/Linux-log-server/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="不记得是ubuntu升级到哪个核心版本的时候出现了这个问题，系统正常关闭，再启动的时候，就会提示根文件系统的超级块最后写入时间比当前实际时间快8个小时。
-而BIOS时钟和系统时钟都是正确的。BIOS里没有时区设置（我没有看到），系统设置的CST时区，以前没有遇到过，有人说是双系统的问题。 &hellip;">
+  <meta name="description" content="不记得是 ubuntu 升级到哪个核心版本的时候出现了这个问题，系统正常关闭，再启动的时候，就会提示根文件系统的超级块最后写入时间比当前实际时间快 8 个小时。而 BIOS 时钟和系统时钟都是正确的。BIOS 里没有时区设置（我没有看到），系统设置的 CST 时区，以前没有遇到过， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,9 +99,7 @@
   </header>
 
 
-<div class="entry-content"><p>不记得是ubuntu升级到哪个核心版本的时候出现了这个问题，系统正常关闭，再启动的时候，就会提示根文件系统的超级块最后写入时间比当前实际时间快8个小时。<br/>
-而BIOS时钟和系统时钟都是正确的。BIOS里没有时区设置（我没有看到），系统设置的CST时区，以前没有遇到过，有人说是双系统的问题。<br/>
-目前的解决办法是，修改<code>/etc/default/rcS</code>文件，添加或者修改类似下面这行：</p>
+<div class="entry-content"><p>不记得是 ubuntu 升级到哪个核心版本的时候出现了这个问题，系统正常关闭，再启动的时候，就会提示根文件系统的超级块最后写入时间比当前实际时间快 8 个小时。而 BIOS 时钟和系统时钟都是正确的。BIOS 里没有时区设置（我没有看到），系统设置的 CST 时区，以前没有遇到过，有人说是双系统的问题。目前的解决办法是，修改<code>/etc/default/rcS</code>文件，添加或者修改类似下面这行：</p>
 
 <p>UTC=yes</p>
 
@@ -193,8 +195,8 @@
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2009/09/04/superblock-write-last-time-is-in-the-future/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/09/04/superblock-write-last-time-is-in-the-future/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2009/09/04/superblock-write-last-time-is-in-the-future/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2009/09/04/superblock-write-last-time-is-in-the-future/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="以前一直以为bc做了不了浮点运算，虽然他能结算类似13.4*45.6的乘法，但是在计算除法的时候，无论你输入5/3还是5/3.0得到的结果都是1 我也没有去看man手册，今天无意中发现了ibase这个变量，是bc使用的一个变量，表示输入的数字的进制，比如ibase=8，表示你输入的数是8进制的。 &hellip;">
+  <meta name="description" content="以前一直以为 bc 做了不了浮点运算，虽然他能结算类似13.4*45.6的乘法，但是在计算除法的时候，无论你输入5/3还是5/3.0得到的结果都是1 我也没有去看 man 手册，今天无意中发现了ibase 这个变量，是 bc 使用的一个变量，表示输入的数字的进制，比如ibase=8， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,10 +99,9 @@
   </header>
 
 
-<div class="entry-content"><p>以前一直以为bc做了不了浮点运算，虽然他能结算类似<code>13.4*45.6</code>的乘法，但是在计算除法的时候，无论你输入<code>5/3</code>还是<code>5/3.0</code>得到的结果都是<code>1</code></p>
+<div class="entry-content"><p>以前一直以为 bc 做了不了浮点运算，虽然他能结算类似<code>13.4*45.6</code>的乘法，但是在计算除法的时候，无论你输入<code>5/3</code>还是<code>5/3.0</code>得到的结果都是<code>1</code></p>
 
-<p>我也没有去看man手册，今天无意中发现了<code>ibas</code>e这个变量，是bc使用的一个变量，表示输入的数字的进制，比如<code>ibase=8</code>，表示你输入的数是8进制的。
-这让我很好奇，于是去看了man手册，原来他是可以做浮点除法的，只是默认不输出小数点后面的值，它同样采用了一个变量来控制<code>--scale</code>，其值表示输出多少位小数。另外一个和ibase对应的变量是obase，表示结果输出采用什么进制，默认是10进制。</p>
+<p>我也没有去看 man 手册，今天无意中发现了<code>ibas</code>e 这个变量，是 bc 使用的一个变量，表示输入的数字的进制，比如<code>ibase=8</code>，表示你输入的数是 8 进制的。这让我很好奇，于是去看了 man 手册，原来他是可以做浮点除法的，只是默认不输出小数点后面的值，它同样采用了一个变量来控制<code>--scale</code>，其值表示输出多少位小数。另外一个和 ibase 对应的变量是 obase，表示结果输出采用什么进制，默认是 10 进制。</p>
 
 <!--more-->
 
@@ -118,8 +122,8 @@
 30 
 </code></pre>
 
-<p>另外一个强大的计算工具是dc（desktop calculator），它采用RPN（逆波兰式输入）
-dc工具比bc工具要难使用的多，看看它的info和man帮助就知道了，但是精通dc的人却能给出这样的输出</p>
+<p>另外一个强大的计算工具是 dc（desktop calculator），它采用 RPN（逆波兰式输入）
+dc 工具比 bc 工具要难使用的多，看看它的 info 和 man 帮助就知道了，但是精通 dc 的人却能给出这样的输出</p>
 
 <pre><code>#echo "16i[q]sa[ln0=aln100%Pln100/snlbx]sbA0D68736142snlbxq" | dc  
 Bash 
@@ -130,8 +134,8 @@ Bash
 3 
 </code></pre>
 
-<p>这是因子分解的脚本。类似factor命令，命令中12是要分解的数。
-(以上部分内容来至ABS)</p>
+<p>这是因子分解的脚本。类似 factor 命令，命令中 12 是要分解的数。
+(以上部分内容来至 ABS)</p>
 </div>
 
 
@@ -223,8 +227,8 @@ Bash
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/09/15/the-new-features-about-bc/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/09/15/the-new-features-about-bc/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/09/15/the-new-features-about-bc/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/09/15/the-new-features-about-bc/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

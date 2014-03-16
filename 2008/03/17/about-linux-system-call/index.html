@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="John Lee上午给我推荐了一个帖子what is linux-gate.so.1，下午才看完，觉得解释得很清楚，帖子较多的评论也说明了这点。 之前也曾有过关于linux-gate.so.1的疑惑，其表象就是linux-gate.so.1为什么找不到，却不知道什么原因， &hellip;">
+  <meta name="description" content="John Lee 上午给我推荐了一个帖子 what is linux-gate.so.1，下午才看完，觉得解释得很清楚，帖子较多的评论也说明了这点。 之前也曾有过关于 linux-gate.so.1 的疑惑，其表象就是 linux-gate.so.1 为什么找不到，却不知道什么原因， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -94,29 +99,29 @@
   </header>
 
 
-<div class="entry-content"><p><a href="http://blog.chinaunix.net/u/6303/">John Lee</a>上午给我推荐了一个帖子<a href="http://www.trilithium.com/johan/2005/08/linux-gate/">what is linux-gate.so.1</a>，下午才看完，觉得解释得很清楚，帖子较多的评论也说明了这点。</p>
+<div class="entry-content"><p><a href="http://blog.chinaunix.net/u/6303/">John Lee</a> 上午给我推荐了一个帖子 <a href="http://www.trilithium.com/johan/2005/08/linux-gate/">what is linux-gate.so.1</a>，下午才看完，觉得解释得很清楚，帖子较多的评论也说明了这点。</p>
 
-<p>之前也曾有过关于linux-gate.so.1的疑惑，其表象就是linux-gate.so.1为什么找不到，却不知道什么原因，自己也没有去想办法解答这个疑惑。</p>
+<p>之前也曾有过关于 linux-gate.so.1 的疑惑，其表象就是 linux-gate.so.1 为什么找不到，却不知道什么原因，自己也没有去想办法解答这个疑惑。</p>
 
-<p>看完后，和John Lee聊天，说到要不我就我能理解的，尝试翻译一下，他觉得可以，至少没有坏处。</p>
+<p>看完后，和 John Lee 聊天，说到要不我就我能理解的，尝试翻译一下，他觉得可以，至少没有坏处。</p>
 
 <!--more-->
 
 
 <p>遂开始着手，翻译到一半，突然想起，是不是已经有人已经做过的工作了呢，如果是，那我直接拿来主义就好了。</p>
 
-<p>Google一把，·<a href="http://www.21tx.com/dev/2007/01/19/10917.html">果然如此</a>，同时在IBM-DEV上也找到了一篇<a href="http://www.ibm.com/developerworks/cn/linux/kernel/l-k26ncpu/index.html">与此相关的文章</a>，当然它是从快速系统调用这个角度来写的。</p>
+<p>Google 一把，·<a href="http://www.21tx.com/dev/2007/01/19/10917.html">果然如此</a>，同时在 IBM-DEV 上也找到了一篇<a href="http://www.ibm.com/developerworks/cn/linux/kernel/l-k26ncpu/index.html">与此相关的文章</a>，当然它是从快速系统调用这个角度来写的。</p>
 
-<p>综合这三篇帖子，基本搞清楚了linux-gate.so.1已经系统调用的一个发展。</p>
+<p>综合这三篇帖子，基本搞清楚了 linux-gate.so.1 已经系统调用的一个发展。</p>
 
 <ol>
-<li><p>linux-gate.so.1是一个虚拟的动态加载库(VDSO)，它在每一个进程的存储空间，对于X86系统，就是在<code>0xffffe000-0xfffff000</code>这段4k地址中。你可以使用
-<code>dd if=/proc/self/mem of=linux-gate.dso bs=4096 kip=1048574 count=1</code> 的方式copy出来。</p></li>
-<li><p>lnux-gate.so.1的意义在于gate：充当了用户和内核空间的大门，因此它与系统调用有关。</p></li>
-<li><p>我们熟知的系统调用采取软中断方式，MSDOS时代使用<code>int 0x21h</code>，而Linux采取<code>int 0x80h</code></p></li>
-<li><p>以前的中断因为需要判断其权限，导致耗时较多，因此现代CPU采取了sysenter/sysexit中断方式，称为新系统调用，加快了进程速度。</p></li>
-<li><p>不是所有的CPU都支持新系统调用，对于Intel CPU而言，只有<code>Fmail&gt;=6</code>且<code>Model&gt;=3</code>且<code>Stepping&gt;=3</code>（可以从<code>/proc/cpuinfo</code>获得）才会支持。</p></li>
-<li><p>Linux kernel同时保留上述两种系统调用。只有在内核载入的时候，他会根据CPU的类型来决定采取那种模式</p></li>
+<li><p>linux-gate.so.1 是一个虚拟的动态加载库(VDSO)，它在每一个进程的存储空间，对于 X86 系统，就是在<code>0xffffe000-0xfffff000</code>这段 4k 地址中。你可以使用
+<code>dd if=/proc/self/mem of=linux-gate.dso bs=4096 kip=1048574 count=1</code> 的方式 copy 出来。</p></li>
+<li><p>lnux-gate.so.1 的意义在于 gate：充当了用户和内核空间的大门，因此它与系统调用有关。</p></li>
+<li><p>我们熟知的系统调用采取软中断方式，MSDOS 时代使用<code>int 0x21h</code>，而 Linux 采取<code>int 0x80h</code></p></li>
+<li><p>以前的中断因为需要判断其权限，导致耗时较多，因此现代 CPU 采取了 sysenter/sysexit 中断方式，称为新系统调用，加快了进程速度。</p></li>
+<li><p>不是所有的 CPU 都支持新系统调用，对于 Intel CPU 而言，只有<code>Fmail&gt;=6</code>且<code>Model&gt;=3</code>且<code>Stepping&gt;=3</code>（可以从<code>/proc/cpuinfo</code>获得）才会支持。</p></li>
+<li><p>Linux kernel 同时保留上述两种系统调用。只有在内核载入的时候，他会根据 CPU 的类型来决定采取那种模式</p></li>
 <li><p>并不一定每个系统调用都需要通过快速系统调用来实现。比如，对于复杂的系统调用例如 fork，两种系统调用方式的时间差和系统调用本身运行消耗的时间来比，可以忽略不计，此处采取快速系统调用方式没有什么必要。而真正应该使用快速系统调用方式的，是那些本身运行时间很短，对时间精确性要求高的系统调用，例如
 getuid、gettimeofday 等等。因此，采取灵活的手段，针对不同的系统调用采取不同的方式，才能得到最优化的性能和实现最完美的功能。</p></li>
 </ol>
@@ -212,8 +217,8 @@ getuid、gettimeofday 等等。因此，采取灵活的手段，针对不同的�
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2008/03/17/about-linux-system-call/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/03/17/about-linux-system-call/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2008/03/17/about-linux-system-call/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2008/03/17/about-linux-system-call/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

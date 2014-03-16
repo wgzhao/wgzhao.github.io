@@ -9,9 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="上午去测试一个加密卡设备权限会发生变化的问题，其实这个问题和我的声卡情况相似。我一般都采用不同用户登录我的系统。
-系统启动时默认会把我的声卡设备权限设置为0666,但是使用的过程中权限会发生变化，变成缺省的0600，导致普通用户不能使用声卡。
-查了一些资料，得知这些设备的权限设置与文件/etc/ &hellip;">
+  <meta name="description" content="上午去测试一个加密卡设备权限会发生变化的问题，其实这个问题和我的声卡情况相似。我一般都采用不同用户登录我的系统。系统启动时默认会把我的声卡设备权限设置为 0666,但是使用的过程中权限会发生变化，变成缺省的 0600，导致普通用户不能使用声卡。查了一些资料，得知这些设备的权限设置与文件/etc/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,17 +99,13 @@
   </header>
 
 
-<div class="entry-content"><p>上午去测试一个加密卡设备权限会发生变化的问题，其实这个问题和我的声卡情况相似。我一般都采用不同用户登录我的系统。<br/>
-系统启动时默认会把我的声卡设备权限设置为0666,但是使用的过程中权限会发生变化，变成缺省的0600，导致普通用户不能使用声卡。<br/>
-查了一些资料，得知这些设备的权限设置与文件<code>/etc/security/console.perms</code>文件有关，因此这里贴出我找到的有关该文件的一些说明：</p>
+<div class="entry-content"><p>上午去测试一个加密卡设备权限会发生变化的问题，其实这个问题和我的声卡情况相似。我一般都采用不同用户登录我的系统。系统启动时默认会把我的声卡设备权限设置为 0666,但是使用的过程中权限会发生变化，变成缺省的 0600，导致普通用户不能使用声卡。查了一些资料，得知这些设备的权限设置与文件<code>/etc/security/console.perms</code>文件有关，因此这里贴出我找到的有关该文件的一些说明：</p>
 
 <!--more-->
 
 
 <p><code>pam_console.so</code> 模块使用 <code>/etc/security/console.perms</code>
-文件来判定系统控制台上用户的权限。<br/>
-该文件的语法非常灵活；你可以编辑该文件以便 不再应用这些指示。<br/>
-然而，默认文件中有一行看起来如下：<br/>
+文件来判定系统控制台上用户的权限。该文件的语法非常灵活；你可以编辑该文件以便 不再应用这些指示。然而，默认文件中有一行看起来如下：<br/>
 <code>tty[0-9][0-9]  * :[0-9]    .[0-9] :[0-9]</code></p>
 
 <p>当用户登录后，他们会被连接到某种有名称的终端，要么是名称类似 :0 或 <code>mymachine.example.com:1.0</code> 的 X
@@ -173,8 +172,7 @@ pam  _timestamp 的应用程序会自动为该用户验证 — 用户不必再�
 <p>第一个以 auth 开头的行应该在任何 auth sufficient 行之后，以 session 开头的行应该在所有 session
 optional 行之后。</p>
 
-<p>如果配置使用 <code>pam_timestamp</code> 的从面板上的 「主菜单」 按钮启动的应用程序被成功地验证，
-图标就会显示在面板的通知区域（若你运行的是 GNOME 桌面环境）。验证过期后（默认为五分钟），该图标就会消失。</p>
+<p>如果配置使用 <code>pam_timestamp</code> 的从面板上的 「主菜单」 按钮启动的应用程序被成功地验证，图标就会显示在面板的通知区域（若你运行的是 GNOME 桌面环境）。验证过期后（默认为五分钟），该图标就会消失。</p>
 
 <p>用户可以通过点击图标并选择忘记验证选项来忘记缓存验证。</p>
 
@@ -278,8 +276,8 @@ floppy 组群的例子：</p>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/04/19/Console-access/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/04/19/Console-access/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/04/19/Console-access/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/04/19/Console-access/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

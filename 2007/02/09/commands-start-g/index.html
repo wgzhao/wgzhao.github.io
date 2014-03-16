@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="/sbin下g开头的命令如下： generate-modprobe.conf getkey grub grub-install grub-terminfo genhostid
-getmd grubby grub-md5-crypt generate-modprobe.conf: &hellip;">
+  <meta name="description" content="/sbin 下 g 开头的命令如下： generate-modprobe.conf getkey grub grub-install grub-terminfo genhostid
+getmd grubby grub-md5-crypt generate-modprobe.conf: 将原来的 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +30,11 @@ getmd grubby grub-md5-crypt generate-modprobe.conf: &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,12 +100,12 @@ getmd grubby grub-md5-crypt generate-modprobe.conf: &hellip;">
   </header>
 
 
-<div class="entry-content"><p>/sbin下g开头的命令如下：</p>
+<div class="entry-content"><p>/sbin 下 g 开头的命令如下：</p>
 
 <blockquote><p>generate-modprobe.conf getkey grub grub-install grub-terminfo genhostid
 getmd grubby grub-md5-crypt</p></blockquote>
 
-<p>generate-modprobe.conf:  将原来的module.conf文件迁移到modprobe.conf文件。这是2.4内核到2.6内核后驱动模块配置的一个改变。</p>
+<p>generate-modprobe.conf:  将原来的 module.conf 文件迁移到 modprobe.conf 文件。这是 2.4 内核到 2.6 内核后驱动模块配置的一个改变。</p>
 
 <!--more-->
 
@@ -113,14 +118,11 @@ Please input a number within 5s[5]
 
 <p>后面的[]内的时间是变化的。</p>
 
-<p>grub,grub-install,grub-terminfo,grub-md5-crypt,grubby这这些命令都是和grub有关的。</p>
+<p>grub,grub-install,grub-terminfo,grub-md5-crypt,grubby 这这些命令都是和 grub 有关的。</p>
 
-<p>genhostid:随机生成一个hostid号，如果<code>/etc/hostid</code>不存在的话,他和我们通常使用的hostid(1)有些微妙的关系。</p>
+<p>genhostid:随机生成一个 hostid 号，如果<code>/etc/hostid</code>不存在的话,他和我们通常使用的 hostid(1)有些微妙的关系。</p>
 
-<p>如果/etc/hostid文件不存在，则hostid命令打印出当前机器的标志号，只要你的机器硬件设备没有更换，这个ID号就不会改变，很多情况下这个号码和你的网卡有一定的关系。<br/>
-于是在Linux下，很多软件的授权号码就于hostid有关系，因为不同的机器hostid不同，这样能保证只有授权的机器才能安装对应的软件。<br/>
-但是如果/etc/hostid文件存在,hostid命令则只是打印出该号码，而/etc/hostid的生成就是依赖genhostid命令。<br/>
-但是我刚才说了，genhostid是随机产生一个hostid号。因此如果你希望hostid命令每次得到不同的结果，那么你就应该每次都重新生成/etc/hostid文件。不过要注意的是hostid命令生成的hostid号只有6位，而genhostid产生的是8位。</p>
+<p>如果/etc/hostid 文件不存在，则 hostid 命令打印出当前机器的标志号，只要你的机器硬件设备没有更换，这个 ID 号就不会改变，很多情况下这个号码和你的网卡有一定的关系。于是在 Linux 下，很多软件的授权号码就于 hostid 有关系，因为不同的机器 hostid 不同，这样能保证只有授权的机器才能安装对应的软件。但是如果/etc/hostid 文件存在,hostid 命令则只是打印出该号码，而/etc/hostid 的生成就是依赖 genhostid 命令。但是我刚才说了，genhostid 是随机产生一个 hostid 号。因此如果你希望 hostid 命令每次得到不同的结果，那么你就应该每次都重新生成/etc/hostid 文件。不过要注意的是 hostid 命令生成的 hostid 号只有 6 位，而 genhostid 产生的是 8 位。</p>
 
 <pre><code>[root@lancy sbin]# hostid
 7f0100
@@ -138,7 +140,7 @@ Please input a number within 5s[5]
 0000004
 </code></pre>
 
-<p>从hexdump命令的结果来看，<code>/etc/hostid</code>文件结构似乎很简单，我们尝试获得一个我们需要的“随机”hostid号试试。</p>
+<p>从 hexdump 命令的结果来看，<code>/etc/hostid</code>文件结构似乎很简单，我们尝试获得一个我们需要的“随机”hostid 号试试。</p>
 
 <pre><code> [[root@lancy tmp]# cat myhostid.c
 #include
@@ -167,7 +169,7 @@ d2bdd8ed
 12345678
 </code></pre>
 
-<p>getmd: 分析<code>/etc/raidtab</code>文件，它是scsirastools包中一个命令，这个包的主要功能就是增加一些管理scsi设备的命令，有下面一些：</p>
+<p>getmd: 分析<code>/etc/raidtab</code>文件，它是 scsirastools 包中一个命令，这个包的主要功能就是增加一些管理 scsi 设备的命令，有下面一些：</p>
 
 <p>sgdskfl – to load disk firmware to disks under Linux<br/>
 sgmode – to get and set SCSI mode pages<br/>
@@ -268,8 +270,8 @@ alarms – to set disk fault LEDs on mBMC platforms</p>
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/02/09/commands-start-g/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/02/09/commands-start-g/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/02/09/commands-start-g/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/02/09/commands-start-g/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

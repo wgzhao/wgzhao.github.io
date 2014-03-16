@@ -9,9 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，但是同样的环境，在深圳却找不到存储设备，很是怪异。
-而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧 &hellip;">
+  <meta name="description" content="来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +30,11 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,32 +100,31 @@ CX300存储的故障问题，而这个连接方案我已经在北京作的测试
   </header>
 
 
-<div class="entry-content"><p>来深圳出差是解决openpower710+redflag连接EMC
-CX300存储的故障问题，而这个连接方案我已经在北京作的测试，但是同样的环境，在深圳却找不到存储设备，很是怪异。<br/>
-而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其一</p>
+<div class="entry-content"><p>来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是其一</p>
 
-<p>我于8.15晚上8点抵达用户现场（飞机晚点3小时）。当时雁联和IBM的人正在使用AIX系统来验证是否CX300存储有问题。</p>
+<p>我于 8.15 晚上 8 点抵达用户现场（飞机晚点 3 小时）。当时雁联和 IBM 的人正在使用 AIX 系统来验证是否 CX300 存储有问题。</p>
 
 <!--more-->
 
 
-<p>CX300的配置以及网络拓扑结构可以参考前面旭铭发的邮件。</p>
+<p>CX300 的配置以及网络拓扑结构可以参考前面旭铭发的邮件。</p>
 
-<p>在AIX没有安装powerpath的情况下，能认出四个磁盘设备，且没有报错，因为上面已经有数据，从AIX系统上无法得知四个磁盘大小（IBM
+<p>在 AIX 没有安装 powerpath 的情况下，能认出四个磁盘设备，且没有报错，因为上面已经有数据，从 AIX 系统上无法得知四个磁盘大小（IBM
 的人说没有办法看容量大小）。
-Linux这边我首先查看了状态，和旭铭在前面发的邮件一样。四个设备/dev/sdc,dev/sdd,/dev/sde,/dev/sdf四个磁盘设备，其中/dev/sdd,/dev/sdf两个设备报错，且大小不一样。同时日志给出读取磁盘容量大小失败。</p>
+Linux 这边我首先查看了状态，和旭铭在前面发的邮件一样。四个设备/dev/sdc,dev/sdd,/dev/sde,/dev/sdf 四个磁盘设备，其中/dev/sdd,/dev/sdf 两个设备报错，且大小不一样。同时日志给出读取磁盘容量大小失败。</p>
 
-<p>从网上下载了最新的emulex卡的驱动，编译加载，结果和先前一样。</p>
+<p>从网上下载了最新的 emulex 卡的驱动，编译加载，结果和先前一样。</p>
 
-<p>尝试使用了redhat AS4 update 4的安装光盘启动，得到的结果和我们的系统一样。</p>
+<p>尝试使用了 redhat AS4 update 4 的安装光盘启动，得到的结果和我们的系统一样。</p>
 
-<p>最后我要求用户将划分的LUN由目前的SPA管理trespass到SPB管理。</p>
+<p>最后我要求用户将划分的 LUN 由目前的 SPA 管理 trespass 到 SPB 管理。</p>
 
-<p>重启AIX系统后，只能认出两个设备，另外两个设备处于define状态，IBM工程师声称这表示之前还有这个设备，但是现没有了。</p>
+<p>重启 AIX 系统后，只能认出两个设备，另外两个设备处于 define 状态，IBM 工程师声称这表示之前还有这个设备，但是现没有了。</p>
 
-<p>由于目前AIX还没有配置好powerpath，用户不太相信CX300出问题。用户更倾向是系统问题或者openpower硬件问题。</p>
+<p>由于目前 AIX 还没有配置好 powerpath，用户不太相信 CX300 出问题。用户更倾向是系统问题或者 openpower 硬件问题。</p>
 
-<p>明天将有EMC的工程师过来，他可能只会去解决AIX配置powerpath的问题，不过由此，应该可以定位问题所在。</p>
+<p>明天将有 EMC 的工程师过来，他可能只会去解决 AIX 配置 powerpath 的问题，不过由此，应该可以定位问题所在。</p>
 </div>
 
 
@@ -213,8 +216,8 @@ Linux这边我首先查看了状态，和旭铭在前面发的邮件一样。四
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/08/16/device-mapper-multipath-of-supernatural-events-1/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/08/16/device-mapper-multipath-of-supernatural-events-1/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/08/16/device-mapper-multipath-of-supernatural-events-1/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/08/16/device-mapper-multipath-of-supernatural-events-1/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

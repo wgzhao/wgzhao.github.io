@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="本来这这个帖子是准备作为帖子虚拟化技术漫谈－－OpenVZ入门的后记的，因为这件事就是发生在我写这篇文章的时候。
-但是一来这个事情和虚拟化，和OpenVZ谈不上什么关系，而来我又多了一篇文章，开玩笑了，因为这篇文章就是一个笑话，故事开始了。 写OpenVZ入门的时候，我提到了如何使用内存分页大小( &hellip;">
+  <meta name="description" content="本来这这个帖子是准备作为帖子虚拟化技术漫谈－－OpenVZ 入门的后记的，因为这件事就是发生在我写这篇文章的时候。但是一来这个事情和虚拟化，和 OpenVZ 谈不上什么关系，而来我又多了一篇文章，开玩笑了，因为这篇文章就是一个笑话，故事开始了。 写 OpenVZ 入门的时候， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -30,6 +29,11 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -95,22 +99,20 @@
   </header>
 
 
-<div class="entry-content"><p>本来这这个帖子是准备作为帖子<a href="/2007/04/09/virtualization-technologies-discussion-introduction/">虚拟化技术漫谈－－OpenVZ入门</a>的后记的，因为这件事就是发生在我写这篇文章的时候。<br/>
-但是一来这个事情和虚拟化，和OpenVZ谈不上什么关系，而来我又多了一篇文章，开玩笑了，因为这篇文章就是一个笑话，故事开始了。</p>
+<div class="entry-content"><p>本来这这个帖子是准备作为帖子<a href="/2007/04/09/virtualization-technologies-discussion-introduction/">虚拟化技术漫谈－－OpenVZ 入门</a>的后记的，因为这件事就是发生在我写这篇文章的时候。但是一来这个事情和虚拟化，和 OpenVZ 谈不上什么关系，而来我又多了一篇文章，开玩笑了，因为这篇文章就是一个笑话，故事开始了。</p>
 
 <!--more-->
 
 
-<p>写OpenVZ入门的时候，我提到了如何使用内存分页大小(pagesize)来简单的计算如何设置对应参数的值，我说x86默认是4096,也就是4096。本来这个后面还有一句话－－&#8221;当然，如果你不确定，也可以用下面的命令来查看&#8221;，写道这里，我就开始找这个命令。
-最开始我想到的是/proc/meminfo的内如，于是<code>cat /proc/meminfo</code>，结果只在最后发现一个Hugepagesize的值，是4096K，整整大了1024倍。看了一下这个参数，和我要的<code>page_size</code>不是一码事。</p>
+<p>写 OpenVZ 入门的时候，我提到了如何使用内存分页大小(pagesize)来简单的计算如何设置对应参数的值，我说 x86 默认是 4096,也就是 4096。本来这个后面还有一句话－－&#8221;当然，如果你不确定，也可以用下面的命令来查看&#8221;，写道这里，我就开始找这个命令。最开始我想到的是/proc/meminfo 的内如，于是<code>cat /proc/meminfo</code>，结果只在最后发现一个 Hugepagesize 的值，是 4096K，整整大了 1024 倍。看了一下这个参数，和我要的<code>page_size</code>不是一码事。</p>
 
-<p>然后<code>sysctl -a</code>,<code>sysctl -A</code>均没有发现对我有用的东西。于是googling，找到一篇文章，提到了<code>time</code>命令，说用<code>time -v</code>就可以显示pagesize。窃喜，赶紧测试了一下</p>
+<p>然后<code>sysctl -a</code>,<code>sysctl -A</code>均没有发现对我有用的东西。于是 googling，找到一篇文章，提到了<code>time</code>命令，说用<code>time -v</code>就可以显示 pagesize。窃喜，赶紧测试了一下</p>
 
 <pre><code>[root@mlsx tmp]# time -v pwd
 bash: -v: command not found
 </code></pre>
 
-<p>方法不对？man一把，没有发现-v选项，但是看到了这个</p>
+<p>方法不对？man 一把，没有发现-v 选项，但是看到了这个</p>
 
 <blockquote><p>%Z (Not in tcsh.) System’s page size, in bytes.
 This is a per-system constant, but varies between systems.</p></blockquote>
@@ -128,23 +130,20 @@ bash: -o: command not found
 .......
 </code></pre>
 
-<p>差点崩溃 strings time一把，有%Z，就是不知道如何用。</p>
+<p>差点崩溃 strings time 一把，有%Z，就是不知道如何用。</p>
 
 <p>再次进入<code>/proc</code>目录，搜刮了一番，没有发现什么东西。</p>
 
-<p>有点绝望了，ping(xplore行业术语，用户和人打招呼)了一下<a href="http://wf.xplore.cn">wf</a>,问问他知道不。<br/>
-搞研发的就是搞研发的，查了两个命令没有后，就丢一句，看源代码吧。我说我不看，我要以<strong>管理员</strong>的身份来解决这个问题。<br/>
-被逼无奈，继续寻找中，wf甚至<code>lspci/lshal/dmidecode</code>都看了，还是没有新进展，我一直觉得这是一特简单的事情,我们怎么就找了这么久，还没有结果呢？</p>
+<p>有点绝望了，ping(xplore 行业术语，用户和人打招呼)了一下 <a href="http://wf.xplore.cn">wf</a>,问问他知道不。搞研发的就是搞研发的，查了两个命令没有后，就丢一句，看源代码吧。我说我不看，我要以<strong>管理员</strong>的身份来解决这个问题。被逼无奈，继续寻找中，wf 甚至<code>lspci/lshal/dmidecode</code>都看了，还是没有新进展，我一直觉得这是一特简单的事情,我们怎么就找了这么久，还没有结果呢？</p>
 
-<p>于是我要找一个局外人，ping了一下<a href="http://rachel.xplore.cn">Rachel</a>,问问她这个问题如何解决。结果她大智若愚的回答我，“我不知道内存分页是什么意思”，难道是我描述本身就有问题？算了，她忙于做经理要做的事情－－协调资源。<br/>
-所以还是我和wf来搞这个事情好了。</p>
+<p>于是我要找一个局外人，ping 了一下 <a href="http://rachel.xplore.cn">Rachel</a>,问问她这个问题如何解决。结果她大智若愚的回答我，“我不知道内存分页是什么意思”，难道是我描述本身就有问题？算了，她忙于做经理要做的事情－－协调资源。所以还是我和 wf 来搞这个事情好了。</p>
 
-<p>wf过了不多久，丢来一个信息</p>
+<p>wf 过了不多久，丢来一个信息</p>
 
 <blockquote><p>man -k getpagesize
 getpagesize (2) &ndash; get memory page size</p></blockquote>
 
-<p>我知道，他要写代码的瘾又上来了，果不其然，我还没有看完man，就来了这个信息：</p>
+<p>我知道，他要写代码的瘾又上来了，果不其然，我还没有看完 man，就来了这个信息：</p>
 
 <pre><code>$ ~/code/ccode/test/get_mem_pagesize 
 memory page size is 4096
@@ -156,10 +155,9 @@ memory page size is 4096
 
 <p>于是又开始大海捞针了。</p>
 
-<p>许久未果，我和wf得到一个结论－－我们还是看内核源代码吧，那里总能找到(开源的好处又被利用了一次)。</p>
+<p>许久未果，我和 wf 得到一个结论－－我们还是看内核源代码吧，那里总能找到(开源的好处又被利用了一次)。</p>
 
-<p>无奈，两人对内核源代码结构都不熟悉，就像两个瞎子(sorry to wf)进入了浩大的迷宫，幸好我们还有一个最后的救命稻草。
-牺牲了一些PU资源后，wf最终找到了这个page_size(<code>/usr/src/linux-2.6.18-1.2798.fc6/include/asm-i386</code>)的定义。</p>
+<p>无奈，两人对内核源代码结构都不熟悉，就像两个瞎子(sorry to wf)进入了浩大的迷宫，幸好我们还有一个最后的救命稻草。牺牲了一些 PU 资源后，wf 最终找到了这个 page_size(<code>/usr/src/linux-2.6.18-1.2798.fc6/include/asm-i386</code>)的定义。</p>
 
 <pre><code>#grep "PAGE_SIZE" -B3 -A2 page.h 
 
@@ -172,12 +170,11 @@ memory page size is 4096
 #define LARGE_PAGE_SIZE (1UL &lt;&lt; PMD_SHIFT)
 </code></pre>
 
-<p>似乎寻找<code>PAGE_SIZE</code>到这里结束了。wf的担心是，大部分情况下安装了内核源代码吗？</p>
+<p>似乎寻找<code>PAGE_SIZE</code>到这里结束了。wf 的担心是，大部分情况下安装了内核源代码吗？</p>
 
-<p>而我的说法却是：命令之所以不出来，是因为<strong>用户</strong>和<strong>管理员</strong>需要知道参数吗？<br/>
-而如果<strong>程序员</strong>需要知道这个值，那他当然会去看源代码或者写程序来校验。</p>
+<p>而我的说法却是：命令之所以不出来，是因为<strong>用户</strong>和<strong>管理员</strong>需要知道参数吗？而如果<strong>程序员</strong>需要知道这个值，那他当然会去看源代码或者写程序来校验。</p>
 
-<p>这估计把wf气坏了，心想，那你丫到底想怎么样呀？</p>
+<p>这估计把 wf 气坏了，心想，那你丫到底想怎么样呀？</p>
 
 <p>呵呵，不想怎么样，只是想找找。</p>
 </div>
@@ -271,8 +268,8 @@ memory page size is 4096
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2007/04/11/find-page_size/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/04/11/find-page_size/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2007/04/11/find-page_size/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2007/04/11/find-page_size/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>

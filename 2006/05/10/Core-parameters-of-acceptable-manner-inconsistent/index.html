@@ -9,9 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="在ACPI和APIC有什么关系？
-中我谈到了acpi和apic的差别，以及内核如何接受这些参数的方法。 昨天去公安部解决qlogic 2312光纤卡加载后kernel panic的问题，现在很怪异，单核心加载没有问题，能正确识别到盘阵（IBM
-Total Storage DS4500)， &hellip;">
+  <meta name="description" content="在 ACPI 和 APIC 有什么关系？
+中我谈到了 acpi 和 apic 的差别，以及内核如何接受这些参数的方法。 昨天去公安部解决 qlogic 2312 光纤卡加载后 kernel panic 的问题，现在很怪异，单核心加载没有问题，能正确识别到盘阵（IBM
+Total Storage &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -31,6 +31,11 @@ Total Storage DS4500)， &hellip;">
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
 
   
 
@@ -96,15 +101,12 @@ Total Storage DS4500)， &hellip;">
   </header>
 
 
-<div class="entry-content"><p>在<a href="http://blog.wgzhao.com/read.php/239.htm">ACPI和APIC有什么关系？</a>
-中我谈到了acpi和apic的差别，以及内核如何接受这些参数的方法。</p>
+<div class="entry-content"><p>在 <a href="http://blog.wgzhao.com/read.php/239.htm">ACPI 和 APIC 有什么关系？</a>
+中我谈到了 acpi 和 apic 的差别，以及内核如何接受这些参数的方法。</p>
 
-<p>昨天去公安部解决qlogic 2312光纤卡加载后kernel panic的问题，现在很怪异，单核心加载没有问题，能正确识别到盘阵（IBM
-Total Storage DS4500)，但是SMP核心会给出SCSI 命令超时的错误，30分钟后就会kernel panic。尝试加了<code>apic=off</code>的核心参数，依然不管用。<br/>
-只要想其他办法，比如更新驱动。但是无论怎么做，都是没有用。<br/>
-后来查看了<code>/proc/interrupt</code>s文件，发现qla2300驱动，单核心使用中断是XT-PIC,SMP核心也采用XT－PIC，而不是期望的IO-APIC-level，觉得可能是驱动没有正确处理SMP核心。但是这样的卡不是第一次使用，其他地方都可以，难道是机器(IBM
-x346)和卡配合的问题?查看了一下内核参数文档，发现apic的禁用方式写的是noapic，反正是测试，于是重启机器使用noapic核心参数测试，结果发现成功了。<br/>
-原来前面使用的<code>apic=off</code>是不正确的，但是显然禁止电源管理是采用<code>acpi=off</code>的参数形式。  为什么参数接受方式要弄得不一样呢？这其中有什么不知道的秘密吗？不解.</p>
+<p>昨天去公安部解决 qlogic 2312 光纤卡加载后 kernel panic 的问题，现在很怪异，单核心加载没有问题，能正确识别到盘阵（IBM
+Total Storage DS4500)，但是 SMP 核心会给出 SCSI 命令超时的错误，30 分钟后就会 kernel panic。尝试加了<code>apic=off</code>的核心参数，依然不管用。只要想其他办法，比如更新驱动。但是无论怎么做，都是没有用。后来查看了<code>/proc/interrupt</code>s 文件，发现 qla2300 驱动，单核心使用中断是 XT-PIC,SMP 核心也采用 XT－PIC，而不是期望的 IO-APIC-level，觉得可能是驱动没有正确处理 SMP 核心。但是这样的卡不是第一次使用，其他地方都可以，难道是机器(IBM
+x346)和卡配合的问题?查看了一下内核参数文档，发现 apic 的禁用方式写的是 noapic，反正是测试，于是重启机器使用 noapic 核心参数测试，结果发现成功了。原来前面使用的<code>apic=off</code>是不正确的，但是显然禁止电源管理是采用<code>acpi=off</code>的参数形式。  为什么参数接受方式要弄得不一样呢？这其中有什么不知道的秘密吗？不解.</p>
 </div>
 
 
@@ -196,8 +198,8 @@ x346)和卡配合的问题?查看了一下内核参数文档，发现apic的禁�
   </ul>
 </section>
 <section>
-<h1>QR-Code<abbr title="The word 'QR Code' is a registered trademark of DENSO WAVE INCORPORATED. It applies only for the word 'QR Code', not for image.">&trade;</abbr></h1>
-<a href="http://wgzhao.github.io/2006/05/10/Core-parameters-of-acceptable-manner-inconsistent/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/10/Core-parameters-of-acceptable-manner-inconsistent/" alt="post-qrcode"></a></section>
+<h1>QR-Code</h1>
+<a href="/2006/05/10/Core-parameters-of-acceptable-manner-inconsistent/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.github.io/2006/05/10/Core-parameters-of-acceptable-manner-inconsistent/" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
     <ul id="category-list"><li><a href='//categories/linuxji-zhu/'>Linux技术 (151)</a></li><li><a href='//categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='//categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='//categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='//categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='//categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
