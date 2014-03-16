@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 随心所想 | Linux系统管理]]></title>
   <link href="http://wgzhao.github.io//categories/sui-xin-suo-xiang/atom.xml" rel="self"/>
   <link href="http://wgzhao.github.io/"/>
-  <updated>2014-03-16T16:52:39+08:00</updated>
+  <updated>2014-03-16T19:36:36+08:00</updated>
   <id>http://wgzhao.github.io/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -12,6 +12,18 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Move to Github]]></title>
+    <link href="http://wgzhao.github.io/2014/03/16/move-to-github/"/>
+    <updated>2014-03-16T18:49:59+08:00</updated>
+    <id>http://wgzhao.github.io/2014/03/16/move-to-github</id>
+    <content type="html"><![CDATA[<p>这两天把荒废了一年多的blog又整理了一下，做了几件事情：
+1. 把blog从自有的VPS上迁移到了<a href="https://github.com">github</a>，也<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">定制了域名</a>
+2. 把blog的引擎有<a href="http://www.octopress.org">octopress</a>迁移到<a href="https://github.com/tommy351/hexo/">hexo</a>,octopress什么都好，就是当帖子数多了后，生成静态文件的时间太太太长了。吐槽的人很多，比如<a href="http://www.techelex.org/why-switch-blog-from-octopress-to-hexo/">这里</a>,<a href="https://github.com/jekyll/jekyll/issues/1855">这里</a>和<a href="http://lucifr.com/2013/01/02/from-octopress-to-hexo/">这里</a>。
+3. 砍掉了很多过时的帖子，似乎没有次整理blog，都会删除部分帖子。记得从boblog到<a href="http://www.wordpress.com">wordpress</a>就砍掉了将近1/3的帖子，后来从wordpress迁移到<a href="http://www.octopress.org">octopress</a>又砍掉了不少帖子。这次迁移到hexo，又砍掉了将近1/3的帖子。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[配眼镜]]></title>
@@ -204,20 +216,6 @@ hoho，浏览器正常了，只是更新又花了我一天。</p>
 <p>MSN还没有更换，过节后再说把。</p>
 
 <p>恩，加上这个月底我要搬新家，哈哈，真的是全新的开始呀！！！！</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[购买了wgzhao.com新域名]]></title>
-    <link href="http://wgzhao.github.io/2010/04/01/bug-wgzhao-dot-com-domain/"/>
-    <updated>2010-04-01T00:00:00+08:00</updated>
-    <id>http://wgzhao.github.io/2010/04/01/bug-wgzhao-dot-com-domain</id>
-    <content type="html"><![CDATA[<p>在CN域名越来越严厉，越来越不靠谱的情况下，我就只能为帝国主义贡献GDP了。在<a href="http://name.com">name.com</a>上花了8.99刀买了wgzhao.com。因此自动绑定了Google App。正好打算使用一下。因此本来打算用<a href="http://wgzhao.com">http://wgzhao.com</a>
-做blog的网址了，现在就只能用<a href="http://blog.wgzhao.com">http://blog.wgzhao.com</a>。连www.wgzhao.com都被Google App“霸占”了（当然你可以不选择在它那里开通网站）。
-OK，到目前为止，域名在非天朝，服务器在非天朝，我总算可以和无比和谐的ICP备案彻底说拜拜了。</p>
-
-<p>P.S
-本来打算在<a href="http://godaddy.com">godaddy.com</a>上买的，结果发现他的SSL证书过期了，同时加上他比name.com上要贵2刀，于是就选择了name.com。不过听说<a href="http://godaddy.com">godaddy.com</a>上的服务很多。</p>
 ]]></content>
   </entry>
   
