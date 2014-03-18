@@ -1,0 +1,649 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="samba 配置文件中经常会用到一些变量，而这些变量也经常给我们带来巨大的便利，因此我把 samba 配置文件（smb.conf）中用到的一些变量。每一个变量都是一%开头，后面是一个单独的大写或者小写字母，而且只能用在配置项的右边。下面是具体的变量名称，至于其用法，大家可以参考默认的 smb. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/page/31">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/09/28/Some-of-the-samba-server-variables/">Samba服务器的一些变量</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-09-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/09/28/Some-of-the-samba-server-variables/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/09/28/Some-of-the-samba-server-variables/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>samba 配置文件中经常会用到一些变量，而这些变量也经常给我们带来巨大的便利，因此我把 samba 配置文件（smb.conf）中用到的一些变量。每一个变量都是一%开头，后面是一个单独的大写或者小写字母，而且只能用在配置项的右边。下面是具体的变量名称，至于其用法，大家可以参考默认的 smb.conf 文件。如果我利用他完成了漂亮的工作，我也会贴出来。</p>
+
+<h3>客户端变量</h3>
+
+<p>%a | 客户端的体系结构（例如 Samba，NT,Win98,或者 Unknown）<br/>
+%I | 客户端的 IP 地址（例如：192.168.220.100)<br/>
+%m | 客户端的 NetBios 名<br/>
+%M | 客户端的 DNS 名</p>
+
+<h3>用户变量</h3>
+
+<p>%g | %u 的基本组<br/>
+%G | %U 的基本组<br/>
+%H | %u 的 Home 目录<br/>
+%u | 当前的 unix 用户名<br/>
+%U | 被请求的客户端用户名(不总是被 samba 使用)</p>
+
+<h3>共享变量</h3>
+
+<p>%p | 如果和%p 不同,automounter 的路径对应共享的根目录<br/>
+%P | 当前共享的根目录<br/>
+%S | 但前共享的名称</p>
+
+<h3>服务器变量</h3>
+
+<p>%d | 当前服务器进程的 ID <br/>
+%h | Samba 服务器的 DNS 主机名<br/>
+%L | Samba 服务器的 netbios 名<br/>
+%N | Home 目录服务器,来自 automount 的映射<br/>
+%v | samba 版本</p>
+
+<h3>其他变量</h3>
+
+<p>%R | 经过协商的 SMB 协议<br/>
+%T | 当前的日期和时间</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/15/written-on-the-tanabata/">写在七夕【转自glemir】</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/15/written-on-the-tanabata/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/05/15/written-on-the-tanabata/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>越来越欣赏 glemir 的才气，都发现似乎他可以去做一个放荡不羁的诗人了。如果想看他更多的作品，<a href="http://glemir.xplore.cn">去他的 blog 吧</a>。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/05/15/written-on-the-tanabata/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/05/09/Engineers-have-to-use-a-quarter-of-the-time-to-reflect-on-great-ideas/">工程师必须用四分之一的时间来思考了不起的点子</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-05-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/05/09/Engineers-have-to-use-a-quarter-of-the-time-to-reflect-on-great-ideas/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/05/09/Engineers-have-to-use-a-quarter-of-the-time-to-reflect-on-great-ideas/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Google 双雄:创始人拉里·佩奇和谢尔盖·布林作者：周坚毅 2003-9-13 21:02:44
+出处：博客中国(Blogchina.com) 原始出处： 经济观察报</p>
+
+<p>一天早晨，Google 网站的工程师们发现，搜索排行的榜首是这样一个冷僻词条：“卡罗尔·布雷迪的娘家”。为什么人们突然会对 20 世纪 70 年代的情景喜剧布雷迪家庭》发生兴趣呢？原来，头一天晚上，在美国电视有奖竞猜节目“谁想成为百万富翁”中，有一道决定百万美元归属的关键问题：“卡罗尔·布雷迪的娘家姓什？”节目主持人提出这个问题不过几秒钟，就有数以千计的人登录 Google 搜寻答案。另外，这项搜索请求在 Google 上形成 4 次查询高峰，正好与该节目在美各时区依次播出的时间相吻合。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/05/09/Engineers-have-to-use-a-quarter-of-the-time-to-reflect-on-great-ideas/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/04/27/vnc-configuration-notes/">VNC配置手记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-04-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/04/27/vnc-configuration-notes/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/04/27/vnc-configuration-notes/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>其实配置 VNC 很简单。只要运行 vncserver 就好了.<br/>
+运行完毕后，它会在家目录生成<code>.vnc</code>目录。 里面最重要的一个文件是 Xstartup。然后你可以使用 <code>vncviewer yourremotehost:id</code> 就可以了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/04/27/vnc-configuration-notes/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/04/26/To-find-a-husband/">找到了婆家</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-04-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/04/26/To-find-a-husband/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/04/26/To-find-a-husband/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>两个星期的找工作算是告一个段落了，我也找到了婆家。目前我在中科红旗上班，呵呵，总算是做自己喜欢做的事情了吧。感觉不错，都是年轻人，都是 linux 的 fans，其实我喜爱的是 linux 的这种开源理念。让人使用起来很自由。总算是摆脱了使用 windows 的恶梦了！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/03/04/looking-for-work-still-in-progress/">找工作还在进行中……</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-03-04T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/03/04/looking-for-work-still-in-progress/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/03/04/looking-for-work-still-in-progress/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天又接到了广州网易给我打来的面试通知电话。要我今天去广州面试。当时给我的第反映就是时间太紧张了，我本能的反应就是问对方能不能使用别的面试方式，比如网络面试，电话面试等等。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/03/04/looking-for-work-still-in-progress/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/03/03/Netease-interview/">面试网易</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-03-03T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/03/03/Netease-interview/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/03/03/Netease-interview/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前几天去面试网易。好不容易才找到他们的办公地址(没有想到他们会躲在那么一个角落里面)。面试我的是一个年轻人，我们先闲聊了一伙，接着介绍了一下我应聘岗位的情况。我一听，就不太喜欢这个岗位，主要没有什么创造性。问我做不做，于是我就问他薪水问题。他很爽快的和我一起计算了薪水问题。于是我知道我不太会去了。接下来就是一个正式的技术面试，还好，技术没有问题。一个半小时后，他告诉我:&ldquo;我还是觉得你不太适合这个岗位，一个这个岗位会比较枯燥，而来这个岗位不能充分发挥你的长处，有点屈才。我还是把你推荐到广州的网易吧”。我的第一个面试就这样 over 了。昨天，网易又打电话要我去面试，我一听是同一个岗位，就说我面试过了。</p>
+
+<p>看了要找北京找到一个适合自己的工作还不是一件容易的事情，虽然机会很多！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/01/11/train-tickets-tears/">火车票,眼泪</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-01-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/01/11/train-tickets-tears/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/01/11/train-tickets-tears/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天上午去北京西站买火车票,一看排队的人挺多,立刻出来,先买一份报纸吧,可是偌大一个西站广场,你就找不到一个卖报纸的地方.
+转悠了半天发现一个西站地下文化商场,去看看,全是卖手机,电话卡,小灵通的,不过偏僻处有一个卖二手书的地方终于发现了有报纸.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/01/11/train-tickets-tears/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/">双网卡负载均衡及路径切换配置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-01-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1.前言双网卡负载均衡其实很早就在 linux 内核里面实现了，我见到的最早的版本是 2.2.10 的内核。不过那个时候还没要作为缺省功能编译到内核里面去，如果你需要这个功能你需要编译内核，然后选中 bonding 相关选项。我最早使用了 bonding 是在我最毕业设计时，在 iSCSI 技术里面加入了 bonding 技术。</p>
+
+<p>通过测试发现对于小数据包的传送，单网卡比双网卡要快，这当然也是正常的，只有在大数据传送的情况下，它才能显示优势，比如流媒体文件的传输。2.4.x 以后的内核就把 bonding 技术作为缺省功能编译进去了，而且还加入了路径切换的功能，那就更加完美了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/01/07/Two-card-load-balancing-and-path-of-the-switch-configuration/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/">使用 Head 和 Tail 以块方式读取文本流</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2004-12-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>如果你想只处理文件的一部分，譬如头几行或后几行，你可以使用 head（它将头 10 行发送至标准输出）或 tail（它将后 10 行发送至标准输出）。您可以通过使用<code>-n</code>选项改变这些命令发送至其标准输出的行数（当然，输出结果将随 XF86Config 文件的内容而不同）：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/32/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/30/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/page/31/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/page/31/index.html" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

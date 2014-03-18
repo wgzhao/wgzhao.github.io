@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>\[sbin学习\]e\*命令 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="/sbin/下 e 开头的命令比较多，列举如下： e2fsck ela_remove elvtune evlfacility evlogmgr evSubagent
+e2image ela_remove_all ether-wake evlgentmpls evlogrmtd
+e2label &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/2007/01/31/commands-start-e">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">\[sbin学习\]e\*命令</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>/sbin/下 e 开头的命令比较多，列举如下：</p>
+
+<pre><code>e2fsck ela_remove elvtune evlfacility evlogmgr evSubagent
+e2image ela_remove_all ether-wake evlgentmpls evlogrmtd
+e2label ela_show ethtool evlnotify evlsend
+ela_add ela_show_all evlactiond evlnotifyd evltc
+ela_get_atts ela_sig_send evlconfig evlogd evlview
+</code></pre>
+
+<p>e2fsck：检查和修复 ext2/ext3 文件系统，这似乎是目前 Linux 下唯一一个对文件系统做修复的工具。</p>
+
+<p>他同时也是一个双刃剑。在实际的文件系统修复经验中，我遇到了两难的问题。根文件系统损坏了，需要修复，系统会提示你要用 e2fsck 来修复。当然你可以按照他的提示去做，但是很可能，你会发现，等你修复完了，文件系统也能正常工作了，但是往往最重要的文件被修复得不加了。这不是开玩笑，而是有大量的案例。如果在修复和损坏之间取得一种平衡需要根据具体的情况来定夺。<br/>
+e2fsck 接受的参数比较多，列举如下：功能说明：检查 ext2 文件系统的正确性。参 数：
+ <pre>
+ -a 不询问使用者意见，便自动修复文件系统
+ -b 指定 superblock，而不使用预设的 superblock
+ -B 指定区块的大小，单位为字节
+ -c 一并执行 badblocks，以标示损坏的区块
+ -C 将检查过程的信息完整记录在 file descriptor 中，使得整个检查过程都能完整监控
+ -d 显示排错信息
+ -f 即使文件系统没有错误迹象，仍强制地检查正确性
+ -F 执行前先清除设备的缓冲区
+ -l 将文件中指定的区块加到损坏区块列表
+ -L 先清除损坏区块列表，再将文件中指定的区块加到损坏区块列表。因此损坏区块列表的区块跟文件中指定的区块是一样的
+ -n 以只读模式开启文件系统，并采取非互动方式执行，所有的问题对话均设置以"no"回答
+ -p 不询问使用者意见，便自动修复文件系统
+ -r 此参数只为了兼容性而存在，并无实际作用
+ -s 如果文件系统的字节顺序不适当，就交换字节顺序，否则不做任何动作
+ -S 不管文件系统的字节顺序，一律交换字节顺序
+ -t 显示时间信息
+ -v 执行时显示详细的信息
+ -V 显示版本信息
+ -y 采取非互动方式执行，所有的问题均设置以"yes"回答。
+e2fsck 执行后的传回值及代表意义如下：
+ 0 没有任何错误发生。
+ 1 文件系统发生错误，并且已经修正。
+ 2 文件系统发生错误，并且已经修正。
+ 4 文件系统发生错误，但没有修正。
+ 8 运作时发生错误。
+ 16 使用的语法发生错误。
+ 128 共享的函数库发生错误。
+</pre></p>
+
+<p>e2image：保存关键的 ext2/ext3 文件系统到文件。 <br/>
+e2image 可以用来创建 ext2 和 ext3 文件系统的镜像。<br/>
+e2image 只解释需要被镜像的文件系统，而不是保存原始 bit。<br/>
+e2image 可以创建&#8221;raw&#8221;和&#8221;nomal&#8221;镜像，这两种方法都可以节约空间。因此，用 e2image 创建的镜像同硬盘上的文件系统有不同的 hash，从这点上看，他是和 dd 命令不同的。但是如何将 e2image 创建的备份恢复出来呢？这点在 e2image 的 help 和 man 手册中都没有提到下面是一个实际的例子，分部创建了&#8221;raw&#8221;和&#8221;normal&#8221;镜像</p>
+
+<pre><code>root@lancy sbin]# e2image /dev/sda1 /tmp/e2image.data
+e2image 1.35 (28-Feb-2004)
+[root@lancy sbin]# ls -lh /tmp/e2image.data
+-rw——- 1 root root 625K 1 月 31 21:18 /tmp/e2image.data
+[root@lancy sbin]# file /tmp/e2image.data
+/tmp/e2image.data: Linux rev 1.0 ext3 filesystem data
+[root@lancy sbin]# mount /tmp/e2image.data /misc -oloop
+mount: wrong fs type, bad option, bad superblock on /dev/loop0,
+or too many mounted file systems
+(could this be the IDE device where you in fact use
+ide-scsi so that sr0 or sda or so is needed?)
+
+[root@lancy sbin]# mount -r /tmp/e2image.data /tmp/e2image_raw_data
+mount: mount point /tmp/e2image_raw_data does not exist
+[root@lancy sbin]# e2image -r /dev/sda1 /tmp/e2image_raw_data
+e2image 1.35 (28-Feb-2004)
+
+[root@lancy sbin]# ls -lh /tmp/e2image_raw_data
+-rw——- 1 root root 20M 1 月 31 21:20 /tmp/e2image_raw_data
+[root@lancy sbin]# file /tmp/e2image_raw_data
+/tmp/e2image_raw_data: Linux rev 1.0 ext3 filesystem data
+[root@lancy sbin]# mount /tmp/e2image_raw_data /misc -oloop
+[root@lancy sbin]# df -h
+Filesystem 容量 已用 可用 已用% 挂载点
+/tmp/e2image_raw_data 19M 1.2M 17M 7% /misc
+[root@lancy /]# mount /dev/sda1 /misc
+d[root@lancy /]# df -h
+Filesystem 容量 已用 可用 已用% 挂载点
+/dev/sda1 19M 1.2M 17M 7% /misc
+</code></pre>
+
+<p>e2label：显示或者修改 ext2/ext3 文件系统的标签。没有注意过从哪个版本开始，/etc/fstab 文件里的挂载设备名不再是实际的设备名称了，取而代之的是其标签，这增加了其灵活性，特别是当删除并不是最后一个去分区时，在此分区前的设备号都会提前一位，如果/etc/fstab 写入的是实际的设备名称，那显然这种情况下，系统也许找不到需要的设备。而采用标签的话，只要标签不重复，即使设备有 sda 变成了 sdb，Linux 系统依然能正常启动。这个命令非常简单。看下面的实例就明白了</p>
+
+<pre><code>[root@lancy sbin]# e2label /dev/sda1
+
+[root@lancy sbin]# e2label /dev/sda1 newlabel
+[root@lancy sbin]# e2label /dev/sda1
+newlabel
+[root@lancy sbin]#
+</code></pre>
+
+<p>tips:  系统在安装时建立的分区都有标签，一般根文件系统标签是/,而其他的就以挂载到某个目录为名称，比如/home,
+/usr，有人误解以为前面的斜线(/)是必须的，其实并不是这样，这仅仅是一种习惯而已。我上面的命令设置标签就没有用到/</p>
+
+<pre><code>ela_add ela_remove ela_show ela_sig_send
+ela_get_atts ela_remove_all ela_show_all
+evlactiond evlfacility evlnotify evlogd evlogrmtd evltc
+evlconfig evlgentmpls evlnotifyd evlogmgr evlsend evlview evSubagent
+</code></pre>
+
+<p>这是企业级日志系统的命令，属于 evlog RPM 包。具体的情况可以参考其<a href="http://evlog.sourceforge.net/%3C/%3E">官方网站</a></p>
+
+<p>elvtune：I/O 电梯调试器，允许你调试每一个块设备的 I／O 电梯，但是还没有实现一路和二路电梯算法。同时对于 LVM 而言，调试器仅仅在物理卷(PV)上有效果，对逻辑卷（LV）没有用。不过这个命令要求的设备参数是/dev/blkdevX (X 表示数字），我尝试传递/dev/sda1
+,/dev/hda1，均报告无效的参数。所以没有觉得这个命令到底能给我们带来什么，特别是在 man 手册的历史一项中这样写道：</p>
+
+<blockquote><p>Ioctls for tuning elevator behaviour were added in Linux 2.3.99-pre1.</p></blockquote>
+
+<p> 感觉应该是一个临时工具，但是他属于 util-linux 工具包，不解。</p>
+
+<p>ether-wake：这个命令用来产生和发送一个 Wake-On-LAN(WOL)数据包(Magic
+Packer)包，用来重启软关机的机器。这个玩意没有办法测试，也不知道实际环境中是否用得多。</p>
+
+<p>ethtool 显示或修改以太网卡的设置，这里的设置真的是硬件方面的，比如强制为半双工等。最开始我用这个命令是有一个用户说他的网卡明明是全双工的，为什么系统里看到的是半双工呀，有什么办法改吗？ifconfig 命令看了半天后没有找到好的设置方式，后来找到了这个 ethtool，解决了问题。其实 mii-tool 也能做到这点，但是有些网卡驱动目前还与支持 mii-tool 工具。
+ethtool 的命令比较复杂，参数也多，我们看几个例子，然后列出 man 手册。</p>
+
+<p>1）打印当前网卡的配置信息</p>
+
+<pre><code># ethtool eth0
+Settings for eth0:
+Supported ports: [ TP MII ]
+Supported link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Supports auto-negotiation: Yes
+Advertised link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Advertised auto-negotiation: No 注：自动协商关闭
+Speed: 100Mb/s // 100Mb
+Duplex: Full //全双工
+Port: MII /支持 mii 模式
+PHYAD: 32
+Transceiver: internal
+Auto-negotiation: off
+Supports Wake-on: pumbg
+Wake-on: d
+Current message level: 0×00000007 (7)
+Link detected: yes 
+</code></pre>
+
+<p>2）将网卡修改成 10Mbps，半双工</p>
+
+<pre><code># ethtool -s eth1 speed 10 duplex half
+# ethtool eth1
+Settings for eth1:
+Supported ports: [ TP MII ]
+Supported link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Supports auto-negotiation: Yes
+Advertised link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Advertised auto-negotiation: No
+Speed: 10Mb/s # 10Mbps
+Duplex: Half #已经修改为半双工了
+Port: MII
+PHYAD: 32
+Transceiver: internal
+Auto-negotiation: off
+Supports Wake-on: pumbg
+Wake-on: d
+Current message level: 0×00000007 (7)
+Link detected: no
+</code></pre>
+
+<p>3）将网卡修改为 100M，全双工</p>
+
+<pre><code># ethtool -s eth1 speed 100 duplex full
+# ethtool eth1
+Settings for eth1:
+Supported ports: [ TP MII ]
+Supported link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Supports auto-negotiation: Yes
+Advertised link modes: 10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Advertised auto-negotiation: No
+Speed: 100Mb/s #
+Duplex: Full #
+Port: MII
+PHYAD: 32
+Transceiver: internal
+Auto-negotiation: off
+Supports Wake-on: pumbg
+Wake-on: d
+Current message level: 0×00000007 (7)
+Link detected: no
+</code></pre>
+
+<p>我们再看看 man 手册</p>
+
+<pre>
+ ethtool ethX #显示网卡的
+
+ ethtool -h #打印帮助
+
+ ethtool -a ethX #查询指定网卡的暂停(pause)参数信息
+
+ ethtool -A ethX [autoneg on|off] [rx on|off] [tx on|off] #设置暂停参数
+
+ ethtool -c ethX #查询指定网卡的联合(coalesc)信息
+
+ ethtool -C ethX [adaptive-rx on|off] [adaptive-tx on|off] [rx-usecs N]
+ [rx-frames N] [rx-usecs-irq N] [rx-frames-irq N] [tx-usecs N] [tx-
+ frames N] [tx-usecs-irq N] [tx-frames-irq N] [stats-block-usecs N]
+ [pkt-rate-low N] [rx-usecs-low N] [rx-frames-low N] [tx-usecs-low N]
+ [tx-frames-low N] [pkt-rate-high N] [rx-usecs-high N] [rx-frames-high
+ N] [tx-usecs-high N] [tx-frames-high N] [sample-interval N]
+ #设置指定网卡的联合信息
+
+ ethtool -g ethX #查询网卡的 RX/TX 参数信息
+
+ ethtool -G ethX [rx N] [rx-mini N] [rx-jumbo N] [tx N] #设置网卡的 RX/TX 参数
+
+ ethtool -i ethX #查询与网卡关联的驱动信息
+
+ ethtool -d ethX #重新获取和打印一个网卡的注册 dump 信息
+
+ ethtool -e ethX [raw on|off] [offset N] [length N] #重新获取和打印网卡的 EEPROM
+dump 信息
+
+ ethtool -E ethX [magic N] [offset N] [value N] #修改网卡的 EEPROM 字节
+
+ ethtool -k ethX #查询网卡的卸载(offload)信息
+
+ ethtool -K ethX [rx on|off] [tx on|off] [sg on|off] [tso on|off]
+#修改网卡的卸载参数
+
+ ethtool -r ethX #重启网卡的自动协商(auto-negotiation)功能，如果这个功能设置位可用的话
+
+ ethtool -t ethX [offline|online] #执行网卡自检程序
+
+ ethtool -s ethX [speed 10|100|1000] [duplex half|full]
+ [port tp|aui|bnc|mii] [autoneg on|off] [phyad N] [xcvr internal|exter-
+ nal] [wol p|u|m|b|a|g|s|d...] [sopass xx:yy:zz:aa:bb:cc] [msglvl N]
+#可以修改的参数值，用-s 来标志
+</pre>
+
+
+<p>这些设置仅仅在当前生效，一旦重启网络或者重启系统，ethtool 的设置将会失效。我们可以把 ethtool 的设置命令加入到 ifcfg-ethX 配置文件中。比如，你希望把第一块网卡设置为全双工，自适应和 100M 的方式，那么你可以在你的<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>文件中加入下面一行：
+ <code>ETHTOOL_OPTS="speed 100 duplex full autoneg off"</code></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-31T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.com/2007/01/31/commands-start-e/" data-via="mlsx" data-counturl="http://wgzhao.com/2007/01/31/commands-start-e/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/01/30/commands-start-d/" title="Previous Post: \[sbin学习\]d\*学习--完成">&laquo; \[sbin学习\]d\*学习--完成</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/02/03/Linux-memory-repeat-simple-calculation/" title="Next Post: 再说Linux内存简单计算">再说Linux内存简单计算 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2007/01/31/commands-start-e/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2007/01/31/commands-start-e/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.com/2007/01/31/commands-start-e/';
+        var disqus_url = 'http://wgzhao.com/2007/01/31/commands-start-e/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

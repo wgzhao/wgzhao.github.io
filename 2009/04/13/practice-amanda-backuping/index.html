@@ -1,0 +1,1003 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Amanda集中备份实例 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="Amanda 高级马里兰自动网络磁盘归档 (Advanced Maryland Automatic Network Disk Archiver 网络备份软件是我第一次接触 Linux 就听到过，只是从来都没有使用过，有需要备份得时候，就是自己写写简单的脚本，使用 cron 来做定时任务， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/2009/04/13/practice-amanda-backuping">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Amanda集中备份实例</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><img class="left" src="http://www.zmanda.com/images/header/logo-zmanda.gif" title="&#34;Amanda Network Backup&#34;" alt="&#34;Amanda Network Backup&#34;"> <br/>
+<a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver">Amanda</a> 高级马里兰自动网络磁盘归档 (Advanced Maryland Automatic Network Disk Archiver 网络备份软件是我第一次接触 Linux 就听到过，只是从来都没有使用过，有需要备份得时候，就是自己写写简单的脚本，使用 cron 来做定时任务，也能基本满足需求。虽然曾经起心想用 Amanda，但限于没有适合的环境，只能作罢。</p>
+
+<p>现在的情况有所不同了，有 4,5 台服务器需要备份，涉及到不同的平台，其备份特性应该达到或者至少朝企业级标准靠拢，因此，这几天看了看 Amanda 的文档，做了一些测试，目前在我的环境下配置成功，特记录下来和大家分享。</p>
+
+<!--more-->
+
+
+<p>这次打算分两篇文档介绍，本篇是介绍文件备份，下一篇将介绍针对 MySQL 数据库的备份方法。 这次配置的大致流程如下：</p>
+
+<ol>
+<li>安装和配置 Amanda 备份服务器</li>
+<li>安装 Amanda 客户端</li>
+<li>配置服务器和客户端参数</li>
+<li>检验配置</li>
+<li>校验备份</li>
+<li>测试恢复</li>
+</ol>
+
+
+<p>下面的列表给出这次测试环境的网络和机器配置</p>
+
+<table>
+<thead>
+<tr valign="top">
+<th>
+<p align="center">机器名</p>
+</th>
+<th>
+<p align="center">要备份的文件</p>
+</th>
+<th>
+<p align="center">OS</p>
+</th>
+<th width="75">
+<p align="center">是否压缩</p>
+</th>
+<th width="99">
+<p align="center">说明</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr valign="top">
+<td width="68">
+<p align="left">cp1.domain.com</p>
+</td>
+<td width="118">
+<p align="left">-</p>
+</td>
+<td width="105">
+<p align="left">Ubuntu 8.10</p>
+</td>
+<td width="75">
+<p align="center">Yes</p>
+</td>
+<td width="99">
+<p align="center">Amanda 服务端</p>
+</td>
+</tr>
+<tr valign="top">
+<td width="68">
+<p align="left">cp2.domain.com</p>
+</td>
+<td width="118">
+<p align="left">/web/websites</p>
+</td>
+<td width="105">
+<p align="left">Asianux 3.0</p>
+</td>
+<td width="75">
+<p align="center">Yes</p>
+</td>
+<td width="99">
+<p align="center">客户端，运行大量网站</p>
+</td>
+</tr>
+<tr valign="top">
+<td width="68">
+<p align="left">cp3.domain.com</p>
+</td>
+<td width="118">
+<p align="left">/opt/www</p>
+</td>
+<td width="105">
+<p align="left">CentOS 5.3</p>
+</td>
+<td width="75">
+<p align="center">Yes</p>
+</td>
+<td width="99">
+<p align="center">IDC 服务器，大量客户站点</p>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>一、安装和配置 Amanda 服务</h2>
+
+<p>首先从官方站点现在对应 OS 的最新 <a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver">Amanda</a>版本，我写这篇帖子的时候，针对 Ubuntu 8.10 的最新版本是 2.6.1p1,可以从
+<a href="http://www.zmanda.com/download-amanda.php">http://www.zmanda.com/download-amanda.php</a>
+找到适合里的版本，包括服务端和客户端。</p>
+
+<p>以下操作 cp1 机器上执行，如果没有特别说明，使用的帐号为 root。</p>
+
+<p>因为 ubuntu 仓库里自带的版本比较低，而且与官方版本在配置方面有些不同，所以建议先卸载自带的版本，然后安装下载的版本。
+<a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver">Amanda</a>服务的启动依赖<code>xinetd</code>超级服务，编辑或者创建<code>/etc/xinetd.d/amandaserver</code>文件，内容应该像下面这个样子：</p>
+
+<p>｛% gist 4449408 amandaserver %}</p>
+
+<p>重启 xinetd 服务</p>
+
+<p><code>/etc/init.d/xinetd restart</code></p>
+
+<h2>二、安装客户端</h2>
+
+<p>用 root 登录 cp2 机器，下载对应的客户端并安装</p>
+
+<figure class='code'><figcaption><span> (amanda_client_install)</span> <a href='/downloads/code/amanda/amanda_client_install'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'><span class="nt">ot</span><span class="k">@cp2</span> <span class="o">/</span><span class="nt">tmp</span><span class="o">]</span><span class="err">#</span> <span class="nt">rpm</span> <span class="nt">-i</span> <span class="nt">amanda-backup_client-2</span><span class="nc">.6.1p1-1.rhel5.i386.rpm</span>
+</span><span class='line'>    <span class="nt">4</span><span class="err">月</span> <span class="nt">11</span> <span class="nt">2009</span> <span class="nt">12</span><span class="nd">:16:32</span><span class="o">:</span> <span class="nt">Preparing</span> <span class="nt">to</span> <span class="nt">install</span><span class="o">:</span> <span class="nt">Amanda</span> <span class="nt">Community</span> <span class="nt">Edition</span> <span class="nt">-</span> <span class="nt">version</span>
+</span><span class='line'><span class="nt">2</span><span class="nc">.6.1p1</span>
+</span><span class='line'>    <span class="nt">4</span><span class="err">月</span> <span class="nt">11</span> <span class="nt">2009</span> <span class="nt">12</span><span class="nd">:16:32</span><span class="o">:</span> <span class="nt">Checking</span> <span class="nt">for</span> <span class="s1">&#39;amandabackup&#39;</span> <span class="nt">user</span><span class="o">...</span>
+</span><span class='line'>    <span class="nt">4</span><span class="err">月</span> <span class="nt">11</span> <span class="nt">2009</span> <span class="nt">12</span><span class="nd">:16:32</span><span class="o">:</span>
+</span><span class='line'>    <span class="nt">4</span><span class="err">月</span> <span class="nt">11</span> <span class="nt">2009</span> <span class="nt">12</span><span class="nd">:16:32</span><span class="o">:</span>  <span class="nt">The</span> <span class="s1">&#39;amandabackup; user account has been successfully cr</span>
+</span><span class='line'><span class="s1">eated.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  Furthermore, the account has been automatically locked f</span>
+</span><span class='line'><span class="s1">or you</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  for security purposes.  Once a password for the  &#39;</span><span class="nt">amanda</span>
+</span><span class='line'><span class="nt">backup</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  account has been set, the user can be unlocked by issuin</span>
+</span><span class='line'><span class="s1">g</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  the following command as root.:</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  # passwd -u amandabackup</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  If this is not a new installation of Amanda and you have</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  pre-existing Amanda configurations in /etc/amanda</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  you should ensure that &#39;</span><span class="nt">dumpuser</span><span class="s1">&#39; is set to &#39;</span><span class="nt">amandabacku</span>
+</span><span class='line'><span class="nt">p</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  in those configurations.  Additionally, you should ensur</span>
+</span><span class='line'><span class="s1">e</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  that /var/lib/amanda/.amandahosts on your client systems</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  is properly configured to allow connections for the user</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:  &#39;</span><span class="nt">amandabackup</span><span class="s1">&#39;.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32:</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:32: === Amanda backup client installation started. ===</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:35: Updating system library cache...done.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:46: Reloading xinetd configuration...停止 xinetd：</span><span class="cp">[</span><span class="err">失败</span><span class="cp">]</span><span class="s1"></span>
+</span><span class='line'><span class="s1">启动 xinetd：</span><span class="cp">[</span><span class="err">确定</span><span class="cp">]</span><span class="s1"></span>
+</span><span class='line'><span class="s1">success.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: Installing &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nt">amandates</span><span class="s1">&#39;.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: The file &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nt">amandates</span><span class="s1">&#39; has been created.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: Ensuring correct permissions for &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nt">amandat</span>
+</span><span class='line'><span class="nt">es</span><span class="s1">&#39;.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nt">amandates</span><span class="s1">&#39; Installation successful.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: Checking &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.amandahosts</span><span class="s1">&#39; file.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: Checking &#39;</span><span class="o">/</span><span class="nt">etc</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nt">amanda-client</span><span class="nc">.conf</span><span class="s1">&#39; file.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: Installing &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.gnupg</span><span class="s1">&#39;.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.gnupg</span><span class="s1">&#39; will be created.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: The directory &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.gnupg</span><span class="s1">&#39; created successful</span>
+</span><span class='line'><span class="s1">ly.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: Ensuring correct permissions for &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.gnupg</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.gnupg</span><span class="s1">&#39; Installation successful.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: Creating directory &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.ssh</span><span class="s1">&#39;.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:47: Creating ssh RSA key in &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.ssh</span><span class="o">/</span><span class="nt">id_rsa_amre</span>
+</span><span class='line'><span class="nt">cover</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:48: Setting permissions for &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.ssh</span><span class="s1">&#39; and &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span>
+</span><span class='line'><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.ssh</span><span class="o">/</span><span class="nt">id_rsa_amrecover</span><span class="o">*</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:48: Checking for &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.profile</span><span class="s1">&#39; and ensuring corr</span>
+</span><span class='line'><span class="s1">ect environment.</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:48: Setting ownership and permissions for &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.p</span>
+</span><span class='line'><span class="nt">rofile</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:48: Sending anonymous distribution and version information to</span>
+</span><span class='line'><span class="s1">    Zmanda</span>
+</span><span class='line'><span class="s1">    4月 11 2009 12:16:48: Setting ownership and permissions for &#39;</span><span class="o">/</span><span class="nt">var</span><span class="o">/</span><span class="nt">lib</span><span class="o">/</span><span class="nt">amanda</span><span class="o">/</span><span class="nc">.p</span>
+</span><span class='line'><span class="nt">rofile</span><span class="err">&#39;</span>
+</span><span class='line'>    <span class="nt">4</span><span class="err">月</span> <span class="nt">11</span> <span class="nt">2009</span> <span class="nt">12</span><span class="nd">:16:53</span><span class="o">:</span> <span class="o">===</span> <span class="nt">Amanda</span> <span class="nt">backup</span> <span class="nt">client</span> <span class="nt">installation</span> <span class="nt">complete</span><span class="o">.</span> <span class="o">===</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编辑或者创建<code>/etc/xinetd.d/amandaclient</code>，内容如下：</p>
+
+<div><script src='https://gist.github.com/4449414.js?file=amandaclient'></script>
+<noscript><pre><code># default: on
+#
+# description: The Amanda backup client should be enabled for systems
+#              which will be backed up by an Amanda backup server.
+
+service amanda
+{
+    disable     = no
+    flags           = IPv6
+    socket_type = stream
+    protocol    = tcp
+    wait        = no
+    user        = amandabackup
+    group       = disk
+    groups      = yes
+    server      = /usr/libexec/amanda/amandad
+    server_args     = -auth=bsdtcp amdump
+}
+</code></pre></noscript></div>
+
+
+<p>重启 xinetd 服务 <br/>
+<code>/etc/init.d/xinetd reload</code></p>
+
+<p>切换到<code>amandabackup</code>用户，编辑<code>/var/lib/amanda/.amandahosts</code>文件，增加下面一行   <br/>
+<code>cp1.domain.com amandabackup amdump</code></p>
+
+<p>这表示允许 cp1 服务器能够连接到在 cp2 机器上的 amanda 客户端,指令如下:</p>
+
+<pre><code>-su-3.2$ echo cp1.domain.com amandabackup amdump &gt;&gt; /var/lib/amanda/.amandahosts
+-su-3.2$ chmod 700 /var/lib/amanda/.amandahosts
+</code></pre>
+
+<p>在<code>amandabackup</code>用户的主目录创建一个隐藏的密码文件，并设置合理的权限</p>
+
+<pre><code>-su-3.2$ chown amandabackup:disk ~amandabackup/.am_passphrase
+-su-3.2$ chmod 700 ~amandabackup/.am_passphrase
+</code></pre>
+
+<p>到此，在 cp2 上的 amanda 客户端配置完成。上述步骤在 cp3 服务器上同样执行一遍。</p>
+
+<h2>三、配置备份参数</h2>
+
+<p>用<code>amandabackup</code>帐号登录 cp1 机器，创建 Amanda 配置目录</p>
+
+<pre><code>root@cp etc:# su - amandabackup -c mkdir /etc/amanda/FileBackup
+</code></pre>
+
+<p>拷贝<code>/var/lib/amanda/example/amanda.conf</code>文件到<code>/etc/amanda/FileBackup/</code>目录，这个<code>amanda.conf</code>文件就是 <a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver">Amanda</a>服务最重要的配置文件了。</p>
+
+<p>当前这个配置文件有 700 多行，不过大部分是注释，对每一行配置参数给出比较详尽的解释，下面我指列出需要修改的一些配置参数，没有提到的，可以不用管他。</p>
+
+<p>打开<code>amanda.conf</code>文件，首先编辑下面这些内容：</p>
+
+<pre><code>org "Xplore Backup center"                      # your organization name for reports
+mailto "root@localhost"                        # space separated list of operators at your site
+tpchanger "chg-disk"                           # the tape-changer glue script
+tapedev "file://yourpath/FileBackup/slots"  # the no-rewind tape device to be used
+tapetype HARDDISK                              # use hard disk intead of tapes (vtape config)
+labelstr "^FileBackup-[0-9][0-9]*$" # label constraint regex: all tapes must match
+</code></pre>
+
+<p>我们这里用的是虚拟磁带，下面我们要定义虚拟磁带的大小，接着编辑文件，增加下面几行内容：</p>
+
+<pre><code>define tapetype HARDDISK {
+ comment "hard disk as virtual tape"
+ length 20480 mbytes
+}
+</code></pre>
+
+<p>接下来，我们需要定义认证模式，找到<code>define dumptype global</code>区段，在<code>}</code>之前，增加 <code>auth "bsdtcp"</code> 一行切换到 root 帐号，创建备份缓存目录，并设置正确的拥有关系和权限.</p>
+
+<pre><code>root@cp1:~#mkdir -p /dumps/amanda
+root@cp1:~#chown amandabackup:disk /dumps/amanda 
+root@cp1:~#chmod 750 /dumps/amanda 
+</code></pre>
+
+<p>接下来，我们需要创建虚拟磁带目录，在<code>amanda.conf</code>文件里，默认定义了缺省的磁带机槽位数为 25 个。</p>
+
+<pre><code>root@cp1:~#mkdir -p /yourpath
+root@cp1:~#chown amandabackup:disk /yourpath
+root@cp1:~#chmod 750 /yourpath
+root@cp1:~# su - amandabackup
+-su-3.2$ touch /etc/amanda/FileBackup/tapelist
+-su-3.2$ mkdir -p /yourpath/FileBackup/slots
+-su-3.2$ cd /yourpath/FileBackup/slots
+-su-3.2$ mkdir slot{1..25}
+-su-3.2$ ln -s slot1 data
+</code></pre>
+
+<p>当前的磁带均没有打标签，在使用之前一定要打好标签，,我们设定了定义磁带标签的规则(<code>labelstr "\^FileBackup-[0-9][0-9]\*$"</code>)
+可以使用下面的指令一次性打好标签</p>
+
+<p>｛% gist 4449429 makelabel.sh %}</p>
+
+<p>接下来，我们做一个测试，看看这些槽位状态如何：</p>
+
+<div><script src='https://gist.github.com/4449434.js?file=slot_status'></script>
+<noscript><pre><code>amtape FileBackup show
+amtape: scanning all 25 slots in tape-changer rack:
+slot   5: time 20090413030002 label FileBackup-05
+slot   6: time X              label FileBackup-06
+slot   7: time X              label FileBackup-07
+slot   8: time X              label FileBackup-08
+slot   9: time X              label FileBackup-09
+slot  10: time X              label FileBackup-10
+slot  11: time X              label FileBackup-11
+slot  12: time X              label FileBackup-12
+slot  13: time X              label FileBackup-13
+slot  14: time X              label FileBackup-14
+slot  15: time X              label FileBackup-15
+slot  16: time X              label FileBackup-16
+slot  17: time X              label FileBackup-17
+slot  18: time X              label FileBackup-18
+slot  19: time X              label FileBackup-19
+slot  20: time X              label FileBackup-20
+slot  21: time X              label FileBackup-21
+slot  22: time X              label FileBackup-22
+slot  23: time X              label FileBackup-23
+slot  24: time X              label FileBackup-24
+slot  25: time 20090412193808 label FileBackup-25
+slot   1: time 20090412194109 label FileBackup-01
+slot   2: time 20090412194420 label FileBackup-02
+slot   3: time 20090412194747 label FileBackup-03
+slot   4: time 20090412195334 label FileBackup-04
+</code></pre></noscript></div>
+
+
+<p>看上去一切正常，接下来，需要重置槽位</p>
+
+<pre><code>-su-3.2$ amtape FileBackup reset changer: got exit: 0
+        str:1 amtape: changer is reset,slot 1 is loaded
+</code></pre>
+
+<p>接下来我们创建<code>/etc/amanda/FileBackup/disklist</code>文件，这个文件包括了所有客户端需要备份的数据定义，内容如下：</p>
+
+<pre><code>cp3.domain.com /opt/www/sites  comp-user-tar
+cp2.domain.com  /web/websites   comp-user-tar
+</code></pre>
+
+<p>最后，我们用<code>amandabackup</code>帐号编辑<code>/var/lib/amanda/.amandahosts</code>文件，增加下面的几行，表示当做恢复的时候，客户端可以连接到备份服务端。</p>
+
+<pre><code>cp2.domain.com root amindexd amidxtaped
+cp3.domain.com root amindexd amidxtaped
+cp1.domain.com root amindexd amidxtaped
+cp1.domain.com amandabackup amdump
+</code></pre>
+
+<h2>四、测试</h2>
+
+<p>现在是测试的时候了，用<code>amandabackup</code>帐号登录 cp1 机器，运行<code>amcheck</code>程序来校验当前的配置是否已经可以运行备份了。</p>
+
+<pre><code>-su-3.2$ amcheck FileBackup
+Amanda Tape Server Host Check
+-----------------------------
+Holding disk /dumps/amanda: 16777216 KB disk space available, using 16674816 KB
+slot 7:read label `FileBackup-07', date `X'.
+NOTE: skipping tape-writable test
+Tape FileBackup-07 label ok
+NOTE: host info dir /etc/amanda/FileBackup/curinfo/cp1.domain.com does not exist
+NOTE: it will be created on the next run.
+NOTE: index dir /etc/amanda/FileBackup/index/cp1.domain.com does not exist
+NOTE: it will be created on the next run.
+Server check took 1.633 seconds
+
+Amanda Backup Client Hosts Check
+--------------------------------
+Client check: 3 hosts checked in 2.086 seconds.  0 problems found.
+
+(brought to you by Amanda 2.6.1p1)
+</code></pre>
+
+<p>上面的测试结果表示一切正常，可以执行真正的备份了，还是在 cp1 机器上，用<code>amandabackup</code>帐号执行<code>amdump</code>命令<code>amdump FileBackup</code><br/>
+这个命令没有任何输出，除非执行过程中报错，执行完后，将会发一封有关备份状态的细节信息邮件给<code>amanda.conf</code>里定义的收件人，内容大致如下：</p>
+
+<figure class='code'><figcaption><span> (email)</span> <a href='/downloads/code/amanda/email'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'><span class="n">To</span><span class="o">:</span> <span class="n">xxxx</span><span class="err">@</span><span class="n">xxx</span><span class="o">.</span><span class="na">xx</span>
+</span><span class='line'>    <span class="n">Subject</span><span class="o">:</span> <span class="n">Backup</span> <span class="n">Centre</span> <span class="n">AMANDA</span> <span class="n">MAIL</span> <span class="n">REPORT</span> <span class="n">FOR</span> <span class="n">April</span> <span class="mi">11</span><span class="o">,</span> <span class="mi">2009</span>
+</span><span class='line'>    <span class="n">Message</span><span class="o">-</span><span class="n">Id</span><span class="o">:</span>
+</span><span class='line'>    <span class="n">From</span><span class="o">:</span> <span class="n">Amanda</span>
+</span><span class='line'>    <span class="n">Date</span><span class="o">:</span> <span class="n">Sat</span><span class="o">,</span> <span class="mi">11</span> <span class="n">Apr</span> <span class="mi">2009</span> <span class="mi">18</span><span class="o">:</span><span class="mi">06</span><span class="o">:</span><span class="mi">49</span> <span class="o">+</span><span class="mi">0800</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Hostname</span><span class="o">:</span> <span class="n">cp1</span><span class="o">.</span><span class="na">domain</span><span class="o">.</span><span class="na">com</span>
+</span><span class='line'>    <span class="n">Org</span>     <span class="o">:</span> <span class="n">Backup</span> <span class="n">Centre</span>
+</span><span class='line'>    <span class="n">Config</span>  <span class="o">:</span> <span class="n">FileBackup</span>
+</span><span class='line'>    <span class="n">Date</span>    <span class="o">:</span> <span class="n">April</span> <span class="mi">11</span><span class="o">,</span> <span class="mi">2009</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">These</span> <span class="n">dumps</span> <span class="n">were</span> <span class="n">to</span> <span class="n">tape</span> <span class="n">FileBackup</span><span class="o">-</span><span class="mi">01</span><span class="o">.</span>
+</span><span class='line'>    <span class="n">The</span> <span class="n">next</span> <span class="n">tape</span> <span class="n">Amanda</span> <span class="n">expects</span> <span class="n">to</span> <span class="n">use</span> <span class="k">is</span><span class="o">:</span> <span class="mi">1</span> <span class="k">new</span> <span class="n">tape</span><span class="o">.</span>
+</span><span class='line'>    <span class="n">The</span> <span class="n">next</span> <span class="k">new</span> <span class="n">tape</span> <span class="n">already</span> <span class="n">labelled</span> <span class="k">is</span><span class="o">:</span> <span class="n">DailySet1</span><span class="o">-</span><span class="mi">01</span><span class="o">.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">STATISTICS</span><span class="o">:</span>
+</span><span class='line'>                              <span class="n">Total</span>       <span class="n">Full</span>      <span class="n">Incr</span><span class="o">.</span>
+</span><span class='line'>                            <span class="o">--------</span>   <span class="o">--------</span>   <span class="o">--------</span>
+</span><span class='line'>    <span class="n">Estimate</span> <span class="n">Time</span> <span class="o">(</span><span class="n">hrs</span><span class="o">:</span><span class="n">min</span><span class="o">)</span>    <span class="mi">0</span><span class="o">:</span><span class="mi">00</span>
+</span><span class='line'>    <span class="n">Run</span> <span class="n">Time</span> <span class="o">(</span><span class="n">hrs</span><span class="o">:</span><span class="n">min</span><span class="o">)</span>         <span class="mi">0</span><span class="o">:</span><span class="mi">06</span>
+</span><span class='line'>    <span class="n">Dump</span> <span class="n">Time</span> <span class="o">(</span><span class="n">hrs</span><span class="o">:</span><span class="n">min</span><span class="o">)</span>        <span class="mi">0</span><span class="o">:</span><span class="mi">05</span>       <span class="mi">0</span><span class="o">:</span><span class="mi">05</span>       <span class="mi">0</span><span class="o">:</span><span class="mi">00</span>
+</span><span class='line'>    <span class="n">Output</span> <span class="n">Size</span> <span class="o">(</span><span class="n">meg</span><span class="o">)</span>        <span class="mf">1539.6</span>     <span class="mf">1539.6</span>        <span class="mf">0.0</span>
+</span><span class='line'>    <span class="n">Original</span> <span class="n">Size</span> <span class="o">(</span><span class="n">meg</span><span class="o">)</span>      <span class="mf">2211.3</span>     <span class="mf">2211.3</span>        <span class="mf">0.0</span>
+</span><span class='line'>    <span class="n">Avg</span> <span class="n">Compressed</span> <span class="n">Size</span> <span class="o">(%)</span>    <span class="mf">69.6</span>       <span class="mf">69.6</span>        <span class="o">--</span>
+</span><span class='line'>    <span class="n">Filesystems</span> <span class="n">Dumped</span>            <span class="mi">2</span>          <span class="mi">2</span>          <span class="mi">0</span>
+</span><span class='line'>    <span class="n">Avg</span> <span class="n">Dump</span> <span class="n">Rate</span> <span class="o">(</span><span class="n">k</span><span class="o">/</span><span class="n">s</span><span class="o">)</span>      <span class="mf">5342.0</span>     <span class="mf">5342.0</span>        <span class="o">--</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Tape</span> <span class="n">Time</span> <span class="o">(</span><span class="n">hrs</span><span class="o">:</span><span class="n">min</span><span class="o">)</span>        <span class="mi">0</span><span class="o">:</span><span class="mi">01</span>       <span class="mi">0</span><span class="o">:</span><span class="mi">01</span>       <span class="mi">0</span><span class="o">:</span><span class="mi">00</span>
+</span><span class='line'>    <span class="n">Tape</span> <span class="n">Size</span> <span class="o">(</span><span class="n">meg</span><span class="o">)</span>          <span class="mf">1539.6</span>     <span class="mf">1539.6</span>        <span class="mf">0.0</span>
+</span><span class='line'>    <span class="n">Tape</span> <span class="n">Used</span> <span class="o">(%)</span>               <span class="mf">7.5</span>        <span class="mf">7.5</span>        <span class="mf">0.0</span>
+</span><span class='line'>    <span class="n">Filesystems</span> <span class="n">Taped</span>             <span class="mi">2</span>          <span class="mi">2</span>          <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Chunks</span> <span class="n">Taped</span>                  <span class="mi">2</span>          <span class="mi">2</span>          <span class="mi">0</span>
+</span><span class='line'>    <span class="n">Avg</span> <span class="n">Tp</span> <span class="n">Write</span> <span class="n">Rate</span> <span class="o">(</span><span class="n">k</span><span class="o">/</span><span class="n">s</span><span class="o">)</span> <span class="mf">21897.1</span>    <span class="mf">21897.1</span>        <span class="o">--</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">USAGE</span> <span class="n">BY</span> <span class="n">TAPE</span><span class="o">:</span>
+</span><span class='line'>      <span class="n">Label</span>             <span class="n">Time</span>      <span class="n">Size</span>      <span class="o">%</span>    <span class="n">Nb</span>    <span class="n">Nc</span>
+</span><span class='line'>      <span class="n">FileBackup</span><span class="o">-</span><span class="mi">01</span>       <span class="mi">0</span><span class="o">:</span><span class="mi">01</span>  <span class="mi">1576584</span><span class="n">K</span>    <span class="mf">7.5</span>     <span class="mi">2</span>     <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">NOTES</span><span class="o">:</span>
+</span><span class='line'>      <span class="n">planner</span><span class="o">:</span> <span class="n">Adding</span> <span class="k">new</span> <span class="n">disk</span> <span class="n">cp3</span><span class="o">.</span><span class="na">domain</span><span class="o">.</span><span class="na">com</span><span class="o">:/</span><span class="n">opt</span><span class="sr">/www/si</span><span class="n">tes</span><span class="o">.</span>
+</span><span class='line'>      <span class="n">planner</span><span class="o">:</span> <span class="n">Adding</span> <span class="k">new</span> <span class="n">disk</span> <span class="n">cp2</span><span class="o">.</span><span class="na">domain</span><span class="o">.</span><span class="na">com</span><span class="o">:/</span><span class="n">web</span><span class="o">/</span><span class="n">websites</span><span class="o">.</span>
+</span><span class='line'>      <span class="n">taper</span><span class="o">:</span> <span class="n">tape</span> <span class="n">DailySet1</span><span class="o">-</span><span class="mi">1</span> <span class="n">kb</span> <span class="mi">1576585</span> <span class="n">fm</span> <span class="mi">2</span> <span class="o">[</span><span class="n">OK</span><span class="o">]</span>
+</span><span class='line'>      <span class="n">small</span> <span class="n">estimate</span><span class="o">:</span> <span class="n">cp2</span><span class="o">.</span><span class="na">domain</span><span class="o">.</span><span class="na">com</span> <span class="sr">/web/</span><span class="n">websites</span> <span class="mi">0</span>
+</span><span class='line'>                      <span class="n">est</span><span class="o">:</span> <span class="mi">1100832</span><span class="n">K</span>    <span class="n">out</span> <span class="mi">1545837</span><span class="n">K</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">DUMP</span> <span class="n">SUMMARY</span><span class="o">:</span>
+</span><span class='line'>                                           <span class="n">DUMPER</span> <span class="n">STATS</span>               <span class="n">TAPER</span> <span class="n">STATS</span>
+</span><span class='line'>    <span class="n">HOSTNAME</span>     <span class="n">DISK</span>        <span class="n">L</span> <span class="n">ORIG</span><span class="o">-</span><span class="n">KB</span>  <span class="n">OUT</span><span class="o">-</span><span class="n">KB</span>  <span class="n">COMP</span><span class="o">%</span>  <span class="n">MMM</span><span class="o">:</span><span class="n">SS</span>   <span class="n">KB</span><span class="sr">/s MMM:SS   KB/s</span>
+</span><span class='line'>    <span class="o">--------------------------</span> <span class="o">-------------------------------------</span> <span class="o">-------------</span>
+</span><span class='line'>    <span class="n">cp2</span><span class="o">.</span><span class="na">domain</span><span class="o">.</span><span class="na">com</span> <span class="o">-</span><span class="n">b</span><span class="o">/</span><span class="n">websites</span> <span class="mi">0</span> <span class="mi">2201540</span> <span class="mi">1545837</span>   <span class="mf">70.2</span>    <span class="mi">4</span><span class="o">:</span><span class="mi">51</span> <span class="mf">5317.0</span>   <span class="mi">1</span><span class="o">:</span><span class="mi">12</span> <span class="mf">21536.4</span>
+</span><span class='line'>    <span class="n">cp3</span><span class="o">.</span><span class="na">domain</span><span class="o">.</span><span class="na">com</span> <span class="o">-/</span><span class="n">www</span><span class="o">/</span><span class="n">sites</span> <span class="mi">0</span>   <span class="mi">62850</span>   <span class="mi">30747</span>   <span class="mf">48.9</span>    <span class="mi">0</span><span class="o">:</span><span class="mi">04</span> <span class="mf">6994.2</span>   <span class="mi">0</span><span class="o">:</span><span class="mi">00</span> <span class="mf">138465.9</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">(</span><span class="n">brought</span> <span class="n">to</span> <span class="n">you</span> <span class="n">by</span> <span class="n">Amanda</span> <span class="n">version</span> <span class="mf">2.6</span><span class="o">.</span><span class="mi">1</span><span class="n">p1</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们也可以运行<code>amadmin</code>命令来查询刚才备份的摘要信息</p>
+
+<figure class='code'><figcaption><span> (amadmin)</span> <a href='/downloads/code/amanda/amadmin'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'><span class="o">-</span><span class="n">su</span><span class="o">-</span>3<span class="p">.</span>2$ <span class="n">amadmin</span>  <span class="n">FileBackup</span> <span class="nb">find</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">date</span>                <span class="n">host</span>         <span class="n">disk</span>           <span class="n">lv</span> <span class="n">tape</span> <span class="n">or</span> <span class="n">file</span>                                               <span class="n">file</span> <span class="n">part</span> <span class="n">status</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>12 19<span class="p">:</span>26<span class="p">:</span>33 <span class="n">cp2</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">websites</span>   1 <span class="o">/</span><span class="n">dumps</span><span class="o">/</span><span class="n">amanda</span><span class="o">/</span>20090412192633
+</span><span class='line'><span class="o">/</span><span class="n">cp2</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">_web_websites</span><span class="p">.</span>1     0   <span class="o">--</span> <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>12 19<span class="p">:</span>32<span class="p">:</span>29 <span class="n">cp2</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">websites</span>   1 <span class="o">/</span><span class="n">dumps</span><span class="o">/</span><span class="n">amanda</span><span class="o">/</span>20090412193229
+</span><span class='line'><span class="o">/</span><span class="n">cp2</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">_web_websites</span><span class="p">.</span>1     0   <span class="o">--</span> <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>12 19<span class="p">:</span>53<span class="p">:</span>34 <span class="n">cp2</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">websites</span>   0 <span class="n">FileBackup</span><span class="o">-</span>04                                                 2  1<span class="o">/</span>1 <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>13 03<span class="p">:</span>00<span class="p">:</span>02 <span class="n">cp2</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">websites</span>   0 <span class="n">FileBackup</span><span class="o">-</span>05                                                 2  1<span class="o">/</span>1 <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>13 17<span class="p">:</span>49<span class="p">:</span>11 <span class="n">cp2</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">websites</span>   1 <span class="n">FileBackup</span><span class="o">-</span>06                                                 3  1<span class="o">/</span>1 <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>12 19<span class="p">:</span>26<span class="p">:</span>33 <span class="n">cp3</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">sites</span>  1 <span class="o">/</span><span class="n">dumps</span><span class="o">/</span><span class="n">amanda</span><span class="o">/</span>20090412192633
+</span><span class='line'><span class="o">/</span><span class="n">cp3</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">_opt_www_sites</span><span class="p">.</span>1    0   <span class="o">--</span> <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>12 19<span class="p">:</span>32<span class="p">:</span>29 <span class="n">cp3</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">sites</span>  1 <span class="o">/</span><span class="n">dumps</span><span class="o">/</span><span class="n">amanda</span><span class="o">/</span>20090412193229
+</span><span class='line'><span class="o">/</span><span class="n">cp3</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span><span class="p">.</span><span class="n">_opt_www_sites</span><span class="p">.</span>1    0   <span class="o">--</span> <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>12 19<span class="p">:</span>53<span class="p">:</span>34 <span class="n">cp3</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">sites</span>  0 <span class="n">FileBackup</span><span class="o">-</span>04                                                 1  1<span class="o">/</span>1 <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>13 03<span class="p">:</span>00<span class="p">:</span>02 <span class="n">cp3</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">sites</span>  1 <span class="n">FileBackup</span><span class="o">-</span>05                                                 1  1<span class="o">/</span>1 <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>13 17<span class="p">:</span>49<span class="p">:</span>11 <span class="n">cp3</span><span class="p">.</span><span class="n">domain</span><span class="p">.</span><span class="n">com</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">sites</span>  0 <span class="n">FileBackup</span><span class="o">-</span>06                                                 2  1<span class="o">/</span>1 <span class="n">OK</span>
+</span><span class='line'>2009<span class="o">-</span>04<span class="o">-</span>13 17<span class="p">:</span>49<span class="p">:</span>11 <span class="n">localhost</span>    <span class="o">/</span><span class="n">etc</span>            0 <span class="n">FileBackup</span><span class="o">-</span>06                                                 1  1<span class="o">/</span>1 <span class="n">OK</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看上去一切都不错，那就把备份加入到定时任务里吧。用<code>amandabackup</code>帐号创建一个你自己需要的备份策略，类似下面这样：</p>
+
+<pre><code>-su-3.2$ crontab  -l
+# m h  dom mon dow   command
+0 3 * * * /usr/sbin/amdump FileBackup
+</code></pre>
+
+<p>到此，关于配置和校验我们都已经完成了，接下来我们完整最后一个最重要的步骤，那就是我们需要校验这些备份数据是否能够恢复，如果不能恢复，备份功能再强大，策略再好，那也没有任何含义。</p>
+
+<h2>五、恢复</h2>
+
+<p>假定我们需要恢复 cp3 上一些丢失的数据，首先用<code>amandabackup</code>帐号登录 cp2 机器，创建<code>/etc/amanda/amanda-client.conf</code>文件，内容如下：</p>
+
+<div><script src='https://gist.github.com/4449439.js?file=amanda-client.conf'></script>
+<noscript><pre><code>#
+# amanda.conf - sample Amanda client configuration file.
+#
+# This file normally goes in /etc/amanda/amanda-client.conf.
+#
+
+conf &quot;FileBackup&quot;       # your config name
+
+index_server &quot;cp1.domain.com&quot;   # your amindexd server
+tape_server  &quot;cp1.domain.com&quot;   # your amidxtaped server
+#tapedev      &quot;tape:/dev/YOUR-TAPE-DEVICE-HERE&quot; # your tape device
+            # if not set, Use configure or ask server.
+            # if set to empty string &quot;&quot;, ask server
+            # amrecover will use the changer if set to the value
+            # of &#39;amrecover_changer&#39; in the server amanda.conf.
+
+#   auth    - authentication scheme to use between server and client.
+#         Valid values are &quot;bsd&quot;, &quot;bsdudp&quot;, &quot;bsdtcp&quot;, &quot;krb5&quot;, &quot;local&quot;,
+#         &quot;rsh&quot; and &quot;ssh&quot;.
+#         Default: [auth &quot;bsdtcp&quot;]
+auth &quot;bsdtcp&quot;
+
+#ssh_keys &quot;&quot;            # your ssh keys file if you use ssh auth
+
+</code></pre></noscript></div>
+
+
+<p>然后使用 root 帐号运行<code>amrecover</code>命令来初始化 data 恢复过程</p>
+
+<pre><code>[root@cp3 ~]# amrecover
+AMRECOVER Version 2.6.1p1. Contacting server on cp1.domain.com ...
+220 cp1 AMANDA index server (2.6.1p1) ready.
+Setting restore date to today (2009-04-13)
+200 Working date set to 2009-04-13.
+200 Config set to FileBackup.
+200 Dump host set to cp3.domain.com.
+Use the setdisk command to choose dump disk to recover
+amrecover&gt;
+</code></pre>
+
+<p>接下的一些命令演示如何将特定的一些数据恢复到指定的目录（这里指定/tmp)</p>
+
+<div><script src='https://gist.github.com/4449446.js?file=amrecover.sh'></script>
+<noscript><pre><code>amrecover&gt; listdisk
+200- List of disk for host cp3.domain.com
+201- /opt/www/sites
+200 List of disk for host cp3.domain.com
+amrecover&gt; setdisk /opt/www/sites
+200 Disk set to /opt/www/sites.
+amrecover&gt; ls
+2009-04-13-17-49-11 newltf/
+2009-04-13-17-49-11 lawburn/
+2009-04-13-17-49-11 hnnoritz/
+2009-04-13-17-49-11 fireyang/
+2009-04-13-17-49-11 admin/
+2009-04-13-17-49-11 .htpasswd
+2009-04-13-17-49-11 .
+amrecover&gt; cd admin
+/opt/www/sites/admin
+amrecover&gt; ls
+2009-04-13-17-49-11 var
+2009-04-13-17-49-11 usr
+2009-04-13-17-49-11 tmp
+2009-04-13-17-49-11 sbin
+2009-04-13-17-49-11 lib
+2009-04-13-17-49-11 etc
+2009-04-13-17-49-11 dev
+2009-04-13-17-49-11 bin
+2009-04-13-17-49-11 domain.com/
+2009-04-13-17-49-11 .
+amrecover&gt; cd domain.com
+/opt/www/sites/admin/domain.com
+amrecover&gt; ls
+2009-04-13-17-49-11 var
+2009-04-13-17-49-11 usr
+2009-04-13-17-49-11 tmp
+2009-04-13-17-49-11 subdomains/
+2009-04-13-17-49-11 sbin
+2009-04-13-17-49-11 mysql/
+2009-04-13-17-49-11 lib
+2009-04-13-17-49-11 etc
+2009-04-13-17-49-11 dev
+2009-04-13-17-49-11 bin
+2009-04-13-17-49-11 Mailboxs/
+2009-04-13-17-49-11 .
+amrecover&gt; add subdomains/
+Added dir /admin/domain.com/subdomains/ at date 2009-04-13-17-49-11
+amrecover&gt; lcd /tmp
+amrecover&gt; extract
+
+Extracting files using tape drive changer on host cp1.domain.com.
+The following tapes are needed: FileBackup-06
+
+Restoring files into directory /tmp
+Continue [?/Y/n]? y
+
+Extracting files using tape drive changer on host cp1.domain.com.
+Load tape FileBackup-06 now
+Continue [?/Y/n/s/d]? y
+./admin/domain.com/subdomains/
+./admin/domain.com/subdomains/404/
+./admin/domain.com/subdomains/404/bin/
+./admin/domain.com/subdomains/404/cgi-bin/
+./admin/domain.com/subdomains/404/dev/
+./admin/domain.com/subdomains/404/etc/
+./admin/domain.com/subdomains/404/html/
+./admin/domain.com/subdomains/404/lib/
+./admin/domain.com/subdomains/404/libexec/
+./admin/domain.com/subdomains/404/logs/
+./admin/domain.com/subdomains/404/logs/2009/
+./admin/domain.com/subdomains/404/logs/2009/04/
+./admin/domain.com/subdomains/404/sbin/
+./admin/domain.com/subdomains/404/tmp/
+......
+</code></pre></noscript></div>
+
+
+<p>我们看看<code>/tmp</code>下面是不是已经有了我们刚才恢复的数据：</p>
+
+<pre><code>[root@cp3 ~]# tree  /tmp/admin/domain.com/subdomains/ |more
+/tmp/admin/domain.com/subdomains/
+|-- 404
+|   |-- bin
+|   |   |-- bash
+|   |   |-- cat
+|   |   |-- echo
+|   |   |-- false
+|   |   |-- gunzip
+|   |   |-- ls
+|   |   |-- mkdir
+|   |   |-- mv
+|   |   |-- pwd
+|   |   |-- rm
+|   |   |-- scp
+|   |   |-- sftp
+|   |   |-- sh
+|   |   |-- tar
+|   |   |-- unzip
+|   |   `-- zip
+|   |-- cgi-bin
+|   |-- dev
+|   |   |-- null
+|   |   |-- random
+|   |   `-- urandom
+......
+</code></pre>
+
+<p>Ok,到此为止，<a href="http://amanda.zmanda.com/" title="Advanced Maryland Automatic Network Disk Archiver">Amanda</a>备份配置基本完成，当然我们很多的配置都是基于缺省定义，比如槽位数，备份周期等，更多详细的定义，可以参考<code>/usr/lib/amanda/example/amanda.conf</code>文件。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-13T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.com/2009/04/13/practice-amanda-backuping/" data-via="mlsx" data-counturl="http://wgzhao.com/2009/04/13/practice-amanda-backuping/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/04/10/crazy-way-to-install-linux/" title="Previous Post: 比较折腾的一种Linux系统安装方式">&laquo; 比较折腾的一种Linux系统安装方式</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/04/15/backup-remote-mysql-with-zrm/" title="Next Post: 使用Amanda ZRM备份远程MySQL数据库">使用Amanda ZRM备份远程MySQL数据库 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2009/04/13/practice-amanda-backuping/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2009/04/13/practice-amanda-backuping/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.com/2009/04/13/practice-amanda-backuping/';
+        var disqus_url = 'http://wgzhao.com/2009/04/13/practice-amanda-backuping/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

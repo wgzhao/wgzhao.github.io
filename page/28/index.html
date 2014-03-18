@@ -1,0 +1,688 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="前两天同事下载了 Novell SuSe Enterprise Desktop 10.0
+,简称 SLED10。总算是看到了 xgl 带来的 3D 绚丽桌面效果。就像下面的截图一样 如果是以前，我肯定毫不犹豫的安装了。但是 3 年前疲于各种系统安装尝鲜的我已经没有了当年的激情。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/page/28">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/29/novell-suse-10-use-experience/">Novell SuSe 10.0使用感受</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/29/novell-suse-10-use-experience/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/07/29/novell-suse-10-use-experience/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前两天同事下载了 Novell SuSe Enterprise Desktop 10.0
+,简称 SLED10。总算是看到了 xgl 带来的 3D 绚丽桌面效果。就像下面的截图一样</p>
+
+<p><img src="http://news.newhua.com/Newhua_Files/Net_pic/2006-7/21/526545801731592919.jpg" alt="image" /></p>
+
+<p>如果是以前，我肯定毫不犹豫的安装了。但是 3 年前疲于各种系统安装尝鲜的我已经没有了当年的激情。尝鲜已经不是我首要的任务，我需要的是稳定的桌面，可用的办公系统等。不过基于我有喜爱的 gnome，和它自带的搜索引擎。经过一天的考虑，我还是决定安装。</p>
+
+<p>我的机器是 HP compaq nx6120，迅驰 1.7GHz/512M/intel915。应该还算可以吧。安装大约是 40 分钟。安装下来 4G。默认启动 gnome，3D 桌面默认没有打开，你需要在控制面版的桌面效果中启动 3D 桌面效果。于是我看到了旋转的 3D 桌面，多达 36 个桌面形成的多面柱体。也看到了窗口颤抖效果，水波纹效果。跑起来还算流畅。自带的软件果然是很多，全新的菜单方式也有耳目一新的感觉，不过因为安装的软件过多，加载菜单时感觉很慢。显然 3D 效果并不能为我带来多大生产力，我需要的是可用的办公桌面。首先看看 office 如何，自带的是 novell 经过修改的 openoffice2.0，当然，我不知道修改了什么，可能是兼容性问题吧。不过和 ms 的 office 兼容还是存在问题。不得不安装永中 office
+2007，安装一切正常。但是打开文档会崩溃，在终端留下遗言，是 java 的问题。修改配置，使用 suse 自带的 java，也不行。安装 jre1.5，也不行，依然是崩溃。这个先放到一边，实在不行还可以使用 redoffice,openoffice。再看看 IM，启动 gaim，默认是 1.5 版本。登录 msn 特别慢。慢也就算了，能登录就行，问题是它时不时崩溃，这就让人很难接受了。也许是版本的问题，到<a href="http://gaim.sf.net">官方站点</a>下载了 2.0 的 beta 版。问题依然。换一个软件，使用 kopete，登录比 gaim 快一点，使用了不上时间，直接报 KDE 崩溃。重新打开，问题依然。不过没有尝试过在 KDE 环境下会如何。打开 firefox，默认版本是 1.5.0.4，最新的稳定版本了。访问网站很慢，主要在解析这块，<a href="http://mlsx.xplore.cn/read.php/281.htm">禁止了 ipv6</a>。还是觉得慢。没有想到其他办法了。运行一段时间后，发现系统明显比使用红旗
+5 慢很多。top 一下，发现负载是 2.7，比较恐怖，查看进程，X 经常占用 97%，beagle 也是消耗大户，查看改进程的来源，原来是 novell 的索引引擎。类似 google 桌面，但是这样的速度实在是太慢了点。关闭 3D 桌面，关闭索引引擎，重启桌面，速度快了不少，或者恢复到我能接受的程度。如此以来，我最需要的功能－office，IM 没有办法使用。那这个系统再怎么豪华，对我来说也是白搭，毕竟我不能拿绚丽的桌面工作和赚钱。所以用了不到一天，又重新回到了红旗桌面，虽然红旗桌面有很多我不喜欢的地方，但是他至少能满足我的基本需求。改天再测试它的 kde 桌面吧。如果两个 X－windows 都没有满足我的基本需求，那么我就只能废了他了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/27/nfs-weird-problem/">NFS的怪异问题</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/27/nfs-weird-problem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/07/27/nfs-weird-problem/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天去用户现场，遇到一个与 NFS 有关的怪异问题。</p>
+
+<p>现象是这样的：</p>
+
+<p>一个服务器配置成 NFS 服务器，假设导出目录是<code>/mnt/datas</code>，使用的参数是<code>rw,sync,anonuid=501,anongid=501</code>
+另外一个客户端在<code>/etc/fstab</code>中配置一条 nfs 挂载信息，参数是：
+<code>hard,rw</code></p>
+
+<p>在<code>/mnt/data</code>s 目录下面创建 3 个目录，A,B,C。A，B 中各有一些文件，但是保证两个目录中的文件名唯一。在 C 目录中写了两个 perl 脚本，一个是将 A 目录中的文件先打开一下（使用 fopen 函数），然后将该文件移动到 B 目录，而另外一个 perl 脚本完成的任务则相反。两个脚本处于死循环状态。同时执行这两个脚本，运行都正常，没有任何报错。但是一旦你在 A 目录下连续的执行 ls 命令，会发现移动 A 目录文件的 perl 脚本退出，报告没有那个文件或者目录。</p>
+
+<p>而去 A 目录看文件存在，使用 ls -l 后，会报下面的错误：</p>
+
+<pre><code>#ls -l xorg.conf.12248 
+ls -l xorg.conf.12248: Invalid arguments
+-rw-r--r-- 1 root root 4384 2006-07-27 19:19 xorg.conf.12248 
+</code></pre>
+
+<p>但是大约 10 秒中后，再执行 ls 命令，错误信息不见了。也对 perl 脚本做过一些修改，但是还是有这样的错误发生。甚至写了类似这种功能的 shell 脚本和 python 脚本，也得到同样的错误。于是在 NFS 服务器端，修改<code>/etc/exports</code>文件，加入了<code>async</code>参数，还是没有什么效果。修改客户端，加入 tcp 参数，没有效果。</p>
+
+<p>加入 sync 参数，没有出问题，但是文件拷贝速度太慢了，大约 2MB/s，用户根本就不能接受。</p>
+
+<p>也加入了<code>dirsync</code>参数也不管用。最后 <a href="http://pczou.bokee.com">pczou</a> 找到了一个参数，在客户端加入了<code>noac</code>参数。测试脚本通过。</p>
+
+<p>回来查了一些 noac，原来是禁止 attribute cache 功能，在 man nfs 中是这样说明的：</p>
+
+<blockquote><p>noac Disable all forms of attribute caching entirely. This
+ extracts a significant performance penalty but it allows
+ two different NFS clients to get reasonable results when
+ both clients are actively writing to a common export on
+ the server.</p></blockquote>
+
+<p>网上也有一些连接说到了这个参数：
+<a href="http://lists.freebsd.org/pipermail/freebsd-bugs/2005-September/014747.html">http://lists.freebsd.org/pipermail/freebsd-bugs/2005-September/014747.html</a><br/>
+<a href="http://study.chyangwa.com/IT/AIX/aixcmds3/mount.htm">http://study.chyangwa.com/IT/AIX/aixcmds3/mount.htm</a><br/>
+<a href="http://blog.gmane.org/gmane.linux.nfs/month=20030201">http://blog.gmane.org/gmane.linux.nfs/month=20030201</a><br/>
+<a href="http://lists.scratchbox.org/pipermail/scratchbox-users/2005-November/000335.html">http://lists.scratchbox.org/pipermail/scratchbox-users/2005-November/000335.html</a><br/>
+<a href="http://www.linuxmine.com/1711.html">http://www.linuxmine.com/1711.html</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/22/The-two-meet-today/">今日的两次聚会</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/22/The-two-meet-today/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/07/22/The-two-meet-today/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>自从搬了新家，双休就没有出去过，虽然说过很多次要去 <a href="http://blog.donews.com/glemir">glemir</a> 的新家，但总被我找各种藉口推脱了，但是我知道我是一定要去了，刚好 wirlfly 和 mswish 也要去，那就同去吧，也省得 glemir 做两次大餐。快 10 点起床，匆匆洗了个澡就出去了，还要有直达的公交车，颠簸了一个多小时，算是到了 glemir 的新居。</p>
+
+<p>嗯，越往北，果然房屋的性价比就越高，三居室的房子，宽敞的客厅，一应俱全的家电，随处可及的窗外风景。相比我们在农大的住宿，显然是上升了 N 个档次。不过 glemir 显然比以前更累了，用他的话说，“倒不是累，却是什么都做不了”。所以宽带的介入似乎很有必要了，虽然我有时在想，网络浪费了我们多少时间，包括我在写这篇 blog 的时候，算是浪费我的时间吗？<br/>
+glmeir 想跳槽，只是一直没有找到合适的单位，有时在一个公司，一个部门做久了，还真不知道自己还能做什么，想想我自己，如果我离开红旗，那我还能找一份不同的工作吗？我还能找一份与 Linux 无关的工作吗？似乎不太可能。好在 glemir 在现在的公司还没有做多久，加之他不如像我这样对 Linux 如此疯狂，或许在找工作上，他会比我顺利很多，但愿如此吧。<br/>
+wirlfly 去 SINA 的可能性应该是 100％了，不希望这次的 offer 又如同面试红旗一样，突发无来由的变故。因为答应了高中同学的离京聚会，所以没有在 glemir 那里呆多久，等他的宽带装好了，那么我们会有更多的交流时间了。高中同学在北京的，在我来之前有 5 个，而现在，一个在前年年底去深圳，问及理由，似乎没有理由。一个暂时去了香港，也不知是否还会回北京。而今天又有一个将于明天离开北京，还好，这次的理由很是正当和充分－－回<a href="http://www.csu.edu.cn">中南大学</a>深造！当然没有问为什么不选择继续工作，因为觉得这是很傻的问题。深造总是一件好事吧，虽然有看到，听到太多的研究生其实就是给自己的导师或者称为老板充当廉价的劳动力，而不是我们说的“研究”生。如此算来，高中同学中，在长沙的依然是最多数，而今日又增加了一位，而又或许不久的某一天，我也会是其中的一员。</p>
+
+<p>酒量似乎真的是锻炼出来的，三天不练口松，几日两次聚会，啤酒不超过 4 杯，却已经感觉头疼，而且不是一时半伙，直到现在还是头疼，而这离我喝的最早的一杯已经是 11 个小时了，最晚的一杯也有 4 个多小时了。或许真的是不能再喝酒了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/21/cooperation-uplinux-and-xplore/">Uplinux.com与Xplore.cn全面合作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/21/cooperation-uplinux-and-xplore/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/07/21/cooperation-uplinux-and-xplore/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>消息来源：
+<a href="http://www.uplinux.com/www/news/01/692.shtml">http://www.uplinux.com/www/news/01/692.shtml</a></p>
+
+<p>自由引领着 <a href="http://www.linux.org/">Linux</a>，共同的憧憬让 [color=#993300]UPLinux 和 [color=#0000ff]Xplore 走到了一起，不是 <a href="http://www.mop.com/">Mop</a> 并购 <a href="http://www.donews.com/">Donews</a>，不是 <a href="http://www.sohu.com/">sohu</a> 收购 <a href="http://www.chinaren.com/">chinaren</a>，在纯自由的世界里，只有精神的融合，没有精神的收购！</p>
+
+<p>UPLinux.com 创立于 2001 年，五年来，从&#8221;Linux 安全网络&#8221;的个人站点，发展为 UPLinux
+升级站、UPLinux 技术论坛，直到今天的 &ldquo;极限 Linux&#8221;。在此期间得到了众多 Linux 爱好者的支持，也为大量
+Linux 爱好者提供了服务器资源，为其创立开源项目提供技术支持。在人气旺盛的时期，网站在大家的建议下，先后两次成立了 UPLinux 技术团队，但是后来由于种种原因，团队的发展始终没有成形，网站也由于站长精力问题，不能全面为爱好者提供更好的技术资源。但 UPLinux 没有也不会放弃。</p>
+
+<p><a href="http://www.xplore.cn/">Xplore</a> 创立于 2004 年，从国内仅有的几个网络存储实验室之一<a href="http://cie.xtu.edu.cn/snl/">湘潭大学 SNL 实验室</a>的里走出来的 <a href="http://mlsx.xplore.cn/">mlsx</a>，将<a href="http://www.gnu.org/">
+GNU</a>的精神带到湘楚大地，很快，一群技术狂热者加入了这个团队，同年开通了 Xplore.cn。Xplore.cn 从信息并不发达的湖南走出来，在网路如此浮躁的今天，一直以 Linux 技术为主要方向。当然 xplore 也曾感到彷徨，是曲高和寡还是太过严肃？有了方向，还要有好的方式，事实上，xplore.cn 一直在试着调整自己的表现形式。
+<img src="http://www.uplinux.com/ddimg/artlit/20060721/134432784lit.png" alt="image" />
+Uplinux 和 Xplore 都意识到需要改变的时候，同在国内最大的 Linux 发行商 RedFlag Linux
+的两位站长走到了一起，几次沟通也促成了这次融合。互补，形成国内 Linux 的门户，是双方一直期待的。现在这些也有了眉目，论坛已经全面整合，形成了内容更加健壮更加明确的 Linux 社区。</p>
+
+<p>Xplore 的原意在探索，UPLinux 的原名叫极限 Linux，但是我们知道，在探索 Linux，探索自由的道路上，我们是永远没有极限的。一个全面、权威的 Linux 门户呼之欲出，让自由引导我们的目光，共同关注中国 Linux 的发展、关注现<a href="http://bbs.uplinux.com/">
+X-UPLinux</a>的发展！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/20/xplore-forum-for-a-new-starting-point/">Xplore论坛的新起点</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/20/xplore-forum-for-a-new-starting-point/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/07/20/xplore-forum-for-a-new-starting-point/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>在<a href="http://mlsx.xplore.cn/read.php/404.htm">《xplore 何去何从》</a>中，我提到了 xplore 将和 <a href="http://www.uplinux.com">uplinux</a> 合作的事情。其实这几天一直在忙着整合论坛的事，经过调试，与今天下午正式发布了整合后的新论坛。新论坛暂时命名为 X-UPLinux，意为 UPLinux Power By Xplore 的想法，想要体现 Xplore 是技术中心，是引擎的特色。而论坛的新 logo 还是交给 <a href="http://brisy.xplore.cn">brisy</a>，相信他能给我们新的震撼。新论坛整合了两个论坛的所有数据和用户，因此原来 uplinux 论坛的帐号和原 xplore 论坛帐号都能登录，不过基于特定论坛的一些内容可能丢失。毕竟 molyx 和 discuz！并不是 100％兼容的。整合的论坛有两种访问方式</p>
+
+<p><a href="http://bbs.uplinux.com">http://bbs.uplinux.com</a>
+<a href="http://bbs.xplore.cn">http://bbs.xplore.cn</a></p>
+
+<p>原来的
+<a href="http://www.uplinux.com/bbs/">http://www.uplinux.com/bbs/</a>
+<a href="http://www.xplore.cn/bbs/">http://www.xplore.cn/bbs/</a></p>
+
+<p>会做跳转。</p>
+
+<p>新论坛依然致力于提供最好的 Linux 服务，宽松的 Linux 讨论和技术交流。</p>
+
+<p>希望我们能为 Linux fans 提供更好的服务，更多的帮助。感谢 2 年来，大家对 Xplore 论坛的支持和关系，希望大家能急需支持我们的新论坛－－<a href="http://bbs.uplinux.com">X-UPLinux</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/18/What-xplore/">Xplore何去何从</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/18/What-xplore/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/07/18/What-xplore/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>很多人问我 Xplore 是什么意思，他和 linux 怎么会扯上关系。
+Xplore 并不是你在 google 搜到的 <a href="http://www.xplore.com.hk">Xplore 品牌手机</a>，当然也不是 xp 知识库了（xplore
+== xp lore)。
+xplore 就是 Xplore，它只是我们为自己的工作室取的名字，它是取单词 explorer 的一部分，很显然，这是很多公司或者品牌取名的办法，而且我喜欢 X 开头的名字。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/07/18/What-xplore/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/06/20/beijing-grid/">以服务人民为荣以背离人民为耻－－北京电力紧急送电</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-06-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/06/20/beijing-grid/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/06/20/beijing-grid/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>家里的电表显示 0001，随时都有进入黑暗的时候。可是去银行排了两天队，还是买不了，据“官方”说话是“连接服务器数据错误”。由于懒，又不想去很远而且不顺路的电力局买电，看来这两天就只能在黑暗中渡过了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/06/20/beijing-grid/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/06/01/ocfs2-the-strange-problem/">Ocfs2的怪异问题</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-06-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/06/01/ocfs2-the-strange-problem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/06/01/ocfs2-the-strange-problem/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>昨天和几个同事去一个用户现场解决不能对存储设备格式化成 ocfs2 的文件系统。</p>
+
+<p>IBM 的服务器，IBM 的光纤交换机，IBM 的存储。硬件方面应该不存在兼容性问题。系统是红旗的 DC5.0。</p>
+
+<p>刚到现场的时候，发现存储配置得有点问题，两台服务器看到的 LUN 并不一致，初步怀疑是配置问题，后来和用户协调，解决了这个问题。LUN 的映射也达到了我们的要求，但是仍然是无法格式化 ocfs2 文件系统，只要格式化，并给出下面的报错信息</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/06/01/ocfs2-the-strange-problem/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/">device-mapper-multipath在Linux上的应用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/05/30/device-mapper-multipath-in-the-Linux-applications/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这两天一直在测试 <a href="http://www.ibm.com">IBM</a> <a href="http://www-900.ibm.com/cn/servers/eserver/openpower/">OpenPower</a> 上运行 RedFlag
+DC5.0 for pSeries 是不是能够正常连接 <a href="http://www.emc.com">EMC</a><a href="http://china.emc.com/products/systems//products/systems/clariion.jsp#cx">CLARiiON
+CX 系列存储</a>。同时也测试了基于 <a href="http://sources.redhat.com/dm/">device-mapper</a> 的 <a href="http://christophe.varoqui.free.fr/wiki/wakka.php?wiki=Home">device-mapper-multipath</a> 工具。</p>
+
+<p>具体的技术细节，大家可以看相关的连接。下面是我的测试手记，大家 look 一下：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/05/30/device-mapper-multipath-in-the-Linux-applications/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/05/27/Moving-in-May/">搬家在5月</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-05-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/05/27/Moving-in-May/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/05/27/Moving-in-May/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>累了一整天，总算又把自己的窝挪到了另外一个地方。离公司也近了 2 站。只是与 <a href="http://blog.donews.com/glemir">glemir</a> 的“同居”生活结束了。算算，这是我到北京的第五次搬家了，其时间跨度却不到 2 年，也许这次会成为我在北京的最后一次搬家，聊以下面的文字记录我的搬家史吧。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/05/27/Moving-in-May/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/29/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/27/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/page/28/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/page/28/index.html" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

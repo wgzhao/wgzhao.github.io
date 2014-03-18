@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 我读我书 | Linux系统管理]]></title>
+  <link href="http://wgzhao.com/categories/wo-du-wo-shu/atom.xml" rel="self"/>
+  <link href="http://wgzhao.com/"/>
+  <updated>2014-03-18T16:16:05+08:00</updated>
+  <id>http://wgzhao.com/</id>
+  <author>
+    <name><![CDATA[wgzhao]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Linux系统管理技术手册第六章习题实践]]></title>
+    <link href="http://wgzhao.com/2009/12/03/lah-chapter6-questions-key/"/>
+    <updated>2009-12-03T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2009/12/03/lah-chapter6-questions-key</id>
+    <content type="html"><![CDATA[<p>E6.1 怎样决定用户的默认组？怎样改变它？</p>
+
+<p>A：感觉还是用户设置为默认的同名私有组作为默认组是比较恰当的。改变组的指令是<code>chgrp</code>。</p>
+
+<p>E6.2 说明下面这几个umask值的区别：077、027、022和755.为了让这些值的其中之一成为新用户的全局默认值，该怎么做？您可以给用户施加一个标准的umask吗？</p>
+
+<p>A：077，表示创建的缺省文件许可是600，027则是640，022则是644，755则是022。想成为新用户的全局默认值，一个办法是修改系统缺省的umask值，Fedora/RedHat系统是<code>/etc/bashrc</code>文件。Debian/Ubuntu系统是<code>/etc/profile</code>。或者直接修改<code>/etc/skel/.bash_profile</code>文件，增加umask的设定。</p>
+
+<!--more-->
+
+
+<p>E6.3 隐蔽口令文件的目的是什么？</p>
+
+<p>A：安全，安全，安全！</p>
+
+<p>♥ E6.4 列出不用useradd程序，给系统增加一个用户所需要的步骤。对于您本地的环境来说，额外还需要什么步骤？</p>
+
+<p>A:在<code>/etc/passwd</code>增加入口，给<code>/etc/shadow</code>增加入口，给<code>/etc/group</code>创建组（如果有必要）。<br/>
+创建用户主目录，拷贝模板文件。<br/>
+我原来管理的机器，还需要增加邮件存储路径，邮件配额等。</p>
+
+<p>♥ E6.5 确定您的站点上用于新用户的命名约定。采取什么规则？如何保持唯一性？您会想到什么缺点吗？如何删除用户？</p>
+
+<p>A：这类开放式的问题还怎不知道如何回答。首先，我没有管理这么多机器。其次管理的机器帐号数量也很少。另外，我们一般有自己的一个网络名，很少重复。那么这个网络名绝大部分就成了新用户的登录名。不过一个不好就是无法一眼就能知道这个帐号对应的实际活生生的人是谁？</p>
+
+<p>♥♥ E6.6 找到一份学生名单，用它作为脚本的输入，按照您站点上的命名约定构成登录名。在您遇到冲突之前可以受理多少用户？总共有多少个冲突？使用这些数据来评定您站点的命名约定，并给出改进建议。</p>
+
+<p>A：这也是开放式的问题了。需要在自己的实际管理经验中总结，而且还必须是在管理众多用户的情况下才能理解到这个含义。</p>
+
+<p>那就拿我们公司的邮件帐号命名来说，我们一般采取名字拼音首字母+姓全拼音的方式。比如我的邮件名字就是wgzhao。目前来看，重复的几率不大。这样命名似乎也是一个常用的方式。当然对于采取也写企业级邮件系统，比如Domino的，他们的命名采取类似LDAP数据库的分级方式。我了解到的是在大部分银行内部邮件是这样的，而且似乎采取Domino作为邮件服务器的都是这样，包括IBM本身。</p>
+
+<p>♥♥ E6.7 编写一个脚本，帮助监视/etc/passwd文件是否正常（除非您开动脑筋，否则b和e需要超级用户权限）
+a) 找出有UID 0的所有项 <br/>
+b) 找出没有口令的所有项（需要<code>/etc/shadow</code>文件) <br/>
+c) 找出有重复UID的所有项 <br/>
+d) 找出有重复登录名的所有项 <br/>
+e) 找出没有作废日期的所有项(需要<code>/etc/shadow</code>文件)</p>
+
+<p>A：每一个要求，基本上就是一条指令，我就分别写好了。 <br/>
+a) <code>awk -F: '{if ($3 == 0) print $0}' /etc/passwd</code> <br/>
+b) 题目的意思似乎是不想用到超级用户权限，那么使用sudo算不算呢？好吧，加点难度，sudo也不用。判断用户是否没有口令，一般来说如果<code>/etc/passwd</code>秘密一项没有占位符，也就是为空。<br/>
+或者<code>/etc/shadow</code>里密码一项为空。这都表示帐号没有密码。<br/>
+为了统一起来，我们可以把标准帐号挨个尝试，如果不需要密码就能su过去，那就应该是没有密码，否则就是有密码。对于Fedora/RedHat而言，标准帐号从500开始。Debian/Ubuntu则从1000开始。</p>
+
+<pre><code>#!/bin/bash
+for i in `awk -F: '{ if ($3 &gt; 499) print $1}'`
+do
+    su - $i -c "ls" &gt;/dev/null
+    [ $? -eq 0 ] || echo " user $i no password"
+done
+</code></pre>
+
+<p>c)</p>
+
+<pre><code>#!/bin/bash
+echo "the following uid(s) is/are duplicated"
+awk -F: '{print $3}' /etc/passwd |sort -n |uniq -d
+exit 0
+</code></pre>
+
+<p>d)</p>
+
+<pre><code>#!/bin/bash
+echo "the following name(s) is/are duplicated"
+awk -F: '{print $1}' /etc/passwd  |sort  |uniq -d
+exit 0
+</code></pre>
+
+<p>e) 这个暂时想不出不用root权限如何获得任意帐号的过期信息。大家有什么办法吗？如果root权限就办好多了，比如下面这样： <code>awk -F:'{if ( $8 \&gt; 0) print $0 }' /etc/shadow</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux系统管理技术手册第五章习题实践]]></title>
+    <link href="http://wgzhao.com/2009/11/27/lah-chapter5-questions-key/"/>
+    <updated>2009-11-27T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2009/11/27/lah-chapter5-questions-key</id>
+    <content type="html"><![CDATA[<p>这一章的习题比较简单，虽然难点是ACL，但是似乎作者很讨厌ACL，因此习题里，一个有关ACL的问题都没有。</p>
+
+<p>E5.1 什么是umask？创建一个umask，对于属组或者其他人什么权限也不给。</p>
+
+<p>A：umask是一个三位八进制数字表示的变量，用来给shell设定新创建的文件的默认权限。 设置umask为0077即可，如下所示：</p>
+
+<pre><code>$ umask 0077
+$ touch test
+$ ls -l test
+-rw------- 1 wgzhao wgzhao 0 2009-11-27 20:11 test
+</code></pre>
+
+<!--more-->
+
+
+<p>E5.2 硬链接和符号（软）链接之间有什么不同？什么时候适合用哪一种链接？</p>
+
+<p>A：区别在于：硬链接是直接引用，而符号链接是通过名称来进行引用，符号链接跟他们指向的文件是不同的。</p>
+
+<p>看你要做什么用，如果你仅仅只是为了达到一种“快捷访问”，或者创建多路劲访问文件的便利，那么使用符号链接无疑是最佳的。但是如果你想获得一个文件的完整拷贝，并能同步更新，而且还能在原始文件被删除后不影响链接文件，那么硬链接就是你需要的。
+大部分情况下，你可以需要的仅仅是符号链接。</p>
+
+<p>♥ E5.3 阅读/etc/fstab文件的手册页。编写一行配置，在启动时自动安装一个Windows
+NTFS分区 /dev/hda1.使用/mnt/win_c作为安装点。</p>
+
+<p>A：编写<code>/etc/fstab</code>不是难题，关键是看你的Linux是如何实现对NTFS访问的，有的可能是<code>ntfs-3g</code>,有的可能是内核直接支持，在fstab文件上反映出来的区别在域文件系统类型这一项，大致如下：</p>
+
+<pre><code>/dev/hda1 /mnt/win\_c ntfs-3g defaults 0 0 
+</code></pre>
+
+<p>♥ E5.4 在安装Linux系统的时候，“Foobar Linux” 发行版使用下面的默认配置：</p>
+
+<pre><code>/ 100MB 
+/var 50MB 
+/boot 10MB 
+&lt;swap&gt; 128MB 
+/usr 剩余空间
+</code></pre>
+
+<p>在一个繁忙的服务器上采取这样的安排会有什么样的潜在问题？</p>
+
+<p>A：看到这些数字，我以为我回到了硬盘只有2G的年代。但是不管在什么年代，分区对系统而言要考虑当前足够可用，以后发展还能适用的原则。</p>
+
+<p>上面的分区，首先swap分区不太大。当然我估计这机器内存也就是64M的样子。<code>/var</code>分的过小。繁忙的服务器，得要看它是忙什么了，如果是mail之类的，那<code>/var</code>肯定立刻就被塞满了，因为默认情况下，邮件队列在<code>/var/spool</code>目录下。</p>
+
+<p>♥ E5.5 为什么说有些分区（比如/var/,/home和交换分区）防盗一个和其他数据文件和应用程序不同的单独驱动器上是一个好主意？ /tmp呢？对于列出的每一种文件系统给出针对性的理由。</p>
+
+<p>A：一直以来，分区我坚持三分开原则，也就是<strong>系统，应用，数据</strong>三者分开。<br/>
+这样不会任何以防的损坏导致另外一方出现灾难性故障。<br/>
+比如系统分区坏了，重建系统就好了，应用和数据不需要变动。<br/>
+同样的，应用坏了，重建应用，数据和系统不用变化。
+想想Windows下痛苦的注册表，你就会理解三者分开的好处了。 <br/>
+对于系统本身而言，处于其他方面的考虑，还可以细分，比如把/usr
+单分，可以提高性能和安全级别，如何做到？</p>
+
+<p>首先单分后，挂载/usr分区，我们可以增加<code>noatime</code>的参数。因为/usr下是系统绝大部分库和程序，属于静态数据，atime属性对此没有意义。<br/>
+我们设置还可以把/usr作成别的文件系统，比如tmpfs来增加速度。另外，可以把/usr挂载为只读，以提高效率。</p>
+
+<p>/home单独分区的意义当然就很多了，安全，配额都是重要的因素。</p>
+
+<p>至于/tmp，在我个人的经验中，很少单独分区，除非用户有特别说明和要求。我看到的往往是单独分区后，因为过小，而导致/tmp空间不足的负面效果。<br/>
+所以/tmp是否单独分区，还真的需要和实际的应用结合起来考虑，不能单一从操作系统上考虑。</p>
+
+<p>♥ E5.6 写一个脚本，找到一个文件系统上所有的硬链接。</p>
+
+<p>A： 需要利用的一个技巧是<code>ls -l</code>命令能给出文件的链接数（就是第二列数值），如果大于1，则表示有硬链接文件。然后利用find查找出是这个inode的所有文件。<br/>
+因为硬链接文件的inode一致。
+所以脚本分两个两个部分，第一个部分是找出所有链接数大于2的inode，形成列表。<br/>
+第二步找出等于这些inode的文件。但是我们可以用一行脚本来完成这个操作，类似如下：</p>
+
+<pre><code>$ find /bin -type f -ls |awk '{if ($4 &gt;1) print $1,$11}'
+1628730 /bin/bzip2
+1628730 /bin/bunzip2
+1628730 /bin/bzcat
+1622053 /bin/uncompress
+1622053 /bin/gunzip
+</code></pre>
+
+<p>首先利用<code>find -type f</code> 的参数，保证只寻找正规文件。然后利用find的<code>-ls</code>参数，等价于<code>ls
+-ldis</code>，这样就把inode和链接数打印出来了，接着将结果交给awk处理，awk判断第四列（链接数）是否大于1，如果大于，则把inode和文件名打印出来。当然可以打印更多的东西。你只需要把<code>/bin</code>目录换成你需要的目录就可以了。</p>
+
+<p>♥ E5.7 给出完成下面任务的命令：</p>
+
+<ol>
+<li>把README的权限设置为对属主有读写权，而其他每个人有读权</li>
+<li>在不需要改变（或者知道）目前权限的情况下，打开一个文件的setuid位；</li>
+<li>里出当前目录的内容，按照修改时间排序，把最近修改的文件放在最后；</li>
+<li>将一个叫做shared的文件的属组从“user”改成“friends”。</li>
+</ol>
+
+
+<p>A：因为简单，直接给出演示的答案了。</p>
+
+<pre><code>/*第一问*/
+$touch README
+$chmod 644 README 
+$ls -l README 
+-rw-r--r-- 1 wgzhao wgzhao 0 2009-11-27 21:12 README
+/*第二问*/
+$chmod u+xs README 
+$ls -l README 
+-rwsr--r-- 1 wgzhao wgzhao 0 2009-11-27 21:12 README
+/*第三问*/
+$ls -lt |sort -n
+drwx------ 2 root   root   4096 2009-11-27 11:29 orbit-root
+drwx------ 2 wgzhao wgzhao 4096 2009-11-27 11:03 keyring-5juJ1c
+drwx------ 2 wgzhao wgzhao 4096 2009-11-27 11:03 pulse-wZb2dv9SzM6y
+drwx------ 2 wgzhao wgzhao 4096 2009-11-27 11:03 seahorse-xvIvYW
+drwx------ 2 wgzhao wgzhao 4096 2009-11-27 11:03 ssh-TjUZjM2036
+drwx------ 2 wgzhao wgzhao 4096 2009-11-27 11:04 virtual-wgzhao.z5uZOh
+drwx------ 2 wgzhao wgzhao 4096 2009-11-27 19:26 plugtmp
+drwx------ 2 wgzhao wgzhao 4096 2009-11-27 19:35 orbit-wgzhao
+drwxr-xr-x 2 wgzhao wgzhao 4096 2009-11-27 19:43 hsperfdata_wgzhao
+-rwsr--r-- 1 wgzhao wgzhao    0 2009-11-27 21:12 README
+/*第四问，因为系统上没有friends组，用www-data代替*/
+$sudo chgrp www-data  README
+$ls -l README 
+-rwxr--r-- 1 wgzhao www-data 0 2009-11-27 21:12 README
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux系统管理技术手册第四章习题实践]]></title>
+    <link href="http://wgzhao.com/2009/11/27/lah-chapter4-questions-key/"/>
+    <updated>2009-11-27T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2009/11/27/lah-chapter4-questions-key</id>
+    <content type="html"><![CDATA[<p>E4.1 解释一个文件的UID和一个正在运行的进程的真实UID以及有效UID之间的关系。除了文件的访问控制外，进程的有效UID有什么用途？</p>
+
+<p>A：
+大部分情况下，文件的UID和运行的真实UID以及有效UID是一致的。但是对于<code>setuid</code>程序而言。进程的真实UID和有效UID就有区别了。比如<code>/usr/bin/passwd</code>程序。它的属主是<code>root（UID=0）</code>，如果一个用户（<code>UID=1000)</code>运行它，那么真实UID为1000，但是有效UID则为0。有效UID除了文件访问控制外，还能提升当前运行程序的“临时特权”。</p>
+
+<!--more-->
+
+
+<p>E4.2 假定您所负责的站点中，有一个用户已经启动恶劣一个长期运行的进程，它消耗了机器的很大一部分资源。</p>
+
+<ol>
+<li>您如何意识到某一个进程正在消耗资源？</li>
+<li>假定异常的进程可能是合法的，不应该杀死它。给出您要把它“冻结”起来（在您调查期间，暂时停止它的运行）应该使用的命令？</li>
+<li>随后，您发现这个进程属于 您的老板，必须继续运行下去。给出您要继续执行这个任务应该使用的命令。</li>
+<li>另一种可能是假定需要杀死这个进程。您会发送什么信号？为什么？如果您要保证这个进程确实已经被杀死了，该怎么做？</li>
+</ol>
+
+
+<p>A： 查看uptime，发现复杂高于平常，然后查看top结果，能找到异常的进程。</p>
+
+<p>对于不能马上杀死的异常进程，我们可以采取暂定的方式来临时冻结进程，利用 kill -STOP pid 指令来冻结进程。<br/>
+调查清楚后，如果想继续运行该进程，则使用 <code>kill -CONT pid</code> 来恢复运行。 <br/>
+如果想杀死，可以先尝试 <code>kill -TERM pid</code> 的方式来温柔的杀死，<br/>
+如果不凑效，则利用野蛮杀死法 <code>kill -9 pid</code><br/>
+然后通过ps指令查看该进程是否还在。如果不在，则表示已经杀死了。</p>
+
+<p>E4.3 找出一个能导致内存泄漏的进程（如果手头没有，就自己写一个）。用ps或者top来监视程序程序运行时内存的使用情况。</p>
+
+<p>A：这一类的问题，在实际的工作中遇到过一些，绝大部分都是java程序，因为内存没有回收，导致内存的使用不断的增加，用完内存的一定比列后（由<code>swappiness</code>值决定），继续使用swap值，最后导致系统出现OOM（Out-Of-Memory)。</p>
+
+<p>♥ E4.4 编写一个处理ps输出的Perl脚本，确定在系统上正在运行的进程总的VSZ和RSS值。这些数字和系统物理内存和交换空间的实际量有什么关系？</p>
+
+<p>A：仅仅是获得VSZ和RSS值的总和，没有必要用到perl这种方式吧（其实是我对perl一窍不通），直接awk也能处理。下面是一行指令： <br/>
+<code>ps aux |awk 'BEGIN{vsz = 0;rss = 0;print "vsz \\t rss"} {vsz+=$5;rss+=$6}
+END{print vsz,rss}'</code></p>
+
+<p>下面是我机器上的输出结果：</p>
+
+<pre><code>$ ps aux |awk 'BEGIN{vsz = 0;rss = 0;print "vsz \\t rss"}\\ {vsz+=$5;rss+=$6} END{print vsz,rss}'
+vsz rss
+3310800 830324 
+</code></pre>
+
+<p>要注意一下单位。vsz是进程的虚拟大小，KiB单位。而rss则是驻留大小，KiB单位。因此，我们转换一下。</p>
+
+<pre><code>$ps aux |awk 'BEGIN{vsz = 0;rss = 0;print "vsz(GiB) \\t rss(MiB)"} \\
+{vsz+=$5;rss+=$6} END{print vsz / 1024 / 1024 ,rss / 1024 }' 
+vsz(GiB) rss(MiB) 
+3.15749 811.973 
+</code></pre>
+
+<p>我机器的内存是：</p>
+
+<pre><code>$ free -m
+             total       used       free     shared    buffers     cached
+Mem:          2768       1593       1175          0        168        662
+-/+ buffers/cache:        763       2005
+Swap:         3169          0       3169
+</code></pre>
+
+<p>VSZ 是进程使用的虚拟内存大小. （包括内存和SWAP空间上） RSS 指的是驻留在内存中的大小。<br/>
+大部分程序都使用共享库，注意VSZ和RSS会包含共享库的部分。<br/>
+如果多个进程都使用相同的共享库，共享部分的内存会分别计入不同的进程内存。所以所有进程RSS部分累加可能会超出物理内存总数。<br/>
+所以，我认为RSS和VSZ于物理内存以及交换空间没有什么关系，因为其中共享库的内存大小重复计算了。在一些资源紧张的机器上，这两个值可能都超过了内存的总和，比如：</p>
+
+<pre><code>$ps aux |awk 'BEGIN{vsz = 0;rss = 0;print "vsz(GiB) \t rss(MiB)"}  \
+  {vsz+=$5;rss+=$6} END{print vsz / 1024 / 1024 ,rss  / 1024  }'; free -m
+
+vsz(GiB)     rss(MiB)
+62.7103 18703.7
+             total       used       free     shared    buffers     cached
+Mem:          2027       1967         59          0         20       1750
+-/+ buffers/cache:        195       1831
+Swap:         4094        121       3972
+</code></pre>
+
+<p>这里，vsz的总和达到了62GiB，远超过6G的内存总和。而rss的总和也达到了1.8G。</p>
+
+<p>不过从我观察到的数据来说，大部分情况下，rss的总和等于buffers + cached值，但是否正确，还需要实际的数据和理论双层检验。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux系统管理技术手册第二章习题实践]]></title>
+    <link href="http://wgzhao.com/2009/11/24/lah-chapter2-questions-key/"/>
+    <updated>2009-11-24T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2009/11/24/lah-chapter2-questions-key</id>
+    <content type="html"><![CDATA[<p>E2.1 为什么在安装LILO引导加载程序之前先运行lilo -t很重要？该怎样引导一个名字不是vmlinuz的内核？</p>
+
+<p>A： 任何引导程序在加载到MBR之前都应该检查配置文件的正确性，对于没有引导时可编辑特性的LILO更应如此，因此在执行lilo或者<code>lilo -v</code>之前，先执行<code>lilo -t</code> 来测试配置文件的正确性是一个良好的习惯。引导配置<code>/etc/lilo.conf</code>里可以通过image指令来指定内核的名字，和内核具体的命名没有关系。</p>
+
+<!--more-->
+
+
+<p>E2.2 为什么不应该用计算机机箱上的电源开关来关闭Linux系统？有什么别的办法来替代？</p>
+
+<p>A： 似乎很多人觉得Linux的文件系统不够健壮，因为一次意外的掉电或者非法关机都会导致文件系统损毁，从而无法正常引导系统。所以，正确的关闭Linux系统是非常重要的。遗憾的是，目前Linux在ACPI方面支持得并不太好，所以有些机器不同通过直接按电源按钮来触发系统正常关闭。这种情况下，使用正确的关机指令很重要，比如<code>shutdown -h now</code>,<code>init 0</code>,<code>poweroff</code> 等指令都能正常关闭系统。</p>
+
+<p>E2.3 用grub命令行引导一个grub.conf里没有的内核？</p>
+
+<p>A： 这就是考察对grub命令行的掌握了，在出现grub引导界面时，按字母c，进入grub命令行，然后依次输入</p>
+
+<pre><code>root (hdX,Y)
+kernel /vmlinuz-&lt;version\&gt; root=LABEL=&lt;label\&gt; [ options ] 
+initrd
+/initrd-&lt;version\&gt; boot 
+</code></pre>
+
+<p>就可以引导你指定的内核。</p>
+
+<p>♥ E2.4 试述运行级的概念，列出Linux定义的运行级，并简短描述每一个运行级。运行级1和S有什么区别？</p>
+
+<p>A：运行级是Linux系统定义的进入系统不同状态的一个描述，每一个运行级用来补充运行特定的服务。目前，Linux定义了0-6，S/single，emergency等9个运行级别。分别描述如下：</p>
+
+<p>0 关机，永远不要设置它为默认运行级别 <br/>
+1 单用户模式，用于系统紧急恢复，备份等特殊情况 <br/>
+2 多用户，没有NFS支持 <br/>
+3 全特征多用户文字模式
+4 保留 <br/>
+5 全特征图形模式（X11） <br/>
+6 重启，永远不要设置它为默认运行级别 <br/>
+s,S,Single 单用户模式的另外一个选择，但是有区别<br/>
+emergency 绕过rc.sysinit，执行<code>sulogin</code></p>
+
+<p>运行级1关闭所有的多用户和远程登录进程，确保系统运行在最小的软件组合模式下。而S仅仅是提供一个用户输入root口令的提示，而它本身不是最终的运行目的。</p>
+
+<p> ♥ E2.5    编写一个启动脚本，启动名为“foot”的守护进程(/usr/local/sbin/foo)，它是一项网络服务。说明如何把它融入系统，在引导时刻自动启动。</p>
+
+<p>A：脚本模型如下：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (foo)</span> <a href='/downloads/code/foo'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#cat /etc/init.d/foo</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># chkconfig: 35 90 12</span>
+</span><span class='line'><span class="c"># description: Foo server</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Get function from functions library</span>
+</span><span class='line'>. /etc/init.d/functions
+</span><span class='line'>
+</span><span class='line'><span class="c"># Start the service foo</span>
+</span><span class='line'>start<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        initlog -c <span class="s2">&quot;echo -n Starting foo server: &quot;</span>
+</span><span class='line'>        /usr/local/sbin/foo &amp;
+</span><span class='line'>        <span class="c">### Create the lock file ###</span>
+</span><span class='line'>        touch /var/lock/subsys/foo
+</span><span class='line'>        success <span class="s2">$&quot;FOO server startup&quot;</span>
+</span><span class='line'>        <span class="nb">echo</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Restart the service foo</span>
+</span><span class='line'>stop<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        initlog -c <span class="s2">&quot;echo -n Stopping foo server: &quot;</span>
+</span><span class='line'>        killproc foo
+</span><span class='line'>        <span class="c">### Now, delete the lock file ###</span>
+</span><span class='line'>        rm -f /var/lock/subsys/foo
+</span><span class='line'>        <span class="nb">echo</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">### main logic ###</span>
+</span><span class='line'><span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class='line'>  start<span class="o">)</span>
+</span><span class='line'>        start
+</span><span class='line'>        ;;
+</span><span class='line'>  stop<span class="o">)</span>
+</span><span class='line'>        stop
+</span><span class='line'>        ;;
+</span><span class='line'>  status<span class="o">)</span>
+</span><span class='line'>        status foo
+</span><span class='line'>        ;;
+</span><span class='line'>  restart|reload|condrestart<span class="o">)</span>
+</span><span class='line'>        stop
+</span><span class='line'>        start
+</span><span class='line'>        ;;
+</span><span class='line'>  *<span class="o">)</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {start|stop|restart|reload|status}&quot;</span>
+</span><span class='line'>        <span class="nb">exit </span>1
+</span><span class='line'><span class="k">esac</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>对于R系统，使用<code>chkconfig --add foo</code> 方式添加到系统里，如何使用<code>chkconfig --level</code>
+的方式设定每一个运行级别的启动停止选项。<br/>
+对于D系统，脚本头需要加入一些LSB的信息进去，类似如下：</p>
+
+<pre><code>### BEGIN INIT INFO
+# Provides:          foo
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start daemon at boot time
+# Description:       Enable service provided by daemon.
+### END INIT INFO
+</code></pre>
+
+<p>而后使用<code>update-rc.d foo default</code>，先加入到系统中，最后使用<code>update-rc.d foo start 0123 stop 456</code>来设定个运行级的启动停止情况。</p>
+
+<p>♥ E2.6  取得并安装mactime程序。运行mactime(它是TCT工具集的一部分)，创建一个域文件系统相关联的时间戳初始数据库。重启机器。再次运行mactime，判断因为引导机器而被修改的文件有哪些，哪些文件访问了而没有修改？（需要root权限）</p>
+
+<p>A：对于D系统，可以使用<code>sudo apt-get install tct</code>来安装tct工具集。<br/>
+对于R系统，如果yum仓库里没有，就从官方站点 <a href="http://www.porcupine.org/forensics/tct.html">http://www.porcupine.org/forensics/tct.html</a>
+下载最新的版本并编译。 <br/>
+mactime需要配合TCT工具集里的其他程序一起使用，因此我打算找一个时间单独说说TCT以及TCT的补充工具集。</p>
+
+<p> ♥♥ E2.7 如果一个系统处于运行级4，而用户运行了命令telinit 1，init会采取哪些步骤？命令最终的结果将会是什么样子？</p>
+
+<p>A：简单的来说，执行<code>telinit 1</code>指令，需要两个阶段的工作要做。第一个阶段是将当前运行级（即运行级4）的所有已经运行的服务停止，也就是所有<code>/etc/rc.d/rc3.d/</code>(Debian是<code>/etc/rc3.d/</code>)下所有S开头的服务，执行对应的K开头的脚本。<br/>
+完成这个步骤后。<br/>
+转入到<code>/etc/rc.d/rc1.d</code>/(Debian是<code>/etc/rc1.d/</code>)，执行所有S开头的服务。<br/>
+执行后完，系统进入到单用户模式。</p>
+
+<p>♥♥ E2.8 绘制一张依赖关系图，画出在您的Linux系统上启动别的守护进程之前，必须启动哪些守护进程？</p>
+
+<p>A：手工做这件事情，不是不可以，但是显然很累。我目前想到的一个办法是用<a href="http://www.bootchart.org/">bootchart</a>这个记录系统启动时间的工具，虽然它的功能是分析系统启动时，各服务所占用的时间，不过它绘制的图，也同事暗示了各服务的依赖关系。<br/>
+比如这个链接地址 <a href="http://www.bootchart.org/images/bootchart.debian.mcrae.0.png">http://www.bootchart.org/images/bootchart.debian.mcrae.0.png</a>，图片太大，就不粘贴到这里了。</p>
+
+<p>♥♥ E2.9    顺序列出创建一个能工作的多OS系统&mdash;包含Linux和Windows&mdash;所用到的步骤。使用GRUB和Windows的引导加载程序。</p>
+
+<p>A：只要是包含了Windows的多OS系统，一定要先安装Windows系统，因为Windows的ntldr程序太霸道，只认自家系统的引导程序，别的一律删除。<br/>
+因此安装完Windows后，然后再安装Linux，绝大部分发行版本在安装的过程中，都能顺利识别出当前机器已经安装的OS，并在其引导配置文件里加入对应的启动入口。<br/>
+无论是GRUB还是LILO均能完成这个功能。<br/>
+如果没有。只需要在GRUB里，加入类似下面的几行：</p>
+
+<pre><code>title windows 
+rootnoverify (hd0,1) 
+chainloader +1 
+</code></pre>
+
+<p>就可以了。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux系统管理技术手册习题实践]]></title>
+    <link href="http://wgzhao.com/2009/11/23/linux-administration-handbook-question-answers/"/>
+    <updated>2009-11-23T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2009/11/23/linux-administration-handbook-question-answers</id>
+    <content type="html"><![CDATA[<p>以前看《<a href="http://book.douban.com/subject/3042029/">Linux系统管理手册</a>》（以下简称LAH）电子版的时候，没有太注意每章后面的习题。</p>
+
+<p>现在买来印刷版看后，觉得这些习题有必要做一做，特别那些标有4颗星的，据说能作为整个学期的作业来完成，这不由得让我想起了《<a href="http://book.douban.com/subject/1130500/">计算机程序设计艺术</a>》艺术有关习题的介绍，不过那个太难了，都是偏向理论性的知识。<br/>
+这本LAH的习题偏向实践一些，应该相对来说容易做到吧。</p>
+
+<!--more-->
+
+
+<p>本来想看看网络上有谁已经做了这个工作，这样就不用重复劳动，或者说可以作为一个参考了。但是google一番，没有找到。</p>
+
+<p>那看来只能依靠自己了，我打算在两个不同系统上来实践这些习题，以为我电脑上刚好有这样两套不同的系统，一个为基于DEB包的ubuntu 9.10（也许以后会更新），另外一个就是基于RPM包的RedFlag Asianux Server 3.0 SP1。</p>
+
+<p>如果答案中没有特别说明发行版本，就表示这个答案对两个系统都适合，否则会指出。为了方便，以后把debian/ubuntu简称为D系统，RedFlag 简称为R系统。</p>
+
+<p>对 <a href="http://www.suse.com/">SuSe</a>，<a href="http://www.mandriva.com">mandriva</a>, <a href="http://www.gentoo.org">gentoo</a>, <a href="http://www.archlinux.org">archlinux</a>等接触的很少。所以就不能兼顾这些了。</p>
+
+<p>ok，少说多做，先从第一章开始：</p>
+
+<p>E1.1 了解系统调用sync（不是sync命令）应该使用什么命令？应该怎样阅读保存在<code>/usr/local/share/man</code>中的sync本地手册页？</p>
+
+<p>A： 这个主要是要了解man命令的一些基本概念和配置。一般情况下，man手册的第2节保存的是系统调用和内核出错代码。而第8节保存的是系统管理命令，因此要了解sync系统调用，需要使用<code>man 2 sync</code>指令，如果是<code>man 8 sync</code> 则表示系统命令。</p>
+
+<p>第二个问题，我的理解应该还是考察man分节的概念，而不是man配置文件的概念，因为下一个题目就是考察man配置文件的问题。<br/>
+所以这里，我觉得答案应该是<code>man 7 sync</code>。 具体的Linux man手册分节及内容列表如下：</p>
+
+<p>节     内容 <br/>
+1 用户级命令和应用程序 <br/>
+2 系统调用和内核出错代码 <br/>
+3 库调用<br/>
+4 设备驱动和网络协议 <br/>
+5 标准文件格式 <br/>
+6 游戏和演示 <br/>
+7 各种文件和文档 <br/>
+8 系统管理命令 <br/>
+9 少见隐秘的内核规范和接口</p>
+
+<p>E1.2
+在您的站点上，有一个系统级的配置文件控制man的行为吗？如果想要在/doc/man中保存本地的文档，应该在这个文件里加入哪些行？必须在/doc/man中使用什么样的目录结构来让它成为man手册页层次结构中的一部分？</p>
+
+<p>A：
+对R系统，配置文件是<code>/etc/man.config</code>，对D系统，配置文件是<code>/etc/manpath.config</code>。这个配置里定义了man默认的搜索路径，如果要加入自己定义的路径，则需要在该配置文件里加入对应的目录。格式如下：<code>MANPATH /doc/man</code> man目录采取通常采取manX目录格式，X是1～9的数字，或者是字幕l或n。<br/>
+所以如果要在/doc/man下保存本地文档，需要创建man{1..9}目录，然后把文档存放到对应的目录里。</p>
+
+<p>E1.3 man和info的区别是什么？他们各自有什么优点？</p>
+
+<p>A：个人使用man的频率远大于info，而且似乎目前大部分程序都提供了man手册，但不一定提供了info手册。<br/>
+除了那些有历史原因或者比较古老的程序外。<br/>
+另外，大部分情况下，我接触到的是，man手册内容和info内容基本一致。<br/>
+有的时候我找man手册发现太简单，想了解更详细的内容，结果发现对应的info手册也会非常的简单。<br/>
+所以，从我个人的角度来看，我没有发现他们之间的区别，当然浏览方式上的区别除外。另外相比man，info看不到优势。<br/>
+或者，这类似vim和emacs的争论吗？ google man和info的区别，能获得一些答案，大家可以移步到<a href="http://www.google.com/search?q=the+difference+of+man+and+info+&amp;ie=utf-8&amp;oe=utf-8">这个链接</a>。</p>
+
+<p>♥ E1.4 Linux内核当前的发展状态如何？热点问题是什么？关键人物都有谁？项目是怎样进行管理的？</p>
+
+<p>A：目前内核最新稳定版本是2.6.31，2.6.32已经出RC8了，相信很快就release了。我关注的热点问题，目前主要是虚拟化这块。如果是桌面方面的话，图形驱动是我关心的。其他更多的信息，可以从官方站点了解到。</p>
+
+<p>♥ E1.5 研究几种Linux发行版本，为下列每种应用推荐一个发行版本。解释做出选择的理由。</p>
+
+<ul>
+<li>在家办公的单个用户</li>
+<li>大学的计算机科学实验室</li>
+<li>企业的web服务器</li>
+</ul>
+
+
+<p>A：这个问题，恐怕十个人做有十个答案，因为不存在所以的标准的，唯一的，权威的答案，而在乎那种对你的环境适合。就我个人目前使用而言。</p>
+
+<p>对于在家办公的单个用户，使用Ubuntu就很好，可能还有一些人会选择Fedora。<br/>
+不管选择哪个，我想大概它需要满足一些基本的桌面条件：<br/>
+首先就是对新硬件要支持得好，这也就意味着内核，程序的版本都会比较新。<br/>
+另外就是软件的安装，更新要方便。<br/>
+其次就是支持的应用程序较多。</p>
+
+<p>对于计算机科学实验室，显然稳定和高效是最需要考虑的，那么各企业发行的企业版应该都能满足需求，特别是那些针对高性能计算有过优化的系统。这里推荐RHEL和Asianux Server。<br/>
+WEB服务器嘛，企业版都能胜任，目前都有其图形化的配置工具。但是需要考虑到这个版本的生命力，还有就是技术支持，这个很重要！</p>
+
+<p>♥
+E1.6 假设您发现了在Fedora Core 5 提供的文中说明中说明的Apache httpd的某些功能并不可行。</p>
+
+<ol>
+<li>在报告这个bug之前，您应该做什么？</li>
+<li>如果认定这是一个bug，那么您应该通知谁？怎样通知？</li>
+<li>要让bug报告有用处的话，它必须包含什么信息？</li>
+</ol>
+
+
+<p>A：这应该算是开发人员经常遇到的问题了，对于系统管理员而言，可能要少一些。<br/>
+发现功能不可用，当然是首先需要确认这个问题是否可重现，在当前机器能否重现，其他机器呢？<br/>
+是否是别的程序的影响？这些都要排除。<br/>
+如果确认了，最好是先去网络上搜索一番，看看别人是否遇到了同样的问题，是否已经有解决方案。去官方站点的bugzilla上看看是否有对应的描述，是否有解决方案。<br/>
+如果很不幸，你是一个发现，那么就可以去官方站点的bugzilla上提交你遇到的问题，一般提交的时候，会告诉你要提交哪些信息，甚至有的是提供一个脚本程序用来收集必要的信息，然后提交。</p>
+]]></content>
+  </entry>
+  
+</feed>

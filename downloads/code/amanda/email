@@ -1,0 +1,55 @@
+To: xxxx@xxx.xx
+    Subject: Backup Centre AMANDA MAIL REPORT FOR April 11, 2009
+    Message-Id:
+    From: Amanda
+    Date: Sat, 11 Apr 2009 18:06:49 +0800
+
+    Hostname: cp1.domain.com
+    Org     : Backup Centre
+    Config  : FileBackup
+    Date    : April 11, 2009
+
+    These dumps were to tape FileBackup-01.
+    The next tape Amanda expects to use is: 1 new tape.
+    The next new tape already labelled is: DailySet1-01.
+
+    STATISTICS:
+                              Total       Full      Incr.
+                            --------   --------   --------
+    Estimate Time (hrs:min)    0:00
+    Run Time (hrs:min)         0:06
+    Dump Time (hrs:min)        0:05       0:05       0:00
+    Output Size (meg)        1539.6     1539.6        0.0
+    Original Size (meg)      2211.3     2211.3        0.0
+    Avg Compressed Size (%)    69.6       69.6        --
+    Filesystems Dumped            2          2          0
+    Avg Dump Rate (k/s)      5342.0     5342.0        -- 
+
+    Tape Time (hrs:min)        0:01       0:01       0:00
+    Tape Size (meg)          1539.6     1539.6        0.0
+    Tape Used (%)               7.5        7.5        0.0
+    Filesystems Taped             2          2          0
+
+    Chunks Taped                  2          2          0
+    Avg Tp Write Rate (k/s) 21897.1    21897.1        -- 
+
+    USAGE BY TAPE:
+      Label             Time      Size      %    Nb    Nc
+      FileBackup-01       0:01  1576584K    7.5     2     2
+
+    NOTES:
+      planner: Adding new disk cp3.domain.com:/opt/www/sites.
+      planner: Adding new disk cp2.domain.com:/web/websites.
+      taper: tape DailySet1-1 kb 1576585 fm 2 [OK]
+      small estimate: cp2.domain.com /web/websites 0
+                      est: 1100832K    out 1545837K
+
+    DUMP SUMMARY:
+                                           DUMPER STATS               TAPER STATS
+    HOSTNAME     DISK        L ORIG-KB  OUT-KB  COMP%  MMM:SS   KB/s MMM:SS   KB/s
+    -------------------------- ------------------------------------- -------------
+    cp2.domain.com -b/websites 0 2201540 1545837   70.2    4:51 5317.0   1:12 21536.4
+    cp3.domain.com -/www/sites 0   62850   30747   48.9    0:04 6994.2   0:00 138465.9
+
+    (brought to you by Amanda version 2.6.1p1)
+

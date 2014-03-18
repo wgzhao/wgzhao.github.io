@@ -1,0 +1,653 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="最近想了解虚拟化技术的一些知识，虽然这不是第一次接触虚拟化概念，至少对起产品有过一些大致的了解，从最开始使用 vmware,到后来发现 qemu，到现在比较火热的 Xen，再到最近才知道的 openVZ。 虚拟化技术正开展得如火如荼.在加上现在用户对虚拟化也提出了一些要求， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/page/20">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/04/09/virtualization-technologies-discussion-introduction/">虚拟化技术漫谈－－介绍</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/04/09/virtualization-technologies-discussion-introduction/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/04/09/virtualization-technologies-discussion-introduction/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近想了解虚拟化技术的一些知识，虽然这不是第一次接触虚拟化概念，至少对起产品有过一些大致的了解，从最开始使用 <a href="http://www.vmware.com/">vmware</a>,到后来发现 <a href="http://fabrice.bellard.free.fr/qemu/">qemu</a>，到现在比较火热的 <a href="http://www.xensource.com/">Xen</a>，再到最近才知道的 <a href="http://www.openvz.org/">openVZ</a>。</p>
+
+<p>虚拟化技术正开展得如火如荼.在加上现在用户对虚拟化也提出了一些要求，因此学习了解虚拟化技术就不可避免了。这次学习，我想写三篇日志，分别是虚拟化技术的介绍，记录我了解到的一些虚拟化技术；接下来就是 openvz 的学习，只所以选择 openvz，而不是 xen，其实是从我工作的角度来考虑的，pczou 说在 RedFlag
+DC5.0 上的 Xen 并不是很稳定，还需要一段时间的发展。而 openvz 将在会出现在红旗 linux 的下一个版本中。所以我想还是先了解 openvz 吧；最后一篇就像记录一些于 openvz 或者说与虚拟化相关的一些高级话题，希望我能写道这篇 :)</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/04/09/virtualization-technologies-discussion-introduction/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/04/07/xplore-welcome-pczou/">欢迎pczou来xplore安家</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/04/07/xplore-welcome-pczou/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/04/07/xplore-welcome-pczou/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>热烈欢迎 <a href="http://pczou.xplore.cn">pczou</a> 来 xplore 安家。</p>
+
+<p>我知道的 pczou 最早的 blog 在<a href="http://pczou.bokee.com">博客中国</a>,后来知道他同时在 donews 上有一个 B 计划。后来博客中国每况愈下，pczou 开始搬家到 <a href="http://blog.sina.com.cn/pczou">sina</a>,我得知这个消息还是前几天的事情，是 rachel 告诉我说，pczou 搬家到 sina 了。然后开玩笑说，要不我们要他搬家到我们这里来吧。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/04/07/xplore-welcome-pczou/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/04/05/telephone-records-talking-with-95555/">与招行95555的电话记录</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/04/05/telephone-records-talking-with-95555/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/04/05/telephone-records-talking-with-95555/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>莫名其妙中，我的招商银行网上银行专业版不能使用了。于是给他们的打电话前面一通乱七八糟的提示过后，一位男士接了电话，很有礼貌的问我需要什么帮助，下面便是我们对话的记录：
+ </div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/04/05/telephone-records-talking-with-95555/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/04/05/configuration-pam-introduction/">配置PAM－－介绍</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-05T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/04/05/configuration-pam-introduction/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/04/05/configuration-pam-introduction/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>PAM（Pluggable Authentication Modules）是一个好东西，在现代的 Linux 系统中已经必不可少了。以前也接触过，也修改过他的一些配置，不过都是依葫芦画瓢，没有仔细看过有关说明文档。今天在 linux-mag 上看到了这样的文章，正好可以仔细阅读一番。介绍分为两篇，这篇是介绍 PAM 的基本常识和配置文件的规则，下一篇是利用这些规则做一些联系。下面是阅读后的一些笔记：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/04/05/configuration-pam-introduction/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/04/01/notes-about-ibm-linux-cluster-solution/">听IBM的Linux集群解决方案的一些笔记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/04/01/notes-about-ibm-linux-cluster-solution/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/04/01/notes-about-ibm-linux-cluster-solution/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.ibm.com/developerworks/cn/">IBM 开发网</a>的内容还是很丰富的。这次听<a href="https://www14.software.ibm.com/webapp/iwm/web/preLogin.do?lang=zh_CN&amp;source=dw-cn-l-l-cluster">这个讲座</a>的主要目的是想看看他们是怎么讲集群的，对我以后讲述这方面有什么样的帮助作用。课程大约 1 个小时，其中讲 IBM 自己的集群技术大约占了一半的时间，其他都是说一些概念，似乎对销售人员和售前技术支持比较有用，但是对于售后的培训可能用处不大。因为既然已经是到售后这个环节了，比如是用户已经购买了集群软件了，也就是意味着他们或多或少的知道了集群的一些概念，原理等，此时他们要听到的恐怕是现在购买的这款集群软件的配置，使用，管理，故障处理等方面的内容。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/04/01/notes-about-ibm-linux-cluster-solution/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/30/master-udev/">掌握udev</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/30/master-udev/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/03/30/master-udev/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>如果你使用 Linux 比较长时间了，那你就知道，在对待设备文件这块，Linux 改变了几次策略。在 Linux 早期，设备文件仅仅是是一些带有适当的属性集的普通文件，它由 mknod 命令创建，文件存放在/dev 目录下。后来，采用了 devfs,一个基于内核的动态设备文件系统，他首次出现在 2.3.46 内核中。Mandrake，Gentoo 等 Linux 分发版本采用了这种方式。devfs 创建的设备文件是动态的。但是 devfs 有一些严重的限制，从 2.6.13 版本后移走了。目前取代他的便是文本要提到的 udev－－一个用户空间程序。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/03/30/master-udev/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/28/chat-with-rachel-coming-from-taiwan/">江西归来&#8211;和台湾驴友聊天</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-28T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/28/chat-with-rachel-coming-from-taiwan/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/03/28/chat-with-rachel-coming-from-taiwan/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这是我出差最长的一次了，整整 11 天。</p>
+
+<p>在回来的长途车上，坐在我旁边的女孩子是一个驴友，只见她翻出一本厚厚的中国游览大全之类的全彩书，问我湖南除了凤凰还有哪些地方可以去看看。</p>
+
+<p>其实对于自己的家乡，我自己也不是很了解，因为除了读书和我工作生活的几个城市，其他我都没有去过。她和聊起了她的计划，从杭州开始，向西到江西，到湖南，可能跳过贵州到云南，然后折回到重庆四川，沿江而下到三峡，然后到湖北，再去江苏。实际上这也就是在长江流域逛逛。她说她的时间并不多，安排得挺紧张的，所以也就只能这样了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/03/28/chat-with-rachel-coming-from-taiwan/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/27/use-pam-abl-plugin-prevent-attacking-ssh/">使用pam\_abl插件防止SSH遭受暴力攻击</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/27/use-pam-abl-plugin-prevent-attacking-ssh/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/03/27/use-pam-abl-plugin-prevent-attacking-ssh/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>目前，大部分 Unix 和 Linux 服务器都会运行 SSH 服务，这样可以允许管理员安全的连接到远程服务器并完成相关操作。也正是因为如此，SSH 遭受的攻击也越来越多，虽然我们可以采用改变缺省端口，禁止某些 ip 或者用户，但是仍然无法制止暴力攻击。不过，现在我们尝试基于 PAM(Pluggable  Authenticatiion Modules)开发的 <a href="http://www.hexten.net/pam_abl/">pam_abl</a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/03/27/use-pam-abl-plugin-prevent-attacking-ssh/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/24/commands-start-n/">\[/sbin学习\]n\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-24T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/24/commands-start-n/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/03/24/commands-start-n/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin 下 n 开头的命令不多，而且基本上不常用</p>
+
+<blockquote><p>nameif nash netplugd netreport new-kernel-pkg nologin</p></blockquote>
+
+<p>nameif：基于 MAC 地址命名网络接口，他需要的配置文件是<code>/etc/mactab</code>。</p>
+
+<p>nash：另外一种 shell，主要用在引导镜像中的脚本中，比如<code>initrd.img</code>。</p>
+
+<p>netplugd：网络热插拔管理后台程序。</p>
+
+<p>netreport：网络接口修改通知，红旗自己写的程序。</p>
+
+<p>new-kernel-pkg：安装新内核，他能完成的功能有：<br/>
+1)创建，删除一个 initrd<br/>
+2)运行 depmod 或者删除 depmod 生成的文件<br/>
+3)从 grub/lilo 配置文件中增加或者删除一个内核镜像（通过 grubby）。</p>
+
+<p>nolog：想拒绝一个帐号登录，就可以使用他了，man 手册中描述的是优雅的拒绝用户登录。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/22/commands-start-m/">\[/sbin学习\]m\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/22/commands-start-m/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/03/22/commands-start-m/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin 目录下 m 开头的命令可不少</p>
+
+<pre><code>mdadm          mii-tool    mkfs.cramfs    mkfs.xfs    mounted.ocfs2  mpath_get_name          multipath.static
+mdadm.static   mingetty    mkfs.ext2      mkinitrd    mount.ncp      mpath_prio_alua
+mdassemble     minilogd    mkfs.ext3      mkreiserfs  mount.ncpfs    mpath_prio_emc
+mdevt          mkbootdisk  mkfs.msdos     mkswap      mount.ocfs2    mpath_prio_hds_modular
+mdmpd          mkdosfs     mkfs.ocfs2     mkzonedb    mount.smb      mpath_prio_netapp
+mgetty         mke2fs      mkfs.reiserfs  modinfo     mount.smbfs    multipath
+microcode_ctl  mkfs        mkfs.vfat      modprobe    mpath_ctl      multipathd
+</code></pre>
+
+<p>mkfs 系列命令占了很大一部分。 mdadm,mdadm.static:这是和 RAID 相关的程序，他用来管理 Linux 下的软 RAID。当前 Linux 提供的 RAID 级别有 LINEAR md 设备，RAID0 (striping),RAID1 (mirroring),RAID4,RAID5,RAID6,MULTIPATH 和 FAULTY.
+这里说的 multipathq 其实并不是软 RAID 机制中的一部分，但是他会去调用。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/03/22/commands-start-m/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/21/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/19/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/page/20/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/page/20/index.html" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

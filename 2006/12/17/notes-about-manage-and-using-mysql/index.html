@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>看《Manage and Using Mysql》的笔记 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="今天的无线上网卡借了出去，也刚好有几个 SQL 语句不知道怎么写为好。其实用 MySQL 这么久了，还一直都没有系统的看过介绍和使用 MySQL 的书，大部分情况下是使用 phpMysqlAdmin 来管理，有些 SQL 语句也是简单的查询了官方的手册。 于是翻出了还是 02 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/2006/12/17/notes-about-manage-and-using-mysql">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">看《Manage and Using Mysql》的笔记</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>今天的无线上网卡借了出去，也刚好有几个 SQL 语句不知道怎么写为好。其实用 MySQL 这么久了，还一直都没有系统的看过介绍和使用 MySQL 的书，大部分情况下是使用 phpMysqlAdmin 来管理，有些 SQL 语句也是简单的查询了官方的手册。</p>
+
+<p> 于是翻出了还是 02 年做完毕业设计就在我电脑上放着的 O&#8217;Reilly 2001 的《Manage &amp; Using MySQL》不过还是草稿版本，不是正式版本，针对的 MySQL 还是 3.22.29 版本。</p>
+
+<!--more-->
+
+
+<p>真是开卷有意呀，看到第 30 多页的时候，就解决了困扰我的一个问题，其实问题很简单，看来自己还是对 SQL 语言，MySQL 不够了解，因此趁机做一下笔记，把觉得比较好的地方，或者将来可能用得到的都记录下来。</p>
+
+<p> 1）字符类型存储空间的解释</p>
+
+<p> MySQL 中有各种字符类型，以前我基本上都是使用 varchar 类型，偶尔使用 text。后来看到一个文章说使用 varchar 对搜索速度有一定的影响，因为不是定长，因此后来就把 varchar 替换成了 char 类型。下面的表对常见的字符类型的存储空间给出了一个实例，值得一看。</p>
+
+<p> <img src="/uploads/spaceofcharacter.gif" alt="image" /></p>
+
+<p> 2）MySQL 支持多行一次性插入。</p>
+
+<p> 这是一个非标准的支持，如果你要考虑兼容和移植，那就不要使用了，给出例子：
+ <code>INSERT INTO foods VALUES (NULL, 'Oranges', 133, 0, 2, 39), (NULL,
+'Bananas', 122, 0, 4, 29), (NULL, 'Liver', 232, 3, 15, 10)</code></p>
+
+<p> 3）MySQL 还支持另外一种非标注的插入模式，那就是你可以一起制定列名和其值，有点类似 update 的语法，给出例子：
+ <code>INSERT INTO book SET title=’The Vampire Lestat’, author=’Anne Rice’;</code></p>
+
+<p> 4)对 null 值的特殊操作符</p>
+
+<p>MySQL 对 null 的操作除了标准操作符以外，还特意提供了称之为 null-safe 的操作符&lt;=>，只有两个操作数同时为 null 或者同时不为 null 时才返回真。给出例子：</p>
+
+<pre><code> mysql&gt; SELECT 1 &lt;=&gt; NULL, NULL &lt;=&gt; NULL, 1 &lt;=&gt; 1;
++------------+---------------+---------+ 
+| 1 &lt;=&gt; NULL | NULL &lt;=&gt; NULL | 1 &lt;=&gt; 1 | 
++------------+---------------+---------+ 
+| 0 | 1 | 1 |
++------------+---------------+---------+ 
+1 row in set (0.00 sec) 
+</code></pre>
+
+<p> 5)支持 Perl 编程和 grep 用法的正规表达式来增强模式匹配。</p>
+
+<p> 在标准 SQL 语句中，能用于模式匹配的操作符是 LIKE，NOT LIKE。MySQL 扩展了这个功能，采用了类似 Perl 语法和 grep 命令语法的正规表达式来做模式匹配。语法规则如下：</p>
+
+<p> <img src="/uploads/regexp.gif" alt="image" /></p>
+
+<p> 他的使用方法是将 like 替换成 regexp 操作符，给出几个例子：</p>
+
+<pre><code> mysql&gt; SELECT * FROM BOOK;
+ +---------+-----------------------------------------+---------------+
+ | BOOK_ID | TITLE | AUTHOR |
+ +---------+-----------------------------------------+---------------+
+ | 1 | Database Programming with JDBC and Java | George Reese |
+ | 2 | JavaServer Pages | Hans Bergsten |
+ | 3 | Java Distributed Computing | Jim Farley |
+ +---------+-----------------------------------------+---------------+
+ 3 rows in set (0.01 sec)
+</code></pre>
+
+<p> &mdash; 查询包含 Java 的书名</p>
+
+<pre><code> mysql&gt; SELECT TITLE FROM BOOK WHERE TITLE REGEXP 'Java';
+ +-----------------------------------------+
+ | TITLE |
+ +-----------------------------------------+
+ | Database Programming with JDBC and Java |
+ | JavaServer Pages |
+ | Java Distributed Computing |
+ +-----------------------------------------+
+ 3 rows in set (0.06 sec)
+</code></pre>
+
+<p> &mdash; 查询以 Java 开头的书名</p>
+
+<pre><code> mysql&gt; SELECT TITLE FROM BOOK WHERE TITLE REGEXP '^Java';
+ +----------------------------+
+ | TITLE |
+ +----------------------------+
+ | JavaServer Pages |
+ | Java Distributed Computing |
+ +----------------------------+
+ 2 rows in set (0.01 sec)
+</code></pre>
+
+<p> &mdash; 查询以 Java 结尾的书名</p>
+
+<pre><code> mysql&gt; SELECT TITLE FROM BOOK WHERE TITLE REGEXP 'Java$';
+ +-----------------------------------------+
+ | TITLE |
+ +-----------------------------------------+
+ | Database Programming with JDBC and Java |
+ +-----------------------------------------+
+ 1 row in set (0.00 sec)
+</code></pre>
+
+<p> 6）一些与日期有关的函数</p>
+
+<p> <code>from_unixtime()</code>：将 unix 时间戳转换成友好的日期格式,参数为记录 unix 时间戳的整数。</p>
+
+<pre><code>mysql&gt; select * from ss; 
++----+------------+ 
+| id | pubtime |
++----+------------+ 
+| 1 | 1166064340 | 
++----+------------+ 
+1 row in set(0.27 sec) 
+
+mysql&gt; select from_unixtime(pubtime) from ss;
++------------------------+ 
+| from_unixtime(pubtime) |
++------------------------+ 
+| 2006-12-14 10:45:40 |
++------------------------+ 
+1 row in set (0.00 sec) 
+</code></pre>
+
+<p> rand(): 取 [0,1]之间的随机数;round()：和其他语言中的 round 函数类似功能。
+ &mdash; 随机打印 [1,35]之间的数</p>
+
+<pre><code>mysql&gt; select round(rand()*34 + 1);
++----------------------+ 
+| round(rand()*34 + 1) |
++----------------------+ 
+| 14 | 
++----------------------+ 
+1 row in set (0.00 sec) 
+mysql&gt; select round(rand()*34 + 1);
++----------------------+ 
+| round(rand()*34 + 1) |
++----------------------+ 
+| 18 | 
++----------------------+ 
+1 row in set (0.00 sec) 
+</code></pre>
+
+<p> to_days(): 返回从公元元年开始到现在经过的天数，接受的参数可以是 unix 时间戳类型，也可以是 datetime 或者 date 类型（e.g 2006-01-01)。</p>
+
+<pre><code> mysql&gt; select to_days(now()) - to_days('2006-12-01') as days;
+
++------+ 
+| days | 
++------+ 
+| 13 | 
++------+ 
+1 row in set (0.00 sec) 
+</code></pre>
+
+<p> DATE_FORMAT(date, format)：返回指定格式的日期。</p>
+
+<pre><code> mysql&gt; SELECT DATE_FORMAT('1969-02-17', '%W, %M %D, %Y');
++--------------------------------------------+ 
+|DATE_FORMAT('1969-02-17', '%W, %M %D, %Y') |
++--------------------------------------------+ 
+| Monday, February 17th,1969 
+| +--------------------------------------------+ 
+1 row in set (0.39sec) 
+</code></pre>
+
+<p> 下表给出了该函数能接受那些指定的格式：</p>
+
+<p>%a Short weekday name (Sun, Mon, etc.)<br/>
+%b Short month name ( Jan, Feb, etc.)<br/>
+%D Day of the month with ordinal suffix (1st, 2nd, 3rd, etc.)<br/>
+%d Day of the month<br/>
+%H 24-hour hour (always two digits, e.g., 01)<br/>
+%h/%I 12-hour hour (always two digits, e.g., 09)<br/>
+%i Minutes<br/>
+%j Day of the year<br/>
+%k 24-hour hour (one or two digits, e.g., 1)<br/>
+%l 12-hour hour (one or two digits, e.g., 9)<br/>
+%M Name of the month<br/>
+%m Number of the month (January is 1).<br/>
+%p AM or PM<br/>
+%r 12-hour total time (including AM/PM)<br/>
+%S Seconds (always two digits, e.g., 04)<br/>
+%s Seconds (one or two digits, e.g., 4)<br/>
+%T 24-hour total time<br/>
+%U Week of the year (new weeks begin on Sunday)<br/>
+%W Name of the weekday<br/>
+%w Number of weekday (0 is Sunday)<br/>
+%Y Four digit year<br/>
+%y Two digit year<br/>
+%% A literal “%” character.</p>
+
+<p>类似日期的函数，MySQL 还提供了很多。这个链接可以看到目前 MySQL 提供的全部日期函数。</p>
+
+<p> 7) load:从文件中导入数据</p>
+
+<p> 这个命令以前用过，还利用它做过坏事，呵呵。只是比较难得记住他的用法，因此也记录下来。
+ load 命令允许你从一个仅仅包含数据的文件中导入数据。
+ <code>load local infile 'books.dat' into table books</code>
+ 这个命令假设文件 books.dat 的内容是每一行对应一条记录，其中值之前用 tab 键分隔，空置(null)用 N 表示。
+ local 关键字表示告诉 mysql 命令行加载的文件和发出该命令的客户端是同一台机器。否则，它会在服务器上寻找该文件，当然你可以这样做，不过你需要得到相关的授权。同时要记住的是非本地加载的文件，默认是从数据库安装目录开始寻找的(在 Linux 里，默认是<code>/var/lib/mysq/</code>下）。这和后面要说的导出文件存放的位置规则是一致的。如果你的文件不是用 tab 键分隔的，而是别的字符，比如逗号(,) 。那么你可以制定分隔符号来导入数据。</p>
+
+<p> <code>LOAD DATA LOCAL INFILE ’books.dat’ INTO TABLE BOOK FIELDS TERMINATED BY ’,’;</code></p>
+
+<p> 如果文件中包含的数据和数据库中已有的数据相冲突，那么你可以使用关键字 replace 或者 ignore 来指定其行为，默认是 ignore。</p>
+
+<p> <code>LOAD DATA LOCAL INFILE 'books.dat' REPLACE INTO TABLE BOOK</code></p>
+
+<p> 8)从数据库中导出数据到文件(Pulling from MySQL)</p>
+
+<p> MySQL 允许将 select 出来的结果写入到文件
+<code>SELECT * INTO OUTFILE ’books.dat’ FROM BOOK;</code></p>
+
+<p> 如果你并不希望用 tab 键分隔值，而是希望用的符号，比如逗号(,)来分隔，这样的好处是一些电子表格程序可以处理这些文件。那么你可以这样做：</p>
+
+<p> <code>SELECT * INTO OUTFILE ’books.dat’ FIELDS TERMINATED BY ’,’ FROM BOOK;</code></p>
+
+<p> 同时，你可以将每一个值用引号包含起来</p>
+
+<p> <code>SELECT * INTO OUTFILE ’books.dat’ FIELDS ENCLOSED BY ’"’ TERMINATED BY ’,’ FROM BOOK;</code></p>
+
+<p> 当然，你可以考虑只有对类型是字符串类型的域的值用引号，其他就不必了。那么可以使用这样的命令</p>
+
+<p> <code>SELECT * INTO OUTFILE ’books.dat’ FIELDS OPTIONALLY ENCLOSED BY ’"’ TERMINATED BY ’,’ FROM BOOK;</code></p>
+
+<p> 更详细的解释可以参考官方手册。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-12-17T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/shu-ju-ku/'>数据库</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.com/2006/12/17/notes-about-manage-and-using-mysql/" data-via="mlsx" data-counturl="http://wgzhao.com/2006/12/17/notes-about-manage-and-using-mysql/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/12/17/Kerosene-lamp-nostalgia/" title="Previous Post: 怀恋煤油灯">&laquo; 怀恋煤油灯</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/01/01/happy-new-year/" title="Next Post: 新年快乐！">新年快乐！ &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2006/12/17/notes-about-manage-and-using-mysql/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2006/12/17/notes-about-manage-and-using-mysql/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.com/2006/12/17/notes-about-manage-and-using-mysql/';
+        var disqus_url = 'http://wgzhao.com/2006/12/17/notes-about-manage-and-using-mysql/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

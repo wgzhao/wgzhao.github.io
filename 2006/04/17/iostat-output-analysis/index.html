@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Iostat 输出解析 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="/proc/partitions iostat 的数据的主要来源是 /proc/partitions，所以需要先看看 /proc/partitions 中有些什么。 # cat /proc/partitions major minor #blocks name rio rmerge rsect &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/2006/04/17/iostat-output-analysis">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Iostat 输出解析</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-04-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><ol>
+<li>/proc/partitions</li>
+</ol>
+
+
+<p>iostat 的数据的主要来源是 <code>/proc/partitions</code>，所以需要先看看 <br/>
+<code>/proc/partitions</code> 中有些什么。</p>
+
+<pre><code>    # cat /proc/partitions  
+    major minor   #blocks name rio rmerge rsect ruse wio wmerge wsect wuse
+    running use aveq  
+
+     3 0 19535040 hda 12524 31127 344371 344360 12941 25534 308434 1097290
+    -1 15800720 28214662  
+     3 1 7172991 hda1 13 71 168 140 0 0 0 0 0 140 140  
+     3 2 1 hda2 0 0 0 0 0 0 0 0 0 0 0  
+     3 5 5116671 hda5 100 477 665 620 1 1 2 30 0 610 650  
+     3 6 265041 hda6 518 92 4616 2770 257 3375 29056 143880 0 46520 146650  
+     3 7 6980211 hda7 11889 30475 338890 340740 12683 22158 279376 953380 0
+    509350 1294120  
+</code></pre>
+
+<p>major: 主设备号。3 代表 hda。</p>
+
+<!--more-->
+
+
+<p>
+minor: 次设备号。7 代表 No.7 分区。<br/>
+#blocks: 设备总块数 (1024 bytes/block)。19535040  * 1024 =  > 20003880960(bytes)
+  ~2G<br/>
+name: 设备名称。如 hda7。</p>
+
+<p>rio: 完成的读 I/O 设备总次数。指真正向 I/O 设备发起并完成的读操作数目，也就是那些放到 I/O 队列中的读请求。注意很多进程发起的读操作<br/>
+ (read())很可能会和其他的操作进行 merge，不一定每个 read() 调用都引起一个 I/O 请求。<br/>
+rmerge: 进行了 merge 的读操作数目。<br/>
+rsect: 读扇区总数 (512 bytes/sector)</p>
+
+<p>ruse: 从进入读队列到读操作完成的时间累积 (毫秒)。上面的例子显示从开机开始，读 hda7 操作共用了约 340 秒。</p>
+
+<p>wio: 完成的写 I/O 设备总次数。<br/>
+wmerge: 进行了 merge 的写操作数目。<br/>
+wsect: 写扇区总数<br/>
+wuse: 从进入写队列到写操作完成的时间累积 (毫秒)</p>
+
+<p>running: 已进入 I/O 请求队列，等待进行设备操作的请求总数。上面的例子显示 hda7 上的请求队列长度为 0。</p>
+
+<p>use: 扣除重叠等待时间的净等待时间 (毫秒)。一般比 (ruse+wuse) 要小。比如 5 个读请求同时等待了 1 毫秒，那么 ruse 值为 5ms, 而 use 值为<br/>
+ 1ms。use 也可以理解为 I/O 队列处于不为空状态的总时间。hda7 的 I/O<br/>
+ 队列非空时间为 509 秒，约合 8 分半钟。</p>
+
+<p>aveq: 在队列中总的等待时间累积 (毫秒) (约等于 ruse+wuse)</p>
+
+<ol>
+<li><p>iostat 结果解析</p>
+
+<pre><code> # iostat -x  
+ Linux 2.4.21-9.30AX (localhost) 2004 年 07 月 14 日  
+
+ avg-cpu: %user %nice %sys %idle  
+  3.85 0.00 0.95 95.20  
+
+ Device: rrqm/s wrqm/s r/s w/s rsec/s wsec/s rkB/s wkB/s avgrq-sz
+ avgqu-sz await svctm %util  
+ /dev/hda 1.70 1.70 0.82 0.82 19.88 20.22 9.94 10.11 24.50 11.83 57.81
+ 610.76 99.96  
+ /dev/hda1 0.00 0.00 0.00 0.00 0.01 0.00 0.00 0.00 12.92 0.00 10.77 10.77
+ 0.00  
+ /dev/hda5 0.02 0.00 0.00 0.00 0.03 0.00 0.02 0.00 6.60 0.00 6.44 6.04
+ 0.00  
+ /dev/hda6 0.01 0.38 0.05 0.03 0.43 3.25 0.21 1.62 46.90 0.15 193.96
+ 52.25 0.41  
+ /dev/hda7 1.66 1.33 0.76 0.79 19.41 16.97 9.70 8.49 23.44 0.79 51.13
+ 19.79 3.07  
+</code></pre></li>
+</ol>
+
+
+<p>rrqm/s: 每秒进行 merge 的读操作数目。即 delta(rmerge)/s<br/>
+wrqm/s: 每秒进行 merge 的写操作数目。即 delta(wmerge)/s<br/>
+r/s: 每秒完成的读 I/O 设备次数。即 delta(rio)/s<br/>
+w/s: 每秒完成的写 I/O 设备次数。即 delta(wio)/s<br/>
+rsec/s: 每秒读扇区数。即 delta(rsect)/s<br/>
+wsec/s: 每秒写扇区数。即 delta(wsect)/s<br/>
+rkB/s: 每秒读 K 字节数。是 rsect/s 的一半，因为每扇区大小为 512 字节。<br/>
+wkB/s: 每秒写 K 字节数。是 wsect/s 的一半。<br/>
+avgrq-sz: 平均每次设备 I/O 操作的数据大小 (扇区)。即 delta(rsect+wsect)/delta(rio+wio)<br/>
+avgqu-sz: 平均 I/O 队列长度。即 delta(aveq)/s/1000 (因为 aveq 的单位为毫秒)。<br/>
+await: 平均每次设备 I/O 操作的等待时间 (毫秒)。即 delta(ruse+wuse)/delta(rio+wio)<br/>
+svctm: 平均每次设备 I/O 操作的服务时间 (毫秒)。即 delta(use)/delta(rio+wio)<br/>
+%util: 一秒中有百分之多少的时间用于 I/O 操作，或者说一秒中有多少时间 I/O 队列是非空的。即 delta(use)/s/1000 (因为 use 的单位为毫秒)</p>
+
+<p>如果 %util 接近 100%，说明产生的 I/O 请求太多，I/O 系统已经满负荷，该磁盘可能存在瓶颈。</p>
+
+<p>svctm 一般要小于 await (因为同时等待的请求的等待时间被重复计算了)，<br/>
+svctm 的大小一般和磁盘性能有关，CPU/内存的负荷也会对其有影响，请求过多也会间接导致 svctm 的增加。await 的大小一般取决于服务时间(svctm) 以及 <br/>
+I/O 队列的长度和 I/O 请求的发出模式。如果 svctm 比较接近 await，说明 <br/>
+I/O 几乎没有等待时间；如果 await 远大于 svctm，说明 I/O 队列太长，应用得到的响应时间变慢，如果响应时间超过了用户可以容许的范围，这时可以考虑更换更快的磁盘，调整内核 elevator 算法，优化应用，或者升级 CPU。</p>
+
+<p>队列长度(avgqu-sz)也可作为衡量系统 I/O 负荷的指标，但由于 avgqu-sz 是按照单位时间的平均值，所以不能反映瞬间的 I/O 洪水。</p>
+
+<ol>
+<li>I/O 系统 vs. 超市排队</li>
+</ol>
+
+
+<p>举一个例子，我们在超市排队 checkout 时，怎么决定该去哪个交款台呢? 首当是看排的队人数，5 个人总比 20 人要快吧? 除了数人头，我们也常常看看前面人购买的东西多少，如果前面有个采购了一星期食品的大妈，那么可以考虑换个队排了。还有就是收银员的速度了，如果碰上了连钱都点不清楚的新手，那就有的等了。另外，时机也很重要，可能 5 分钟前还人满为患的收款台，现在已是人去楼空，这时候交款可是很爽啊，当然，前提是那过去的 5 分钟里所做的事情比排队要有意义 (不过我还没发现什么事情比排队还无聊的)。</p>
+
+<p>I/O 系统也和超市排队有很多类似之处:</p>
+
+<p> r/s+w/s 类似于交款人的总数平均队列长度(avgqu-sz)类似于单位时间里平均排队人的个数平均服务时间(svctm)类似于收银员的收款速度平均等待时间(await)类似于平均每人的等待时间平均 I/O 数据(avgrq-sz)类似于平均每人所买的东西多少<br/>
+ I/O 操作率 (%util)类似于收款台前有人排队的时间比例。</p>
+
+<p>我们可以根据这些数据分析出 I/O 请求的模式，以及 I/O 的速度和响应时间。</p>
+
+<ol>
+<li><p>一个例子</p>
+
+<pre><code> # iostat -x 1  
+ avg-cpu: %user %nice %sys %idle  
+  16.24 0.00 4.31 79.44  
+ Device: rrqm/s wrqm/s r/s w/s rsec/s wsec/s rkB/s wkB/s avgrq-sz
+ avgqu-sz await svctm %util  
+ /dev/cciss/c0d0  
+  0.00 44.90 1.02 27.55 8.16 579.59 4.08 289.80 20.57 22.35 78.21 5.00
+ 14.29  
+ /dev/cciss/c0d0p1  
+  0.00 44.90 1.02 27.55 8.16 579.59 4.08 289.80 20.57 22.35 78.21 5.00
+ 14.29  
+ /dev/cciss/c0d0p2  
+  0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  
+</code></pre></li>
+</ol>
+
+
+<p>上面的 iostat 输出表明秒有 28.57 次设备 I/O 操作: delta(io)/s = r/s +<br/>
+w/s = 1.02+27.55 = 28.57 (次/秒) 其中写操作占了主体 (w:r = 27:1)。</p>
+
+<p>平均每次设备 I/O 操作只需要 5ms 就可以完成，但每个 I/O 请求却需要等上 <br/>
+78ms，为什么? 因为发出的 I/O 请求太多 (每秒钟约 29 个)，假设这些请求是同时发出的，那么平均等待时间可以这样计算:</p>
+
+<p> 平均等待时间 = 单个 I/O 服务时间   * ( 1 + 2 + &hellip; + 请求总数-1) / 请求总数</p>
+
+<p>应用到上面的例子: 平均等待时间 = 5ms   * (1+2+&hellip;+28)/29 = 70ms，和 <br/>
+iostat 给出的 78ms 的平均等待时间很接近。这反过来表明 I/O 是同时发起的。</p>
+
+<p>每秒发出的 I/O 请求很多 (约 29 个)，平均队列却不长 (只有 2 个 左右)，这表明这 29 个请求的到来并不均匀，大部分时间 I/O 是空闲的。</p>
+
+<p>一秒中有 14.29% 的时间 I/O 队列中是有请求的，也就是说，85.71% 的时间里 <br/>
+I/O 系统无事可做，所有 29 个 I/O 请求都在 142 毫秒之内处理掉了。</p>
+
+<p>delta(ruse+wuse)/delta(io) = await = 78.21 =  > delta(ruse+wuse)/s =<br/>
+78.21   * delta(io)/s = 78.21  *28.57 = 2232.8，表明每秒内的 I/O 请求总共需要等待 2232.8ms。所以平均队列长度应为 2232.8ms/1000ms = 2.23，而 iostat <br/>
+给出的平均队列长度 (avgqu-sz) 却为 22.35，为什么?! 因为 iostat 中有 <br/>
+bug，avgqu-sz 值应为 2.23，而不是 22.35。</p>
+
+<ol>
+<li>iostat 的 bug 修正</li>
+</ol>
+
+
+<p>iostat.c 中是这样计算 avgqu-sz 的:</p>
+
+<p> <code>((double) current.aveq) / itv</code></p>
+
+<p>aveq 的单位是毫秒，而 itv 是两次采样之间的间隔，单位是 jiffies。必须换算成同样单位才能相除，所以正确的算法是:</p>
+
+<p> <code>((double) current.aveq) / itv   * HZ / 1000</code></p>
+
+<p>这样，上面 iostat 中输出的 avgqu-sz 值应为 2.23，而不是 22.3。</p>
+
+<p>另外，util 值的计算中做了 HZ 值的假设，不是很好，也需要修改。</p>
+
+<pre><code>    --- sysstat-4.0.7/iostat.c.orig 2004-07-15 13:31:27.000000000 +0800  
+    +++ sysstat-4.0.7/iostat.c 2004-07-15 13:37:34.000000000 +0800  
+    @@ -370,7 +370,7 @@  
+
+     nr  _ios = current.rd  _ios + current.wr  _ios;  
+     tput = nr  _ios   * HZ / itv;  
+    - util = ((double) current.ticks) / itv;  
+    + util = ((double) current.ticks) / itv   * HZ / 1000;  
+     /  * current.ticks (ms), itv (jiffies)   */  
+     svctm = tput ? util / tput : 0.0;  
+     /  * kernel gives ticks already in milliseconds for all platforms -  &gt; no
+    need for further scaling   */  
+    @@ -387,12 +387,12 @@  
+     ((double) current.rd  _sectors) / itv   * HZ, ((double)
+    current.wr  _sectors) / itv   * HZ,  
+     ((double) current.rd  _sectors) / itv   * HZ / 2, ((double)
+    current.wr  _sectors) / itv   * HZ / 2,  
+     arqsz,  
+    - ((double) current.aveq) / itv,  
+    + ((double) current.aveq) / itv   * HZ / 1000, /  * aveq is in ms   */  
+     await,  
+     /  * again: ticks in milliseconds   */  
+    - svctm   * 100.0,  
+    + svctm,  
+     /  * NB: the ticks output in current sard patches is biased to output
+    1000 ticks per second   */  
+    - util   * 10.0);  
+    + util   * 100.0);  
+     }  
+     }  
+     }  
+</code></pre>
+
+<p>一会儿 jiffies, 一会儿 ms，看来 iostat 的作者也被搞晕菜了。</p>
+
+<p>这个问题在 systat 4.1.6 中得到了修正:</p>
+
+<blockquote><ul>
+<li>The average I/O requests queue length as displayed by iostat -x was<br/>
+wrongly calculated. This is now fixed.</li>
+</ul>
+</blockquote>
+
+<p>但 Redhat 的 sysstat 版本有些太过时了 (4.0.7)。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-04-17T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.com/2006/04/17/iostat-output-analysis/" data-via="mlsx" data-counturl="http://wgzhao.com/2006/04/17/iostat-output-analysis/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/03/30/VG-resume-case/" title="Previous Post: VG恢复一例">&laquo; VG恢复一例</a>
+      
+      
+        <a class="basic-alignment right" href="/2006/04/19/Console-access/" title="Next Post: 控制台访问">控制台访问 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2006/04/17/iostat-output-analysis/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2006/04/17/iostat-output-analysis/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.com/2006/04/17/iostat-output-analysis/';
+        var disqus_url = 'http://wgzhao.com/2006/04/17/iostat-output-analysis/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Device-mapper-multipath的灵异事件--4 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/2006/08/18/device-mapper-multipath-of-supernatural-events-4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Device-mapper-multipath的灵异事件--4</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>来深圳出差是解决 openpower710+redflag 连接 EMC
+CX300 存储的故障问题，而这个连接方案我已经在北京作的测试，也有对应的测试报告，但是同样的环境，在深圳却找不到存储设备，很是怪异。而最后的解决办法更是让我搞不明白，因此标题冠以“灵异”二字，而具体的情况估计也说不太清楚，就贴上我的当时的一些记录吧，这是最后</p>
+
+<p>在 CX300 上删除两台 Linux 系统的注册信息，重新注册和设置权限，再调试 multipath，仍然不能做到路径“愈合”。重新编译 multipath，还是有这个错误。</p>
+
+<!--more-->
+
+
+<p>再调试各种 multipath 配置，到网上查找资源。现在的能看到的错误是三个：</p>
+
+<ol>
+<li><code>multipath -ll</code>出现的<code>[faulty]</code></li>
+<li>multipathd 服务启动时给出的<code>Failing path</code></li>
+<li><code>multipath -v3</code> 给出的<code>path not correctly configured for failover</code></li>
+</ol>
+
+
+<p>理清的思路是 3)导致了 2）的出现，1）是 2）的具体表现。因此需要重点考虑 3)的报错信息。无数电话和研发沟通，研发建议我从 multipath 源代码中看这个信息是从哪里报出来的，有没有办法屏蔽或者从报错的源代码中找到一些线索。</p>
+
+<p>multipath 的源代码中有两个 c 程序包含了该错误信息，一个是<code>path_priority/pp_emc/pp_emc.c</code>
+代码片段如下：</p>
+
+<pre><code>if ( /* Effective initiator type */
+ sense_buffer[27] != 0x03
+ /* Failover mode should be set to 1 */
+ || (sense_buffer[28] &amp; 0x07) != 0x04
+ /* Arraycommpath should be set to 1 */
+ || (sense_buffer[30] &amp; 0x04) != 0x04) {
+ fprintf(stderr, "Path not correctly configured for failover");
+ }
+</code></pre>
+
+<p>分别屏蔽三个条件来测试。发现第二个条件和第三个条件全部屏蔽后<code>multipath
+-v3</code>不会再报 3)的错误，但是 multipathd 服务还是会给出 2）的错误。另外一个包含 3）错误的源代码是<code>libcheckers/emc_clariion.c</code>,代码片段</p>
+
+<pre><code> if ( /* Effective initiator type */
+ sense_buffer[27] != 0x03
+ /* Failover mode should be set to 1 */
+ || (sense_buffer[28] &amp; 0x07) != 0x04
+ /* Arraycommpath should be set to 1 */
+ || (sense_buffer[30] &amp; 0x04) != 0x04) {
+ MSG("emc_clariion_checker: Path not correctly configured for
+failover");
+ ret = PATH_DOWN;
+ goto out;
+ }
+</code></pre>
+
+<p>从这段得知，如果有这个报错，会将程序返回值设置为 PATH_DOWN，查看 multipath 的说明文件，当设置为这个返回值时，multipathd
+服务会认为路径会处于 faulty 状态，这就是我们能看到的 1）错误信息。于是屏蔽上述代码中的后两个条件测试信息。</p>
+
+<p>重新编译，安装，测试。1），2），3）错误信息完全消失，路径也能“愈合”。看上去似乎很已经彻底解决这次的故障。</p>
+
+<p>打电话给研发，告知修改方法，研发不能保证该方式能否做到 trespass 功能，因为发生 trespass 的触发条件已经屏蔽。他建议我如果有时间的话，按照源代码中指示的参数设置值，修改一下 CX300 的配置，再做测试。</p>
+
+<p>于是根据源代码中的信息，将 CX300 中 ArrayCommPath,failover 两个参数改回原来的 enable 和 1。重启系统，重新安装 multipath 包，再测试一切正常，按照在北京的测试文档，测试均通过，包括控制器的 trespass.
+升级系统到 sp1，再测试，一切正常。</p>
+
+<p>从这点看来，事情又回到了起点，我来深圳的时候看到的配置和今天我看到的配置完全相同，当时之所以要修改默认的 ArrayCommPath 和
+failover 参数，是因为系统无法正确的识别到四个设备。其中两个设备识别出来的 vendor 是 DGC，大小正常。另外两个的 vendor 是 LUNZ，大小是 1G。而从前天发给大家的 pdf 文档中恰好提到了 LUNZ 的问题，出错的信息和我们现场一样，pdf 文档建议修改为 disable 和 2。而修改后确实能认到正确的设备，于是就认为这个参数修改无疑是正确的。剩下的任务应该是来修改 multipath 来消除上面给出的错误信息，这就导致我们离正确的解决办法越走越远，导致用了 2 天的时间来修改 multipath 配置，连研发都认为可能是我们的系统问题，后者是系统不够稳定，或者是 multipath 不稳定。</p>
+
+<p>仔细回想这几天的操作，我觉得当时之所以不能正确识别设备的原因可能是 CX300 上修改的配置并没有生效。所以我给出下面的建议：</p>
+
+<p>划分 LUN 并配置完成后，最好重启存储设备，如果确实不能重启的（比如这次，就不允许重启）。可以考虑对控制器做两次切换来确保配置生效。而 multipath 无须做任何修改，DC5.0 SP1 上的版本可以直接使用。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-18T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.com/2006/08/18/device-mapper-multipath-of-supernatural-events-4/" data-via="mlsx" data-counturl="http://wgzhao.com/2006/08/18/device-mapper-multipath-of-supernatural-events-4/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/08/17/device-mapper-multipath-of-supernatural-events-3/" title="Previous Post: device-mapper-multipath的灵异事件--3">&laquo; device-mapper-multipath的灵异事件--3</a>
+      
+      
+        <a class="basic-alignment right" href="/2006/08/21/Weird-dream/" title="Next Post: 怪异的梦">怪异的梦 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2006/08/18/device-mapper-multipath-of-supernatural-events-4/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2006/08/18/device-mapper-multipath-of-supernatural-events-4/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.com/2006/08/18/device-mapper-multipath-of-supernatural-events-4/';
+        var disqus_url = 'http://wgzhao.com/2006/08/18/device-mapper-multipath-of-supernatural-events-4/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

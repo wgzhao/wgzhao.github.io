@@ -1,0 +1,63 @@
+ot@cp2 /tmp]# rpm -i amanda-backup_client-2.6.1p1-1.rhel5.i386.rpm
+    4月 11 2009 12:16:32: Preparing to install: Amanda Community Edition - version
+2.6.1p1
+    4月 11 2009 12:16:32: Checking for 'amandabackup' user...
+    4月 11 2009 12:16:32:
+    4月 11 2009 12:16:32:  The 'amandabackup; user account has been successfully cr
+eated.
+    4月 11 2009 12:16:32:  Furthermore, the account has been automatically locked f
+or you
+    4月 11 2009 12:16:32:  for security purposes.  Once a password for the  'amanda
+backup'
+    4月 11 2009 12:16:32:  account has been set, the user can be unlocked by issuin
+g
+    4月 11 2009 12:16:32:  the following command as root.:
+    4月 11 2009 12:16:32:
+    4月 11 2009 12:16:32:  # passwd -u amandabackup
+    4月 11 2009 12:16:32:
+    4月 11 2009 12:16:32:  If this is not a new installation of Amanda and you have
+    4月 11 2009 12:16:32:  pre-existing Amanda configurations in /etc/amanda
+    4月 11 2009 12:16:32:  you should ensure that 'dumpuser' is set to 'amandabacku
+p'
+    4月 11 2009 12:16:32:  in those configurations.  Additionally, you should ensur
+e
+    4月 11 2009 12:16:32:  that /var/lib/amanda/.amandahosts on your client systems
+    4月 11 2009 12:16:32:  is properly configured to allow connections for the user
+    4月 11 2009 12:16:32:  'amandabackup'.
+    4月 11 2009 12:16:32:
+    4月 11 2009 12:16:32:
+    4月 11 2009 12:16:32: === Amanda backup client installation started. ===
+    4月 11 2009 12:16:35: Updating system library cache...done.
+    4月 11 2009 12:16:46: Reloading xinetd configuration...停止 xinetd：[失败]
+启动 xinetd：[确定]
+success.
+    4月 11 2009 12:16:47: Installing '/var/lib/amanda/amandates'.
+    4月 11 2009 12:16:47: The file '/var/lib/amanda/amandates' has been created.
+    4月 11 2009 12:16:47: Ensuring correct permissions for '/var/lib/amanda/amandat
+es'.
+    4月 11 2009 12:16:47: '/var/lib/amanda/amandates' Installation successful.
+    4月 11 2009 12:16:47: Checking '/var/lib/amanda/.amandahosts' file.
+    4月 11 2009 12:16:47: Checking '/etc/amanda/amanda-client.conf' file.
+    4月 11 2009 12:16:47: Installing '/var/lib/amanda/.gnupg'.
+    4月 11 2009 12:16:47: '/var/lib/amanda/.gnupg' will be created.
+    4月 11 2009 12:16:47: The directory '/var/lib/amanda/.gnupg' created successful
+ly.
+    4月 11 2009 12:16:47: Ensuring correct permissions for '/var/lib/amanda/.gnupg'
+.
+    4月 11 2009 12:16:47: '/var/lib/amanda/.gnupg' Installation successful.
+    4月 11 2009 12:16:47: Creating directory '/var/lib/amanda/.ssh'.
+    4月 11 2009 12:16:47: Creating ssh RSA key in '/var/lib/amanda/.ssh/id_rsa_amre
+cover'
+    4月 11 2009 12:16:48: Setting permissions for '/var/lib/amanda/.ssh' and '/var/
+lib/amanda/.ssh/id_rsa_amrecover*'
+    4月 11 2009 12:16:48: Checking for '/var/lib/amanda/.profile' and ensuring corr
+ect environment.
+    4月 11 2009 12:16:48: Setting ownership and permissions for '/var/lib/amanda/.p
+rofile'
+    4月 11 2009 12:16:48: Sending anonymous distribution and version information to
+    Zmanda
+    4月 11 2009 12:16:48: Setting ownership and permissions for '/var/lib/amanda/.p
+rofile'
+    4月 11 2009 12:16:53: === Amanda backup client installation complete. ===
+
+

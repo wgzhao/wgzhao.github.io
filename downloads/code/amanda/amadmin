@@ -1,0 +1,18 @@
+-su-3.2$ amadmin  FileBackup find
+
+date                host         disk           lv tape or file                                               file part status
+2009-04-12 19:26:33 cp2.domain.com /web/websites   1 /dumps/amanda/20090412192633
+/cp2.domain.com._web_websites.1     0   -- OK
+2009-04-12 19:32:29 cp2.domain.com /web/websites   1 /dumps/amanda/20090412193229
+/cp2.domain.com._web_websites.1     0   -- OK
+2009-04-12 19:53:34 cp2.domain.com /web/websites   0 FileBackup-04                                                 2  1/1 OK
+2009-04-13 03:00:02 cp2.domain.com /web/websites   0 FileBackup-05                                                 2  1/1 OK
+2009-04-13 17:49:11 cp2.domain.com /web/websites   1 FileBackup-06                                                 3  1/1 OK
+2009-04-12 19:26:33 cp3.domain.com /opt/www/sites  1 /dumps/amanda/20090412192633
+/cp3.domain.com._opt_www_sites.1    0   -- OK
+2009-04-12 19:32:29 cp3.domain.com /opt/www/sites  1 /dumps/amanda/20090412193229
+/cp3.domain.com._opt_www_sites.1    0   -- OK
+2009-04-12 19:53:34 cp3.domain.com /opt/www/sites  0 FileBackup-04                                                 1  1/1 OK
+2009-04-13 03:00:02 cp3.domain.com /opt/www/sites  1 FileBackup-05                                                 1  1/1 OK
+2009-04-13 17:49:11 cp3.domain.com /opt/www/sites  0 FileBackup-06                                                 2  1/1 OK
+2009-04-13 17:49:11 localhost    /etc            0 FileBackup-06                                                 1  1/1 OK

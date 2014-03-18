@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>LVM Snapshot简述 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="这两天看了有关 LVM 快照(snapshot)的一些资料，加上 pczou 的一些指导，对 snapshot 有一些理解，记录如下，和大家共享： Logical Volume Manager (LVM))提供了对任意一个 Logical Volume(LV)做“快照”(snapshot)的功能， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/2008/06/20/LVM-snapshot-summary">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">LVM Snapshot简述</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>这两天看了有关 LVM 快照(snapshot)的一些资料，加上 pczou 的一些指导，对 snapshot 有一些理解，记录如下，和大家共享：</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux">Logical Volume Manager (LVM)</a>)提供了对任意一个 Logical Volume(LV)做“快照”(snapshot)的功能，以此来获得一个分区的状态一致性备份。在某一个状态下做备份的时候，可能有应用正在访问某一个文件或者数据库，这就是使得备份的时候文件处于一个状态，而备份完后，文件却处于另外一个状态，从而造成备份的非一致性，这种状态恢复数据库数据几乎不会成功。</p>
+
+<!--more-->
+
+
+<p>状态的解决办法是将其分区挂载为只读，然后通过数据库的表级别锁定(table-level write locks)甚至停止数据库来备份数据。所有这些方法无意严重影响了服务的可用性。使用 LVM snapshot 既可以获得一致性备份，又不会影响服务器的可用性。</p>
+
+<p>要提醒一点是，snapshot 这种方法仅对 LVM 有效，对于非 LVM 文件系统无效。</p>
+
+<p>snapshot 的实现有多种方式(参考文章最后的连接)，这里说说 LVM 中 snapshot 的“写时复制”(copy on write) 的实现方法。</p>
+
+<p>当一个 snapshot 创建的时候，仅拷贝原始卷里数据的元数据(meta-data)。创建的时候，并不会有数据的物理拷贝，因此 snapshot 的创建几乎是实时的，当原始卷上有写操作执行时，snapshot 跟踪原始卷块的改变，这个时候原始卷上将要改变的数据在改变之前被拷贝到 snapshot 预留的空间里，因此这个原理的实现叫做写时复制(copy-on-write)。</p>
+
+<p>在写操作写入块之前，CoW 讲原始数据移动到 snapshot 空间里，这样就保证了所有的数据在 snapshot 创建时保持一致。而对于 snapshot 的读操作，如果是读取数据块是没有修改过的，那么会将读操作直接重定向到原始卷上，如果是要读取已经修改过的块，那么就读取拷贝到 snapshot 中的块。</p>
+
+<p>这样，通常的文件 I/0 流程有一个改变，那就是在文件系统和设备驱动之间增加了一个 cow 层，变成了下面这个样子：</p>
+
+<pre><code>file I/0 ---&gt; filesystem -- &gt;CoW --&gt; block I /O
+</code></pre>
+
+<p>下面的图也许可以比较容易了解 CoW 的原理：</p>
+
+<p><img src="/images/cow.gif" title="Copy on Write" alt="image" /></p>
+
+<p>采取 CoW 实现方式时，snapshot 的大小并不需要和原始卷一样大，其大小仅仅只需要考虑两个方面：从 shapshot 创建到释放这段时间内，估计块的改变量有多大;数据更新的频率。一旦
+snapshot 的空间记录满了原始卷块变换的信息，那么这个 snapshot 立刻被释放，从而无法使用，从而导致这个 snapshot 无效。所以，非常重要的一点，一定要在 snapshot 的生命周期里，做完你需要做得事情。当然，如果你的 snapshot 大小和原始卷一样大，甚至还要大，那它的寿命就是“与天齐寿”了。</p>
+
+<p>snapshot 其实除了备份以外，还有很多其他用途</p>
+
+<h4>虚拟化</h4>
+
+<p>在使用 LVM2 时，快照可以不是只读的。这意味着，在创建快照之后， 可以像常规块设备一样挂载和读写快照。</p>
+
+<p>因为流行的虚拟化系统（比如 Xen、VMWare、Qemu 和 KVM）可以将块设备用作 guest 映像，所以可以创建这些映像的完整拷贝，并根据需要使用它们，它们就像是内存占用量很低的虚拟机。这样做的好处是部署迅速（创建快照的时间常常不超过几秒）和节省空间（guest 共享原映像的大多数数据）。</p>
+
+<p>设置的步骤如下：</p>
+
+<ol>
+<li>为原映像创建一个逻辑卷。</li>
+<li>使用这个 LV 作为磁盘映像安装 guest 虚拟机。</li>
+<li>暂停这个虚拟机。内存映像可以是一个常规文件，所有其他快照都放在里面。</li>
+<li>为原 LV 创建一个可读写的快照。</li>
+<li>使用快照卷作为磁盘映像生成一个新的虚拟机。如果需要的话，要修改网络/控制台设置。</li>
+<li>登录已经创建的虚拟机，修改网络设置/主机名。</li>
+</ol>
+
+
+<p>完成这些步骤之后， 就可以让用户访问刚创建的虚拟机了。如果需要另一个虚拟机，那么只需重复步骤 4 到 6（所以不需要重新安装虚拟机）。还可以用一个脚本自动执行这些步骤。</p>
+
+<p>在使用完虚拟机之后， 可以停止虚拟机并销毁快照。</p>
+
+<h4>数据回溯</h4>
+
+<p>在一个生产系统上要执行一些操作，需要慎之又慎，即便在模拟环境中做过很多次测试都没有问题，但是并不能保证在生产环境就一定成功，于是这个时候，我们把系统做一个 snapshot，这样一旦新操作出现问题，立刻回溯到创建 snapshot 的时间点，当然你也可以认为这是一个备份的扩展使用。</p>
+
+<p>最后，我们举一些例子，加深对 snapshot 的理解。</p>
+
+<p>a) 创建一个 120M 的 snapshot，执行一些操作看看 CoW 的动作。</p>
+
+<p>我们举一个例子来说明如何创建和使用 snapshot。我们假定创建一个 120M 的 snapshot，这就意味着在 snapshot 生命周期里，你仅能有 120M 的数据量改变。</p>
+
+<p>下面的命令，为<code>/dev/vg/lvdata</code>创建<code>/dev/vg/lvdata-sp</code></p>
+
+<pre><code># lvcreate -L20M -s -n lvdata-sp /dev/vg/lvdata
+
+Logical volume “lvdata-sp” created
+
+其中 lvdata 大小为 120MB。
+
+# lvdisplay /dev/vg/lvdata-sp
+
+— Logical volume —
+
+LV Name /dev/vg/lvdata-sp
+
+VG Name vg
+
+LV UUID Yl0fQU-Ve9T-lfmp-xJPq-Uwrd-RVVM-lDDVz0
+
+LV Write Access read/write
+
+LV snapshot status active destination for /dev/vg/lvdata
+
+LV Status available
+
+# open 1
+
+LV Size 200.00 MB
+
+Current LE 50
+
+COW-table size 20.00 MB
+
+COW-table LE 5
+
+Allocated to snapshot 0.27%
+
+Snapshot chunk size 8.00 KB
+
+Segments 1
+
+Allocation inherit
+
+Read ahead sectors 0
+
+Block device 253:0
+</code></pre>
+
+<p>上面的 <code>Allocated to snapshot 0.27%</code>是我们关心的，表示目前还有<code>99.73%</code>的空间没有使用。</p>
+
+<p>我们尝试在 lvdata 创建一个 10M 的文件，再看看这个参数值。</p>
+
+<pre><code># mount /dev/vg/lvdata /media/lvdata/
+# dd if=/dev/hda of=/media/lvdata/10M bs=1M count=10
+
+10+0 records in
+
+10+0 records out
+
+10485760 bytes (10 MB) copied, 0.272393 seconds, 38.5 MB/s
+
+# lvdisplay /dev/vg/lvdata-sp
+
+— Logical volume —
+
+LV Name /dev/vg/lvdata-sp
+
+VG Name vg
+
+LV UUID Yl0fQU-Ve9T-lfmp-xJPq-Uwrd-RVVM-lDDVz0
+
+LV Write Access read/write
+
+LV snapshot status active destination for /dev/vg/lvdata
+
+LV Status available
+
+# open 0
+
+LV Size 200.00 MB
+
+Current LE 50
+
+COW-table size 20.00 MB
+
+COW-table LE 5
+
+Allocated to snapshot 51.02%
+
+Snapshot chunk size 8.00 KB
+
+Segments 1
+
+Allocation inherit
+
+Read ahead sectors 0
+
+Block device 253:0
+</code></pre>
+
+<p><code>Allocated to snapshot51.02%</code>,符合我们的预期。此时 snapshot 还剩下大概 10M 不到的空间了，如果我么再在 lvdata 上创建一个 12M 的文件，会发生什么呢？</p>
+
+<pre><code>#dd if=/dev/hda of=/media/lvdata/12M bs=1M count=12
+
+12+0 records in
+
+12+0 records out
+
+12582912 bytes (13 MB) copied, 0.288311 seconds, 43.6 MB/s
+
+device-mapper: snapshots: Invalidating snapshot: Unable to allocate exception.
+</code></pre>
+
+<p>创建文件的过程中，一个报错出现了，snapshot 已经无效。我们看看 snapshot 卷的详细信息。</p>
+
+<pre><code># lvdisplay /dev/vg/lvdata-sp
+
+/dev/vg/lvdata-sp: read failed after 0 of 4096 at 0: Input/Out Error
+
+— Logical volume —
+
+LV Name /dev/vg/lvdata-sp
+
+VG Name vg
+
+LV UUID Yl0fQU-Ve9T-lfmp-xJPq-Uwrd-RVVM-lDDVz0
+
+LV Write Access read/write
+
+LV snapshot status INACTIVE destination for /dev/vg/lvdata
+
+LV Status available
+
+# open 0
+
+LV Size 200.00 MB
+
+Current LE 50
+
+COW-table size 20.00 MB
+
+COW-table LE 5
+
+Snapshot chunk size 8.00 KB
+
+Segments 1
+
+Allocation inherit
+
+Read ahead sectors 0
+</code></pre>
+
+<p>整个 snapshot 卷已经出现 I/0 错误了，而且 snapshot 的状态也是“INACTIVE”。</p>
+
+<p>是否能挂载上来呢？</p>
+
+<pre><code># mount /dev/vg/lvdata-sp /media/snapshot/
+
+mount: you must specify the filesystem type
+
+#dmesg
+
+Buffer I/O error on device dm-0, logical block 0
+
+Buffer I/O error on device dm-0, logical block 1
+
+Buffer I/O error on device dm-0, logical block 2
+
+Buffer I/O error on device dm-0, logical block 3
+
+Buffer I/O error on device dm-0, logical block 4
+
+Buffer I/O error on device dm-0, logical block 5
+
+Buffer I/O error on device dm-0, logical block 6
+
+Buffer I/O error on device dm-0, logical block 7
+
+Buffer I/O error on device dm-0, logical block 8
+
+Buffer I/O error on device dm-0, logical block 9
+
+hfs: unable to find HFS+ superblock
+</code></pre>
+
+<p>从 dmesg 的错误信息来看，超级块的信息也丢失了</p>
+
+<p>尝试激活一下 lvdata-sp</p>
+
+<pre><code> # lvchange -ay /dev/vg/lvdata-sp 
+ /dev/vg/lvdata-sp: read failed after 0 of 4096 at 0: 输入/输出错误 
+</code></pre>
+
+<p>恩，这个 snapshot 已经被释放了，所以剩下要做得事情就是删除它。</p>
+
+<pre><code># lvremove /dev/vg/lvdata-sp 
+/dev/vg/lvdata-sp: read failed after 0 of 4096 at 0: 输入/输出错误 
+Do you really want to remove active logical volume "lvdata-sp"? [y/n]: y 
+Logical volume "lvdata-sp" successfully removed 
+</code></pre>
+
+<p>b）利用 snapshot 在线备份 MySQL 数据库（或者其他数据库）</p>
+
+<p>流程是先做一个 flush 操作，并锁定表，任何创建 snapshot，任何解锁，然后备份数据，最后释放 snapshot。这样，MySQL 几乎不会中断其运行。</p>
+
+<pre><code> FLUSH TABLES WITH READ LOCK; 
+\! lvcreate --size 100m --snapshot --name snap /dev/VolGroup01/LogVol00 
+UNLOCK TABLES; 
+</code></pre>
+
+<p>接着做一些备份的工作</p>
+
+<pre><code>mkdir /snap
+
+mount /dev/VolGroup01/snap /snap
+
+# This is where you back up whatever you need from /snap, e.g. rsync(1)
+
+umount /snap
+
+lvremove /dev/VolGroup01/snap
+
+rmdir /snap
+</code></pre>
+
+<p>最后，感谢 pczou 抽出时间和我交流和指导！</p>
+
+<p>进一步阅读：</p>
+
+<p><a href="http://www.ibm.com/developerworks/tivoli/library/t-snaptsm1/index.html">﻿Understanding and exploiting snapshot technology for data protection, Part 1: Snapshot technology  overview</a></p>
+
+<p><a href="http://www.ibm.com/developerworks/cn/linux/l-lvm2/">逻辑卷管理</a></p>
+
+<p><a href="http://tldp.org/HOWTO/LVM-HOWTO/">LVM-HOWTO</a></p>
+
+<p>﻿<a href="http://www.howtoforge.com/linux_lvm_snapshots">Back Up (And Restore) LVM Partitions With LVM Snapshots</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-20T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.com/2008/06/20/LVM-snapshot-summary/" data-via="mlsx" data-counturl="http://wgzhao.com/2008/06/20/LVM-snapshot-summary/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2008/06/17/simple-steps-enable-postfix-with-sasl/" title="Previous Post: 使Postfix具有SASL功能的简明配置步骤">&laquo; 使Postfix具有SASL功能的简明配置步骤</a>
+      
+      
+        <a class="basic-alignment right" href="/2008/06/23/Based-on-the-SSL-certificate-configuration/" title="Next Post: 基于SSL的电子证书配置">基于SSL的电子证书配置 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2008/06/20/LVM-snapshot-summary/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2008/06/20/LVM-snapshot-summary/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.com/2008/06/20/LVM-snapshot-summary/';
+        var disqus_url = 'http://wgzhao.com/2008/06/20/LVM-snapshot-summary/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,2485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Linux系统管理]]></title>
+  <link href="http://wgzhao.com/atom.xml" rel="self"/>
+  <link href="http://wgzhao.com/"/>
+  <updated>2014-03-18T16:16:05+08:00</updated>
+  <id>http://wgzhao.com/</id>
+  <author>
+    <name><![CDATA[wgzhao]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[静态编译tmux 1.9a版本]]></title>
+    <link href="http://wgzhao.com/2014/03/18/compile-tmux-1-dot-9a-statically/"/>
+    <updated>2014-03-18T15:34:29+08:00</updated>
+    <id>http://wgzhao.com/2014/03/18/compile-tmux-1-dot-9a-statically</id>
+    <content type="html"><![CDATA[<p><a href="" title="http://tmux.sourceforge.net &quot;tmux is a terminal multiplexer&quot;">tmux</a> 的最新版本 1.9 带来了很多<a href="http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/CHANGES">特性</a>，而 CentOS 的仓库里，目前我只能找到<code>1.6</code>的版本。因此想要自己编译一个，但是<code>tmux 1.9a</code>编译时要求 <a href="" title="http://libevent.org  &quot;libevent office website&quot;">libevent</a> 为<code>2.x</code>的版本，而 CentOS 6.x 默认还是<code>1.x</code>的版本，为了不影响系统的稳定性，决定采取静态编译的方式。流程如下:</p>
+
+<!--more-->
+
+
+<ol>
+<li><p>系统首先安装需要的几个静态库</p>
+
+<pre><code> sudo yum -y install glibc-static ncurses-static
+</code></pre></li>
+<li><p>下载最新的 <a href="http://downloads.sourceforge.net/tmux/tmux-1.9a.tar.gz">tmux 1.9a</a></p></li>
+<li>下载 <a href="https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz">libevent 2.0</a> 源代码</li>
+<li><p>静态编译<code>libevent</code></p>
+
+<pre><code> tar -vxzf libevent-2.0.21-stable.tar.gz
+ cd libevent-2.0.21-stable
+ ./configure --enable-static --disable-shared
+ make &amp;&amp; sudo make install
+</code></pre></li>
+<li><p>静态编译<code>tmux 1.9a</code></p>
+
+<pre><code> tar -vxzf tmux-1.9a.tar.gz
+ cd tmux-1.9a
+ ./configure --enable-static --prefix=/usr/local
+ make &amp;&amp; sudo make install
+</code></pre></li>
+</ol>
+
+
+<p>如果上述步骤觉得比较啰嗦，可以点击<a href="http://pan.baidu.com/s/1sjxwW6D">这里</a>下载我已经编译好的版本。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Move to Github]]></title>
+    <link href="http://wgzhao.com/2014/03/16/move-to-github/"/>
+    <updated>2014-03-16T18:49:59+08:00</updated>
+    <id>http://wgzhao.com/2014/03/16/move-to-github</id>
+    <content type="html"><![CDATA[<p>这两天把荒废了一年多的 blog 又整理了一下，做了几件事情：</p>
+
+<ol>
+<li>把 blog 从自有的 VPS 上迁移到了 <a href="https://github.com">github</a>，也<a href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">定制了域名</a></li>
+<li>把 blog 的引擎有 <a href="http://www.octopress.org">octopress</a> 迁移到 <a href="https://github.com/tommy351/hexo/">hexo</a>,octopress 什么都好，就是当帖子数多了后，生成静态文件的时间太太太长了。吐槽的人很多，比如<a href="http://www.techelex.org/why-switch-blog-from-octopress-to-hexo/">这里</a>,<a href="https://github.com/jekyll/jekyll/issues/1855">这里</a>和<a href="http://lucifr.com/2013/01/02/from-octopress-to-hexo/">这里</a>。</li>
+<li>砍掉了很多过时的帖子，似乎没有次整理 blog，都会删除部分帖子。记得从 boblog 到 <a href="http://www.wordpress.com">wordpress</a> 就砍掉了将近 1/3 的帖子，后来从 wordpress 迁移到 <a href="http://www.octopress.org">octopress</a> 又砍掉了不少帖子。这次迁移到 hexo，又砍掉了将近 1/3 的帖子。</li>
+<li>域名从原来的<code>blog.wgzhao.com</code>迁移到<code>wgzhao.com</code>，前者将做 301 跳转.</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[一些Mac OS X 的使用技巧]]></title>
+    <link href="http://wgzhao.com/2012/12/30/some-tips-for-mac-os-x/"/>
+    <updated>2012-12-30T22:08:00+08:00</updated>
+    <id>http://wgzhao.com/2012/12/30/some-tips-for-mac-os-x</id>
+    <content type="html"><![CDATA[<p>下面的这些 Mac 上使用的小技巧都来自<a href="http://pragprog.com/book/ktmack2/mac-kung-fu">《Mac Kung Fu(2nd edition)》</a> 这本书，改书讲述了超过 400 个使用 Mac 的技巧，但是个人感觉很多技巧并不是那么实用，因此这里只摘录了个人觉得用得上的一些技巧。更详细和完善的技巧，大家可以点击<a href="http://pragprog.com/book/ktmack2/mac-kung-fu">这里</a>.</p>
+
+<h3>FaceTime 呼叫自动应答如果有人通过 FaceTime 呼叫你，默认情况下，你是需要点击接受才能建立起呼叫的，怎么才能做到自动应答呢，我们可以通过下面的方法</h3>
+
+<ol>
+<li><p>打开你喜欢的终端，输入下面的指令</p>
+
+<p> <code>defaults write com.apple.FaceTime AutoAcceptInvites -bool TRUE</code></p></li>
+<li><p>接下来，架设你希望 FaceTime ID(一般就是 Apple ID)为 <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#x77;&#x67;&#122;&#104;&#x61;&#x6f;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#119;&#x67;&#x7a;&#104;&#97;&#x6f;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;</a> 的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
+
+<p> <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add wgzhao@gmail.com</code></p>
+
+<p> 如果你希望能够自动应答的联系人是通过手机号码呼入进来的，那就把上面的邮件地址换成手机号码，不过要注意的是，手机号码前需要加上国码标志，比如中国是+86,那么指令类似如下：<br/>
+ <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add +8618612341234</code></p></li>
+<li><p>重启 FaceTime，然后试试，应该就可以了。</p></li>
+</ol>
+
+
+<p>如果你想删除自动应答，那很简单，删除上述两条指令就好了，类似如下：</p>
+
+<p><code>default delete com.apple.FaceTime AutoAcceptInvites    
+ default delete com.appple.FaceTime AutoAcceptInvitesFrom</code></p>
+
+<p> 当然，你可以直接编辑<code>~/Library/Preferences/com.apple.FaceTime.plist</code>文件来删除上述两项.</p>
+
+<!--more-->
+
+
+<h3>讯息程序(Messages.app)的一些常用快捷键</h3>
+
+<p><code>Message.app</code>是我在 Mac 上最常用的应用程序，也是一天使用时间很长的应用程序，因此掌握一些基本常用的快捷方式对提高效率还是很有帮助的。</p>
+
+<ul>
+<li><code>Control + Command + A/I/O/W</code> 设置状态为可用(A)，隐身(I)，离开(W)和离线(O)</li>
+<li><code>Command + 1</code> 显示联系人列表</li>
+<li><code>Control + Tab</code> 在聊天窗口左侧的联系人中来回切换</li>
+<li><code>Option + Up/Down</code> 在消息输入框里，使用这个快捷键，可以循环显示之前发出的消息，这样要是要重新发上一次，或者上几次发出的消息，就用不着重新打字，或者粘贴复制了。而且即使关机，重启后，这些消息依然还是存在</li>
+<li><code>Option + Command + B</code> 显示你正在聊天的人的地址簿信息，如果此人不在地址簿中，则创建一个。如果这个联系人在地址簿中的联系信息比较多，按这个快捷后，你会觉得比较壮观哟。</li>
+<li><code>Shift + Command + I</code> 显示正在聊天人的简介</li>
+<li><code>Option + Command + E</code> 用独立的邮件程序给当前聊天的人写一封电子邮件</li>
+<li><code>Option + Command + L</code> 显示文件传送窗口</li>
+<li><code>Shift + Command + K</code> 给对话增加时间戳</li>
+<li><code>Option + Command + K</code> 永久删除对话，不能恢复</li>
+<li><code>Shift + Command + E</code> 打开视频特效窗口，可以给你当前的视频增加特效，还记得 TBBT 里 Amy 和 Sheldon 的视频聊天不？</li>
+</ul>
+
+
+<h3>打开在终端里显示的链接如果你在终端(console)里看到一个邮件地址或者网页地址（比如打开 man 手册），如果你想打开这个链接，只需要按下<code>Command</code>键，然后把把鼠标移到链接上，鼠标形状就会变成熟悉的手形。点击链接，既可以打开.</h3>
+
+<h3>微调音量缺省情况下，使用音量调节按钮，每次都是一次增加或者减少一格音量。如果我们先按下<code>Shift</code>键和<code>Option</code>键，然后再按音量调整键，则把一格音量分成了 4 份，每次增加或者减少 &frac14; 格音量，非常方便。</h3>
+
+<h3>重启 Finder</h3>
+
+<p>最常见的重启<code>Finder</code>的方法是打开一个终端，然后输入<code>killall Finder</code>，这对终端控而言，无疑是最自然的重启方式，不过属于鼠标控而言，我们可以先按下<code>Option</code>键，然后在屏幕下方（也许你换了位置）的 Dock 上，右键点击<code>Finder</code>图标，在弹出的菜单中，选择<code>重启开始</code>即可</p>
+
+<h3>计算所有文件大小如果你在<code>Finder</code>里用列表(list)视图查看文件或文件夹的时候，你可能可以看到每个文件的大小，但是对于文件夹而言，大小那一列，则是用<code>--</code>表示，这个时候，我们可以按<code>Command + J</code>快捷键来打开查看窗口，然后选中下方的<code>计算所有大小</code>，一旦选中，<code>Finder</code>就会立刻计算所有文件夹的大小并显示。这个设置是针对每个你查看的文件夹的，如果你希望这个设置是系统全局可用，那么点击刚才查看窗口的<code>用作默认</code>按钮即可。</h3>
+
+<p><img src="http://blog.wgzhao.com/uploads/560_1356920963.png" alt="560" /></p>
+
+<h3>在快速查看里选择文本快速查看文件是 Mac 里一个非常方便的功能，使得我们不需要打开任何应用程序就可以预览绝大部分格式的文件。不过一个不太方便的地方是，在快速查看模式下，你没法选择文本。比如我快速查看一个文本文件，先复制其中某一段，就没办法，只能老老实实用文本编辑器打开，然后选择复制。现在我们可以通过下面的指令来做到这点：</h3>
+
+<p><code>defaults write com.apple.finder QLEnableTextSelection -bool TRUE; killall Finder</code></p>
+
+<p>然后你再快速查看一个本文文件或者 pdf 文件等，看看是不是可以选择，复制了？</p>
+
+<p>如果想去掉这个功能，那就删除上述条目好了</p>
+
+<p><code>defaults delete com.apple.finder QLEnableTextSelection;killall Finder</code></p>
+
+<h3>快速创建文件列表有什么办法可以快速创建一个包含当前目录下的所有文件及文件夹的列表文件吗？办法是肯定有的。打开<code>Finder</code>，进入你要创建列表的文件夹，然后按下<code>Command+A</code>选中全部文件和文件夹，然后按<code>Command+C</code>,别担心，只是按下，这个时候不会复制的。然后打开文本编辑器(TextEdit.app)，切换到纯文本模式(<code>Shift + Command +T</code>)，然后按下<code>Command + V</code>粘贴，现在你看到的就是文件列表了，而不是真正的复制那些你拷贝的文件的内容。这个方法对所有可以切换到纯文本模式的字处理程序都有效，包括 Word 和 Pages。</h3>
+
+<h3>一些符号的快捷键输入</h3>
+
+<p>直到怎么快速打出 Apple 的 logo 不？直到怎么快速插入一些数学符号不？打开你的文本编辑器，试试下面的这些快捷键吧</p>
+
+<h4>苹果符号按下<code>Shift+Option+K</code>就可以插入你经常可以在论坛中看到的 Apple logo 了()，不过要注意的是，在你的电脑上也许显示的是，但是并不意味着在别人的电脑上看到就是这个符号，这依赖于操作系统，比如 Windows 可能直接显示为一个框框，而 Linux 系统则有可能显示为另外一个符号</h4>
+
+<h4>版权符号按下<code>Option + G</code>就可以插入漂亮的版权符号(©)了。还有一个办法，就是你输入<code>(c)</code>后，按空格，也会自动变成版权符号</h4>
+
+<h4>货币符号</h4>
+
+<p><code>Shift + 4</code>能输出<code>$</code>符号，这个地球人都知道了。当然如果是在中文输入法的情况下，它会输出人民币符号<code>￥</code>。下面说的都是在默认英语书法的情况下</p>
+
+<ul>
+<li>美分(¢): <code>Option + 4</code></li>
+<li>英镑(£): <code>Option + 3</code></li>
+<li>日元/人民币(¥): <code>Option + Y</code></li>
+<li>欧元(€):<code>Shift + Option + 2</code></li>
+</ul>
+
+
+<h4>数学符号</h4>
+
+<ul>
+<li>约等于(≈): <code>Option + X</code></li>
+<li>度(°): <code>Shift + Option + 8</code></li>
+<li>除号(÷): <code>Option + /</code></li>
+<li>无穷(∞): <code>Option + 5</code></li>
+<li>小于等于(≤): <code>Option + ,</code></li>
+<li>大于等于(≥): <code>Option + .</code></li>
+<li>不等于(≠):  <code>Option + =</code></li>
+<li>Pi(π):    <code>Option + P</code></li>
+<li>加减(±):    <code>Shift + Option + =</code></li>
+<li>平方根(√):    <code>Option + V</code></li>
+<li>求和(∑):    <code>Option + W</code></li>
+</ul>
+
+
+<h4>商标符号</h4>
+
+<p><code>Option + 2</code>可以显示商标符号(™)，<code>Option + R</code>可以获得注册商标符号(®),输入<code>(r)</code>后按下空格，也可以获得.</p>
+
+<h3>屏幕截图最简单的对整个屏幕截图的快捷键是<code>Shift+Command+3</code>，默认会把快照照片保存到桌面，格式为 png.</h3>
+
+<p><code>Shift+Command+4</code>则允许你对特定的区域进行截图。</p>
+
+<p>如果是想把截图放在剪贴板里而不是保存到桌面上，那就分别使用<code>Shift+Control+Command+3</code>和<code>Shift+Control+Command+4</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[生成随机字符串以及自动更新时间戳和返回最近插入的ID号]]></title>
+    <link href="http://wgzhao.com/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/"/>
+    <updated>2012-08-24T22:04:00+08:00</updated>
+    <id>http://wgzhao.com/2012/08/24/generate-random-strings-and-other-tips-on-postgresql</id>
+    <content type="html"><![CDATA[<p><a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>下的几条 SQL 语句小技巧。</p>
+
+<h2>生成随机字符串这个是从<a href="http://momjian.us/main/blogs/pgblog/2012.html">别人的 blog</a> 上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">SELECT</span><span class="p">(</span>
+</span><span class='line'>       <span class="k">SELECT</span> <span class="n">string_agg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>         <span class="k">FROM</span> <span class="p">(</span>
+</span><span class='line'>          <span class="k">SELECT</span> <span class="n">chr</span><span class="p">(</span><span class="n">ascii</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">floor</span><span class="p">(</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">26</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span>
+</span><span class='line'>               <span class="k">FROM</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>           <span class="p">)</span> <span class="k">AS</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">)</span>
+</span><span class='line'>    <span class="k">FROM</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="k">as</span> <span class="n">a</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+</span><span class='line'>                    <span class="n">string_agg</span>
+</span><span class='line'>    <span class="c1">------------------------------------------</span>
+</span><span class='line'>     <span class="n">hnwjotzpvihnglbcfamgffisgdyveqjlefvtzviu</span>
+</span><span class='line'>     <span class="n">ephkbjmgkznqevikyggdxpocvkvugdpktxuuhhbr</span>
+</span><span class='line'>     <span class="n">gohljpwiwclusawnkrirvxbovwjcdktjzbujrqrn</span>
+</span><span class='line'>     <span class="n">tdildezovigqfhfbdodgzxpzykiqbaeudmghqfwm</span>
+</span><span class='line'>     <span class="n">ncdtkiunxyuwwjvuuelvepqibwqrcneqphkzqenn</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">5</span> <span class="k">rows</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成的字符串在<code>[a-z]</code>之间，当然，你可以通过修改<code>chr(ascii('a')</code>和<code>floor(random() * 26)</code>这个算术来在更广泛的范围内获取随机字符。比如下面这个</p>
+
+<!--more-->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">SELECT</span>
+</span><span class='line'>    <span class="p">(</span>
+</span><span class='line'>            <span class="k">SELECT</span> <span class="n">string_agg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">FROM</span> <span class="p">(</span>
+</span><span class='line'>                    <span class="k">SELECT</span> <span class="n">chr</span><span class="p">(</span><span class="n">ascii</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">floor</span><span class="p">(</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">94</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span>
+</span><span class='line'>                    <span class="k">FROM</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">)</span> <span class="k">AS</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>    <span class="k">FROM</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="k">as</span> <span class="n">a</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+</span><span class='line'>                    <span class="n">string_agg</span>
+</span><span class='line'>    <span class="c1">------------------------------------------</span>
+</span><span class='line'>     <span class="p">,:</span><span class="n">D</span><span class="o">|^</span><span class="mi">5</span><span class="n">jKD4</span><span class="o">&lt;</span><span class="n">VkxvplTSu</span><span class="o">&amp;</span><span class="n">bR_</span> <span class="n">w</span><span class="o">^</span><span class="n">Z</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="n">KP6</span><span class="p">,</span><span class="n">e</span><span class="ss">&quot;W,</span>
+</span><span class='line'><span class="ss">     7sc$m[t[2JS9/(x/!Yi,jvD7I[D0^{=up&quot;</span><span class="n">y_</span><span class="o">^</span><span class="n">p</span><span class="o">=</span><span class="n">q</span>
+</span><span class='line'>     <span class="o">&lt;</span><span class="n">q</span><span class="p">,</span><span class="n">Kz</span><span class="o">&amp;</span><span class="p">[</span><span class="err">{</span><span class="o">`</span><span class="k">G</span><span class="o">*</span><span class="n">L</span><span class="o">?</span><span class="n">Odh</span><span class="o">-*</span><span class="n">yk</span><span class="s1">&#39;8bx;]ZzPxmlkz:g#uec</span>
+</span><span class='line'><span class="s1">     ?p2^BwIO$D&lt;,] &amp;y^`u0[e|Ha92d1xJPk\1/VZ^Z</span>
+</span><span class='line'><span class="s1">     !{f^{mZ\PQl-9kVz&amp;ha8c-hPjy_BV@}W=f7;Uqw&#39;</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">5</span> <span class="k">rows</span><span class="p">)</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>当记录有改动时，自动更新其时间戳这个功能我记得在 <a href="http://www.mysql.com" title="mysql">MySQL</a>里是自动有的，对于类型是<code>date</code>，和<code>timestamp</code>的时候，可以选择修改时更新。但是在 <a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>里，提供到了利用 <a href="http://www.postgresql.org/docs/9.1/static/rules-update.html">rule</a> 的方式来和另外一个表联动修改。和我这里的需求有些差别，我这里的需求时，假定有一列的类型为<code>timestamp</code>，只要这一行有改动，那么就需要更新这个<code>timestamp</code>列。我们可以通过构建一个函数和一个触发器来达到目的，比如：</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">create</span> <span class="k">table</span> <span class="n">customer</span> <span class="p">(</span><span class="n">id</span> <span class="nb">int</span> <span class="p">,</span><span class="n">name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="n">modified</span> <span class="k">timestamp</span> <span class="k">default</span> <span class="k">current_timestamp</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="k">function</span> <span class="n">update_modified_column</span><span class="p">()</span>
+</span><span class='line'>         <span class="k">returns</span> <span class="k">trigger</span> <span class="k">as</span> <span class="err">$$</span>
+</span><span class='line'>         <span class="k">begin</span>
+</span><span class='line'>            <span class="k">NEW</span><span class="p">.</span><span class="n">modified</span> <span class="o">=</span> <span class="n">now</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">return</span> <span class="k">NEW</span><span class="p">;</span>
+</span><span class='line'>         <span class="k">end</span><span class="p">;</span>
+</span><span class='line'>    <span class="err">$$</span> <span class="k">language</span> <span class="s1">&#39;plpgsql&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">create</span> <span class="k">trigger</span> <span class="n">update_customer_modtime</span> <span class="k">before</span> <span class="k">update</span>
+</span><span class='line'>    <span class="k">on</span> <span class="n">customer</span> <span class="k">for</span> <span class="k">each</span> <span class="k">row</span> <span class="k">execute</span> <span class="k">procedure</span>
+</span><span class='line'>    <span class="n">update_modified_column</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">-- example</span>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">customer</span> <span class="k">values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;lancy&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">customer</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">id</span> <span class="o">|</span>  <span class="n">name</span>  <span class="o">|</span>          <span class="n">modified</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">----+--------+----------------------------</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="mi">1</span> <span class="o">|</span> <span class="n">wgzhao</span> <span class="o">|</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">24</span> <span class="mi">17</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">33</span><span class="p">.</span><span class="mi">862608</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="mi">2</span> <span class="o">|</span> <span class="n">lancy</span>  <span class="o">|</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">24</span> <span class="mi">17</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">33</span><span class="p">.</span><span class="mi">862608</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">(</span><span class="mi">2</span> <span class="k">rows</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">update</span> <span class="n">customer</span> <span class="k">set</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;nancy&#39;</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">UPDATE</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">customer</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">id</span> <span class="o">|</span>  <span class="n">name</span>  <span class="o">|</span>          <span class="n">modified</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">----+--------+----------------------------</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="mi">1</span> <span class="o">|</span> <span class="n">wgzhao</span> <span class="o">|</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">24</span> <span class="mi">17</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">33</span><span class="p">.</span><span class="mi">862608</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="mi">2</span> <span class="o">|</span> <span class="n">nancy</span>  <span class="o">|</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">24</span> <span class="mi">17</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">57</span><span class="p">.</span><span class="mi">870447</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">(</span><span class="mi">2</span> <span class="k">rows</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>获得刚插入一行的 ID 号</h2>
+
+<p>和 <a href="http://www.mysql.com" title="mysql">MySQL</a>的<code>last_insert</code>函数类似，需要获得刚执行<code>insert</code>语句的<code>ID</code>号。这在 <a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>里用的是<code>insert</code>语句的<code>returning</code>子语句，对于<code>ID</code>列是否是自增（有序列）都生效，下面分别举一个<code>ID</code>是<code>serial</code>类型的和<code>ID</code>是<code>int</code>类型的例子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">create</span> <span class="k">table</span> <span class="n">foo</span><span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">,</span><span class="n">name</span> <span class="nb">text</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">CREATE</span>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">foo</span> <span class="k">values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">)</span>
+</span><span class='line'>     <span class="n">id</span>
+</span><span class='line'>    <span class="c1">----</span>
+</span><span class='line'>      <span class="mi">1</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">foo</span> <span class="k">values</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">)</span> <span class="n">returning</span> <span class="n">id</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">id</span>
+</span><span class='line'>     <span class="c1">----</span>
+</span><span class='line'>      <span class="mi">3</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">create</span> <span class="k">table</span> <span class="n">bar</span><span class="p">(</span><span class="n">id</span> <span class="nb">serial</span><span class="p">,</span><span class="n">name</span> <span class="nb">text</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">CREATE</span> <span class="k">TABLE</span>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">bar</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">values</span><span class="p">(</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">)</span> <span class="n">returning</span> <span class="n">id</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">id</span>
+</span><span class='line'>     <span class="c1">----</span>
+</span><span class='line'>      <span class="mi">1</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">bar</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">values</span><span class="p">(</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">)</span> <span class="n">returning</span> <span class="n">id</span><span class="p">;</span>
+</span><span class='line'>     <span class="n">id</span>
+</span><span class='line'>     <span class="c1">----</span>
+</span><span class='line'>      <span class="mi">2</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux下的一些I/O统计工具]]></title>
+    <link href="http://wgzhao.com/2012/08/22/some-way-to-io-statistics-on-linux/"/>
+    <updated>2012-08-22T10:25:00+08:00</updated>
+    <id>http://wgzhao.com/2012/08/22/some-way-to-io-statistics-on-linux</id>
+    <content type="html"><![CDATA[<p>作为一个 Linux 系统管理员，统计各类 IO 是一项必不可少的工作。其统计工具中 iostat 显然又是最重要的一个统计手段。但是这里 iostat 不是本文的重点，因为这个工具的使用在网络上已经有大量的教程，可以供大家参考。这里主要是想介绍一些其他统计工具以来满足不同的需求。</p>
+
+<h3>iostat</h3>
+
+<p>iostat 的功能异常强大，输出项也特别多，比如下面这个例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Device: rrqm/s  wrqm/s  r/s     w/s    rkB/s    wkB/s    avgrq-sz avgqu-sz   await r_await w_await  svctm  %util
+</span><span class='line'>
+</span><span class='line'>sda     0.00     0.50  173.50   73.50  3076.00   604.00    29.80   149.93    676.58   74.36 2098.15  4.05 100.00</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其各项的含义分别是：</p>
+
+<!--more-->
+
+
+<ul>
+<li>rrqm/s:       每秒进行 merge 的读操作数目.即 delta(rmerge)/s</li>
+<li>wrqm/s:  每秒进行 merge 的写操作数目.即 delta(wmerge)/s</li>
+<li>r/s:               每秒完成的读 I/O 设备次数.即 delta(rio)/s</li>
+<li>w/s:             每秒完成的写 I/O 设备次数.即 delta(wio)/s</li>
+<li>rsec/s:        每秒读扇区数.即 delta(rsect)/s</li>
+<li>wsec/s:      每秒写扇区数.即 delta(wsect)/s</li>
+<li>rkB/s:          每秒读 K 字节数.是 rsect/s 的一半,因为每扇区大小为 512 字节.(需要计算)</li>
+<li>wkB/s:    每秒写 K 字节数.是 wsect/s 的一半.(需要计算)</li>
+<li>avgrq-sz: 平均每次设备 I/O 操作的数据大小 (扇区).delta(rsect+wsect)/delta(rio+wio)</li>
+<li>avgqu-sz: 平均 I/O 队列长度.即 delta(aveq)/s/1000 (因为 aveq 的单位为毫秒).</li>
+<li>await:        平均每次设备 I/O 操作的等待时间 (毫秒).即 delta(ruse+wuse)/delta(rio+wio)</li>
+<li>svctm:       平均每次设备 I/O 操作的服务时间 (毫秒).即 delta(use)/delta(rio+wio)</li>
+<li>%util:          一秒中有百分之多少的时间用于 I/O 操作,或者说一秒中有多少时间 I/O 队列是非空的.即 delta(use)/s/1000 (因为 use 的单位为毫秒)</li>
+</ul>
+
+
+<p>如果 <code>%util</code> 接近 100%,说明产生的 I/O 请求太多,I/O 系统已经满负荷,该磁盘可能存在瓶颈.</p>
+
+<p>idle 小于 70% IO 压力就较大了,一般读取速度有较多的 wait.</p>
+
+<p>同时可以结合<code>vmstat</code>查看查看 b 参数(等待资源的进程数)和 wa 参数(IO 等待所占用的 CPU 时间的百分比,高过 30%时 IO 压力高)</p>
+
+<p>另外 <code>await</code> 的参数也要多和 <code>svctm</code> 来参考。差的过高就一定有 IO 的问题.</p>
+
+<p><code>avgrq-sz</code> 也是个做 IO 调优时需要注意的地方,这个就是直接每次操作的数据的大小,如果次数多,但数据拿的小的话,其实 IO 也会很小.如果数据拿的大,才 IO 的数据会高.也可以通过 <code>avgqu-sz × ( r/s or w/s ) = rsec/s or wsec/s</code>.也就是讲,读定速度是这个来决定的.</p>
+
+<p><code>svctm</code> 一般要小于 <code>await</code> (因为同时等待的请求的等待时间被重复计算了),<code>svctm</code> 的大小一般和磁盘性能有关,CPU/内存的负荷也会对其有影响,请求过多也会间接导致 <code>svctm</code> 的增加.<code>await</code> 的大小一般取决于服务时间(<code>svctm</code>) 以及 I/O 队列的长度和 I/O 请求的发出模式.如果 svctm 比较接近 await,说明 I/O 几乎没有等待时间；如果 await 远大于 svctm,说明 I/O 队列太长,应用得到的响应时间变慢,如果响应时间超过了用户可以容许的范围,这时可以考虑更换更快的磁盘,调整内核 <code>elevator</code> 算法,优化应用,或者升级 CPU.</p>
+
+<p> 队列长度(<code>avgqu-sz</code>)也可作为衡量系统 I/O 负荷的指标,但由于 <code>avgqu-sz</code> 是按照单位时间的平均值,所以不能反映瞬间的 I/O 洪水.</p>
+
+<p>有时间的话，我会单独写几个帖子来说说<code>iostat</code>。</p>
+
+<h3>iodump</h3>
+
+<p><a href="http://aspersa.googlecode.com/svn/trunk/iodump">iodump</a> 是一个统计每一个进程(线程)所消耗的磁盘 I/O 工具。这个一个 perl 脚本，其原理时打开有关 I/O 的内核记录消息开关，而后读取消息然后分析输出。简单使用步骤如下：</p>
+
+<p>首先下载这个工具</p>
+
+<p><code>wget http://aspersa.googlecode.com/svn/trunk/iodump</code></p>
+
+<p>然后打开有关 I/O 内核消息的开关</p>
+
+<p><code>echo 1 &gt;/proc/sys/vm/block_dump</code></p>
+
+<p>上述开关打开后，内核会记录下每一个 I/O 操作的消息。我们只需要定时获取并分析就好了，比如下面这样</p>
+
+<p><code>while true; do sleep 1; dmesg -c ; done |perl iodump</code></p>
+
+<p>等待一段时间，然后通过<code>ctrl+c</code>来结束上述脚本，你将获得下面类似的信息:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>TASK                   PID      TOTAL       READ      WRITE      DIRTY DEVICES
+</span><span class='line'>postgres              5799       1919       1919          0          0 sda7
+</span><span class='line'>jbd2/sda7-8           1572         35          0         35          0 sda7
+</span><span class='line'>jbd2/sda2-8            250         32          0         32          0 sda2
+</span><span class='line'>flush-8:0             2229         31          0         31          0 sda2, sda7
+</span><span class='line'>postgres              4308          2          0          2          0 sda7
+</span><span class='line'>bash                  5804          1          0          1          0 sda2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上述输出的单位为块(block)，每块的大小取决于创建文件系统时指定的块大小。比如我这个里的 sda7 的 block 大小是 1KB。</p>
+
+<h3>iotop</h3>
+
+<p><a href="http://guichaz.free.fr/iotop/">iotop</a> 是一个 Python 编写的工具，有类似<code>top</code>工具的 UI，包括一些参数也和<code>top</code>类似。不过它对系统有一些要求，分别是：</p>
+
+<ol>
+<li>Python ≥ 2.5 or Python ≥  2.4 with the ctypes module</li>
+<li>Kernel ≥  2.6.20</li>
+<li>Kernel uses options:
+
+<ol>
+<li>TASK_DELAY_ACCT</li>
+<li>CONFIG_TASKSTATS</li>
+<li>TASK_IO_ACCOUNTING</li>
+<li>CONFIG_VM_EVENT_COUNTERS</li>
+</ol>
+</li>
+</ol>
+
+
+<p>如果是基于 RPM 包的系统，可以直接下载编译好的二进制包(<a href="http://guichaz.free.fr/iotop/files/iotop-0.4.4-1.noarch.rpm">here</a>)或者二进制源代码包(<a href="http://guichaz.free.fr/iotop/files/iotop-0.4.4-1.src.rpm">here</a>)</p>
+
+<p>如果是 Debian/Ubuntu 系统，直接使用</p>
+
+<p><code>sudo apt-get install iotop</code></p>
+
+<p>即可（不得不说，Debian 系统提供的软件真的是相当丰富呀)，其他系统则可以通过下面的指令下载源代码，然后编译</p>
+
+<p><code>git clone git://repo.or.cz/iotop.git</code></p>
+
+<p>具体的使用方法可以参考 iotop(8)手册，下面是在我机器上的一个显示：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>iotop -o -u wgzhao
+</span><span class='line'>Total DISK READ:       2.15 M/s | Total DISK WRITE:    1601.15 K/s
+</span><span class='line'>  TID  PRIO  USER     DISK READ  DISK WRITE  SWAPIN      IO    COMMAND
+</span><span class='line'> 5984 be/4 wgzhao      2.15 M/s   70.55 K/s  0.00 % 83.67 % postgres: wgzhao pgbench [local] UPDATE
+</span><span class='line'> 4305 be/4 wgzhao      0.00 B/s  227.34 K/s  0.00 %  0.00 % postgres: writer process
+</span><span class='line'> 4308 be/4 wgzhao      0.00 B/s   90.15 K/s  0.00 %  0.00 % postgres: stats collector process</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>iopp</h3>
+
+<p><a href="https://github.com/markwkm/iopp">iopp</a> 是另外一个统计每一个进程 I/O 的工具，使用 C 语言编写，理论上应该比上述两个重狙效率都要高。安装方法很简单，首先通过下面的指令下载源代码:</p>
+
+<p><code>git://github.com/markwkm/iopp.git</code></p>
+
+<p>然后分别通过下面的指令编译安装</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cmake CMakeLists.txt
+</span><span class='line'>make
+</span><span class='line'>make install DESTDIR=/usr</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下面是一个使用例子</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>iopp -i -c 2
+</span><span class='line'>  pid    rchar    wchar    syscr    syscw   rbytes   wbytes  cwbytes command
+</span><span class='line'> 2144        0      296       40        8        0        0        0 /usr/sbin/LCDd
+</span><span class='line'> 2284        0        0        2        0        0        0        0 ha_logd: read process
+</span><span class='line'> 2299        0        0        2        0        0        0        0 ha_logd: write process
+</span><span class='line'> 2520        3        3        3        3        0        0        0 /usr/lib/virtualbox/vboxwebsrv
+</span><span class='line'> 2599        2        2        2        2        0        0        0 /usr/lib/virtualbox/VBoxSVC
+</span><span class='line'> 2675        0        0        1        0        0        0        0 runsvdir
+</span><span class='line'> 3177       16       16        4        2        0        0        0 /usr/bin/gnome-shell
+</span><span class='line'> 3192       16       16        4        2        0        0        0 nautilus
+</span><span class='line'> 3305      180      340      100       60        0        0        0 /usr/lib/icedove/icedove-bin
+</span><span class='line'> 3623     1393     1440        1        1        0        0        0 sshd: wgzhao@pts/0
+</span><span class='line'> 4305        0  4603904        0      562        0  4603904        0 postgres: writer process   
+</span><span class='line'> 6257  2064384  1892352      252      215  3719168   139264        0 postgres: wgzhao pgbench [local] UPDATE</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上述输出的各项含义是：</p>
+
+<ul>
+<li>pid 进程 ID</li>
+<li>rchar 将要从磁盘读取的字节数</li>
+<li>wchar 已经写入或应该要写入磁盘的字节数</li>
+<li>syscr 读 I/O 数</li>
+<li>syscw 写 I/O 数</li>
+<li>rbytes 真正从磁盘读取的字节数</li>
+<li>wbytes 真正写入到磁盘的字节数</li>
+<li>cwbytes 因为清空页面缓存而导致没有发生操作的字节数</li>
+<li>command 执行的命令</li>
+</ul>
+
+
+<p>其中<code>rbytes</code>,<code>wbytes</code>,<code>cwbytes</code>会因给出<code>-k</code>或者<code>-m</code>参数，而显示为<code>rkb</code>,<code>wkb</code>,<code>cwkb</code>或<code>rmb</code>,<code>wmb</code>,<code>cwmb</code>。<code>command</code>一列如果给出<code>-c</code>的参数则显示完整的命令名而不仅仅只是命令本身。这些参数的使用和<code>top</code>类似。</p>
+
+<p>更具体的可以参考 iopp(8)手册。</p>
+
+<h3>dstat</h3>
+
+<p><a href="http://dag.wieers.com/home-made/dstat/">dstat</a> 号称各种资源统计工具，其目的是想替代<code>vmstat</code>,<code>iostat</code>,<code>netstat</code>,<code>ifstat</code>等各种单一统计工具，从而做到<code>All in one</code>。 dstat 用 Python 语言编写。</p>
+
+<p>dstat 能够清晰显示每列的信息，特别是单位及大小很明确，不会在单位换算上犯迷糊和失误。最重要的是，因为它是基于模块化设计，因此我们可以很容易的写一个插件来收集我们需要的统计信息。</p>
+
+<p>另外，dstat 的输出还可以导出为<code>CSV</code>格式文件，从而可以在电子表格工具里分方便的生成统计图形。</p>
+
+<p>目前 dstat 的插件已经相当多了，这是我机器上目前的输出:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ dstat  --list
+</span><span class='line'>internal:
+</span><span class='line'>  aio, cpu, cpu24, disk, disk24, disk24old, epoch, fs, int, int24, io, ipc, load, lock, mem, net, 
+</span><span class='line'>  page, page24, proc, raw, socket, swap, swapold, sys, tcp, time, udp, unix, vm
+</span><span class='line'>/usr/share/dstat:
+</span><span class='line'>  battery, battery-remain, cpufreq, dbus, disk-tps, disk-util, dstat, dstat-cpu, dstat-ctxt, 
+</span><span class='line'>  dstat-mem, fan, freespace, gpfs, gpfs-ops, helloworld, innodb-buffer, innodb-io, innodb-ops, lustre, 
+</span><span class='line'>  memcache-hits, mysql-io, mysql-keys, mysql5-cmds, mysql5-io, mysql5-keys, net-packets, nfs3, 
+</span><span class='line'>  nfs3-ops, nfsd3, nfsd3-ops, ntp, postfix, power, proc-count, qmail, rpc, rpcd, sendmail, snooze, 
+</span><span class='line'>  squid, test, thermal, top-bio, top-bio-adv, top-childwait, top-cpu, top-cpu-adv, top-cputime, 
+</span><span class='line'>  top-cputime-avg, top-int, top-io, top-io-adv, top-latency, top-latency-avg, top-mem, top-oom, utmp, 
+</span><span class='line'>  vm-memctl, vmk-hba, vmk-int, vmk-nic, vz-cpu, vz-io, vz-ubc, wifi</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下面给出几个使用的列子（实际输出是带彩色的，很容易识别）</p>
+
+<p>dstat 的缺省输出</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wgzhao-nb:~# dstat
+</span><span class='line'>You did not select any stats, using -cdngy by default.
+</span><span class='line'>----total-cpu-usage---- -dsk/total- -net/total- ---paging-- ---system--
+</span><span class='line'>usr sys idl wai hiq siq| read  writ| recv  send|  in   out | int   csw 
+</span><span class='line'>  2   1  87  10   0   0| 816k  385k|   0     0 |   0     0 |2279  7048 
+</span><span class='line'>  5   1  78  16   0   0|2600k    0 | 140B  940B|   0     0 |5952    13k
+</span><span class='line'>  5   3  80  12   0   0|2896k  182k|  70B  358B|   0     0 |6074    14k
+</span><span class='line'>  4   2  78  16   0   0|2724k    0 |  70B  374B|   0     0 |5703    15k
+</span><span class='line'>  4   2  81  14   0   0|3008k    0 |  70B  358B|   0     0 |5924    13k
+</span><span class='line'>  5   1  80  14   0   0|1976k   17k|  70B  358B|   0     0 |5819    13k
+</span><span class='line'>  5   2  79  14   0   0|2056k    0 | 198B  374B|   0     0 |5618    13k
+</span><span class='line'>  4   2  79  15   0   0|2416k    0 |  70B  358B|   0     0 |5866    15k
+</span><span class='line'>  5   2  78  15   0   0|2528k    0 |  70B  358B|   0     0 |6356    14k
+</span><span class='line'>  5   2  78  16   0   0|2288k    0 |  70B  358B|   0     0 |6515    15k
+</span><span class='line'>  5   2  79  14   0   0|2656k 8192B|  70B  358B|   0     0 |6490    15k
+</span><span class='line'>  3   2  81  13   0   0|2296k    0 |  70B  374B|   0     0 |5573    15k
+</span><span class='line'>  4   3  76  17   0   1|2224k    0 |  70B  358B|   0     0 |5366    12k
+</span><span class='line'>  5   1  81  13   0   0|2208k    0 | 508B  358B|   0     0 |5403    13k
+</span><span class='line'>  4   2  79  15   0   0|2024k  182k|  70B  358B|   0     0 |5583    13k
+</span><span class='line'>  5   2  79  15   0   0|2148k   17k| 186B  490B|   0     0 |5400    12k</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定需要显示的列</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wgzhao-nb:~# dstat  -c --top-cpu -d --top-bio --top-latency
+</span><span class='line'>Module dstat_top_latency failed to load. (Kernel has no scheduler statistics, use at least 2.6.12)
+</span><span class='line'>----total-cpu-usage---- -most-expensive- -dsk/total- ----most-expensive----
+</span><span class='line'>usr sys idl wai hiq siq|  cpu process   | read  writ|  block i/o process   
+</span><span class='line'>  2   1  87  10   0   0|gnome-shell  0.7| 826k  384k|postgres    692k   52k
+</span><span class='line'>  4   2  79  16   0   0|postgres: wgz3.0|1744k  776k|postgres: w1744k   72k
+</span><span class='line'>  5   3  78  15   0   0|postgres: wgz5.0|3120k    0 |postgres: w3064k  136k
+</span><span class='line'>  6   2  73  19   0   0|postgres: wgz4.2|2608k  285k|postgres: w2608k  136k
+</span><span class='line'>  4   2  77  17   0   0|postgres: wgz3.5|2112k  848k|postgres: w2112k   88k
+</span><span class='line'>  3   2  71  25   0   0|postgres: wgz2.0| 944k 1049k|postgres: w 936k   48k
+</span><span class='line'>  3   2  58  37   0   0|postgres: wgz2.0| 920k 2070k|postgres: w 928k   64k
+</span><span class='line'>  3   2  62  34   0   0|postgres: wgz2.2|1496k  992k|postgres: w1608k   72k
+</span><span class='line'>  3   2  56  38   0   0|postgres: wgz3.0|1840k  645k|postgres: w1856k   88k
+</span><span class='line'>  3   2  78  17   0   0|postgres: wgz3.0|1420k 1200k|postgres: w1292k   80k
+</span><span class='line'>  5   2  80  12   0   1|postgres: wgz4.2|2628k    0 |postgres: w2636k  112k
+</span><span class='line'>  4   3  69  25   0   0|postgres: wgz3.8|2168k  576k|postgres: w2224k  104k</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定需要显示的列，并同时将结果导出到文件</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wgzhao-nb:~# dstat  --disk --mem --proc --io --sys --filesystem --tcp --vm --output dstat.csv
+</span><span class='line'>-dsk/total- ------memory-usage----- ---procs--- --io/total- ---system-- --filesystem- ----tcp-sockets---- -----virtual-memory----
+</span><span class='line'> read  writ| used  buff  cach  free|run blk new| read  writ| int   csw |files  inodes|lis act syn tim clo|majpf minpf alloc  free
+</span><span class='line'> 844k  404k| 829M 19.4M 2920M  124M|  0 0.0 0.7|47.5  38.4 |2336  7185 | 4928  12286 | 11   3   0   0   2|   1   620   602   605 
+</span><span class='line'>2128k 1526k| 828M 19.4M 2915M  130M|  0 2.0   0| 111   157 |4588    14k| 4928  12285 | 11   3   0   0   2|   0  1859   995  2278 
+</span><span class='line'> 920k 2151k| 826M 19.4M 2917M  129M|  0 2.0   0|52.0   237 |3091  7540 | 4928  12284 | 11   3   0   0   2|   0  4448  2330  2144 
+</span><span class='line'>2124k 1003k| 826M 19.4M 2921M  126M|1.0 1.0   0| 135   106 |4705    14k| 4928  12284 | 11   3   0   0   2|   0   331   865     1 
+</span><span class='line'>2344k 1024k| 826M 19.4M 2924M  122M|1.0 2.0   0| 121   118 |4074    13k| 4928  12284 | 11   3   0   0   2|   0   249   953     1 
+</span><span class='line'>1572k 1624k| 827M 19.4M 2926M  120M|1.0 2.0   0|87.0   190 |3231    11k| 4928  12284 | 11   3   0   0   2|   0    98   530     1 
+</span><span class='line'> 916k  788k| 827M 19.4M 2928M  119M|  0 2.0   0|68.0  92.0 |3452  8709 | 4928  12284 | 11   3   0   0   2|   0   128   383     4 
+</span><span class='line'>2452k 1665k| 826M 19.4M 2931M  116M|1.0 1.0   0| 132   197 |4779    14k| 4928  12284 | 11   3   0   0   2|   0   208   822     1 
+</span><span class='line'>1552k 1328k| 827M 19.4M 2933M  114M|  0 2.0   0|97.0   156 |3762  9117 | 4928  12284 | 11   3   0   0   2|   0   133   473     1 
+</span><span class='line'>1192k 2024k| 827M 19.4M 2934M  112M|  0 2.0   0|81.0   239 |4068    11k| 4928  12284 | 11   3   0   0   2|   0   135   414     2 
+</span><span class='line'>2668k  584k| 827M 19.4M 2937M  109M|  0 2.0   0| 148  71.0 |4415    10k| 4928  12284 | 11   3   0   0   2|   0   174   870     4 
+</span><span class='line'>1712k  960k| 827M 19.4M 2940M  106M|  0 2.0   0| 122   113 |4454    14k| 4928  12284 | 11   3   0   0   2|   0   182   616     2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>更详细的用法，可以参考 dstat(1)手册</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PostgreSQL查询优化简介]]></title>
+    <link href="http://wgzhao.com/2012/08/21/explaining-the-postgresql-query-optimizer/"/>
+    <updated>2012-08-21T12:18:00+08:00</updated>
+    <id>http://wgzhao.com/2012/08/21/explaining-the-postgresql-query-optimizer</id>
+    <content type="html"><![CDATA[<p>总结一些有关 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>查询计划，查询优化的相关内容，比较基础。</p>
+
+<p>SQL 是一种申明性(declared)语言，也就是说，它并不是一种程序。它没有其他编程语言里的流控制语言，比如 while，也无法控制操作顺序，比如有名的&#8221;goto&#8221;。</p>
+
+<p>SQL 只是描述一个结果，并非过程。</p>
+
+<p>结果一致，但如果过程不同，所带来的系统消耗可谓天差地远。所以所有的 RDBMS 里都需要有查询优化器来获得一条执行代价最小的方式来获取期望的结果。</p>
+
+<p>在 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，和查询优化器紧密相连的便是查询计划。</p>
+
+<!--more-->
+
+
+<h3>查询计划的目标主要是：</h3>
+
+<ul>
+<li>使得查询运行的足够快
+
+<ul>
+<li>最小化磁盘 I/O</li>
+<li>偏向使用顺序 I/O 而非随机 I/O</li>
+<li>最小化 CPU 处理</li>
+</ul>
+</li>
+<li>处理过程不要消耗太多内存</li>
+<li>传递正确的结果</li>
+</ul>
+
+
+<h3>查询计划的决策包括:</h3>
+
+<ul>
+<li>对表的访问策略
+
+<ul>
+<li>顺序扫描(Sequential Scan),索引扫描(Index Scan)，位图索引扫描(Bitmap Index Scan)，仅索引扫描(Index-Only Scan)</li>
+</ul>
+</li>
+<li>表连接策略
+
+<ul>
+<li>表连接顺序</li>
+<li>连接方法：嵌套循环(nested loop),合并连接(merge join)，哈希连接(hash join)</li>
+<li>内连接，外连接；内表与外表</li>
+</ul>
+</li>
+<li>分组策略
+
+<ul>
+<li>简单分组，排序分组，哈希分组</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>查询成本参数</h3>
+
+<p>在 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，查询计划是按照成本计算的，也就是基于成本的查询计划(cost-based plan)，其中影响成本计算的参数包括(后面括号的值为其缺省值)：</p>
+
+<ul>
+<li> cpu_index_tuple_cost (0.005)</li>
+<li> cpu_operator_cost (0.0025)</li>
+<li> cpu_tuple_cost (0.01)</li>
+<li> random_page_cost (4.0)</li>
+<li> seq_page_cost (1.0)</li>
+</ul>
+
+
+<p>与成本计算相关的试图包括:</p>
+
+<ul>
+<li> pg_class
+
+<ul>
+<li>relpages：索引、表的页面数</li>
+<li>reltuples：索引、表的记录数</li>
+<li>以上这些统计信息用以计算物理操作的开销</li>
+</ul>
+</li>
+<li> pg_stats（pg_statistic）
+
+<ul>
+<li>most_common_vals：最常使用的列值</li>
+<li>most_common_freqs：最常使用的列值的频率</li>
+<li>histogram_bounds：数据分布列</li>
+<li>n_distinct：</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>成本计算方法</h3>
+
+<p>一个查询的总代价包括读取数据的 I/O 代价和其他各种操作的代价之和。
+I/O 代价包括顺序读取数据或索引页（<code>seq_scan_cost</code>）和随机读取数据页（<code>random_scan_cost</code>）的代价，操作代价包括处理表元组（<code>cpu_tuple_cost</code>）、处理比较操作（<code>cpu_operator_cost</code>）和处理索引元组（<code>cpu_index_tuple_cost</code>）。</p>
+
+<p>比如，如果在一个表上做全表顺序扫描，那么其代价公式为:</p>
+
+<p><code>Cost = seq_scan_cost*relpages + cpu_tuple_cost*reltuples</code></p>
+
+<p>如果是在一个表上做全表顺序扫描并执行过滤，则代价公式为:</p>
+
+<p><code>Cost = seq_scan_cost*relpages + cpu_tuple_cost*reltuples + cpu_operator_cost*reltuples</code></p>
+
+<p>对于预算要返回的行数量，其计算公式为:</p>
+
+<p><code>rows = reltuples *估算频率</code></p>
+
+<p>这里，估算频率通过<code>sys_stats</code>视图中统计的列值和出现频率计算得出</p>
+
+<h3>顺序扫描</h3>
+
+<p>顾名思义，顺序扫描就是从头到尾将扫描表的每一条记录，此时表的所有页面都要读取一遍。其代价为页面读取（<code>relpages*seq_page_cost</code>）+元组处理(<code>reltuples*cpu_tuple_cost</code>) ,顺序扫描在任何情况下都能使用，它不需要读取索引，因此对于表，不需要预先创建索引。顺序扫描的基本原理如下图:<br/>
+<img src="http://wgzhao.com/images/sql_seqscan.png" title="Sequential Scan" alt="Sequential Scan" /></p>
+
+<p>以下几种情况是顺序扫描的最佳(或不得不)使用场景:</p>
+
+<ul>
+<li>查询表没有过滤条件</li>
+<li>过滤条件无索引</li>
+<li>查询的返回结果集占据了整个表的绝大多数</li>
+<li>访问的表是非常小</li>
+</ul>
+
+
+<h3>索引扫描</h3>
+
+<p>索引扫描，使用索引定位到元组所在的页面，读取元组，此时只读取符合索引过滤条件的元组所在的页面和少量的索引页面。索引扫描的基本原理如下图:<br/>
+<img src="http://wgzhao.com/images/sql_indexscan.png" title="Index Scan" alt="Index Scan" /></p>
+
+<p>索引扫描的代价为索引页面读取+数据页面读取+元组处理。索引扫描在一个巨量表里获取较少行时能获得相当高的性能，但是不要忘记了索引扫描基本上都是随机 I/O。同时索引扫描是交替读取索引和表。</p>
+
+<h3>仅索引扫描(in 9.2+)</h3>
+
+<p>这是 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a> 9.2 以上版本才有的功能，它和索引扫描有类似的功能和有点，另外，它有时可以避免读取行记录。如果一个表修改的很多，仅索引扫描可能表现不好。而且它要求所有查询的列都在索引里。</p>
+
+<h3>位图索引扫描</h3>
+
+<p>其原理图如下：</p>
+
+<p><img src="http://wgzhao.com/images/sql_bitmapscan.png" title="Bitmap Index Scan" alt="Bitmap Index Scan" /></p>
+
+<ul>
+<li>在检查表之前先所秒所有的索引，构成一个元组 ID(Tuples-ID,TID)的位图</li>
+<li>顺序读表，可以跳跃</li>
+<li>结果以物理排序返回</li>
+<li>对于有多个条件的组合（AND、OR），可以分别对每个条件做 Bitmap Index Scan，然后再对结果进行 AND 或 OR 操作</li>
+<li>处理 limit 很弱</li>
+</ul>
+
+
+<h2>连接</h2>
+
+<h3>连接计划</h3>
+
+<ul>
+<li>修复连接顺序和连接策略无疑是查询计划中最难的部分</li>
+<li>随着表数量的增加，连接方式的可能性成指数级剧增</li>
+<li>当搜索空间较小，查询计划差不多是做穷举搜索</li>
+<li>当搜索太大，查询计划使用启发式或基因查询优化(Genetic Query Optimization,GEQO)来限制计划时间和内存使用</li>
+</ul>
+
+
+<h3>连接方法</h3>
+
+<p>当连接 2 个表时，可以计划用于执行表连接，每一种连接方法使用一个外表(outer)和一个内表(inner)来产生一个结果表(result).</p>
+
+<ul>
+<li>嵌套循环连接(Nested loop join)
+
+<ul>
+<li>带内表顺序扫描</li>
+<li>带内表索引扫描</li>
+</ul>
+</li>
+<li>合并连接(Merge join)</li>
+<li>哈希连接(Hash join)</li>
+</ul>
+
+
+<h4>Nested Loop Join</h4>
+
+<p>当内表较小时，对于外表的每一条记录，都去扫描依次内表获得匹配，其原理图如下：<br/>
+<img src="http://wgzhao.com/images/sql_nested_loop_seqscan.png" title="Nested loop join with inner sequential scan" alt="Nested loop join with inner seqscan" /></p>
+
+<p>其实现的伪代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">(</span><span class="n">outer</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span><span class="p">(</span><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">(</span><span class="n">inner</span><span class="p">);</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span>  <span class="n">inner</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</span><span class='line'>        <span class="n">output</span><span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">inner</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>如果内表很大，且有查询列都有索引，则每次外表的每一行都会通过内表的索引去匹配，如果成功，则返回匹配的行。基本原理如下图所示：
+<img src="http://wgzhao.com/images/sql_nested_loop_indexscan.png" title="Nested loop join with inner index scan" alt="Nested loop join with inner index scan" /></p>
+
+<p>其实现的伪代码如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">(</span><span class="n">outer</span><span class="p">);</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>  <span class="n">index_entry</span> <span class="o">=</span><span class="n">get_first_match</span><span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">index_entry</span><span class="p">){</span>
+</span><span class='line'>    <span class="n">output</span><span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">inner</span><span class="p">[</span><span class="n">index_entry</span><span class="p">]);</span>
+</span><span class='line'>    <span class="n">index_entry</span><span class="o">=</span><span class="n">get_next_match</span><span class="p">(</span><span class="n">index_entry</span><span class="p">)</span>
+</span><span class='line'>    <span class="err">``</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里的内表或外表可以是基本表，也可以是其他连接生成的结果。该连接的代价大致和两个表大小的乘积相当，如果两个都很大的话，代价很大。所以要求整个查询返回的结果集不能太大，要把返回子集较小表的作为外表,而且在内表的连接字段上一定要有索引。</p>
+
+<h4>Merge Join</h4>
+
+<p>合并连接的要点是首先将连接的两个表进行排序(使用 sort/index 扫描)，然后并行扫描两个表，找出相等的值返回。其基本原理见下图：<br/>
+<img src="http://wgzhao.com/images/sql_merge_join.png" title="Merge join" alt="Merge join" /></p>
+
+<p>其实现伪代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">sort</span><span class="p">(</span><span class="n">outer</span><span class="p">);</span>
+</span><span class='line'><span class="n">sort</span><span class="p">(</span><span class="n">inner</span><span class="p">);</span>
+</span><span class='line'><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="n">save_j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="k">while</span> <span class="p">(</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">(</span><span class="n">outer</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">inner</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</span><span class='line'>     <span class="n">output</span><span class="p">[</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">inner</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">inner</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">(</span><span class="n">inner</span><span class="p">)){</span>
+</span><span class='line'>     <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">inner</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</span><span class='line'>       <span class="n">save_j</span> <span class="o">=</span> <span class="n">j</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>     <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>     <span class="n">j</span> <span class="o">=</span> <span class="n">save_j</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>合并连接只能处理相等条件连接，比如<code>a.x = b.x</code>这样的。根据上述原理图我们可以看出，通常情况下，一个元组只需要访问一次，但是如果外表有重复值的话，内表就需要多次扫描。比如外表是{1 2 2 3},内表是{2 2 3 4}的情况</p>
+
+<h4>Hash Join</h4>
+
+<p>和 Merge join 类似，Hash join 也只能处理相等条件连接。首先在把内表的每一行通过 hash 函数进行 hash，从而在内存内创建一个 hash 表。而后针对外表的每一行进行 hash，来和内存的中的 hash 表进行匹配。其原理图如下：</p>
+
+<p><img src="http://wgzhao.com/images/sql_hash_join.png" title="Hash Join" alt="Hash Join" /></p>
+
+<p>其实现的伪代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">(</span><span class="n">inner</span><span class="p">);</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">hash_key</span> <span class="o">=</span> <span class="n">hash</span><span class="p">(</span><span class="n">inner</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+</span><span class='line'>    <span class="n">append</span><span class="p">(</span><span class="n">hash_store</span><span class="p">(</span><span class="n">hash_key</span><span class="p">),</span><span class="n">inner</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">(</span><span class="n">outer</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">hash_key</span> <span class="o">=</span> <span class="n">hash</span><span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">(</span><span class="n">hash_store</span><span class="p">(</span><span class="n">hash_key</span><span class="p">]);</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">hash_store</span><span class="p">[</span><span class="n">hash_key</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+</span><span class='line'>            <span class="n">output</span><span class="p">(</span><span class="n">outer</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">inner</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>什么下会导致查询计划出错</h3>
+
+<ul>
+<li>如果查询计划低估了结果集的数量，它可能会选择索引扫描(Index Scan)而不是期望的顺序扫描(Sequential Scan)，或是嵌套连接(Nested Loop)而不是 Hash 或者合并连接</li>
+<li>如果查询计划高估了结果集的数量，则结果和上条相反</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[几种常见的NoSQL数据库关键特性列表]]></title>
+    <link href="http://wgzhao.com/2012/08/20/several-popular-nosql-databases-key-features-list/"/>
+    <updated>2012-08-20T13:50:00+08:00</updated>
+    <id>http://wgzhao.com/2012/08/20/several-popular-nosql-databases-key-features-list</id>
+    <content type="html"><![CDATA[<p><a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>根据不同的数据模型，大致可以分为 4 类，分别是键值对存储(Key-Value Stores)，列族存储(Column Families)，文档数据库(Document Databases)以及图形数据库(Graph Databases)。四者从容量来讲，依次下降，而从复杂度来说则相反。</p>
+
+<p>下面我根据最近看的一些资料，列出了目前常见的 <a href="http://zh.wikipedia.org/wiki/Nosql" title="Not only SQL">NoSQL</a>数据库系统的一些主要特性，不一定都正确。另外，后面列了一些参考资料，偏向于 <a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>，个人觉得还不错。</p>
+
+<ul>
+<li><p> Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a></p>
+
+<ul>
+<li>由 Google 开发</li>
+<li>闭源产品</li>
+<li>通过 SSTable 实现持久化</li>
+<li>通过 <a href="http://research.google.com/archive/chubby.html" title="chubby lock service">Chubby</a>实现一致性</li>
+<li>key-value 存储</li>
+</ul>
+</li>
+<li><p> <a href="http://hbase.apache.org" title="Hbase home">HBase</a></p>
+
+<ul>
+<li>Apache 基金项目，开发语言为 Java</li>
+<li>Apache License 2.0 许可</li>
+<li>Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的开源版本</li>
+<li>为 <a href="http://hadoop.apache.org" title="open source software framework">Hadoop</a>的后端数据库</li>
+<li>通过 HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用 <a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
+<li>着重于 CP</li>
+<li>通过 memtable/SStable 实现持久化</li>
+<li>通过 <a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现一致性</li>
+<li>支持多主节点(multi-master)</li>
+</ul>
+</li>
+</ul>
+
+
+<!--more-->
+
+
+<p></p>
+
+<ul>
+<li><p> <a href="http://hypertable.com" title="Hypertable">Hypertable</a></p>
+
+<ul>
+<li>由 Inkomi 公司前员工发起，其中包括百度，Rediff,Zvents 等公司赞助，后成立 Hypertable 公司。</li>
+<li>GPLv2 许可</li>
+<li>开发语言为 C++</li>
+<li>Goole <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的另外一个开源实现,但比 <a href="http://hbase.apache.org" title="Hbase home">HBase</a>要快</li>
+<li>着重 CP</li>
+<li>通过 <a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>通信</li>
+<li>通过 memtable/SStable 实现持久化</li>
+<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" title="Multiversion concurrency control">MVCC</a></li>
+<li>查询通过类似 SQL 的 HQL</li>
+<li>通过 Hypersace 算法(<a href="http://zh.wikipedia.org/wiki/Paxos%E7%AE%97%E6%B3%95" title="Paxos 算法">Paxos 算法</a>)实现一致性</li>
+</ul>
+</li>
+<li><p> Apache <a href="http://cassandra.apache.org" title="Apache Cassandra">Cassandra</a></p>
+
+<ul>
+<li>由 <a href="http://www.facebook.com" title="facebook">Facebook</a>开发，开发语言为 Java</li>
+<li>Apache License 2.0 许可</li>
+<li>Google <a href="http://en.wikipedia.org/wiki/BigTable" title="google bigtable">BigTable</a>的数据模型，<a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Amazon</a>的基础架构</li>
+<li>面向列的 key-value 存储</li>
+<li>通过提交日志来实现持久化，类似 <a href="http://www.postgresql.org" title="The most advanced open source database">PostgreSQL</a>里的 <a href="http://www.postgresql.org/docs/9.1/static/wal-intro.html" title="Write-Ahead Log">WAL</a></li>
+<li>跨节点的最后一致性(Eventually Consistent)实现</li>
+<li>着重于 <a href="http://en.wikipedia.org/wiki/CAP_theorem" title="Consistency,Availablitiy,Partition tolerance">CAP</a>里的 AP</li>
+<li>客户端通过 <a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>协议通讯，查询通过 <a href="http://zh.wikipedia.org/wiki/MapReduce" title="Map Reduce">Map-Reduce</a></li>
+</ul>
+</li>
+<li><p> Apache <a href="http://couchdb.apache.org" title="CouchDB">CouchDB</a></p>
+
+<ul>
+<li>主要开发者包括 <a href="http://www.bbc.co.uk" title="BBC">BBC</a>和 <a href="http://www.engineyard.com" title="cloud platform for RoR and PHP">Engine Yard</a></li>
+<li>Apache License 2.0 许可</li>
+<li>开发语言为 <a href="http://www.erlang.org" title="Erlang Programming Language">Erlang</a></li>
+<li>key-value 文档存储</li>
+<li>通过只附加(append-only)B+树实现持久化</li>
+<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" title="Multiversion concurrency control">MVCC</a></li>
+<li>着重于 AP</li>
+<li>通过 HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>，使用 <a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>协议通信</li>
+<li>支持多主(multi-master)复制</li>
+<li>通过文档或 JavaScript 函数(<a href="http://zh.wikipedia.org/wiki/MapReduce" title="Map Reduce">Map-Reduce</a>)进行查询</li>
+<li>无一致性实现，需要通过应用端解决</li>
+</ul>
+</li>
+<li><p> <a href="http://www.mongodb.org" title="MongoDB">MongoDB</a></p>
+
+<ul>
+<li>主要开发者包括 <a href="http://www.sourceforge.net" title="source forge">Sourceforge</a>,<a href="http://foursquare.com" title="foursquare">Foursquare</a>,<a href="http://bit.ly" title="bit.ly shorten url">Bit.ly</a> 和 <a href="http://www.github.com" title="Github">Github</a></li>
+<li>开发语言为 C++</li>
+<li>AGPLv3 许可</li>
+<li>key-value 文档存储</li>
+<li>通过复制加快照实现持久化</li>
+<li>就地更新(in place update)，无版本，无只附加日志</li>
+<li>着重于 CP</li>
+<li>数据通过 BSON(二进制 <a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>)存储</li>
+<li>自有的通信协议</li>
+<li>主从复制</li>
+<li>支持地理空间索引</li>
+</ul>
+</li>
+<li><p> <a href="http://project-voldemort.com" title="Voldemort distributed data store">Voldemort</a></p>
+
+<ul>
+<li>有 <a href="http://www.linkedin.com" title="LinkedIn SNS">LinkedIn</a>开发,开发语言为 Java</li>
+<li>key-value 文档存储</li>
+<li>基于上游的 <a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Amazon</a></li>
+<li>通过可插拔的数据存储层(<a href="http://en.wikipedia.org/wiki/BerkeleyDB" title="Berkeley DB,BDB">BerkeleyDB</a>/<a href="http://www.mysql.com" title="MySQL">MySQL</a>)实现持久化</li>
+<li>着重 AP</li>
+<li><a href="http://en.wikipedia.org/wiki/Multiversion_concurrency_control" title="Multiversion concurrency control">MVCC</a></li>
+<li><a href="http://aws.amazon.com/dynamodb/" title="Amazon Dynamo Database">Dynamo</a> 分布式 hash 表(Distributed Hash Table,<a href="http://en.wikipedia.org/wiki/Distributed_hash_table" title="Distributed Hash Table">DHT</a>)实现,一致性 hash(<a href="http://en.wikipedia.org/wiki/Consistent_hashing" title="Consistent Hashing">Consistent Hashing</a>)，向量时钟(<a href="http://en.wikipedia.org/wiki/Vector_clocks" title="Vector clock">Vector clock</a>)</li>
+<li>多种数据序列化格式(<a href="http://zh.wikipedia.org/wiki/JSON" title="Javascript Object Notation">JSON</a>,Java String, byte[],<a href="http://en.wikipedia.org/wiki/Apache_Thrift" title="Thrift Protocol">Thrift</a>,Avro,<a href="http://en.wikipedia.org/wiki/Protobuf" title="Protocol Buffers">ProtoBuf</a>)</li>
+<li>自有的通信协议</li>
+</ul>
+</li>
+<li><p> <a href="http://www.redis.io" title="Redis">Redis</a></p>
+
+<ul>
+<li>由 <a href="http://www.vmware.com" title="VMWare">VMWare</a>开发,开发语言为 ANSI C</li>
+<li>key-value 文档存储</li>
+<li>内存数据库，通过快照实现持久化</li>
+<li>着重于 CP</li>
+<li>无数据序列化格式</li>
+<li>类似 POP3 的自有通信协议</li>
+</ul>
+</li>
+<li><p> Tokyo <a href="http://fallabs.com/tokyocabinet/" title="Tokyo Cabinet">Cabinet</a>/<a href="http://fallabs.com/tokyotyrant/" title="network interface of Cabinet">Tyrant</a></p>
+
+<ul>
+<li>实现 key-value 数据库管理，带网络守护进程(<a href="http://fallabs.com/tokyotyrant/" title="network interface of Cabinet">Tyrant</a>)</li>
+<li>通过 <a href="http://www.postgresql.org/docs/9.1/static/wal-intro.html" title="Write-Ahead Log">WAL</a>和阴影拷贝分页实现持久化</li>
+<li>无数据序列化格式</li>
+<li>通信协议：Tokyo Tyrant Binrary Protocol,memcached compatible Text protocol,HTTP <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a></li>
+</ul>
+</li>
+<li><p> <a href="http://neo4j.org" title="neo4j: World's leading Graph Database">Neo4j</a></p>
+
+<ul>
+<li>有 <a href="http://www.neotechnology.com%22" title="neotechnology graphs are anywhere">neo technology</a>开发</li>
+<li>开发语言为 Java</li>
+<li>AGPLv3 和商业 双重许可</li>
+<li>图形化数据库</li>
+<li>通过 <a href="http://en.wikipedia.org/wiki/Apache_ZooKeeper" title="ZooKeeper service">ZooKeeper</a>实现 HA</li>
+<li>通过 <a href="http://zh.wikipedia.org/wiki/REST" title="Representational State Transfer">REST</a>,Java 协议通信</li>
+<li>通过存储在磁盘的链接列表(linked-list)实现持久化</li>
+<li>节点遍历高效</li>
+<li>很好的纵向扩展性</li>
+<li>通过 <a href="http://en.wikipedia.org/wiki/Sparql" title="SPARQL Protocol and RDF Query Language">SPARQL</a>查询</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>参考：</h3>
+
+<ol>
+<li><a href="http://www.scribd.com/doc/31669670/PostgreSQL-and-NoSQL">PostSQL and NoSQL</a></li>
+<li><a href="http://www.slideshare.net/slideshow/embed_code/7080449">NoSQL databases: why,what and when</a></li>
+<li><a href="http://research.google.com/archive/bigtable-osdi06.pdf">Bigtable:A Distributed Storage System for Structured Data</a></li>
+<li><a href="http://research.google.com/archive/chubby-osdi06.pdf">The Chubby lock service for lossely-coupled distrubuted systems</a></li>
+<li><a href="http://www.nosqlnotes.net/wp-content/uploads/Distributed_System_Engineering_Practice.pdf">分布式系统工程实践</a></li>
+<li><a href="http://rhass.blogspot.com">Robert Hass blog</a></li>
+<li><a href="http://momjian.us/main/blogs/pgblog.html">Bruce Momjian: Postgres Blog</a></li>
+<li><a href="http://pgsnake.blogspot.com/">Dave&rsquo;s Postgres Blog</a></li>
+<li><a href="http://dbmsmusings.blogspot.com/">DBMS Musings</a></li>
+<li> <a href="http://www.nosqlnotes.net/">NOSQL Notes</a></li>
+<li> <a href="http://blog.nosqlfan.com/">NoSQL Fan</a></li>
+<li> <a href="http://blog.sina.com.cn/kern0612">阳振坤的博客</a></li>
+<li> <a href="http://blog.2ndquadrant.com/">2ndQuadrant</a></li>
+<li> <a href="http://blog.163.com/digoal@126">The Heart,The World</a></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在PostgreSQL里计算一个表的大小]]></title>
+    <link href="http://wgzhao.com/2012/08/19/calculate-a-table-size-in-postgresql/"/>
+    <updated>2012-08-19T12:05:00+08:00</updated>
+    <id>http://wgzhao.com/2012/08/19/calculate-a-table-size-in-postgresql</id>
+    <content type="html"><![CDATA[<p>在 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里如何查看或者一个表的大小呢?方法很多，我们可以从简单到复杂看这件事情：</p>
+
+<p>首先创建一个简单表：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">create</span> <span class="k">table</span> <span class="n">t</span> <span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">,</span> <span class="n">name</span> <span class="nb">text</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- inserto 100w records</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">t</span> <span class="k">select</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000000</span><span class="p">),</span><span class="s1">&#39;wgzhao_&#39;</span> <span class="o">||</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000000</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1000000</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- create a index on column id：</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">create</span> <span class="k">index</span> <span class="n">idx_t_id</span> <span class="k">on</span> <span class="n">t</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">CREATE</span> <span class="k">INDEX</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">--vacuum once</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">VACUUM</span> <span class="n">t</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">VACUUM</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">ANALYZE</span> <span class="n">t</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">ANALYZE</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!--more-->
+
+
+<p>最简单的查看大小就是 isql 给出<code>\dt</code>指令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="err">\</span><span class="n">dt</span> <span class="n">t</span>
+</span><span class='line'>
+</span><span class='line'>           <span class="n">List</span> <span class="k">of</span> <span class="n">relations</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">Schema</span> <span class="o">|</span> <span class="n">Name</span> <span class="o">|</span> <span class="k">Type</span>  <span class="o">|</span> <span class="k">Owner</span>  <span class="o">|</span> <span class="k">Size</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">--------+------+-------+--------+-------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">PUBLIC</span> <span class="o">|</span> <span class="n">t</span>    <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="k">SYSTEM</span> <span class="o">|</span> <span class="mi">72</span> <span class="n">MB</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>还一个方法是用系统函数</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_total_relation_size</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">pg_size_pretty</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-----------------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="mi">72</span> <span class="n">MB</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们也可以自己来计算：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">relname</span><span class="p">,</span><span class="n">reltuples</span><span class="p">,</span><span class="n">relpages</span> <span class="k">from</span> <span class="n">pg_class</span>  <span class="k">where</span> <span class="n">relname</span> <span class="o">=</span><span class="s1">&#39;t&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">relname</span> <span class="o">|</span> <span class="n">reltuples</span> <span class="o">|</span> <span class="n">relpages</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">---------+-----------+----------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">t</span>       <span class="o">|</span>   <span class="mi">1000000</span> <span class="o">|</span>    <span class="mi">12802</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个<code>relpages</code>只是表示包含的记录数，并没有包括索引。从这里也可以看出，一个<code>relpages</code>大概可以包含 78 个<code>reltupls</code>，也就是 78 条记录。</p>
+
+<p>如果表上有索引，则可以用下面的指令来计算出包括索引在内的<code>relpages</code>一起是多少：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">c2</span><span class="p">.</span><span class="n">relname</span><span class="p">,</span><span class="n">c2</span><span class="p">.</span><span class="n">relpages</span> <span class="k">from</span> <span class="n">pg_class</span>  <span class="k">c</span><span class="p">,</span><span class="n">pg_class</span> <span class="n">c2</span><span class="p">,</span><span class="n">pg_index</span> <span class="n">i</span> <span class="k">where</span> <span class="k">c</span><span class="p">.</span><span class="n">relname</span> <span class="o">=</span> <span class="s1">&#39;t&#39;</span> <span class="k">and</span> <span class="k">c</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">indrelid</span> <span class="k">and</span> <span class="n">c2</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">indexrelid</span> <span class="k">order</span> <span class="k">by</span> <span class="n">c2</span><span class="p">.</span><span class="n">relname</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">relname</span>  <span class="o">|</span> <span class="n">relpages</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">----------+----------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">idx_t_id</span> <span class="o">|</span>     <span class="mi">5567</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一个<code>relpages</code>是一个<code>block_size</code>大小，因此我们就可以做下面的计算了：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">((</span><span class="mi">5567</span> <span class="o">+</span> <span class="mi">12802</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">pg_size_pretty</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-----------------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="mi">72</span> <span class="n">MB</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样我们就计算出了大小。</p>
+
+<p>不过这是在表“干净”的情况下，假定我们要一些删除和更新操作，同时又不执行<code>vacuum</code>，结果会怎么样呢？</p>
+
+<p>我们看看：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">update</span> <span class="n">t</span> <span class="k">set</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;update_wgzhao&#39;</span> <span class="k">where</span> <span class="n">id</span> <span class="o">&lt;</span> <span class="mi">20000</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">UPDATE</span> <span class="mi">19999</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">delete</span> <span class="k">from</span> <span class="n">t</span> <span class="k">where</span> <span class="n">id</span> <span class="o">&gt;</span> <span class="mi">990000</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">DELETE</span> <span class="mi">10000</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们再用上面的方法计算一遍，看看有没有什么问题：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="err">\</span><span class="n">dt</span> <span class="n">t</span>
+</span><span class='line'>
+</span><span class='line'>           <span class="n">List</span> <span class="k">of</span> <span class="n">relations</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">Schema</span> <span class="o">|</span> <span class="n">Name</span> <span class="o">|</span> <span class="k">Type</span>  <span class="o">|</span> <span class="k">Owner</span>  <span class="o">|</span> <span class="k">Size</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">--------+------+-------+--------+-------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">PUBLIC</span> <span class="o">|</span> <span class="n">t</span>    <span class="o">|</span> <span class="k">table</span> <span class="o">|</span> <span class="k">SYSTEM</span> <span class="o">|</span> <span class="mi">74</span> <span class="n">MB</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">(</span><span class="n">pg_total_relation_size</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">pg_size_pretty</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-----------------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="mi">74</span> <span class="n">MB</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">relname</span><span class="p">,</span><span class="n">reltuples</span><span class="p">,</span><span class="n">relpages</span> <span class="k">from</span> <span class="n">pg_class</span>  <span class="k">where</span> <span class="n">relname</span> <span class="o">=</span><span class="s1">&#39;t&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">relname</span> <span class="o">|</span> <span class="n">reltuples</span> <span class="o">|</span> <span class="n">relpages</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">---------+-----------+----------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">t</span>       <span class="o">|</span>   <span class="mi">1000000</span> <span class="o">|</span>    <span class="mi">12802</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">c2</span><span class="p">.</span><span class="n">relname</span><span class="p">,</span><span class="n">c2</span><span class="p">.</span><span class="n">relpages</span> <span class="k">from</span> <span class="n">pg_class</span>  <span class="k">c</span><span class="p">,</span><span class="n">pg_class</span> <span class="n">c2</span><span class="p">,</span><span class="n">pg_index</span> <span class="n">i</span> <span class="k">where</span> <span class="k">c</span><span class="p">.</span><span class="n">relname</span> <span class="o">=</span> <span class="s1">&#39;t&#39;</span> <span class="k">and</span> <span class="k">c</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">indrelid</span> <span class="k">and</span> <span class="n">c2</span><span class="p">.</span><span class="n">oid</span> <span class="o">=</span> <span class="n">i</span><span class="p">.</span><span class="n">indexrelid</span> <span class="k">order</span> <span class="k">by</span> <span class="n">c2</span><span class="p">.</span><span class="n">relname</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">relname</span>  <span class="o">|</span> <span class="n">relpages</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">----------+----------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">idx_t_id</span> <span class="o">|</span>     <span class="mi">5567</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">((</span><span class="mi">5567</span> <span class="o">+</span> <span class="mi">12802</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">pg_size_pretty</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-----------------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="mi">72</span> <span class="n">MB</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>问题来了，通过<code>relpages</code> 来计算表的大小不对了，删除的元组并没有反馈到<code>reltuples</code>里。怎么办呢，这个时候需要查询<code>pg_stat_user_tables</code>了</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">n_tup_ins</span><span class="p">,</span><span class="n">n_tup_upd</span><span class="p">,</span><span class="n">n_tup_del</span> <span class="k">from</span> <span class="n">pg_stat_user_tables</span> <span class="k">where</span> <span class="n">relname</span> <span class="o">=</span> <span class="s1">&#39;t&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">n_tup_ins</span> <span class="o">|</span> <span class="n">n_tup_upd</span> <span class="o">|</span> <span class="n">n_tup_del</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-----------+-----------+-----------</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="mi">1000000</span> <span class="o">|</span>     <span class="mi">19999</span> <span class="o">|</span>     <span class="mi">10000</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在没有<code>vacuum</code>之前，不管是删除的还是更新的，都需要占用磁盘空间，从一开始我们知道一个<code>relpages</code>大概包含 78 条<code>reltuples</code>。</p>
+
+<p>因此</p>
+
+<p><code>(19999 + 10000) /78 = 384</code>，因此计算表大小的时候还需要加上 384 个<code>reltuples</code>的大小</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span>  <span class="k">select</span> <span class="n">pg_size_pretty</span><span class="p">((</span><span class="mi">5567</span> <span class="o">+</span> <span class="mi">12802</span> <span class="o">+</span> <span class="mi">384</span><span class="p">)</span> <span class="o">*</span> <span class="n">current_setting</span><span class="p">(</span><span class="s1">&#39;block_size&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">pg_size_pretty</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-----------------</span>
+</span><span class='line'>
+</span><span class='line'> <span class="mi">73</span> <span class="n">MB</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个基本上就靠谱了</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[简单实现一个基于postgresql的datediff函数]]></title>
+    <link href="http://wgzhao.com/2012/08/15/create-datediff-function-in-postgresql/"/>
+    <updated>2012-08-15T14:53:00+08:00</updated>
+    <id>http://wgzhao.com/2012/08/15/create-datediff-function-in-postgresql</id>
+    <content type="html"><![CDATA[<p>在当前 <a href="http://www.postgresql.org" title="The world's most advanced open source database">PostgreSQL</a>里，目前还没有一个能够以指定单位返回两个时间差的函数（如果有，请告诉我），比如返回两个时间相差的月份。</p>
+
+<p>我简单的写了一个函数，只是作为一个实现的思路，没有做过多的严禁判断。代码如下：</p>
+
+<div><script src='https://gist.github.com/3357205.js?file=datediff.sql'></script>
+<noscript><pre><code>--
+create or replace function datediff(m text,d1 date,d2 date) returns int as $$
+declare
+d1_year     int;
+d1_month    int;
+
+d2_year     int;
+d2_month    int;
+day int;
+
+begin
+ select extract(year from d1) into d1_year;
+ select extract(month from d1) into d1_month;
+
+ select extract(year from d2) into d2_year;
+ select extract(month from d2) into d2_month;
+
+if m = &#39;year&#39; then
+    return (d2_year - d1_year);
+elsif m = &#39;month&#39; then
+return (d2_year - d1_year) * 12 + (d2_month - d1_month);
+elsif m = &#39;day&#39; then
+ select d2 - d1 into day;
+ return day;
+end if;
+end;
+$$ language plpgsql;</code></pre></noscript></div>
+
+
+<p>简单测试如下：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">datediff</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">,</span><span class="s1">&#39;1970-12-2&#39;</span><span class="p">::</span><span class="nb">date</span><span class="p">,</span><span class="k">current_date</span><span class="p">);</span>
+</span><span class='line'> <span class="n">datediff</span>
+</span><span class='line'><span class="c1">----------</span>
+</span><span class='line'>       <span class="mi">42</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Time</span><span class="p">:</span> <span class="mi">1</span><span class="p">.</span><span class="mi">385</span> <span class="n">ms</span>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">datediff</span><span class="p">(</span><span class="s1">&#39;month&#39;</span><span class="p">,</span><span class="s1">&#39;1970-12-2&#39;</span><span class="p">::</span><span class="nb">date</span><span class="p">,</span><span class="k">current_date</span><span class="p">);</span>
+</span><span class='line'> <span class="n">datediff</span>
+</span><span class='line'><span class="c1">----------</span>
+</span><span class='line'>      <span class="mi">500</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Time</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">770</span> <span class="n">ms</span>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="n">datediff</span><span class="p">(</span><span class="s1">&#39;day&#39;</span><span class="p">,</span><span class="s1">&#39;1970-12-2&#39;</span><span class="p">::</span><span class="nb">date</span><span class="p">,</span><span class="k">current_date</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">datediff</span>
+</span><span class='line'><span class="c1">----------</span>
+</span><span class='line'>    <span class="mi">15232</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Time</span><span class="p">:</span> <span class="mi">0</span><span class="p">.</span><span class="mi">602</span> <span class="n">ms</span>
+</span><span class='line'><span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="k">version</span><span class="p">();</span>
+</span><span class='line'>     <span class="k">version</span>
+</span><span class='line'><span class="c1">---------------------</span>
+</span><span class='line'> <span class="n">PostgreSQL</span> <span class="mi">9</span><span class="p">.</span><span class="mi">1</span><span class="p">.</span><span class="mi">4</span> <span class="p">,</span> <span class="mi">64</span><span class="o">-</span><span class="nb">bit</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Time</span><span class="p">:</span> <span class="mi">19</span><span class="p">.</span><span class="mi">968</span> <span class="n">ms</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[升级blog编译环境]]></title>
+    <link href="http://wgzhao.com/2012/08/14/upgrade-blog-environment/"/>
+    <updated>2012-08-14T09:42:00+08:00</updated>
+    <id>http://wgzhao.com/2012/08/14/upgrade-blog-environment</id>
+    <content type="html"><![CDATA[<p>系统升级到 Mountain Lion 后，发现我的 blog 编译环境不能正常使用了，我的 blog 放弃 <a href="http://www.wordpress.org" title="wordpress">wordpress</a>，采取了 <a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>，这玩意儿的好处是全静态，搬家的时候很容易，甚至可以随时搬迁到 <a href="http://github.com" title="github">github</a>，<a href="http://www.dropbox.com" title="dropbox">dropbox</a>这类的空间上都没以问题。麻烦的就是那套环境，<a href="http://www.ruby.org" title="ruby">ruby</a>本来也不熟悉，所以搞起来比较痛苦。昨晚花了 3 个多小时才搞定，不停的清理环境，重新安装。其中有两个问题记录如下一个是 gcc 的问题，<a href="http://www.ruby.org" title="ruby">ruby</a>一些组件的编译并不支持 Mac 自带的 llvm-gcc 特性。因此需要自行编译一个 gcc，当然自己编译太痛苦了，幸运的是 <a href="http://hpc.sourceforge.net/" title="High Performance Computer for Mac OS X">HPC for Mac OS X</a>网站已经编译好了针对 Mac 的，可以从其网站直接下载，省去的编译的痛苦另外出现的一个问题是在执行<code>bundle install</code>的时候，会给出下面的报错</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>creating Makefile  
+</span><span class='line'>extconf.rb:21:in `&lt;main&gt;': Only Darwin systems 
+</span><span class='line'>greater than 8 (Mac OS X 10.5+) are supported (RuntimeError)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个报错的原因是 <a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>需要的 <a href="https://github.com/thibaudgg/rb-fsevent/" title="rb-fsevent">rb-fsevent</a>的版本是<code>0.4.3.1</code>，这个版本还不支持 Mountain Lion。简单的处理办法是修改<code>ext/extconf.rb</code>文件，找到 19 行，如下:
+<code>sdk_version    = { 9 =&gt; '10.5', 10 =&gt; '10.6', 11 =&gt; '10.7' }[darwin_version]</code><br/>
+修改为
+<code>sdk_version    = { 9 =&gt; '10.5', 10 =&gt; '10.6', 11 =&gt; '10.7',12=&gt;'10.8' }[darwin_version]</code></p>
+
+<p>删除第 24 行内容，如下</p>
+
+<p><code>-isysroot #{xcode_path}/SDKs/MacOSX#{sdk_version}.sdk</code></p>
+
+<p>然后编译安装即可。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setup a Virtual Ftp Server With Pam Mysql]]></title>
+    <link href="http://wgzhao.com/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/"/>
+    <updated>2012-04-07T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql</id>
+    <content type="html"><![CDATA[<hr />
+
+<p>layout: post
+title: 用 vsftpd 和 mysql 创建一个虚拟用户 ftp 服务器
+date: 2012-04-07 16:51
+comments: true
+categories:
+&ndash; Linux 技术
+tags:
+&ndash; vsftp
+&ndash; mysql
+&ndash; pam</p>
+
+<hr />
+
+<p>当前有这样的一个需求，我需要批量创建一个网站，比如我要创建一个<code>foo.com</code>的网站，我就会在<code>/web/</code>目录下创建一个<code>foo.com</code>的目录，WEB 服务器（我这里用的是 <a href="http://nginx.org" title="nginx">nginx</a>）已经自动设置好解析。同时，我需要有一个对应的 ftp 账号来管理这个网站，但是我不希望使用系统账号，一来网站多了，系统账号必然多，而来我不希望管理网站的账号能通过 ssh 登陆，虽然 ssh 也可以配置哪些账号不允许登陆。但是不创建系统账号显然是最安全的做法。</p>
+
+<!--more-->
+
+
+<p>于是这就是有了标题的做法，用 <a href="http://vsftpd.beasts.org/" title="vsftpd Server">vsftpd</a> 做 FTP 服务器，用 <a href="http://www.mysql.com" title="MySQL Server">MySQL</a> 做后端数据库，两者通过 <a href="http://pam-mysql.sourceforge.net" title="PAM module backed by MySQL">pam-mysql</a> 插件联系起来。配置步骤简述如下：</p>
+
+<ol>
+<li>我的系统是 <a href="http://www.centos.org" title="CentOS">CentOS</a> 6.2，因此现用 yum 工具安装好所需要的软件，包括 <a href="http://www.mysql.com" title="MySQL Server">mysql-server</a>,<a href="http://vsftpd.beasts.org/" title="vsftpd Server">vsftpd</a>,<a href="http://pam-mysql.sourceforge.net" title="PAM module backed by MySQL">pam-mysql</a> 等。</li>
+<li><p>编辑<code>/etc/vsftpd/vsftpd.conf</code>文件,增加或者修改如下几项：</p>
+
+<pre><code> anonymous_enable=NO
+ virtual_use_local_privs=YES
+ guest_enable=YES
+ user_sub_token=$USER
+ local_root=/web/$USER
+ chroot_local_user=YES
+ hide_ids=YES
+ guest_username=nginx
+</code></pre>
+
+<p> <code>guest_username</code> 表示当用户登陆成功后，其 uid 映射到系统哪个账号上，我这里为了和 WEB 管理相结合，因此用了 nginx 这个账号。</p></li>
+<li><p>创建数据库表，我们创建一个名为 vsftpd 的数据库，在其下创建一个 users 表，同时授权给 vsftpd 账号登陆，创建过程类似如下：</p>
+
+<pre><code> mysql&gt; create database vsftpd;
+ Query OK, 1 row affected (0.00 sec)
+
+ mysql&gt; use vsftpd
+ Database changed
+ mysql&gt; create table users(username varchar(30) not null primary key,password varchar(41) not null);
+ Query OK, 0 rows affected (0.04 sec)
+ mysql&gt; grant usage  on vsftpd.users to vsftpd@localhost identified by 'abc123';
+ Query OK, 0 rows affected (0.00 sec)
+ mysql&gt; insert into users values('foo.com',password('test'));
+ Query OK, 1 row affected (0.00 sec)
+
+ mysql&gt; select * from users;
+ +----------+-------------------------------------------+
+ | username | password                                  |
+ +----------+-------------------------------------------+
+ | foo.com  | *94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29 |
+ +----------+-------------------------------------------+
+ 1 row in set (0.00 sec)
+</code></pre></li>
+</ol>
+
+
+<p>我这里对密码使用 password 加密函数，因为要和 WEB 结合，因为 username 使用了和域名相同的名字，这样我就可以通过 username 来同时获知域名，从而将账号的主目录锁定在对应的域名目录下。</p>
+
+<ol>
+<li><p>编辑<code>/etc/pam.d/vsftpd</code>文件，最后类似如下：</p>
+
+<pre><code> auth required pam_mysql.so user=vsftpd passwd=abc123 host=localhost db=ftpd table=users usercolumn=username passwdcolumn=password crypt=2
+ account required pam_mysql.so user=vsftpd passwd=abc123 host=localhost db=ftpd table=users usercolumn=username passwdcolumn=password crypt=2
+</code></pre>
+
+<p> user 和 passwd 指的是连接 <a href="http://www.mysql.com" title="MySQL Server">MySQL</a> 的账号和密码，crypt 指的加密方式，0 表示明文；不加密；1 表示用 crypt 方式加密；2 表示用 <a href="http://www.mysql.com" title="MySQL Server">MySQL</a> 的 password 函数加密；3 表示用 md5 加密；4 表示用 sha1 加密。</p></li>
+<li><p>创建对应的目录 当用 foo.com 登陆，且验证通过后，根据之前 <a href="http://vsftpd.beasts.org/" title="vsftpd Server">vsftpd</a> 的配置，它将以 nginx 的身份把<code>/web/foo.com</code>作为其主目录，因此要保证其目录存在，而且其身份有访问权限。</p></li>
+<li>测试，直接可以在本地测试，看看能否登陆，如果不能登陆，<code>/var/log/secure</code>里又看不到更多的信息，那你可以选择在<code>/etc/pam.d/vsftpd</code>的配置文件里加上<code>verbose</code>模式，也就是在<code>user=vsftpd</code>那里加上一个<code>verbose=1</code>的选项，这样它就会把详细的信息打印到<code>/var/log/secure</code>文件里。看看是哪里的报错。</li>
+</ol>
+
+
+<p>其实，上述只是一个最简单的配置，<code>pam-mysql</code>还可以让你配置得更复杂，比如记录登录日志，根据特定条件查询过滤用户信息等，<code>pam-mysql</code>软件包自带的<code>README</code>有详细的说明，大家可以按照那个说明来配置一个符合你需求的灵活的认证方式。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SQL查询工具网站的部署]]></title>
+    <link href="http://wgzhao.com/2011/09/20/clone-explain-depesz-com-website/"/>
+    <updated>2011-09-20T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2011/09/20/clone-explain-depesz-com-website</id>
+    <content type="html"><![CDATA[<p>从 IRC #postgresql 频道了解到一个网站: <a href="http://explain.depesz.com">http://explain.depesz.com</a> 其口号是：</p>
+
+<blockquote><p>A tool for finding a real cause for slow queries</p></blockquote>
+
+<p>方法是粘贴你的 <code>explain
+sql</code> 语句结构。他可以根据结果生成 HTML 格式的解释页面，其中用不同颜色来标识子语句所占用的资源情况，其中颜色越深，标识所占用的资源越多。同时它还给出了两张统计列表，一张是按照索引类型来统计占用的时间，及比率；另外一种是根据 SQL 语句中涉及到的表来统计查询每张表所占用的时间及比率。不仅如此，这个网站代码还是开源的，托管在 github 上。地址为：
+<a href="https://github.com/depesz/explain.depesz.com">https://github.com/depesz/explain.depesz.com</a></p>
+
+<p>下面是搭建过程：</p>
+
+<!--more-->
+
+
+<ol>
+<li>环境：Debian unstable 64bit</li>
+<li>首先安装网站代码以来的 perl 框架 mojolicious，可以从<a href="http://www.mojolicious.org/">http://www.mojolicious.org/</a>
+下载源代码编译安装。不过 Debian 的源里有这个软件，可以直接通过<code>sudo apt-get install mojolicious</code> 来安装。
+2)从<a href="http://backpan.perl.org/authors/id/D/DE/DEPESZ/Pg-Explain-0.61.tar.gz">http://backpan.perl.org/authors/id/D/DE/DEPESZ/Pg-Explain-0.61.tar.gz</a>
+下载分析 explain SQL 的 perl 模块，这个模块也是网站作者编写的。下载解压，执行<code>perl Build.pl</code>
+，如果提示有模块没有安装，则执行 <code>./Build installdeps</code> 而后执行 <code>./Build install</code> 即可。</li>
+<li><p>下载 explain.depesze.com 的源代码</p>
+
+<pre><code> cd /home/wgzhao/websites/
+ git clone https://github.com/depesz/explain.depesz.com.git  explain
+</code></pre></li>
+<li><p>网站默认使用的是 postgresql 数据库，我们修改
+<code>explain.json</code>文件中关于 database 区域的相关信息。保证 perl 能正确连接上数据库。</p></li>
+<li><p>用 psql 连接 postgresql，创建<code>explain.json</code>里设置的数据库名，并导入<code>sql/create.sql</code>文件。</p></li>
+<li><p>执行<code>morbo  --verbose ./explain.pl</code> 根据提示，如果报一些 perl 模块找不到，先安装这些模块。直到上述指令出现类似下面的结果：<br/>
+     [Tue Sep 20 18:17:37 2011]<br/>
+     [info] Server listening (<a href="http://*:3000">http://*:3000</a>) Server available at <a href="http://127.0.0.1:3000.">http://127.0.0.1:3000.</a></p></li>
+<li>打开浏览器，访问 <a href="http://127.0.0.1:3000">http://127.0.0.1:3000</a>，看看是不是获得了和<a href="http://explain.depesz.com/">http://explain.depesz.com/</a> 一样的效果？</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[自动配置Mac OS X 的VPN连接时的特定路由]]></title>
+    <link href="http://wgzhao.com/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/"/>
+    <updated>2011-09-07T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx</id>
+    <content type="html"><![CDATA[<p>Mac 系统自带的 VPN 连接配置倒是方便，但是有一个毛病（或者说我还没有不知道使用）,那就是对于通过 VPN 获取的路有信息，要不就是全部忽略，要不就是所有的 IP 流出都通过 vpn 的路由，相当于由 VPN 的路由指定了缺省路由。用户没有办法手工增加特定路由。这点就不如 Linux 下的网络管理工具，比如 Gnome 的 nm-applet 使用起来就很方便。</p>
+
+<p>当然，在图形界面配置上没有，不代码在命令行或者特殊的配置文件没有，下面我们就通过配置文件来解决这个问题。</p>
+
+<!--more-->
+
+
+<p>首先在/etc/ppp/目录下创建(或者修改）ip-up 文件。这个文件实际上时 pppd 后台进程读取的，VPN 也得通过它来拨号。</p>
+
+<p>VPN 拨号后，会传递一系列的参数给 ip-up 文件，比如拨号的设备（ppp0),拨号两端的 ip 地址，以及缺省路由。我们感兴趣的是$5 这个参数。该参数描述的是 ppp 链路服务端的 ip 地址，也就是我们需要的路由网关。我们可以通过这个参数来判断，从而加入不同的路由。比如你有多个 VPN 连接，那肯定需要通过判断不同的 ppp0 端 IP 地址而加入不同的路由。脚本可以这样写：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;${5:-}&quot;</span> <span class="o">=</span> <span class="s2">&quot;192.168.15.10&quot;</span> <span class="o">]</span>;<span class="k">then</span>
+</span><span class='line'>     /sbin/route add -net 192.168.0.0/20 <span class="nv">$5</span>
+</span><span class='line'><span class="k">fi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>保存后，并设置该文件的权限为 755 <code>chmod 755 ip-up</code> 你再连接 VPN 看看，是不是加上了脚本里的路由信息。：）</p>
+
+<p>测试环境： Dell E6410，Mac OS X 10.7.2</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在Dell E6410 上安装Mac OS X Lion]]></title>
+    <link href="http://wgzhao.com/2011/08/07/install-mac-os-x-lion-with-dell-e6410/"/>
+    <updated>2011-08-07T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2011/08/07/install-mac-os-x-lion-with-dell-e6410</id>
+    <content type="html"><![CDATA[<p>我的 iMac 升级到 10.7 后，就一直想把我的 Dell E6410 笔记本上的 Mac OS X Snow Leopard
+升级到 Lion，可惜有前几次的失败后，都有点不想折腾了，真的 Mac 机器，升级还是非常容易的，比如我的 iMac，前后只用了 30 分钟。</p>
+
+<p>下午有点休闲时间，刚好皮皮也睡觉了，还是手痒一把，参考了远景论坛上的几个帖子（附后）以及强大的 Google，这次居然成功的升级到了 10.7.2，不容易呀！特意记录一下过程，和大家分享：</p>
+
+<ol>
+<li><p>准备 Lion 镜像，这个基本上大网站都有下载了，这里推荐 <a href="http://imzdl.com/">http://imzdl.com/</a> ，资料都靠谱，而且下载速度还不错。</p></li>
+<li><p>如何烧录 Lion 镜像，请参考下面这个连接： <a href="http://itc.do-johodai.ac.jp/~s0823612/">http://itc.do-johodai.ac.jp/~s0823612/</a></p></li>
+</ol>
+
+
+<p>同时我把内容复制到下面：</p>
+
+<!--more-->
+
+
+<blockquote><ol>
+<li>由于我是直接 app store
+上下的，会自动下载到<code>/Application</code>文件夹下，（如果是通过其他渠道得到的镜像文件请跳过这一步），然后我们在程序文件夹下找到<code>安装 Mac
+OS lion</code>这样一个狮子头光盘图标，然后在 finder 里右键选择<code>显示包内容</code>，然后在<code>Contents-&gt;SharedSupport</code>里找到<code>InstallESD.dmg</code></li>
+<li>双击<code>InstallESD.dmg</code>装载这个虚拟盘，紧接着我们打开终端（“程序”&mdash;-》“实用工具”&mdash;&mdash;-》“终端”）在终端里，进入到该盘里，输入：
+<code>cd /Volumes/"Mac OS X Install ESD"</code> 然后我们装载一个叫<code>BaseSystem.dmg</code>的隐藏文件： <code>hdiutil
+mount BaseSystem.dmg</code> 成功的话应该能在桌面上看到一个名为<code>BaseSystem</code>的盘符意思是已经装载</li>
+<li>打开磁盘工具（“程序”&mdash;-》“实用工具”&mdash;&mdash;-》“磁盘工具”）然后选中<code>Mac OS X BaseSystem</code>盘符，将其恢复到本地分区或者 U 盘移动硬盘上，大概 5 个 G，（我是选择了用 U 盘，目标磁盘只要把你 U 盘或者移动硬盘或者本地分区从左边一栏拖到右边的地址栏里即可）恢复完之后这个盘名自动会变成<code>Mac OS X BaseSystem</code>，我们称它为安装磁盘</li>
+<li>将原来那个<code>Mac OS X BaseSystem</code>推出（<strong>重要</strong>）</li>
+<li>将<code>Install ESD</code>磁盘中的隐藏文件<code>mach_kernel</code>复制到上述的安装磁盘，在终端里输入： <code>cp mach_kernel /Volumes/"Mac
+OS X BaseSystem"</code> （如果提示输入 root 密码就输一下，反正我拷贝的时候没有要求）</li>
+<li>接下来，将<code>Install ESD</code>磁盘中的<code>Packages</code>文件夹复制到安装磁盘的<code>/System/Installation</code>目录下面覆盖原来的<code>Packages</code>快捷方式</li>
+<li>然后下载 <a href="http://blog.nawcom.com/?p=751">nawcom 制作的 MBR patch for lion</a></li>
+<li>解压缩下载到的<code>DP4.tar.gz2</code>文件，并将<code>System</code>目录及子目录下面的<code>OSInstall</code>文件和<code>OSInstall.mpkg</code>文件按照相应的路径复制到安装磁盘的对应位置并替代原文件，这里貌似需要 root 权限</li>
+</ol>
+</blockquote>
+
+<ol>
+<li>安装过程中，内置的键盘和鼠标都没有响应，需要弄一个外置的 USB 鼠标，键盘可以暂时不管。</li>
+<li>如果上述步骤安装成功，但是启动过程中，到了<code>pci beginning configuration</code>位置就不往下走的话，那么可以再次用安装镜像启动，然后进入到终端，而后把安装镜像的 Extra 目录拷贝到系统目录里，然后重启，就应该没有问题了。</li>
+</ol>
+
+
+<p>到目前为止，无线网卡还是没有办法解决，有线网卡没有问题，声卡也就是发声而已，不能指望太多。显卡特效无法开启，只是分辨率能到 1280x800。稳定性嘛，目前还在测试。做完 time machine 后，我又升级到了 10.7.2，目前一切良好。 下面的链接也可以作为安装的参考：<br/>
+<a href="http://bbs.pcbeta.com/viewthread-875058-1-1.html">http://bbs.pcbeta.com/viewthread-875058-1-1.html</a>
+<a href="http://bbs.pcbeta.com/viewthread-874098-1-1.html">http://bbs.pcbeta.com/viewthread-874098-1-1.html</a>
+<a href="http://blog.nawcom.com/?p=751">http://blog.nawcom.com/?p=751</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[配眼镜]]></title>
+    <link href="http://wgzhao.com/2011/04/11/my-glasses-story/"/>
+    <updated>2011-04-11T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2011/04/11/my-glasses-story</id>
+    <content type="html"><![CDATA[<p>下午去宝岛配了一副眼镜，又花了一大笔，在回来的公交车上，回想了我这几天配眼镜，带眼镜的往事，有些感慨，唠唠叨叨记录一下吧：一直到高二，我的眼睛还是挺好的，不说 1.5，也在 1.2 以上，坐在最后一排，大晴天的情况下，看黑板一点问题都没有。</p>
+
+<p>到了高三，题海战术来了，于是对眼睛的利用率也到了及其无耻的程度。那个时候穷呀，说穷，可能觉得矫情，就说节省吧（一个月 30 块的生活费还有的剩）。</p>
+
+<p>那个时候，别说课外教材了，就是草稿纸，都很缺。记得我一个算较远的亲戚了，给我送来了一叠带横线的浅蓝色稿纸，纸很薄，算起来张数就很多了。很是兴奋，于是非常节约的写，怎么个节约法呢，一张新的稿纸，先用自动铅笔用一遍，两面都写。因为自动铅笔写上去其实颜色很浅的，看的时候非常吃力，写第一面还好一点，接着写第二面的时候，眼镜就看得比较难受了。</p>
+
+<!--more-->
+
+
+<p>铅笔写完，接下来就用蓝色墨色的特细钢笔写，也是两面都写，这个倒是比较清楚。</p>
+
+<p>接下来，是用碳素墨水的较粗钢笔再写两面，此时眼镜就有点不管用了，因为一不留神，就看到第二层去了，需要你集中精力来看你刚才写的东西。</p>
+
+<p>到这个时候，这张纸，基本上算是废了，上面透着分布均匀的亮点。这个时候，还是不能扔了，最后的用途就是用来练习写毛笔字，毛笔多粗呀，所以还是能看得很清楚的。</p>
+
+<p>一个学期下来，突然间发现，眼镜不太好使了，黑板上的字有点重影了，再扫描一下同学，戴眼镜的也多了，那个时候，对于恢复势力，打得最多广告的就是所谓利用小孔成像原理制成的视力矫正器，听上去道理很高深，其实就是一个塑料镜框加两片黑色塑料片充当镜片，然后在这塑料片上中央各打一个 1mm 左右的小孔，于是一副高科技视力矫正器诞生了，当时不少同学都戴，从讲台上看过去，有点像盲人学校了。当然，至于效果，你也想到是什么结果了。校园外面，也有很多配眼镜的，不过不是现在你看到的这种正规的眼镜行，给你测视力，测瞳距。那些小店，基本上眼镜都是成型的，就是镜框和镜片都已经做好成一副一副的，你自己随便去挑，挑好了，戴上，去看店里面挂的视力表，觉得行，那就买下，觉得还是模糊，就再挑度数高的。这类的眼镜，价格也不菲，20～80 不等。大当然，绝大部分都很重，相比现在配的高质量的眼镜的重量，那基本上就是在你鼻梁上挂着一个哑铃了。</p>
+
+<p>价格不菲，加上对眼镜的恐惧，高中期间一直没有配，看不清黑板的解决办法其实也很简单，看不清，那就不看好了，反正高三，高四，也就是题海战术了。</p>
+
+<p>考上大学后，姐姐说要配一副眼镜，我也觉得要配了，毕竟不是搞题海战术了，和姐姐到一个很正规的眼镜店配了第一副眼镜，测完视力，技师说你要配 275 度的眼镜，我当时吓一跳，觉得这太不可意思了，虽然我是看东西有点模糊，但还不至于吧。我对技师说，你甭管测出来要戴多少度，你就都给我配成 150 度好了。技师当然说了一推的专业内容告诉我这是不对的，但是我还是坚持只要 150 度。技师也没辙，只要按照我的要求去做。至于价格，我觉得那简直就是抢钱。</p>
+
+<p>于是 98 年的秋天，我戴上了 150 度的眼镜，坐在大教室最后一排，基本上一切风景尽收眼底，那清晰度，那感觉，哎，又回到了初中。只是因为第一次戴眼镜很不习惯，摘摘戴戴的，没过一个月，眼镜就丢。从那以后，大学期间就一直没有配过眼镜了，黑板和幻灯片照样看不清，看不清的解决方案，高中已经有现成的，继续不看黑板好了。</p>
+
+<p>严格说来，也不是后来一直没有戴，应该是大三那年，从当时的女朋友（现在是家里领导了）那里拿了一副她不用的眼镜，度数有点高，但是戴一会儿还行，结果不到 2 周，又丢在 6 路公交车上了。</p>
+
+<p>配第二副眼镜的时候，已经是距离第一副眼镜 7 年后了，那是 05 年的圣诞节，女朋友过来玩，我们沿着苏州街走，看到了一家宝岛眼镜店，我建议女朋友把眼镜换了，一个时间长了，镜框有点变型了，二则视力估计也变动了，得重新测试测试。</p>
+
+<p>给她配置了一个我应该说还算不错的眼镜，顺便也给我自己配了一副，哇哈哈，这一次测试视力，居然只要我配 150 度的，OMG，我当时已经在心里把自己狠狠的佩服了一把。</p>
+
+<p>这副眼镜算是戴的比较多的了，从拿到手，到最后不知道去哪里了，加起来，戴的时间应该超过了 10 天。</p>
+
+<p>07 年的夏天，自己提出来还是要配一副眼镜，因为看电视不清楚，就会老眯着眼睛，久而久之，眼睛就会受不了，于是又去长沙步行街的宝岛眼镜店配了一副，女朋友也顺便换了一副。</p>
+
+<p>记得应该是没过多久，这副眼镜就惨烈牺牲在我的屁股下。</p>
+
+<p>之后，对自己说，再也不配眼镜了，这么多副眼镜加起来，戴的时间也没有超过 1 个月，花的钱可不少。但挨不过已经升级为老婆的劝说，2010 年的 7 月，和她一起配了一副眼镜。对这副眼镜，我可是保管得小心翼翼，其方法就是尽量不戴。这样，总算熬到了 2011 年的 7 月，在一次不到 10 秒的不注意期间，我们的皮皮用她分筋错骨手招数直接把眼镜框两腿拔下，干脆利落，以致连修补的机会都没有。</p>
+
+<p>等要用眼镜的时候，我就用一根跑鞋带系住镜框的两端，然后套在自己的头上，你还别说，除了摘下不方便外，其矫正视力的功能还是没有受影响的。但这种寒酸的做法，在家里还行，总不能在外面也这样戴着，当然，我猜想，如果是韩寒戴着，那可能叫做特立独行，我戴着，那叫做正宗 SB 一枚。于是，只好在今天，又狠了狠心，打算配一个 300 以内的眼镜，结果给领导汇报时，领导说如果能对保护视力有好处，那多花钱是值得的，于是最后成交就变成 800 了。</p>
+
+<p>它会是我的最后一副眼镜吗？</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[快速制作一个虚假deb格式软件包]]></title>
+    <link href="http://wgzhao.com/2011/03/18/how-to-build-a-fake-deb-package-quickly/"/>
+    <updated>2011-03-18T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2011/03/18/how-to-build-a-fake-deb-package-quickly</id>
+    <content type="html"><![CDATA[<p>把上面的代码保存为<code>dummy.c</code>。而后使用<code>autoscan</code>命令来粗昂间一个<code>configure</code>模板文件，命令如下</p>
+
+<pre><code>$ autoscan 
+$ ls
+autoscan.log  configure.scan  dummy.c
+</code></pre>
+
+<p>将生成的<code>configure.scan</code>文件保存为<code>configure.in</code>，并进行修改，只用保留下面几行内容就行了，我在文件里注释说明</p>
+
+<!--more-->
+
+
+<pre><code>AC_PREREQ([2.67])
+#定义包的名字，版本以及 bug 发布地址
+AC_INIT(dummy, 2009-10, fake@example.com)
+#传递给 automake 的参数
+AM_INIT_AUTOMAKE(dummy,2009-10)
+AC_CONFIG_SRCDIR([dummy.c])
+AC_CONFIG_HEADERS([config.h])
+AC_PROG_CC
+#输出文件名
+AC_OUTPUT(Makefile)
+</code></pre>
+
+<p>上面的版本号可以随意定义，但是为了和我们当前系统获取的真实的<code>texlive-base</code>包版一致，我们取的一样。我们可以先通过下面的指令获得该包的版本</p>
+
+<pre><code>$ apt-cache show texlive-base |grep '^Version'
+Version: 2009-10
+</code></pre>
+
+<p>执行<code>aclocalhe</code>和<code>autoconf</code>，生成<code>confiugre</code>文件</p>
+
+<pre><code>$ aclocal
+$ autoconf 
+$ ls
+autom4te.cache  autoscan.log  configure  configure.in  dummy.c
+</code></pre>
+
+<p>新建<code>Makefile.am</code>文件，再由<code>automake</code>工具根据所写的<code>Makefile.am</code>文件来自动生成<code>Makefile.in</code>文件。
+<code>Makefile.am</code>文件一般定义自己的软件最后生成的可执行程序名字、需要连接的库等，这里只有一个 c 文件，因此<code>Makefile.am</code>就相当简单了</p>
+
+<pre><code>$ cat Makefile.am 
+bin_PROGRAMS=dummy
+dummy_SOURCES=dummy.c
+</code></pre>
+
+<p>注意上面的最后一行，dummy 是依赖第一行的设置，如果第一行最后设置为 foo,那么第二行就应该是<code>foo_SOURCES</code>
+好了，现在有了 Makefile.am 了，我们可以创建<code>Makefile.in</code>文件了,不过创建<code>Makefile.in</code>之前，我们还需要创建<code>automake</code>必须要的一些文件，然后再执行她</p>
+
+<pre><code>$ touch NEWS README AUTHORS ChangeLog
+$ automake --add-missing
+$ ls
+aclocal.m4      ChangeLog      configure.in  INSTALL      missing
+AUTHORS         config.log     COPYING       install-sh   NEWS
+autom4te.cache  config.status  depcomp       Makefile.am  README
+autoscan.log    configure      dummy.c       Makefile.in
+</code></pre>
+
+<p>以上会给出一些警告，因为我们缺少一个软件源代码一般都需要的 INSTALL,README 等文件。当然你可以 touch 这些，或者对这些直接飘过，反正我们这个包只是用来欺骗 apt 的。接下来的步骤我们就很熟悉了，就是<code>./configure &amp;&amp; make</code> 这个套路了，我们来执行它吧：</p>
+
+<pre><code>$ automake
+$ ./configure 
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... no
+checking for mawk... mawk
+checking whether make sets $(MAKE)... yes
+checking for gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking for style of include used by make... GNU
+checking dependency style of gcc... gcc3
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: executing depfiles commands
+$ make
+gcc -DPACKAGE_NAME=\"dummy\" -DPACKAGE_TARNAME=\"dummy\" -DPACKAGE_VERSION=\"2009-10\" -DPACKAGE_STRING=\"dummy\ 2009-10\" -DPACKAGE_BUGREPORT=\"fake@example.com\" -DPACKAGE_URL=\"\" -DPACKAGE=\"dummy\" -DVERSION=\"2009-10\" -I.     -g -O2 -MT dummy.o -MD -MP -MF .deps/dummy.Tpo -c -o dummy.o dummy.c
+mv -f .deps/dummy.Tpo .deps/dummy.Po
+gcc  -g -O2   -o dummy dummy.o  
+$ ls
+aclocal.m4      ChangeLog      configure.in  dummy.c     Makefile     NEWS
+AUTHORS         config.log     COPYING       dummy.o     Makefile.am  README
+autom4te.cache  config.status  depcomp       INSTALL     Makefile.in
+autoscan.log    configure      dummy         install-sh  missing
+</code></pre>
+
+<p>好了，make 成功了，如果仅仅是安装，我们执行<code>make install</code>
+就好了，但是我们的目的是创建一个 deb 包，虽然我们可以按照 Debian 的 New Maintainer
+Guide 一步一步制作 deb 包，详细的过程请参照：
+<a href="http://www.debian.org/doc/maint-guide/">http://www.debian.org/doc/maint-guide/</a>
+但是我们为了快速创建 deb 包，还是利用 checkinstall 这个工具好了。</p>
+
+<pre><code>$ checkinstall -D -y --install=no --pkgname=texlive-base --pkgversion=2009-10
+
+checkinstall 1.6.2, Copyright 2009 Felipe Eduardo Sanchez Diaz Duran
+
+...... .....
+*******************************************************
+
+ Done. The new package has been saved to
+
+ /var/tmp/texlive-base/texlive-base_2009-10-1_i386.deb
+ You can install it in your system anytime using: 
+
+      dpkg -i texlive-base_2009-10-1_i386.deb
+
+***********************************************************
+</code></pre>
+
+<p>看到最好了吧，我们就得到了<code>texlive-base_2009-10-1_i386.deb</code>包了，这个包，没有任何依赖关系，你可以直接安装。安装后，再执行</p>
+
+<pre><code>$sudo apt-get install texworks
+</code></pre>
+
+<p>从列出的依赖关系中，你就发现少了 texlive-base 包了。 如果你依赖的包很多，那么我们可以将上述过程自动化，非常方便。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Ssh的三板斧]]></title>
+    <link href="http://wgzhao.com/2011/03/11/ssh-three-kill-features/"/>
+    <updated>2011-03-11T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2011/03/11/ssh-three-kill-features</id>
+    <content type="html"><![CDATA[<p>ssh 的功能无比强悍，对于一个<strong> Unix/Linux </strong>而言，只要开放一个 ssh 服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下：</p>
+
+<h2>端口转发</h2>
+
+<p>端口转发，也就是-L 参数的设置。以我的实际例子来说明吧，我在家里上网，设置的是局域网，IP 地址是<code>192.168.100.101</code>。公司总部呢，也是用的是局域网地址，<code>172.16.0.0</code>网段。我需要访问公司内部的一台应用服务器，比如<code>172.16.81.111</code>。我该怎么办呢？恰好，公司有一台网关服务器，有两块网卡，一块是设置的公网 IP 地址，比如<code>219.99.12.23</code>。另外一块网卡，则是公司的内网的 IP 地址，比如<code>172.16.81.220</code>。这台服务器开启了 SSH 服务。那么我要做的便是执行下面的指令:</p>
+
+<!--more-->
+
+
+<p><code>ssh -f -N   -L 8080:172.16.81.111:80 wgzhao@219.99.12.23</code></p>
+
+<p>一旦登陆成功后，在自己的电脑上，打开浏览器，在地址栏，输入<a href="http://localhost:8080">http://localhost:8080</a>，你能看到什么呢？它等价于访问了<a href="http://172.16.81.111/">http://172.16.81.111/</a>。对就是访问了公司总部指定的服务器的 WEB 服务（假定 80 端口对应的是 WEB 服务）。当然，这里也要注意，如果自己的电脑已经使用了 8080 端口，则上述指令不会成功，换一个不常用的高端端口吧。这条指令，基本上可以让你无障碍的访问公司任何服务器的任何服务，甚至是 SSH 服务（前提是已授权访问）。嗯，想想看，如果上面的指令改成下面这样：</p>
+
+<p><code>ssh -f -N -L 8022:172.16.81.111:22 wgzhao@219.99.12.23</code> 然后你再执行</p>
+
+<p><code>ssh -p 8022  localhost</code>
+会是什么样的结果呢？ 此时，你已经通过 ssh 进入到了公司服务器。我们再进一步，把上述指令改成</p>
+
+<p><code>ssh -X -p 8022 localhost</code></p>
+
+<p>然后执行 startx 或者 gnome-session 或者其他的，结果又会是怎样呢？哈哈，其功能仅受限于您的想象力（感谢周立波提供此语句）。</p>
+
+<h2>端口绑定端口绑定，也即 ssh 的-R 参数配置。依然举个例子，不在一起的一个朋友，一台机器有些故障需要解决，我需要登陆到他的机器，第一个办法用不上，因为没有一台具有公网 IP 地址的网关机器。其他办法呢？显然 Windows 下的那套 QQ 远程，MSN 远程都派不上用场了。怎么办？Linux 只有 Linux 的解决办法。那就是利用可以通过 ssh 访问的一台有公网 IP 地址的机器。它可以是 VPS，可以是独立主机，总之，只要能够让双方通过 ssh 访问得到就可以。首先，让我的朋友执行下面的指令：</h2>
+
+<p><code>ssh -qTfN -R 9922:localhost:22  account@222.222.233.212</code></p>
+
+<p>执行成功后。我在执行下面的指令： <code>ssh account@222.222.233.212</code> 登陆成功后，可以执行</p>
+
+<p><code>netstat -lpnt |grep 9922</code></p>
+
+<p>你应该可以类似下面的输出：</p>
+
+<pre><code>$ netstat -ln |grep 9922 
+tcp        0      0  
+127.0.0.1:9922              0.0.0.0:*                   
+LISTEN       tcp        0      0 ::
+1:9922                    :::*                        
+LISTEN
+</code></pre>
+
+<p>这里的<code>9922</code>端口，实际上就是我朋友电脑上的 ssh 服务。立马在这台服务器上继续执行下面的指令吧：</p>
+
+<p><code>ssh -p 9922 puser@localhost</code></p>
+
+<p>puser 是我朋友电脑上的账号。登陆成功后，我就进入了我朋友的电脑。OK，想干什么都可以做了。完成后，我朋友只需要把那条包含<code>9922</code>的进程<code>kill</code>就可以了。</p>
+
+<h2>动态端口转发动态端口转发，也即-R 参数的配置，它的目的是把本地指定的一个端口通过 socket 模式转发到指定的远程服务器上的特定端口。比如说，我在美国有一个 VPS，有用 SSH 访问功能，如果我在本地执行下面的指令：</h2>
+
+<p><code>ssh -D8580 -qnTfN account@myserver.example.com</code></p>
+
+<p>然后呢，比如，打开你的浏览器，设置代理 ip 地址为<code>127.0.0.1</code>，端口是<code>8580</code>，代理类型是<code>SOCKET5</code>，注意是 5，SOCKET4 不行（至少我没有测试成功）。设置完成后，虽然访问一些网站，比如<a href="http://blog.wgzhao.com">http://blog.wgzhao.com</a>，看能不能打开。如果能，就表示设置成功了。然后呢？然后你访问 <a href="http://twitter.com">twitter</a>，<a href="http://www.facebook.com">facebook</a>，<a href="http://www.youtube.com">youtube</a> 这些根本在实际上就不存在的网站呢？再然后呢？ 没有了。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在线扩容ext4文件系统]]></title>
+    <link href="http://wgzhao.com/2011/03/09/online-resizing-ext4-filesystem/"/>
+    <updated>2011-03-09T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2011/03/09/online-resizing-ext4-filesystem</id>
+    <content type="html"><![CDATA[<p>原来一个分区分得太小了（只有 5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对 ext3 干过这样的事情，看了 ext3 上的 <a href="https://ext4.wiki.kernel.org/index.php/Frequently_Asked_Questions#How_to_online_resize_the_Ext4_filesystem.3F">wiki 介绍</a>，得知做法和原来的 ext2/ext3 一样（看来兼容性还是不错）。下面是我的扩容过程</p>
+
+<p>首先下载你要扩容的分区，这样当然是最保险的，如果你就是不想卸载，只要你别对其做写操作，也没有问题。</p>
+
+<!--more-->
+
+
+<p>接下来就是用 fdisk 删除该分区，然后用你期望的大小重建该分区。这里要注意的是，分区的开始扇区一定要和删除前保持一致，否则文件系统就会遭到破坏。下面是我的实际操作过程</p>
+
+<pre><code># fdisk /dev/sda
+
+Command (m for help): p
+
+Disk /dev/sda: 64.4 GB, 64424509440 bytes
+255 heads, 63 sectors/track, 7832 cylinders, total 125829120 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00067b51
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *          63    29302559    14651248+  83  Linux
+/dev/sda2        29302784    39061503     4879360   83  Linux
+
+Command (m for help): d
+Partition number (1-4): 2
+
+Command (m for help): n
+Command action
+   e   extended
+   p   primary partition (1-4)
+p
+Partition number (1-4, default 2): 
+Using default value 2
+First sector (29302560-125829119, default 29302560): 29302784
+Last sector, +sectors or +size{K,M,G} (29302784-125829119, default 125829119): +20G
+
+Command (m for help): p
+
+Disk /dev/sda: 64.4 GB, 64424509440 bytes
+255 heads, 63 sectors/track, 7832 cylinders, total 125829120 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00067b51
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *          63    29302559    14651248+  83  Linux
+/dev/sda2        29302784    71245823    20971520   83  Linux
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+
+WARNING: Re-reading the partition table failed with error 16: Device or resource busy.
+The kernel still uses the old table. The new table will be used at
+the next reboot or after you run partprobe(8) or kpartx(8)
+Syncing disks.
+</code></pre>
+
+<p>而后执行下面的指令</p>
+
+<pre><code># partprobe /dev/sda
+# e2fsck -f /dev/sda2
+e2fsck 1.41.12 (17-May-2010)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+data: 38934/305216 files (0.1% non-contiguous), 1140469/1219840 blocks
+[root@wgzhao-nb wgzhao]# resize2fs /dev/sda2 20G
+resize2fs 1.41.12 (17-May-2010)
+Resizing the filesystem on /dev/sda2 to 5242880 (4k) blocks.
+The filesystem on /dev/sda2 is now 5242880 blocks long.
+</code></pre>
+
+<p>我们再挂载上来，得到的就是我期望的大小了（20G）</p>
+
+<pre><code># df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1              14G  6.5G  7.2G  48% /
+tmpfs                 1.4G  296K  1.4G   1% /dev/shm
+/dev/sda2              20G  4.3G   16G  22% /data
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Windows下压缩包在linux解压乱码的解决办法]]></title>
+    <link href="http://wgzhao.com/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/"/>
+    <updated>2010-08-06T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball</id>
+    <content type="html"><![CDATA[<p>我的系统是 ubuntu 10.04 ，编码是<code>zh_CN.UTF-8</code>。我从网络上下载的绝大部分 zip 包，解压后，连带目录和文件都是乱码。在终端尝试更换 LANG，LANGUAGE 等环境变量，还是不能直接解决问题。</p>
+
+<p>而且用 unzip 解压后，无论你怎么设置 convmv 命令的编码参数，均不能解决问题。后通过 7z 工具算是暂时解决了这个问题。首先用 apt 安装 7z 工具包。然后用下面的两条指令： <br/>
+1) <code>LANG=C 7z x xxx.zip</code> <br/>
+2) <code>convmv -f cp936 -t utf8 -r --notest *</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在ssh服务里使用chroot]]></title>
+    <link href="http://wgzhao.com/2010/07/14/chroot-in-ssh-server/"/>
+    <updated>2010-07-14T00:00:00+08:00</updated>
+    <id>http://wgzhao.com/2010/07/14/chroot-in-ssh-server</id>
+    <content type="html"><![CDATA[<p>对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发 ssh 给用户，那么无疑能极大的增加用户操作的灵活性，但是 ssh 的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。</p>
+
+<p>幸而 openSSH 已经了解到了这点，目前的版本均支持 chroot 功能，下面我简单的描述一下在 ubuntu
+10.04 系统上如何实现，其他系统实现的原理相同，只是一些配置文件和指令不同而已。</p>
+
+<!--more-->
+
+
+<ol>
+<li><p>确定 chroot 目录按照传统，chroot 的目录都在/var/chroot/下面。我们遵循这种传统，将目录限定在/var/chroot/sshd 下面。</p></li>
+<li><p>创建必要的目录和文件。我们需要在/var/chroot/sshd 下创建一个最小的系统环境，特别是需要有交互终端，如果用到一个系统高级的功能，还需要一些特定的设备文件。因为我们这里只是演示最基本的功能，复杂的的功能，可以根据错误提示要按需增加需要的资源。</p>
+
+<pre><code> $sudo mkdir -p /var/chroot/sshd/{bin,home,etc} 
+ $sudo apt-get install busybox-static 
+ $sudo cp /bin/busybox /var/chroot/sshd/bin/  
+</code></pre>
+
+<p>每次敲 <code>busybox</code> 显然不够环保，我们还是做一些额外的工作，将所有内置的 busybox 命令都用软链接的方式导出来，下面的 python 脚本能快速帮你做到这点。</p></li>
+</ol>
+
+
+<figure class='code'><figcaption><span>python ctlink.py </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='py'><span class='line'>        <span class="c">#!/usr/bin/env python</span>
+</span><span class='line'>        <span class="kn">import</span> <span class="nn">commands</span>
+</span><span class='line'>        <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">sys</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">output</span><span class="o">=</span><span class="n">commands</span><span class="o">.</span><span class="n">getoutput</span><span class="p">(</span><span class="s">&#39;./busybox --help&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">c</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span>  <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;functions:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)]</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;ln -sf busybox </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>只需要在<code>/var/chroot/sshd/bin/</code>下面执行这个脚本就好了。为了能让 chroot 环境能正确识别用户，组等信息，我们需要在 etc 目录下创建 passwd,group,shadow 等文件。而用户登录验证的时候，依赖的是 chroot 之前的<code>/etc/{passwd,shadow,group}</code>文件，这里我们采取硬链接方式来解决这个问题</p>
+
+<pre><code>    $cd /var/chroot/sshd/etc 
+    $sudo ln -n /etc/{passwd,group,shadow}
+</code></pre>
+
+<p>当然，如果你的/var 和/并不是在一个分区上，那么硬链接就不能工作，那你可以尝试在/etc 和/var/chroot/sshd/etc 来个同步工具。</p>
+
+<ol>
+<li><p>创建测试帐号 我们不用之前的用户帐号，是因为我们需要对帐号的基本信息做一些修改，我们不想破坏你现在的环境，因为来一个测试帐号是比较安全的。<br/>
+<code>$ sudo useradd -d /var/chroot/sshd/home/test -m -s /bin/sh test</code> <br/>
+然后修改<code>/etc/passwd</code> 文件将 <br/>
+<code>test:x:1001:1001::/var/chroot/sshd/home/test:/bin/sh</code>
+修改成<br/>
+<code>test:x:1001:1001::/home/test:/bin/sh</code> <br/>
+接着创建密码
+<code>$sudo passwd test</code></p></li>
+<li><p>修改 openssh-server 配置文件编辑<code>/etc/ssh/sshd_config</code>文件，在最后一行增加<code>chrootDirectory</code>指令来指定<code>chroot</code>的路径，类似如下：
+<code>chrootDirectory /var/chroot/sshd</code> 保存退出。</p></li>
+<li><p>测试，测试 以上步骤完成后，执行
+<code>$sudo /etc/init.d/sshd reload</code>
+来重新加载配置文件 然后我们可以测试了，下面是一个登录的测试结果：</p>
+
+<pre><code>  $ ssh test@localhost
+  test@localhost's password: 
+  Linux wgzhao-laptop 2.6.32-23-generic #37-Ubuntu SMP Fri Jun 11 07:54:58 UTC 2010 i686 GNU/Linux
+  Ubuntu 10.04 LTS
+  ~ $ pwd
+  /home/test
+  ~ $ cd /
+  / $ ls
+  bin   etc   home
+  / $ 
+</code></pre></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

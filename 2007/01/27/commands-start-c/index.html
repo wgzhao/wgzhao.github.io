@@ -1,0 +1,492 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>\[sbin学习\]c\*命令 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="/sbin 目录下 c 开头的命令也没有多少，列出如下 cardctl cardmgr change_console chkconfig clock consoletype cryptsetup ctrlaltdel 其中 clock 还是软连接。 [root@lancy sbin]# ls -l &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.com/2007/01/27/commands-start-c">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">\[sbin学习\]c\*命令</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-27T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>/sbin 目录下 c 开头的命令也没有多少，列出如下</p>
+
+<pre><code>cardctl cardmgr change_console chkconfig clock consoletype cryptsetup ctrlaltdel
+</code></pre>
+
+<p>其中 clock 还是软连接。</p>
+
+<pre><code>[root@lancy sbin]# ls -l clock 
+lrwxrwxrwx 1 root root 7 9 月 7 12:07 clock -&gt; hwclock
+</code></pre>
+
+<p>因此这个留待 h *命令的时候来学习。</p>
+
+<!--more-->
+
+
+<p>cardctl 和 cardmgr 是对 PCMCIA 设备的操作，不过似乎直接使用这两个命令来管理 PCMCIA 设别的机会应该很少。一来 PCMCIA 插槽只在笔记本上有，二来目前 Linux 下能支持的 PCMCIA 设备还真不多，似乎除了一些无线网卡和很少的无线上网卡支持外，其他的我就不清楚了，所以这两个命令我没用过，看了 man 手册，也没有看出名堂，忽略之。</p>
+
+<p><strong>change_console</strong>: 改变终端，这个命令是 init 来用的，我怎么加参数来执行，也没有看出什么变化，man 手册说的很少，忽略之。</p>
+
+<p><strong>chkconfig</strong>：更新和查询系统服务的运行级别信息。我们知道大部分的 Linux 发行版本都有 0-6 共 7 个级别的运行模式，先抛开关机的 0 级别和重启的 6 级别，那么就还有 1－5 共 5 个运行级别，Linux 系统允许你定义在不动的运行级别默认启动不动的系统服务。而实际上所有的执行脚本都是在<code>/etc/rc.d/init.d/</code>下面。而每个不同级别的可以运行的系统服务定义在<code>/etc/rc.d/rc[0-6].d</code>里，里面只有软连接。软连接分成了两种类型，一种是 K 开始的软连接，一种是 S 开头的软连接。分别表示需要停止的服务和启动的服务。其中启动顺序有连接名中的数字决定，数字越小，启动的优先级就越高。很显然如果要我们手工来管理这些连接，恐怕表示一件容易的事情。也是 chkconfig 就出现了。</p>
+
+<p>目前 Linux 下的 chkconfig 主要完成 5 个方面的功能：增加可以管理的系统服务移走可以管理的系统服务列出当前服务器的启动信息改变系统服务的启动信息检查特定服务的启动状态我们举一个例子阐述上面的 5 个功能</p>
+
+<p>假设我们写了一个服务程序，我们希望像其他系统服务那样可以定义不同级别的启动停止方式，而不是简单的加入到/etc/rc.d/rc.local 文件中。那么我们首先要创建一个运行脚本放到/etc/rc.d/init.d 目录下，并设置好权限。如果你不知道如何修改，那么你可以考参 init.d 目录下的任何一个运行脚本。下面的是我的一个最简单的脚本</p>
+
+<pre><code>[root@lancy init.d]# cat /etc/rc.d/init.d/test
+#! /bin/sh
+#
+# test simple test system service for management by chkconfig
+#
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Set defaults
+
+start(){
+echo -n “Starting test: ”
+/usr/local/bin/tmy start
+RETAL=$?
+echo
+}
+
+stop(){
+echo -n “Stopping test: ”
+/usr/local/bin/tmy stop
+RETVAL=$?
+echo
+}
+
+restart(){
+stop
+start
+}
+
+# See how we were called.
+case “$1″ in
+start)
+start
+;;
+stop)
+stop
+;;
+*)
+echo “Usage: test {start|stop|}”
+RETVAL=1
+esac
+
+exit $RETVAL
+
+[root@lancy init.d]# cat /usr/local/bin/tmy
+#!/bin/bash
+if [ $1 = “start” ];then
+echo “have started my services”
+elif [ $1 = “stop” ]; then
+echo “have stoped myservices”
+fi
+exit 0
+</code></pre>
+
+<p>现在你可以使用<code>/etc/init.d/test start|stop</code>的方式启动这个服务。但是
+<code>chkconfig --list test test</code> 服务不支持 chkconfig
+所以，接下来我们要把这个服务器加入到可管理系统服务中，我们需要在执行脚本中加入两行让 chkconfig 识别的注释</p>
+
+<pre><code># chkconfig:2345 20 80 
+# description: test simple test system service for management by chkconfig 
+</code></pre>
+
+<p>这两行注释是告诉 chkconfig 命令，这脚本应该在 2，3，4，5 这 4 个级别启动，且启动优先级是 20，而对应的停止优先级是 80。加入后，我们再试试 chkconfig 命令</p>
+
+<pre><code>[root@lancy init.d]# chkconfig --list test 
+test 服务支持 chkconfig，但它在任何级别中都没有被引用(运行“chkconfig --add test”) 
+</code></pre>
+
+<p>恩，至少 chkconfig 认识出了 test，而且也说了可以被管理，只是没有加入。根据提示，我们需要加入他</p>
+
+<pre><code>[root@lancy init.d]# chkconfig --add test 
+[root@lancy init.d]# echo $?
+0 
+[root@lancy init.d]# chkconfig --list test test
+ 0:关闭 1:关闭 2:启用 3:启用 4:启用 5:启用 6:关闭 
+</code></pre>
+
+<p>这和我们期望的是一样的。然后我们看看 test 软连接</p>
+
+<pre><code>[root@lancy init.d]# ls -l /etc/rc.d/rc6.d/K80test 
+lrwxrwxrwx 1 root root 14 1 月 27 20:47 /etc/rc.d/rc6.d/K80test -&gt; ../init.d/test
+[root@lancy init.d]# ls -l /etc/rc.d/rc3.d/S20test 
+lrwxrwxrwx 1 root root 14 1 月 27 20:47 /etc/rc.d/rc3.d/S20test -&gt; ../init.d/test 
+</code></pre>
+
+<p>到此，test 服务已经加入了可被 chkconfig 管理的系统服务范围内。那么我们事实修改和删除看看。</p>
+
+<pre><code>[root@lancy init.d]# chkconfig --list test test 
+0:关闭 1:关闭 2:启用 3:启用
+4:启用 5:启用 6:关闭 
+[root@lancy init.d]# chkconfig --level 3 test off
+[root@lancy init.d]# chkconfig --list test test 
+0:关闭 1:关闭 2:启用 3:关闭     4:启用 5:启用 6:关闭 
+[root@lancy init.d]# ls -l /etc/rc.d/rc3.d/K80test
+lrwxrwxrwx 1 root root 14 1 月 27 20:54 /etc/rc.d/rc3.d/K80test -&gt; ../init.d/test 
+[root@lancy init.d]# chkconfig --del test 
+[root@lancy init.d]# chkconfig --list test 
+test 服务支持 chkconfig，但它在任何级别中都没有被引用(运行“chkconfig --add test”) 
+</code></pre>
+
+<p>如果要彻底删除 test 服务，那么就只要删除 test 执行脚本就行了。</p>
+
+<p><strong>consoletype</strong>:  打印连接到标注输入的终端类型；这是 Asianux 特有的命令，他根据终端的不同类型打印出不同的信息。如果是虚拟终端(/dev/tty* 或者不是串行终端的<code>/dev/console</code>)，打印出 vt
+如果标准输入是串行终端(<code>/dev/console</code> 和或者<code>/dev/ttyS*</code>)，打印 serial
+如果标准输入是伪终端（<code>/dev/pts/*</code>)，打印 pty</p>
+
+<pre><code>[root@lancy sbin]# who
+root pts/0 Jan 27 19:41 (:0.0)
+[root@lancy sbin]# consoletype
+pty
+[root@lancy sbin]# who
+root tty1 Jan 27 21:05
+[root@lancy sbin]# consoletype
+vt
+[root@lancy tmp]# cat test.c
+#include
+#include
+int main()
+{
+int fd1,fd2;
+fd1=open(“test.sh”,O_RDONLY);
+if (!fd1)
+{
+perror(“error open test.sh”);
+exit(65);
+}
+fd2=dup2(fd1,0);
+system(“/sbin/consoletype &gt;/tmp/a”);
+return 0;
+}
+[root@lancy tmp]# gcc test.c -o test
+[root@lancy tmp]# ./test
+[root@lancy tmp]# cat a
+serial
+[root@lancy tmp]# consoletype
+pty
+</code></pre>
+
+<p><strong>cryptsetup</strong>: 对指定的设别进行加密，这里的设别必须是/dev/mapper 下的设备，那这样看来 2.4 的内核是没有这个命令了。他对应的应该有另外一个命令 dm-crypt，但是我的系统上找不到。该命令没有 man 手册，其 help 帮助如下：</p>
+
+<pre><code> [root@lancy /]# cryptsetup –help
+Usage: cryptsetup [OPTION…] []
+-v, –verbose Shows more detailed error messages
+-c, –cipher=STRING The cipher used to encrypt the disk (see
+/proc/crypto) (default: “aes”)
+-h, –hash=STRING The hash used to create the encryption key from
+the passphrase (default: “ripemd160″)
+-y, –verify-passphrase Verifies the passphrase by asking for it twice
+-d, –key-file=STRING Read the key from a file (can be /dev/random)
+-s, –key-size=BITS The size of the encryption key (default: 256)
+-b, –size=SECTORS The size of the device
+-o, –offset=SECTORS The start offset in the backend device
+-p, –skip=SECTORS How many sectors of the encrypted data to skip
+at the beginning
+
+Help options:
+-?, –help Show this help message
+–usage Show this help message
+
+is one of:
+create – create device
+remove – remove device
+reload – modify active device
+resize – resize active device
+status – show device status
+is the device to create under /dev/mapper
+is the encrypted device
+</code></pre>
+
+<p>这个 help 似乎也不能帮我们了解更多的内容。只好作测试了。我用了一个 U 盘来创建 LVM，这样在/dev/mapper 下面就有对应的设备了。</p>
+
+<pre><code>[root@lancy /]# ls -l /dev/mapper/vg0-lv0
+brw-rw—- 1 root disk 253, 0 1 月 27 22:13 /dev/mapper/vg0-lv0
+[root@lancy /]# mount /dev/mapper/vg0-lv0 /misc
+[root@lancy /]# ls -l /misc
+总用量 12
+drwx—— 2 root root 12288 1 月 27 22:21 lost+found
+[root@lancy /]# touch /misc/one
+[root@lancy /]# ls -l /misc
+总用量 12
+drwx—— 2 root root 12288 1 月 27 22:21 lost+found
+-rw-r–r– 1 root root 0 1 月 27 22:22 one
+[root@lancy /]# umount /misc
+[root@lancy /]# cryptsetup create cytest /dev/mapper/vg0-lv0
+Enter passphrase:mypassword
+[root@lancy /]# ls -l /dev/mapper/vg0-lv0
+brw-rw—- 1 root disk 253, 0 1 月 27 22:13 /dev/mapper/vg0-lv0
+[root@lancy /]# mount /dev/mapper/vg0-lv0 /misc
+mount: /dev/mapper/vg0-lv0 already mounted or /misc busy
+[root@lancy /]# cryptsetup remove cytest
+[root@lancy /]# mount /dev/mapper/vg0-lv0 /misc
+[root@lancy /]# ls -l /misc
+总用量 12
+drwx—— 2 root root 12288 1 月 27 22:21 lost+found
+-rw-r–r– 1 root root 0 1 月 27 22:22 one
+</code></pre>
+
+<p>加密前的设备和加密后的设备我用 od 命令查看了输出值，发现没有不同，看了他不是根据内容加密的，具体情况需要查<a href="http://www.saout.de/misc/dm-crypt/">官方网站</a>才知道了。</p>
+
+<p><strong>ctrlaltdel</strong>: 设置 Ctrl-Alt-Del 组合键的功能，这里有两种方式 hard 和 soft。
+hard 表示当接受 Ctrl-Alt-Del 组合键时，系统立刻重启计算机，而不会调用 sync(2)命令，也不会作其他一些准备，这有点类似不延时的 reset 按钮。而 soft 则表示 Ctrl-Alt-Del 组合键按下时，他发送 SIGINT 信号给 init 进程，那剩下的事情就是看 init 如何做了。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-27T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.com/2007/01/27/commands-start-c/" data-via="mlsx" data-counturl="http://wgzhao.com/2007/01/27/commands-start-c/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/01/25/commands-start-b/" title="Previous Post: \[sbin学习\]b\*命令">&laquo; \[sbin学习\]b\*命令</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/01/28/Html-command-line-to-send-e-mail-with-attachments-and-e-mail/" title="Next Post: 命令行发送html邮件和带附件的邮件">命令行发送html邮件和带附件的邮件 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2007/01/27/commands-start-c/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2007/01/27/commands-start-c/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.com/2007/01/27/commands-start-c/';
+        var disqus_url = 'http://wgzhao.com/2007/01/27/commands-start-c/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
