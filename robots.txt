@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://wgzhao.github.io/sitemap.xml 
