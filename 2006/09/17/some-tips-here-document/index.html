@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Here Document 的一些技巧 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="here document 就是一段特殊目的的代码块. 他使用 I/O 重定向的形式来将一个命令序列传递到一个交互程序或者命令中, 比如 ftp, cat, 或者 ex 文本编辑器. COMMAND &lt;
+...
+InputComesFromHERE limit string &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2006/09/17/some-tips-here-document">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Here Document 的一些技巧</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>here document 就是一段特殊目的的代码块. 他使用 I/O 重定向的形式来将一个命令序列传递到一个交互程序或者命令中, 比如 ftp, cat, 或者 ex 文本编辑器.</p>
+
+<pre><code>COMMAND &lt;
+...
+InputComesFromHERE
+</code></pre>
+
+<p>limit string 用来划定命令序列的范围(译者注: 两个相同的 limit string 之间就是命令序列) .
+特殊符号 &lt;&lt; 用来表识 limit string. 这个符号具有重定向文件的输出到程序或命令的输入的作用.</p>
+
+<!--more-->
+
+
+<p>与 interactive-program &lt; command-file 很相象, command-file 包含:</p>
+
+<pre><code>command #1
+command #2
+…
+</code></pre>
+
+<p>而 here document 的形式看上去是如下的样子:</p>
+
+<pre><code>#!/bin/bash
+interactive-program &lt; 3 command #1
+command #2
+...
+LimitString
+</code></pre>
+
+<p>选择一个名字非常诡异的 limit string 将会避免命令列表和 limit string 重名的问题.
+即使是某些不大可能的工具, 如 vi 也可以使用 here document.</p>
+
+<p>1）使用 vi 创建一个文件，并写入内容</p>
+
+<pre><code>#cat fakevi.sh
+#!/bin/bash
+
+# 用非交互的方式来使用'vi'编辑一个文件.
+# 模仿'sed'.
+
+E_BADARGS=65
+
+if [ -z “$1″ ]
+then
+echo “Usage: `basename $0` filename”
+exit $E_BADARGS
+fi
+
+TARGETFILE=$1
+
+# 在文件中插入两行, 然后保存.
+#——–Begin here document———–#
+/bin/vi $TARGETFILE &lt; i
+This is line 1 of the example file.
+This is line 2 of the example file.
+
+ZZ
+x23LimitStringx23
+#----------End here document-----------#
+
+# 注意上边^[是一个转义符,键入 Ctrl+v 就行,
+#+ 事实上它是键.
+
+# Bram Moolenaar 指出这种方法不能正常地用在'vim'上, ( Bram Moolenaar 是 vim 作者),
+#+ 因此这里使用了/bin/vi 而不是 vim，直接输入 vi,调用的可能是 vim,可以看看你的 alias 列表中是#+否 有 vi 的定义
+exit 0
+</code></pre>
+
+<p>运行结果</p>
+
+<pre><code>[root@lancy bin]# ./fakevi.sh one
+Vim: Warning: Input is not from a terminal
+[root@lancy bin]# cat one
+
+This is line 1 of the example file.
+This is line 2 of the example file.
+</code></pre>
+
+<p>2）多行消息输出使用 echo 来打印单行消息非常有用，但是在打印消息块的时候就麻烦了一点，这个时候我们可以使用 cat here document 的的方式来解决</p>
+
+<pre><code>#!/bin/bash
+cat &lt; this is line 1
+this is line 2
+this is line 3
+EndMsg
+exit 0
+</code></pre>
+
+<p>这样可以打印上面的三行信息，用 tab 键退后是为了代码好看，但是带来的影响是 tab 键也将被输出，这可能不是我们所期望的，我们可以使用 here document 来解决，看看下面的例子</p>
+
+<pre><code>#!/bin/bash
+cat &lt;&lt;-EndMsg
+    this is line 1
+    this is line 2
+    this is line 3
+EndMsg
+exit 0
+</code></pre>
+
+<p>看看打印的结果有什么不同？</p>
+
+<p>3）参数替换
+here document 支持参数和命令替换. 所以也可以给 here document 的消息体传递不同的参数,
+这样相应的也会修改输出. <br/>
+看下面的代码</p>
+
+<pre><code>#!/bin/bash
+NAME=${1:-”Mr. smith”}
+cat &lt;&lt;EndMsg 
+hello,there,$NAME
+Greetings to you,$NAME
+#this comment shows up in the output
+EndMsg
+exit 0
+</code></pre>
+
+<p>4）禁止参数替换</p>
+
+<p>在 here document 的开头引用或转义”limit string”会使得 here document 的消息体中的参数替换被禁用.这在需要某些原始输出时很有用。再看下面的代码，看看输出和上面的有什么不同</p>
+
+<pre><code>#!/bin/bash
+NAME=${1:-"Mr. smith"}
+cat &lt;&lt;'EndMsg'
+hello,there,$NAME
+Greetings to you,$NAME
+#this comment shows up in the output
+EndMsg
+exit 0
+</code></pre>
+
+<p>下面的两种情况类似</p>
+
+<pre><code>cat &lt;&lt;"EndMsg"
+cat &lt;&lt;EndMsg 
+</code></pre>
+
+<p>禁用了参数替换后, 将允许输出文本本身. 产生脚本甚至是程序 代码就是这种用法的用途之一.</p>
+
+<p>5）here document 与函数同一脚本中的函数也可以接受 here document 的输出作为自身的参数.看下面的代码</p>
+
+<pre><code>#!/bin/bash
+printsomething()
+{
+read one
+read two
+read three
+echo “the value arg 1 is $one”
+}
+#上面这个函数无疑是一个交互性的函数，但是我们可以做调用
+printsomething &lt; this is one
+this is two
+this is three
+EndMsg
+exit 0
+</code></pre>
+
+<p>5）匿名 here document</p>
+
+<p>做一个假命令来从一个 here document 中接收输出. 这么做事实上就是创建了一个”匿名”的 here document.
+看看下面的代码</p>
+
+<pre><code>#!/bin/bash
+: &lt; ${hostname?}${user?}${MAIL?} # 如果其中一个变量没被设置, 那么就打印错误信息.
+TESTVARIABLES
+exit 0
+</code></pre>
+
+<p>上边的这种技术当然也可以用来注释掉一段正在使用的代码, 如果你有某些特定调试要求的话这将比对每行都敲入”#”来得方便的多, 而且如果你想恢复的话, 还得将添加上的”#”删除掉.
+看下面的代码</p>
+
+<pre><code>#!/bin/bash
+: &lt; for i in *
+do
+cat $i
+done
+DebugIt
+exit 0
+</code></pre>
+
+<p>这样这段 for 循环代码就注释了，下次要使用，只需要删除:&lt;关于这种小技巧的另一个应用就是能够产生自文档化(self-documenting)的脚本.</p>
+
+<pre><code>#!/bin/bash
+# self-document.sh: 自文档化(self-documenting)的脚本
+# Modification of “colm.sh”.
+
+DOC_REQUEST=70
+
+if [ “$1″ = “-h” -o “$1″ = “–help” ] # 请求帮助.
+then
+echo; echo “Usage: $0 [directory-name]”; echo
+sed –silent -e '/DOCUMENTATIONXX$/,/^DOCUMENTATIONXX$/p' “$0″ |
+sed -e '/DOCUMENTATIONXX$/d'; exit $DOC_REQUEST; fi
+
+: &lt; List the statistics of a specified directory in tabular format.
+---------------------------------------------------------------
+The command line parameter gives the directory to be listed.
+If no directory specified or directory specified cannot be read,
+then list the current working directory.
+
+DOCUMENTATIONXX
+
+if [ -z "$1" -o ! -r "$1" ]
+then
+directory=.
+else
+directory="$1"
+fi
+
+echo "Listing of "$directory":"; echo
+(printf "PERMISSIONS LINKS OWNER GROUP SIZE MONTH DAY HH:MM PROG-NAME\n" \
+; ls -l "$directory" | sed 1d) | column -t
+
+exit 0
+</code></pre>
+
+<p>注意: Here document 创建临时文件, 但是这些文件将在打开后被删除, 并且不能够被任何其他进程所存取.</p>
+
+<pre><code>[root@lancy bin]# bash -c 'lsof -a -p $$ -d0' &lt; &gt;EOF
+COMMAND PID USER FD TYPE DEVICE SIZE NODE NAME
+lsof 6238 root 0r REG 3,5 0 212880 /tmp/sh-thd-1158429626 (deleted)
+</code></pre>
+
+<p>警告: 结束的 limit string, 就是 here document 最后一行的 limit string, 必须开始于第一个字符位置. 它的前面不能够有任何前置的空白. 而在这个 limit string 后边的空白也会引起异常问题. 空白将会阻止 limit string 的识别.
+(以上部分内容来自 ABS 一书)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-17T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2006/09/17/some-tips-here-document/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2006/09/17/some-tips-here-document/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2006/09/17/other-use-about-dd-command/" title="Previous Post: shell编程--dd命令它用">&laquo; shell编程--dd命令它用</a>
+      
+      
+        <a class="basic-alignment right" href="/2006/10/02/10010-faint/" title="Next Post: 10010，不骂不办事">10010，不骂不办事 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2006/09/17/some-tips-here-document/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2006/09/17/some-tips-here-document/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2006/09/17/some-tips-here-document/';
+        var disqus_url = 'http://wgzhao.github.io/2006/09/17/some-tips-here-document/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

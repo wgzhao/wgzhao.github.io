@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>听IBM的Linux集群解决方案的一些笔记 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="IBM 开发网的内容还是很丰富的。这次听这个讲座的主要目的是想看看他们是怎么讲集群的，对我以后讲述这方面有什么样的帮助作用。课程大约 1 个小时，其中讲 IBM 自己的集群技术大约占了一半的时间，其他都是说一些概念，似乎对销售人员和售前技术支持比较有用，但是对于售后的培训可能用处不大。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/04/01/notes-about-ibm-linux-cluster-solution">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">听IBM的Linux集群解决方案的一些笔记</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-01T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://www.ibm.com/developerworks/cn/">IBM 开发网</a>的内容还是很丰富的。这次听<a href="https://www14.software.ibm.com/webapp/iwm/web/preLogin.do?lang=zh_CN&amp;source=dw-cn-l-l-cluster">这个讲座</a>的主要目的是想看看他们是怎么讲集群的，对我以后讲述这方面有什么样的帮助作用。课程大约 1 个小时，其中讲 IBM 自己的集群技术大约占了一半的时间，其他都是说一些概念，似乎对销售人员和售前技术支持比较有用，但是对于售后的培训可能用处不大。因为既然已经是到售后这个环节了，比如是用户已经购买了集群软件了，也就是意味着他们或多或少的知道了集群的一些概念，原理等，此时他们要听到的恐怕是现在购买的这款集群软件的配置，使用，管理，故障处理等方面的内容。</p>
+
+<!--more-->
+
+
+<p>还好，售前的活我也接着要干了，应该这个讲座可以帮到我一些。下面是我听这个讲座的一些笔记。贴出来和大家共享：</p>
+
+<p>Linux 集群（IBM）</p>
+
+<ul>
+<li><ul>
+<li><ul>
+<li>分类
+o 高可用集群（High Availability)&mdash;提供冗余和高可用的资源）
+o 负载均衡／水平扩展集群(Load Balancing/Horizontal Scaling)&mdash;提供和节点个数成正比的负载能力)
+o 高性能计算(High Performance Computing)&mdash;提供比单台计算机更强的计算能力</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>什么是 Linux 集群
+o 由一组通过网络互联的计算机组成
+o 作为一个整体向用户提供一组网络资源
+o 运行于开放的 Linux 系统</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Linux 集群解决方案概览
+o 高可用性集群</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Kimberlite Clustering(OpenSource)</li>
+<li>Linux-HA heartbeat(OpenSource)</li>
+<li>RedFlag HA Cluster</li>
+<li>IBM Tivoli System Automation</li>
+<li>SuSe Heartbeat</li>
+<li>RedHat Cluster Manager</li>
+<li>TurboLinux HA</li>
+<li>Steeleye Lifekeeper</li>
+<li>&hellip;&hellip;&hellip;.
+o 负载均衡集群</li>
+<li>LVS(Linux Virtual Server)(OpenSource)</li>
+<li>RedHat IP Load Balancing</li>
+<li>RedFlag Load Balancing</li>
+<li>TurboLinux Cluster Server</li>
+<li>&hellip;&hellip;&hellip;
+o 高性能计算集权</li>
+<li>IBM 1350 集群解决方案</li>
+<li>联想深腾、曙光、方正&hellip;.</li>
+<li><ul>
+<li><ul>
+<li>Linux 高可用性解决解决方案
+o Linux 高可用对应用系统的重要性
++
+o + &ndash; Linux 高可用性集群的功能</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>满足关键应用的高可用性要求</li>
+<li>实现系统宕机时的自动恢复，保证系统提供不间断的服务</li>
+<li>由两个以上节点组成，节点共享存储介质</li>
+<li>用户数据存放于共享存储设备上</li>
+<li>通过集群节点间的间歇通信信号(心跳信号)，在系统之间进行周期性的握手，来监控检测各节点运行状态</li>
+<li>系统出现故障时，由备份节点接替原系统工作，实现容错
+o Linux 高可用性集群相关技术</li>
+<li><ul>
+<li><ul>
+<li>心跳通信路径
+
+<h1>套接字(socket)</h1>
+
+<h1>RS－232 串行口(tty)</h1>
+
+<h1>网卡</h1>
+
+<h1>共享磁盘</h1></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>共享存储模式
+
+<h1>共享磁盘&mdash;RAID Array,SCSI,FC</h1>
+
+<h1>网络附加存储(NAS)</h1></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Network Attached Storage</li>
+<li>NFS,GFS,File Server,etc
+
+<h1>存储区域网络(SAN)</h1>
+
+<p>o Linux 高可用性集群配置方式</p></li>
+<li><ul>
+<li><ul>
+<li>双节点
+
+<h1>主从模式(Active-Passive)</h1>
+
+<h1>对等模式(Active-Active)</h1></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>多节点配置
+
+<h1>一对一模式(one to one)</h1>
+
+<h1>一对多模式(one to many)</h1>
+
+<h1>多对一模式(many to one)</h1>
+
+<h1>多对多模式(many to many)</h1></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>Linux 负载均衡集群解决方案
+o + &ndash; Linux 负载均衡集群功能</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>通过集群实现负载的均衡处理</li>
+<li>提高系统的性能和处理能力</li>
+<li>改善网络拥塞问题</li>
+<li>为用户提供更好的访问质量</li>
+<li>提高服务器响应速度</li>
+<li>提高服务器及其其他资源的利用效率</li>
+<li>避免了网络关键部位出现单点失效
+o + &ndash; Linux 负载均衡集群节点类型</li>
+<li><ul>
+<li><ul>
+<li>管理节点(Cluster Manager)
+
+<h1>接受用户的请求</h1>
+
+<h1>根据一定的负载调度策略将用户的请求分发给集群节点</h1>
+
+<h1>可以使用 HA 容错机制避免单点失效</h1>
+
+<h1>运行应用代理程序查询每一个节点的服务状态</h1>
+
+<h1>如果探测到故障，可以通知管理员</h1></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>集群节点(Cluster Nodes)
+
+<h1>处理服务请求，执行具体网络服务</h1>
+
+<p>o + &ndash; 关于负载均衡调度策略</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>轮循调度(round-robin)
+
+<h1>每一个请求轮流分配给内部中的每台服务器，从 1 至 N 然后重新开始</h1>
+
+<h1>适合服务器具有相同的软硬件配置，平均服务请求相对均衡的情况</h1></li>
+<li>加权轮循调度(weighted round-robin)
+
+<h1>在轮循调度基础上，按照权值分配服务器请求</h1></li>
+<li><ul>
+<li><ul>
+<li>最小连接调度(Least-connection)
+
+<h1>记录服务器当前正在处理的连接数量</h1>
+
+<h1>把新请求分配给连接数最少的服务器</h1>
+
+<h1>适合长时间处理的请求服务，比如 FTP</h1></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>其他策略
+
+<h1>加权最小连接调度(weighted least-connection)</h1>
+
+<h1>基于局部性的最少链接(locality-based least connection)</h1>
+
+<h1>目标地址散列调度(destination hashing)</h1>
+
+<h1>源地址散列调度(source hashing)</h1>
+
+<p>o + &ndash; 负载均衡集群工作原理
++</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Linux 高性能计算集群解决方案
+o + &ndash; 应用领域
++
+o + &ndash; 架构</li>
+<li><ul>
+<li><ul>
+<li>Beowulf 集群架构
+
+<h1>Beowulf 是一种系统结构，似的多个计算机组成的系统能够用于并行计算</h1>
+
+<h1>Beowulf 系统通常有一个管理节点和多个计算节点构成</h1>
+
+<h1>管理节点监控计算节点，通常也是计算节点的网关和控制终端</h1>
+
+<h1>他们通过以太网(或其他网络)连接</h1>
+
+<h1>Beowulf 系统通常由最常见的硬件设备组成&mdash;PC,以太网卡，以太网交换机等</h1>
+
+<h1>Beowulf 系统最初采取那些广为传播的软件&mdash;Linux,消息传递接口(MPI)</h1>
+
+<p>o + &ndash; 概览</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>每一个节点有独立的 CPU，内存，磁盘和完整的操作系统，根据功能不同分为计算节点，管理节点和存储节点</li>
+<li>各节点之间通过网络方式连接，实现信息的交互和数据的共享</li>
+<li>通过管理软件实现系统的单点控制</li>
+<li>采用作业调度软件协助作业的提交和分发
+o 面临的挑战</li>
+<li><ul>
+<li><ul>
+<li>硬件部件来自不同的厂商
+
+<h1>compute system vendors</h1>
+
+<h1>network vendors</h1>
+
+<h1>managment component vendors</h1></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>软件来自不同厂家
+
+<h1>Operating System(Linux)</h1>
+
+<h1>network drivers</h1>
+
+<h1>science libraries</h1>
+
+<h1>compiler</h1>
+
+<h1>MPI libraries</h1></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>不同软硬件的兼容性测试问题</li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-01T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/04/01/notes-about-ibm-linux-cluster-solution/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/04/01/notes-about-ibm-linux-cluster-solution/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/03/30/master-udev/" title="Previous Post: 掌握udev">&laquo; 掌握udev</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/04/05/configuration-pam-introduction/" title="Next Post: 配置PAM－－介绍">配置PAM－－介绍 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2007/04/01/notes-about-ibm-linux-cluster-solution/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2007/04/01/notes-about-ibm-linux-cluster-solution/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/04/01/notes-about-ibm-linux-cluster-solution/';
+        var disqus_url = 'http://wgzhao.github.io/2007/04/01/notes-about-ibm-linux-cluster-solution/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

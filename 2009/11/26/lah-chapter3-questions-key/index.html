@@ -1,0 +1,366 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理技术手册第三章习题实践 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="E3.1 使用带有-perm 选项的 find 命令在您的系统上找到 5 个 setuid 文件。对于每个文件，试述为什么对于让命令正确发挥其功能来说，setuid 机制是必要的。 A：有关 find 的-perm选项的说明，可以看我之前的帖子，里面描述了如何正确设置 perm 参数来查找 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux系统管理技术手册第三章习题实践</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-26T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>E3.1 使用带有-perm 选项的 find 命令在您的系统上找到 5 个 setuid 文件。对于每个文件，试述为什么对于让命令正确发挥其功能来说，setuid 机制是必要的。</p>
+
+<!--more-->
+
+
+<p>A：有关 find 的<code>-perm</code>选项的说明，可以看我<a href="http://blog.wgzhao.com/2008/05/06/find-perm-parameters-of-a-simple-way-to-remember.html">之前的帖子</a>，里面描述了如何正确设置 perm 参数来查找 setuid/setgid 文件。</p>
+
+<pre><code>$ find /usr/bin /bin -type f -perm +6000
+/usr/bin/screen
+/usr/bin/X
+/usr/bin/passwd
+/usr/bin/mail-lock
+/usr/bin/newgrp
+/usr/bin/kgrantpty
+......
+/bin/ping
+/bin/ping6
+/bin/umount
+/bin/fusermount
+/bin/mount
+/bin/su
+</code></pre>
+
+<p>使用<code>setuid/setgid</code>位无非就是因为那些程序运行普通用户运行，但是又需要 root 权限来对系统文件做一定的更改。比如<code>/usr/bin/passwd</code>文件，它是用来修改用户的口令。而我们知道缺省情况下，口令密文保存在<code>/etc/shadow</code>文件里。而这个文件仅仅对 root 可读。所以为了使得普通用户修改口令时，能修改<code>/etc/shadow</code>文件，不得不让<code>/usr/bin/passwd</code>有 setuid 权限。在比如<code>/usr/bin/crontab</code>文件。如果没有 setgid 位，执行行，会给出下面的错误：</p>
+
+<pre><code>$ crontab  -e
+/var/spool/cron/crontabs/wgzhao: Permission denied
+
+# ls -ld /var/spool/cron/crontabs/
+drwx-wx--T 2 root crontab 4096 2009-09-16 16:16 /var/spool/cron/crontabs/
+</code></pre>
+
+<p>这是因为 crontab 自定义配置文件保存在<code>/var/spool/cron/crontabs</code>目录下，以用户名为文件名。而 crontabs 目录的许可如上面 ls 的结果所示，对于非 root 用户和 crontab 组成员，是无法进入该目录的。因此我们至少需要 crontab 许可。所以，<code>/usr/bin/crontab</code> 文件的许可就是下面这个样子：</p>
+
+<pre><code>ls -l /usr/bin/crontab
+-rwxr-sr-x 1 root crontab 31712 2009-09-15 21:12 /usr/bin/crontab
+</code></pre>
+
+<p>在组 crontab 许可位上设置了 setgid 位。保证运行 crontab 指令时，能获得 crontab 组身份，从而能保存文件到<code>/var/spool/cron/crontabs/</code>目录下。其他的文件，理由类似，就不再一一描述。</p>
+
+<p>E3.2 创建三个“出人意料的废话”式口令词，但是要保密。通过运行 md5sum 程序处理这三个口令词，报告结果。为什么公开 MD5 结果是安全的。</p>
+
+<p>A：创建一个安全的密码不是一件容易的事情。太困难会记不住，一旦忘记，等于这个密码没有意义。太简单就容易猜解或者暴力破解。所以目前有一些工具专门用来生成一些固定长处的密码，比如 pwgen,apg,gpw 等工具都能做这些事情。该书提到了一个方法就是用一些平常不敢说的，或者没有任何意义的一句话的单词首字母拼接起来。比如你很痛恨某一个人，但是当面又不敢说，这样你就可以把诅咒他/她的话变成密码短语。英语不是我们的母语。不过我们可以使用拼音字母组合，这实际上比单词拼接更难猜解。因为当前大部分密码字典都是基于英语单词的。比如我们可以创建这样的密码：
+<em>wjsbg-s-nwdmm * 如果我不解释，恐怕要猜测上面的意思很难，其实去掉两个-符号，上面的字母是“我就是不告诉你我的密码”的拼音首字母拼接。当然，还可以更复杂的，比如： </em>7y23hgl1tmm* 这是“7 月 23 号改了一台密码”的拼音首字母拼接。上面两个密码的 MD5 结果如下：</p>
+
+<pre><code>wjsbg-s-nwdmm 08a71fd8b1e7dfeebb6c6990e2e9f1e0 
+7y23hgl1tmm aadf738b3f80d5da52a71a4ef23969ba
+</code></pre>
+
+<p>实际上 md5 后的结果比密码明文更难猜解。而且 md5 属于哈希方式，不存在逆向破解。只能是由明文生成密文后去匹配。破解难度很大。</p>
+
+<p>E3.3 列举一系列修改某个用户口令的命令，展示如何掩盖修改的痕迹。假定您只有 sudo 的权利（允许使用除 shell 或者 su 之外的所有命令）</p>
+
+<p>A：修改密码无非就是修改<code>/etc/shadow</code>中的密文字符串，可以通过指令，也可以通过手工编辑。但是需要解决的一个问题是如何掩盖修改痕迹。如果直接使用<code>sudo /usr/bin/passwd foo</code> 这样的方式来修改 foo 的密码，那么系统日志会有类似下面的记录：</p>
+
+<pre><code>Dec 7 10:10:24 work sudo : root: TTY=pts/3; PWD=/root; USER=root; COMMAND=/usr/bin/passwd foo   
+</code></pre>
+
+<p>那这样的话，管理员就会知道你恶意修改了密码。<br/>
+So，可以有两个办法，第一个是在执行修改密码之前，利用已有的许可，停止系统日志服务。 <br/>
+<code>sudo /etc/init.d/syslogd stop</code>
+然后使用<code>sudo /usr/bin/passwd foo</code> 修改密码。最后恢复删除现有日志，然后恢复日志服务 <br/>
+<code>sudo /etc/init.d/syslogd start</code><br/>
+另外一个办法就是书上提到的。虽然限制了 shell 的使用，但是它是通过指定 shell 的位置来设定的。我们可以通过拷贝一个 shell 到某一个“奇怪”的目录，然后 sudo 到这个 shell，变成 root，然后在  <code>passwd foo</code>来修改密码。而后清空 root 帐号的 history 信息。</p>
+
+<p>E3.4 为 sudoers 配置文件创建两项：</p>
+
+<ol>
+<li>一项让用户 matt,adam 和 drew 负责在 printserver 这台机器上为打印机服务，消除夹纸，如何重新启动打印机的守护进程；</li>
+<li>一项让 drew、smithgr 和 jimlane 终止学生机房的任务并重启机器。</li>
+</ol>
+
+
+<p>A：老实说，对于打印机的服务我不是太了解。因此我只能写出其 sudoers 的语法，但不能保证真的可以在实际环境中这么用：</p>
+
+<pre><code>Cmnd_Alias PRINTING=/usr/sbin/lpc,/usr/bin/lprm,/etc/init.d/cups restart
+
+Cmnd_Alias STU=/sbin/reboot,/bin/kill
+
+#Permissions
+
+matt,adam,drew printserver = PRINTING
+
+drew,smithgr,jimlane  ALL=STU
+</code></pre>
+
+<p>E3.5  安装 sudo，配置成让它把有关误用的邮件发给您。以本地用户和机器名来测试上一个问题中的 sudo 配置项；验证 sudo 是否能正确地把日志写到 syslog。检查测试在 syslog 中生成的日志项（需要 root 权限，很可能还要调整一下/etc/syslog.conf）</p>
+
+<p>A：在 sudo 里，和 mail 相关的，主要是下面几个参数：</p>
+
+<p><strong>mail_always</strong>
+  ~ 每次有 sudo 的使用，就发送邮件给指定用户，缺省是关闭的。<br/>
+<strong>mail_badpass</strong>
+  ~ 如果使用 sudo 的用户没有输入正确的密码，则发送邮件给指定用户，默认关闭。<br/>
+<strong>mail_no_host</strong>
+  ~ 如果设置了的话，邮件发给指定用户，当 sudo 使用者使用了不允许的命名。缺省关闭。<br/>
+<strong>mail_no_perms</strong>
+  ~ 如果设置了的话，当然 sudo 使用者使用了不在 sudoer 里列出或者显式被拒绝的命令时，发送邮件给指定用户。缺省关闭。<br/>
+<strong>mail_no_user</strong>
+  ~ 如果 sudo 使用者不在 sudoer 列表里，则发送邮件给指定用户。缺省设置了该参数。</p>
+
+<p>我们可以通过设置 mailto 参数来指定邮件接收者，默认是 root。另外可以通过设置 mailsub 来设定邮件的主题。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-11-26T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/11/24/lah-chapter2-questions-key/" title="Previous Post: Linux系统管理技术手册第二章习题实践">&laquo; Linux系统管理技术手册第二章习题实践</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/11/27/lah-chapter4-questions-key/" title="Next Post: Linux系统管理技术手册第四章习题实践">Linux系统管理技术手册第四章习题实践 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2009/11/26/lah-chapter3-questions-key/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2009/11/26/lah-chapter3-questions-key/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key/';
+        var disqus_url = 'http://wgzhao.github.io/2009/11/26/lah-chapter3-questions-key/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,649 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="不想写很多，只是想说一句： 我重新回到了红旗，不过不在北京上班，而是在长沙。
+">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/21">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/21/return-to-the-redflag/">重回红旗</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/21/return-to-the-redflag/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/21/return-to-the-redflag/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不想写很多，只是想说一句：</p>
+
+<p>我重新回到了<a href="http://www.redflag-linux.com">红旗</a>，不过不在北京上班，而是在长沙。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/19/commands-start-l/">\[/sbin学习\]l\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/19/commands-start-l/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/19/commands-start-l/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin/下 l 开头的命令不多，列举如下：</p>
+
+<blockquote><p>ldconfig lilo logsave loopctrl losetup lsmod lspci lsusb lvm lvm.static</p></blockquote>
+
+<p>其中 lvm 是 lvm.static 的软连接。</p>
+
+<p>ldconfig：配置动态连接库，以便程序在编译和运行中动态连接这些程序库。与此相关的配置文件便是/etc/ld.so.conf，后来的 ldconfig 的配置文件采取了现在流行的读取目录下的配置文件。所以/etc/ld.so.conf.d 目录便是后来增加的。我仅仅使用 ldconfig 的一个参数-f，就是指定配置文件，这样的好处是，当我需要增加某一个目录的动态库时，我不要全部重建动态库缓存，命令程序运行时间短了很多。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/03/19/commands-start-l/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/17/i-winning/">中奖了，中奖了！</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/17/i-winning/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/17/i-winning/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>感谢母亲在 28 年前的今天，忍受了人生最大的痛苦，生育了我！中午，lancy 请我吃饭。随便点了几个菜，边聊边吃，结账时，顺便要了一张发票。习惯性的刮着，虽然从来都没有中奖过，但是还是期望奇迹发现。我是从中间刮起，随便刮了点，瞄了一眼，觉得出现的这个字好陌生呀，因为平常挂出来都是“付税光荣”，这次似乎不像“税”，也不像“光”，再看，是个“拾”字，我马上对 lancy 说，中奖了，lancy 不相信，说我骗她，我继续刮，前面居然是一个“伍”字，我兴奋的说”中奖了，伍拾呢！“，旁边的服务员也不相信，顺口说了一句”是付税光荣“，估计是他们这里还没有发现有人中奖过吧。</p>
+
+<p>lancy 看我不像是骗她，立马抢了过去，再刮了一下，果然是伍拾，哈哈！</p>
+
+<p>lancy 高兴的去服务台领奖，旁边的服务员也赶紧围了过来，纷纷说手气不错，赶紧去买六合彩。</p>
+
+<p>这还是我们第一次发票上中奖呢，不容易呀，看这次的好运气能不能给我今年带来好运！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/12/some-tips-about-group-and-gshadow/">/etc/group,/etc/gshadow释疑</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/12/some-tips-about-group-and-gshadow/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/12/some-tips-about-group-and-gshadow/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>下午 <a href="http://weiling00.spaces.live.com/">welling</a> 在 MSN 上问我，你知道/etc/group 的第二项是什么意思吗？这项中!和 x 分别代表什么意思呢？之前我还真的没有注意到这个问题。于是先 man group 了一把，给出了的说明是</p>
+
+<blockquote><p>password the (encrypted) group password. If this field is empty, no
+password is needed.</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/03/12/some-tips-about-group-and-gshadow/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/09/today-left-5460/">今日离开中国同学录</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/09/today-left-5460/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/09/today-left-5460/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>下午 5：40，打印出了离职报告，交给了部门经理，签字后又转移到总监手里。至此，我在<a href="http://www.5460.net" title="中国同学录">中国同学录</a> <br/>
+的工作告一段落了。这是我在回长沙后的第二份工作，第一份工作工作了 5 天，因为规定周六要上班和需要缴纳 3000 元的保证金而离开了。</p>
+
+<p>而现在的这份工作，我上了 58 天班，因为公司的体制和一些做人做事的方法，让我无法适应而离开。不过就在准备离开的这两天，其实发生了很多事情，让我看到了一些平常我看不到的层面，只是觉得有点晚，因为之前我已经决定走了。</p>
+
+<p>有时我觉得我是不是过于挑剔或者过于自大了？是不是应该放下自己其实就没有资格有的臭架子，可是往往我有无法强迫自己去认同那些我不习惯的东西。</p>
+
+<p>我不习惯在办公室这样的公共场合还有人吸烟；我不习惯在办公室总是充斥着污言秽语和大肆喧哗；我不习惯成天的开会，虽然我并不要参加；我不习惯虽然说不提倡加班，但事实却不是这样。</p>
+
+<p>也许潜意识里，我还是热爱着 Linux，我已经在公司被 windows 压抑得几乎无法呼吸。我渴望自由！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/07/commands-start-k/">[/sbin学习]k*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/07/commands-start-k/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/03/07/commands-start-k/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin 下 j 开头的命令没有，k 开头的也只有三个，而且比较简单
+killall5:发送中断信号给所有的进程，除了自己，它只接受一个参数，那就是中断信号数。
+klogd:系统内核日志 daemon 程序，一般有/etc/init.d/syslogd 脚本来调用，有关日志系统的介绍，可以参考
+<a href="read.php/334.htm">Linux 日志文件系统</a>。
+kmodule：没有任何说明和帮助，string 了一下，也没有看到什么有用的信息，执行了一下，输出了目前我的系统已经加载的内核模块，但是他的显示又和 lsmod 不同，比如声卡驱动，lsmod 打印可能会有 3，4 行信息，但是 Kmodule 仅仅一行，就是告诉你加载了什么类型的声卡驱动。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/02/12/what-intercity-bus-we-want/">我需要什么样的城际公交</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/02/12/what-intercity-bus-we-want/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/12/what-intercity-bus-we-want/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>周六去湘潭，一改乘坐火车站附近的大巴的习惯，要去尝试刚开通不久的长株潭城际公交。开始以为从长沙出发到湘潭和株洲的公交车应该在同一个出发点，结果到了东塘后，才发现这里仅仅是到株洲的公交，去往湘潭的，应该在侯家塘坐车。</p>
+
+<p>又辗转到侯家塘，果然发现有辆公交车停在那里。之前看过报纸，说公交车全程是 5 块。结果今天一问，才发现全程是 14 块，到我我下车的地方是 11 块，大约是 2 块钱一站。相比从火车站附近的大巴 18 块的票价而言，也算便宜了 7 块钱，两人单次就是 14 块，来回一趟 28，算算似乎可以。于是就上车了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/02/12/what-intercity-bus-we-want/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/02/12/have-read-chinese-painting/">看完了《国画》</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/02/12/have-read-chinese-painting/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/12/have-read-chinese-painting/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="http://www.douban.com/lpic/s1509506.jpg" alt="image" /> 不知不觉又在 WC 中看完了一本书，想来人一天呆在 WC 的时间还是不少的（是不是这也是一个商机呢？比如提供可以翻阅的广告等）</p>
+
+<p>我想《<a href="http://www.douban.com/subject/1397659/">国画</a>》这本书之所以被禁，应该是他其中的对官场入木三分的刻画吧。</p>
+
+<p>只是边看的时候，我在想，书的出版是为了像人们揭示一个现实生活中的官场行为呢，还是要作为一个官场入职 ABC 的知道教材呢？至少我看完后，如果我去政府部门，那我会很本能的想到这本书，想到这本书所描述的一些为官“方法”。</p>
+
+<p>或许等我再看完《青瓷》，对此会有更多的理解的吧。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/02/12/commands-start-h/">\[/sbin学习\]h\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/02/12/commands-start-h/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/12/commands-start-h/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin 下 h 开头的命令不多，仅有 4 个<br/>
+halt hdparm hotplug hwclock<br/>
+halt:停止系统，他和 reboot，poweroff 等命令属于同一个功能集。
+halt 命令不不接参数，仅仅有几个选项来决定如何停止系统</p>
+
+<p>-n: 停止系统前不做同步(sync)，适合快速关机和那些仅仅只有只读访问的系统。<br/>
+-w: 仅在 wtmp 文件中写一条 reboot 记录，然后退出，他的用处是什么？<br/>
+-d: 不写 reboot 记录到 wtmp 文件中<br/>
+-f: 强制停机/重启，但不调用 shutdown.shutdown 是一种安全的关闭系统的方式。<br/>
+-p: 如果支持，系统关闭后掉电。否则只是停止系统.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/02/12/commands-start-h/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/02/09/commands-start-g/">\[/sbin学习\] G\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/02/09/commands-start-g/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2007/02/09/commands-start-g/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin 下 g 开头的命令如下：</p>
+
+<blockquote><p>generate-modprobe.conf getkey grub grub-install grub-terminfo genhostid
+getmd grubby grub-md5-crypt</p></blockquote>
+
+<p>generate-modprobe.conf:  将原来的 module.conf 文件迁移到 modprobe.conf 文件。这是 2.4 内核到 2.6 内核后驱动模块配置的一个改变。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/02/09/commands-start-g/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/22/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/20/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/page/21/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/page/21/index.html" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

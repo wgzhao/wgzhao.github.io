@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>用好sudo - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="sudo 工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的 root 访问权限。它是一个 setuid 程序，只需要输入用户自己的密码，就可以执行 sudo 后面的命令。使用 root 帐号，运行/usr/bin/visudo 来编辑那些用户可以调用 sudo 命令的用户列表， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/03/13/using-sudo-effectively">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">用好sudo</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>sudo 工具能够帮你把一部分系统管理的责任分摊给其他人，还不用给出完全的 root 访问权限。它是一个 setuid 程序，只需要输入用户自己的密码，就可以执行 sudo 后面的命令。使用 root 帐号，运行/usr/bin/visudo 来编辑那些用户可以调用 sudo 命令的用户列表，缺省的 sudo 列表看上去类似下面这样：</p>
+
+<pre><code> root ALL=(ALL) ALL
+</code></pre>
+
+<p>很不幸，很多系统管理直接把这条当作了模板，然后授权给其他用户，就像这样：</p>
+
+<!--more-->
+
+
+<pre><code>root ALL=(ALL) ALL 
+work ALL=(ALL) ALL 
+test ALL=(ALL) ALL
+</code></pre>
+
+<p>上面这种模式使得 work 和 test 帐号具有完全的 root 权限，还不需要 root 帐号的密码。如果你授权的这些帐号如果是完全可信赖的，那这是一个不错的方法，可惜，信赖并不是那么说的清楚。因此我们需要按照最小原则来给特定的帐号授权，我们先看看 sudo 列表文件的语法，在 sudo 列表里，每一行应该是下面这个样子：</p>
+
+<pre><code> user machine=(effective user) command
+</code></pre>
+
+<p>第一列(user)指定要授权的帐号。第二列(machine)定义在那些机器上，这条执行生效，其好处是在多台机器上使用同一份配置文件。举个例子，假设有一个开发人员需要在开发服务器上获得 root 访问权限，在其他服务器上就不行，那么我们这样做</p>
+
+<pre><code> steven beta.xplore.cn=(ALL) ALL
+</code></pre>
+
+<p>第三列（就是括号里的 effective user)指定实际执行该命令的帐号，这就方便一个帐号允许用另外一个帐号来执行特定的命令，而不非得是 root 帐号:</p>
+
+<pre><code> steven mail.xplore.cn=(mailman) ALL
+</code></pre>
+
+<p>最后一列（command）指定所以这个帐号看可以在 sudo 环境下执行的指令：</p>
+
+<pre><code> kevin ns.xplore.cn =(bind) /usr/sbin/rndc,/usr/sbin/named
+</code></pre>
+
+<p>如果你觉得在指定用户或者机器或者命令时列表太长（比如很多帐号授权相同，一个帐号需要指定的命令和机器列表过长），我们可以使用 sudo 列表里 Alias 语法，Alias 的语法和 shell 环境变量中 alias 类似，你可以看成是一个变量：</p>
+
+<pre><code> User_Alias ADMINS=wgzhao,kevin,steven 
+ User_Alias     WEBMASTERS=xplore,glemir,xinhe 
+ Runas_Alias DAEMONS=bind,www,ftp
+ Host_Alias WEBSERVERS=www.xplore.cn,www.lawburn.com 
+ Cmnd_Alias     PROCS=/bin/kill,/bin/killall,/usr/bin/skill,/usr/bin/top 
+ Cmnd_Alias     APACHE=/usr/bin/apachectl WEBMASTERS WEBSERVERS=(www) 
+ APACHE ADMINS     ALL=(DAEMONS) ALL
+</code></pre>
+
+<p>以上都是针对帐号的，其实第一列中也可以指定组帐号，表示允许所有属于这个组的帐号都获得这样的授权，语法上，只需要在组帐号之前加上一个%号，就像这样：</p>
+
+<pre><code> %mail WEBSERVERS=(mail) sendmail
+</code></pre>
+
+<p>现在，属于 mail 组的帐号都可以在 WEBSERVERS 定义的服务器上用 mail 帐号来执行 sendmail 指令。除此之外，还有一个有用的标志，那就是 NOPASSWD: 。如果设置了这个标志，表示当前授权的帐号执行后面的帐号不需要输入当前帐号的密码：</p>
+
+<pre><code> xplore ALL=(ALL) NOPASSWD: PROCS
+</code></pre>
+
+<p>这允许帐号 xplore 可以用任何帐号执行 kill,killall,skill 和 top 指令，还不用输入密码。</p>
+
+<p><a href="http://technorati.com/tag/sudo">sudo</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-03-13T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/03/13/using-sudo-effectively/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/03/13/using-sudo-effectively/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/02/12/usr-sbin-study-the-remainder-of-the-commands/" title="Previous Post: \[/usr/sbin学习\]剩余的命令">&laquo; \[/usr/sbin学习\]剩余的命令</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/04/10/crazy-way-to-install-linux/" title="Next Post: 比较折腾的一种Linux系统安装方式">比较折腾的一种Linux系统安装方式 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2009/03/13/using-sudo-effectively/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2009/03/13/using-sudo-effectively/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/03/13/using-sudo-effectively/';
+        var disqus_url = 'http://wgzhao.github.io/2009/03/13/using-sudo-effectively/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

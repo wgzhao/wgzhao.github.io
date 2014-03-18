@@ -1,0 +1,78 @@
+<hr />
+
+<p>layout: post
+title: 用 vsftpd 和 mysql 创建一个虚拟用户 ftp 服务器
+date: 2012-04-07 16:51
+comments: true
+categories:
+&ndash; Linux 技术
+tags:
+&ndash; vsftp
+&ndash; mysql
+&ndash; pam</p>
+
+<hr />
+
+<p>当前有这样的一个需求，我需要批量创建一个网站，比如我要创建一个<code>foo.com</code>的网站，我就会在<code>/web/</code>目录下创建一个<code>foo.com</code>的目录，WEB 服务器（我这里用的是 <a href="http://nginx.org" title="nginx">nginx</a>）已经自动设置好解析。同时，我需要有一个对应的 ftp 账号来管理这个网站，但是我不希望使用系统账号，一来网站多了，系统账号必然多，而来我不希望管理网站的账号能通过 ssh 登陆，虽然 ssh 也可以配置哪些账号不允许登陆。但是不创建系统账号显然是最安全的做法。</p>
+
+<!--more-->
+
+
+<p>于是这就是有了标题的做法，用 <a href="http://vsftpd.beasts.org/" title="vsftpd Server">vsftpd</a> 做 FTP 服务器，用 <a href="http://www.mysql.com" title="MySQL Server">MySQL</a> 做后端数据库，两者通过 <a href="http://pam-mysql.sourceforge.net" title="PAM module backed by MySQL">pam-mysql</a> 插件联系起来。配置步骤简述如下：</p>
+
+<ol>
+<li>我的系统是 <a href="http://www.centos.org" title="CentOS">CentOS</a> 6.2，因此现用 yum 工具安装好所需要的软件，包括 <a href="http://www.mysql.com" title="MySQL Server">mysql-server</a>,<a href="http://vsftpd.beasts.org/" title="vsftpd Server">vsftpd</a>,<a href="http://pam-mysql.sourceforge.net" title="PAM module backed by MySQL">pam-mysql</a> 等。</li>
+<li><p>编辑<code>/etc/vsftpd/vsftpd.conf</code>文件,增加或者修改如下几项：</p>
+
+<pre><code> anonymous_enable=NO
+ virtual_use_local_privs=YES
+ guest_enable=YES
+ user_sub_token=$USER
+ local_root=/web/$USER
+ chroot_local_user=YES
+ hide_ids=YES
+ guest_username=nginx
+</code></pre>
+
+<p> <code>guest_username</code> 表示当用户登陆成功后，其 uid 映射到系统哪个账号上，我这里为了和 WEB 管理相结合，因此用了 nginx 这个账号。</p></li>
+<li><p>创建数据库表，我们创建一个名为 vsftpd 的数据库，在其下创建一个 users 表，同时授权给 vsftpd 账号登陆，创建过程类似如下：</p>
+
+<pre><code> mysql&gt; create database vsftpd;
+ Query OK, 1 row affected (0.00 sec)
+
+ mysql&gt; use vsftpd
+ Database changed
+ mysql&gt; create table users(username varchar(30) not null primary key,password varchar(41) not null);
+ Query OK, 0 rows affected (0.04 sec)
+ mysql&gt; grant usage  on vsftpd.users to vsftpd@localhost identified by 'abc123';
+ Query OK, 0 rows affected (0.00 sec)
+ mysql&gt; insert into users values('foo.com',password('test'));
+ Query OK, 1 row affected (0.00 sec)
+
+ mysql&gt; select * from users;
+ +----------+-------------------------------------------+
+ | username | password                                  |
+ +----------+-------------------------------------------+
+ | foo.com  | *94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29 |
+ +----------+-------------------------------------------+
+ 1 row in set (0.00 sec)
+</code></pre></li>
+</ol>
+
+
+<p>我这里对密码使用 password 加密函数，因为要和 WEB 结合，因为 username 使用了和域名相同的名字，这样我就可以通过 username 来同时获知域名，从而将账号的主目录锁定在对应的域名目录下。</p>
+
+<ol>
+<li><p>编辑<code>/etc/pam.d/vsftpd</code>文件，最后类似如下：</p>
+
+<pre><code> auth required pam_mysql.so user=vsftpd passwd=abc123 host=localhost db=ftpd table=users usercolumn=username passwdcolumn=password crypt=2
+ account required pam_mysql.so user=vsftpd passwd=abc123 host=localhost db=ftpd table=users usercolumn=username passwdcolumn=password crypt=2
+</code></pre>
+
+<p> user 和 passwd 指的是连接 <a href="http://www.mysql.com" title="MySQL Server">MySQL</a> 的账号和密码，crypt 指的加密方式，0 表示明文；不加密；1 表示用 crypt 方式加密；2 表示用 <a href="http://www.mysql.com" title="MySQL Server">MySQL</a> 的 password 函数加密；3 表示用 md5 加密；4 表示用 sha1 加密。</p></li>
+<li><p>创建对应的目录 当用 foo.com 登陆，且验证通过后，根据之前 <a href="http://vsftpd.beasts.org/" title="vsftpd Server">vsftpd</a> 的配置，它将以 nginx 的身份把<code>/web/foo.com</code>作为其主目录，因此要保证其目录存在，而且其身份有访问权限。</p></li>
+<li>测试，直接可以在本地测试，看看能否登陆，如果不能登陆，<code>/var/log/secure</code>里又看不到更多的信息，那你可以选择在<code>/etc/pam.d/vsftpd</code>的配置文件里加上<code>verbose</code>模式，也就是在<code>user=vsftpd</code>那里加上一个<code>verbose=1</code>的选项，这样它就会把详细的信息打印到<code>/var/log/secure</code>文件里。看看是哪里的报错。</li>
+</ol>
+
+
+<p>其实，上述只是一个最简单的配置，<code>pam-mysql</code>还可以让你配置得更复杂，比如记录登录日志，根据特定条件查询过滤用户信息等，<code>pam-mysql</code>软件包自带的<code>README</code>有详细的说明，大家可以按照那个说明来配置一个符合你需求的灵活的认证方式。</p>

@@ -1,0 +1,684 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="layout: post
+title: 用 vsftpd 和 mysql 创建一个虚拟用户 ftp 服务器
+date: 2012-04-07 16:51
+comments: true
+categories:
+&ndash; Linux 技术
+tags:
+&ndash; vsftp
+&ndash &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/">Setup a Virtual Ftp Server With Pam Mysql</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><hr />
+
+<p>layout: post
+title: 用 vsftpd 和 mysql 创建一个虚拟用户 ftp 服务器
+date: 2012-04-07 16:51
+comments: true
+categories:
+&ndash; Linux 技术
+tags:
+&ndash; vsftp
+&ndash; mysql
+&ndash; pam</p>
+
+<hr />
+
+<p>当前有这样的一个需求，我需要批量创建一个网站，比如我要创建一个<code>foo.com</code>的网站，我就会在<code>/web/</code>目录下创建一个<code>foo.com</code>的目录，WEB 服务器（我这里用的是 <a href="http://nginx.org" title="nginx">nginx</a>）已经自动设置好解析。同时，我需要有一个对应的 ftp 账号来管理这个网站，但是我不希望使用系统账号，一来网站多了，系统账号必然多，而来我不希望管理网站的账号能通过 ssh 登陆，虽然 ssh 也可以配置哪些账号不允许登陆。但是不创建系统账号显然是最安全的做法。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/20/clone-explain-depesz-com-website/">SQL查询工具网站的部署</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2011/09/20/clone-explain-depesz-com-website/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/09/20/clone-explain-depesz-com-website/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>从 IRC #postgresql 频道了解到一个网站: <a href="http://explain.depesz.com">http://explain.depesz.com</a> 其口号是：</p>
+
+<blockquote><p>A tool for finding a real cause for slow queries</p></blockquote>
+
+<p>方法是粘贴你的 <code>explain
+sql</code> 语句结构。他可以根据结果生成 HTML 格式的解释页面，其中用不同颜色来标识子语句所占用的资源情况，其中颜色越深，标识所占用的资源越多。同时它还给出了两张统计列表，一张是按照索引类型来统计占用的时间，及比率；另外一种是根据 SQL 语句中涉及到的表来统计查询每张表所占用的时间及比率。不仅如此，这个网站代码还是开源的，托管在 github 上。地址为：
+<a href="https://github.com/depesz/explain.depesz.com">https://github.com/depesz/explain.depesz.com</a></p>
+
+<p>下面是搭建过程：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2011/09/20/clone-explain-depesz-com-website/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/">自动配置Mac OS X 的VPN连接时的特定路由</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Mac 系统自带的 VPN 连接配置倒是方便，但是有一个毛病（或者说我还没有不知道使用）,那就是对于通过 VPN 获取的路有信息，要不就是全部忽略，要不就是所有的 IP 流出都通过 vpn 的路由，相当于由 VPN 的路由指定了缺省路由。用户没有办法手工增加特定路由。这点就不如 Linux 下的网络管理工具，比如 Gnome 的 nm-applet 使用起来就很方便。</p>
+
+<p>当然，在图形界面配置上没有，不代码在命令行或者特殊的配置文件没有，下面我们就通过配置文件来解决这个问题。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/08/07/install-mac-os-x-lion-with-dell-e6410/">在Dell E6410 上安装Mac OS X Lion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2011/08/07/install-mac-os-x-lion-with-dell-e6410/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/08/07/install-mac-os-x-lion-with-dell-e6410/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我的 iMac 升级到 10.7 后，就一直想把我的 Dell E6410 笔记本上的 Mac OS X Snow Leopard
+升级到 Lion，可惜有前几次的失败后，都有点不想折腾了，真的 Mac 机器，升级还是非常容易的，比如我的 iMac，前后只用了 30 分钟。</p>
+
+<p>下午有点休闲时间，刚好皮皮也睡觉了，还是手痒一把，参考了远景论坛上的几个帖子（附后）以及强大的 Google，这次居然成功的升级到了 10.7.2，不容易呀！特意记录一下过程，和大家分享：</p>
+
+<ol>
+<li><p>准备 Lion 镜像，这个基本上大网站都有下载了，这里推荐 <a href="http://imzdl.com/">http://imzdl.com/</a> ，资料都靠谱，而且下载速度还不错。</p></li>
+<li><p>如何烧录 Lion 镜像，请参考下面这个连接： <a href="http://itc.do-johodai.ac.jp/~s0823612/">http://itc.do-johodai.ac.jp/~s0823612/</a></p></li>
+</ol>
+
+
+<p>同时我把内容复制到下面：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2011/08/07/install-mac-os-x-lion-with-dell-e6410/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/04/11/my-glasses-story/">配眼镜</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2011/04/11/my-glasses-story/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/04/11/my-glasses-story/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>下午去宝岛配了一副眼镜，又花了一大笔，在回来的公交车上，回想了我这几天配眼镜，带眼镜的往事，有些感慨，唠唠叨叨记录一下吧：一直到高二，我的眼睛还是挺好的，不说 1.5，也在 1.2 以上，坐在最后一排，大晴天的情况下，看黑板一点问题都没有。</p>
+
+<p>到了高三，题海战术来了，于是对眼睛的利用率也到了及其无耻的程度。那个时候穷呀，说穷，可能觉得矫情，就说节省吧（一个月 30 块的生活费还有的剩）。</p>
+
+<p>那个时候，别说课外教材了，就是草稿纸，都很缺。记得我一个算较远的亲戚了，给我送来了一叠带横线的浅蓝色稿纸，纸很薄，算起来张数就很多了。很是兴奋，于是非常节约的写，怎么个节约法呢，一张新的稿纸，先用自动铅笔用一遍，两面都写。因为自动铅笔写上去其实颜色很浅的，看的时候非常吃力，写第一面还好一点，接着写第二面的时候，眼镜就看得比较难受了。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2011/04/11/my-glasses-story/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/">快速制作一个虚假deb格式软件包</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/03/18/how-to-build-a-fake-deb-package-quickly/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>把上面的代码保存为<code>dummy.c</code>。而后使用<code>autoscan</code>命令来粗昂间一个<code>configure</code>模板文件，命令如下</p>
+
+<pre><code>$ autoscan 
+$ ls
+autoscan.log  configure.scan  dummy.c
+</code></pre>
+
+<p>将生成的<code>configure.scan</code>文件保存为<code>configure.in</code>，并进行修改，只用保留下面几行内容就行了，我在文件里注释说明</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2011/03/18/how-to-build-a-fake-deb-package-quickly/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/03/11/ssh-three-kill-features/">Ssh的三板斧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-11T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2011/03/11/ssh-three-kill-features/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/03/11/ssh-three-kill-features/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>ssh 的功能无比强悍，对于一个<strong> Unix/Linux </strong>而言，只要开放一个 ssh 服务，就可以轻松，随意，快捷，方便的全盘操控这台机器。相信很多功能大家都很熟悉了，我这里只是想把它的其中三个具有杀手级的功能例举一下：</p>
+
+<h2>端口转发</h2>
+
+<p>端口转发，也就是-L 参数的设置。以我的实际例子来说明吧，我在家里上网，设置的是局域网，IP 地址是<code>192.168.100.101</code>。公司总部呢，也是用的是局域网地址，<code>172.16.0.0</code>网段。我需要访问公司内部的一台应用服务器，比如<code>172.16.81.111</code>。我该怎么办呢？恰好，公司有一台网关服务器，有两块网卡，一块是设置的公网 IP 地址，比如<code>219.99.12.23</code>。另外一块网卡，则是公司的内网的 IP 地址，比如<code>172.16.81.220</code>。这台服务器开启了 SSH 服务。那么我要做的便是执行下面的指令:</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2011/03/11/ssh-three-kill-features/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2011/03/09/online-resizing-ext4-filesystem/">在线扩容ext4文件系统</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-03-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2011/03/09/online-resizing-ext4-filesystem/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2011/03/09/online-resizing-ext4-filesystem/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原来一个分区分得太小了（只有 5G），等拷贝完数据才知道太小了。于是尝试了扩容的办法。以前对 ext3 干过这样的事情，看了 ext3 上的 <a href="https://ext4.wiki.kernel.org/index.php/Frequently_Asked_Questions#How_to_online_resize_the_Ext4_filesystem.3F">wiki 介绍</a>，得知做法和原来的 ext2/ext3 一样（看来兼容性还是不错）。下面是我的扩容过程</p>
+
+<p>首先下载你要扩容的分区，这样当然是最保险的，如果你就是不想卸载，只要你别对其做写操作，也没有问题。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2011/03/09/online-resizing-ext4-filesystem/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/">Windows下压缩包在linux解压乱码的解决办法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-06T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我的系统是 ubuntu 10.04 ，编码是<code>zh_CN.UTF-8</code>。我从网络上下载的绝大部分 zip 包，解压后，连带目录和文件都是乱码。在终端尝试更换 LANG，LANGUAGE 等环境变量，还是不能直接解决问题。</p>
+
+<p>而且用 unzip 解压后，无论你怎么设置 convmv 命令的编码参数，均不能解决问题。后通过 7z 工具算是暂时解决了这个问题。首先用 apt 安装 7z 工具包。然后用下面的两条指令： <br/>
+1) <code>LANG=C 7z x xxx.zip</code> <br/>
+2) <code>convmv -f cp936 -t utf8 -r --notest *</code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/07/14/chroot-in-ssh-server/">在ssh服务里使用chroot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-14T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/07/14/chroot-in-ssh-server/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2010/07/14/chroot-in-ssh-server/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发 ssh 给用户，那么无疑能极大的增加用户操作的灵活性，但是 ssh 的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。</p>
+
+<p>幸而 openSSH 已经了解到了这点，目前的版本均支持 chroot 功能，下面我简单的描述一下在 ubuntu
+10.04 系统上如何实现，其他系统实现的原理相同，只是一些配置文件和指令不同而已。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/07/14/chroot-in-ssh-server/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/page/2/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/page/2/index.html" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

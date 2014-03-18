@@ -1,0 +1,429 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>寻找适合你的MySQL高可用解决方案 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="摘译自 mysql performance blog 需要 MySQL 高可用吗？ 问题似乎很明显，但是有时却忽略了。实际上这是一个投入和产出的问题，投入越大，你获得数据安全性就越高，所以这个问题可以归结为”你的服务器宕机成本是多少？“，如果你的宕机成本小于$10/hour， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/10/18/finding-your-mysql-high-availability-solution">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">寻找适合你的MySQL高可用解决方案</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-18T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>摘译自 <a href="http://tinyurl.com/bol3ou7">mysql performance blog</a></p>
+
+<p>需要 MySQL 高可用吗？</p>
+
+<p>问题似乎很明显，但是有时却忽略了。实际上这是一个投入和产出的问题，投入越大，你获得数据安全性就越高，所以这个问题可以归结为”你的服务器宕机成本是多少？“，如果你的宕机成本小于$10/hour，那基本上你不需要高可用方案了，So，不用浪费时间看下文了。</p>
+
+<!--more-->
+
+
+<p>如何确定哪种高可用方案对你最好？</p>
+
+<p>当前，MySQL 高可用有下面几种，从简单到非常复杂，我们排列一下</p>
+
+<ul>
+<li>MySQL replication with manual failover</li>
+<li>Master-Master with MMM manager</li>
+<li>Heartbeat/SAN</li>
+<li>Heartbeat/DRBD</li>
+<li>NDB Cluster</li>
+</ul>
+
+
+<p>就目前为止，可能不是上面的某一个方案就能完全适合你，大部分情况下是多种方案联合起来。要选择上面哪种方案，其实还是取决于你的对宕机时间的容忍，越复杂的方案，宕机时间越短，但是成本也就越高，需要仔细计算你的预算。</p>
+
+<h2>你需要哪个级别的 HA？</h2>
+
+<p>所有的技术都不能保证 100%的系统有效，同样，不同的技术提供的系统有效级别也不同。因此第一个重要的考虑因素便是有效级别，下面有一个对各种解决方案提供的有效级别评估表</p>
+
+<pre>
+
+  有效级别                            宕机时间( per year)
+                                                   
+  Simple replication               98 to 99%        3 天 15 小时 ~ 7 天
+
+  Master-Master with MMM manager   99%              3 天 15 小时
+
+  Heartbeat/SAN (depends on SAN)   99.5% to 99.9%   43.8 小时 ～ 8.8 小时
+
+  Heartbeat/DRBD                   99.9%            8.8 小时
+
+  NDB Cluster                      99.999%          5 分钟
+ 
+</pre>
+
+
+<p>根据上表，如果你的要求是 99.99%，那么你可能只能选择 NDB Cluster 了，但是你只是要求 99%，那选择范围就宽了很多。实际上，评估使用哪个有效级别还是很难的，需要仔细思辩。</p>
+
+<h2>能承受数据丢失吗？</h2>
+
+<p>显然，相对有效级别而言，可能你更关心数据的安全，你很可能使用 innoDB 存储引擎，因为 MyISAM 缺乏事务交易，而且不同步数据到磁盘。同样的，MySQL replication 采取异步处理，尽管它在 master 和 slave 之间传输数据非常快，但是仍然有丢失数据的机会。如果你能承受数据丢失，那么，你可以考虑“MySQL replication” 和“Master-Master with MMM manager&#8221;，否则，你就只能考虑别的方案了。</p>
+
+<pre>
+  --------------------         -----------
+                                  数据 100%安全
+                                   
+  MySQL replication                否
+                                   
+  Master-Master with MMM manager   否
+                                 
+  Heartbeat/SAN (depends on SAN)   是
+                                   
+  Heartbeat/DRBD                   是
+                                   
+  NDB Cluster                      是
+                                   
+  -------------------------   -----------
+</pre>
+
+
+<h2>你的应用程序仅用到了 MyISAM 特性吗？</h2>
+
+<p>包括全文索引，GIS 索引在内的特性仅被 MyISAM 支持。“MySQL replication&#8221;和&#8221;Master-Master with MMM
+manager&#8221;解决方案对 MyISAM 支持的非常好。取决于你的应用程序，MyISAM 全文索引可以被另外的搜索引擎替代，比如 <a href="www.sphinxsearch.com/">Sphinx</a> 替代，这样可以打破只能使用 MyISAM 存储引擎的限制。对于 GIS 索引，目前还没有替代的方案。</p>
+
+<pre>
+
+                                   HA 解决方案
+                            
+
+ 需要 MyISAM 全文索引或 GIS 索引           “MySQL replication” 和 “Master-Master with MMM manager”
+                            
+  不使用任何 MyISAM 特性                 所有
+                            
+  可以用 Sphinx 替换 MyISAM 的全文索引      所有
+                            
+</pre>
+
+
+<h2>什么是写负载</h2>
+
+<p>上述的 HA 解决方案在写负载方面并不相同。因为复制(replication)实现的原因，slave 上仅有一个线程能处理写操作。如果复制主机(master)是多核 CPU，而且有使用多线程的写操作，那么 slave 就可能无法和 master 保持一致。如果使用 Linux 下的共享存储模拟 <a href="http://www.drbd.org">DRBD</a>,大致能较低 30%的写负载（严重依赖硬件条件），在写能力方面，你可以参考下面的表格</p>
+
+<pre>
+  -------------------------------- ------
+                                  写能力
+                                   
+
+  MySQL replication                正常
+                                   
+
+  Master-Master with MMM manager   正常
+                                   
+
+  Heartbeat/SAN (depends on SAN)   优秀
+                                   
+
+  Heartbeat/DRBD                   好
+                                   
+
+  NDB Cluster                      优秀
+                                   
+  -------------------------------- ------
+</pre>
+
+
+<h2>为什么样的增长度做计划</h2>
+
+<p>因为 NDB Cluster 是一个集成的共享环境（将数据库分隔到多台服务器上），如果你需要这个功能，你可以认真考虑这个方案，否则，除去写能力外，其他方案大致相等。</p>
+
+<h2>职员或者技术支持公司水平如何</h2>
+
+<p>有效级别和解决方案的复杂度有着直接的正比关系。为了达到期望的有效级别，内部或者外部维护 HA 配置的职员，就必须具备同等的能力和经验，参考下表：</p>
+
+<pre>
+  -------------------------------- -----------------------------
+                                  专业级别
+                                   
+
+  MySQL replication                一般 MySQL DBA 水平，加上一些系统管理能力
+
+  Master-Master with MMM manager   较好的 MySQL DBA 水平，加上较好的系统管理能力
+
+  Heartbeat/SAN (depends on SAN)   较高的 MySQL DBA 水平，较强的系统管理能力
+                                   
+
+  Heartbeat/DRBD                   较高的 MySQL DBA 水平，较强的系统管理能力
+
+  NDB Cluster                      对 NDB 知识非常了解，很高的 MySQL 以及系统管理技能
+  -------------------------------- -----------------------------
+</pre>
+
+
+<h2>你有多少米米</h2>
+
+<p>最有一个需要考虑的问题便是预算了，复杂意味着昂贵。我们考虑项目的两个阶段。第一个是基本测试，也就是方案论证，包括硬件测试，数据导入，基本测试和文档化。另外一个阶段就是迁移到生产线，包括多方面测试，消防预演，完整的文档，监控，报警，备份，迁移，迁移后监控等。当然，这是迁移 HA 解决方案到产品线最安全的做法。下表是基于行业一般水平制的两个阶段需要的时间，考虑到一些非预计问题，所有时间都留有余地</p>
+
+<pre>
+  -------------------------------- ------- ---------
+                                  概念认证   迁移到生产线
+                                           
+
+  MySQL replication                4 小时     12 小时
+
+  Master-Master with MMM manager   8 小时     24 小时
+
+  Heartbeat/SAN (depends on SAN)   32 小时    120 小时
+
+  Heartbeat/DRBD                   40 小时    120 小时
+
+  NDB Cluster                      40 小时    120+ 小时
+  -------------------------------- ------- ---------
+</pre>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-10-18T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/shu-ju-ku/'>数据库</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/10/18/finding-your-mysql-high-availability-solution/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/10/18/finding-your-mysql-high-availability-solution/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/09/04/superblock-write-last-time-is-in-the-future/" title="Previous Post: superblock write last time is in the future">&laquo; superblock write last time is in the future</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/10/19/happy-birthday-for-pipi/" title="Next Post: 皮皮周岁">皮皮周岁 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2009/10/18/finding-your-mysql-high-availability-solution/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2009/10/18/finding-your-mysql-high-availability-solution/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/10/18/finding-your-mysql-high-availability-solution/';
+        var disqus_url = 'http://wgzhao.github.io/2009/10/18/finding-your-mysql-high-availability-solution/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>在Dell E6410 上安装Mac OS X Lion - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="我的 iMac 升级到 10.7 后，就一直想把我的 Dell E6410 笔记本上的 Mac OS X Snow Leopard
+升级到 Lion，可惜有前几次的失败后，都有点不想折腾了，真的 Mac 机器，升级还是非常容易的，比如我的 iMac，前后只用了 30 分钟。 下午有点休闲时间， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2011/08/07/install-mac-os-x-lion-with-dell-e6410">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">在Dell E6410 上安装Mac OS X Lion</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-07T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>我的 iMac 升级到 10.7 后，就一直想把我的 Dell E6410 笔记本上的 Mac OS X Snow Leopard
+升级到 Lion，可惜有前几次的失败后，都有点不想折腾了，真的 Mac 机器，升级还是非常容易的，比如我的 iMac，前后只用了 30 分钟。</p>
+
+<p>下午有点休闲时间，刚好皮皮也睡觉了，还是手痒一把，参考了远景论坛上的几个帖子（附后）以及强大的 Google，这次居然成功的升级到了 10.7.2，不容易呀！特意记录一下过程，和大家分享：</p>
+
+<ol>
+<li><p>准备 Lion 镜像，这个基本上大网站都有下载了，这里推荐 <a href="http://imzdl.com/">http://imzdl.com/</a> ，资料都靠谱，而且下载速度还不错。</p></li>
+<li><p>如何烧录 Lion 镜像，请参考下面这个连接： <a href="http://itc.do-johodai.ac.jp/~s0823612/">http://itc.do-johodai.ac.jp/~s0823612/</a></p></li>
+</ol>
+
+
+<p>同时我把内容复制到下面：</p>
+
+<!--more-->
+
+
+<blockquote><ol>
+<li>由于我是直接 app store
+上下的，会自动下载到<code>/Application</code>文件夹下，（如果是通过其他渠道得到的镜像文件请跳过这一步），然后我们在程序文件夹下找到<code>安装 Mac
+OS lion</code>这样一个狮子头光盘图标，然后在 finder 里右键选择<code>显示包内容</code>，然后在<code>Contents-&gt;SharedSupport</code>里找到<code>InstallESD.dmg</code></li>
+<li>双击<code>InstallESD.dmg</code>装载这个虚拟盘，紧接着我们打开终端（“程序”&mdash;-》“实用工具”&mdash;&mdash;-》“终端”）在终端里，进入到该盘里，输入：
+<code>cd /Volumes/"Mac OS X Install ESD"</code> 然后我们装载一个叫<code>BaseSystem.dmg</code>的隐藏文件： <code>hdiutil
+mount BaseSystem.dmg</code> 成功的话应该能在桌面上看到一个名为<code>BaseSystem</code>的盘符意思是已经装载</li>
+<li>打开磁盘工具（“程序”&mdash;-》“实用工具”&mdash;&mdash;-》“磁盘工具”）然后选中<code>Mac OS X BaseSystem</code>盘符，将其恢复到本地分区或者 U 盘移动硬盘上，大概 5 个 G，（我是选择了用 U 盘，目标磁盘只要把你 U 盘或者移动硬盘或者本地分区从左边一栏拖到右边的地址栏里即可）恢复完之后这个盘名自动会变成<code>Mac OS X BaseSystem</code>，我们称它为安装磁盘</li>
+<li>将原来那个<code>Mac OS X BaseSystem</code>推出（<strong>重要</strong>）</li>
+<li>将<code>Install ESD</code>磁盘中的隐藏文件<code>mach_kernel</code>复制到上述的安装磁盘，在终端里输入： <code>cp mach_kernel /Volumes/"Mac
+OS X BaseSystem"</code> （如果提示输入 root 密码就输一下，反正我拷贝的时候没有要求）</li>
+<li>接下来，将<code>Install ESD</code>磁盘中的<code>Packages</code>文件夹复制到安装磁盘的<code>/System/Installation</code>目录下面覆盖原来的<code>Packages</code>快捷方式</li>
+<li>然后下载 <a href="http://blog.nawcom.com/?p=751">nawcom 制作的 MBR patch for lion</a></li>
+<li>解压缩下载到的<code>DP4.tar.gz2</code>文件，并将<code>System</code>目录及子目录下面的<code>OSInstall</code>文件和<code>OSInstall.mpkg</code>文件按照相应的路径复制到安装磁盘的对应位置并替代原文件，这里貌似需要 root 权限</li>
+</ol>
+</blockquote>
+
+<ol>
+<li>安装过程中，内置的键盘和鼠标都没有响应，需要弄一个外置的 USB 鼠标，键盘可以暂时不管。</li>
+<li>如果上述步骤安装成功，但是启动过程中，到了<code>pci beginning configuration</code>位置就不往下走的话，那么可以再次用安装镜像启动，然后进入到终端，而后把安装镜像的 Extra 目录拷贝到系统目录里，然后重启，就应该没有问题了。</li>
+</ol>
+
+
+<p>到目前为止，无线网卡还是没有办法解决，有线网卡没有问题，声卡也就是发声而已，不能指望太多。显卡特效无法开启，只是分辨率能到 1280x800。稳定性嘛，目前还在测试。做完 time machine 后，我又升级到了 10.7.2，目前一切良好。 下面的链接也可以作为安装的参考：<br/>
+<a href="http://bbs.pcbeta.com/viewthread-875058-1-1.html">http://bbs.pcbeta.com/viewthread-875058-1-1.html</a>
+<a href="http://bbs.pcbeta.com/viewthread-874098-1-1.html">http://bbs.pcbeta.com/viewthread-874098-1-1.html</a>
+<a href="http://blog.nawcom.com/?p=751">http://blog.nawcom.com/?p=751</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-07T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/ji-zhu-ji-qiao/'>技术技巧</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2011/08/07/install-mac-os-x-lion-with-dell-e6410/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2011/08/07/install-mac-os-x-lion-with-dell-e6410/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2011/04/11/my-glasses-story/" title="Previous Post: 配眼镜">&laquo; 配眼镜</a>
+      
+      
+        <a class="basic-alignment right" href="/2011/09/07/routing-specific-ip-address-over-vpn-under-macosx/" title="Next Post: 自动配置Mac OS X 的VPN连接时的特定路由">自动配置Mac OS X 的VPN连接时的特定路由 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2011/08/07/install-mac-os-x-lion-with-dell-e6410/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2011/08/07/install-mac-os-x-lion-with-dell-e6410/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2011/08/07/install-mac-os-x-lion-with-dell-e6410/';
+        var disqus_url = 'http://wgzhao.github.io/2011/08/07/install-mac-os-x-lion-with-dell-e6410/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

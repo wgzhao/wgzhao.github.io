@@ -1,0 +1,401 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Fs-cache and Cachefs for Network Filesystem - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="对于像 NFS 和 AFS 这种网络文件系统而言，因为受网络的影响，使得对数据访问和存储的实时性就有了一定的挑战，特别是在早期 100Mb/s 的网络环境下（当然 10Mb/s 的网络环境就是一个噩耗了）。为了解决响应实效的问题，一种被称为 CacheFS 的本地缓存方案被开发出来， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2009/07/10/fs-cache-and-cachefs-for-network-filesystem">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Fs-cache and Cachefs for Network Filesystem</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>对于像 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a> 和 <a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a> 这种网络文件系统而言，因为受网络的影响，使得对数据访问和存储的实时性就有了一定的挑战，特别是在早期 100Mb/s 的网络环境下（当然 10Mb/s 的网络环境就是一个噩耗了）。为了解决响应实效的问题，一种被称为 <a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 的本地缓存方案被开发出来，用来提供分布式文件系统的本地缓存。</p>
+
+<p>作为内核 2.6.30 的一部分， 一种 <a href="http://kernelnewbies.org/Linux_2_6_30#head-29350000cec3a460e9f2af6360324670faf14b2">CacheFS 实现机制</a></p>
+
+<p>已经加入进来，当前它支持 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a> 和 <a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a>，但是其他文件系统也能从中获得好处（文章后面会提到）</p>
+
+<!--more-->
+
+
+<h2>什么是 FS-Cache 和 CacheFS?</h2>
+
+<p>FS-Cache 是指在文件系统和缓存之间的接口。 <a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 指的则是 FS-cache 的缓存后端。<br/>
+<a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 做实际的数据存储和检索处理，并使用块设备的分区。<br/>
+<a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 并不能用在任何文件系统上，文件系统<strong>必须</strong>能被 FS-Cache 写入。<br/>
+FS-Cache 可以使用任何一种它想要的缓存机制（使用缓存接口），文件系统本身并不关心使用何种缓存机制。<br/>
+<a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a> 和 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a> 都能使用 FSCache 来修改。 <br/>
+2.6.30 核心已经包含了能够利用 FS-Cache 的修改版。</p>
+
+<p>一图胜千言，下图给出了使用 FS-Cache 和 CacheFS 的通用数据流图。
+<img src="http://linuxmag.s3.amazonaws.com/i/articles/7378/data_flow.png" alt="Figure 1: Data Flow showing FS-Cache, CacheFS, and
+CacheFiles" /></p>
+
+<p><strong>图一: FS-Cache, CacheFS, 和 CacheFiles</strong></p>
+
+<p>在上图里，<a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a>/<a href="http://en.wikipedia.org/wiki/Andrew_File_System" title="Andrew File System">AFS</a>/ISOFS&mdash;我们一般称为 netfs&mdash;调用 FS-Cache，而 FS-Cache 则调用 CacheFile 或者 <a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 函数，这是两种不同的数据缓存实现机制。FS-Cache 都可以调用。这样因为 FC-Cache 的原因，左边的文件系统就可以直接使用缓存而不必知道具体的实现机制。注意：<a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 使用的是块设备上的分区(这里是/dev/hda5)，而 CacheFiles 则使用缺省的<code>/var/fscache</code>目录来缓存文件。</p>
+
+<p>下图给出了更多的细节
+<img src="http://linuxmag.s3.amazonaws.com/i/articles/7378/data_flow_detailed.png" alt="Figure 2: More Detailed Data Flow showing FS-Cache, CacheFS, and
+CacheFiles along with netfs" />
+<strong>图二: FS-Cache, CacheFS, and CacheFiles 的更多细节</strong></p>
+
+<p>此图显示了 netfs 文件系统是如何和 FS-Cache 进行通讯的，以及 FS-Cache 是如何和 <a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 或者 CacheFiles 通讯的。我们也注意到 netfs 也需要和 VFS 进行通讯，这显然的，毕竟 <a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 仅仅只是用来做数据缓存，而并不是来实现一个完整的文件系统，而在当前 Linux 里，所有的文件系统都需要和 VFS 打交道，以保证应用程序对不同的文件系统保持透明。</p>
+
+<p>FS-Cache 背后的关键概念是：在透过缓存访问 netfs 上的文件之前，FS-Cache 并不要求该文件被完整的载入到缓存中。这是因为：</p>
+
+<ul>
+<li>没有缓存的情况下也必须能操作</li>
+<li>必须能够打开比大于缓存大小的文件</li>
+<li>所有打开的远程文件的大小不应该受到缓存大小的限制</li>
+<li>如果一次只是访问某个远程的某一个部分，不应该强迫用户要缓存整个文件</li>
+</ul>
+
+
+<p>所以，FS-Cache 是建立在页(page)的概念上，而不是文件。否则的话，即便是读取一个字节的内容，也需要缓存整个文件的。<br/>
+FS-Cache 的实现提供了下面的一些特性：</p>
+
+<ul>
+<li>可以使用多个缓存。用标签(tag)来区分识别</li>
+<li>缓存可以在多个 netfs 之间共享。共享时，每个 netfs 的共享数据是相互独立的。另外，它也并不会把同一个文件的试图关联起来。比如，如果一个文件同时被 NFS 和 CIFS 读，那么在缓存里将会有两份拷贝。</li>
+<li>任何时刻缓存都增加或者删除</li>
+<li>netfs 提供了一个接口，允许任何一方从文件回退缓存 The <em>netfs</em> is provided with an interface
+that allows either party (<em>netfs</em> or FS-Cache) to withdraw caching
+facilities from a file</li>
+<li>netfs 的接口应该尽可能少的返回错误，宁可让 netfs 无视这些 The interface to the <em>netfs</em> returns
+as few errors as possible, preferring to let the <em>netfs</em> remain
+oblivious</li>
+<li>数据 IO 直接和 netfs 的 page 打交道</li>
+<li>尽可能异步</li>
+</ul>
+
+
+<p><strong>使用 CacheFS 或者 CacheFiles</strong></p>
+
+<p>使用 FS-Cache 和 CacheFS/CacheFiles 是相当简单的。首先确保内核是否支持。你可以在内核源代码目录检查<code>.config</code>文件.<br/>
+确保 FS-Cache 和 CacheFS 都被选中。 另外，确保 NFS Client Caching Support 也被选中了。</p>
+
+<p>第二步是确保 <a href="http://sourceforge.net/projects/nfs" title="NFS Utils">nfsutils</a> 是最新的，建议你下载最新版本，并编译安装。</p>
+
+<p>第三步是编译安装最新的 <a href="http://people.redhat.com/~dhowells/cachefs/">cachefilesd</a>。目前最新版本是 0.9,安装 cachefilesd 需要创建<code>/etc/cachefilesd.conf</code>文件，用来控制 FS-Cache 和 CacheFS(或 CacheFiles)的行为。格式很简单，详细情况，请猛击这个 <a href="http://people.redhat.com/~steved/fscache/docs/HOWTO.txt">HOWTO</a> 文档。</p>
+
+<p>配置文件里第一步是定义缓存的位置，你可以把缓存的位置定义在系统安装分区上，当然你可以使用 SD 卡或者 USB 硬盘来作为缓存路径，不过性能上可能会差一些。当然，如果机器上有空闲的空间，使用新的分区来做存储路径也不错。如果你足够有钱，使用固态盘(SSD)会有更好的性能。我们这里举的例子是采取一个分区来当做存储目录。这个分区应该做成支持 <a href="http://en.wikipedia.org/wiki/Extended_file_attributes">extended attributes</a>(<em>xattr</em>)的文件系统，大部分 Linux 下的文件系统都支持这个特性，包括 ext2/&frac34;,xfs,reiserfs,jfs 等，这里使用 ext3 文件系统。首先使用<code>mkfs.ext3 /dev/sda1</code> 格式化,然后使用<code>tune2fs -o user_xattr /dev/sda1</code> 打开 xattr 特性。</p>
+
+<p>接下来，在/etc/fstab 加入下面这行：</p>
+
+<p><code>/dev/sda1 /var/fscache ext3 defaults,user_xattr 0 0</code></p>
+
+<p>以上步骤对 <a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 和 CacheFiles 都适合。下一步就是启动 cachefilesd 服务了</p>
+
+<p><code>% service cachefilesd start</code></p>
+
+<p>如果没有报错，在<code>/var/fscache</code>目录，你应该可以看到下面这两个新创建的目录：</p>
+
+<ul>
+<li>cache</li>
+<li>graveyard</li>
+</ul>
+
+
+<p>如果你查看<code>/var/fscache/cache</code>目录，你会看到一些奇怪的文件名，这意味着到目前为止一切 OK。但是在使用这些你看到的文件之前，你需要确保 netfs 使用缓存。</p>
+
+<p>比如，<a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a> 能够使用 FS-Cache 和 CacheFS/CacheFiles. 只需要一个 fsc 挂载参数就可以做到。就像下面这样的命令：</p>
+
+<p><code>%mount -o fsc bigserver:/group-data /mnt/group-data</code></p>
+
+<p>这里&#8221;bigserver&#8221;是 NFS 服务器的机器名，<code>/group-data</code>是导出的共享目录。  客户端把它挂载到<code>/mnt/group-data</code>目录上。关键的地方就是这个<code>-o fsc</code>参数。</p>
+
+<p>netfs 挂载后，缓存并不会自动开始工作，只有发生了读或者写的操作后，缓存才会工作，如果你在<code>/var/fscache/cache</code>里看到了新创建的文件，那就表示缓存功能已经激活了。</p>
+
+<p>缓存并不关心你的 NFS 挂载的时候使用的是哪个版本,v2,v3,v4 都是支持的，但是有些区别：对于 V2 和 V3,因为协议的限制，直接 IO（Direct IO）和并发写是不支持的。而 NFS v4 提供较好的锁机制，使得写缓存或直接 IO 是支持的，因此确保你挂载时，使用的版本是 v4.</p>
+
+<p>那么我如何直到 <a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 工作得如何呢？我们有一些统计和观察的方法。首先请确保使用上面的方法激活了缓存。在<code>/proc</code>文件系统里，有一些统计信息在里面，如果你想查看这些信息，先确保你运行的核心打开下面的两个参数：</p>
+
+<ul>
+<li>CONFIG_FSCACHE_STATS=y</li>
+<li>CONFIG_FSCACHE_HISTOGRAM=y</li>
+</ul>
+
+
+<p>那么你就可以从下面两个位置能看到一些信息了：</p>
+
+<ul>
+<li>/proc/fs/fscache/stats</li>
+<li>/proc/fs/fscache/histograms</li>
+</ul>
+
+
+<p>对这些信息的详细解释，这里就不展开了，感兴趣的可以参考相应的文档。</p>
+
+<p><strong>总结</strong></p>
+
+<p>这篇文档对 FS-Cache 和 <a href="http://en.wikipedia.org/wiki/CacheFS" title="Cache File System">CacheFS</a> 做了一个大致的介绍。FS-Cache 的目标是为本地数据缓存提供一个中心点，同时报纸原始文件系统与缓存机制的无关性。而 CacheFS 则是实际用来缓存文件系统，它被 FS-Cache 用来调用当做缓存的功能。CacheFS 使用块设备的分区来存储缓存数据，当然 FS-Cache 也能够使用 CacheFiles 来当做缓存功能。</p>
+
+<p>CacheFS 已经进入到了 2.6.30 的官方核心里，它将用在新的文件系统里。NFS 和 AFS 都已经准备使用 FS-Cache+CacheFS/CacheFiles 了。</p>
+
+<p>FS-Cache 另外的一个使用领域就是用来缓存本地文件系统，目前，文件系统都是依赖内核来缓存数据和调度相关 IO 操作，缓存不是直接受你的控制。
+FS-Cache 使用非常大的缓存（比磁盘缓存大很多）时，读的性能有了非常大的提升，而且对于那些有着很好的写性能的文件系统，比如
+<a href="http://www.linux-mag.com/cache/7345/1.html">NILFS</a>，使用 FS-Cache 和 CacheFS 也能显著提升读的性能。</p>
+
+<p>但是，本地系统可能需要某种关机自动备份的功能用来确保数据从缓存写入到实际的文件系统里。</p>
+
+<p>FS-Cahce 和 CacheFS/CacheFiles 的另外一个使用领域就是对压缩文件系统&mdash;比如 <a href="http://www.linux-mag.com/cache/7357/1.html" title="SquashFS">SquashFS</a>&mdash;产生影响。SquashFS 是压缩的文件系统，采取只读挂载的方式。因为 FS-Cache 的确有帮助提升读性能的能力，因此将它和 <a href="http://www.linux-mag.com/cache/7357/1.html" title="SquashFS">SquashFS</a> 联合起来是有好处的。而且，<a href="http://www.linux-mag.com/cache/7357/1.html" title="SquashFS">SquashFS</a> 使用 FS-Cache 后变得可以被修改，对，就是能够被修改。</p>
+
+<p>最后，如果你在桌面，笔记本，客户端使用 <a href="http://en.wikipedia.org/wiki/Network_File_System_(protocol)" title="Network File System">NFS</a>，那么你有足够的理由来尝试 FS-Cache 和 CacheFS/CacheFiles，它能给你性能上的提升。</p>
+
+<p>本文大部分内容翻译自</p>
+
+<p><a href="http://www.linux-mag.com/id/7378/1/">http://www.linux-mag.com/id/7378/1/</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-10T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2009/07/09/what-is-a-good-job/" title="Previous Post: 什么样的职位才是好职位">&laquo; 什么样的职位才是好职位</a>
+      
+      
+        <a class="basic-alignment right" href="/2009/07/16/troubleshooting-kernel-panic/" title="Next Post: kernel panic故障排解">kernel panic故障排解 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/';
+        var disqus_url = 'http://wgzhao.github.io/2009/07/10/fs-cache-and-cachefs-for-network-filesystem/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

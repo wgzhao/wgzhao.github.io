@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>\[sbin学习\]d\*学习--完成 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="接着上次没有完成的 d 命令学习 -S 大小评估。用来计算 dump 需要的空间，但是并不真正执行 dump 操作。这对增量备份有好处，因为可以知道需要多少存储介质。 -T 时间。使用指定的时间来作为 dump 的时间，而不是从/etc/dumpdates 里读取。这里时间的格式和 ctime(3 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/01/30/commands-start-d">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">\[sbin学习\]d\*学习--完成</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>接着上次没有完成的 <a href="2007/01/29/commands-start-d-incomplete/">d 命令学习</a></p>
+
+<p>-S 大小评估。用来计算 dump 需要的空间，但是并不真正执行 dump 操作。这对增量备份有好处，因为可以知道需要多少存储介质。</p>
+
+<p>-T 时间。使用指定的时间来作为 dump 的时间，而不是从/etc/dumpdates 里读取。这里时间的格式和 ctime(3)的格式相同，遵守
+ RFC822 时区规范。他先下面的-u 参数是互斥的。</p>
+
+<!--more-->
+
+
+<p>-u 成功 dump 后，更新/etc/dumpdates 文件。
+/etc/dumpdates 文件格式是人可以阅读的，每行记录一个时间，采取了叫宽松的格式。</p>
+
+<p>-y 写入磁带时压缩块，采用 lzo 链接库。</p>
+
+<p>-z
+压缩级别，采用 zlib 库，这个参数仅在将数据 dump 到文件，管道或者磁带机时才有用，缺省值是 2.注意指定这个值的时候，参数和值之间应该没有参数（很多 Linux 下面的命令的参数都有这个小小的要求）下面是一个压缩到文件的简单例子</p>
+
+<pre><code>[root@lancy sbin]# dump -0 -f /tmp/rootdump /root
+DUMP: Date of this level 0 dump: Sun Jan 28 22:06:46 2007
+DUMP: Dumping /dev/hda5 (/ (dir root)) to /tmp/rootdump
+DUMP: Label: /
+DUMP: Writing 10 Kilobyte records
+DUMP: mapping (Pass I) [regular files]
+DUMP: mapping (Pass II) [directories]
+DUMP: estimated 15509 blocks.
+DUMP: Volume 1 started with block 1 at: Sun Jan 28 22:06:48 2007
+DUMP: dumping (Pass III) [directories]
+DUMP: ACLs in inode #2 won't be dumped
+DUMP: ACLs in inode #187672 won't be dumped
+DUMP: ACLs in inode #204060 won't be dumped
+DUMP: ACLs in inode #674281 won't be dumped
+DUMP: dumping (Pass IV) [regular files]
+DUMP: ACLs in inode #505922 won't be dumped
+DUMP: ACLs in inode #505923 won't be dumped
+DUMP: ACLs in inode #505924 won't be dumped
+DUMP: ACLs in inode #505925 won't be dumped
+DUMP: ACLs in inode #505926 won't be dumped
+DUMP: ACLs in inode #505927 won't be dumped
+……
+DUMP: Closing /tmp/rootdump
+DUMP: Volume 1 completed at: Sun Jan 28 22:06:59 2007
+DUMP: Volume 1 15340 blocks (14.98MB)
+DUMP: Volume 1 took 0:00:11
+DUMP: Volume 1 transfer rate: 1394 kB/s
+DUMP: 15340 blocks (14.98MB) on 1 volume(s)
+DUMP: finished in 11 seconds, throughput 1394 kBytes/sec
+DUMP: Date of this level 0 dump: Sun Jan 28 22:06:46 2007
+DUMP: Date this dump completed: Sun Jan 28 22:06:59 2007
+DUMP: Average transfer rate: 1394 kB/s
+DUMP: DUMP IS DONE
+</code></pre>
+
+<p>我们来看看 dump 出来的文件是有什么特征</p>
+
+<pre><code>[root@lancy sbin]# file /tmp/rootdump
+/tmp/rootdump: new-fs dump file (little endian), This dump Sun Jan 28 22:06:46 2007, Previous dump Thu Jan 1 08:00:00 1970, Volume 1, Level zero, type: tape header, Label /, Filesystem / (dir root), Device /dev/hda5, Host lancy, Flags 3
+[root@lancy sbin]# du -sh /tmp/rootdump
+15M /tmp/rootdump
+[root@lancy sbin]# du -sh /root
+15M /root
+</code></pre>
+
+<p>在不指定-z 参数时，dump 是没有压缩效果的。在看看压缩效果</p>
+
+<pre><code>[root@lancy sbin]# dump -0 -z9 -f /tmp/rootdump.z9 /root ......
+[root@lancy sbin]#ls -h /tmp/rootdump.z9 -rw-r--r-- 1 root root 7.4M
+Jan 30 20:56 /tmp/rootdump.z9 
+</code></pre>
+
+<p>看上去效果还不错</p>
+
+<p>dump_cis:显示 PCMCIA 设别的信息。因为我的无线上网卡不这次，因此他仅仅给出了下面的信息</p>
+
+<pre><code>[root@lancy sbin]# dump_cis no pcmcia driver in /proc/devices
+</code></pre>
+
+<p>dumpe2fs:   导出 ext2/ext3 文件系统信息，显然这也是一个重量级的工具，在文件系统出现损坏的情况下用得着。他打印出文件系统的超级块和块组信息。我们先看一个具体的例子，下面是对我刚创建个一个分区的 dump 信息。</p>
+
+<pre><code>[root@lancy sbin]# dumpe2fs /dev/sda1
+dumpe2fs 1.35 (28-Feb-2004)
+Filesystem volume name: 
+Last mounted on: 
+Filesystem UUID: f74b41c6-637f-436f-ab9c-e1cbd532abf8
+Filesystem magic number: 0xEF53
+Filesystem revision #: 1 (dynamic)
+Filesystem features: has_journal resize_inode filetype sparse_super
+Default mount options: (none)
+Filesystem state: clean
+Errors behavior: Continue
+Filesystem OS type: Linux
+Inode count: 4944
+Block count: 19732
+Reserved block count: 986
+Free blocks: 17905
+Free inodes: 4933
+First block: 1
+Block size: 1024
+Fragment size: 1024
+Reserved GDT blocks: 77
+Blocks per group: 8192
+Fragments per group: 8192
+Inodes per group: 1648
+Inode blocks per group: 206
+Filesystem created: Sun Jan 28 21:43:19 2007
+Last mount time: n/a
+Last write time: Sun Jan 28 21:43:19 2007
+Mount count: 0
+Maximum mount count: 26
+Last checked: Sun Jan 28 21:43:19 2007
+Check interval: 15552000 (6 months)
+Next check after: Fri Jul 27 21:43:19 2007
+Reserved blocks uid: 0 (user root)
+Reserved blocks gid: 0 (group root)
+First inode: 11
+Inode size: 128
+Journal inode: 8
+Default directory hash: tea
+Directory Hash Seed: d1aef805-54e4-4d41-90f7-e509a85a7028
+Journal backup: inode blocks
+
+Group 0: (Blocks 1-8192)
+Primary superblock at 1, Group descriptors at 2-2
+Block bitmap at 80 (+79), Inode bitmap at 81 (+80)
+Inode table at 82-287 (+81)
+6861 free blocks, 1637 free inodes, 2 directories
+Free blocks: 1332-8192
+Free inodes: 12-1648
+Group 1: (Blocks 8193-16384)
+Backup superblock at 8193, Group descriptors at 8194-8194
+Block bitmap at 8272 (+79), Inode bitmap at 8273 (+80)
+Inode table at 8274-8479 (+81)
+7905 free blocks, 1648 free inodes, 0 directories
+Free blocks: 8480-16384
+Free inodes: 1649-3296
+Group 2: (Blocks 16385-19731)
+Block bitmap at 16385 (+0), Inode bitmap at 16386 (+1)
+Inode table at 16387-16592 (+2)
+3139 free blocks, 1648 free inodes, 0 directories
+Free blocks: 16593-19731
+Free inodes: 3297-4944
+</code></pre>
+
+<p>从这个 dump 信息我们能够得到几个很重要的信息，无论对于你将来的正在备份，恢复还是文件系统修复都是至关重要的。</p>
+
+<p> Free blocks: 17905 //能够存储数据的块大小 <br/>
+ Free inodes: 4933 //能够使用的 i 节点 Block<br/>
+ size: 1024 //块大小<br/>
+Primary superblock at 1，Backup superblock at 8193 //主超级块以及备份超级块的位置</p>
+
+<p>free blocks 和 block size 决定了存储数据的空间大小，同时 block size 在某些备份软件中是需要指定的。而 free
+inode 表说明能够创建的文件或目录总和。因为一个文件或目录需要占用一个 i 节点。因此即使你的空间还足够，但是你会发现你无法创建文件或者目录，而提示却是空间不够，这个时候你可以用 dumpe2fs 来看看你还有多少 free inode。当然仅仅为了查看 i 节点的信息，不仅仅只有 dumpe2fs 能够做得到。df -i 命令也可以查看到 i 节点的使用信息。</p>
+
+<p>而适当的改变 block size 可以在同样空间里获得更多的 inode，这个我们在说 mkfs 的时候再讨论。</p>
+
+<p>superblock 无疑是整个文件系统的核心，类似通往文件系统存储空间的钥匙，没有了钥匙，你既无法继续存储数据，也无法取出原来的数据。</p>
+
+<p>正是因为他是如此的重要，所以文件系统在一创建的就做了若干备份。而且空间越到，备份的数目越多，以我的根文件系统为例，大小是 5.3G.
+其中超级块一共 8 个。一旦文件系统的超级块损坏，我们立刻可以使用<code>e2fsck -b xxxx</code>的方式启用备用的超级块。</p>
+
+<p>这里的 xxx 就是你的备份超级块的位置，上面的例子中，第一个超级块备份位置是 8193，因此你可以使用
+ <code>e2fsck -b 8193 /dev/sda1</code>来恢复超级块。</p>
+
+<p>除了这些重要信息外，对 dumpe2fs 的深入分析，甚至可以将一个一经无法通过恢复超级块来访问的文件系统的数据导出来。不过我现在还不知道如何做，呵呵。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-30T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/01/30/commands-start-d/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/01/30/commands-start-d/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/01/29/commands-start-d-incomplete/" title="Previous Post: \[sbin学习\]d\*命令--未完成">&laquo; \[sbin学习\]d\*命令--未完成</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/01/31/commands-start-e/" title="Next Post: \[sbin学习\]e\*命令">\[sbin学习\]e\*命令 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2007/01/30/commands-start-d/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2007/01/30/commands-start-d/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/01/30/commands-start-d/';
+        var disqus_url = 'http://wgzhao.github.io/2007/01/30/commands-start-d/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

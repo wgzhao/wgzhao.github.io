@@ -1,0 +1,1090 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="here document 就是一段特殊目的的代码块. 他使用 I/O 重定向的形式来将一个命令序列传递到一个交互程序或者命令中, 比如 ftp, cat, 或者 ex 文本编辑器. COMMAND &lt;
+...
+InputComesFromHERE limit string &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/page/26">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <style type="text/css">
+  div.entry-content h1 {font-size: 1.3em !important;}
+</style>
+<div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/17/some-tips-here-document/">Here Document 的一些技巧</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/17/some-tips-here-document/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/17/some-tips-here-document/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>here document 就是一段特殊目的的代码块. 他使用 I/O 重定向的形式来将一个命令序列传递到一个交互程序或者命令中, 比如 ftp, cat, 或者 ex 文本编辑器.</p>
+
+<pre><code>COMMAND &lt;
+...
+InputComesFromHERE
+</code></pre>
+
+<p>limit string 用来划定命令序列的范围(译者注: 两个相同的 limit string 之间就是命令序列) .
+特殊符号 &lt;&lt; 用来表识 limit string. 这个符号具有重定向文件的输出到程序或命令的输入的作用.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/09/17/some-tips-here-document/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/17/other-use-about-dd-command/">Shell编程&#8211;dd命令它用</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-17T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/17/other-use-about-dd-command/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/17/other-use-about-dd-command/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原来 dd 的命令不仅仅是用来镜像（复制）数据的。虽然最开始它是 UNIX 微机和 IBM 大型机通过磁带机交换数据的工具。 但是它会做一些转换.
+下边是一些可能的转换, 比如 ASCII/EBCDIC, [4] 大写/小写, 在输入和输出之间 的字节对的交换,
+还有对输入文件做一些截头去尾的工作. dd &mdash;help 列出了所有转换, 还有这个强力工具的一些其他选项.
+给出几个例子</p>
+
+<p>1） 将一个文件内容大写输出</p>
+
+<pre><code>[root@lancy bin]# cat call.sh
+#!/bin/bash
+function1()
+{
+caller 0
+}
+
+function1
+
+ls -l &amp;     
+wait    
+echo “Done”
+
+exit 0
+</code></pre>
+
+<p>运行结果如下</p>
+
+<pre><code>[root@lancy bin]# dd if=call.sh conv=ucase
+#!/BIN/BASH
+FUNCTION1()
+{
+CALLER 0
+}
+
+FUNCTION1
+
+LS -L &amp;
+WAIT
+ECHO “DONE”
+
+EXIT 0
+</code></pre>
+
+<p>如果想输出为小写，将 ucase 改成 lcase 好了。</p>
+
+<p>2）从文件 call.sh 的位置 2 到位置 5 的字符读取出来(4=5-2+1)</p>
+
+<pre><code>[root@lancy bin]# dd if=call.sh bs=1 skip=2 count=4 2&gt;/dev/null
+/bin
+</code></pre>
+
+<p>3）输出垂直的”hello world”字符</p>
+
+<pre><code>[root@lancy bin]# echo -n “hello world” |dd cbs=1 conv=unblock 2&gt;/dev/null
+h
+e
+l
+l
+o
+
+w
+o
+r
+l
+d
+</code></pre>
+
+<p>(以上部分内容来自 ABS 一书)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/16/seq-command/">Shell编程&#8211;seq命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/16/seq-command/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/16/seq-command/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>seq 产生整数数列</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>root@lancy bin<span class="o">]</span><span class="c"># seq 5</span>
+</span><span class='line'>1
+</span><span class='line'>2
+</span><span class='line'>3
+</span><span class='line'>4
+</span><span class='line'>5
+</span><span class='line'><span class="o">[</span>root@lancy bin<span class="o">]</span><span class="c"># seq -s: 5</span>
+</span><span class='line'>1:2:3:4:5
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span>root@lancy bin<span class="o">]</span><span class="c"># seq -s: 3 5</span>
+</span><span class='line'>3:4:5
+</span><span class='line'><span class="o">[</span>root@lancy bin<span class="o">]</span><span class="c"># seq -s: 3 2 7</span>
+</span><span class='line'>3:5:7
+</span><span class='line'><span class="o">[</span>root@lancy bin<span class="o">]</span><span class="c"># seq -s: 7 -2 3</span>
+</span><span class='line'>7:5:3
+</span><span class='line'><span class="o">[</span>root@lancy bin<span class="o">]</span><span class="c"># seq 10</span>
+</span><span class='line'>1
+</span><span class='line'>2
+</span><span class='line'>3
+</span><span class='line'>4
+</span><span class='line'>5
+</span><span class='line'>6
+</span><span class='line'>7
+</span><span class='line'>8
+</span><span class='line'>9
+</span><span class='line'>10
+</span><span class='line'><span class="o">[</span>root@lancy bin<span class="o">]</span><span class="c"># seq -w 10</span>
+</span><span class='line'>01
+</span><span class='line'>02
+</span><span class='line'>03
+</span><span class='line'>04
+</span><span class='line'>05
+</span><span class='line'>06
+</span><span class='line'>07
+</span><span class='line'>08
+</span><span class='line'>09
+</span><span class='line'>10
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里-w 的参数非常有用，你可以自己设定填充的字符。这在做批量下载的时候非常有用的，之前我写的那个下载程序就是填充没有做好，用这个命令就很好解决了。
+(以上部分内容来自 ABS 一书)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/15/the-new-features-about-bc/">Shell编程&#8211;发现bc的新功能</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/15/the-new-features-about-bc/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/15/the-new-features-about-bc/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>以前一直以为 bc 做了不了浮点运算，虽然他能结算类似<code>13.4*45.6</code>的乘法，但是在计算除法的时候，无论你输入<code>5/3</code>还是<code>5/3.0</code>得到的结果都是<code>1</code></p>
+
+<p>我也没有去看 man 手册，今天无意中发现了<code>ibas</code>e 这个变量，是 bc 使用的一个变量，表示输入的数字的进制，比如<code>ibase=8</code>，表示你输入的数是 8 进制的。这让我很好奇，于是去看了 man 手册，原来他是可以做浮点除法的，只是默认不输出小数点后面的值，它同样采用了一个变量来控制<code>--scale</code>，其值表示输出多少位小数。另外一个和 ibase 对应的变量是 obase，表示结果输出采用什么进制，默认是 10 进制。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/09/15/the-new-features-about-bc/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/14/get-the-random-number-in-specific-range/">Shell编程&#8211;获得指定范围内的随机数</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-14T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/14/get-the-random-number-in-specific-range/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/14/get-the-random-number-in-specific-range/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.tldp.org/LDP/abs/abs-guide.pdf">《Advanced Bash-Scripting
+Guide》（简称 ABS）</a>是我正在看的一本 bash 编程书籍，个人觉得很不错，590 页的文档充满了示例代码，并且都非常有用，比如下面的这个在制定范围内获得随机数就是一个不错的例子，它没有使用 bash 内嵌的 RANDMON,而是使用了一定的算法(我增加了后面的一段代码)。代码是最好的注释，大家看代码吧。</p>
+
+<figure class='code'><figcaption><span> (random.sh)</span> <a href='/downloads/code/random.sh'>download</a></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="c"># random-between.sh</span>
+</span><span class='line'><span class="c"># 在两个指定值之间的随机数.</span>
+</span><span class='line'><span class="c"># Bill Gradwohl 编写的本脚本,本文作者作了较小的修改.</span>
+</span><span class='line'><span class="c"># 允许使用.</span>
+</span><span class='line'>
+</span><span class='line'>randomBetween<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'><span class="c"># 产生一个正的或者负的随机数.</span>
+</span><span class='line'><span class="c">#+ 在$max 和$max 之间</span>
+</span><span class='line'><span class="c">#+ 并且可被$divisibleBy 整除的.</span>
+</span><span class='line'><span class="c"># 给出一个合理的随机分配的返回值.</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># Bill Gradwohl – Oct 1, 2003</span>
+</span><span class='line'>
+</span><span class='line'>syntax<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'><span class="c"># 在函数中内嵌函数</span>
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span> “Syntax: randomBetween <span class="o">[</span>min<span class="o">]</span> <span class="o">[</span>max<span class="o">]</span> <span class="o">[</span>multiple<span class="o">]</span>”
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span> “Expects up to 3 passed parameters, but all are completely optional.”
+</span><span class='line'><span class="nb">echo</span> “min is the minimum value”
+</span><span class='line'><span class="nb">echo</span> “max is the maximum value”
+</span><span class='line'><span class="nb">echo</span> “multiple specifies that the answer must be a multiple of this value.”
+</span><span class='line'><span class="nb">echo</span> ” i.e. answer must be evenly divisible by this number.”
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span> “If any value is missing, defaults area supplied as: 0 32767 1″
+</span><span class='line'><span class="nb">echo</span> “Successful completion returns 0, unsuccessful completion returns”
+</span><span class='line'><span class="nb">echo</span> “function syntax and 1.”
+</span><span class='line'><span class="nb">echo</span> “The answer is returned in the global variable randomBetweenAnswer”
+</span><span class='line'><span class="nb">echo</span> “Negative values <span class="k">for </span>any passed parameter are handled correctly.”
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 默认值分配,用来处理没有参数传递进来的时候.</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">local </span>x
+</span><span class='line'><span class="nb">local </span>spread
+</span><span class='line'>
+</span><span class='line'><span class="c"># 确认divisibleBy 是正值.</span>
+</span><span class='line'><span class="o">[</span> <span class="k">${</span><span class="nv">divisibleBy</span><span class="k">}</span> -lt 0 <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">divisibleBy</span><span class="o">=</span><span class="k">$((</span><span class="m">0</span><span class="o">-</span>divisibleBy<span class="k">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 完整性检查.</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-gt 3 -o <span class="k">${</span><span class="nv">divisibleBy</span><span class="k">}</span> -eq 0 -o <span class="k">${</span><span class="nv">min</span><span class="k">}</span> -eq <span class="k">${</span><span class="nv">max</span><span class="k">}</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'>syntax
+</span><span class='line'><span class="k">return </span>1
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 察看是否min 和max 颠倒了.</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">min</span><span class="k">}</span> -gt <span class="k">${</span><span class="nv">max</span><span class="k">}</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="c"># 交换它们.</span>
+</span><span class='line'><span class="nv">x</span><span class="o">=</span><span class="k">${</span><span class="nv">min</span><span class="k">}</span>
+</span><span class='line'><span class="nv">min</span><span class="o">=</span><span class="k">${</span><span class="nv">max</span><span class="k">}</span>
+</span><span class='line'><span class="nv">max</span><span class="o">=</span><span class="k">${</span><span class="nv">x</span><span class="k">}</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 如果min 自己并不能够被$divisibleBy 整除,</span>
+</span><span class='line'><span class="c">#+ 那么就调整min 的值,使其能够被$divisibleBy 整除,前提是不能放大范围.</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">$((</span>min/divisibleBy*divisibleBy<span class="k">))</span> -ne <span class="k">${</span><span class="nv">min</span><span class="k">}</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">min</span><span class="k">}</span> -lt 0 <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="nv">min</span><span class="o">=</span><span class="k">$((</span>min/divisibleBy*divisibleBy<span class="k">))</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="nv">min</span><span class="o">=</span><span class="k">$((</span><span class="o">((</span>min/divisibleBy<span class="o">)+</span><span class="m">1</span><span class="o">)*</span>divisibleBy<span class="k">))</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 如果min 自己并不能够被$divisibleBy 整除,</span>
+</span><span class='line'><span class="c">#+ 那么就调整max 的值,使其能够被$divisibleBy 整除,前提是不能放大范围.</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">$((</span>max/divisibleBy*divisibleBy<span class="k">))</span> -ne <span class="k">${</span><span class="nv">max</span><span class="k">}</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">max</span><span class="k">}</span> -lt 0 <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="nv">max</span><span class="o">=</span><span class="k">$((</span><span class="o">((</span>max/divisibleBy<span class="o">)-</span><span class="m">1</span><span class="o">)*</span>divisibleBy<span class="k">))</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="nv">max</span><span class="o">=</span><span class="k">$((</span>max/divisibleBy*divisibleBy<span class="k">))</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># ———————————————————————</span>
+</span><span class='line'><span class="c"># 现在,来做真正的工作.</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 注意,为了得到对于端点来说合适的分配,</span>
+</span><span class='line'><span class="c">#+ 随机值的范围不得不落在</span>
+</span><span class='line'><span class="c">#+ 0 和 abs(max-min)+divisibleBy 之间, 而不是 abs(max-min)+1.</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 对于端点来说,</span>
+</span><span class='line'><span class="c">#+ 这个少量的增加将会产生合适的分配.</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 修改这个公式,使用abs(max-min)+1 来代替abs(max-min)+divisibleBy 的话,</span>
+</span><span class='line'><span class="c">#+ 也能够产生正确的答案, 但是在这种情况下生成的随机值对于正好为端点倍数</span>
+</span><span class='line'><span class="c">#+ 的这种情况来说将是不完美的,因为在正好为端点倍数的情况的随机率比较低,</span>
+</span><span class='line'><span class="c">#+ 因为你才加1 而已,这比正常的公式所产生的机率要小得多(正常为加divisibleBy)</span>
+</span><span class='line'><span class="c"># ———————————————————————</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">spread</span><span class="o">=</span><span class="k">$((</span>max-min<span class="k">))</span>
+</span><span class='line'><span class="o">[</span> <span class="k">${</span><span class="nv">spread</span><span class="k">}</span> -lt 0 <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nv">spread</span><span class="o">=</span><span class="k">$((</span><span class="m">0</span><span class="o">-</span>spread<span class="k">))</span>
+</span><span class='line'><span class="nb">let </span>spread+<span class="o">=</span>divisibleBy
+</span><span class='line'><span class="nv">randomBetweenAnswer</span><span class="o">=</span><span class="k">$((</span><span class="o">(</span>RANDOM%spread<span class="o">)/</span>divisibleBy*divisibleBy+min<span class="k">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">return </span>0
+</span><span class='line'>
+</span><span class='line'><span class="c"># 然而,Paulo Marcel Coelho Aragao 指出</span>
+</span><span class='line'><span class="c">#+ 当$max 和$min 不能被$divisibleBy 整除时,</span>
+</span><span class='line'><span class="c">#+ 这个公式将会失败.</span>
+</span><span class='line'><span class="c">#</span>
+</span><span class='line'><span class="c"># 他建议使用如下的公式:</span>
+</span><span class='line'><span class="c"># rnumber = $(((RANDOM%(max-min+1)+min)/divisibleBy*divisibleBy))</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 让我们测试一下这个函数.</span>
+</span><span class='line'><span class="nv">min</span><span class="o">=</span>-14
+</span><span class='line'><span class="nv">max</span><span class="o">=</span>20
+</span><span class='line'><span class="nv">divisibleBy</span><span class="o">=</span>3
+</span><span class='line'>
+</span><span class='line'><span class="c"># 产生一个数组answers,answers 的下标用来表示在范围内可能出现的值,</span>
+</span><span class='line'><span class="c">#+ 而内容记录的是对于这个值出现的次数,如果我们循环足够多次,一定会得到</span>
+</span><span class='line'><span class="c">#+ 一次出现机会.</span>
+</span><span class='line'><span class="nb">declare</span> -a answer
+</span><span class='line'><span class="nv">minimum</span><span class="o">=</span><span class="k">${</span><span class="nv">min</span><span class="k">}</span>
+</span><span class='line'><span class="nv">maximum</span><span class="o">=</span><span class="k">${</span><span class="nv">max</span><span class="k">}</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">$((</span>minimum/divisibleBy*divisibleBy<span class="k">))</span> -ne <span class="k">${</span><span class="nv">minimum</span><span class="k">}</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">minimum</span><span class="k">}</span> -lt 0 <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="nv">minimum</span><span class="o">=</span><span class="k">$((</span>minimum/divisibleBy*divisibleBy<span class="k">))</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="nv">minimum</span><span class="o">=</span><span class="k">$((</span><span class="o">((</span>minimum/divisibleBy<span class="o">)+</span><span class="m">1</span><span class="o">)*</span>divisibleBy<span class="k">))</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 如果maximum 自己并不能够被$divisibleBy 整除,</span>
+</span><span class='line'><span class="c">#+ 那么就调整maximum 的值,使其能够被$divisibleBy 整除,前提是不能放大范围.</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">$((</span>maximum/divisibleBy*divisibleBy<span class="k">))</span> -ne <span class="k">${</span><span class="nv">maximum</span><span class="k">}</span> <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="k">${</span><span class="nv">maximum</span><span class="k">}</span> -lt 0 <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="nv">maximum</span><span class="o">=</span><span class="k">$((</span><span class="o">((</span>maximum/divisibleBy<span class="o">)-</span><span class="m">1</span><span class="o">)*</span>divisibleBy<span class="k">))</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'><span class="nv">maximum</span><span class="o">=</span><span class="k">$((</span>maximum/divisibleBy*divisibleBy<span class="k">))</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 我们需要产生一个下标全为正的数组,</span>
+</span><span class='line'><span class="c">#+ 所以我们需要一个displacement 来保正都为正的结果.</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">displacement</span><span class="o">=</span><span class="k">$((</span><span class="m">0</span><span class="o">-</span>minimum<span class="k">))</span>
+</span><span class='line'><span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span><span class="k">${</span><span class="nv">minimum</span><span class="k">}</span>; i&lt;<span class="o">=</span><span class="k">${</span><span class="nv">maximum</span><span class="k">}</span>; i+<span class="o">=</span>divisibleBy<span class="o">))</span>; <span class="k">do</span>
+</span><span class='line'>answer<span class="o">[</span>i+displacement<span class="o">]=</span>0
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="c">#main function</span>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span>-lt 2 <span class="o">]</span>; <span class="k">then</span>
+</span><span class='line'><span class="nb">echo</span> <span class="err">&quot;</span>Usage: <span class="nv">$0</span> <span class="o">[</span>divisible<span class="o">]</span>”
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">echo</span> “e.g <span class="nv">$0</span> 2 100 3″
+</span><span class='line'><span class="nb">echo</span>
+</span><span class='line'><span class="nb">exit</span>
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="nv">min</span><span class="o">=</span><span class="k">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">0</span><span class="k">}</span>
+</span><span class='line'><span class="nv">max</span><span class="o">=</span><span class="k">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">32767</span><span class="k">}</span>
+</span><span class='line'><span class="nv">divisibleBy</span><span class="o">=</span><span class="k">${</span><span class="nv">3</span><span class="k">:-</span><span class="nv">1</span><span class="k">}</span>
+</span><span class='line'>randomBetween <span class="k">${</span><span class="nv">max</span><span class="k">}</span> <span class="k">${</span><span class="nv">min</span><span class="k">}</span> <span class="k">${</span><span class="nv">divisibleBy</span><span class="k">}</span>
+</span><span class='line'><span class="nb">echo</span> <span class="k">${</span><span class="nv">randomBetweenAnswer</span><span class="k">}</span>
+</span><span class='line'><span class="nb">exit </span>0
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/09/13/how-far-from-the-information-highway/">我离信息高速公路还有多远？</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-09-13T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/09/13/how-far-from-the-information-highway/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/09/13/how-far-from-the-information-highway/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1 号回来，4 号去电信办 ADSL，服务态度还行，不到一会，手续办完，只是这次 modem 没有了，需要麻烦我再来一趟，自己拿。要装 ADSL 的人带过来还不行，说他们没有这个权利，一副顾客是上帝的样子。他们号称是 7 个工作日办好，催他们快，说没有用，这是程序流程。</p>
+
+<p>第三天，打电话给 10000，居然说我住的地方接口不够，需要扩展才行，需要多长时间，未知。第五天，打电话给 10000，说我们已经打报告给领导了，什么时间能办，未知。第八天，打电话给 10000，说正在处理，什么时间搞定，未知。第九天，去营业厅，取消 ADSL 业务。打电话给铁通的同学，询问了基本情况，说他们可以办，价格还便宜。于是他帮我找人联系我，开始办理。先考察，然后制定方案。说这周三安装好电话，周四便能开通 ADSL。今天下午，果然他们打电话来了，MODEM 也带来了，电话线也带来了。还是铁通速度快呀。安装工程师看了一眼，说恐怕不行，装不了，打电话给业务代表，两人开始扯皮。</p>
+
+<p>业务代表过来了，看了看环境，又出去和安装工程师交谈了一阵，杀回来告诉我，不好意思，装不了，拜拜！</p>
+
+<p>如此一来，只有网通了，我想在南方电信都搞不定，网通也没戏，我的宽带呀，你何时能到我的身边?</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/08/31/beijing-goodbye-and-redflag-goodbye/">北京，再见；红旗，再见</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-31T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/08/31/beijing-goodbye-and-redflag-goodbye/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/08/31/beijing-goodbye-and-redflag-goodbye/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>15:00，南下的 T1 缓缓离开北京西客站。我在心理默默的念叨：“北京，再见了；红旗，我在北京真正意义上的第一个上班的公司，再见了”。</p>
+
+<p>2 年前的今天，<a href="http://lawstar.xplore.cn">lancy</a>，<a href="http://wf.xplore.cn">wirlfly</a>，<a href="http://mwishes.xplore.cn">mwishes</a> 和我四人搭乘 T2，离开熟悉的湘潭，来到了北京。lancy 去天津继续她喜欢的专业学习，wirlfly 则到了以美女出名的北京广播学院，而 mwishes 一年后也同样来到了这所大学继续深造。只有我，开始了北漂的生活。</p>
+
+<p>刚来北京，喜欢它的地铁，也只会坐地铁，快捷方便准时，只是价格高，但是经过 731 路公交 2 个半小时的颠簸后，价格的劣势便一扫而光。于是刚到北京的近 3 个月，每天重复着八通线――1 号地铁――2 号地铁――运通 106――11 路车的往返运动，虽沉闷，但也还能在这个沉闷的时间让我看书，于是《余秋雨文集》便被打发到了这个运动轨迹上。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2006/08/31/beijing-goodbye-and-redflag-goodbye/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/08/25/Storage-study-exchange/">存储学习交流</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-25T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/08/25/Storage-study-exchange/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/08/25/Storage-study-exchange/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这几天一直都没有更新 blog，忙着部门存储学习交流的文档，这几天都是瞎忙到凌晨 2 点，还好每天可以和 <a href="http://blog.sina.com.cn/u/1245710794">wirlfly</a>
+讨论相关的技术，这使得我能在昨天开始培训前 30 分钟完成 ppt 文档，不过还是很粗糙，原本想加入的一些内容因为时间原因还是去掉了。</p>
+
+<p>昨天下午 2 点开始做技术交流，居然有研发的牛人去听，吓得我不敢怎么大声说话，总觉得有点班门弄斧的感觉。感觉昨天的交流还是讲的不够详细，很多概念我都没有去介绍，就直接带出来了，内容的组织上也存在问题，甚至有时我都不知道为什么会有这一页存在。和 wirlfly 讨论的时候，感觉说得很流利，而真正和大家讲的时候就不是这样了。<br/>
+3 个小时讲完，发现对象存储，CAS，IP 存储将得不是很好，可能还是和自己水平有关，应该再去仔细了解这方面的技术。附近是我这次交流的 ppt，喜欢的可以拿去。</p>
+
+<p><a href="/uploads/storage.rar">storage tutorial</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/08/21/sigh-of-love-to-freecloudz/">感叹爱情－－写给freecloudz</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/08/21/sigh-of-love-to-freecloudz/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/08/21/sigh-of-love-to-freecloudz/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>很长时间没有和 freecloudz 联系了，今日在 MSN 上见到他，居然告诉我他和女友分手了。又给我看了他在<a href="http://www.tianya.cn/New/PublicForum/Content.asp?flag=1&amp;idWriter=0&amp;Key=0&amp;idArticle=643085&amp;strItem=feeling">天涯写的《真的很痛》</a>，看了很长时间，唏嘘不已。</p>
+
+<p>他女友我是认识的，比我们低一届。严格说来，他们认识还是我介绍的，当时只是说我介绍一下，剩下的就靠你了。从那以后，freecloudz 锲而不舍，依然记得圣诞节的时候，freecloudz 冒着被逮住的危险，翻阅围墙送玫瑰的情形，依然记得他总会变着法子来过他们的认识一周纪念，认识一月纪念等。多年来，他对他的付出，不仅仅让她感动，也让她的朋友感动和我们感动。也许正式这种锲而不舍，他们终于走到了一起，真的成了男女朋友。毕业后，他留下了陪他靠 GMAT，之后又离开长沙，去深圳，也是为了她。之间种种努力，也时常使得她泪流满面，觉得她今生再也早不到比他跟爱她的人了。可惜感动依然只是感动，物质的诱惑总是那样的让人难以抗拒，3 个月的物质诱惑居然冲垮了 6 年来建立的爱情，再爱情和面包，或者面包和海鲜面前，后者总是会以胜利的姿态出现。</p>
+
+<p>又或许感动并不是爱情，她也许一直生活在感动中，误以为感动便是爱情，而这种感动总是一方真心的付出，一方只需要享受，爱情应该生活平等的，她不是一方的付出，而是两人的相互付出和回报。如果真的爱过，6 年的感情不是说消失就消失的，也许有时分手才能真的看出双方是否真的深爱着对方，那么对分手后又复合的，那是因为走过之后，才发现原来的她（他）才是之间的真爱。</p>
+
+<p>freecloudz，守候你的爱情吧。保重。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/08/21/Weird-dream/">怪异的梦</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-08-21T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/08/21/Weird-dream/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io/2006/08/21/Weird-dream/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>不知是这几天头晕，还是严重缺失睡眠，昨晚做了一个异常怪异的梦。梦中，我打一群人在看热闹，但是也不知道看什么，只是知道一群人围观在那里，不到一伙，人群散了，我也离开，突然有人抓我的腿，还有人抓我的手，似乎要把我抬起来，他们口里还说“抓回去，抓回去”我慌忙问，“你们抓我做什么，我又不认识你们？”</p>
+
+<p>那群人却说：“你是回族人，要抓你回去，这里是汉族住的地方”我就拼命解释我不是回族人，我是汉族人。我不会你们回去，他们就追我，我就拼命跑，一直跑到大家都累了，都跑不动了，我也突然醒来了，一摸额头，湿的，身上也出汗了。早晨一直在想怎么会这样呢？为什么会梦到这样奇怪的事情呢？常说，“日有所思，也有所梦”，可我压根就没有想到什么回族之类的呀。<a href="http://rachel.xplore.cn">Rachel</a> 说我是看了《狼图腾》的原因，这也是很早就看完了，而这段时间我一直在看《废都》，昨晚睡觉前也看了一段，但是《废都》里面压根就没有说道回族呀，又不是看《穆斯林的葬礼》。难道是《废都》后面会说道回族，看情节也不太可能呀，于是趁中午休息的时间，看完了最后 4 章，依然没有说道回族，这就怪异了。</p>
+
+<p>而唯一与这有点点关联的是有很多人第一次见到我，都要问我哪里人，然后就说不想，说我应该是新疆的啦，或者是什么哈萨克斯坦人啦，反正应该是西域一代的，如果不是，要不就是你们家祖上有西域的，吓，这我还真不知道了，活血有机会去了解一下。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/27/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/25/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/page/26/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/page/26/index.html" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

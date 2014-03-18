@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>优化我的系统 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="虽然同样的机器下，使用 Linux 比 windows xp 或 vista 更快，但是我希望 Linux 更快。刚做了三个方面的系统优化,系统整体性能提高 40%,使用的方法和大家共享: 1) 磁盘优化这个以前也做过,不过每次都是单独做而已,没有和接下来的两条接合起来.方法就是使用 hdparm &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/07/19/I-optimized-the-system">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">优化我的系统</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-19T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>虽然同样的机器下，使用 Linux 比 windows xp 或 vista 更快，但是我希望 Linux 更快。刚做了三个方面的系统优化,系统整体性能提高 40%,使用的方法和大家共享:</p>
+
+<p>1) 磁盘优化这个以前也做过,不过每次都是单独做而已,没有和接下来的两条接合起来.方法就是使用 hdparm 命令了.
+优化后参数是:</p>
+
+<pre><code>[root@mlsx ~]# hdparm -v /dev/hda
+
+/dev/hda:
+multcount = 16 (on)
+IO_support = 0 (default 16-bit)
+unmaskirq = 0 (off)
+using_dma = 1 (on)
+keepsettings = 1 (on)
+readonly = 0 (off)
+readahead = 1024 (on)
+geometry = 16383/255/63, sectors = 117210240, start = 0
+</code></pre>
+
+<p>具体的命令是:</p>
+
+<pre><code>#hdparm -d 1 /dev/hda
+#hdparm -m 16 /dev/hda
+#hdparm -a 1024 /dev/hda
+#hdparm -k 1 /dev/hda
+</code></pre>
+
+<p>通过优化磁盘参数,我的磁盘读写速度由原来的 15.69M/S 提升到了现在的 23.57M/S,提高达 50%.</p>
+
+<p>2)优化挂载参数因为是自己用,因此有些挂载参数可以加上,比如 noatime,对于/boot 而言(假设/boot 是独立的分区),它仅仅是在启动的时候使用,因此给他加上一个 noatime 的参数是可以的.另外,我个人的数据和系统是分开的,因此系统坏了,系统被人攻击了(有可能吗?)我无所谓,因此给/也加上 noatime 参数.实际上,我把除了我存储个人数据的分区使用的 defaults 参数外,其他的都加上了 noatime 参数.
+就是在/etc/fstab 文件里,对应行的 defaults 后面加上&#8221;,notime&#8221;就可以了.如果不想重启系统,那么执行类型下面的命令就好了
+<code>#mount -o remount,defaults,notime /</code></p>
+
+<p>3)空间换时间现在空间已经不是问题,因此空间换时间是划得来的.这个优化主要是为了提高应用程序的载入速度.<br/>
+有两个办法,如果是自己编译的程序,那么可以考虑采用静态(static)编译的方式,很多 configure 都给出静态编译的选项,这样就不用再动态载入库文件,快了很多.<br/>
+对于已经存在的程序呢,比如 konsole.我们可以使用 prelink 命令来预先把需要载入的库链接好.</p>
+
+<pre><code>[root@mlsx ~]# ls -l /usr/bin/konsole 
+-rwxr-xr-x 1 root root 3704 04-10 17:04 /usr/bin/konsole 
+[root@mlsx ~]# prelink /usr/bin/konsole
+[root@mlsx ~]# ls -l /usr/bin/konsole 
+-rwxr-xr-x 1 root root 39556 04-10 17:04 /usr/bin/konsole 
+</code></pre>
+
+<p>体积是膨胀了一个数量级.但是载入速度也提高了一倍.
+我把<code>/usr/bin/</code>下的 dcop 开头的和 kde 开头的程序全部做了 prelink。经过测试，系统整体性能提高了 40%左右，比较爽。如果你的程序使用的库不在标注路径里，或者系统找不到，那么使用-l 的参数。</p>
+
+<p>我的测试环境如下：</p>
+
+<p>三星 X05 笔记本标准配置，Everest 0.3 版本，自己增加了 N 多程序。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-19T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/07/19/I-optimized-the-system/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/07/19/I-optimized-the-system/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/07/18/commands-study-b/" title="Previous Post: \[/usr/sbin学习\]b\*学习">&laquo; \[/usr/sbin学习\]b\*学习</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/07/19/ionice-use/" title="Next Post: ionice的用途">ionice的用途 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2007/07/19/I-optimized-the-system/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2007/07/19/I-optimized-the-system/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/07/19/I-optimized-the-system/';
+        var disqus_url = 'http://wgzhao.github.io/2007/07/19/I-optimized-the-system/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

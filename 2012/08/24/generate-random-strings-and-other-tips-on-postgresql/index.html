@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>生成随机字符串以及自动更新时间戳和返回最近插入的ID号 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="PostgreSQL下的几条 SQL 语句小技巧。 生成随机字符串这个是从别人的 blog 上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16 SELECT( SELECT string_agg(x &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2012/08/24/generate-random-strings-and-other-tips-on-postgresql">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-24T22:04:00+08:00" pubdate data-updated="true">Aug 24<span>th</span>, 2012</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>下的几条 SQL 语句小技巧。</p>
+
+<h2>生成随机字符串这个是从<a href="http://momjian.us/main/blogs/pgblog/2012.html">别人的 blog</a> 上看到的，在做一些测试需要加载一些数据的时候用得上。于是摘录到这里</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">SELECT</span><span class="p">(</span>
+</span><span class='line'>       <span class="k">SELECT</span> <span class="n">string_agg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>         <span class="k">FROM</span> <span class="p">(</span>
+</span><span class='line'>          <span class="k">SELECT</span> <span class="n">chr</span><span class="p">(</span><span class="n">ascii</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">floor</span><span class="p">(</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">26</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span>
+</span><span class='line'>               <span class="k">FROM</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>           <span class="p">)</span> <span class="k">AS</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">)</span>
+</span><span class='line'>    <span class="k">FROM</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="k">as</span> <span class="n">a</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+</span><span class='line'>                    <span class="n">string_agg</span>
+</span><span class='line'>    <span class="c1">------------------------------------------</span>
+</span><span class='line'>     <span class="n">hnwjotzpvihnglbcfamgffisgdyveqjlefvtzviu</span>
+</span><span class='line'>     <span class="n">ephkbjmgkznqevikyggdxpocvkvugdpktxuuhhbr</span>
+</span><span class='line'>     <span class="n">gohljpwiwclusawnkrirvxbovwjcdktjzbujrqrn</span>
+</span><span class='line'>     <span class="n">tdildezovigqfhfbdodgzxpzykiqbaeudmghqfwm</span>
+</span><span class='line'>     <span class="n">ncdtkiunxyuwwjvuuelvepqibwqrcneqphkzqenn</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">5</span> <span class="k">rows</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成的字符串在<code>[a-z]</code>之间，当然，你可以通过修改<code>chr(ascii('a')</code>和<code>floor(random() * 26)</code>这个算术来在更广泛的范围内获取随机字符。比如下面这个</p>
+
+<!--more-->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">SELECT</span>
+</span><span class='line'>    <span class="p">(</span>
+</span><span class='line'>            <span class="k">SELECT</span> <span class="n">string_agg</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">FROM</span> <span class="p">(</span>
+</span><span class='line'>                    <span class="k">SELECT</span> <span class="n">chr</span><span class="p">(</span><span class="n">ascii</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">floor</span><span class="p">(</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">94</span><span class="p">)::</span><span class="nb">integer</span><span class="p">)</span>
+</span><span class='line'>                    <span class="k">FROM</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">40</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">)</span> <span class="k">AS</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>    <span class="k">FROM</span> <span class="n">generate_series</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="k">as</span> <span class="n">a</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+</span><span class='line'>                    <span class="n">string_agg</span>
+</span><span class='line'>    <span class="c1">------------------------------------------</span>
+</span><span class='line'>     <span class="p">,:</span><span class="n">D</span><span class="o">|^</span><span class="mi">5</span><span class="n">jKD4</span><span class="o">&lt;</span><span class="n">VkxvplTSu</span><span class="o">&amp;</span><span class="n">bR_</span> <span class="n">w</span><span class="o">^</span><span class="n">Z</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="n">KP6</span><span class="p">,</span><span class="n">e</span><span class="ss">&quot;W,</span>
+</span><span class='line'><span class="ss">     7sc$m[t[2JS9/(x/!Yi,jvD7I[D0^{=up&quot;</span><span class="n">y_</span><span class="o">^</span><span class="n">p</span><span class="o">=</span><span class="n">q</span>
+</span><span class='line'>     <span class="o">&lt;</span><span class="n">q</span><span class="p">,</span><span class="n">Kz</span><span class="o">&amp;</span><span class="p">[</span><span class="err">{</span><span class="o">`</span><span class="k">G</span><span class="o">*</span><span class="n">L</span><span class="o">?</span><span class="n">Odh</span><span class="o">-*</span><span class="n">yk</span><span class="s1">&#39;8bx;]ZzPxmlkz:g#uec</span>
+</span><span class='line'><span class="s1">     ?p2^BwIO$D&lt;,] &amp;y^`u0[e|Ha92d1xJPk\1/VZ^Z</span>
+</span><span class='line'><span class="s1">     !{f^{mZ\PQl-9kVz&amp;ha8c-hPjy_BV@}W=f7;Uqw&#39;</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">5</span> <span class="k">rows</span><span class="p">)</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>当记录有改动时，自动更新其时间戳这个功能我记得在 <a href="http://www.mysql.com" title="mysql">MySQL</a>里是自动有的，对于类型是<code>date</code>，和<code>timestamp</code>的时候，可以选择修改时更新。但是在 <a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>里，提供到了利用 <a href="http://www.postgresql.org/docs/9.1/static/rules-update.html">rule</a> 的方式来和另外一个表联动修改。和我这里的需求有些差别，我这里的需求时，假定有一列的类型为<code>timestamp</code>，只要这一行有改动，那么就需要更新这个<code>timestamp</code>列。我们可以通过构建一个函数和一个触发器来达到目的，比如：</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="k">create</span> <span class="k">table</span> <span class="n">customer</span> <span class="p">(</span><span class="n">id</span> <span class="nb">int</span> <span class="p">,</span><span class="n">name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="n">modified</span> <span class="k">timestamp</span> <span class="k">default</span> <span class="k">current_timestamp</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">create</span> <span class="k">or</span> <span class="k">replace</span> <span class="k">function</span> <span class="n">update_modified_column</span><span class="p">()</span>
+</span><span class='line'>         <span class="k">returns</span> <span class="k">trigger</span> <span class="k">as</span> <span class="err">$$</span>
+</span><span class='line'>         <span class="k">begin</span>
+</span><span class='line'>            <span class="k">NEW</span><span class="p">.</span><span class="n">modified</span> <span class="o">=</span> <span class="n">now</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">return</span> <span class="k">NEW</span><span class="p">;</span>
+</span><span class='line'>         <span class="k">end</span><span class="p">;</span>
+</span><span class='line'>    <span class="err">$$</span> <span class="k">language</span> <span class="s1">&#39;plpgsql&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">create</span> <span class="k">trigger</span> <span class="n">update_customer_modtime</span> <span class="k">before</span> <span class="k">update</span>
+</span><span class='line'>    <span class="k">on</span> <span class="n">customer</span> <span class="k">for</span> <span class="k">each</span> <span class="k">row</span> <span class="k">execute</span> <span class="k">procedure</span>
+</span><span class='line'>    <span class="n">update_modified_column</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">-- example</span>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">customer</span> <span class="k">values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;lancy&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">customer</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">id</span> <span class="o">|</span>  <span class="n">name</span>  <span class="o">|</span>          <span class="n">modified</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">----+--------+----------------------------</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="mi">1</span> <span class="o">|</span> <span class="n">wgzhao</span> <span class="o">|</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">24</span> <span class="mi">17</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">33</span><span class="p">.</span><span class="mi">862608</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="mi">2</span> <span class="o">|</span> <span class="n">lancy</span>  <span class="o">|</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">24</span> <span class="mi">17</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">33</span><span class="p">.</span><span class="mi">862608</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">(</span><span class="mi">2</span> <span class="k">rows</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">update</span> <span class="n">customer</span> <span class="k">set</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;nancy&#39;</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">UPDATE</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">customer</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">id</span> <span class="o">|</span>  <span class="n">name</span>  <span class="o">|</span>          <span class="n">modified</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">----+--------+----------------------------</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="mi">1</span> <span class="o">|</span> <span class="n">wgzhao</span> <span class="o">|</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">24</span> <span class="mi">17</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">33</span><span class="p">.</span><span class="mi">862608</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="mi">2</span> <span class="o">|</span> <span class="n">nancy</span>  <span class="o">|</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">24</span> <span class="mi">17</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">57</span><span class="p">.</span><span class="mi">870447</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">(</span><span class="mi">2</span> <span class="k">rows</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>获得刚插入一行的 ID 号</h2>
+
+<p>和 <a href="http://www.mysql.com" title="mysql">MySQL</a>的<code>last_insert</code>函数类似，需要获得刚执行<code>insert</code>语句的<code>ID</code>号。这在 <a href="http://www.postgresql.com" title="PostgreSQL">PostgreSQL</a>里用的是<code>insert</code>语句的<code>returning</code>子语句，对于<code>ID</code>列是否是自增（有序列）都生效，下面分别举一个<code>ID</code>是<code>serial</code>类型的和<code>ID</code>是<code>int</code>类型的例子：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">create</span> <span class="k">table</span> <span class="n">foo</span><span class="p">(</span><span class="n">id</span> <span class="nb">int</span><span class="p">,</span><span class="n">name</span> <span class="nb">text</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">CREATE</span>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">foo</span> <span class="k">values</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">)</span>
+</span><span class='line'>     <span class="n">id</span>
+</span><span class='line'>    <span class="c1">----</span>
+</span><span class='line'>      <span class="mi">1</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">foo</span> <span class="k">values</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">)</span> <span class="n">returning</span> <span class="n">id</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">id</span>
+</span><span class='line'>     <span class="c1">----</span>
+</span><span class='line'>      <span class="mi">3</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">create</span> <span class="k">table</span> <span class="n">bar</span><span class="p">(</span><span class="n">id</span> <span class="nb">serial</span><span class="p">,</span><span class="n">name</span> <span class="nb">text</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">CREATE</span> <span class="k">TABLE</span>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">bar</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">values</span><span class="p">(</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">)</span> <span class="n">returning</span> <span class="n">id</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="n">id</span>
+</span><span class='line'>     <span class="c1">----</span>
+</span><span class='line'>      <span class="mi">1</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">wgzhao</span><span class="o">=#</span> <span class="k">insert</span> <span class="k">into</span> <span class="n">bar</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">values</span><span class="p">(</span><span class="s1">&#39;wgzhao&#39;</span><span class="p">)</span> <span class="n">returning</span> <span class="n">id</span><span class="p">;</span>
+</span><span class='line'>     <span class="n">id</span>
+</span><span class='line'>     <span class="c1">----</span>
+</span><span class='line'>      <span class="mi">2</span>
+</span><span class='line'>    <span class="p">(</span><span class="mi">1</span> <span class="k">row</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">INSERT</span> <span class="mi">0</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-24T22:04:00+08:00" pubdate data-updated="true">Aug 24<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/ji-zhu-ji-qiao/'>技术技巧</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/08/22/some-way-to-io-statistics-on-linux/" title="Previous Post: Linux下的一些I/O统计工具">&laquo; Linux下的一些I/O统计工具</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/12/30/some-tips-for-mac-os-x/" title="Next Post: 一些Mac OS X 的使用技巧">一些Mac OS X 的使用技巧 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/';
+        var disqus_url = 'http://wgzhao.github.io/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

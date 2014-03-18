@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>\[/sbin学习\]h\*命令 - Linux系统管理</title>
+  <meta name="author" content="wgzhao">
+
+  
+  <meta name="description" content="/sbin 下 h 开头的命令不多，仅有 4 个
+halt hdparm hotplug hwclock
+halt:停止系统，他和 reboot，poweroff 等命令属于同一个功能集。
+halt 命令不不接参数，仅仅有几个选项来决定如何停止系统 -n: 停止系统前不做同步(sync)， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://wgzhao.github.io/2007/02/12/commands-start-h">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Linux系统管理" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<style>
+div.entry-content > p, section > p, blockquote > p {text-indent: 2em;}
+code {text-indent: 0em;}
+div.entry-content > p:first-of-type {text-indent: 0em;}
+div.entry-content > p:first-of-type:first-letter
+  {font-size:180%;font-weight:bold;}
+</style>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Linux系统管理</a></h1>
+  
+    <h2>关注Linux系统管理，运维开发以及大数据</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com.hk/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:wgzhao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">\[/sbin学习\]h\*命令</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://wgzhao.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>/sbin 下 h 开头的命令不多，仅有 4 个<br/>
+halt hdparm hotplug hwclock<br/>
+halt:停止系统，他和 reboot，poweroff 等命令属于同一个功能集。
+halt 命令不不接参数，仅仅有几个选项来决定如何停止系统</p>
+
+<p>-n: 停止系统前不做同步(sync)，适合快速关机和那些仅仅只有只读访问的系统。<br/>
+-w: 仅在 wtmp 文件中写一条 reboot 记录，然后退出，他的用处是什么？<br/>
+-d: 不写 reboot 记录到 wtmp 文件中<br/>
+-f: 强制停机/重启，但不调用 shutdown.shutdown 是一种安全的关闭系统的方式。<br/>
+-p: 如果支持，系统关闭后掉电。否则只是停止系统.</p>
+
+<!--more-->
+
+
+<p>hdparm： 获取和设置硬盘参数，当我一次看到 hdparm 命令和其说明时，我以为我发现了一个秘笈，因为说明中提到，他可以设置一些关键的参数，让你的硬盘提速。同时在网上也找到了不少有关这个命令的介绍，大多数都说可以显著提高硬盘响应速度，还有很多人的标题干脆是“瞬间提高你的 Linux 的速度”。其实大部分介绍中，主要是修改两个参数，一个是设置 DMA 为 enable，另外一个是设置 I/0 为 32 位。我测试过这两个参数，对硬盘的响应速度确实有很大的影响，特别是 DMA 的设置，有相差好几倍的效果。然后实际上，后来的 Linux 分发版本，对于硬盘的优化早在系统启动中就已经做好了。而我知道的是，仅仅只有 2.2 的内核默认是不打开 DMA 模式的，因此在 2.2 的内核，利用<code>hdparm -c 1 /dev/hdx</code>的方式来提高硬盘响应速度是有效果的，但是 2.2 的内核毕竟是古董了。另外 hdparm 的 man 提到 hdparm 仅仅只是设置 ATA/IDE 硬盘参数，而对 SCSI 硬盘是没有用的，当然也对后来出现的 SATA,SAS 硬盘无效了。  我没有测试过 SCSI 硬盘，也没有测试过 SATA,SAS 硬盘，所以现在还不能给出一个确切的答案。</p>
+
+<p>我们看看后来的 linux 版本是如何在启动是针对不同硬盘做的优化的，下面的脚本片段来自<code>/etc/rc.d/rc.sysinit</code>文件</p>
+
+<pre><code># Turn on harddisk optimization
+# There is only one file /etc/sysconfig/harddisks for all disks
+# after installing the hdparm-RPM. If you need different hdparm parameters
+# for each of your disks, copy /etc/sysconfig/harddisks to
+# /etc/sysconfig/harddiskhda (hdb, hdc…) and modify it.
+# Each disk which has no special parameters will use the defaults.
+# Each non-disk which has no special parameters will be ignored.
+#
+
+disk[0]=s;
+disk[1]=hda; disk[2]=hdb; disk[3]=hdc; disk[4]=hdd;
+disk[5]=hde; disk[6]=hdf; disk[7]=hdg; disk[8]=hdh;
+disk[9]=hdi; disk[10]=hdj; disk[11]=hdk; disk[12]=hdl;
+disk[13]=hdm; disk[14]=hdn; disk[15]=hdo; disk[16]=hdp;
+disk[17]=hdq; disk[18]=hdr; disk[19]=hds; disk[20]=hdt;
+
+if [ -x /sbin/hdparm ]; then
+for device in 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+unset MULTIPLE_IO USE_DMA EIDE_32BIT LOOKAHEAD EXTRA_PARAMS
+if [ -f /etc/sysconfig/harddisk${disk[$device]} ]; then
+. /etc/sysconfig/harddisk${disk[$device]}
+HDFLAGS[$device]=
+if [ -n “$MULTIPLE_IO” ]; then
+HDFLAGS[$device]=”-q -m$MULTIPLE_IO”
+fi
+if [ -n “$USE_DMA” ]; then
+HDFLAGS[$device]=”${HDFLAGS[$device]} -q -d$USE_DMA”
+fi
+if [ -n “$EIDE_32BIT” ]; then
+HDFLAGS[$device]=”${HDFLAGS[$device]} -q -c$EIDE_32BIT”
+fi
+if [ -n “$LOOKAHEAD” ]; then
+HDFLAGS[$device]=”${HDFLAGS[$device]} -q -A$LOOKAHEAD”
+fi
+if [ -n “$EXTRA_PARAMS” ]; then
+HDFLAGS[$device]=”${HDFLAGS[$device]} $EXTRA_PARAMS”
+fi
+else
+HDFLAGS[$device]=”${HDFLAGS[0]}”
+fi
+if [ -e “/proc/ide/${disk[$device]}/media” ]; then
+hdmedia=`cat /proc/ide/${disk[$device]}/media`
+if [ “$hdmedia” = “disk” -o -f “/etc/sysconfig/harddisk${disk[$device]}” ]; then
+if [ -n “${HDFLAGS[$device]}” ]; then
+action $”Setting hard drive parameters for ${disk[$device]}: ” /sbin/hdparm ${HDFLAGS[$device]} /dev/${disk[$device]}
+fi
+fi
+fi
+done
+fi
+</code></pre>
+
+<p>这段脚本是所有的 IDE 硬盘，根据<code>/etc/sysconfig/harddisks</code>文件的策略而设置硬盘的参数.  从这里我们似乎可以看出，sdx 设备并不再设置之内，由此是不是可以肯定 hdparm 对 SCSI 设备不支持呢？我们再看看 harddisks 文件</p>
+
+<pre><code>#
+# WARNING !!!
+#
+# The kernel will autodetect the correct settings for most drives.
+# Overriding these settings with hdparm can cause data corruption and/or
+# data loss.
+# Leave this file as it is unless you know exactly what you're doing !!
+#
+#
+#
+# These options are used to tune the hard drives -
+# read the hdparm man page for more information
+
+# Set this to 1 to enable DMA. This might cause some
+# data corruption on certain chipset / hard drive
+# combinations. This is used with the “-d” option
+
+# USE_DMA=1
+
+# Multiple sector I/O. a feature of most modern IDE hard drives,
+# permitting the transfer of multiple sectors per I/O interrupt,
+# rather than the usual one sector per interrupt. When this feature
+# is enabled, it typically reduces operating system overhead for disk
+# I/O by 30-50%. On many systems, it also provides increased data
+# throughput of anywhere from 5% to 50%. Some drives, however (most
+# notably the WD Caviar series), seem to run slower with multiple mode
+# enabled. Under rare circumstances, such failures can result in
+# massive filesystem corruption. USE WITH CAUTION AND BACKUP.
+# This is the sector count for multiple sector I/O – the “-m” option
+#
+# MULTIPLE_IO=16
+
+# (E)IDE 32-bit I/O support (to interface card)
+#
+# EIDE_32BIT=3
+
+# Enable drive read-lookahead
+#
+# LOOKAHEAD=1
+
+# Add extra parameters here if wanted
+# On reasonably new hardware, you may want to try -X66, -X67 or -X68
+# Other flags you might want to experiment with are -u1, -a and -m
+# See the hdparm manpage (man hdparm) for details and more options.
+#
+EXTRA_PARAMS=
+</code></pre>
+
+<p>从这个文件的注释我们能够看出，它将影响硬盘效果最明显的参数单独列了出来，而将其他参数放到了 EXTRA_PARAMS 里。因此对于 hdparm 命令的众多参数而言，我们需要去了解的不太多。<br/>
+hotplug:Linux 下热插拔支持脚本。<br/>
+hwclock:查询和设置硬件时钟(RTC).系统启动时，需要从硬件时钟中读出时间来设置系统系统，这个过程在<code>/etc/rc.d/rc.sysini</code>t 脚本中采用<code>hwclock $CLOCKFLAGS</code>的方式来实现。这里的参数$CLOCKFLAGS 分为两部分，一部分是&mdash;hctosys,表示同步的方式是硬件时钟到系统时钟。另外一部分参数是时间设置的标准，是标准时间（utc），还是本地时间(localtim).<br/>
+而关闭系统时，则相反，似乎用-systohc 的参数来将系统时钟同步到硬件时钟。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">wgzhao</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-02-12T00:00:00+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/linuxji-zhu/'>Linux技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://wgzhao.github.io/2007/02/12/commands-start-h/" data-via="mlsx" data-counturl="http://wgzhao.github.io/2007/02/12/commands-start-h/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2007/02/09/commands-start-g/" title="Previous Post: \[/sbin学习\] g\*命令">&laquo; \[/sbin学习\] g\*命令</a>
+      
+      
+        <a class="basic-alignment right" href="/2007/02/12/have-read-chinese-painting/" title="Next Post: 看完了《国画》">看完了《国画》 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2014/03/16/move-to-github/">Move to Github</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/12/30/some-tips-for-mac-os-x/">一些Mac OS X 的使用技巧</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>QR-Code</h1>
+<a href="/2007/02/12/commands-start-h/"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=/2007/02/12/commands-start-h/" alt="post-qrcode"></a></section>
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - wgzhao -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'wgzhao';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://wgzhao.github.io/2007/02/12/commands-start-h/';
+        var disqus_url = 'http://wgzhao.github.io/2007/02/12/commands-start-h/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

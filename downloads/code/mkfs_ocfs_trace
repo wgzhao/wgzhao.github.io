@@ -1,0 +1,174 @@
+execve(“/sbin/mkfs.ocfs2″, ["mkfs.ocfs2", "/dev/sdb1"], [/* 27 vars */]) = 0
+uname({sys=”Linux”, node=”abz1″, …}) = 0
+brk(0) = 0×8069000
+access(“/etc/ld.so.preload”, R_OK) = -1 ENOENT (No such file or directory)
+open(“/etc/ld.so.cache”, O_RDONLY) = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=100165, …}) = 0
+old_mmap(NULL, 100165, PROT_READ, MAP_PRIVATE, 3, 0) = 0xb7fe7000
+close(3) = 0
+open(“/lib/libcom_err.so.2″, O_RDONLY) = 3
+read(3, “\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0 9\303\000″…, 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=7168, …}) = 0
+old_mmap(0xc33000, 8800, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0xc33000
+old_mmap(0xc35000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0×1000) = 0xc35000
+close(3) = 0
+open(“/lib/libuuid.so.1″, O_RDONLY) = 3
+read(3, “\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0P\352\204″…, 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=9712, …}) = 0
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7fe6000
+old_mmap(0x84e000, 11208, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0)= 0x84e000
+old_mmap(0×850000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0×1000) = 0×850000
+close(3) = 0
+open(“/lib/tls/libc.so.6″, O_RDONLY) = 3
+read(3, “\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0\3\0\1\0\0\0\20\177″…, 512) = 512
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1460321, …}) = 0
+old_mmap(0×723000, 1215644, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0×723000
+old_mmap(0×846000, 16384, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0×123000) = 0×846000
+old_mmap(0x84a000, 7324, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x84a000
+close(3) = 0
+old_mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7fe5000
+mprotect(0×846000, 4096, PROT_READ) = 0
+mprotect(0x71f000, 4096, PROT_READ) = 0
+set_thread_area({entry_number:-1 -> 6, base_addr:0xb7fe56c0, limit:1048575, seg_32bit:1, contents:0, read_exec_only:0, limit_in_pages:1, seg_not_present:0, useable:1}) = 0
+munmap(0xb7fe7000, 100165) = 0
+rt_sigaction(SIGTERM, {0x80497cc, [TERM], SA_RESTORER|SA_RESTART, 0x74a8c8}, {SIG_DFL},  = 0
+rt_sigaction(SIGINT, {0x80497cc, [INT], SA_RESTORER|SA_RESTART, 0x74a8c8}, {SIG_DFL},  = 0
+brk(0) = 0×8069000
+brk(0x808a000) = 0x808a000
+write(2, “mkfs.ocfs2 0.99.13-BETA14\n”, 26mkfs.ocfs2 0.99.13-BETA14
+) = 26
+time(NULL) = 1149062589
+stat64(“/dev/sdb1″, {st_mode=S_IFBLK|0660, st_rdev=makedev(8, 17), …}) = 0
+open(“/proc/swaps”, O_RDONLY) = 3
+fstat64(3, {st_mode=S_IFREG|0444, st_size=0, …}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7fff000
+read(3, “Filename\t\t\t\tType\t\tSize\tUsed\tPrio”…, 1024) = 100
+stat64(“/dev/sda2″, {st_mode=S_IFBLK|0660, st_rdev=makedev(8, 2), …}) = 0
+read(3, “”, 1024) = 0
+close(3) = 0
+munmap(0xb7fff000, 4096) = 0
+open(“/proc/mounts”, O_RDONLY) = 3
+stat64(“/dev/sdb1″, {st_mode=S_IFBLK|0660, st_rdev=makedev(8, 17), …}) = 0
+fstat64(3, {st_mode=S_IFREG|0444, st_size=0, …}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7fff000
+read(3, “rootfs / rootfs rw 0 0\n/proc /pr”…, 1024) = 400
+stat64(“rootfs”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“/proc”, {st_mode=S_IFDIR|0555, st_size=0, …}) = 0
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“/dev/root”, {st_mode=S_IFBLK|0600, st_rdev=makedev(8, 1), …}) = 0
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“/proc”, {st_mode=S_IFDIR|0555, st_size=0, …}) = 0
+stat64(“/proc/bus/usb”, {st_mode=S_IFDIR|0755, st_size=0, …}) = 0
+stat64(“/sys”, {st_mode=S_IFDIR|0755, st_size=0, …}) = 0
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“configfs”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“ocfs2_dlmfs”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+read(3, “”, 1024) = 0
+stat64(“/”, {st_mode=S_IFDIR|0755, st_size=4096, …}) = 0
+close(3) = 0
+munmap(0xb7fff000, 4096) = 0
+open(“/etc/mtab”, O_RDONLY) = 3
+stat64(“/dev/sdb1″, {st_mode=S_IFBLK|0660, st_rdev=makedev(8, 17), …}) = 0
+fstat64(3, {st_mode=S_IFREG|0644, st_size=291, …}) = 0
+mmap2(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7fff000
+read(3, “/dev/sda1 / ext3 rw 0 0\nnone /pr”…, 4096) = 291
+stat64(“/dev/sda1″, {st_mode=S_IFBLK|0660, st_rdev=makedev(8, 1), …}) = 0
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“usbfs”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“none”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“configfs”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+stat64(“ocfs2_dlmfs”, 0xbfe47ecc) = -1 ENOENT (No such file or directory)
+read(3, “”, 4096) = 0
+stat64(“/”, {st_mode=S_IFDIR|0755, st_size=4096, …}) = 0
+close(3) = 0
+munmap(0xb7fff000, 4096) = 0
+stat64(“/dev/sdb1″, {st_mode=S_IFBLK|0660, st_rdev=makedev(8, 17), …}) = 0
+open(“/dev/sdb1″, O_RDONLY|O_EXCL) = 3
+close(3) = 0
+open(“/dev/sdb1″, O_RDWR|O_DIRECT|O_LARGEFILE) = 3
+pread(3, “\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0″…, 512, 0) =512
+uname({sys=”Linux”, node=”abz1″, …}) = 0
+pread(3, “\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0″…, 512, 0) =512
+pread(3, “\0\350\1\0<\231\7\0Ca\0\0v2\7\0\365\347\1\0\1\0\0\0\0\0"..., 512, 1024) = 512
+pread(3, "\4\1\0\0\5\1\0\0\6\1\0\0\0\0\365\7\2\0\0\0\0\0\0\0\0\0"..., 1024, 2048) = 1024
+pread(3, "\4 \0\0\4`\0\0\4\240\0\0\4\340\0\0\4 \1\0\4 \3\0\4`\3\0"..., 2048, 4096) = 2048
+pread(3, "\10 \0\0\10`\0\0\10\240\0\0\10\340\0\0\10 \1\0\10 \3\0"..., 4096, 8192) = 4096
+close(3) = 0
+open("/dev/sdb1", O_RDWR|O_DIRECT|O_LARGEFILE) = 3
+open("/dev/sdb1", O_RDONLY|O_LARGEFILE) = 4
+ioctl(4, BLKSSZGET, 0xbfe4864c) = 0
+close(4) = 0
+open("/dev/sdb1", O_RDONLY|O_LARGEFILE) = 4
+uname({sys="Linux", node="abz1", ...}) = 0
+ioctl(4, BLKGETSIZE64, 0xbfe48368) = 0
+close(4) = 0
+open("/dev/sdb1", O_RDONLY|O_LARGEFILE) = 4
+uname({sys="Linux", node="abz1", ...}) = 0
+ioctl(4, BLKGETSIZE64, 0xbfe48368) = 0
+close(4) = 0
+mmap2(NULL, 1056768, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb7ee3000
+pwrite(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 1048576,0) = 1048576
+pwrite(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 1048576,508886016) = 1048576
+munmap(0xb7ee3000, 1056768) = 0
+gettimeofday({1149062590, 209876}, NULL) = 0
+open("/dev/urandom", O_RDONLY) = 4
+getpid() = 5509
+getuid32() = 0
+gettimeofday({1149062590, 210092}, NULL) = 0
+gettimeofday({1149062590, 210146}, NULL) = 0
+read(4, "U}.\21\322W.5\26\245\22\"\'g-a", 16) = 16
+open("/dev/urandom", O_RDONLY) = 5
+read(5, "\263\206\257q", 4) = 4
+close(5) = 0
+write(1, "Filesystem label=\n", 18Filesystem label=
+) = 18
+write(1, "Block size=1024 (bits=10)\n", 26Block size=1024 (bits=10)
+) = 26
+write(1, "Cluster size=4096 (bits=12)\n", 28Cluster size=4096 (bits=12)
+) = 28
+write(1, "Volume size=509934592 (124495 cl"..., 56Volume size=509934592 (124495clusters) (497980 blocks)
+) = 56
+write(1, "17 cluster groups (tail covers 1"..., 7217 cluster groups (tail covers 1615 clusters, rest cover 7680 clusters)
+) = 72
+write(1, "Journal size=8388608\n", 21Journal size=8388608
+) = 21
+write(1, "Initial number of node slots: 2\n", 32Initial number of node slots: 2
+) = 32
+write(1, "Creating bitmaps: ", 18Creating bitmaps: ) = 18
+brk(0x80ab000) = 0x80ab000
+fsync(3) = 0
+write(1, "done", 4done) = 4
+write(1, "\n", 1
+) = 1
+write(1, "Initializing superblock: ", 25Initializing superblock: ) = 25
+fsync(3) = 0
+write(1, "done", 4done) = 4
+write(1, "\n", 1
+) = 1
+write(1, "Writing system files: ", 22Writing system files: ) = 22
+pwrite(3, "INODE01\0\263\206\257q\377\377\1\0\0\0\0\0\1\0\0\0\0\0"..., 1024, 9216) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\2\0\0\0\0\0\1\0\0\0\0\0"..., 1024, 10240) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\3\0\0\0\0\0\0\0\0\0\0\0"..., 1024, 11264) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\4\0\0\0\0\0003\0\0\0\0\0"..., 1024, 12288) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\5\0\0\0\0\0\1\0\0\0\0\0"..., 1024, 13312) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\6\0\0\0\0\0@\0\0\0\0\0\0"..., 1024, 14336) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\7\0\0\0\0\0O\346\1\0\0\0"..., 1024, 15360) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\10\0\0\0\0\0\1\0\0\0\0\0"..., 1024, 16384) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\t\0\0\0\0\0\1\0\0\0\0\0"..., 1024, 17408) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\n\0\0\0\0\0\0\0\0\0\0\0"..., 1024, 18432) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\v\0\0\0\0\0\0\0\0\0\0\0"..., 1024, 19456) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\f\0\0\0\0\0\0\0\0\0\0\0"..., 1024, 20480) = 1024
+pwrite(3, "INODE01\0\263\206\257q\377\377\r\0\0\0\0\0\0\0\0\0\0\0"..., 1024, 21504) = 1024
+mmap2(NULL, 8396800, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0xb77e3000
+pwrite(3, "\300;9\230\0\0\0\4\0\0\0\0\0\0\4\0\0\0 \0\0\0\0\1\0\0\0"..., 8388608, 499712) = -1 EIO (Input/output error)
+write(2, "mkfs.ocfs2", 10mkfs.ocfs2) = 10
+write(2, ": ", 2: ) = 2
+write(2, "Could not write: Input/output er"..., 35Could not write: Input/outputerror) = 35
+write(2, "\r\n", 2
+) = 2
+exit_group(1)
