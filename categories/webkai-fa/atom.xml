@@ -4,7 +4,7 @@
   <title><![CDATA[Category: WEB开发 | Linux系统管理]]></title>
   <link href="http://wgzhao.com/categories/webkai-fa/atom.xml" rel="self"/>
   <link href="http://wgzhao.com/"/>
-  <updated>2014-03-18T16:16:05+08:00</updated>
+  <updated>2014-03-22T18:18:31+08:00</updated>
   <id>http://wgzhao.com/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -59,7 +59,7 @@ sql</code> 语句结构。
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Apache配置动态虚拟主机]]></title>
+    <title type="html"><![CDATA[apache配置动态虚拟主机]]></title>
     <link href="http://wgzhao.com/2008/09/11/Dynamic-Host-Configuration-apache-virtual/"/>
     <updated>2008-09-11T00:00:00+08:00</updated>
     <id>http://wgzhao.com/2008/09/11/Dynamic-Host-Configuration-apache-virtual</id>
@@ -130,7 +130,7 @@ VirtualScriptAlias /web/websites/%0/cgi-bin
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Feedburner可以访问啦]]></title>
+    <title type="html"><![CDATA[feedburner可以访问啦]]></title>
     <link href="http://wgzhao.com/2008/01/02/can-access-feedburner/"/>
     <updated>2008-01-02T00:00:00+08:00</updated>
     <id>http://wgzhao.com/2008/01/02/can-access-feedburner</id>
@@ -383,7 +383,7 @@ source",你应该可以看到svn仓库里的资源.类似下面这样</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Javascript+xml+xslt实现动态分页]]></title>
+    <title type="html"><![CDATA[javascript+xml+xslt实现动态分页]]></title>
     <link href="http://wgzhao.com/2004/10/19/paging-using-javascript-xml-xslt/"/>
     <updated>2004-10-19T00:00:00+08:00</updated>
     <id>http://wgzhao.com/2004/10/19/paging-using-javascript-xml-xslt</id>

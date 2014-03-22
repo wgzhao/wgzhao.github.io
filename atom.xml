@@ -4,7 +4,7 @@
   <title><![CDATA[Linux系统管理]]></title>
   <link href="http://wgzhao.com/atom.xml" rel="self"/>
   <link href="http://wgzhao.com/"/>
-  <updated>2014-03-18T16:16:05+08:00</updated>
+  <updated>2014-03-22T18:18:31+08:00</updated>
   <id>http://wgzhao.com/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -48,11 +48,15 @@
 
 
 <p>如果上述步骤觉得比较啰嗦，可以点击<a href="http://pan.baidu.com/s/1sjxwW6D">这里</a>下载我已经编译好的版本。</p>
+
+<p><strong>Update 2014-03-22</strong></p>
+
+<p>目前 Mac 平台的 <a href="http://macports.org">Macports</a> 还没有提供<code>1.9a</code>的版本，我顺便编译了一个 Mac 平台的。可以从<a href="http://pan.baidu.com/s/1gdFYvab">这里</a> 下载。注意需要<code>libevent 2.0</code>版本。</p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Move to Github]]></title>
+    <title type="html"><![CDATA[move to github]]></title>
     <link href="http://wgzhao.com/2014/03/16/move-to-github/"/>
     <updated>2014-03-16T18:49:59+08:00</updated>
     <id>http://wgzhao.com/2014/03/16/move-to-github</id>
@@ -81,7 +85,7 @@
 <li><p>打开你喜欢的终端，输入下面的指令</p>
 
 <p> <code>defaults write com.apple.FaceTime AutoAcceptInvites -bool TRUE</code></p></li>
-<li><p>接下来，架设你希望 FaceTime ID(一般就是 Apple ID)为 <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#x77;&#x67;&#122;&#104;&#x61;&#x6f;&#64;&#103;&#109;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#119;&#x67;&#x7a;&#104;&#97;&#x6f;&#x40;&#x67;&#x6d;&#97;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;</a> 的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
+<li><p>接下来，架设你希望 FaceTime ID(一般就是 Apple ID)为 <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#119;&#103;&#122;&#104;&#97;&#111;&#64;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#99;&#111;&#x6d;">&#x77;&#103;&#122;&#104;&#97;&#111;&#64;&#x67;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a> 的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
 
 <p> <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add wgzhao@gmail.com</code></p>
 
@@ -1842,7 +1846,7 @@ $$ language plpgsql;</code></pre></noscript></div>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Setup a Virtual Ftp Server With Pam Mysql]]></title>
+    <title type="html"><![CDATA[Setup A Virtual Ftp Server With Pam Mysql]]></title>
     <link href="http://wgzhao.com/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql/"/>
     <updated>2012-04-07T00:00:00+08:00</updated>
     <id>http://wgzhao.com/2012/04/07/setup-a-virtual-ftp-server-with-pam-mysql</id>
@@ -2230,7 +2234,7 @@ checkinstall 1.6.2, Copyright 2009 Felipe Eduardo Sanchez Diaz Duran
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Ssh的三板斧]]></title>
+    <title type="html"><![CDATA[ssh的三板斧]]></title>
     <link href="http://wgzhao.com/2011/03/11/ssh-three-kill-features/"/>
     <updated>2011-03-11T00:00:00+08:00</updated>
     <id>http://wgzhao.com/2011/03/11/ssh-three-kill-features</id>
@@ -2383,7 +2387,7 @@ tmpfs                 1.4G  296K  1.4G   1% /dev/shm
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Windows下压缩包在linux解压乱码的解决办法]]></title>
+    <title type="html"><![CDATA[windows下压缩包在linux解压乱码的解决办法]]></title>
     <link href="http://wgzhao.com/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball/"/>
     <updated>2010-08-06T00:00:00+08:00</updated>
     <id>http://wgzhao.com/2010/08/06/fix-the-encode-of-files-extracted-from-windows-zip-ball</id>

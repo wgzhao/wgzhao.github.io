@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux技术 | Linux系统管理]]></title>
   <link href="http://wgzhao.com/categories/linuxji-zhu/atom.xml" rel="self"/>
   <link href="http://wgzhao.com/"/>
-  <updated>2014-03-18T16:16:05+08:00</updated>
+  <updated>2014-03-22T18:18:31+08:00</updated>
   <id>http://wgzhao.com/</id>
   <author>
     <name><![CDATA[wgzhao]]></name>
@@ -49,6 +49,10 @@
 
 
 <p>如果上述步骤觉得比较啰嗦，可以点击<a href="http://pan.baidu.com/s/1sjxwW6D">这里</a>下载我已经编译好的版本。</p>
+
+<p><strong>Update 2014-03-22</strong></p>
+
+<p>目前Mac平台的<a href="http://macports.org">Macports</a>还没有提供<code>1.9a</code>的版本，我顺便编译了一个Mac平台的。可以从<a href="http://pan.baidu.com/s/1gdFYvab">这里</a> 下载。注意需要<code>libevent 2.0</code>版本。</p>
 ]]></content>
   </entry>
   
@@ -510,7 +514,7 @@ checkinstall 1.6.2, Copyright 2009 Felipe Eduardo Sanchez Diaz Duran
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Ssh的三板斧]]></title>
+    <title type="html"><![CDATA[ssh的三板斧]]></title>
     <link href="http://wgzhao.com/2011/03/11/ssh-three-kill-features/"/>
     <updated>2011-03-11T00:00:00+08:00</updated>
     <id>http://wgzhao.com/2011/03/11/ssh-three-kill-features</id>
