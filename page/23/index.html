@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="不幸被 Rachel 言中了。我的工作岗位是研发，而且在我提出要转维护后，主管不同意的情况下，这两天我干的活主要还是技术支持加维护。 上班第一天，主管说你看我们发邮件有错误，你看看是什么问题，我一看日志，嗯，很明显“Permissions Denied"，原来是邮件队列目录权限和属主设置有问题， &hellip;">
+  <meta name="description" content="开始看《Linux Troubleshooting for System Administrators and Power Users》顺便记录一些我新学到的东西。 本书一开始就讲系统引导，启动和关机。这点其实也比较关键的，因为在实际的工作中也遇到过很多次，大部分情况下是 GRUB（现在 Lilo &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,52 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/01/15/About-GRUB/">有关GRUB</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-01-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/01/15/About-GRUB/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/01/15/About-GRUB/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>开始看《Linux Troubleshooting for System Administrators and Power Users》顺便记录一些我新学到的东西。</p>
+
+<p>本书一开始就讲系统引导，启动和关机。这点其实也比较关键的，因为在实际的工作中也遇到过很多次，大部分情况下是 GRUB（现在 Lilo 相对很少了）被完全破坏或者部分破坏。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/01/15/About-GRUB/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -497,47 +543,6 @@ div.entry-content > p:first-of-type:first-letter
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2006/12/05/Linux-Maintenance-Checklist/">Linux Maintenance Checklist</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-12-05T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2006/12/05/Linux-Maintenance-Checklist/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2006/12/05/Linux-Maintenance-Checklist/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>来自 <a href="http://pczou.bokee.com">pczou</a> 的<a href="http://spreadsheets.google.com/pub?key=ptE1ou4tWrFJupYqCFPs2YQ">帖子</a></p>
-
-<p>这个检查列表可救了我的急呀，刚好这段时间服务器负载很高，这下可以按照这个流程一步一步走下去，看看到底是什么问题了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/24/">&larr; Older</a>
@@ -555,6 +560,10 @@ div.entry-content > p:first-of-type:first-letter
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -570,10 +579,6 @@ div.entry-content > p:first-of-type:first-letter
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -581,7 +586,7 @@ div.entry-content > p:first-of-type:first-letter
 <a href="/page/23/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/23/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

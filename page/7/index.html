@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="因为搬家的原因，这篇文档，断断续续，翻译了一个多星期，翻译的过程中，发现自己对 SCSI 子系统还是不了解，所以有很多地方翻译得很晦涩，还是建议大家看原文档。原文档的链接地址是： http://sg.danny.cz/sg/sdebug26.html
-如果你实在是看着英文就头疼， &hellip;">
+  <meta name="description" content="我其实讨厌麦当劳，当然也不喜欢肯德基，我说的是他们提供的垃圾食品。 但当离火车开走还有 4 个小时，又无处可去的时候，我还是希望找到麦当劳或者肯德基的。虽然火车站附近的大小快餐店一家接着一家，但是我想，大概没有人会去呆着那里休息的。很奇怪，在火车站附近没有看到麦当劳，也没有看到肯德基。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,54 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/08/10/reading-at-mcdonalds/">在麦当劳看书</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-08-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/08/10/reading-at-mcdonalds/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2009/08/10/reading-at-mcdonalds/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我其实讨厌麦当劳，当然也不喜欢肯德基，我说的是他们提供的垃圾食品。</p>
+
+<p>但当离火车开走还有 4 个小时，又无处可去的时候，我还是希望找到麦当劳或者肯德基的。虽然火车站附近的大小快餐店一家接着一家，但是我想，大概没有人会去呆着那里休息的。很奇怪，在火车站附近没有看到麦当劳，也没有看到肯德基。于是我想到了去银行的营业大厅，那里还算干净，也有免费的空调可以吹。</p>
+
+<p>我一脚跨进建设银行的大门，一位着正装的女孩子连忙起身，问我“先生，您需要办理什么业务”，我环顾四周，说了句，不办什么，看看。那女孩估计知道了我是来噌位子的，连忙说，自动取款机在外面左侧。这女孩可真聪明，我也知道顺着她的台阶说，谢谢。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/08/10/reading-at-mcdonalds/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -512,54 +559,6 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/04/15/backup-remote-mysql-with-zrm/">使用Amanda ZRM备份远程MySQL数据库</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-04-15T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2009/04/15/backup-remote-mysql-with-zrm/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2009/04/15/backup-remote-mysql-with-zrm/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><del>本文写道最后的时候，我才发现 ZRM for MySQL 的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库 test1,test2，你备份了这两个数据库，某一天，test2 数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复 test2，而是直接把 test1,test2 都恢复。那这绝对是一个噩梦。但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.</del></p>
-
-<p><strong>Update：</strong><br/>
-原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">ZRM</a> 备份是可以指定恢复特定的数据库的，刚才今天 mwf 的站点数据库需要恢复，测试了一下，完全没有问题。具体的恢复办法，请看文末。
-<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">Zmanda Recovery Manager(ZRM)</a>提供了备份 MySQL 数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html">官方的介绍</a>。下面给出一个备份的实例。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2009/04/15/backup-remote-mysql-with-zrm/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/8/">&larr; Older</a>
@@ -577,6 +576,10 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -592,10 +595,6 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -603,7 +602,7 @@ Actually, you can&rsquo;t! This is what one of the developers, Andreas  Dilger, 
 <a href="/page/7/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/7/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

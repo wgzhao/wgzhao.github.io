@@ -9,8 +9,12 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="前两天同事下载了 Novell SuSe Enterprise Desktop 10.0
-,简称 SLED10。总算是看到了 xgl 带来的 3D 绚丽桌面效果。就像下面的截图一样 如果是以前，我肯定毫不犹豫的安装了。但是 3 年前疲于各种系统安装尝鲜的我已经没有了当年的激情。 &hellip;">
+  <meta name="description" content="FUSE 是定义在用户空间(userspace)一组实现文件系统功能的程序，他包括的功能有： 简单 API 实现
+简单安装
+用户空间
+非特权用户可以使用
+kernel 2.4 和 2.6 均可以使用
+目前比较稳定 其实 FUSE 只是一个框架（framework）， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +81,106 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2006/07/30/user-level-file-system-fuse/">用户级文件系统－－FUSE</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2006-07-30T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2006/07/30/user-level-file-system-fuse/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2006/07/30/user-level-file-system-fuse/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://fuse.sourceforge.net/">FUSE</a> 是定义在用户空间(userspace)一组实现文件系统功能的程序，他包括的功能有：</p>
+
+<ol>
+<li>简单 API 实现</li>
+<li>简单安装</li>
+<li>用户空间</li>
+<li>非特权用户可以使用</li>
+<li>kernel 2.4 和 2.6 均可以使用</li>
+<li>目前比较稳定</li>
+</ol>
+
+
+<p>其实 FUSE 只是一个框架（framework），我比较喜欢的是基于它的各种文集系统的实现，比如
+<a href="http://www.mulliner.org/bluetooth/btfs.php">bluetooth filesystem</a><br/>
+<a href="http://www.hep.phy.cam.ac.uk/~lester/gphoto2-fuse-fs/">ghoto2 file system</a><br/>
+<a href="http://fuse.sourceforge.net/sshfs.html">ssh filesystem</a><br/>
+<a href="http://flickrfs.sourceforge.net/">flickr filesystem</a><br/>
+<a href="http://rohanpm.net/blogfs">blog filesystem</a><br/>
+<a href="http://richard.jones.name/google-hacks/gmail-filesystem/gmail-filesystem.html">gmail filesystem</a>
+等。</p>
+
+<p>我测试了一下<code>ssh filesystem</code>，觉得不错。下面是我的安装和测试手记</p>
+
+<p>1）<a href="http://prdownloads.sourceforge.net/fuse/fuse-2.5.3.tar.gz?download">下载最新的 fuse 版本</a></p>
+
+<p>2）编译安装</p>
+
+<pre><code> $tar -vxzf fuse-2.5.3.tar.gz 
+ $cd fuse-2.5.3 $ 
+ ./configure --with-kernel=/usr/src/linux 
+ $make &amp;&amp; sudo make install 
+ $sudo ldconfig 
+</code></pre>
+
+<p>3）<a href="http://prdownloads.sourceforge.net/fuse/sshfs-fuse-1.6.tar.gz?download">下载最新的 sshfs</a></p>
+
+<p>4）编译安装</p>
+
+<pre><code> $tar -vxzf ssfs-fuse-1.6.tar.gz 
+ $cd sshfs-fuse-1.6 
+ $./configure &amp;&amp; make &amp;&amp; make instll 
+</code></pre>
+
+<p>5）测试</p>
+
+<p>你可以使用通常的挂载分区的方式挂载远程服务器上的某一个目录，而通过的协议是 ssh，比如</p>
+
+<pre><code>#sshfs mlsx@172.16.81.196:/home/mlsx /misc
+[root@wgzhao ~]# df -h 
+Filesystem 容量 已用 可用 已用% 挂载点 
+/dev/hda5 5.8G 4.6G    987M 83% / 
+none 248M 0 248M 0% /dev/shm 
+/dev/hda6 17G 4.1G 13G 25% /home
+/dev/hda7 7.9G 4.5G 3.0G 61% /mnt/suse
+sshfs#mlsx@172.16.81.196:/home/mlsx 7.5T 0 7.5T 0% /misc 
+</code></pre>
+
+<p>不过它对大小的识别就有点问题了。不管是哪个分区，哪个目录挂载上来，它都识别为 7.5T（如果是真的，那该多好）。这也挂载上来的读写权限是远程机器帐号的 uid 和 gid 对应的本地机器的帐号，比如如果远程机器 mlsx 帐号的 uid 是 500,而我的机器上 uid 是 500 的帐号是 work，那么/misc 的读写权限属于 work，其他帐号都没有权限。你可以这样来挂载
+ <code>#sshfs mlsx@172.16.81.196:/home/mlsx /misc -o uid=1000,gid=100</code>
+uid，gid 是对应你本地机器帐号的 id 号，这样你就可以指定某个帐号来读写了。卸载的时候，使用下面的命令
+ <code>#fusermount -u /misc</code>
+是不是觉得比 scp，sftp 要方便很多呢？同样的，你可以使用它提供的 gmail filesystem，blog filesystem 等。而接下来，我要关心的是<a href="http://sourceforge.net/project/showfiles.php?group_id=16036&amp;package_id=191598">基于 fuse 的 ZFS</a>，这是 sun 公司基于 solaris 提出的一种文件系统，<a href="http://mlsx.xplore.cn/read.php/403.htm">在我的 blog 中提到过它</a>，而 ZFS-FUSE 就是基于 FUSE 来在 linux 实现 ZFS 的特性，不过目前还没有实质性的成果，我也下载了它现在推出的最新版本，也能编译通过，但是目前还不知道如何使用，solaris 上有专门的视频来告诉你如何使用 ZFS，可惜那些功能目前在 ZFS-FUSE 还没有实现。让我们期待。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -540,50 +644,6 @@ CX 系列存储</a>。同时也测试了基于 <a href="http://sources.redhat.co
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2006/05/27/Moving-in-May/">搬家在5月</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2006-05-27T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2006/05/27/Moving-in-May/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2006/05/27/Moving-in-May/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>累了一整天，总算又把自己的窝挪到了另外一个地方。离公司也近了 2 站。只是与 <a href="http://blog.donews.com/glemir">glemir</a> 的“同居”生活结束了。算算，这是我到北京的第五次搬家了，其时间跨度却不到 2 年，也许这次会成为我在北京的最后一次搬家，聊以下面的文字记录我的搬家史吧。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2006/05/27/Moving-in-May/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/29/">&larr; Older</a>
@@ -601,6 +661,10 @@ CX 系列存储</a>。同时也测试了基于 <a href="http://sources.redhat.co
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -616,10 +680,6 @@ CX 系列存储</a>。同时也测试了基于 <a href="http://sources.redhat.co
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -627,7 +687,7 @@ CX 系列存储</a>。同时也测试了基于 <a href="http://sources.redhat.co
 <a href="/page/28/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/28/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

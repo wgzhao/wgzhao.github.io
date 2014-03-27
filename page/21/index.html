@@ -9,8 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="不想写很多，只是想说一句： 我重新回到了红旗，不过不在北京上班，而是在长沙。
-">
+  <meta name="description" content="/sbin 目录下 m 开头的命令可不少 mdadm mii-tool mkfs.cramfs mkfs.xfs mounted.ocfs2 mpath_get_name multipath.static
+mdadm.static mingetty mkfs.ext2 mkinitrd mount &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,62 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/03/22/commands-start-m/">\[/sbin学习\]m\*命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-03-22T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/03/22/commands-start-m/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/03/22/commands-start-m/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>/sbin 目录下 m 开头的命令可不少</p>
+
+<pre><code>mdadm          mii-tool    mkfs.cramfs    mkfs.xfs    mounted.ocfs2  mpath_get_name          multipath.static
+mdadm.static   mingetty    mkfs.ext2      mkinitrd    mount.ncp      mpath_prio_alua
+mdassemble     minilogd    mkfs.ext3      mkreiserfs  mount.ncpfs    mpath_prio_emc
+mdevt          mkbootdisk  mkfs.msdos     mkswap      mount.ocfs2    mpath_prio_hds_modular
+mdmpd          mkdosfs     mkfs.ocfs2     mkzonedb    mount.smb      mpath_prio_netapp
+mgetty         mke2fs      mkfs.reiserfs  modinfo     mount.smbfs    multipath
+microcode_ctl  mkfs        mkfs.vfat      modprobe    mpath_ctl      multipathd
+</code></pre>
+
+<p>mkfs 系列命令占了很大一部分。 mdadm,mdadm.static:这是和 RAID 相关的程序，他用来管理 Linux 下的软 RAID。当前 Linux 提供的 RAID 级别有 LINEAR md 设备，RAID0 (striping),RAID1 (mirroring),RAID4,RAID5,RAID6,MULTIPATH 和 FAULTY.
+这里说的 multipathq 其实并不是软 RAID 机制中的一部分，但是他会去调用。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/03/22/commands-start-m/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -496,55 +552,6 @@ halt 命令不不接参数，仅仅有几个选项来决定如何停止系统</p
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/02/09/commands-start-g/">\[/sbin学习\] g\*命令</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-02-09T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/02/09/commands-start-g/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2007/02/09/commands-start-g/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>/sbin 下 g 开头的命令如下：</p>
-
-<blockquote><p>generate-modprobe.conf getkey grub grub-install grub-terminfo genhostid
-getmd grubby grub-md5-crypt</p></blockquote>
-
-<p>generate-modprobe.conf:  将原来的 module.conf 文件迁移到 modprobe.conf 文件。这是 2.4 内核到 2.6 内核后驱动模块配置的一个改变。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2007/02/09/commands-start-g/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/22/">&larr; Older</a>
@@ -562,6 +569,10 @@ getmd grubby grub-md5-crypt</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -577,10 +588,6 @@ getmd grubby grub-md5-crypt</p></blockquote>
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -588,7 +595,7 @@ getmd grubby grub-md5-crypt</p></blockquote>
 <a href="/page/21/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/21/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

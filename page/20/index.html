@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="最近想了解虚拟化技术的一些知识，虽然这不是第一次接触虚拟化概念，至少对起产品有过一些大致的了解，从最开始使用 vmware,到后来发现 qemu，到现在比较火热的 Xen，再到最近才知道的 openVZ。 虚拟化技术正开展得如火如荼.在加上现在用户对虚拟化也提出了一些要求， &hellip;">
+  <meta name="description" content="之前写过一篇配置 PAM－－介绍的帖子，这是第二篇. 具有调用 PAM 的应用程序可以用来认证用户，登录服务，屏保，密码工具，可以和其他任何认证工具交互。要实现这些功能，你需要配置或者是标准的/etc/passwd 文件，或者是 LDAP 服务，或者是 windows 域控制器，或者是其他任何 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,54 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/04/10/practice-pam/">配置PAM－－实践</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-04-10T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/04/10/practice-pam/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/04/10/practice-pam/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>之前写过一篇<a href="2007/04/05/configuration-pam-introduction/">配置 PAM－－介绍</a>的帖子，这是第二篇.</p>
+
+<p>具有调用 PAM 的应用程序可以用来认证用户，登录服务，屏保，密码工具，可以和其他任何认证工具交互。要实现这些功能，你需要配置或者是标准的/etc/passwd 文件，或者是 LDAP 服务，或者是 windows 域控制器，或者是其他任何 PAM 支持的东西。</p>
+
+<p>虽然，配置标准的 PAM 看上去比较简单，但是 PAM 却是非常灵活的，他可以把一个正在工作的系统折腾的不知所以然，所以我们在配置的时候还是要格外小心。接下来，希望给出一些例子，结合上一篇文章，更加全面的了解 PAM。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/04/10/practice-pam/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -493,62 +541,6 @@ DC5.0 上的 Xen 并不是很稳定，还需要一段时间的发展。而 openv
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/03/22/commands-start-m/">\[/sbin学习\]m\*命令</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-03-22T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/03/22/commands-start-m/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2007/03/22/commands-start-m/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>/sbin 目录下 m 开头的命令可不少</p>
-
-<pre><code>mdadm          mii-tool    mkfs.cramfs    mkfs.xfs    mounted.ocfs2  mpath_get_name          multipath.static
-mdadm.static   mingetty    mkfs.ext2      mkinitrd    mount.ncp      mpath_prio_alua
-mdassemble     minilogd    mkfs.ext3      mkreiserfs  mount.ncpfs    mpath_prio_emc
-mdevt          mkbootdisk  mkfs.msdos     mkswap      mount.ocfs2    mpath_prio_hds_modular
-mdmpd          mkdosfs     mkfs.ocfs2     mkzonedb    mount.smb      mpath_prio_netapp
-mgetty         mke2fs      mkfs.reiserfs  modinfo     mount.smbfs    multipath
-microcode_ctl  mkfs        mkfs.vfat      modprobe    mpath_ctl      multipathd
-</code></pre>
-
-<p>mkfs 系列命令占了很大一部分。 mdadm,mdadm.static:这是和 RAID 相关的程序，他用来管理 Linux 下的软 RAID。当前 Linux 提供的 RAID 级别有 LINEAR md 设备，RAID0 (striping),RAID1 (mirroring),RAID4,RAID5,RAID6,MULTIPATH 和 FAULTY.
-这里说的 multipathq 其实并不是软 RAID 机制中的一部分，但是他会去调用。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2007/03/22/commands-start-m/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/21/">&larr; Older</a>
@@ -566,6 +558,10 @@ microcode_ctl  mkfs        mkfs.vfat      modprobe    mpath_ctl      multipathd
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -581,10 +577,6 @@ microcode_ctl  mkfs        mkfs.vfat      modprobe    mpath_ctl      multipathd
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -592,7 +584,7 @@ microcode_ctl  mkfs        mkfs.vfat      modprobe    mpath_ctl      multipathd
 <a href="/page/20/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/20/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

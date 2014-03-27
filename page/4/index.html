@@ -9,7 +9,10 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="思考再三，还是决定在 blog 记录下练习《Python 核心编程第二版》习题的过程。英文原版书后是有有些习题答案的，但是基本上都是一些简单问题的答案，而且较少。练习是最好的学习，所以我打算尽可能把能练手的习题做一遍。 我手头只有第一版的印刷版，第二版是电子版，目前无法得知电子版是否和印刷版本一致 &hellip;">
+  <meta name="description" content="6–5.字符串
+(a)更新你在练习 2-7 里面的方案,使之可以每次向前向后都显示一个字符串的一个字符.
+(b)通过扫描来判断两个字符串是否匹配(不能使用比较操作符或者 cmp()内建函数)。附加题:在你的方案里加入大小写区分.
+(c)判断一个字符串是否重现(后面跟前面的一致).附加题: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +79,54 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">core python programming 2nd chapter 6 exercise</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-29T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>6–5.字符串<br/>
+(a)更新你在练习 2-7 里面的方案,使之可以每次向前向后都显示一个字符串的一个字符.<br/>
+(b)通过扫描来判断两个字符串是否匹配(不能使用比较操作符或者 cmp()内建函数)。附加题:在你的方案里加入大小写区分.<br/>
+(c)判断一个字符串是否重现(后面跟前面的一致).附加题:在处理除了严格的回文之外,加入对例如控制符号和空格的支持。<br/>
+(d)接受一个字符,在其后面加一个反向的拷贝,构成一个回文字符串.</p></blockquote>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -529,56 +580,6 @@ OK，到目前为止，域名在非天朝，服务器在非天朝，我总算可
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/01/15/lah-chapter10-questions-key/">Linux系统管理技术手册第10章系统实践</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-15T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/01/15/lah-chapter10-questions-key/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2010/01/15/lah-chapter10-questions-key/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>E10.1 保留老日志文件的主要理由是什么？</p>
-
-<p>A：除非你每天查看系统日志并记录有故障的消息，否则你就要保留老的日志文件，否则 BOSS 问起你来，你来什么来对付呢？</p>
-
-<p>E10.2 lastlog 和 wtmp 之间的区别是什么？每种日志合理的轮换策略是什么？</p>
-
-<p>A：lastlog 记录的是当前所有系统帐号的登录情况，记录每一个帐号最近的登录日期，登录端口/终端。如果没有登录过，则显示为从未登录。而 wtmp 则是记录所有登录帐号的信息，包括该帐号登录的时间，登录终端，退出时间等。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2010/01/15/lah-chapter10-questions-key/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/5/">&larr; Older</a>
@@ -596,6 +597,10 @@ OK，到目前为止，域名在非天朝，服务器在非天朝，我总算可
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -611,10 +616,6 @@ OK，到目前为止，域名在非天朝，服务器在非天朝，我总算可
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -622,7 +623,7 @@ OK，到目前为止，域名在非天朝，服务器在非天朝，我总算可
 <a href="/page/4/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/4/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

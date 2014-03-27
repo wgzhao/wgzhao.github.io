@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="Amanda 高级马里兰自动网络磁盘归档 (Advanced Maryland Automatic Network Disk Archiver 网络备份软件是我第一次接触 Linux 就听到过，只是从来都没有使用过，有需要备份得时候，就是自己写写简单的脚本，使用 cron 来做定时任务， &hellip;">
+  <meta name="description" content="本文写道最后的时候，我才发现 ZRM for MySQL 的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库 test1,test2，你备份了这两个数据库，某一天，test2 数据库里的某一个表坏了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,54 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2009/04/15/backup-remote-mysql-with-zrm/">使用Amanda ZRM备份远程MySQL数据库</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-04-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2009/04/15/backup-remote-mysql-with-zrm/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2009/04/15/backup-remote-mysql-with-zrm/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><del>本文写道最后的时候，我才发现 ZRM for MySQL 的一个致命问题，就我目前的理解和测试来看，它恢复数据的时候是采取覆盖的方式，举个例子，假定某台数据库服务器上有两个数据库 test1,test2，你备份了这两个数据库，某一天，test2 数据库里的某一个表坏了，那么它无法做到仅仅只是恢复损坏的表，甚至无法做到仅仅恢复 test2，而是直接把 test1,test2 都恢复。那这绝对是一个噩梦。但愿我目前的理解是错误的，只是我实在找不到控制恢复粒度的地方。下面的文字就当闲着无聊看看吧.</del></p>
+
+<p><strong>Update：</strong><br/>
+原谅我的无知，<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">ZRM</a> 备份是可以指定恢复特定的数据库的，刚才今天 mwf 的站点数据库需要恢复，测试了一下，完全没有问题。具体的恢复办法，请看文末。
+<a href="http://www.zmanda.com/zrm-mysql-enterprise.html" title="Zmanda Recovery Manager">Zmanda Recovery Manager(ZRM)</a>提供了备份 MySQL 数据库的能力，并且支持两种备份模式：逻辑备份和裸备份，有关详细的介绍，可以看<a href="http://www.zmanda.com/backup-mysql.html">官方的介绍</a>。下面给出一个备份的实例。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2009/04/15/backup-remote-mysql-with-zrm/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -525,52 +573,6 @@ div.entry-content > p:first-of-type:first-letter
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/09/20/vlock-lock-your-terminal/">vlock&#8211;锁定你的终端</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-09-20T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/09/20/vlock-lock-your-terminal/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2008/09/20/vlock-lock-your-terminal/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>X 方式下有都有屏幕锁定和屏幕保护的功能，但是在终端下，如何保护我们目前的工作不被别人看到呢，可以尝试这个 <a href="http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html">vlock</a> 工具，不到 30k，可以非常方便的锁定终端。</p>
-
-<p>只要运行 vlock 程序，屏幕就会清空锁定，要想再次使用，必须输入用户密码：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/09/20/vlock-lock-your-terminal/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/9/">&larr; Older</a>
@@ -588,6 +590,10 @@ div.entry-content > p:first-of-type:first-letter
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -603,10 +609,6 @@ div.entry-content > p:first-of-type:first-letter
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -614,7 +616,7 @@ div.entry-content > p:first-of-type:first-letter
 <a href="/page/8/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/8/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

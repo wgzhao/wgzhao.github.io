@@ -9,7 +9,8 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="这段时间一直在投诉联通，间隔也投诉了一下移动。我不能偏心，至少对两个移动运营商都投诉了。 投诉联通是因为我的掌中宽带让我及其郁闷，简直就是浪费我的生命。每天高峰期，我至少需要花 2 个小时才能上网，当然 2 个小时后，高峰期也过去了。之前给他们打电话，他们总是给出下面几个解决方案： 1）把卡拔出来 &hellip;">
+  <meta name="description" content="突然想到了裸设备，linux 下的裸设备(raw
+device)一直都不是理解得很清楚，特别是用户问及到裸设备的时候，我到真不知道如何才是正确的解释，或者说能让用户相信我的说法。 今天做了一些功课，算是又多了解了一些东西吧。 为什么裸设备需要绑定或者说映射到已经存在的块设备上？ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +77,55 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2007/07/09/Linux-gab-bare-equipment/">瞎扯linux裸设备</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2007-07-09T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2007/07/09/Linux-gab-bare-equipment/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2007/07/09/Linux-gab-bare-equipment/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>突然想到了裸设备，linux 下的裸设备(raw
+device)一直都不是理解得很清楚，特别是用户问及到裸设备的时候，我到真不知道如何才是正确的解释，或者说能让用户相信我的说法。</p>
+
+<p>今天做了一些功课，算是又多了解了一些东西吧。</p>
+
+<p>为什么裸设备需要绑定或者说映射到已经存在的块设备上？这恐怕是用户问得最多的问题，我之前的回答都是 linux 下就是需要绑定。用户一般立刻会回一句，那为什么 Unix 就不用要呢？虽然我觉得这种比较没有太多含义，毕竟我们说 Linux 和 Unix 非常相似，但是再相似，也不是相同呀，凭什么 Unix 不做绑定或者映射，Linux 就一定要按照这种设计模式呀？</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2007/07/09/Linux-gab-bare-equipment/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -500,52 +550,6 @@ Array 阵列卡，其链接的 SCSI 在 linux 中识别出来的不是平常我�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2007/05/17/what-can-help-noapic-and-acpioff/">noapic和acpi=off能帮我做到什么？</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2007-05-17T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2007/05/17/what-can-help-noapic-and-acpioff/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2007/05/17/what-can-help-noapic-and-acpioff/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>06 年 1 月的时候写过一篇有关 <a href="/2006/01/12/what-difference-between-acpi-and-apic/">acpi 和 apic</a> 的帖子。当时写这个帖子有两个原因：一是确实遇到了很多人混淆了 apic 和 acpi 的差别，也难怪，他们两个长得也太像了。二来是因为当时与次相关的两个核心参数(noapic,acpi=off)帮我解决了一个当时我觉得不可思议的问题，所以觉得有必要记录下来。</p>
-
-<p>后来我又写了一个<a href="read.php/311.htm">帖子</a>，说到了又一次用这两个参数解决疑难杂症的事情。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2007/05/17/what-can-help-noapic-and-acpioff/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/19/">&larr; Older</a>
@@ -563,6 +567,10 @@ Array 阵列卡，其链接的 SCSI 在 linux 中识别出来的不是平常我�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -578,10 +586,6 @@ Array 阵列卡，其链接的 SCSI 在 linux 中识别出来的不是平常我�
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -589,7 +593,7 @@ Array 阵列卡，其链接的 SCSI 在 linux 中识别出来的不是平常我�
 <a href="/page/18/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/18/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

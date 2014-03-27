@@ -9,7 +9,9 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="samba 配置文件中经常会用到一些变量，而这些变量也经常给我们带来巨大的便利，因此我把 samba 配置文件（smb.conf）中用到的一些变量。每一个变量都是一%开头，后面是一个单独的大写或者小写字母，而且只能用在配置项的右边。下面是具体的变量名称，至于其用法，大家可以参考默认的 smb. &hellip;">
+  <meta name="description" content="Windows 的 AD（Active Directory)是一个 DAP(Directory Access
+Protocol)的一个完美演绎，使用 AD 创建的域，使得普通用户的登录信息于机器无关，而且可以实现单点登录（single sign
+on).目前 Linux &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +78,54 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/">LDAP+SAMBA+Proftpd+SYSTEM AUTH集成配置</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2005-11-08T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Windows 的 AD（Active Directory)是一个 DAP(Directory Access
+Protocol)的一个完美演绎，使用 AD 创建的域，使得普通用户的登录信息于机器无关，而且可以实现单点登录（single sign
+on).目前 Linux 下面可以勉强达到这个水平的可能只有 RADIUS。现在我要介绍的这个方案是基于 LDAP 的认证方式，也就是 samba，
+ftp，system 的认证信息都是来自 ldap 数据库，而不是原来的密码文件，这样做的好处是密码的统一管理，减少风险，比如你可能并不希望 ftp，
+mail 等帐号的认证用到系统帐号，这个时候你就可以考虑这个方案（当然你也可以使用像 mysql 这样的数据库）。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2005/11/08/integrated-configuration-with-samba-proftpd-system-auth/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -501,50 +551,6 @@ div.entry-content > p:first-of-type:first-letter
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/">使用 head 和 tail 以块方式读取文本流</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2004-12-26T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>如果你想只处理文件的一部分，譬如头几行或后几行，你可以使用 head（它将头 10 行发送至标准输出）或 tail（它将后 10 行发送至标准输出）。您可以通过使用<code>-n</code>选项改变这些命令发送至其标准输出的行数（当然，输出结果将随 XF86Config 文件的内容而不同）：</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2004/12/26/The-use-of-head-and-tail-to-block-the-way-to-read-the-text-flow/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/32/">&larr; Older</a>
@@ -562,6 +568,10 @@ div.entry-content > p:first-of-type:first-letter
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -577,10 +587,6 @@ div.entry-content > p:first-of-type:first-letter
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -588,7 +594,7 @@ div.entry-content > p:first-of-type:first-letter
 <a href="/page/31/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/31/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="SASL(Simple Authentication Security Layer)是流行的认证库，Sendmail 和 Postfix 都可以利用 SASL 来做到 SMTP 认证。简明步骤如下： 1) 确认 cyrus-sasl 已经安装 2) 修改/etc/postfix/main.cf， &hellip;">
+  <meta name="description" content="这两天看了有关 LVM 快照(snapshot)的一些资料，加上 pczou 的一些指导，对 snapshot 有一些理解，记录如下，和大家共享： Logical Volume Manager (LVM))提供了对任意一个 Logical Volume(LV)做“快照”(snapshot)的功能， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,52 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/06/20/LVM-snapshot-summary/">LVM snapshot简述</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-06-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/06/20/LVM-snapshot-summary/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2008/06/20/LVM-snapshot-summary/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这两天看了有关 LVM 快照(snapshot)的一些资料，加上 pczou 的一些指导，对 snapshot 有一些理解，记录如下，和大家共享：</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux">Logical Volume Manager (LVM)</a>)提供了对任意一个 Logical Volume(LV)做“快照”(snapshot)的功能，以此来获得一个分区的状态一致性备份。在某一个状态下做备份的时候，可能有应用正在访问某一个文件或者数据库，这就是使得备份的时候文件处于一个状态，而备份完后，文件却处于另外一个状态，从而造成备份的非一致性，这种状态恢复数据库数据几乎不会成功。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/06/20/LVM-snapshot-summary/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -495,50 +541,6 @@ dd 命令虽然最后给出了读了多少，写了多少块，但是看不到�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/05/04/I-was-working/">我就是打工的</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-05-04T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/05/04/I-was-working/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2008/05/04/I-was-working/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天去 lancy 公司的计生科交相关材料，办理准生证这种中国特色的东西。相关材料很早就找齐了，特别是公司的相关证明，虽然当时计生专干要求是公司计生科或者计生相关部门的公章，我想出了政府部门，事业单位，普通的公司哪有什么计生科呀，我可没有听说过，所以就加盖了公司的公章，觉得应该问题不大。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/05/04/I-was-working/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/11/">&larr; Older</a>
@@ -556,6 +558,10 @@ dd 命令虽然最后给出了读了多少，写了多少块，但是看不到�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -571,10 +577,6 @@ dd 命令虽然最后给出了读了多少，写了多少块，但是看不到�
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -582,7 +584,7 @@ dd 命令虽然最后给出了读了多少，写了多少块，但是看不到�
 <a href="/page/10/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/10/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="tmux 的最新版本 1.9 带来了很多特性，而 CentOS 的仓库里，目前我只能找到1.6的版本。因此想要自己编译一个，但是tmux 1.9a编译时要求 libevent 为2.x的版本，而 CentOS 6.x 默认还是1.x的版本，为了不影响系统的稳定性，决定采取静态编译的方式。流程如下: ">
+  <meta name="description" content="图形化界面上配置 VPN 已经很方便了。但是在命令行下，Linux 还不是那么容易能搞定 VPN 的配置已经连接。需要一些软件包的支持和一些配置工作。 下面是基于 CentOS 6.4 的配置步骤。假定你的 VPN 服务器地址是192.240.240.112,账号是vpn,密码是vpntest ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,52 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-27T13:53:46+08:00" pubdate data-updated="true">Mar 27<span>th</span>, 2014</time>
+        
+           | <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2014/03/27/setup-a-pptp-vpn-from-command-line/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>图形化界面上配置 VPN 已经很方便了。但是在命令行下，Linux 还不是那么容易能搞定 VPN 的配置已经连接。需要一些软件包的支持和一些配置工作。</p>
+
+<p>下面是基于 CentOS 6.4 的配置步骤。假定你的 VPN 服务器地址是<code>192.240.240.112</code>,账号是<code>vpn</code>,密码是<code>vpntest</code></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -207,7 +253,7 @@ div.entry-content > p:first-of-type:first-letter
 <li><p>打开你喜欢的终端，输入下面的指令</p>
 
 <p> <code>defaults write com.apple.FaceTime AutoAcceptInvites -bool TRUE</code></p></li>
-<li><p>接下来，架设你希望 FaceTime ID(一般就是 Apple ID)为 <a href="&#109;&#x61;&#105;&#108;&#x74;&#x6f;&#58;&#119;&#103;&#122;&#x68;&#x61;&#x6f;&#64;&#103;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x77;&#x67;&#x7a;&#104;&#97;&#111;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a> 的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
+<li><p>接下来，架设你希望 FaceTime ID(一般就是 Apple ID)为 <a href="&#109;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#x77;&#x67;&#122;&#104;&#x61;&#111;&#x40;&#103;&#109;&#x61;&#105;&#x6c;&#46;&#99;&#x6f;&#109;">&#119;&#103;&#122;&#x68;&#97;&#x6f;&#64;&#x67;&#109;&#x61;&#105;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a> 的人呼叫的时候，能够自动应答，那么就输入下面的指令：</p>
 
 <p> <code>defaults write com.apple.FaceTime AutoAcceptInvitesFrom -array-add wgzhao@gmail.com</code></p>
 
@@ -741,64 +787,6 @@ $$ language plpgsql;</code></pre></noscript></div>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2012/08/14/upgrade-blog-environment/">升级blog编译环境</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-14T09:42:00+08:00" pubdate data-updated="true">Aug 14<span>th</span>, 2012</time>
-        
-           | <a href="/2012/08/14/upgrade-blog-environment/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2012/08/14/upgrade-blog-environment/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>系统升级到 Mountain Lion 后，发现我的 blog 编译环境不能正常使用了，我的 blog 放弃 <a href="http://www.wordpress.org" title="wordpress">wordpress</a>，采取了 <a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>，这玩意儿的好处是全静态，搬家的时候很容易，甚至可以随时搬迁到 <a href="http://github.com" title="github">github</a>，<a href="http://www.dropbox.com" title="dropbox">dropbox</a>这类的空间上都没以问题。麻烦的就是那套环境，<a href="http://www.ruby.org" title="ruby">ruby</a>本来也不熟悉，所以搞起来比较痛苦。昨晚花了 3 个多小时才搞定，不停的清理环境，重新安装。其中有两个问题记录如下一个是 gcc 的问题，<a href="http://www.ruby.org" title="ruby">ruby</a>一些组件的编译并不支持 Mac 自带的 llvm-gcc 特性。因此需要自行编译一个 gcc，当然自己编译太痛苦了，幸运的是 <a href="http://hpc.sourceforge.net/" title="High Performance Computer for Mac OS X">HPC for Mac OS X</a>网站已经编译好了针对 Mac 的，可以从其网站直接下载，省去的编译的痛苦另外出现的一个问题是在执行<code>bundle install</code>的时候，会给出下面的报错</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>creating Makefile  
-</span><span class='line'>extconf.rb:21:in `&lt;main&gt;': Only Darwin systems 
-</span><span class='line'>greater than 8 (Mac OS X 10.5+) are supported (RuntimeError)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这个报错的原因是 <a href="http://octopress.org" title="octopress: a blogging framework">octopress</a>需要的 <a href="https://github.com/thibaudgg/rb-fsevent/" title="rb-fsevent">rb-fsevent</a>的版本是<code>0.4.3.1</code>，这个版本还不支持 Mountain Lion。简单的处理办法是修改<code>ext/extconf.rb</code>文件，找到 19 行，如下:
-<code>sdk_version    = { 9 =&gt; '10.5', 10 =&gt; '10.6', 11 =&gt; '10.7' }[darwin_version]</code><br/>
-修改为
-<code>sdk_version    = { 9 =&gt; '10.5', 10 =&gt; '10.6', 11 =&gt; '10.7',12=&gt;'10.8' }[darwin_version]</code></p>
-
-<p>删除第 24 行内容，如下</p>
-
-<p><code>-isysroot #{xcode_path}/SDKs/MacOSX#{sdk_version}.sdk</code></p>
-
-<p>然后编译安装即可。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/2/">&larr; Older</a>
@@ -812,6 +800,10 @@ $$ language plpgsql;</code></pre></noscript></div>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
     
       <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
@@ -829,10 +821,6 @@ $$ language plpgsql;</code></pre></noscript></div>
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -840,7 +828,7 @@ $$ language plpgsql;</code></pre></noscript></div>
 <a href="/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

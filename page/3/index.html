@@ -9,8 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="针对一个服务器需要同时开几个 ssh 连接，也许是同一个帐号链接，也许是不同的帐号，你是不死和厌烦了每次的都要输入密码？其实 ssh 链接可以做到共享会话的。一个办法是用一些 ssh 链接客户端，比如 Windows 下的 Secure
-CRT，Linux 下的 hotssh。另外一个办法， &hellip;">
+  <meta name="description" content="对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发 ssh 给用户，那么无疑能极大的增加用户操作的灵活性，但是 ssh 的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。 幸而 openSSH 已经了解到了这点，目前的版本均支持 chroot 功能， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +76,53 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/07/14/chroot-in-ssh-server/">在ssh服务里使用chroot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-14T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/07/14/chroot-in-ssh-server/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2010/07/14/chroot-in-ssh-server/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>对于虚拟主机而言，平衡用户易用体验和安全是一个挑战，比如如果开发 ssh 给用户，那么无疑能极大的增加用户操作的灵活性，但是 ssh 的强大也是得在安全方面让管理员很头疼，如何将用户限制在自己的环境中，就显得尤为重要。</p>
+
+<p>幸而 openSSH 已经了解到了这点，目前的版本均支持 chroot 功能，下面我简单的描述一下在 ubuntu
+10.04 系统上如何实现，其他系统实现的原理相同，只是一些配置文件和指令不同而已。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/07/14/chroot-in-ssh-server/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -520,54 +566,6 @@ __str__()方法采用和 dollarize()一样的字符格式显示该值。<br/>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">core python programming 2nd chapter 6 exercise</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-29T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote><p>6–5.字符串<br/>
-(a)更新你在练习 2-7 里面的方案,使之可以每次向前向后都显示一个字符串的一个字符.<br/>
-(b)通过扫描来判断两个字符串是否匹配(不能使用比较操作符或者 cmp()内建函数)。附加题:在你的方案里加入大小写区分.<br/>
-(c)判断一个字符串是否重现(后面跟前面的一致).附加题:在处理除了严格的回文之外,加入对例如控制符号和空格的支持。<br/>
-(d)接受一个字符,在其后面加一个反向的拷贝,构成一个回文字符串.</p></blockquote>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2010/05/29/core-python-programming-2nd-chapter-6-exercise/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/4/">&larr; Older</a>
@@ -585,6 +583,10 @@ __str__()方法采用和 dollarize()一样的字符格式显示该值。<br/>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -600,10 +602,6 @@ __str__()方法采用和 dollarize()一样的字符格式显示该值。<br/>
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -611,7 +609,7 @@ __str__()方法采用和 dollarize()一样的字符格式显示该值。<br/>
 <a href="/page/3/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/3/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

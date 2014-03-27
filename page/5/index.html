@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="2009 年开始到来的时候，我做了一个计划。现在是总结的时候了 好好抚养皮皮：目前皮皮正在健康快乐的成长，到目前为止，暂时还没有感冒过，发烧过，除了打预防针，暂时还没有去过医院，这一点让我们觉得皮皮真的很好带，也让我们省了很多心。同时也觉得小孩的东西，质量还是很重要的，这一点，我打算到时专门写一篇 &hellip;">
+  <meta name="description" content="E10.1 保留老日志文件的主要理由是什么？ A：除非你每天查看系统日志并记录有故障的消息，否则你就要保留老的日志文件，否则 BOSS 问起你来，你来什么来对付呢？ E10.2 lastlog 和 wtmp 之间的区别是什么？每种日志合理的轮换策略是什么？ A：lastlog &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,56 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2010/01/15/lah-chapter10-questions-key/">Linux系统管理技术手册第10章系统实践</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-15T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2010/01/15/lah-chapter10-questions-key/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2010/01/15/lah-chapter10-questions-key/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>E10.1 保留老日志文件的主要理由是什么？</p>
+
+<p>A：除非你每天查看系统日志并记录有故障的消息，否则你就要保留老的日志文件，否则 BOSS 问起你来，你来什么来对付呢？</p>
+
+<p>E10.2 lastlog 和 wtmp 之间的区别是什么？每种日志合理的轮换策略是什么？</p>
+
+<p>A：lastlog 记录的是当前所有系统帐号的登录情况，记录每一个帐号最近的登录日期，登录端口/终端。如果没有登录过，则显示为从未登录。而 wtmp 则是记录所有登录帐号的信息，包括该帐号登录的时间，登录终端，退出时间等。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2010/01/15/lah-chapter10-questions-key/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -538,52 +588,6 @@ $ ls -l test
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2009/11/23/linux-administration-handbook-question-answers/">Linux系统管理技术手册习题实践</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2009-11-23T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2009/11/23/linux-administration-handbook-question-answers/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2009/11/23/linux-administration-handbook-question-answers/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>以前看《<a href="http://book.douban.com/subject/3042029/">Linux 系统管理手册</a>》（以下简称 LAH）电子版的时候，没有太注意每章后面的习题。</p>
-
-<p>现在买来印刷版看后，觉得这些习题有必要做一做，特别那些标有 4 颗星的，据说能作为整个学期的作业来完成，这不由得让我想起了《<a href="http://book.douban.com/subject/1130500/">计算机程序设计艺术</a>》艺术有关习题的介绍，不过那个太难了，都是偏向理论性的知识。这本 LAH 的习题偏向实践一些，应该相对来说容易做到吧。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2009/11/23/linux-administration-handbook-question-answers/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/6/">&larr; Older</a>
@@ -601,6 +605,10 @@ $ ls -l test
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -616,10 +624,6 @@ $ ls -l test
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -627,7 +631,7 @@ $ ls -l test
 <a href="/page/5/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/5/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   

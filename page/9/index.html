@@ -9,7 +9,7 @@
   <meta name="author" content="wgzhao">
 
   
-  <meta name="description" content="很惭愧，知道今天才知道 Aapche 可以基于域名或者 IP 来动态配置虚拟主机。 这样，你只要在特定的目录建立域名目录，那么你的虚拟主机就配置好了，而必须许该 httpd.conf 文件，更重要的是，不要重启 Apache 服务。否则的话，在有大量域名的情况下， &hellip;">
+  <meta name="description" content="X 方式下有都有屏幕锁定和屏幕保护的功能，但是在终端下，如何保护我们目前的工作不被别人看到呢，可以尝试这个 vlock 工具，不到 30k，可以非常方便的锁定终端。 只要运行 vlock 程序，屏幕就会清空锁定，要想再次使用，必须输入用户密码： ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,52 @@ div.entry-content > p:first-of-type:first-letter
 </style>
 <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/2008/09/20/vlock-lock-your-terminal/">vlock&#8211;锁定你的终端</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2008-09-20T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+           | <a href="/2008/09/20/vlock-lock-your-terminal/#disqus_thread"
+             data-disqus-identifier="http://wgzhao.com/2008/09/20/vlock-lock-your-terminal/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>X 方式下有都有屏幕锁定和屏幕保护的功能，但是在终端下，如何保护我们目前的工作不被别人看到呢，可以尝试这个 <a href="http://cthulhu.c3d2.de/~toidinamai/vlock/vlock.html">vlock</a> 工具，不到 30k，可以非常方便的锁定终端。</p>
+
+<p>只要运行 vlock 程序，屏幕就会清空锁定，要想再次使用，必须输入用户密码：</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/2008/09/20/vlock-lock-your-terminal/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -625,52 +671,6 @@ a.b.c.d             : bad
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/2008/06/20/LVM-snapshot-summary/">LVM snapshot简述</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2008-06-20T00:00:00+08:00" pubdate data-updated="true"></time>
-        
-           | <a href="/2008/06/20/LVM-snapshot-summary/#disqus_thread"
-             data-disqus-identifier="http://wgzhao.com/2008/06/20/LVM-snapshot-summary/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这两天看了有关 LVM 快照(snapshot)的一些资料，加上 pczou 的一些指导，对 snapshot 有一些理解，记录如下，和大家共享：</p>
-
-<p><a href="http://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux">Logical Volume Manager (LVM)</a>)提供了对任意一个 Logical Volume(LV)做“快照”(snapshot)的功能，以此来获得一个分区的状态一致性备份。在某一个状态下做备份的时候，可能有应用正在访问某一个文件或者数据库，这就是使得备份的时候文件处于一个状态，而备份完后，文件却处于另外一个状态，从而造成备份的非一致性，这种状态恢复数据库数据几乎不会成功。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/2008/06/20/LVM-snapshot-summary/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/page/10/">&larr; Older</a>
@@ -688,6 +688,10 @@ a.b.c.d             : bad
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/2014/03/27/setup-a-pptp-vpn-from-command-line/">命令行配置PPTP VPN</a>
+      </li>
+    
+      <li class="post">
         <a href="/2014/03/18/compile-tmux-1-dot-9a-statically/">静态编译tmux 1.9a版本</a>
       </li>
     
@@ -703,10 +707,6 @@ a.b.c.d             : bad
         <a href="/2012/08/24/generate-random-strings-and-other-tips-on-postgresql/">生成随机字符串以及自动更新时间戳和返回最近插入的ID号</a>
       </li>
     
-      <li class="post">
-        <a href="/2012/08/22/some-way-to-io-statistics-on-linux/">Linux下的一些I/O统计工具</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -714,7 +714,7 @@ a.b.c.d             : bad
 <a href="/page/9/index.html"><img src="http://chart.apis.google.com/chart?chs=150x150&cht=qr&chld=|0&chco=165B94&chl=http://wgzhao.com/page/9/index.html" alt="post-qrcode"></a></section>
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (152)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
+    <ul id="category-list"><li><a href='/categories/linuxji-zhu/'>Linux技术 (153)</a></li><li><a href='/categories/webkai-fa/'>WEB开发 (6)</a></li><li><a href='/categories/wo-du-wo-shu/'>我读我书 (16)</a></li><li><a href='/categories/ji-zhu-ji-qiao/'>技术技巧 (29)</a></li><li><a href='/categories/shu-ju-ku/'>数据库 (8)</a></li><li><a href='/categories/sui-xin-suo-xiang/'>随心所想 (113)</a></li></ul>
 </section>
 
   
