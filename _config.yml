@@ -2,3 +2,11 @@ title: 个人的碎碎念
 theme: jekyll-theme-cayman
 plugins:
   - jekyll-archives
+  - jekyll-feed
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-avatar
+  - jemoji
+  - jekyll-mentions
+  - jekyll-include-cache
