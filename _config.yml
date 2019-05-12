@@ -25,7 +25,7 @@ twitter_username: mlsx
 github_username:  wgzhao
 
 # Build settings
-markdown: kramdown
+markdown: GFM
 theme: jekyll-theme-cayman
 plugins:
   - jekyll-feed
