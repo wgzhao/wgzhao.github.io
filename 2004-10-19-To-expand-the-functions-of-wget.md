@@ -1,3 +1,11 @@
+---
+layout: post
+title: 扩展wget的功能
+date: 2004-10-19
+categories:
+  - Linux技术
+tags: [wget, curl]
+---
 ## 问题
 wget和curl是我非常喜爱的下载程序，可是却有这样的问题，比如当我要下载20个文件，这些文件至少名字不同，但是非常有规律，比如
 
