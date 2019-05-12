@@ -1,9 +1,7 @@
 ---
 layout: post
 title: 扩展wget的功能
-date: 2004-10-19
-categories:
-  - Linux技术
+date: "2004-10-19"
 tags: [wget, curl]
 ---
 ## 问题
